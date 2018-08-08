@@ -1,0 +1,11 @@
+{
+"type": "FeatureCollection",
+"name": "dummy_data",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "OPERATOR_NAME": "Julie Brown", "BUSINESS_NAME": "Langley Lodge", "STREET_ADDRESS": "5451 204 Street", "CITY": "Langley", "addressString": "5451 204 Street Langley, BC", "POSTAL_CODE": "V3A 5M9", "LATITUDE": 49.1015673, "LONGITUDE": -122.6573035 }, "geometry": { "type": "Point", "coordinates": [ -122.6573035, 49.1015673 ] } },
+{ "type": "Feature", "properties": { "OPERATOR_NAME": "Jane Smith", "BUSINESS_NAME": "Jackman Manor", "STREET_ADDRESS": "27477 28 Avenue", "CITY": "Langley", "addressString": "27477 28 Avenue Langley, BC", "POSTAL_CODE": "V4W 3L9", "LATITUDE": 49.0538233, "LONGITUDE": -122.4630403 }, "geometry": { "type": "Point", "coordinates": [ -122.4630403, 49.0538233 ] } },
+{ "type": "Feature", "properties": { "OPERATOR_NAME": "Martha Stewart", "BUSINESS_NAME": "Fort Langley Care Centre", "STREET_ADDRESS": "8838 Glover Road ", "CITY": "Langley", "addressString": "8838 Glover Road  Langley, BC", "POSTAL_CODE": "V1M 2R4", "LATITUDE": 49.1128886, "LONGITUDE": -122.6444621 }, "geometry": { "type": "Point", "coordinates": [ -122.6444621, 49.1128886 ] } },
+{ "type": "Feature", "properties": { "OPERATOR_NAME": "Ralph Nader", "BUSINESS_NAME": "Langley Memorial Hospital", "STREET_ADDRESS": "22051 Fraser Highway", "CITY": "Langley", "addressString": "22051 Fraser Highway Langley, BC", "POSTAL_CODE": "V3A 4H4", "LATITUDE": 49.0948791, "LONGITUDE": -122.6123667 }, "geometry": { "type": "Point", "coordinates": [ -122.6123667, 49.0948791 ] } }
+]
+}

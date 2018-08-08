@@ -1,0 +1,106 @@
+/* smk-map-frame.css */
+
+.smk-theme-beta .smk-command {
+    display: inline-block;
+    color: black;
+    border: 1px outset gray;
+    background-color: lightgray;
+    border-radius: 2px;
+    font-size: 13px;
+    padding-right: 3px;
+    margin-bottom: 3px;
+}
+
+.smk-theme-beta select.smk-command {
+    color: black;
+    border: 1px outset gray;
+    background-color: lightgray;
+    border-radius: 2px;
+    font-size: 13px;
+    padding-right: 3px;
+    margin-bottom: 3px;
+}
+
+.smk-theme-beta .smk-command:hover {
+    outline: 1px solid black;
+}
+
+.smk-theme-beta .smk-command.smk-disabled:hover {
+    outline: none;
+}
+
+.smk-theme-beta .smk-command.smk-disabled {
+    color: gray;
+    font-style: italic;
+    border: 1px outset transparent;
+}
+
+
+/* viewer-leaflet.css */
+
+.smk-theme-beta .leaflet-popup-content {
+    max-width: 500px;
+    width: 500px;
+    min-width: 250px;
+}
+
+
+
+/* toolbar.css */
+
+.smk-theme-beta .smk-tool {
+    color: black;
+    border: 1px outset gray;
+    background-color: lightgray;
+    border-radius: 2px;
+}
+
+.smk-theme-beta .smk-tool.smk-tool-active {
+    border: 1px inset gray;
+    background-color: darkgray;
+}
+
+
+/* menu.css */
+
+.smk-theme-beta .smk-sidepanel .smk-panel.smk-menu-panel > .smk-header {
+    box-shadow: none;
+}
+
+
+/* directions.css */
+
+.smk-theme-beta .smk-directions-panel .smk-command-col {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.smk-theme-beta .smk-directions-panel .smk-command-col label {
+    padding-right: 3px;
+    margin-bottom: 3px;
+}
+
+.smk-theme-beta .smk-directions-panel .smk-command-col label input[type=checkbox] {
+    height: 13px;
+}
+
+.smk-theme-beta .smk-directions-panel .smk-waypoint {
+    margin: 0 -1px;
+}
+
+.smk-theme-beta .smk-directions-panel .smk-waypoint i, .smk-theme-beta .smk-directions-panel .smk-waypoint div {
+    margin: 0 1px;
+}
+
+
+/* panel-feature-list.css */
+
+.smk-theme-beta .smk-feature-list-panel .smk-layer .smk-feature {
+    margin: 0 -1px;
+    justify-content: flex-start;
+}
+
+.smk-theme-beta .smk-feature-list-panel .smk-layer .smk-feature span, .smk-theme-beta .smk-feature-list-panel .smk-layer .smk-feature i {
+    margin: 0 1px;
+}

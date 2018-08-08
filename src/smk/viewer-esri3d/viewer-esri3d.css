@@ -1,0 +1,35 @@
+.smk-viewer .esri-ui .esri-popup  {
+    transform: translateY( -30px );
+}
+
+.smk-viewer .esri-popup__main-container {
+    width: 400px;
+    border-radius: 5px;
+    max-height: initial;
+    font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
+    font-size: 12px;
+}
+
+.smk-viewer .esri-popup__main-container .esri-popup__header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+.smk-viewer .esri-popup__main-container .esri-popup__header .esri-popup__header-buttons {
+    z-index: 1;
+}
+
+.smk-viewer .esri-popup__main-container .esri-popup__header .esri-popup__header-title {
+    display: none;
+}
+
+.smk-viewer .esri-popup__main-container .esri-popup__content {
+    overflow: visible;
+    margin: 15px;
+}
+
+.smk-viewer .esri-popup--aligned-top-center .esri-popup__pointer-direction, .esri-popup--aligned-bottom-center .esri-popup__pointer-direction {
+    transform:  translateY(-8px) scale(1.5, 2) rotate(45deg);
+}

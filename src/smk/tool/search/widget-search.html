@@ -1,0 +1,13 @@
+<div v-bind:class="classes">
+    <input type="text" placeholder="Search for location" ref="search-input"
+        v-model.trim="search"
+        v-on:keyup="$$emit( 'input-change', { text: search } )"
+        v-on:click="$$emit( 'activate', {} )"
+    >
+
+    <button
+        v-on:click="$$emit( 'activate', { toggle: true } ); focus()"
+        v-bind:title="title"
+    ><i class="material-icons">{{ icon }}</i>
+    </button>
+</div>

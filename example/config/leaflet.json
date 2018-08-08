@@ -1,0 +1,21 @@
+{
+    "smkId": "test-app",
+    "smkRevision": 1,
+
+    "name": "SMK Demo App",
+
+    "createdBy": "bwj",
+    "published": false,
+
+    "viewer": {
+        "type": "leaflet",
+        "initialExtent": [ -139.1782, 47.6039, -110.3533, 60.5939 ],
+        "baseMap": "Streets"
+    },
+
+    "surround": {
+        "type": "default",
+        "title": "Standalone SMK Demo",
+        "subtitles": [ "Leaflet" ]
+    }
+}

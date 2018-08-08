@@ -1,0 +1,503 @@
+{
+  "_id": "d5857328-f85c-4619-b5be-9d15d935765d",
+  "_rev": "42-2f4d7da010a1b754a3c75dd23942fa8e",
+  "lmfId": "uat-test-app",
+  "lmfRevision": 1,
+  "name": "UAT App",
+  "createdBy": "",
+  "published": false,
+  "surround": {
+    "type": "default",
+    "title": "UAT App",
+    "imageSrc": "@gir-on-pig-transparent"
+  },
+  "viewer": {
+    "type": "leaflet",
+    "location": {
+      "extent": [
+        -156.884765625,
+        67.7427590666639,
+        -92.72460937500001,
+        35.24561909420681
+      ],
+      "center": [
+        -139.1782,
+        47.6039
+      ],
+      "zoom": 5
+    },
+    "baseMap": "Streets"
+  },
+  "tools": [
+    {
+      "type": "coordinate",
+      "enabled": true,
+      "title": "Coordinate"
+    },
+    {
+      "type": "attribution",
+      "enabled": true,
+      "title": "Attribution"
+    },
+    {
+      "type": "sidebar",
+      "enabled": true,
+      "title": "Sidebar"
+    },
+    {
+      "type": "layers",
+      "enabled": true,
+      "title": "Layers Panel"
+    },
+    {
+      "type": "pan",
+      "enabled": true,
+      "title": "Panning"
+    },
+    {
+      "type": "zoom",
+      "enabled": true,
+      "title": "Zooming",
+      "mouseWheel": true,
+      "doubleClick": true,
+      "box": true,
+      "control": true
+    },
+    {
+      "type": "measure",
+      "enabled": false,
+      "title": "Measurement"
+    },
+    {
+      "type": "markup",
+      "enabled": false,
+      "title": "Markup"
+    },
+    {
+      "type": "scale",
+      "enabled": true,
+      "title": "Scale",
+      "showFactor": true,
+      "showBar": true
+    },
+    {
+      "type": "minimap",
+      "enabled": true,
+      "title": "Mini Map",
+      "baseMap": "Topographic"
+    },
+    {
+      "type": "directions",
+      "enabled": true,
+      "title": "Directions"
+    },
+    {
+      "type": "about",
+      "enabled": true,
+      "title": "About Panel",
+      "content": "<p>My URL Link&nbsp;</p><br><p><a href=\"http://data.gov.bc.ca\" title=\"DataBC\">DataBC</a><br></p><br><p><strong>Font 1</strong></p><p><sup>Font 2</sup></p><p><span style=\"background-color: rgb(155, 187, 89);\">Font 3</span></p><p><del>Font 4</del></p><br>p.a {\n    font-family: \"Times New Roman\", Times, serif;\n}\n<html>\n<head>\n<style>\np.a {\n    font-family: \"Times New Roman\", Times, serif;\n}\n\np.b {\n    font-family: Arial, Helvetica, sans-serif;\n}\n</style>\n</head>\n<body>\n<h1>The font-family Property</h1>\n\n<p class=\"a\">This is a paragraph, shown in the Times New Roman font.</p>\n\n<p class=\"b\">This is a paragraph, shown in the Arial font.</p>\n\n</body>\n</html>"
+    },
+    {
+      "type": "baseMaps",
+      "enabled": true,
+      "title": "Base Maps Panel",
+      "choices": [
+        "Topographic",
+        "Streets"
+      ]
+    },
+    {
+      "type": "select",
+      "enabled": true,
+      "title": "Selection Panel",
+      "style": {
+        "strokeWidth": 1,
+        "strokeStyle": "1, 1",
+        "strokeColor": "#000000",
+        "strokeOpacity": 0.8,
+        "fillColor": "#000000",
+        "fillOpacity": 0.5,
+        "markerSize": [
+          20,
+          20
+        ],
+        "markerOffset": [
+          10,
+          0
+        ]
+      },
+      "styleOpacity": 1
+    },
+    {
+      "type": "identify",
+      "enabled": true,
+      "title": "Identify Panel",
+      "style": {
+        "strokeWidth": 1,
+        "strokeStyle": "1, 1",
+        "strokeColor": "#000000",
+        "strokeOpacity": 0.8,
+        "fillColor": "#000000",
+        "fillOpacity": 0.5,
+        "markerSize": [
+          20,
+          20
+        ],
+        "markerOffset": [
+          10,
+          0
+        ]
+      },
+      "styleOpacity": 1
+    },
+    {
+      "type": "search",
+      "enabled": true,
+      "title": "Search Panel"
+    }
+  ],
+  "layers": [
+    {
+      "type": "esri-dynamic",
+      "id": "1",
+      "title": "ALR Boundaries",
+      "isVisible": true,
+      "attribution": "Copyright 2018 DataBC, Government of British Columbia",
+      "metadataUrl": "https://catalogue.data.gov.bc.ca/dataset/b23a6be5-c7b0-4a12-a598-bb369a159be1",
+      "opacity": 0.65,
+      "minScale": 2000000,
+      "maxScale": 0,
+      "isQueryable": true,
+      "attributes": [
+        {
+          "id": "feature-length-m",
+          "name": "FEATURE_LENGTH_M",
+          "title": "Length Meters",
+          "visible": true
+        },
+        {
+          "id": "objectid",
+          "name": "OBJECTID",
+          "title": "OBJECTID",
+          "visible": true
+        },
+        {
+          "id": "geometry",
+          "name": "GEOMETRY",
+          "title": "GEOMETRY",
+          "visible": true
+        },
+        {
+          "id": "feature-code",
+          "name": "FEATURE_CODE",
+          "title": "Feature Code",
+          "visible": true
+        },
+        {
+          "id": "boundary-type",
+          "name": "BOUNDARY_TYPE",
+          "title": "Boundary Type",
+          "visible": true
+        },
+        {
+          "id": "alr-line-id",
+          "name": "ALR_LINE_ID",
+          "title": "ALR Line Id",
+          "visible": true
+        }
+      ],
+      "mpcmId": 1,
+      "mpcmWorkspace": "MPCM_ALL_PUB",
+      "serviceUrl": "https://maps.gov.bc.ca/arcgis/rest/services/mpcm/bcgw/MapServer",
+      "dynamicLayers": [
+        "{\"id\":1,\"source\":{\"type\":\"dataLayer\",\"dataSource\":{\"type\":\"table\",\"workspaceId\":\"MPCM_ALL_PUB\",\"dataSourceName\":\"WHSE_LEGAL_ADMIN_BOUNDARIES.OATS_ALR_BOUNDARY_LINES_SVW\",\"gdbVersion\":\"\"}},\"drawingInfo\":{\"renderer\":{\"type\":\"simple\",\"symbol\":{\"type\":\"esriSLS\",\"style\":\"esriSLSSolid\",\"color\":[38,115,0,255],\"width\":1.5},\"label\":\"ALR Boundaries\",\"description\":\"\"},\"transparency\":0,\"labelingInfo\":null}}"
+      ]
+    },
+    {
+      "type": "esri-dynamic",
+      "id": "686",
+      "title": "FWA - Named Point Features - Points",
+      "isVisible": true,
+      "attribution": "Copyright 2018 DataBC, Government of British Columbia",
+      "metadataUrl": "http://catalogue.data.gov.bc.ca/dataset/freshwater-atlas-named-point-features",
+      "opacity": 0.65,
+      "minScale": 35000000,
+      "maxScale": 0,
+      "isQueryable": true,
+      "attributes": [
+        {
+          "id": "gnis-name",
+          "name": "GNIS_NAME",
+          "title": "GNIS Name",
+          "visible": true
+        },
+        {
+          "id": "named-feature-type",
+          "name": "NAMED_FEATURE_TYPE",
+          "title": "Named Feature Type",
+          "visible": true
+        },
+        {
+          "id": "feature-code",
+          "name": "FEATURE_CODE",
+          "title": "Feature Code",
+          "visible": true
+        },
+        {
+          "id": "geometry",
+          "name": "GEOMETRY",
+          "title": "GEOMETRY",
+          "visible": true
+        },
+        {
+          "id": "objectid",
+          "name": "OBJECTID",
+          "title": "OBJECTID",
+          "visible": true
+        }
+      ],
+      "mpcmId": 686,
+      "mpcmWorkspace": "MPCM_ALL_PUB",
+      "serviceUrl": "https://maps.gov.bc.ca/arcgis/rest/services/mpcm/bcgw/MapServer",
+      "dynamicLayers": [
+        "{\"id\":686,\"source\":{\"type\":\"dataLayer\",\"dataSource\":{\"type\":\"table\",\"workspaceId\":\"MPCM_ALL_PUB\",\"dataSourceName\":\"WHSE_BASEMAPPING.FWA_NAMED_POINT_FEATURES_SP\",\"gdbVersion\":\"\"}},\"drawingInfo\":{\"renderer\":{\"type\":\"uniqueValue\",\"field1\":\"NAMED_FEATURE_TYPE\",\"field2\":null,\"field3\":null,\"fieldDelimiter\":\", \",\"defaultSymbol\":null,\"defaultLabel\":null,\"uniqueValueInfos\":[{\"symbol\":{\"type\":\"esriSMS\",\"style\":\"esriSMSCircle\",\"color\":[115,223,255,255],\"size\":4,\"angle\":0,\"xoffset\":0,\"yoffset\":0,\"outline\":{\"color\":[0,0,0,255],\"width\":1}},\"value\":\"Fresh\",\"label\":\"Fresh Water\",\"description\":\"\"},{\"symbol\":{\"type\":\"esriSMS\",\"style\":\"esriSMSCircle\",\"color\":[163,255,115,255],\"size\":4,\"angle\":0,\"xoffset\":0,\"yoffset\":0,\"outline\":{\"color\":[0,0,0,255],\"width\":1}},\"value\":\"Marine\",\"label\":\"Marine\",\"description\":\"\"}]},\"transparency\":0,\"labelingInfo\":null}}"
+      ]
+    },
+    {
+      "type": "esri-dynamic",
+      "id": "688",
+      "title": "FWA - Obstructions - Points",
+      "isVisible": true,
+      "attribution": "Copyright 2018 DataBC, Government of British Columbia",
+      "metadataUrl": "http://catalogue.data.gov.bc.ca/dataset/freshwater-atlas-obstructions",
+      "opacity": 0.65,
+      "minScale": 1000000,
+      "maxScale": 0,
+      "isQueryable": true,
+      "attributes": [
+        {
+          "id": "gnis-name",
+          "name": "GNIS_NAME",
+          "title": "GNIS Name",
+          "visible": true
+        },
+        {
+          "id": "obstruction-type",
+          "name": "OBSTRUCTION_TYPE",
+          "title": "Obstruction Type",
+          "visible": true
+        },
+        {
+          "id": "fwa-watershed-code",
+          "name": "FWA_WATERSHED_CODE",
+          "title": "FWA Watershed Code",
+          "visible": true
+        },
+        {
+          "id": "local-watershed-code",
+          "name": "LOCAL_WATERSHED_CODE",
+          "title": "Local Watershed Code",
+          "visible": true
+        },
+        {
+          "id": "watershed-group-code",
+          "name": "WATERSHED_GROUP_CODE",
+          "title": "Watershed Group Code",
+          "visible": true
+        },
+        {
+          "id": "route-measure",
+          "name": "ROUTE_MEASURE",
+          "title": "Route Measure",
+          "visible": true
+        },
+        {
+          "id": "feature-source",
+          "name": "FEATURE_SOURCE",
+          "title": "Feature Source",
+          "visible": true
+        },
+        {
+          "id": "feature-code",
+          "name": "FEATURE_CODE",
+          "title": "Feature Code",
+          "visible": true
+        },
+        {
+          "id": "geometry",
+          "name": "GEOMETRY",
+          "title": "GEOMETRY",
+          "visible": true
+        },
+        {
+          "id": "objectid",
+          "name": "OBJECTID",
+          "title": "OBJECTID",
+          "visible": true
+        }
+      ],
+      "mpcmId": 688,
+      "mpcmWorkspace": "MPCM_ALL_PUB",
+      "serviceUrl": "https://maps.gov.bc.ca/arcgis/rest/services/mpcm/bcgw/MapServer",
+      "dynamicLayers": [
+        "{\"id\":688,\"source\":{\"type\":\"dataLayer\",\"dataSource\":{\"type\":\"table\",\"workspaceId\":\"MPCM_ALL_PUB\",\"dataSourceName\":\"WHSE_BASEMAPPING.FWA_OBSTRUCTIONS_SP\",\"gdbVersion\":\"\"}},\"drawingInfo\":{\"renderer\":{\"type\":\"uniqueValue\",\"field1\":\"FEATURE_CODE\",\"field2\":null,\"field3\":null,\"fieldDelimiter\":\", \",\"defaultSymbol\":null,\"defaultLabel\":null,\"uniqueValueInfos\":[{\"symbol\":{\"type\":\"esriPMS\",\"url\":\"d5587cdeced3a4b01fa7ba4fb3dfa332\",\"imageData\":\"iVBORw0KGgoAAAANSUhEUgAAAAIAAAALCAYAAABVuVzsAAAAAXNSR0IB2cksfwAAAAlwSFlzAAAOxAAADsQBlSsOGwAAAD9JREFUCJljYWBg4NbW1nZlkZeXl/zz5896locPH95hYGBgZdHW1pb68+fPIpYvX75wcXBwOLMwQAFRDKg5jACykRON3VBROgAAAABJRU5ErkJggg==\",\"contentType\":\"image/png\",\"width\":1,\"height\":8,\"angle\":0,\"xoffset\":0,\"yoffset\":0},\"value\":\"GA08450110\",\"label\":\"Beaver Dam\",\"description\":\"\"},{\"symbol\":{\"type\":\"esriPMS\",\"url\":\"2b8f4319293ef1d64e7b65ed1169865d\",\"imageData\":\"iVBORw0KGgoAAAANSUhEUgAAAAsAAAASCAYAAACNdSR1AAAAAXNSR0IB2cksfwAAAAlwSFlzAAAOxAAADsQBlSsOGwAAAUBJREFUKJGV0D9LQmEUx/HvebwgBJEZ9SocgqAX0BCNbULRnyHbUq5QIA3p1KYoDhEtQUNjS7QVtdWUvYCmAjF6iAbjat7T0D/zXqx+28P5cHh+x+Efcbof8bSOW5iOio56Rh7jbc5sVS57sBpc3bE+KUA95AGfERshQkaPiDFHQV7ecYYsvqSACyLMU5Q7sjrGK7sIszxrGVj9/EYaaKEkKUodgKI0WNEkg9ziyyJLmnbI6QBNPUd5omLqPxrtiYerN8AMMYYctqUJLITWd3UYn0ngnjINJxQBrGuMFsdAHGUZRMPxho7icQokgE0qsh+481faHAIJDGuUpNpz5+/EXZ2wPlOgB5RMtXsWwLZDAgGMnPTOgpvh2hpydLj6FduK1IBaWJUAjmb8vIdsRdGCVzb5vrhfAvhjW977C+6XN/CRa2JSnuwSAAAAAElFTkSuQmCC\",\"contentType\":\"image/png\",\"width\":8,\"height\":13,\"angle\":0,\"xoffset\":0,\"yoffset\":0},\"value\":\"GA23500110\",\"label\":\"Rapids\",\"description\":\"\"},{\"symbol\":{\"type\":\"esriPMS\",\"url\":\"a05369e3dfd0c1899cc100fbe11c112e\",\"imageData\":\"iVBORw0KGgoAAAANSUhEUgAAAAIAAAAECAYAAACk7+45AAAAAXNSR0IB2cksfwAAAAlwSFlzAAAOxAAADsQBlSsOGwAAACZJREFUCJktyaEBACAMA7CIXoVA7Awsdp/uKQyxCQ4qWLhBY+fXPCt0Axk06YrjAAAAAElFTkSuQmCC\",\"contentType\":\"image/png\",\"width\":1,\"height\":3,\"angle\":0,\"xoffset\":0,\"yoffset\":0},\"value\":\"GA90002110\",\"label\":\"Falls\",\"description\":\"\"},{\"symbol\":{\"type\":\"esriSMS\",\"style\":\"esriSMSCircle\",\"color\":[0,0,0,0],\"size\":4,\"angle\":0,\"xoffset\":0,\"yoffset\":0,\"outline\":{\"color\":[0,0,0,255],\"width\":1}},\"value\":\"GA98450000\",\"label\":\"Dam\",\"description\":\"\"},{\"symbol\":{\"type\":\"esriPMS\",\"url\":\"caa0748c50dde2ec8b395b5610afe30c\",\"imageData\":\"iVBORw0KGgoAAAANSUhEUgAAAAQAAAAICAYAAADeM14FAAAAAXNSR0IB2cksfwAAAAlwSFlzAAAOxAAADsQBlSsOGwAAAHVJREFUCJlNwSEOg0AQQNG/ySRjG+SyB+EEHISkVZUgsD1AD9ADNGkPgqqurgGqVmHG7GB5TwDWqmo85yaofmRVbT3nC6p3NxvFYSvQJ7PfAm+JZhPAH04FrgIwQyrwRHWQGVKAl8O5NvtKgFuACDwWQCJ0HOyWvCafNC4x+gAAAABJRU5ErkJggg==\",\"contentType\":\"image/png\",\"width\":3,\"height\":6,\"angle\":0,\"xoffset\":0,\"yoffset\":0},\"value\":\"HB27550000\",\"label\":\"Sinkhole\",\"description\":\"\"},{\"symbol\":{\"type\":\"esriPMS\",\"url\":\"2ff63bc853292e8696ff48a0ad4c926d\",\"imageData\":\"iVBORw0KGgoAAAANSUhEUgAAAAIAAAAECAYAAACk7+45AAAAAXNSR0IB2cksfwAAAAlwSFlzAAAOxAAADsQBlSsOGwAAAChJREFUCJlj+b+iPur/fwYnlv8MDFaMDAzJLEwRjTn/l9fbsUClTgMACb4PYRRuqDkAAAAASUVORK5CYII=\",\"contentType\":\"image/png\",\"width\":1,\"height\":3,\"angle\":0,\"xoffset\":0,\"yoffset\":0},\"value\":\"GA10450200\",\"label\":\"Artifical Falls\",\"description\":\"\"},{\"symbol\":{\"type\":\"esriPMS\",\"url\":\"773019923a37dfcc1c6ef54414383fc1\",\"imageData\":\"iVBORw0KGgoAAAANSUhEUgAAAAIAAAAECAYAAACk7+45AAAAAXNSR0IB2cksfwAAAAlwSFlzAAAOxAAADsQBlSsOGwAAACdJREFUCJljaWpqimJgYHBiYWBgsGJgYEhmqaury2lqarJjgUqdBgCT0gklfgRQ7AAAAABJRU5ErkJggg==\",\"contentType\":\"image/png\",\"width\":1,\"height\":3,\"angle\":0,\"xoffset\":0,\"yoffset\":0},\"value\":\"GA10450300\",\"label\":\"Deleted Falls\",\"description\":\"\"}]},\"transparency\":0,\"labelingInfo\":null}}"
+      ]
+    },
+    {
+      "type": "esri-dynamic",
+      "id": "697",
+      "title": "FWA - Stream Directions - Points",
+      "isVisible": true,
+      "attribution": "Copyright 2018 DataBC, Government of British Columbia",
+      "metadataUrl": "http://catalogue.data.gov.bc.ca/dataset/freshwater-atlas-stream-directions",
+      "opacity": 0.65,
+      "minScale": 50000,
+      "maxScale": 0,
+      "isQueryable": true,
+      "attributes": [
+        {
+          "id": "downstream-direction",
+          "name": "DOWNSTREAM_DIRECTION",
+          "title": "Downstream Direction",
+          "visible": true
+        },
+        {
+          "id": "feature-code",
+          "name": "FEATURE_CODE",
+          "title": "Feature Code",
+          "visible": true
+        },
+        {
+          "id": "geometry",
+          "name": "GEOMETRY",
+          "title": "GEOMETRY",
+          "visible": true
+        },
+        {
+          "id": "objectid",
+          "name": "OBJECTID",
+          "title": "OBJECTID",
+          "visible": true
+        }
+      ],
+      "mpcmId": 697,
+      "mpcmWorkspace": "MPCM_ALL_PUB",
+      "serviceUrl": "https://maps.gov.bc.ca/arcgis/rest/services/mpcm/bcgw/MapServer",
+      "dynamicLayers": [
+        "{\"id\":697,\"source\":{\"type\":\"dataLayer\",\"dataSource\":{\"type\":\"table\",\"workspaceId\":\"MPCM_ALL_PUB\",\"dataSourceName\":\"WHSE_BASEMAPPING.FWA_STREAM_DIRECTIONS_SP\",\"gdbVersion\":\"\"}},\"drawingInfo\":{\"renderer\":{\"type\":\"simple\",\"symbol\":{\"type\":\"esriPMS\",\"url\":\"89acc6b67b5f838004f42b3ddfa4c414\",\"imageData\":\"iVBORw0KGgoAAAANSUhEUgAAAAsAAAAKCAYAAABi8KSDAAAAAXNSR0IB2cksfwAAAAlwSFlzAAAOxAAADsQBlSsOGwAAAQZJREFUGJWV0KFLxVAYBfDD5YK3GGSy4L9g0GZ+8TLG58A2BMMUNDwQfAg2hRcE0WYQjAPb9WPi32ARLBaL4DCMMR4sTbh+zyKCOAVPOhx+6Wj8I7pvJKIzZt4D8P4njuN4VUTuiWiDmS9/xVmWzVRVtVQUxWGSJPtpms7leT7pxXVdb3nvL6y1s13XnYvIEMD4B7bWLiilpmEYTtq2vQaw7r1/SZJk0Tn3+A1rrbMgCI6bptkUkW0R2SmK4oiIxgAOvjARrQB4KMty3hjzxszPRPQURdGyiNwQETEzawBQSo2893fGmAEzjwCAma+I6FREXgEMANxqAHDOrfXcPWXm3c9+AgAfeUxxq3wwrpQAAAAASUVORK5CYII=\",\"contentType\":\"image/png\",\"width\":8,\"height\":7,\"angle\":0,\"xoffset\":0,\"yoffset\":0},\"label\":\"Downstream direction from _SP\",\"description\":\"\",\"rotationType\":\"arithmetic\",\"rotationExpression\":\"[DOWNSTREAM_DIRECTION]\"},\"transparency\":0,\"labelingInfo\":null}}"
+      ]
+    },
+    {
+      "type": "vector",
+      "id": "test-file",
+      "title": "Test File",
+      "isVisible": true,
+      "isQueryable": true,
+      "attributes": [],
+      "queries": [],
+      "dataUrl": "",
+      "useRaw": false,
+      "useClustering": true,
+      "useHeatmap": false,
+      "style": {
+        "strokeStyle": "",
+        "strokeColor": "#000000",
+        "fillColor": "#000000",
+        "markerSize": [
+          null,
+          null
+        ],
+        "markerOffset": [
+          null,
+          null
+        ]
+      }
+    },
+    {
+      "type": "esri-dynamic",
+      "id": "2",
+      "title": "ALR Polygons",
+      "isVisible": true,
+      "attribution": "Copyright 2018 DataBC, Government of British Columbia",
+      "metadataUrl": "https://catalogue.data.gov.bc.ca/dataset/92e17599-ac8a-47c8-877c-107768cb373c",
+      "opacity": 0.65,
+      "minScale": 2000000,
+      "maxScale": 0,
+      "isQueryable": true,
+      "attributes": [
+        {
+          "id": "feature-length-m",
+          "name": "FEATURE_LENGTH_M",
+          "title": "Perimeter Meters",
+          "visible": true
+        },
+        {
+          "id": "feature-area-sqm",
+          "name": "FEATURE_AREA_SQM",
+          "title": "Area Square Meters",
+          "visible": true
+        },
+        {
+          "id": "objectid",
+          "name": "OBJECTID",
+          "title": "OBJECTID",
+          "visible": true
+        },
+        {
+          "id": "geometry",
+          "name": "GEOMETRY",
+          "title": "GEOMETRY",
+          "visible": true
+        },
+        {
+          "id": "feature-code",
+          "name": "FEATURE_CODE",
+          "title": "Feature Code",
+          "visible": true
+        },
+        {
+          "id": "status",
+          "name": "STATUS",
+          "title": "Status",
+          "visible": true
+        },
+        {
+          "id": "alr-poly-id",
+          "name": "ALR_POLY_ID",
+          "title": "ALR Poly Id",
+          "visible": true
+        }
+      ],
+      "queries": [],
+      "mpcmId": 2,
+      "mpcmWorkspace": "MPCM_ALL_PUB",
+      "serviceUrl": "https://maps.gov.bc.ca/arcgis/rest/services/mpcm/bcgw/MapServer",
+      "dynamicLayers": [
+        "{\"id\":2,\"source\":{\"type\":\"dataLayer\",\"dataSource\":{\"type\":\"table\",\"workspaceId\":\"MPCM_ALL_PUB\",\"dataSourceName\":\"WHSE_LEGAL_ADMIN_BOUNDARIES.OATS_ALR_POLYS\",\"gdbVersion\":\"\"}},\"drawingInfo\":{\"renderer\":{\"type\":\"simple\",\"symbol\":{\"type\":\"esriSFS\",\"style\":\"esriSFSSolid\",\"color\":[137,205,102,255],\"outline\":{\"type\":\"esriSLS\",\"style\":\"esriSLSSolid\",\"color\":[38,115,0,255],\"width\":0.4}},\"label\":\"ALR Polygons\",\"description\":\"\"},\"transparency\":50,\"labelingInfo\":null},\"definitionExpression\":\"\"}"
+      ]
+    }
+  ],
+  "_attachments": {
+    "surroundImage": {
+      "content_type": "image/png",
+      "revpos": 14,
+      "digest": "md5-1eOBfjUhQ1reG1f7p5a6Tw==",
+      "length": 680360,
+      "stub": true
+    },
+    "parks-2": {
+      "content_type": "application/octet-stream",
+      "revpos": 25,
+      "digest": "md5-u6rlE0pcywvkeZCtT7/mwQ==",
+      "length": 42,
+      "stub": true
+    },
+    "2018-parks": {
+      "content_type": "application/octet-stream",
+      "revpos": 36,
+      "digest": "md5-biQ9iwCPtuwIvBqLkxQw8A==",
+      "length": 1598975,
+      "stub": true
+    }
+  }
+}

@@ -1,0 +1,9 @@
+.smk-location-popup .smk-address {
+    margin-bottom: 10px;
+}
+
+.smk-location-popup .smk-commands {
+    border-top: 1px solid gray;
+    margin-top: 10px;
+    padding-top: 5px;
+}

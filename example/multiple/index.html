@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <!-- SMK BOOTSTRAP - - - - - - - -->
+        <script src="../../smk.js"
+            smk-id="1"
+            smk-container-sel="#smk-map-frame1"
+            smk-title-sel="#header-title, head title"
+            smk-config="map-config.json|?1"
+        ></script>
+
+        <script src="../../smk.js"
+            smk-id="2"
+            smk-container-sel="#smk-map-frame2"
+            smk-title-sel=""
+            smk-config="map-config.json|?2"
+        ></script>
+        <!-- - - - - - - - - - - - - - - -->
+        <style>
+            #header {
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 70px;
+
+                border-bottom:      2px solid #fcba19;
+                background-color: #036;
+                font-family:        Helvetica,Arial,sans-serif;
+
+                display:            flex;
+                justify-content:    flex-start;
+                align-items:        center;
+            }
+
+            #header img {
+                margin-left:    10px;
+                margin-bottom:  10px;
+            }
+
+            #header-title {
+                color:          white;
+                margin-left:    20px;
+
+                display:        flex;
+                flex-direction: column;
+                justify-content:center;
+                align-items:    flex-start;
+                font-size:      30px;
+            }
+
+            #content {
+                position: absolute;
+                top: 72px;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                margin: 0;
+                padding: 10px;
+            }
+
+            #map-border {
+                position: relative;
+                width: 400px;
+                height: 400px;
+                border: 2px solid black;
+                border-radius: 4px;
+            }
+
+            .to-right {
+                float: right;
+                margin-left: 10px;
+            }
+
+            .to-left {
+                float: left;
+                margin-right: 10px;
+            }
+
+            #smk-map-frame1, #smk-map-frame2 {
+                position: absolute;
+                top: 4px;
+                left: 4px;
+                right: 4px;
+                bottom: 4px;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div id="header">
+            <img src="bc-gov-logo-transparent.png">
+            <div id="header-title"></div>
+        </div>
+        <div id="content">
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vel sapien auctor, blandit mi eget, iaculis erat. Nam rutrum luctus est, sed accumsan sapien rhoncus ac. Curabitur in suscipit sem. Integer mollis risus cursus tempor ullamcorper. Nullam mollis urna at ante consequat, eget rhoncus velit varius. Sed posuere tortor nec eleifend feugiat. Cras vestibulum dolor ut elit aliquet, nec auctor magna lacinia. Pellentesque eget quam quis mi iaculis venenatis. Vestibulum vel enim risus.</p>
+            <div id="map-border" class="to-right"><div id="smk-map-frame1"></div></div>
+            <p>Suspendisse luctus pulvinar porta. Maecenas bibendum, erat nec sollicitudin luctus, massa tortor efficitur neque, a posuere libero est sit amet orci. Duis dui erat, convallis sed eros sit amet, sodales aliquam turpis. Mauris lobortis lacinia iaculis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; In condimentum, eros et aliquam laoreet, mauris justo accumsan metus, ut consectetur erat mauris vel arcu. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nulla orci lorem, sodales nec hendrerit tempus, pretium nec diam.</p>
+            <p>Etiam id orci nec dui tempus vulputate sit amet vitae nibh. In eu dignissim arcu. Pellentesque non sollicitudin neque. Pellentesque tortor orci, facilisis ut nisl non, feugiat pharetra metus. Suspendisse sit amet imperdiet lacus. Curabitur facilisis laoreet risus posuere dapibus. Nulla vitae odio pharetra, pulvinar dui at, aliquam quam. Quisque venenatis nec ligula eu porttitor. Quisque ac imperdiet magna. In eu dolor sit amet turpis blandit ultrices nec ultricies purus. Praesent id varius lectus. Nulla lobortis enim vestibulum urna condimentum, et vehicula dui malesuada. Integer varius enim ut enim ullamcorper gravida. Morbi vitae nunc nec diam vestibulum aliquam. Suspendisse ornare nulla at condimentum posuere.</p>
+            <div id="map-border" class="to-left"><div id="smk-map-frame2"></div></div>
+            <p>Integer vestibulum tristique quam id ultricies. Sed sodales sapien vel metus sagittis, at congue justo feugiat. Vivamus rutrum quis lectus a commodo. Vivamus vitae odio eget nisl mattis porttitor. Suspendisse a turpis non sem porttitor condimentum bibendum in massa. Donec nec imperdiet turpis. Suspendisse sed vulputate eros, eu feugiat massa. Sed pharetra lectus nec dignissim tempor. Sed non gravida nibh, non egestas neque. Nullam id vestibulum leo. Ut ac risus in nibh posuere tincidunt.</p>
+            <p>Vestibulum nisi leo, tempor vitae lobortis id, placerat vel mauris. Aliquam semper, mi sit amet sollicitudin interdum, augue est luctus velit, nec gravida lorem ipsum at massa. Aenean imperdiet ornare augue in tincidunt. Etiam est erat, pretium eu molestie a, tempus ac quam. Fusce bibendum elit ac feugiat vulputate. Maecenas in orci nunc. Aenean lobortis turpis at est bibendum egestas. In urna orci, malesuada nec nisl sed, eleifend placerat justo. Cras eget est a tellus facilisis sodales. Integer id leo ut elit cursus pellentesque non ac odio.            </p>
+        </div>
+    </body>
+</html>

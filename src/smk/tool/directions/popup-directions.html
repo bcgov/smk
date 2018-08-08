@@ -1,0 +1,37 @@
+<div class="smk-directions-popup" v-if="site">
+    <div class="smk-message">
+        <span v-if="site.current">[CURRENT]</span>
+        <span v-if="site.first">Start here:</span>
+        <span v-if="site.last">End here:</span>
+        <span v-if="site.index && !site.first && !site.last">Stopover #{{ site.index }}:</span>
+    </div>
+
+    <div class="smk-direction" v-if="site.instruction">
+        <div class="smk-instruction">{{ site.instruction }}</div>
+        <div v-if="site.distance">
+            <span class="smk-distance" >for {{ site.distance }}</span>
+            <span class="smk-time">({{ site.time }})</span>
+        </div>
+    </div>
+
+    <div class="smk-address" v-if="site.fullAddress">
+        <div class="smk-street">
+            <span class="smk-civic-number">{{ site.civicNumber }}</span>
+            <span class="smk-street-name">{{ site.streetName }}</span>
+            <span class="smk-street-type">{{ site.streetType }}</span>
+        </div>
+        <div class="smk-locality">
+            <span class="smk-locality-name">{{ site.localityName }}</span>
+            <span class="smk-locality-type" v-if="site.localityType != 'Unknown'">({{ site.localityType }})</span>
+        </div>
+    </div>
+
+    <div class="smk-coordinate" v-if="site.latitude">
+        <span class="smk-ordinate">
+            <label>latitude<div>{{ formatDD( site.latitude ) }}</div></label>
+        </span>
+        <span class="smk-ordinate">
+            <label>longitude<div>{{ formatDD( site.longitude ) }}</div></label>
+        </span>
+    </div>
+</div>

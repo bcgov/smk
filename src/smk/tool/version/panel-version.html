@@ -1,0 +1,43 @@
+<side-panel class="smk-version-panel">
+    <template slot="header">
+        <h1>{{ title }}</h1>
+    </template>
+    <dl>
+        <dt>SMK Version</dt>
+        <dd>{{ build.version }}</dd>
+
+        <dt>Last commit on</dt>
+        <dd>{{ build.lastCommit | formatDate }}</dd>
+
+        <dt>Commit</dt>
+        <dd>{{ build.commit }}</dd>
+
+        <dt>Branch</dt>
+        <dd>{{ build.branch }}</dd>
+
+        <dt>Origin</dt>
+        <dd>{{ build.origin }}</dd>
+
+        <template v-if="config.lmfId">
+            <dt>Map Identifier</dt>
+            <dd>{{ config.lmfId }}</dd>
+        </template>
+
+        <template v-if="config.lmfRevision">
+            <dt>Map Version</dt>
+            <dd>{{ config.lmfRevision }}.{{ config._rev.substr( 0, config._rev.indexOf( '-')) - 1 }}{{ config.published ? ' (Published)' : '' }}</dd>
+        </template>
+
+        <template v-if="config.createdBy">
+            <dt>Map Created By</dt>
+            <dd>{{ config.createdBy }}</dd>
+        </template>
+
+        <dt>SMK Built by</dt>
+        <dd>
+            <div><a href="http://www.vividsolutions.com/">Vivid Solutions</a> for <a href="https://data.gov.bc.ca/">Data BC</a></div>
+            <div><a href="mailto:bjubb@vividsolutions.com">Ben Jubb</a></div>
+            <div><a href="mailto:dhemsworth@vividsolutions.com">Dylan Hemsworth</a></div>
+        </dd>
+    </dl>
+</side-panel>

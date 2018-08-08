@@ -1,0 +1,20 @@
+<side-panel class="smk-dropdown-panel">
+    <h1 slot="header">{{ title }}
+        <select class="smk-command smk-dropdown"
+            v-on:change="$$emit( 'select-tool', { id: $event.target.value } )"
+        >
+            <option
+                v-for="tool in subWidgets"
+                v-bind:value="tool.id"
+            >{{ tool.widget.title }}</option>
+        </select>
+    </h1>
+
+    <component class="smk-panel"
+        v-if="activeToolId && subPanels[ activeToolId ]"
+        v-bind:is="subPanels[ activeToolId ].panelComponent"
+        v-bind:key="activeToolId"
+        v-bind="removeTitle( subPanels[ activeToolId ].panel )"
+    ></component>
+
+</side-panel>

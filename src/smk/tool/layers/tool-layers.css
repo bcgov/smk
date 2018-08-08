@@ -1,0 +1,86 @@
+.smk-layers-panel .smk-header .smk-commands {
+    height: 28px;
+
+    display: flex;
+    align-items: center;
+}
+
+.smk-layers-panel .smk-header .smk-commands label {
+    white-space: nowrap;
+}
+
+.smk-layers-panel input.smk-filter {
+    margin-bottom: 0;
+    border: 0;
+    font-size: 15px;
+    padding: 3px;
+    background-color: white;
+    vertical-align: top;
+    flex-basis: 100%;
+}
+
+.smk-layers-panel input.smk-filter:focus {
+    outline: 0;
+}
+
+.smk-layers-panel .smk-all-visibility {
+    padding: 0;
+}
+
+.smk-layers-panel .smk-all-visibility.smk-some-visible {
+    opacity: .5;
+}
+
+.smk-layers-panel .smk-item {
+    font-size: 14px;
+}
+
+.smk-layers-panel .smk-folder {
+    padding-left: 10px;
+}
+
+.smk-layers-panel .smk-folder .smk-item {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.smk-layers-panel .smk-folder .smk-item .smk-folder-expand {
+    position: absolute;
+    left: -20px;
+}
+
+.smk-layers-panel .smk-folder .smk-item .smk-title {
+    display: inline-block;
+    margin-left: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.smk-layers-panel .smk-folder .smk-item.smk-obscured .smk-title {
+    font-style: italic;
+    color: gray;
+}
+
+.smk-layers-panel .smk-folder .smk-item.smk-disabled .smk-title {
+    font-style: italic;
+    color: gray;
+    text-decoration: line-through;
+    text-decoration-color: red;    
+}
+
+.smk-layers-panel .smk-folder .smk-item.smk-disabled .smk-visibility {
+    opacity: 0.5;
+}
+
+.smk-layers-panel .smk-folder .smk-item.smk-disabled .smk-visibility:hover {
+    border: 1px solid transparent;
+}
+
+.smk-layers-panel .smk-legend {
+    padding-left: 30px;
+}
+
+.smk-layers-panel .smk-folder .smk-folder-expand:hover {
+    border: 1px solid transparent;
+}

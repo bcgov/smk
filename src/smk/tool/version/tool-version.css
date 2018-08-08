@@ -1,0 +1,15 @@
+.smk-version-panel dt {
+    font-size: 12px
+}
+
+.smk-version-panel dd {
+    margin-left: 20px;
+    margin-bottom: 10px;
+    overflow-wrap: break-word;
+}
+
+.smk-version-panel dd ul {
+    margin: 0;
+    padding-left: 15px;
+}
+

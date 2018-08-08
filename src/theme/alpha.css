@@ -1,0 +1,69 @@
+/* toolbar.css */
+
+.smk-theme-alpha .smk-toolbar  {
+    background-color: transparent;
+    box-shadow: none;
+}
+
+.smk-theme-alpha .smk-tool {
+    border: 1px solid transparent;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65);
+    background-color: white;
+}
+
+.smk-theme-alpha .smk-tool.smk-tool-active {
+    background-color: yellow;
+}
+
+
+/* sidepanel.css */
+
+.smk-theme-alpha .smk-sidepanel {
+    top: 30px;
+}
+
+.smk-theme-alpha .smk-elastic-panel {
+    display: flex;
+    flex-direction: column;
+
+    background-color: transparent;
+    box-shadow: none;
+}
+
+.smk-theme-alpha .smk-sidepanel .smk-panel .smk-header {
+    background-color: white;
+    border-radius: 3px;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65);
+    z-index: 1;
+    margin-bottom: 0;
+}
+
+.smk-theme-alpha .smk-sidepanel .smk-panel .smk-body {
+    background-color: white;
+    border-radius: 3px;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65);
+    z-index: 2;
+    margin-left: 1px;
+    margin-right: 1px;
+    padding: 5px;
+}
+
+
+/* menu.css */
+
+.smk-theme-alpha .smk-sidepanel .smk-panel.smk-menu-panel {
+    border: 0;
+    background-color: transparent;   
+}
+
+.smk-theme-alpha .smk-sidepanel .smk-panel.smk-menu-panel > .smk-header {
+    background-color: transparent;
+    box-shadow: none;
+}
+
+.smk-theme-alpha .smk-sidepanel .smk-panel.smk-menu-panel > .smk-body {
+    background-color: transparent;
+    box-shadow: none;
+    padding-top: 1px;
+    padding-bottom: 2px;
+}
