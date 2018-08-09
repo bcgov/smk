@@ -1,7 +1,9 @@
 # smk-client
 Simple Map Kit Client - A versatile and lightweight toolkit for building a simple web map.
 
-[API](docs/SMK-Client-API.md)
+[Client API](docs/SMK-Client-API.md) and [examples](docs/SMK-Client-API-Examples.md)
+
+[Client Configuration](docs/SMK-Client-Configuration.md)
 
 # License
 ```
