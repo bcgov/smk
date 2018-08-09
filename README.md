@@ -1,6 +1,10 @@
 # smk-client
 Simple Map Kit Client - A versatile and lightweight toolkit for building a simple web map.
 
+[Client API](docs/SMK-Client-API.md) and [examples](docs/SMK-Client-API-Examples.md)
+
+[Client Configuration](docs/SMK-Client-Configuration.md)
+
 # License
 ```
 Copyright 2018 Province of British Columbia
