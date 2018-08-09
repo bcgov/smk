@@ -1,0 +1,113 @@
+<side-panel class="smk-directions-panel" v-bind:class="{ 'smk-busy': busy }">
+    <template slot="header">
+        <h1>Route Planner</h1>
+        <spinner v-bind:busy="busy"></spinner> 
+    </template>
+
+    <template slot="commands">
+        <span class="smk-command-col">
+            <div class="smk-command"
+                v-bind:class="{ 'smk-disabled': busy }"
+                v-on:click="!busy && $$emit( 'reverse' )"
+            >Reverse</div>
+
+            <div class="smk-command"
+                v-bind:class="{ 'smk-disabled': busy }"
+                v-on:click="!busy && $$emit( 'clear' )"
+            >Reset</div>
+        </span>
+
+        <span class="smk-command-col">
+            <label class="smk-command"
+                v-bind:class="{ 'smk-disabled': busy }"
+            ><input type="checkbox"
+                v-model="optimal"
+                v-on:change="!busy && $$emit( 'config', getConfigState() )"
+            >Optimal order</label>
+
+            <label class="smk-command"
+                v-bind:class="{ 'smk-disabled': busy }"
+            ><input type="checkbox"
+                v-model="roundTrip"
+                v-on:change="!busy && $$emit( 'config', getConfigState() )"
+            >Round trip</label>
+        </span>
+
+        <span class="smk-command-col">
+            <label class="smk-command"
+                v-bind:class="{ 'smk-disabled': busy }"
+            ><input type="radio" value="shortest"
+                v-model="criteria"
+                v-on:change="!busy && $$emit( 'config', getConfigState() )"
+            >Shortest</label>
+
+            <label class="smk-command"
+                v-bind:class="{ 'smk-disabled': busy }"
+            ><input type="radio" value="fastest"
+                v-model="criteria"
+                v-on:change="!busy && $$emit( 'config', getConfigState() )"
+            >Fastest</label>
+        </span>
+    </template>
+
+    <template slot="status" v-if="statusMessage">
+        <status-message v-bind="statusMessage">
+    </template>
+
+    <draggable class="smk-waypoints"
+        v-bind:list="waypoints"
+        v-bind:options="{ handle: '.smk-handle', disabled: optimal }"
+        v-on:end="$$emit( 'changed-waypoints' )"
+    >
+        <div class="smk-waypoint smk-item"
+            v-for="( site, i ) in waypoints"
+        >
+            <i class="smk-command smk-icon smk-handle material-icons"
+                v-bind:class="{ 'smk-disabled': optimal || busy }"
+                v-bind:title="optimal ? 'Optimal order' : 'Drag to reorder'"
+            >drag_handle</i>
+
+            <div class="smk-description">
+                {{ site.fullAddress }}
+                <span v-if="site.current">[CURRENT]</span>
+            </div>
+
+            <i class="smk-command smk-icon smk-zoomto material-icons" title="Zoom to this waypoint"
+                v-on:click="$$emit( 'zoom-waypoint', { waypoint: site, index: i } )"
+                v-bind:class="{
+                    'smk-first':    i == 0,
+                    'smk-middle':   i != 0 && i != waypoints.length - 1,
+                    'smk-last':     i != 0 && i == waypoints.length - 1
+                }"
+            >location_on</i>
+
+            <i class="smk-command smk-icon smk-remove material-icons" title="Remove this waypoint"
+                v-on:click="waypoints.length > 1 && $$emit( 'remove-waypoint', { index: i } )"
+                v-bind:class="{ 'smk-disabled': waypoints.length < 2 || busy }"
+            >delete</i>
+        </div>
+    </draggable>
+
+    <div class="smk-waypoint smk-item">
+        <address-search class="smk-description" placeholder="Click on point, or enter address"
+            v-model="newAddress"
+            v-on:update="$$emit( 'new-waypoint', $event )"
+        ></address-search>
+    </div>
+
+    <div class="smk-directions">
+        <div class="smk-direction"
+            v-for="( direction, i ) in directions"
+            v-on:mouseenter="$$emit( 'hover-direction', { highlight: i } )"
+            v-on:mouseleave="$$emit( 'hover-direction', { highlight: null } )"
+            v-on:click="$$emit( 'pick-direction', { pick: i } )"
+            v-bind:class="{ 'smk-highlight': i == directionHighlight, 'smk-pick': i == directionPick }"
+        >
+            <span class="smk-instruction">{{ direction.instruction }}</span>
+            <span class="smk-metric"
+                v-if="direction.distance"
+            >for {{ direction.distance }} ({{ direction.time }})</span>
+        </div>
+    </div>
+
+</side-panel>

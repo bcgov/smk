@@ -1,0 +1,18 @@
+.smk-measure-panel .smk-result {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 0px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 5px;
+}
+
+.smk-measure-panel .smk-result .smk-title {
+}
+
+.smk-measure-panel .smk-result .smk-value {
+    flex-grow: 1;
+    text-align: right;
+}
+

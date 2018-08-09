@@ -1,0 +1,9 @@
+.leaflet-marker-icon .number{
+    position: relative;
+    top: -42px;
+    font-size: 11px;
+    font-family: "Arial Narrow", Arial, sans-serif;
+    font-weight: bold;
+    width: 25px;
+    text-align: center;
+}

@@ -1,0 +1,33 @@
+.smk-sidepanel .smk-panel.smk-dropdown-panel > .smk-header {
+    border: 0;
+    box-shadow: 0px 2px 12px -3px rgba(0, 0, 0, 0.65);
+    padding-top: 0;
+    margin-bottom: 0;
+    padding-left: 0;
+    margin-left: 0;
+}
+
+.smk-sidepanel .smk-dropdown-panel .smk-dropdown {
+    font-size: 30px;
+    font-weight: bold;
+    width: 100%;
+    border: 0;
+    background-color: white;
+    margin-left: 0;
+}
+
+.smk-sidepanel .smk-dropdown-panel .smk-dropdown:focus {
+    outline: 0;
+    border: 0;
+}
+
+.smk-sidepanel .smk-dropdown-panel > .smk-header h1 {
+    padding-bottom: 0;
+}
+
+.smk-sidepanel .smk-panel.smk-dropdown-panel > .smk-body {
+    padding: 0;
+    padding-top: 5px;
+    overflow-y: hidden;
+}
+

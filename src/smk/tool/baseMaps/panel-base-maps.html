@@ -1,0 +1,12 @@
+<side-panel class="smk-base-maps-panel">
+    <h1 slot="header">Base Maps</h1>
+
+    <div v-for="basemap in basemaps" class="smk-base-map" v-on:click="$$emit( 'set-base-map', basemap )" v-bind:class="{ 'smk-active': basemap.id == current }">
+        <!-- <h2>{{ basemap.title }}</h2> -->
+        <div class="smk-base-map-sample" 
+            v-bind:title="basemap.title"
+            v-bind:style="mapStyle"
+            v-map="{ basemap: basemap, center: center, zoom: zoom }"
+        ></div>
+    </div>
+</side-panel>

@@ -1,0 +1,26 @@
+.smk-base-maps-panel .smk-body {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    align-content: flex-start;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    height: 100%;
+}
+
+.smk-base-map-sample {
+    border-radius: 5px;
+}
+
+.smk-base-map {
+    padding: 4px;
+    border-radius: 5px;
+    border: 1px solid transparent;
+    margin: 5px;
+}
+
+.smk-base-map:hover {
+    border: 1px solid black;
+}
+
+

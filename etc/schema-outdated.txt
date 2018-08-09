@@ -1,0 +1,129 @@
+"_id": "1",
+"_rev": "29-1442dc3c9b983dc90e19edb49915fa06",
+
+"smkId": "bens-app",
+"smkRevision": 1,
+"name": "SMK Demo App",
+"createdBy": "bwj",
+"published": false,
+
+"surround": {
+    "type": "default",
+    "title": "Standalone SMK Demo App",
+},
+
+"viewer": {
+    "type": "leaflet"
+    "initialExtent": [ -139.1782, 47.6039, -110.3533, 60.5939 ],
+    "baseMap": "Topographic"
+},
+
+"tools": {
+    "measure": true,
+
+    "scale": {
+        "showBar": true,
+        "showFactor": true,
+    },
+
+    "scaleFactor": true,
+
+    "coordinate": true,
+
+    "minimap": true,
+
+    "markup": true,
+
+    "directions": false,
+
+    "pan": true,
+
+    "attribution": true,
+
+    "zoom": {
+        "mouseWheel": false,
+        "doubleClick": true,
+        "box": true,
+        "control": true,
+    },
+
+    "sidebar": {
+        initialOpen: "about"
+    }
+
+    "about": {
+        "content": "This application is a demonstration of Simple Mapping Kit (SMK).<p>It is a standalone web app."
+    },
+
+    "baseMaps": true,
+
+    "layers": true,
+
+    "identify": true,
+
+    "select": true
+}
+
+
+
+    "layers": [
+        {
+            "type": "wms",
+            "id": "INT_LAND_ACT_LEASE_SVW",
+            "title": "Crown Land Lease",
+            "isVisible": true,
+            "attribution": "Copyright 117 DataBC, Government of British Columbia",
+            "serviceUrl": "https://i1geo.nrs.gov.bc.ca/pub/geoserver/wms",
+            "opacity": 0.65,
+            "layerName": "INT_LAND_ACT_LEASE_SVW",
+            "styleName": "INT_LAND_ACT_LEASE_SVW",
+            "geometryAttribute": "GEOMETRY",
+            "titleAttribute": "DOCUMENT_CHR",
+            "attributes": [
+                {
+                    "name": "DOCUMENT_CHR",
+                    "title": "Tenure Document"
+                },
+
+
+
+        {
+            "type": "esri-dynamic",
+            "id": 3107,
+            "title": "Specimen Collection Station",
+            "isVisible": true,
+            "attribution": "Copyright 117 DataBC, Government of British Columbia",
+            "serviceUrl": "http://maps.gov.bc.ca/arcgis/rest/services/mpcm/bcgw/MapServer",
+            "metadataUrl": "http://catalogue.data.gov.bc.ca/dataset/diagnostic-facilities",
+            "opacity": 0.65,
+            "scaleMin": 500000,
+            "scaleMax": 0,
+            "mpcmId": 4009,
+            "mpcmWorkspace": "MPCM_ALL_PUB",
+            "dynamicLayers": [
+                "{\"id\":4009,\"minScale\":500000,\"maxScale\":0,\"definitionExpression\":\"SERVICE_CODE_DESCRIPTION = 'Specimen Collection Station'\",\"source\":{\"type\":\"dataLayer\",\"dataSource\":{\"type\":\"table\",\"workspaceId\":\"MPCM_ALL_PUB\",\"dataSourceName\":\"WHSE_IMAGERY_AND_BASE_MAPS.ACDF_DIAGNOSTIC_FACILITIES_SVW\",\"gdbVersion\":\"\"}},\"drawingInfo\":{\"renderer\":{\"type\":\"simple\",\"symbol\":{\"type\":\"esriPMS\",\"url\":\"1a3b5dc79f306486d1e94f6d47f93a0d\",\"imageData\":\"iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAYAAACprHcmAAAAAXNSR0IB2cksfwAAAAlwSFlzAAAOxAAADsQBlSsOGwAAAQhJREFUGJV90DFLAnEYx/Gv8tdbjBOCo4OGW0SHwkEhJIKCMxp8BS4n7tIQJNJbkKZehKPD7YGkm3CugTgoKqGo/HH4wyENmRxm/qaH5/k8w/MI/iYM6MAK2AQHIlDrTa1ZTajEbVyLn0rkYsCgVVO1Vw9vGsQnHTqNnMo9AKB+mkmSVyZmtkSp6OFNBYCrudUd3Eua9F2d+ouNXREAlrLuD8HfWJqVRxEWAFGi5jEcU7EzQBcAPv4SOP8PS+QSWAmACZNWitRFiNBBPGb8AWwEwIjRc5fuTYbM5f5Cj95nn/4TbF/n4Kxd3Os27TcDw44QMXz8+YzZ+5DhY5ny1w4DFChIwDl26DcbxUzROT8OgAAAAABJRU5ErkJggg==\",\"contentType\":\"image/png\",\"width\":8,\"height\":8,\"angle\":0,\"xoffset\":0,\"yoffset\":0},\"label\":\"\",\"description\":\"\"},\"transparency\":0,\"labelingInfo\":null}}"
+            ]
+            "attributes": [
+                {
+                    "name": "OWNERSHIP_NAME",
+                    "title": "Ownership Name"
+                },
+            ],
+
+
+        {
+            "type": "geojson",
+            "id": "geojson1",
+            "title": "3 polygons, geojson",
+            "isVisible": true,
+            "dataUrl": "3-polygons[webmercator].geojson",
+            // "data": "<base64>"
+            // "opacity": 0.65,
+            "style": {
+                "strokeColor": "#ff0000",
+                "strokeWidth": 4,
+                "strokeOpacity": 0.8,
+                "fillOpacity": 0.6,
+                "fillColor": "#00ff00"
+            }
+        },

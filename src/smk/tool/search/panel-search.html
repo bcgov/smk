@@ -1,0 +1,52 @@
+<side-panel class="smk-search-panel" v-bind:class="{ 'smk-busy': busy }">
+    <template slot="header">
+        <h1>Search for Location</h1>
+        <spinner v-bind:busy="busy"></spinner> 
+    </template>
+
+    <template slot="commands">
+        <span class="smk-command"
+            v-bind:class="{ 'smk-disabled': isEmpty() }"
+            v-on:click="$$emit( 'clear' )"
+        >Clear results</span>
+
+        <span class="smk-command"
+            v-bind:class="{ 'smk-disabled': isEmpty() }"
+            v-on:click="$$emit( 'zoom' )"
+        >Zoom to results</span>
+    </template>
+
+    <template slot="status" v-if="isEmpty()">
+        <status-message message="Enter name of location.">
+    </template>
+
+    <div class="smk-search-result smk-item"
+        v-if="!isEmpty()"
+        v-for="result in results"
+        v-on:mouseenter="$$emit( 'hover', { result: result } )"
+        v-on:mouseleave="$$emit( 'hover', { result: null } )"
+        v-on:click="$$emit( 'pick', { result: result } )"
+        v-bind:class="{ 'smk-highlighted': result.id == highlightId }"
+    >
+        <div class="smk-address" v-if="result.properties.fullAddress">
+            <div v-bind:class="'smk-precision-' + result.properties.matchPrecision.toLowerCase()">
+                <div class="smk-intersection" v-if="result.properties.intersectionName">
+                    <span class="smk-intersection-name">{{ result.properties.intersectionName }}</span>
+                </div>
+                <div class="smk-street" v-if="result.properties.streetName">
+                    <span class="smk-civic-number">{{ result.properties.civicNumber }}</span>
+                    <span class="smk-street-name">{{ result.properties.streetName }}</span>
+                    <span class="smk-street-qualifier">{{ result.properties.streetQualifier }}</span>
+                    <span class="smk-street-type">{{ result.properties.streetType }}</span>
+                </div>
+                <div class="smk-locality" v-if="result.properties.localityName">
+                    <span class="smk-locality-name">{{ result.properties.localityName }}</span>
+                    <span class="smk-locality-type" v-if="result.properties.localityType != 'Unknown'">({{ result.properties.localityType }})</span>
+                </div>
+            </div>
+        </div>
+
+        <i class="smk-highlight material-icons smk-command smk-icon"
+        >speaker_notes</i>
+    </div>
+</side-panel>

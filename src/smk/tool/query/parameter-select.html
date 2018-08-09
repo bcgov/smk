@@ -1,0 +1,25 @@
+<div class="smk-parameter">
+    <label>
+        {{ title }}
+        <select
+            v-model="selected"
+            v-on:change="$emit( 'input', { value: $event.target.value } )"
+            v-bind:disabled="isEmpty"
+            v-if="!useFallback || !isEmpty"
+        >
+            <option disabled value="" v-if="isEmpty">No choices available</option>
+            <option disabled value="" v-if="!isEmpty">Please choose</option>
+
+            <option
+                v-for="option in choices"
+                v-bind:value="option.value"
+            >{{ option.title ? option.title : '' }}{{ option.title ? '' : option.value | formatTitle }}</option>
+        </select>
+
+        <input
+            v-model="selected"
+            v-on:input="$emit( 'input', { value: $event.target.value } )"
+            v-if="useFallback && isEmpty"
+        >
+    </label>
+</div>

@@ -1,0 +1,349 @@
+{
+  "layers": [
+    {
+      "type": "wms",
+      "serviceUrl": "https://i1geo.nrs.gov.bc.ca/pub/geoserver/wms",
+      "opacity": 0.6,
+      "title": "Community Watersheds - Current",
+      "id": "WLS_COMMUNITY_WS_PUB_SVW",
+      "layerName": "WLS_COMMUNITY_WS_PUB_SVW",
+      "styleName": "WLS_COMMUNITY_WS_PUB_SVW",
+      "geometryAttribute": "GEOMETRY",
+      "isVisible": true,
+      "attributes": [
+        {
+          "name": "COMMUNITY_WS_NAME",
+          "title": "CWS Name"
+        },
+        {
+          "name": "COMMUNITY_WS_SOURCE_NAME",
+          "title": "Source Name"
+        },
+        {
+          "name": "FEATURE_AREA_SQM",
+          "title": "Area Square Meters"
+        },
+        {
+          "name": "POD_CODE",
+          "title": "Point Of Diversion Code"
+        }
+      ]
+    },
+    {
+      "type": "wms",
+      "serviceUrl": "https://i1geo.nrs.gov.bc.ca/pub/geoserver/wms",
+      "opacity": 0.6,
+      "title": "Ground Water Aquifers",
+      "id": "GW_AQUIFERS_CLASSIFICATION_SVW",
+      "layerName": "GW_AQUIFERS_CLASSIFICATION_SVW",
+      "styleName": "GW_AQUIFERS_CLASSIFICATION_SVW",
+      "geometryAttribute": "GEOMETRY",
+      "isVisible": false,
+      "attributes": [
+        {
+          "name": "AQUIFER_CLASSIFICATION",
+          "title": "Aquifer Classification"
+        },
+        {
+          "name": "AQUIFER_NAME",
+          "title": "Aquifer Name"
+        },
+        {
+          "name": "AQUIFER_NUMBER",
+          "title": "Aquifer Number"
+        },
+        {
+          "name": "AQUIFER_RANKING_VALUE",
+          "title": "Aquifer Ranking Value"
+        },
+        {
+          "name": "DESCRIPTIVE_LOCATION",
+          "title": "Descriptive Location"
+        },
+        {
+          "name": "FEATURE_AREA_SQM",
+          "title": "Area Square Meters"
+        }
+      ]
+    },
+    {
+      "type": "wms",
+      "serviceUrl": "https://i1geo.nrs.gov.bc.ca/pub/geoserver/wms",
+      "opacity": 0.6,
+      "title": "Ground Water Wells",
+      "id": "WATER_WELLS_SVW",
+      "layerName": "WATER_WELLS_SVW",
+      "styleName": "WATER_WELLS_SVW",
+      "geometryAttribute": "GEOMETRY",
+      "isVisible": false,
+      "attributes": [
+        {
+          "name": "OWNER",
+          "title": "Surname"
+        },
+        {
+          "name": "PID",
+          "title": "PID - LTSA Parcel ID"
+        },
+        {
+          "name": "WELL_LOCATION",
+          "title": "Well Location"
+        },
+        {
+          "name": "WELL_TAG_NO",
+          "title": "Well Tag Number"
+        },
+        {
+          "name": "WELL_USE_NAME",
+          "title": "Well Use Name"
+        }
+      ]
+    },
+    {
+      "type": "wms",
+      "serviceUrl": "https://i1geo.nrs.gov.bc.ca/pub/geoserver/wms",
+      "opacity": 0.6,
+      "title": "Licenced Springs",
+      "id": "LICENCED_SPRINGS_SVW",
+      "layerName": "LICENCED_SPRINGS_SVW",
+      "styleName": "LICENCED_SPRINGS_SVW",
+      "geometryAttribute": "GEOMETRY",
+      "isVisible": false,
+      "attributes": [
+        {
+          "name": "ADDRESS_LINE1",
+          "title": "Address Line 1"
+        },
+        {
+          "name": "ADDRESS_LINE2",
+          "title": "Address Line 2"
+        },
+        {
+          "name": "ADDRESS_LINE3",
+          "title": "Address Line 3"
+        },
+        {
+          "name": "ADDRESS_LINE4",
+          "title": "Address Line 4"
+        },
+        {
+          "name": "COUNTRY",
+          "title": "Country"
+        },
+        {
+          "name": "LICENCE_NO",
+          "title": "Licence Number"
+        },
+        {
+          "name": "LICENSEE",
+          "title": "Licensee"
+        },
+        {
+          "name": "LIC_STATUS",
+          "title": "Licence Status"
+        },
+        {
+          "name": "MAPSHEET_POD",
+          "title": "Mapsheet / Point of Diversion"
+        },
+        {
+          "name": "POSTAL_CODE",
+          "title": "Postal Code"
+        },
+        {
+          "name": "PURPOSE",
+          "title": "Purpose"
+        },
+        {
+          "name": "STREAM_NAME",
+          "title": "Stream Name"
+        },
+        {
+          "name": "TPOD_TAG",
+          "title": "Point of Diversion Number"
+        }
+      ]
+    },
+    {
+      "type": "wms",
+      "serviceUrl": "https://i1geo.nrs.gov.bc.ca/pub/geoserver/wms",
+      "opacity": 0.6,
+      "title": "Reservoir Permits Over Crown Land",
+      "id": "RSVR_PERMIT_OVER_CROWN_LND_SVW",
+      "layerName": "RSVR_PERMIT_OVER_CROWN_LND_SVW",
+      "styleName": "RSVR_PERMIT_OVER_CROWN_LND_SVW",
+      "geometryAttribute": "GEOMETRY",
+      "isVisible": false,
+      "attributes": [
+        {
+          "name": "ELEVATION",
+          "title": "Elevation"
+        },
+        {
+          "name": "FEATURE_AREA_SQM",
+          "title": "Area Square Meters"
+        },
+        {
+          "name": "LICENCE_NUMBER",
+          "title": "Licence Number"
+        },
+        {
+          "name": "LICENCE_STATUS",
+          "title": "Licence Status"
+        },
+        {
+          "name": "RESERVOIR_NAME",
+          "title": "Reservoir Name"
+        },
+        {
+          "name": "RESERVOIR_PMT_LICENSEE_ID",
+          "title": "Reservoir Permit Licensee ID"
+        },
+        {
+          "name": "RESERVOIR_POD",
+          "title": "Reservoir Point Of Diversion"
+        },
+        {
+          "name": "STREAM_NAME",
+          "title": "Stream Name"
+        }
+      ]
+    },
+    {
+      "type": "wms",
+      "serviceUrl": "https://i1geo.nrs.gov.bc.ca/pub/geoserver/wms",
+      "opacity": 0.6,
+      "title": "Water Allocation Restrictions",
+      "id": "WLS_WATER_RESTRICTION_LOC_SVW",
+      "layerName": "WLS_WATER_RESTRICTION_LOC_SVW",
+      "styleName": "WLS_WATER_RESTRICTION_LOC_SVW",
+      "geometryAttribute": "GEOMETRY",
+      "isVisible": false,
+      "attributes": [
+        {
+          "name": "DESCRIPTION",
+          "title": "Description"
+        },
+        {
+          "name": "RESTRICTION_ID",
+          "title": "Restriction ID"
+        }
+      ]
+    },
+    {
+      "type": "wms",
+      "serviceUrl": "https://i1geo.nrs.gov.bc.ca/pub/geoserver/wms",
+      "opacity": 0.6,
+      "title": "Water Licence",
+      "id": "WLS_POD_LICENCE_SVW",
+      "layerName": "WLS_POD_LICENCE_SVW",
+      "styleName": "WLS_POD_LICENCE_SVW",
+      "geometryAttribute": "GEOMETRY",
+      "isVisible": false,
+      "attributes": [
+        {
+          "name": "ADDRESS_LINE1",
+          "title": "Address Line 1"
+        },
+        {
+          "name": "ADDRESS_LINE2",
+          "title": "Address Line 2"
+        },
+        {
+          "name": "ADDRESS_LINE3",
+          "title": "Address Line 3"
+        },
+        {
+          "name": "ADDRESS_LINE4",
+          "title": "Address Line 4"
+        },
+        {
+          "name": "COUNTRY",
+          "title": "Country"
+        },
+        {
+          "name": "EXPIRY_DATE",
+          "title": "Expiry Date"
+        },
+        {
+          "name": "FILE_NO",
+          "title": "Water File Number"
+        },
+        {
+          "name": "LICENCE_NO",
+          "title": "Licence Number"
+        },
+        {
+          "name": "LICENSEE",
+          "title": "Licensee"
+        },
+        {
+          "name": "LIC_STATUS",
+          "title": "Licence Status"
+        },
+        {
+          "name": "PCL_NO",
+          "title": "Crown Land Permit Number"
+        },
+        {
+          "name": "POSTAL_CODE",
+          "title": "Postal Code"
+        },
+        {
+          "name": "PURPOSE",
+          "title": "Purpose"
+        },
+        {
+          "name": "STRM_NAME",
+          "title": "Stream Name"
+        },
+        {
+          "name": "TPOD_TAG",
+          "title": "TPOD Tag"
+        }
+      ]
+    },
+    {
+      "type": "wms",
+      "serviceUrl": "https://i1geo.nrs.gov.bc.ca/pub/geoserver/wms",
+      "opacity": 0.6,
+      "title": "Water Reserves",
+      "id": "WLS_WATER_RESERVE_LOC_SVW",
+      "layerName": "WLS_WATER_RESERVE_LOC_SVW",
+      "styleName": "WLS_WATER_RESERVE_LOC_SVW",
+      "geometryAttribute": "GEOMETRY",
+      "isVisible": false,
+      "attributes": [
+        {
+          "name": "DESCRIPTION",
+          "title": "Description"
+        },
+        {
+          "name": "RESERVE_ID",
+          "title": "Reserve ID"
+        }
+      ]
+    },
+    {
+      "type": "wms",
+      "serviceUrl": "https://i1geo.nrs.gov.bc.ca/pub/geoserver/wms",
+      "opacity": 0.6,
+      "title": "Water Works",
+      "id": "WLS_WATER_LICENCED_WRK_LNE_SVW",
+      "layerName": "WLS_WATER_LICENCED_WRK_LNE_SVW",
+      "styleName": "WLS_WATER_LICENCED_WRK_LNE_SVW",
+      "geometryAttribute": "GEOMETRY",
+      "isVisible": false,
+      "attributes": [
+        {
+          "name": "WATER_LICENCED_WORK_LINE_ID",
+          "title": "Water Licenced Work Line ID"
+        },
+        {
+          "name": "WORKS_ID",
+          "title": "Works ID"
+        }
+      ]
+    }
+  ]
+}

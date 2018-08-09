@@ -1,0 +1,31 @@
+.smk-identify-cluster {
+    background-color: white;
+    border: 1px solid darkgrey;
+    box-shadow: 0 3px 14px rgba(0,0,0,0.4);
+}
+
+.smk-identify-cluster div {
+    height: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.smk-identify-cluster-one {
+    background-color: rgba(100%, 100%, 100%, 0.7);
+    border-radius: 20px;
+    width: 20px;
+    height: 20px;
+    margin-top: -11px;
+    margin-left: -11px;
+}
+
+.smk-identify-cluster-many {
+    border-radius: 24px;
+    width: 24px;
+    height: 24px;
+    margin-top: -13px;
+    margin-left: -13px;
+}
+

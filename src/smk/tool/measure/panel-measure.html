@@ -1,0 +1,61 @@
+<side-panel class="smk-measure-panel">
+    <h1 slot="header">Measurement</h1>
+
+    <template slot="commands">
+        <span class="smk-command"
+            v-bind:class="{ 'smk-disabled': busy }"
+            v-on:click="!busy && $$emit( 'start-area' )"
+        >Area</span>
+
+        <span class="smk-command"
+            v-bind:class="{ 'smk-disabled': busy }"
+            v-on:click="!busy && $$emit( 'start-distance' )"
+        >Distance</span>
+
+        <span class="smk-command"
+            v-if="viewer.leaflet"
+            v-bind:class="{ 'smk-disabled': !busy }"
+            v-on:click="busy && $$emit( 'cancel' )"
+        >Cancel</span>
+
+        <select class="smk-command"
+            v-if="viewer.leaflet"
+            v-bind:disabled="busy"
+            v-bind:class="{ 'smk-disabled': busy }"
+            v-model="unit"
+        >
+            <option value="metric">Metric</option>
+            <option value="imperial">Imperial</option>
+            <option value="inches">Inches</option>
+            <option value="feet">Feet</option>
+            <option value="yards">Yards</option>
+            <option value="miles">Miles</option>
+            <option value="nautical-miles">Nautical Miles</option>
+            <!-- <option value="us-feet">Feet (US)</option> -->
+            <option value="meters">Meters</option>
+            <option value="kilometers">Kilometers</option>
+            <option value="acres">Acres</option>
+            <option value="hectares">Hectares</option>
+        </select>
+    </template>
+
+    <template slot="status" v-if="statusMessage">
+        <status-message v-bind="statusMessage">
+    </template>
+
+    <div class="smk-measure-container"
+        v-container=""
+    ></div>
+
+    <div class="smk-results"
+        v-if="results && results.length > 0"
+    >
+        <div class="smk-result"
+            v-for="result in results"
+        >
+            <span class="smk-title" v-html="result.title"></span>
+            <span class="smk-value">{{ result.value | dimensionalNumber( result.dim, unit, 2 ) }}</span>
+        </div>
+    </div>
+
+</side-panel>

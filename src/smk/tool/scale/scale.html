@@ -1,0 +1,34 @@
+<div class="smk-scale">
+
+    <div class="smk-denom"
+        v-if="scaleDenom"
+    >1 : {{ scaleDenom | formatNumber() }}</div>
+
+    <div class="smk-ruler">
+        <div
+            class="smk-sections"
+            v-if="rulerSectionWidth"
+        ><span
+            class="smk-upper"
+            v-bind:style="{ width: rulerSectionWidth + 'px' }"
+        ></span><span
+            class="smk-lower"
+            v-bind:style="{ width: rulerSectionWidth + 'px' }"
+        ></span><span
+            class="smk-upper"
+            v-bind:style="{ width: rulerSectionWidth + 'px' }"
+        ></span><span
+            class="smk-lower"
+            v-bind:style="{ width: rulerSectionWidth + 'px' }"
+        ></span></div>
+
+        <div class="smk-labels"
+            v-if="rulerLength"
+        >
+            <span class="smk-first">0</span>
+            <span class="smk-middle">{{ ( rulerLength / 2 ) | formatNumber( 1 ) }}</span>
+            <span class="smk-last">{{ rulerLength | formatNumber() }}{{ rulerUnit }}</span>
+        </div>
+    </div>
+
+</div>

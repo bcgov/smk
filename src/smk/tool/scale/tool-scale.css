@@ -1,0 +1,63 @@
+.smk-scale {
+    color: #000;
+    font-weight: bold;
+    font-size: 12px;
+    text-shadow: 1px 0 0 #fff, 0 -1px 0 #fff, 0 1px 0 #fff, -1px 0 0 #fff;
+    text-align: right;
+    background-color: transparent;
+    cursor: default;
+
+    margin-top: 5px;
+}
+
+.smk-scale .smk-denom {
+}
+
+.smk-scale .smk-ruler {
+    display: flex;
+    flex-direction: column;
+}
+
+.smk-scale .smk-ruler .smk-sections {
+    border: 1px solid black;
+    border-radius: 2px;
+    height: 10px;
+    line-height: 0;
+}
+
+.smk-scale .smk-ruler .smk-sections span {
+    display: inline-block;
+    background-color: white;
+    height: 5px;
+    margin: 0;
+    padding: 0;
+}
+
+.smk-scale .smk-ruler .smk-sections .smk-upper {
+    border-top: 5px solid black;
+}
+
+.smk-scale .smk-ruler .smk-sections .smk-lower {
+    border-bottom: 5px solid black;
+}
+
+.smk-scale .smk-ruler .smk-labels {
+    display: flex;
+    justify-content: space-between;
+}
+
+.smk-scale .smk-ruler .smk-labels .smk-first {
+    flex-basis: 50%;
+    text-align: left;
+}
+
+.smk-scale .smk-ruler .smk-labels .smk-middle {
+    text-align: center;
+}
+
+.smk-scale .smk-ruler .smk-labels .smk-last {
+    flex-basis: 50%;
+    text-align: right;
+}
+
+
