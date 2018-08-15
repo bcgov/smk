@@ -8,27 +8,16 @@ module.exports = function( grunt ) {
     ] )
 
     grunt.registerTask( 'build-smk', [
-        'gen-tags',
-        'write-tags',
+        'generate-tags:true',
         'write-tag-head-foot',
         'concat:smk',
         'jshint:smk',
     ] )
 
-    grunt.registerTask( 'write-tags', function () {
-        var tag = grunt.config( 'tag' )
-        var tags = Object.keys( tag ).sort()
-
-        var fn = grunt.template.process( '<%= buildPath %>/smk-tags.js' )
-        grunt.log.write( 'Writing ' + tags.length + ' tags to ' + fn + '...' )
-        grunt.file.write( fn, tags.map( function ( t ) { return 'include.tag( "' + t + '", ' + JSON.stringify( tag[ t ], null, '    ' ) + ' );' } ).join( '\n\n' ) )
-        grunt.log.ok()
-    } )
-
     grunt.config.merge( {
         clean: {
             temp: {
-                src: [ undefined, '<%= buildPath %>/smk-tags.js' ]
+                src: [ undefined, '<%= buildPath %>/tags/**', '<%= buildPath %>/smk-tags.js' ]
             }
         },
 
@@ -60,7 +49,7 @@ module.exports = function( grunt ) {
                 src: [
                     'lib/include.js',
                     '<%= buildPath %>/smk-tags-head.js',
-                    '<%= buildPath %>/smk-tags.js',
+                    '<%= buildPath %>/tags/*',
                     '<%= buildPath %>/smk-tags-foot.js',
                     '<%= srcPath %>/smk.js'
                 ],
