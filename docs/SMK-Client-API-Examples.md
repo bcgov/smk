@@ -5,15 +5,32 @@
 For the following examples, the reader should assume the following:
 
 - There is a site at **https://example.com/demo**, this will be the base for the URLs used below.
+    This site contains the following directory structure.
+<pre>
+    demo
+    |-- index.html
+    |-- map-config.json
+    |-- victoria.json
+    |-- kamloops.json 
+    |-- wms-layer.json 
+    |-- wms-layer-attributes.json
+    |-- wms-layer-query.json
+    |-- smk.js
+    '-- images
+        '-- (SMK images)
+</pre>
 
-- There is a file `index.html` hosted at URL above.  
-The comment marks where the examples insert the SMK `<script>` element.
+- `index.html`  
+  (take careful note of the comment in the code):
+
 ```html
-<!DOCTYPE html>
 <html>
     <head>
         <title></title>
-        <!-- SMK <script> element -->
+        <!-- ------------------------------------------------
+            The examples specify the SMK <script> element 
+            that is to be inserted here.
+        ------------------------------------------------- -->
         <style>
             #smk-map-frame {
                 position: absolute;
@@ -32,7 +49,7 @@ The comment marks where the examples insert the SMK `<script>` element.
 </html>
 ```
 
-- There is a file `map-config.json` in same folder as `index.html`.
+- `map-config.json`
 ```json
 {
     "smkId": "test-app",
@@ -57,18 +74,18 @@ The comment marks where the examples insert the SMK `<script>` element.
 }
 ```
 
-- There is a file `victoria.json` in same folder as `index.html`.
+- `victoria.json` 
 ```json
 {
     "viewer": {
         "location": {
             "extent": [ -124.0750, 48.3087, -123.2273, 48.7519 ]
-        },
+        }
     }
 }
 ```
 
-- There is a file `kamloops.json` in same folder as `index.html`.
+- `kamloops.json`
 ```json
 {
     "viewer": {
@@ -81,7 +98,7 @@ The comment marks where the examples insert the SMK `<script>` element.
 }
 ```
 
-- There is a file `wms-layer.json` in same folder as `index.html`.
+- `wms-layer.json`
 ```json
 {
     "layers": [
@@ -98,7 +115,7 @@ The comment marks where the examples insert the SMK `<script>` element.
 }
 ```
 
-- There is a file `wms-layer-attributes.json` in same folder as `index.html`.
+- `wms-layer-attributes.json`
 ```json
 {
     "layers": [
@@ -130,7 +147,7 @@ The comment marks where the examples insert the SMK `<script>` element.
 }
 ```
 
-- There is a file `wms-layer-query.json` in same folder as `index.html`.
+- `wms-layer-query.json`
 ```json
 {
     "viewer": {
@@ -183,23 +200,19 @@ The comment marks where the examples insert the SMK `<script>` element.
 }
 ```
 
+- `smk.js`  
+The production version of the SMK library.
+[smk.js](https://smk-demo.pathfinder.gov.bc.ca/smk-client/smk.js)
 
 The examples will provide a setup that gives the `<script>` element and the parameters for URL that is being requested.
 The URL parameters (if any) are presented in a list for ease of reading, and the [`URL`]() is linked to the properly formatted URL.
+
+The complete request is formatted as a standard URL (though without any spaces around ? and &):
+
+> [host and path] **?** [argument1] **&** [argument2] **&** ... **&** [argumentN]
+
+
 If multiple setups are provided for an example, it is asserted that they all have exactly the same effect.
-
-An example with a `<script>` element, followed by the URL to be invoked:
-
-### Setup example
-
-```html
-<script src="smk.js"
-    smk-config="show-tool=baseMaps"
-></script>
-```
-
-[`https://example.com/demo?`](https://example.com/demo?smk-show-tool=baseMaps)
-- `smk-show-tool=baseMaps`
 
 
 
@@ -408,6 +421,9 @@ Setting location of map.
 ## Example 5
 
 Changing URL parameter prefix.
+The default URL parameter prefix is `smk-`, but this can be changed.
+You may want the parameters processed by SMK to be prefixed with `foo-` for example.
+The URL parameters can be processed before or after other configuration specified in the `smk-config` attribute.
 
 ### Setup 5A
 ```html
@@ -565,7 +581,7 @@ Configuring tools.
 
 Running an ad-hoc query.
 
-### Setup 8B
+### Setup 8A
 ```html
 <script src="smk.js"></script>
 ```
