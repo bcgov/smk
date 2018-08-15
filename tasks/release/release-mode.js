@@ -101,4 +101,5 @@ module.exports = function( grunt ) {
 
     } )
 
+    grunt.log.ok( 'Task release-mode' )
 }

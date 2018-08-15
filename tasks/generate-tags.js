@@ -95,4 +95,5 @@ module.exports = function( grunt ) {
         }
     }
 
+    grunt.log.ok( 'Task generate-tags' )
 }
