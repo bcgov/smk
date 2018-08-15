@@ -21,11 +21,11 @@ Start Grunt in development mode:
 
     > grunt
 
-Point browser at [localhost:8443](localhost:8443).
+Point browser at [https://localhost:8443](https://localhost:8443).
 
 Edit code, and when a file is saved, the website is automatically reloaded.
 
-The configurations in `example/config` are available to any of the pages at [localhost:8443](localhost:8443).
+The configurations in `example/config` are available to any of the pages at [https://localhost:8443](https://localhost:8443).
 Use a URL parameter like `config=config/bcparks-test.json`.
 
 
