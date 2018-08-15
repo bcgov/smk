@@ -1,9 +1,33 @@
 # smk-client
+
 Simple Map Kit Client - A versatile and lightweight toolkit for building a simple web map.
 
 [Client API](docs/SMK-Client-API.md) and [examples](docs/SMK-Client-API-Examples.md)
 
 [Client Configuration](docs/SMK-Client-Configuration.md)
+
+# Development
+
+Clone this repo, let's say into `projects/smk-client`.
+
+Install [NodeJS](https://nodejs.org/en/).
+
+Install node modules:
+
+    > cd projects/smk-client
+    > npm install
+
+Start Grunt in development mode:
+
+    > grunt
+
+Point browser at [https://localhost:8443](https://localhost:8443).
+
+Edit code, and when a file is saved, the website is automatically reloaded.
+
+The configurations in `example/config` are available to any of the pages at [https://localhost:8443](https://localhost:8443).
+Use a URL parameter like `config=config/bcparks-test.json`.
+
 
 # License
 ```
