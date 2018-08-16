@@ -98,6 +98,7 @@ include.module( 'query.query-wms-js', [ 'query.query-js' ], function () {
         var layerConfig = viewer.layerId[ this.layerId ].config
 
         var filter = makeCqlClause( this.predicate, param )
+        if ( !filter ) throw new Error( 'filter is empty' )
 
         var data = $.extend( {
             service:      "WFS",
@@ -157,55 +158,111 @@ include.module( 'query.query-wms-js', [ 'query.query-js' ], function () {
         'and': function ( args, param ) {
             if ( args.length == 0 ) throw new Error( 'AND needs at least 1 argument' )
 
-            return args.map( function ( a ) { return '( ' + handleCqlOperator( a, param ) + ' )' } ).join( ' AND ' )
+            return args
+                .map( function ( a ) { 
+                    var c = handleCqlOperator( a, param )
+
+                    if ( !c ) return
+
+                    return '( ' + c + ' )' 
+                } )
+                .filter( function ( c ) {
+                    return !!c 
+                } )
+                .join( ' AND ' )
         },
 
         'or': function ( args, param ) {
             if ( args.length == 0 ) throw new Error( 'OR needs at least 1 argument' )
 
-            return args.map( function ( a ) { return '( ' + handleCqlOperator( a, param ) + ' )' } ).join( ' OR ' )
+            return args
+                .map( function ( a ) { 
+                    var c = handleCqlOperator( a, param )
+
+                    if ( !c ) return
+
+                    return '( ' + c + ' )' 
+                } )
+                .filter( function ( c ) {
+                    return !!c 
+                } )
+                .join( ' OR ' )
         },
 
         'equals': function ( args, param ) {
             if ( args.length != 2 ) throw new Error( 'EQUALS needs exactly 2 arguments' )
 
-            return handleCqlOperand( args[ 0 ], param ) + ' = ' + handleCqlOperand( args[ 1 ], param )
+            var a = handleCqlOperand( args[ 0 ], param )
+            var b = handleCqlOperand( args[ 1 ], param )
+
+            if ( !a || !b ) return
+
+            return a + ' = ' + b
         },
 
         'less-than': function ( args, param ) {
             if ( args.length != 2 ) throw new Error( 'LESS-THAN needs exactly 2 arguments' )
 
-            return handleCqlOperand( args[ 0 ], param ) + ' < ' + handleCqlOperand( args[ 1 ], param )
+            var a = handleCqlOperand( args[ 0 ], param )
+            var b = handleCqlOperand( args[ 1 ], param )
+
+            if ( !a || !b ) return
+
+            return a + ' < ' + b
         },
 
         'greater-than': function ( args, param ) {
             if ( args.length != 2 ) throw new Error( 'GREATER-THAN needs exactly 2 arguments' )
 
-            return handleCqlOperand( args[ 0 ], param ) + ' > ' + handleCqlOperand( args[ 1 ], param )
+            var a = handleCqlOperand( args[ 0 ], param )
+            var b = handleCqlOperand( args[ 1 ], param )
+
+            if ( !a || !b ) return
+
+            return a + ' > ' + b
         },
 
         'contains': function ( args, param ) {
             if ( args.length != 2 ) throw new Error( 'CONTAINS needs exactly 2 arguments' )
 
-            return handleCqlOperand( args[ 0 ], param ) + ' ILIKE \'%' + handleCqlOperand( args[ 1 ], param, false ) + '%\''
+            var a = handleCqlOperand( args[ 0 ], param )
+            var b = handleCqlOperand( args[ 1 ], param, false )
+
+            if ( !a || !b ) return
+
+            return a + ' ILIKE \'%' + b + '%\''
         },
 
         'starts-with': function ( args, param ) {
             if ( args.length != 2 ) throw new Error( 'STARTS-WITH needs exactly 2 arguments' )
 
-            return handleCqlOperand( args[ 0 ], param ) + ' ILIKE \'' + handleCqlOperand( args[ 1 ], param, false ) + '%\''
+            var a = handleCqlOperand( args[ 0 ], param )
+            var b = handleCqlOperand( args[ 1 ], param, false )
+
+            if ( !a || !b ) return
+
+            return a + ' ILIKE \'' + b + '%\''
         },
 
         'ends-with': function ( args, param ) {
             if ( args.length != 2 ) throw new Error( 'ENDS-WITH needs exactly 2 arguments' )
 
-            return handleCqlOperand( args[ 0 ], param ) + ' ILIKE \'%' + handleCqlOperand( args[ 1 ], param, false ) + '\''
+            var a = handleCqlOperand( args[ 0 ], param )
+            var b = handleCqlOperand( args[ 1 ], param, false )
+
+            if ( !a || !b ) return
+
+            return a + ' ILIKE \'%' + b + '\''
         },
 
         'not': function ( args, param ) {
             if ( args.length != 1 ) throw new Error( 'NOT needs exactly 1 argument' )
 
-            return 'NOT ' + handleCqlOperator( args[ 0 ], param )
+            var a = handleCqlOperator( args[ 0 ], param )
+
+            if ( !a ) return
+
+            return 'NOT ' + a
         }
     }
 
@@ -225,7 +282,10 @@ include.module( 'query.query-wms-js', [ 'query.query-js' ], function () {
         },
 
         'parameter': function ( arg, param, quote ) {
-            return ( quote === false ? '' : '\'' ) + escapeCqlParameter( param[ arg.id ].value ) + ( quote === false ? '' : '\'' )
+            var v = param[ arg.id ].value
+            if ( v == null || v === '' ) return
+
+            return ( quote === false ? '' : '\'' ) + escapeCqlParameter( v ) + ( quote === false ? '' : '\'' )
         }
     }
 

@@ -102,6 +102,7 @@ include.module( 'query.query-esri-dynamic-js', [ 'query.query-js' ], function ()
         delete dynamicLayer.drawingInfo
 
         var whereClause = makeWhereClause( this.predicate, param )
+        if ( !whereClause ) throw new Error( 'filter is empty' )
 
         var attrs = layerConfig.attributes.filter( function ( a ) { return a.visible !== false } ).map( function ( a ) { return a.name } )
 
@@ -170,55 +171,111 @@ include.module( 'query.query-esri-dynamic-js', [ 'query.query-js' ], function ()
         'and': function ( args, param ) {
             if ( args.length == 0 ) throw new Error( 'AND needs at least 1 argument' )
 
-            return args.map( function ( a ) { return '( ' + handleWhereOperator( a, param ) + ' )' } ).join( ' AND ' )
+            return args
+                .map( function ( a ) { 
+                    var c = handleWhereOperator( a, param )
+
+                    if ( !c ) return
+
+                    return '( ' + c + ' )' 
+                } )
+                .filter( function ( c ) {
+                    return !!c 
+                } )
+                .join( ' AND ' )
         },
 
         'or': function ( args, param ) {
             if ( args.length == 0 ) throw new Error( 'OR needs at least 1 argument' )
 
-            return args.map( function ( a ) { return '( ' + handleWhereOperator( a, param ) + ' )' } ).join( ' OR ' )
+            return args
+                .map( function ( a ) { 
+                    var c = handleWhereOperator( a, param )
+
+                    if ( !c ) return
+
+                    return '( ' + c + ' )' 
+                } )
+                .filter( function ( c ) {
+                    return !!c 
+                } )
+                .join( ' OR ' )
         },
 
         'equals': function ( args, param ) {
             if ( args.length != 2 ) throw new Error( 'EQUALS needs exactly 2 arguments' )
 
-            return handleWhereOperand( args[ 0 ], param ) + ' = ' + handleWhereOperand( args[ 1 ], param )
+            var a = handleWhereOperand( args[ 0 ], param )
+            var b = handleWhereOperand( args[ 1 ], param )
+
+            if ( !a || !b ) return
+
+            return a + ' = ' + b
         },
 
         'less-than': function ( args, param ) {
             if ( args.length != 2 ) throw new Error( 'LESS-THAN needs exactly 2 arguments' )
 
-            return handleWhereOperand( args[ 0 ], param ) + ' < ' + handleWhereOperand( args[ 1 ], param )
+            var a = handleWhereOperand( args[ 0 ], param )
+            var b = handleWhereOperand( args[ 1 ], param )
+
+            if ( !a || !b ) return
+
+            return a + ' < ' + b
         },
 
         'greater-than': function ( args, param ) {
             if ( args.length != 2 ) throw new Error( 'GREATER-THAN needs exactly 2 arguments' )
 
-            return handleWhereOperand( args[ 0 ], param ) + ' > ' + handleWhereOperand( args[ 1 ], param )
+            var a = handleWhereOperand( args[ 0 ], param )
+            var b = handleWhereOperand( args[ 1 ], param )
+
+            if ( !a || !b ) return
+
+            return a + ' > ' + b
         },
 
         'contains': function ( args, param ) {
             if ( args.length != 2 ) throw new Error( 'CONTAINS needs exactly 2 arguments' )
 
-            return handleWhereOperand( args[ 0 ], param ) + ' LIKE \'%' + handleWhereOperand( args[ 1 ], param, false ) + '%\''
+            var a = handleWhereOperand( args[ 0 ], param )
+            var b = handleWhereOperand( args[ 1 ], param, false )
+
+            if ( !a || !b ) return
+
+            return a + ' LIKE \'%' + b + '%\''
         },
 
         'starts-with': function ( args, param ) {
             if ( args.length != 2 ) throw new Error( 'STARTS-WITH needs exactly 2 arguments' )
 
-            return handleWhereOperand( args[ 0 ], param ) + ' LIKE \'' + handleWhereOperand( args[ 1 ], param, false ) + '%\''
+            var a = handleWhereOperand( args[ 0 ], param )
+            var b = handleWhereOperand( args[ 1 ], param, false )
+
+            if ( !a || !b ) return
+
+            return a + ' LIKE \'' + b + '%\''
         },
 
         'ends-with': function ( args, param ) {
             if ( args.length != 2 ) throw new Error( 'ENDS-WITH needs exactly 2 arguments' )
 
-            return handleWhereOperand( args[ 0 ], param ) + ' LIKE \'%' + handleWhereOperand( args[ 1 ], param, false ) + '\''
+            var a = handleWhereOperand( args[ 0 ], param )
+            var b = handleWhereOperand( args[ 1 ], param, false )
+
+            if ( !a || !b ) return
+
+            return a + ' LIKE \'%' + b + '\''
         },
 
         'not': function ( args, param ) {
             if ( args.length != 1 ) throw new Error( 'NOT needs exactly 1 argument' )
 
-            return 'NOT ' + handleWhereOperator( args[ 0 ], param )
+            var a = handleWhereOperator( args[ 0 ], param )
+
+            if ( !a ) return
+
+            return 'NOT ' + a
         }
     }
 
@@ -238,7 +295,10 @@ include.module( 'query.query-esri-dynamic-js', [ 'query.query-js' ], function ()
         },
 
         'parameter': function ( arg, param, quote ) {
-            return ( quote === false ? '' : '\'' ) + escapeWhereParameter( param[ arg.id ].value ) + ( quote === false ? '' : '\'' )
+            var v = param[ arg.id ].value
+            if ( v == null || v === '' ) return
+
+            return ( quote === false ? '' : '\'' ) + escapeWhereParameter( v ) + ( quote === false ? '' : '\'' )
         }
     }
 
