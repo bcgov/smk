@@ -25,8 +25,8 @@
     <template slot="command-row" slot-scope="list">
         <div class="smk-command-row">
             <span class="smk-command"
-                v-bind:class="{ 'smk-disabled': !isReady || busy }"
-                v-on:click="isReady && !busy && $$emit( 'execute' )"
+                v-bind:class="{ 'smk-disabled': busy }"
+                v-on:click="!busy && $$emit( 'execute' )"
             >Search</span>
 
             <span class="smk-command"

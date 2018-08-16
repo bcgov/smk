@@ -7,8 +7,9 @@
             v-bind:disabled="isEmpty"
             v-if="!useFallback || !isEmpty"
         >
-            <option disabled value="" v-if="isEmpty">No choices available</option>
-            <option disabled value="" v-if="!isEmpty">Please choose</option>
+            <option disabled value="" v-if="isEmpty">(No choices available)</option>
+            <!-- <option disabled value="" v-if="!isEmpty">Please choose</option> -->
+            <option value="" v-if="!isEmpty" >(No value selected)</option>
 
             <option
                 v-for="option in choices"
