@@ -36,6 +36,8 @@ include.module( 'query.query-vector-js', [ 'query.query-js' ], function () {
 
         var test = makeTest( this.predicate, param )
 
+        if ( !test ) throw new Error( 'test is empty' )
+
         var features = []
         viewer.visibleLayer[ this.layerId ].eachLayer( function ( ly ) {
             if ( test( ly.feature.properties ) )
@@ -44,9 +46,9 @@ include.module( 'query.query-vector-js', [ 'query.query-js' ], function () {
 
         return SMK.UTIL.resolved( features )
             .then( function ( features ) {
-                console.log( features )
+                // console.log( features )
 
-                if ( !features || features.length == 0 ) throw new Error( 'no features' )
+                if ( !features || features.length == 0 ) throw new Error( 'no results' )
 
                 return features.map( function ( f, i ) {
                     if ( layerConfig.titleAttribute )
@@ -73,11 +75,17 @@ include.module( 'query.query-vector-js', [ 'query.query-js' ], function () {
 
     var testOperator = {
         'and': function ( args, param ) {
-            if ( args.length == 0 ) throw new Error( 'AND needs at least 1 argument' )
+            if ( args.length == 0 ) throw new Error( 'AND needs 1 or more arguments' )
 
-            var tests = args.map( function ( a ) {
-                return makeTestOperator( a, param )
-            } )
+            var tests = args
+                .map( function ( a ) {
+                    return makeTestOperator( a, param )
+                } )
+                .filter( function ( t ) {
+                    return !!t
+                } )
+
+            if ( tests.length == 0 ) return
 
             return function ( properties ) {
                 return tests.every( function ( t ) {
@@ -87,11 +95,17 @@ include.module( 'query.query-vector-js', [ 'query.query-js' ], function () {
         },
 
         'or': function ( args, param ) {
-            if ( args.length == 0 ) throw new Error( 'OR needs at least 1 argument' )
+            if ( args.length == 0 ) throw new Error( 'OR needs 1 or more arguments' )
 
-            var tests = args.map( function ( a ) {
-                return makeTestOperator( a, param )
-            } )
+            var tests = args
+                .map( function ( a ) {
+                    return makeTestOperator( a, param )
+                } )
+                .filter( function ( t ) {
+                    return !!t
+                } )
+
+            if ( tests.length == 0 ) return 
 
             return function ( properties ) {
                 return tests.some( function ( t ) {
@@ -106,6 +120,8 @@ include.module( 'query.query-vector-js', [ 'query.query-js' ], function () {
             var a = makeTestOperand( args[ 0 ], param )
             var b = makeTestOperand( args[ 1 ], param )
 
+            if ( !a || !b ) return 
+
             return function ( properties ) {
                 return a( properties ) == b( properties )
             }
@@ -116,6 +132,8 @@ include.module( 'query.query-vector-js', [ 'query.query-js' ], function () {
 
             var a = makeTestOperand( args[ 0 ], param )
             var b = makeTestOperand( args[ 1 ], param )
+
+            if ( !a || !b ) return 
 
             return function ( properties ) {
                 return a( properties ) < b( properties )
@@ -128,6 +146,8 @@ include.module( 'query.query-vector-js', [ 'query.query-js' ], function () {
             var a = makeTestOperand( args[ 0 ], param )
             var b = makeTestOperand( args[ 1 ], param )
 
+            if ( !a || !b ) return 
+
             return function ( properties ) {
                 return a( properties ) > b( properties )
             }
@@ -138,6 +158,8 @@ include.module( 'query.query-vector-js', [ 'query.query-js' ], function () {
 
             var a = makeTestOperand( args[ 0 ], param )
             var b = makeTestOperand( args[ 1 ], param )
+
+            if ( !a || !b ) return 
 
             return function ( properties ) {
                 return ( new RegExp( b( properties ), 'i' ) ).test( a( properties ) )
@@ -150,6 +172,8 @@ include.module( 'query.query-vector-js', [ 'query.query-js' ], function () {
             var a = makeTestOperand( args[ 0 ], param )
             var b = makeTestOperand( args[ 1 ], param )
 
+            if ( !a || !b ) return 
+
             return function ( properties ) {
                 return ( new RegExp( '^' + b( properties ), 'i' ) ).test( a( properties ) )
             }
@@ -161,6 +185,8 @@ include.module( 'query.query-vector-js', [ 'query.query-js' ], function () {
             var a = makeTestOperand( args[ 0 ], param )
             var b = makeTestOperand( args[ 1 ], param )
 
+            if ( !a || !b ) return 
+
             return function ( properties ) {
                 return ( new RegExp( b( properties ) + '$', 'i' ) ).test( a( properties ) )
             }
@@ -170,6 +196,8 @@ include.module( 'query.query-vector-js', [ 'query.query-js' ], function () {
             if ( args.length != 1 ) throw new Error( 'NOT needs exactly 1 argument' )
 
             var a = makeTestOperator( args[ 0 ], param )
+            
+            if ( !a ) return 
 
             return function ( properties ) {
                 return ! a( properties )
@@ -193,9 +221,14 @@ include.module( 'query.query-vector-js', [ 'query.query-js' ], function () {
         },
 
         'parameter': function ( arg, param, quote ) {
-            return function ( properties ) {
-                if ( !( arg.id in param ) ) throw new Error( '"' + arg.id + '" is not a valid parameter' )
-                return param[ arg.id ].value
+            if ( !( arg.id in param ) ) throw new Error( '"' + arg.id + '" is not a valid parameter' )
+
+            var v = param[ arg.id ].value 
+
+            if ( v == null || v === '' ) return
+
+            return function () {
+                return v
             }
         }
     }
