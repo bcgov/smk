@@ -335,6 +335,12 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
                     self.visibleLayer[ cid ] = ly
                     return ly
                 } )
+                .catch( function ( e ) {
+                    console.warn( 'Failed to create layer ' + cid + ':', e )
+                    lys.forEach( function ( ly ) {
+                        self.layerDisplayContext.setItemEnabled( ly.id, false ) 
+                    } )
+                } )
 
             promises.push( p )
         } )
@@ -372,13 +378,13 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
 
         return ( this.layerIdPromise[ id ] = SMK.UTIL.resolved()
             .then( function () {
-                try {
-                    return SMK.TYPE.Layer[ type ][ self.type ].create.call( self, layers, zIndex )
-                }
-                catch ( e ) {
-                    console.warn( 'failed to create viewer layer', layers, e )
-                    return SMK.UTIL.rejected( e )
-                }
+                // try {
+                return SMK.TYPE.Layer[ type ][ self.type ].create.call( self, layers, zIndex )
+                // }
+                // catch ( e ) {
+                    // console.warn( 'failed to create viewer layer', layers, e )
+                    // return SMK.UTIL.rejected( e )
+                // }
             } )
             .then( function ( ly ) {
                 return self.afterCreateViewerLayer( id, type, layers, ly )

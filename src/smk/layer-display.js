@@ -211,6 +211,15 @@ include.module( 'layer-display', [ 'jquery', 'util', 'event' ], function () {
             return this.itemId[ id ][ 0 ].index
     }
 
+    LayerDisplayContext.prototype.setItemEnabled = function ( id, enabled ) {
+        if ( !( id in this.itemId ) ) return 
+
+        var lds = this.itemId[ id ]
+
+        if ( lds[ 0 ].type == 'layer' )
+            lds[ 0 ].isEnabled = enabled
+    }
+
     LayerDisplayContext.prototype.setFolderExpanded = function ( id, expanded ) {
         if ( !( id in this.itemId ) ) return 
 
@@ -222,7 +231,7 @@ include.module( 'layer-display', [ 'jquery', 'util', 'event' ], function () {
         if ( !( id in this.itemId ) ) return false
 
         return this.itemId[ id ].reduce( function ( accum, ld ) {
-            return accum && ld.isVisible
+            return accum && ld.isVisible && ( ld.type == 'layer' ? ld.isEnabled : true )
         }, true )
     }
 
@@ -230,6 +239,8 @@ include.module( 'layer-display', [ 'jquery', 'util', 'event' ], function () {
         if ( !( id in this.itemId ) ) return 
 
         var lds = this.itemId[ id ]
+
+        if ( lds[ 0 ].type == 'layer' && !lds[ 0 ].isEnabled ) return false
 
         if ( visible )
             lds.forEach( function ( ld ) {

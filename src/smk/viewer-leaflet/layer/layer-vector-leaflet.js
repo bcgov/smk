@@ -134,7 +134,9 @@ include.module( 'layer-leaflet.layer-vector-leaflet-js', [ 'layer.layer-vector-j
             layers[ 0 ].config.CRS = 'EPSG4326'
 
         return SMK.UTIL.makePromise( function ( res, rej ) {
-                $.get( url, null, null, 'json' ).then( res, rej )
+                $.get( url, null, null, 'json' ).then( res, function ( xhr, status, err ) { 
+                    rej( 'Failed requesting ' + url + ': ' + xhr.status + ',' + err ) 
+                } )
             } )
             .then( function ( data ) {
                 console.log( 'loaded', url )
