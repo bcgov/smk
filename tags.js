@@ -88,6 +88,9 @@ t.group( 'tool-identify' )
 t.group( 'tool-layers' )
     .dir( 'smk/tool/layers/*' )
 
+t.group( 'tool-list-menu' )
+    .dir( 'smk/tool/list-menu/*' )
+
 t.group( 'tool-location' )
     .dir( 'smk/tool/location/*' )
 

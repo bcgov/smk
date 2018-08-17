@@ -1,0 +1,22 @@
+<side-panel class="smk-list-menu-panel">
+    <template slot="header">
+    </template>
+
+    <template slot="commands">
+        <list-menu-previous-panel 
+            id="previous-panel" 
+            type="previous-panel"  
+            icon="arrow_back" 
+            v-bind:title="previousPanelTitle" 
+            showTitle="true" 
+            visible="true" 
+            v-bind:enabled="previousPanelTitle"
+        ></list-menu-previous-panel>
+    </template>
+
+    <component class="smk-panel"
+        v-bind:is="currentPanel.panelComponent"
+        v-bind="currentPanel.panel"
+    ></component>
+
+</side-panel>

@@ -18,6 +18,7 @@ include.module( 'tool', [ 'jquery', 'event' ], function () {
         this.makeProp( 'active', false, 'changedActive' )
 
         this.makePropWidget( 'type', 'unknown' )
+        this.makePropWidget( 'showTitle', false )
 
         $.extend( this, option )
     }

@@ -1,0 +1,7 @@
+.smk-sidepanel .smk-tool-list-panel .smk-header {
+    display: none;
+}
+
+.smk-sidepanel .smk-tool-list-panel .smk-body .smk-tool {
+    display: block;
+}
