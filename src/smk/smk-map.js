@@ -1,4 +1,4 @@
-include.module( 'smk-map', [ 'jquery', 'util' ], function () {
+include.module( 'smk-map', [ 'jquery', 'util', 'theme-base' ], function () {
     "use strict";
 
     function SmkMap( option ) {
@@ -277,17 +277,13 @@ include.module( 'smk-map', [ 'jquery', 'util' ], function () {
             if ( self.$option[ 'title-sel' ] )
                 $( self.$option[ 'title-sel' ] ).text( self.name )
 
-            if ( self.viewer.theme ) {
-                var id = self.viewer.theme.toLowerCase().replace( /[^a-z0-9]+/g, '-' ).replace( /^[-]|[-]$/g, '' )
+            var themes = [ 'base' ].concat( self.viewer.themes ).map( function ( th ) { return 'theme-' + th } )
+            
+            $( self.$container )
+                .addClass( themes.map( function ( th ) { return 'smk-' + th } ).join( ' ' ) )
+                .addClass( 'smk-device-' + self.viewer.device )
 
-                $( self.$container )
-                    .addClass( 'smk-theme-' + id )
-
-                var tag = 'theme-' + id
-                include.tag( tag, { loader: 'style', url: include.option( 'baseUrl' ) + 'theme/' + self.viewer.theme + '.css'  } )
-
-                return include( tag )
-            }
+            return include( themes )
         }
 
         function checkTools() {

@@ -168,10 +168,20 @@
 
         'theme': function ( arg, source ) {
             var args = arg.split( ',' )
-            if ( args.length != 1 ) throw new Error( '-theme needs 1 argument' )
+            if ( args.length != 1 ) throw new Error( '-theme needs at least 1 argument' )
             return {
                 viewer: {
-                    theme: args[ 0 ]
+                    themes: args
+                }
+            }
+        },
+
+        'device': function ( arg, source ) {
+            var args = arg.split( ',' )
+            if ( args.length != 1 ) throw new Error( '-device needs 1 argument' )
+            return {
+                viewer: {
+                    device: args[ 0 ]
                 }
             }
         },
@@ -587,6 +597,8 @@
                 name: 'SMK Default Map',
                 viewer: {
                     type: "leaflet",
+                    device: "desktop",
+                    themes: [],
                     location: {
                         extent: [ -139.1782, 47.6039, -110.3533, 60.5939 ],
                     },

@@ -28,10 +28,7 @@ t.style( 'material-icons', 'https://fonts.googleapis.com/icon?family=Material+Ic
 // smk base
 // ==================================================================================
 
-t.group( 'smk-map' )
-    .script( 'smk/smk-map.js' )
-    .style( 'smk/smk-map-frame.css' )
-
+t.script( 'smk-map',    'smk/smk-map.js' )
 t.script( 'util',       'smk/util.js' )
 t.script( 'event',      'smk/event.js' )
 t.script( 'viewer',     'smk/viewer.js' )
@@ -257,5 +254,23 @@ t.group( 'tool-zoom-esri3d' )
     .dir( 'smk/viewer-esri3d/tool/zoom/**/*' )
 
 // ==================================================================================
+// smk themes
+// ==================================================================================
+
+t.group( 'theme-base' )
+    .dir( 'theme/_base/**/*' )
+
+t.group( 'theme-alpha' )
+    .dir( 'theme/alpha/**/*' )
+
+t.group( 'theme-beta' )
+    .dir( 'theme/beta/**/*' )
+
+t.group( 'theme-gamma' )
+    .dir( 'theme/gamma/**/*' )
+
+t.group( 'theme-delta' )
+    .dir( 'theme/delta/**/*' )
+
 
 process.stdout.write( JSON.stringify( t, null, '    ' ) )
