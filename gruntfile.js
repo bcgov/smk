@@ -49,8 +49,18 @@ module.exports = function( grunt ) {
             'examples': {
                 expand: true,
                 cwd: '<%= examplePath %>',
-                src: [ '**', '!attachments/**', '!config/**' ],
-                dest: '<%= buildPath %>/example'
+                src: [ '**/*.html', '!attachments/**', '!config/**' ],
+                dest: '<%= buildPath %>/example',
+                options: {
+                    process: '<%= processTemplate %>',
+                },
+            },
+
+            'example-images': {
+                expand: true,
+                cwd: '<%= examplePath %>',
+                src: [ '**', '!**/*.html', '!attachments/**', '!config/**' ],
+                dest: '<%= buildPath %>/example',
             },
 
             'themes': {
@@ -76,6 +86,10 @@ module.exports = function( grunt ) {
 
             'build': {
                 src: [ '<%= buildPath %>/**', '!<%= buildPath %>', '!<%= buildPath %>/attachments/**', '!<%= buildPath %>/config/**' ]
+            },
+
+            'themes': {
+                src: [ '<%= buildPath %>/theme/**' ]
             },
 
             'example-data': {
@@ -155,8 +169,13 @@ module.exports = function( grunt ) {
             },
 
             src: {
-                files: [ '<%= srcPath %>/**', 'smk-tags.js', 'lib/**' ],
+                files: [ '<%= srcPath %>/**', 'smk-tags.js', 'lib/**', '!<%= srcPath %>/theme/**' ],
                 tasks: [ 'build' ]
+            },
+
+            themes: {
+                files: [ '<%= srcPath %>/theme/**' ],
+                tasks: [ 'build-themes' ]
             },
 
             test: {
@@ -216,11 +235,13 @@ module.exports = function( grunt ) {
     ] )
 
     grunt.registerTask( 'build-themes', [
+        'clean:themes',
         'copy:themes',
     ] )
 
     grunt.registerTask( 'build-examples', [
         'copy:examples',
+        'copy:example-images',
     ] )
 
     grunt.registerTask( 'build-example-data', [

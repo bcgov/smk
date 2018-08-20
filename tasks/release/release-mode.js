@@ -1,6 +1,7 @@
 module.exports = function( grunt ) {
 
     grunt.config( 'mode', 'release' )
+    grunt.config( 'reload', '' )
 
     grunt.registerTask( 'build-lib', [
         'jshint:lib',

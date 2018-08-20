@@ -1,6 +1,7 @@
 module.exports = function( grunt ) {
 
     grunt.config( 'mode', 'dev' )
+    grunt.config( 'reload', '<script src="//localhost:35729/livereload.js"></script>' )
 
     grunt.registerTask( 'build-lib', [
         'jshint:lib',
