@@ -597,7 +597,8 @@
                 name: 'SMK Default Map',
                 viewer: {
                     type: "leaflet",
-                    device: "desktop",
+                    device: "auto",
+                    deviceAutoBreakpoint: 500,
                     themes: [],
                     location: {
                         extent: [ -139.1782, 47.6039, -110.3533, 60.5939 ],

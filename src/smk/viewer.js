@@ -11,7 +11,8 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
         'pickedLocation',
         'changedLocation',
         'changedPopup',
-        'changedLayerVisibility'
+        'changedLayerVisibility',
+        'changedDevice'
     ] )
 
     function Viewer() {
@@ -240,6 +241,14 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
                     console.warn( e )
                 } )
         } )
+
+        $( window ).resize( SMK.UTIL.makeDelayedCall( function () {
+            var dev = smk.detectDevice()
+            if ( dev ) 
+                self.changedDevice( dev )
+        }, { delay: 500 } ) )
+
+        // self.changedDevice( function ( dev ) { console.log( 'device change', dev ) } )
     }
 
     Viewer.prototype.initializeLayers = function ( smk ) {

@@ -281,7 +281,8 @@ include.module( 'smk-map', [ 'jquery', 'util', 'theme-base' ], function () {
             
             $( self.$container )
                 .addClass( themes.map( function ( th ) { return 'smk-' + th } ).join( ' ' ) )
-                .addClass( 'smk-device-' + self.viewer.device )
+
+            self.detectDevice()
 
             return include( themes )
         }
@@ -425,7 +426,7 @@ include.module( 'smk-map', [ 'jquery', 'util', 'theme-base' ], function () {
 
         if ( this.$sidepanel ) return this.$sidepanel
 
-    return ( this.$sidepanel = include( 'sidepanel' )
+        return ( this.$sidepanel = include( 'sidepanel' )
             .then( function ( inc ) {
                 return new SMK.TYPE.Sidepanel( self )
             } ) )
@@ -453,6 +454,28 @@ include.module( 'smk-map', [ 'jquery', 'util', 'theme-base' ], function () {
         if ( !this.$tool[ toolId ] ) return
 
         return action.call( this.$tool[ toolId ] )
+    }
+
+    SmkMap.prototype.detectDevice = function () {
+        var dev = this.viewer.device
+        if ( dev == 'auto' ) {
+            var w =  $( window ).width()
+            dev = w >= this.viewer.deviceAutoBreakpoint ? 'desktop' : 'mobile'
+        }
+
+        if ( dev == this.$device )
+            return 
+
+        if ( this.$device )
+            $( this.$container )
+                .removeClass( 'smk-device-' + this.$device )
+
+        this.$device = dev
+        
+        $( this.$container )
+            .addClass( 'smk-device-' + this.$device )
+
+        return this.$device
     }
 
 } )
