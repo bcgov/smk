@@ -18,7 +18,7 @@ include.module( 'tool-select', [ 'feature-list', 'widgets', 'tool-select.panel-s
         SMK.TYPE.FeatureList.prototype.constructor.call( this, $.extend( {
             order:              5,
             position:           'menu',
-            title:              'Selection',
+            title:              'Selected Features',
             widgetComponent:    'select-widget',
             panelComponent:     'select-panel'
         }, option ) )

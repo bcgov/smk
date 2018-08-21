@@ -15,7 +15,7 @@ include.module( 'widgets', [ 'vue', 'widgets.tool-button-html' ], function ( inc
         toolButton: Vue.extend( {
             mixins: [ emit ],
             template: inc[ 'widgets.tool-button-html' ],
-            props: [ 'id', 'type', 'title', 'visible', 'enabled', 'active', 'icon', 'showTitle' ],
+            props: { 'id': String, 'type': String, 'title': String, 'visible': Boolean, 'enabled': Boolean, 'active': Boolean, 'icon': String, 'showTitle': Boolean },
             computed: {
                 classes: function () {
                     var c = {}

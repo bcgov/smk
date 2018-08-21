@@ -9,10 +9,14 @@ include.module( 'tool-list-menu', [ 'tool', 'widgets', 'tool-list-menu.panel-lis
         extends: inc.widgets.toolButton,
     } )
 
+    Vue.component( 'list-menu-close', {
+        extends: inc.widgets.toolButton,
+    } )
+
     Vue.component( 'list-menu-panel', {
         extends: inc.widgets.toolPanel,
         template: inc[ 'tool-list-menu.panel-list-menu-html' ],
-        props: [ 'visible', 'enabled', 'active', 'currentPanel', 'previousPanelTitle' ]
+        props: [ 'visible', 'enabled', 'active', 'currentPanel', 'panelTitle', 'previousPanelTitle' ]
     } )
 
     Vue.component( 'tool-list-panel', {
@@ -27,7 +31,7 @@ include.module( 'tool-list-menu', [ 'tool', 'widgets', 'tool-list-menu.panel-lis
             {
                 panelComponent: 'tool-list-panel',
                 panel: {
-                    title: 'Menu',
+                    title: null,
                     subWidgets: []
                 }
             }            
@@ -38,13 +42,16 @@ include.module( 'tool-list-menu', [ 'tool', 'widgets', 'tool-list-menu.panel-lis
         this.makePropWidget( 'icon', 'menu' )
 
         this.makePropPanel( 'currentPanel', this.panelStack[ 0 ] )
+        this.makePropPanel( 'panelTitle', null )
         this.makePropPanel( 'previousPanelTitle', null )
 
         SMK.TYPE.Tool.prototype.constructor.call( this, $.extend( {
-            title:          null,
+            title:          'Menu',
             widgetComponent:'list-menu-widget',
             panelComponent: 'list-menu-panel',
         }, option ) )
+
+        this.panelTitle = this.panelStack[ 0 ].panel.title = this.title
     }
 
     SMK.TYPE.ListMenuTool = ListMenuTool
@@ -66,9 +73,16 @@ include.module( 'tool-list-menu', [ 'tool', 'widgets', 'tool-list-menu.panel-lis
                 if ( self.panelStack.length == 1 ) {
                     self.activeTool.active = false
                     self.activeTool = null
+                    self.panelTitle = self.currentPanel.panel.title
                     self.previousPanelTitle = null
                 }
 
+            }
+        } )
+
+        smk.on( 'close', {
+            'activate': function () {
+                self.active = false
             }
         } )
 
@@ -114,8 +128,9 @@ include.module( 'tool-list-menu', [ 'tool', 'widgets', 'tool-list-menu.panel-lis
                 self.panelStack.splice( 1 )
                 self.panelStack.push( {
                     panelComponent: tool.panelComponent,
-                    panel:          tool.panel
+                    panel:          Object.assign( {}, tool.panel, { title: null } )
                 } )
+                self.panelTitle = tool.panel.title
                 self.previousPanelTitle = self.panelStack[ self.panelStack.length - 2 ].panel.title 
 
                 self.currentPanel = self.panelStack[ 1 ]

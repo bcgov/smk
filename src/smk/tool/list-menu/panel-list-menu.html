@@ -8,10 +8,20 @@
             type="previous-panel"  
             icon="arrow_back" 
             v-bind:title="previousPanelTitle" 
-            showTitle="true" 
-            visible="true" 
+            visible
             v-bind:enabled="previousPanelTitle"
         ></list-menu-previous-panel>
+
+        <div class="smk-title">{{ panelTitle }}</div>
+
+        <list-menu-close
+            id="close" 
+            type="close"  
+            icon="close" 
+            title="Close" 
+            visible
+            enabled
+        ></list-menu-close>
     </template>
 
     <component class="smk-panel"

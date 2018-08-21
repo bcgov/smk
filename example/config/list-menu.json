@@ -55,8 +55,9 @@
     {
       "type": "about",
       "enabled": true,
-      "content": "",
-      "position": "list-menu"
+      "content": "All about the app, and how awesome it is!",
+      "position": "list-menu",
+      "title": "About the App"
     },
     {
       "type": "baseMaps",
@@ -83,7 +84,8 @@
     },
     {
       "type": "list-menu",
-      "enabled": true
+      "enabled": true,
+      "title": "The App"
     }
   ],
   "layers": [

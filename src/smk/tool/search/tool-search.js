@@ -96,7 +96,7 @@ include.module( 'tool-search', [ 'tool', 'widgets', 'tool-search.widget-search-h
 
         SMK.TYPE.Tool.prototype.constructor.call( this, $.extend( {
             order:      2,
-            title:      'Search',
+            title:      'Search for Location',
             widgetComponent: 'search-widget',
             panelComponent: 'search-panel',
         }, option ) )
