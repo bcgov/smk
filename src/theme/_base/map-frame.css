@@ -6,28 +6,7 @@
     visibility: hidden;
 }
 
-.smk-map-frame .smk-toplevel.smk-spinner {
-    z-index: 99999;
-    visibility: visible;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 64px;
-    height: 64px;
-    margin-top: -32px;
-    margin-left: -32px;
-}
-
-.smk-map-frame .smk-toplevel.smk-status {
-    z-index: 99999;
-    visibility: visible;
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    text-align: center;
-    padding-bottom: 30px;
-}
+/*************************************************************/
 
 .smk-map-frame .smk-viewer {
     position: absolute;
@@ -38,16 +17,18 @@
     z-index: 1;
 }
 
+/*************************************************************/
+
 .smk-map-frame .smk-overlay {
     position: absolute;
-    top: 7px;
-    left: 7px;
-    right: 7px;
-    bottom: 7px;
+    top: var( --overlay-padding );
+    left: var( --overlay-padding );
+    right: var( --overlay-padding );
+    bottom: var( --overlay-padding );
     z-index: 2;
     border-radius: 5px;
-    /* border: 1px solid black; */
     pointer-events: none;
+    /* border: 1px solid black; */  
 }
 
 .smk-map-frame .smk-overlay .smk-status {
@@ -58,74 +39,6 @@
     display: flex;
     flex-direction: column-reverse;
     align-items: flex-end;
-}
-
-/*************************************************************/
-
-.smk-map-frame .smk-command {
-    cursor: pointer;
-    color: blue;
-    padding: 2px;
-    border: 1px solid transparent;
-    border-radius: 5px;
-    margin-left: -2px;
-    font-size: 12px;
-    user-select: none;
-}
-
-.smk-map-frame .smk-command.smk-icon {
-    color: black;
-    padding: 0;
-    width: 26px;
-    height: 26px;
-    font-size: 24px;
-}
-
-.smk-map-frame .smk-command.smk-disabled {
-    color: lightgray;
-    font-style: italic;
-}
-
-.smk-map-frame .smk-command.smk-icon.smk-disabled {
-    font-style: normal;
-}
-
-.smk-map-frame .smk-command:hover {
-    border: 1px solid black;
-}
-
-.smk-map-frame .smk-command.smk-disabled:hover {
-    border: 1px solid transparent;
-}
-
-.smk-map-frame select.smk-command {
-    background-color: white;
-}
-
-.smk-map-frame select.smk-command:focus {
-    outline: 0;
-}
-
-.smk-map-frame .smk-commands {
-    margin-bottom: 1px;
-}
-
-.smk-map-frame .smk-active, .smk-tool-active {
-    background-color: #d2d9e6;
-}
-
-.smk-map-frame .smk-item {
-    border-radius: 5px;
-    margin-bottom: 1px;
-    cursor: default;
-}
-
-.smk-map-frame .smk-item:hover {
-    background-color: #d2d9e6;
-}
-
-.smk-map-frame .smk-item.smk-disabled:hover {
-    background-color: transparent;
 }
 
 /*************************************************************/
@@ -148,6 +61,7 @@
     font-size: 14px;
 }
 
+/*************************************************************/
 
 .smk-map-frame .smk-address {
 }
@@ -168,22 +82,3 @@
     font-size: 10px;
 }
 
-/* style resets */
-
-/* https://gist.github.com/retyui/b71c6cfca2d265c8c3c108fa39c7c88a */
-
-.smk-map-frame select {
-    background: #fff;
-    border: 1px solid #eee;
-    border-radius: 3px;
-    padding: 3px 22px 3px 3px;
-    background-image: url("data:image/svg+xml, %3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M7.406 7.828l4.594 4.594 4.594-4.594 1.406 1.406-6 6-6-6z'%3E%3C/path%3E%3C/svg%3E");
-    background-position: calc(100% - 3px) 50%;
-    background-repeat: no-repeat;
-    background-size: 16px;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-}
-.smk-map-frame select::-ms-expand {
-    display: none;
-}

@@ -25,11 +25,11 @@ include.module( 'smk-map', [ 'jquery', 'util', 'theme-base' ], function () {
         $( this.$container )
             .addClass( 'smk-map-frame smk-hidden' )
 
-        var spinner = $( '<img class="smk-toplevel smk-spinner">' )
+        var spinner = $( '<img class="smk-startup smk-spinner">' )
             .attr( 'src', include.option( 'baseUrl' ) + '/images/spinner.gif' )
             .appendTo( this.$container )
 
-        var status = $( '<div class="smk-toplevel smk-status">' )
+        var status = $( '<div class="smk-startup smk-status">' )
             .text( 'Reticulating splines...' )
             .appendTo( this.$container )
 
