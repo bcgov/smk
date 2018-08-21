@@ -16,6 +16,8 @@ include.module( 'tool-coordinate', [ 'tool', 'tool-coordinate.coordinate-html' ]
     SMK.TYPE.CoordinateTool.prototype.afterInitialize.push( function ( smk ) {
         var self = this
 
+        if ( smk.$device == 'mobile' ) return
+
         this.model = {
             latitude: null,
             longitude: null,

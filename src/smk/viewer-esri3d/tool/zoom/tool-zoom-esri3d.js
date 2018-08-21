@@ -2,6 +2,7 @@ include.module( 'tool-zoom-esri3d', [ 'tool-zoom', 'esri3d' ], function () {
     "use strict";
 
     SMK.TYPE.ZoomTool.prototype.afterInitialize.push( function ( smk ) {
+        if ( smk.$device == 'mobile' ) return
 
         if ( this.mouseWheel !== false ) {
             smk.$viewer.zoomHandler.mouseWheel.remove()

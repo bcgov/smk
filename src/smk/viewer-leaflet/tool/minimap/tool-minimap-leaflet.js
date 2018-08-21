@@ -2,6 +2,8 @@ include.module( 'tool-minimap-leaflet', [ 'leaflet', 'tool-minimap' ], function 
     "use strict";
 
     SMK.TYPE.MinimapTool.prototype.afterInitialize.push( function ( smk ) {
+        if ( smk.$device == 'mobile' ) return
+
         smk.addToStatus( $( '<div class="smk-spacer">' ).height( 170 ).get( 0 ) )
 
         var ly = smk.$viewer.createBasemapLayer( this.baseMap || "Topographic" );
