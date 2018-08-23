@@ -3,16 +3,38 @@
     margin-bottom: 0;
 }
 
-.smk-sidepanel .smk-panel.smk-list-menu-panel > .smk-header .smk-commands {
+.smk-sidepanel .smk-panel.smk-list-menu-panel > .smk-header > .smk-commands {
     display: flex;
     justify-content: space-between;    
-    align-items: center;
+    align-items: flex-start;
+}
+
+.smk-sidepanel .smk-panel.smk-list-menu-panel > .smk-header > .smk-commands .smk-title {
+    margin-top: 5px;
+}
+
+.smk-sidepanel .smk-panel.smk-list-menu-panel > .smk-header > .smk-commands .smk-title h2 {
+    font-size: 18px;
+    margin: 0;
+    padding: 0;
+}
+
+.smk-sidepanel .smk-panel.smk-list-menu-panel > .smk-header > .smk-commands .smk-title h3 {
+    font-size: 13px;
+    margin: 0;
+    padding: 0;
 }
 
 .smk-sidepanel .smk-panel.smk-list-menu-panel > .smk-body {
     padding-left: 0;
     padding-right: 0;
     padding-bottom: 0;
+    overflow-y: hidden;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
 }
 
 .smk-sidepanel .smk-panel.smk-list-menu-panel .smk-header .smk-commands .smk-previous-panel-tool span {
