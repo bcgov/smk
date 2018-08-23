@@ -36,7 +36,7 @@ include.module( 'tool-about', [ 'tool', 'widgets', 'tool-about.panel-about-html'
 
         smk.on( this.id, {
             'activate': function () {
-                if ( !self.visible || !self.enabled ) return
+                if ( !self.enabled ) return
 
                 self.active = !self.active
             }

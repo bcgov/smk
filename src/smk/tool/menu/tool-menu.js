@@ -37,7 +37,7 @@ include.module( 'tool-menu', [ 'tool', 'widgets', 'tool-menu.panel-menu-html' ],
 
         smk.on( this.id, {
             'activate': function () {
-                if ( !self.visible || !self.enabled ) return
+                if ( !self.enabled ) return
 
                 self.active = !self.active
             }

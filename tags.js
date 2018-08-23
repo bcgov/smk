@@ -80,6 +80,9 @@ t.group( 'tool-directions' )
 t.group( 'tool-dropdown' )
     .dir( 'smk/tool/dropdown/*' )
 
+t.group( 'check-identify' )
+    .dir( 'smk/tool/identify/check/*' )
+
 t.group( 'tool-identify' )
     .dir( 'smk/tool/identify/*' )
 

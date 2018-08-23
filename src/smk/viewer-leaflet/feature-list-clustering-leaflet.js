@@ -35,7 +35,11 @@ include.module( 'feature-list-clustering-leaflet', [ 'leaflet', 'feature-list-le
             } )
 
         self.changedActive( function () {
-            if ( self.active ) {
+            self.visible = self.active
+        } )
+
+        self.changedVisible( function () {
+            if ( self.visible ) {
                 self.cluster.addTo( smk.$viewer.map )
             }
             else {
@@ -76,7 +80,7 @@ include.module( 'feature-list-clustering-leaflet', [ 'leaflet', 'feature-list-le
             } )
         } )
 
-        if ( self.showFeatures == 'popup' ) {
+        if ( !self.showFeatures || self.showFeatures == 'identify-popup' ) {
             self.featureSet.pickedFeature( function ( ev ) {
                 if ( !ev.feature ) return
 

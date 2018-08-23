@@ -29,13 +29,8 @@
       "type": "identify",
       "enabled": true,
       "position": "list-menu",
-      "showFeatures": "identify-features",
+      "showFeatures": "identify-feature",
       "debugView": true
-    },
-    {
-      "type": "identify-feature",
-      "enabled": true,
-      "position": "list-menu"
     },
     {
       "type": "pan",

@@ -60,7 +60,7 @@ include.module( 'tool-measure', [ 'tool', 'widgets', 'tool-measure.panel-measure
 
         smk.on( this.id, {
             'activate': function () {
-                if ( !self.visible || !self.enabled ) return
+                if ( !self.enabled ) return
 
                 self.active = !self.active
             },

@@ -40,7 +40,7 @@ include.module( 'tool-version', [ 'tool', 'widgets', 'tool-version.panel-version
 
         smk.on( this.id, {
             'activate': function () {
-                if ( !self.visible || !self.enabled ) return
+                if ( !self.enabled ) return
 
                 self.active = !self.active
             }

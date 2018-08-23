@@ -113,7 +113,7 @@ include.module( 'tool-search', [ 'tool', 'widgets', 'tool-search.widget-search-h
 
         smk.on( this.id, {
             'activate': function ( ev ) {
-                if ( !self.visible || !self.enabled ) return
+                if ( !self.enabled ) return
 
                 if ( ev.toggle )
                     self.active = !self.active

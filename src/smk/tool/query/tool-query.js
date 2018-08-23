@@ -171,7 +171,7 @@ include.module( 'tool-query', [ 'feature-list', 'widgets', 'tool-query.panel-que
 
         smk.on( this.id, {
             'activate': function () {
-                if ( !self.visible || !self.enabled ) return
+                if ( !self.enabled ) return
 
                 self.active = !self.active
             },

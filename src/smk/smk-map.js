@@ -293,8 +293,13 @@ include.module( 'smk-map', [ 'jquery', 'util', 'theme-base' ], function () {
             if ( enabledTools.length == 0 ) return
 
             return SMK.UTIL.waitAll( enabledTools.map( function ( t ) {
-                return include( 'check-' + t.type )
+                var tag = 'check-' + t.type
+                return include( tag )
                     .then( function ( inc ) {
+                        if ( inc[ tag ] && typeof( inc[ tag ] ) == 'function' )
+                            return inc[ tag ]( self, t )
+                    } )
+                    .then( function () {
                         console.log( 'checked tool "' + t.type + '"' )
                     } )
                     .catch( function ( e ) {

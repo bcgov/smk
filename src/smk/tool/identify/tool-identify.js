@@ -42,10 +42,11 @@ include.module( 'tool-identify', [ 'feature-list', 'widgets', 'tool-identify.pan
 
         self.changedActive( function () {
             if ( self.active ) {
-                // if ( self.firstId )
-                //     setTimeout( function () {
-                //         smk.$viewer.identified.pick( self.firstId )
-                //     }, 50 )
+                if ( !self.showFeatures || self.showFeatures == 'identify-popup' )
+                    if ( self.firstId )
+                        setTimeout( function () {
+                            smk.$viewer.identified.pick( self.firstId )
+                        }, 50 )
             }
         } )
 
@@ -60,7 +61,7 @@ include.module( 'tool-identify', [ 'feature-list', 'widgets', 'tool-identify.pan
 
         smk.on( this.id, {
             'activate': function () {
-                if ( !self.visible || !self.enabled ) return
+                if ( !self.enabled ) return
 
                 self.active = !self.active
             },
@@ -93,7 +94,8 @@ include.module( 'tool-identify', [ 'feature-list', 'widgets', 'tool-identify.pan
                 self.setMessage( 'No features found', 'warning' )
             }
             else {
-                smk.$viewer.identified.pick( self.firstId )
+                if ( !self.showFeatures || self.showFeatures == 'identify-popup' )
+                    smk.$viewer.identified.pick( self.firstId )
 
                 var stat = smk.$viewer.identified.getStats()
 

@@ -37,12 +37,9 @@ include.module( 'tool-list-menu', [ 'tool', 'widgets', 'tool-list-menu.panel-lis
             }            
         ]
 
-        // this.activeTool = null
-
         this.makePropWidget( 'icon', 'menu' )
 
         this.makePropPanel( 'currentTool', this.toolStack[ 0 ] )
-        // this.makePropPanel( 'panelTitle', null )
         this.makePropPanel( 'previousTool', null )
 
         SMK.TYPE.Tool.prototype.constructor.call( this, $.extend( {
@@ -51,7 +48,7 @@ include.module( 'tool-list-menu', [ 'tool', 'widgets', 'tool-list-menu.panel-lis
             panelComponent: 'list-menu-panel',
         }, option ) )
 
-        // this.panelTitle = this.toolStack[ 0 ].hear from panel.title = this.title
+        this.toolStack[ 0 ].panel.title = this.title
     }
 
     SMK.TYPE.ListMenuTool = ListMenuTool
@@ -66,19 +63,6 @@ include.module( 'tool-list-menu', [ 'tool', 'widgets', 'tool-list-menu.panel-lis
         smk.on( 'previous-panel', {
             'activate': function () {
                 self.popTool()
-                // if ( self.toolStack.length == 1 ) return
-
-                // self.activeTool.active = false
-                // self.toolStack.pop()
-                // self.currentTool = self.toolStack[ self.toolStack.length - 1 ]
-
-                // if ( self.toolStack.length == 1 ) {
-                //     self.activeTool.active = false
-                //     self.activeTool = null
-                //     self.panelTitle = self.currentTool.panel.title
-                //     self.previousPanelTitle = null
-                // }
-
             }
         } )
 
@@ -90,7 +74,7 @@ include.module( 'tool-list-menu', [ 'tool', 'widgets', 'tool-list-menu.panel-lis
 
         smk.on( this.id, {
             'activate': function () {
-                if ( !self.visible || !self.enabled ) return
+                if ( !self.enabled ) return
 
                 self.active = !self.active
             },
@@ -116,20 +100,14 @@ include.module( 'tool-list-menu', [ 'tool', 'widgets', 'tool-list-menu.panel-lis
         this.previousTool = this.toolStack[ top - 2 ]
 
         return this.toolStack.length
-        // self.activeTool.active = false
-        // self.toolStack.pop()
-        // self.currentTool = self.toolStack[ self.toolStack.length - 1 ]
-
-        // if ( self.toolStack.length == 1 ) {
-        //     self.activeTool.active = false
-        //     self.activeTool = null
-        //     self.panelTitle = self.currentTool.panel.title
-        //     self.previousPanelTitle = null
-        // }
     }
 
     ListMenuTool.prototype.pushTool = function ( tool ) {
         console.log( 'push', tool.id, this.toolStack.length )
+
+        if ( this.currentTool && this.currentTool.id == tool.id )
+            return
+
         if ( tool.widgetComponent )
             while ( this.popTool() > 1 ) {}
 
@@ -158,35 +136,13 @@ include.module( 'tool-list-menu', [ 'tool', 'widgets', 'tool-list-menu.panel-lis
         tool.changedActive( function () {
             console.log( tool.id, tool.active, self.currentTool && self.currentTool.id )
             if ( tool.active ) {
-                // if ( self.activeTool && self.activeTool.id != tool.id ) {
-                //     var prev = self.activeTool
-                //     self.activeTool = tool
-                //     prev.active = false
-                // }
-                // else if ( !self.activeTool ) {
-                //     self.activeTool = tool
-                // }
-                
+               
                 self.active = true
-                
-                if ( self.currentTool.id != tool.id )
-                    self.pushTool( tool )
-                // if ( tool.widgetComponent )
-                //     self.toolStack.splice( 1 )
 
-                // self.toolStack.push( {
-                //     panelComponent: tool.panelComponent,
-                //     panel:          tool.panel
-                // } )
-                // self.panelTitle = tool.panel.title
-                // // self.toolStack[ self.toolStack.length - 1 ].panel.title = null
-                // self.previousPanelTitle = self.toolStack[ self.toolStack.length - 2 ].panel.title 
-
-                // self.currentTool = self.toolStack[ self.toolStack.length - 1 ]
+                // if ( self.currentTool.id != tool.id )
+                self.pushTool( tool )
             }
             else {
-                // if ( self.activeTool &&  self.activeTool.id == tool.id )
-                    // self.activeTool = null
             }
         } )
     }

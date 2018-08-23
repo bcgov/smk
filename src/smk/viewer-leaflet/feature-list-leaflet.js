@@ -37,7 +37,11 @@ include.module( 'feature-list-leaflet', [ 'leaflet', 'feature-list' ], function 
         } )
 
         self.changedActive( function () {
-            if ( self.active ) {
+            self.visible = self.active
+        } )
+
+        self.changedVisible( function () {
+            if ( self.visible ) {
                 self.featureHighlights.addTo( smk.$viewer.map )
             }
             else {

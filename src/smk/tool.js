@@ -13,7 +13,7 @@ include.module( 'tool', [ 'jquery', 'event' ], function () {
 
         this.makeProp( 'id', null )
         this.makeProp( 'title', null )
-        this.makeProp( 'visible', true, 'changedVisible' )
+        this.makeProp( 'visible', false, 'changedVisible' )
         this.makeProp( 'enabled', true, 'changedEnabled' )
         this.makeProp( 'active', false, 'changedActive' )
 
@@ -45,6 +45,7 @@ include.module( 'tool', [ 'jquery', 'event' ], function () {
         Object.defineProperty( self, name, {
             get: function () { return self.widget[ name ] },
             set: function ( v ) {
+                // console.warn( self.id, name, v )                
                 if ( v == self.widget[ name ] ) return
                 self.widget[ name ] = v
                 self.panel[ name ] = v

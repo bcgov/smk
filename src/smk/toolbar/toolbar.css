@@ -22,7 +22,7 @@
 }
 
 .smk-tool {
-    display: none;
+    display: inline-block;
     opacity: 0.5;
     border-radius: 3px;
     border: 1px solid transparent;
@@ -40,9 +40,9 @@
     background-color: white;
 }
 
-.smk-tool.smk-tool-visible {
+/* .smk-tool.smk-tool-visible {
     display: inline-block;
-}
+} */
 
 .smk-tool.smk-tool-enabled {
     opacity: 1.0;

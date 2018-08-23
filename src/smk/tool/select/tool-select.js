@@ -41,7 +41,7 @@ include.module( 'tool-select', [ 'feature-list', 'widgets', 'tool-select.panel-s
 
         smk.on( this.id, {
             'activate': function () {
-                if ( !self.visible || !self.enabled ) return
+                if ( !self.enabled ) return
 
                 self.active = !self.active
             },

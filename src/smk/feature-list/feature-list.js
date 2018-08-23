@@ -327,11 +327,6 @@ include.module( 'feature-list', [ 'tool', 'widgets',
     } )
 
     function FeaturePanel( option ) {
-        // this.makePropPanel( 'busy', false )
-        // this.makePropPanel( 'layers', [] )
-        // this.makePropPanel( 'highlightId', null )
-        // this.makePropPanel( 'statusMessage', null )
-
         this.makePropPanel( 'feature', null )
         this.makePropPanel( 'layer', null )
         this.makePropPanel( 'attributeComponent', null )

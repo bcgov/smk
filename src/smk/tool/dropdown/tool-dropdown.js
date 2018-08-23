@@ -43,7 +43,7 @@ include.module( 'tool-dropdown', [ 'tool', 'widgets', 'tool-dropdown.panel-dropd
 
         smk.on( this.id, {
             'activate': function () {
-                if ( !self.visible || !self.enabled ) return
+                if ( !self.enabled ) return
 
                 self.active = !self.active
             },
