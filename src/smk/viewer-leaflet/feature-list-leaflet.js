@@ -7,7 +7,7 @@ include.module( 'feature-list-leaflet', [ 'leaflet', 'feature-list' ], function 
         this.highlight = {}
         this.featureHighlights = L.layerGroup( { pane: 'markerPane' } )
 
-        if ( this.showPanel ) {
+        if ( this.showPanel || this.showFeatures == "identify-feature" ) {
             this.tlPadding = L.point( 340, 40 )
             this.brPadding = L.point( 40, 40 )
         }

@@ -23,6 +23,11 @@ include.module( 'tool-identify-feature', [ 'feature-list' ], function ( inc ) {
     IdentifyFeatureTool.prototype.afterInitialize.push( function ( smk ) {
         var self = this
 
+        var featureIds
+
+        this.tool.select = smk.$tool.select
+        this.tool.zoom = smk.$tool.zoom
+
         self.changedActive( function () {
             if ( self.active ) {
                 smk.$tool[ 'identify' ].visible = true
@@ -33,13 +38,32 @@ include.module( 'tool-identify-feature', [ 'feature-list' ], function ( inc ) {
             }
         } )
 
-        // smk.on( this.id, {
-        //     'activate': function () {
-        //         if ( !self.enabled ) return
+        smk.on( this.id, {
+            'zoom': function () {
+                self.featureSet.zoomTo( featureIds[ self.resultPosition ] )
+            },
+            'select': function () {
+                var f = self.featureSet.get( featureIds[ self.resultPosition ] )
+                smk.$viewer.selected.add( f.layerId, [ f ] )
+            },
+            'directions': console.log,
+            'move-previous': function () {
+                self.featureSet.pick( featureIds[ ( self.resultPosition + self.resultCount - 1 ) % self.resultCount ] )
+            },
+            'move-next': function () {
+                self.featureSet.pick( featureIds[ ( self.resultPosition + 1 ) % self.resultCount ] )
+            },
+        } )
 
-        //         self.active = !self.active
-        //     },
-        // } )
+        self.featureSet.addedFeatures( function ( ev ) {
+            self.resultCount = self.featureSet.getStats().featureCount 
+
+            featureIds =  Object.keys( self.featureSet.featureSet )
+        } )
+
+        self.featureSet.clearedFeatures( function ( ev ) {
+            self.resultCount = 0
+        } )
 
         self.featureSet.pickedFeature( function ( ev ) {
             if ( !ev.feature ) {
@@ -72,6 +96,8 @@ include.module( 'tool-identify-feature', [ 'feature-list' ], function ( inc ) {
             self.title = '<h3>' + self.layer.title + '</h3>' + '<h2>' + self.feature.title + '</h2>'
 
             self.setAttributeComponent( ly, ev.feature )
+
+            self.resultPosition = featureIds.indexOf( ev.feature.id )
         } )
 
     } )

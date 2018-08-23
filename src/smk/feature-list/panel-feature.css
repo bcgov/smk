@@ -63,10 +63,12 @@
     /* border-top: 1px solid gray; */
     padding-top: 5px;
     user-select: none;
+}
 
+.smk-feature-panel .smk-commands .smk-command-row {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: flex-start;
     align-content: flex-end;
 }
@@ -83,8 +85,8 @@
     justify-content: flex-end;
     align-items: center;
     align-content: flex-end;
-    margin-top: -4px;
-    margin-right: -6px;
+    /* margin-top: -4px; */
+    /* margin-right: -6px; */
 }
 
 .smk-feature-panel .smk-navigator.smk-hidden {
