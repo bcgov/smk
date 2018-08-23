@@ -1,16 +1,5 @@
-<div class="smk-feature-popup" v-if="layer">
-    <component class="smk-feature"
-        v-bind:key="layer.id"
-        v-bind:is="attributeView == 'default' ? attributeComponent : attributeView"
-        v-bind="{
-            layer:   layer,
-            feature: feature,
-            showHeader: true
-        }"
-    >
-    </component>
-
-    <div class="smk-commands">
+<side-panel class="smk-feature-panel">
+    <template slot="commands">
         <span class="smk-command"
             v-if="tool.zoom"
             v-on:click="zoomToFeature( layer.id, feature.id )"
@@ -26,8 +15,8 @@
             v-on:click="startDirections()"
         >Directions to here</span>
 
+            <!-- v-if="tool.attributeView" -->
         <select class="smk-command"
-            v-if="tool.attributeView"
             v-model="attributeView"
         >
             <option value="default">Default View</option>        
@@ -38,18 +27,27 @@
         </select>
 
         <span class="smk-navigator"
-            v-bind:class="{ 'smk-hidden': !hasMultiple }"
+            v-bind:class="{ 'smk-hidden': !hasMultiple }" 
         >
             <i class="material-icons smk-move smk-command smk-icon"
                 v-on:click="movePrevious()"
             >navigate_before</i>
 
             <span class="smk-position"
-            >{{ position }}</span>
+            >{{ resultPosition }} of {{ resultCount }}</span>
 
             <i class="material-icons smk-move smk-command smk-icon"
                 v-on:click="moveNext()"
             >navigate_next</i>
         </span>
-    </div>
-</div>
+    </template>
+
+    <component class="smk-feature"
+        v-bind:key="layer.id"
+        v-bind:is="attributeView == 'default' ? attributeComponent : attributeView"
+        v-bind="{
+            layer:   layer,
+            feature: feature,
+        }"
+    ></component>
+</side-panel>

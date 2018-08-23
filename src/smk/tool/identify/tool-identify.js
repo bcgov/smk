@@ -20,7 +20,8 @@ include.module( 'tool-identify', [ 'feature-list', 'widgets', 'tool-identify.pan
             title:              'Identify Results',
             widgetComponent:    'identify-widget',
             panelComponent:     'identify-panel',
-            showPanel:          false
+            showPanel:          false,
+            showFeatures:       'popup'
         }, option ) )
     }
 
@@ -41,10 +42,10 @@ include.module( 'tool-identify', [ 'feature-list', 'widgets', 'tool-identify.pan
 
         self.changedActive( function () {
             if ( self.active ) {
-                if ( self.firstId )
-                    setTimeout( function () {
-                        smk.$viewer.identified.pick( self.firstId )
-                    }, 50 )
+                // if ( self.firstId )
+                //     setTimeout( function () {
+                //         smk.$viewer.identified.pick( self.firstId )
+                //     }, 50 )
             }
         } )
 

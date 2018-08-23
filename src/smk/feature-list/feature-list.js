@@ -3,7 +3,8 @@ include.module( 'feature-list', [ 'tool', 'widgets',
     'feature-list.popup-feature-html',
     'feature-list.feature-attributes-html',
     'feature-list.feature-properties-html',
-    'feature-list.feature-description-html'
+    'feature-list.feature-description-html',
+    'feature-list.panel-feature-html'
 ], function ( inc ) {
     "use strict";
 
@@ -22,7 +23,7 @@ include.module( 'feature-list', [ 'tool', 'widgets',
     } )
 
     var featurePopup = Vue.extend( {
-        props: [ 'feature', 'layer' ],
+        props: [ 'feature', 'layer', 'showHeader' ],
         methods: {
             insertWordBreaks: function ( str ) {
                 return str.replace( /[^a-z0-9 ]+/ig, function ( m ) { return '<wbr>' + m } )
@@ -312,6 +313,93 @@ include.module( 'feature-list', [ 'tool', 'widgets',
         if ( delay )
             return SMK.UTIL.makePromise( function ( res ) { setTimeout( res, delay ) } )
     }
+    // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+    //
+    Vue.component( 'feature-panel', {
+        extends: inc.widgets.toolPanel,
+        template: inc[ 'feature-list.panel-feature-html' ],
+        props: [ 'feature', 'layer', 'attributeComponent', 'tool', 'hasMultiple', 'resultPosition', 'resultCount' ],
+        data: function () {
+            return {
+                'attributeView': 'default'
+            }
+        }
+    } )
 
+    function FeaturePanel( option ) {
+        // this.makePropPanel( 'busy', false )
+        // this.makePropPanel( 'layers', [] )
+        // this.makePropPanel( 'highlightId', null )
+        // this.makePropPanel( 'statusMessage', null )
+
+        this.makePropPanel( 'feature', null )
+        this.makePropPanel( 'layer', null )
+        this.makePropPanel( 'attributeComponent', null )
+        this.makePropPanel( 'tool', {} )
+        this.makePropPanel( 'hasMultiple', false )
+        this.makePropPanel( 'resultPosition', null )
+        this.makePropPanel( 'resultCount', null )
+        this.makePropPanel( 'attributeView', 'default' )
+
+        SMK.TYPE.Tool.prototype.constructor.call( this, $.extend( {
+            // debugView: false
+        }, option ) )
+    }
+
+    SMK.TYPE.FeaturePanel = FeaturePanel
+
+    $.extend( FeaturePanel.prototype, SMK.TYPE.Tool.prototype )
+    FeaturePanel.prototype.afterInitialize = []
+
+    FeaturePanel.prototype.setAttributeComponent = function ( layer, feature ) {
+        if ( layer.config.popupTemplate ) {
+            var template
+
+            if ( layer.config.popupTemplate.startsWith( '@' ) ) {
+                this.attributeComponent = layer.config.popupTemplate.substr( 1 )
+            }
+            else {
+                this.attributeComponent = 'feature-template-' + layer.config.id
+                template = layer.config.popupTemplate
+            }
+
+            if ( !Vue.component( this.attributeComponent ) ) {
+                if ( template ) {
+                    try {
+                        Vue.component( this.attributeComponent, {
+                            template:           template,
+                            extends:            featurePopup,
+                        } )
+                    }
+                    catch ( e ) {
+                        console.warn( 'failed compiling template:', this.attributeComponent, e )
+                        layer.config.popupTemplate = null
+                    }
+                }
+                else {
+                    console.warn( 'component not found:', this.attributeComponent )
+                    layer.config.popupTemplate = null
+                }
+            }
+
+            if ( Vue.component( this.attributeComponent ) )
+                return
+        }
+
+        if ( feature.properties.description ) {
+            this.attributeComponent = 'feature-description'
+            return
+        }
+
+        if ( layer.config.attributes ) {
+            this.attributeComponent = 'feature-attributes'
+            return
+        }
+
+        this.attributeComponent = 'feature-properties'
+    }
+
+    // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+    //
     return FeatureList
 } )

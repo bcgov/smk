@@ -7,12 +7,12 @@
             id="previous-panel" 
             type="previous-panel"  
             icon="arrow_back" 
-            v-bind:title="previousPanelTitle" 
+            v-bind:title="previousTool && previousTool.title" 
             visible
-            v-bind:enabled="previousPanelTitle"
+            v-bind:enabled="!!previousTool"
         ></list-menu-previous-panel>
 
-        <div class="smk-title">{{ panelTitle }}</div>
+        <div class="smk-title" v-html="currentTool.panel.title"></div>
 
         <list-menu-close
             id="close" 
@@ -25,8 +25,9 @@
     </template>
 
     <component class="smk-panel"
-        v-bind:is="currentPanel.panelComponent"
-        v-bind="currentPanel.panel"
+        v-bind:is="currentTool.panelComponent"
+        v-bind="currentTool.panel"
+        title=""
     ></component>
 
 </side-panel>
