@@ -45,8 +45,8 @@ include.module( 'tool', [ 'jquery', 'event' ], function () {
         Object.defineProperty( self, name, {
             get: function () { return self.widget[ name ] },
             set: function ( v ) {
-                // console.warn( self.id, name, v )                
                 if ( v == self.widget[ name ] ) return
+                // console.warn( self.id, name, v )                
                 self.widget[ name ] = v
                 self.panel[ name ] = v
                 if ( event ) self[ event ].call( self )
@@ -108,8 +108,7 @@ include.module( 'tool', [ 'jquery', 'event' ], function () {
                 if ( self.widgetComponent )
                     objs[ 0 ].add( self )
 
-                if ( self.panelComponent )
-                    objs[ 1 ].add( self )
+                objs[ 1 ].add( self )
             }
             else {
                 smk.$tool[ self.position ].addTool( self )
@@ -119,11 +118,6 @@ include.module( 'tool', [ 'jquery', 'event' ], function () {
                 init.call( self, smk )
             } )
         } )
-    }
-    // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
-    //
-    Tool.prototype.hasPickPriority = function ( toolIdSet ) {
-        return false
     }
 
     return Tool

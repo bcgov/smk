@@ -81,6 +81,12 @@ include.module( 'tool-list-menu', [ 'tool', 'widgets', 'tool-list-menu.panel-lis
         } )
 
         self.changedActive( function () {
+            if ( self.active ) {
+                self.currentTool.active = true
+            }
+            else {
+                self.currentTool.active = false
+            }
         } )
     } )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _

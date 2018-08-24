@@ -15,24 +15,35 @@ include.module( 'tool-location-leaflet', [ 'leaflet', 'tool-location' ], functio
     SMK.TYPE.LocationTool.prototype.afterInitialize.push( function ( smk ) {
         var self = this
 
-        this.popup = L.popup( {
-            maxWidth: 100,
-            closeButton: false,
+        self.changedActive( function () {
+            self.visible = self.active
         } )
-        .setContent( function () { return self.vm.$el } )
 
         this.locationMarker = L.marker( null, { icon: blueIcon } )
-            .bindPopup( this.popup )
+
+        if ( !this.showPanel ) {
+            this.popup = L.popup( {
+                maxWidth: 100,
+                closeButton: false,
+            } )
+            .setContent( function () { return self.vm.$el } )
+
+            this.locationMarker
+                .bindPopup( this.popup )
+        }
 
         self.changedVisible( function () {
             if ( self.visible ) {
                 self.locationMarker
                     .setLatLng( [ self.location.map.latitude, self.location.map.longitude ] )
                     .addTo( smk.$viewer.map )
-                    .openPopup()
+
+                if ( !self.showPanel )
+                    self.locationMarker.openPopup()
             }
             else {
-                self.popup.remove()
+                if ( !self.showPanel )
+                    self.popup.remove()
                 self.locationMarker.remove()
             }
         } )

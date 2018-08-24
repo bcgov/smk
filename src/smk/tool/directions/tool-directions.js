@@ -208,8 +208,6 @@ include.module( 'tool-directions', [ 'tool', 'widgets', 'tool-directions.panel-d
 
         this.changedActive( function () {
             if ( self.active ) {
-                smk.withTool( 'location', function () { this.active = false } )
-
                 if ( self.waypoints.length == 0 ) {
                     self.activating = self.activating.then( function () {
                         return self.startAtCurrentLocation()
@@ -220,9 +218,6 @@ include.module( 'tool-directions', [ 'tool', 'widgets', 'tool-directions.panel-d
                         return self.findRoute()
                     } )
                 }
-            }
-            else {
-                smk.withTool( 'location', function () { this.active = true } )
             }
         } )
 

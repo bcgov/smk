@@ -50,14 +50,25 @@ include.module( 'tool-identify', [ 'feature-list', 'widgets', 'tool-identify.pan
             }
         } )
 
+        // fallback handler if nothing else uses pick
         smk.$viewer.handlePick( 0, function ( location ) {
+            return startIdentify( location )
+        } )
+
+        smk.$viewer.handlePick( 2, function ( location ) {
+            if ( !self.active ) return
+
+            return startIdentify( location )
+        } )
+
+        var startIdentify = function ( location ) {
             self.pickedLocation = null
             return smk.$viewer.identifyFeatures( location )
                 .then( function () {
                     self.pickedLocation = location
                     return true
                 } )
-        } )
+        }
 
         smk.on( this.id, {
             'activate': function () {
@@ -145,10 +156,6 @@ include.module( 'tool-identify', [ 'feature-list', 'widgets', 'tool-identify.pan
 
     IdentifyTool.prototype.getLocation = function () {
         return this.pickedLocation.map
-    }
-
-    IdentifyTool.prototype.hasPickPriority = function ( toolIdSet ) {
-        return !toolIdSet.location
     }
 
     return IdentifyTool

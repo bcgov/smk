@@ -26,6 +26,11 @@
       "position": "list-menu"
     },
     {
+      "type": "location",
+      "enabled": true,
+      "showPanel": true
+    },
+    {
       "type": "identify",
       "enabled": true,
       "position": "list-menu",
@@ -59,7 +64,7 @@
       "enabled": true,
       "content": "All about the app, and how awesome it is!",
       "position": "list-menu",
-      "title": "About the App"
+      "title": "About the Demo App"
     },
     {
       "type": "baseMaps",
@@ -87,7 +92,7 @@
     {
       "type": "list-menu",
       "enabled": true,
-      "title": "The App"
+      "title": "Demo App"
     }
   ],
   "layers": [
