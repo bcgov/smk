@@ -9,15 +9,15 @@
         <span class="smk-command" v-if="tool.directions" v-on:click="$$emit( 'directions' )">Directions to here</span>
     </template>    
 
-    <div class="smk-address" v-if="site.fullAddress">
+    <div class="smk-address">
         <div class="smk-street">
             <span class="smk-civic-number">{{ site.civicNumber }}</span>
-            <span class="smk-street-name">{{ site.streetName }}</span>
+            <span class="smk-street-name">{{ site.streetName || '(No address found)' }}</span>
             <span class="smk-street-type">{{ site.streetType }}</span>
         </div>
         <div class="smk-locality">
-            <span class="smk-locality-name">{{ site.localityName }}</span>
-            <span class="smk-locality-type" v-if="site.localityType != 'Unknown'">({{ site.localityType }})</span>
+            <span class="smk-locality-name">{{ site.localityName || '&nbsp;' }}</span>
+            <span class="smk-locality-type" v-if="site.localityType && site.localityType != 'Unknown'">({{ site.localityType }})</span>
         </div>
     </div>
 

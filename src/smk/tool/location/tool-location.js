@@ -101,10 +101,9 @@ include.module( 'tool-location', [ 'tool', 'widgets', 'tool-location.popup-locat
         this.updatePopup = function () {}
 
         smk.$viewer.handlePick( 1, function ( location ) {
-            self.reset()
-
-            self.location = location
             self.active = true
+            self.site = location.map
+            self.pickLocation( location )
 
             return SMK.UTIL.findNearestSite( location.map )
                 .then( function ( site ) {
@@ -112,15 +111,15 @@ include.module( 'tool-location', [ 'tool', 'widgets', 'tool-location.popup-locat
                     return true
                 } )
                 .catch( function ( err ) {
-                    self.site = location.map
                     return true
                 } )
         } )
 
+        this.pickLocation = function ( location ) {} 
+
         this.reset = function () {
             this.site = {}
             this.active = false
-            this.visible = false
         }
 
         smk.$viewer.changedView( function () {

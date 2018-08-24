@@ -15,10 +15,6 @@ include.module( 'tool-location-leaflet', [ 'leaflet', 'tool-location' ], functio
     SMK.TYPE.LocationTool.prototype.afterInitialize.push( function ( smk ) {
         var self = this
 
-        self.changedActive( function () {
-            self.visible = self.active
-        } )
-
         this.locationMarker = L.marker( null, { icon: blueIcon } )
 
         if ( !this.showPanel ) {
@@ -32,21 +28,27 @@ include.module( 'tool-location-leaflet', [ 'leaflet', 'tool-location' ], functio
                 .bindPopup( this.popup )
         }
 
-        self.changedVisible( function () {
-            if ( self.visible ) {
+        this.changedActive( function () {
+            if ( self.active ) {
                 self.locationMarker
-                    .setLatLng( [ self.location.map.latitude, self.location.map.longitude ] )
                     .addTo( smk.$viewer.map )
-
-                if ( !self.showPanel )
-                    self.locationMarker.openPopup()
             }
             else {
-                if ( !self.showPanel )
-                    self.popup.remove()
                 self.locationMarker.remove()
             }
         } )
+
+        if ( self.showPanel )
+            this.pickLocation = function ( location ) {
+                self.locationMarker
+                    .setLatLng( [ location.map.latitude, location.map.longitude ] )
+            } 
+        else 
+            this.pickLocation = function ( location ) {
+                self.locationMarker
+                    .setLatLng( [ location.map.latitude, location.map.longitude ] )
+                    .openPopup()
+            } 
     } )
 
 
