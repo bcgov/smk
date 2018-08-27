@@ -1,7 +1,7 @@
 <side-panel class="smk-search-panel" v-bind:class="{ 'smk-busy': busy }">
     <template slot="header">
         <h1>{{ title }}</h1>
-        <spinner v-bind:busy="busy"></spinner> 
+        <!-- <busy-spinner v-bind:busy="busy"></busy-spinner>  -->
     </template>
 
     <template slot="commands">
@@ -16,8 +16,10 @@
         >Zoom to results</span>
     </template>
 
-    <template slot="status" v-if="isEmpty()">
-        <status-message message="Enter name of location."></status-message>
+    <template slot="status" v-if="isEmpty() || busy">
+        <status-message message="Enter name of location." v-if="!busy"></status-message>
+        <status-message message="Searching" status="progress" v-if="busy"></status-message>        
+        <busy-spinner v-bind:busy="busy"></busy-spinner> 
     </template>
 
     <div class="smk-search-result smk-item"

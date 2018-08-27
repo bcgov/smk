@@ -178,7 +178,7 @@ include.module( 'vue-config', [ 'vue' ], function ( inc ) {
     //     }
     // } )
 
-    Vue.component( 'spinner', {
+    Vue.component( 'busy-spinner', {
         template: '\
 <img class="smk-spinner"\
     v-if="busy"\

@@ -1,7 +1,7 @@
 <side-panel class="smk-layers-panel" v-bind:class="{ 'smk-busy': busy }">
     <template slot="header">
         <h1>{{ title }}</h1>
-        <spinner v-bind:busy="busy"></spinner> 
+        <!-- <busy-spinner v-bind:busy="busy"></busy-spinner>  -->
     </template>
 
     <template slot="commands">
@@ -22,8 +22,10 @@
         >Legend</label>
     </template>
 
-    <template slot="status" v-if="!items || items.length == 0">
-        <status-message message="No layers are configured" status="warning"></status-message>        
+    <template slot="status" v-if="!items || items.length == 0 || busy">
+        <status-message message="No layers are configured" status="warning" v-if="!busy"></status-message>        
+        <status-message message="Loading data" status="progress" v-if="busy"></status-message>        
+        <busy-spinner v-bind:busy="busy"></busy-spinner> 
     </template>
     
     <layer-display 
