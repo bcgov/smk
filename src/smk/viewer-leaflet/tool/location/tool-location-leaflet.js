@@ -30,8 +30,6 @@ include.module( 'tool-location-leaflet', [ 'leaflet', 'tool-location' ], functio
 
         this.changedActive( function () {
             if ( self.active ) {
-                self.locationMarker
-                    .addTo( smk.$viewer.map )
             }
             else {
                 self.locationMarker.remove()
@@ -42,11 +40,13 @@ include.module( 'tool-location-leaflet', [ 'leaflet', 'tool-location' ], functio
             this.pickLocation = function ( location ) {
                 self.locationMarker
                     .setLatLng( [ location.map.latitude, location.map.longitude ] )
+                    .addTo( smk.$viewer.map )
             } 
         else 
             this.pickLocation = function ( location ) {
                 self.locationMarker
                     .setLatLng( [ location.map.latitude, location.map.longitude ] )
+                    .addTo( smk.$viewer.map )
                     .openPopup()
             } 
     } )

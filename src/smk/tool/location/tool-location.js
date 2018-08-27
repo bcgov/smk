@@ -30,40 +30,42 @@ include.module( 'tool-location', [ 'tool', 'widgets', 'tool-location.popup-locat
     LocationTool.prototype.afterInitialize.push( function ( smk ) {
         var self = this
 
-        if ( smk.$tool.identify )
-            this.tool.identify = true
+        this.setIdentifyHandler = function ( handler ) {
+            if ( !smk.$tool.identify ) return
+
+            self.tool.identify = !!handler
+
+            self.identifyHandler = handler || function () {}
+        }
+        self.identifyHandler = function () {}
+        
+        this.setDirectionsHandler = function ( handler ) {
+            if ( !smk.$tool.directions ) return
+
+            self.tool.directions = !!handler
+
+            self.directionsHandler = handler || function () {}
+        }
+        self.directionsHandler = function () {}
 
         // if ( smk.$tool.measure )
         //     this.tool.measure = true
 
-        if ( smk.$tool.directions )
-            this.tool.directions = true
+        if ( this.showPanel ) {
+            smk.on( this.id, {
+                'identify': function () {
+                    self.identifyHandler()
+                },
 
-        smk.on( this.id, {
-            'identify': function () {
-                self.reset()
-                smk.$viewer.identifyFeatures( self.location )
-            },
+                'measure': function () {
+                },
 
-            'measure': function () {
-            },
-
-            'directions': function () {
-                var site = self.site
-                self.reset()
-                smk.$tool.directions.active = true
-
-                smk.$tool.directions.activating
-                    .then( function () {
-                        return smk.$tool.directions.startAtCurrentLocation()
-                    } )
-                    .then( function () {
-                        return smk.$tool.directions.addWaypoint( site )
-                    } )
-            }
-        } )
-
-        if ( !this.showPanel )
+                'directions': function () {
+                    self.directionsHandler()
+                }
+            } )
+        }
+        else {
             this.vm = new Vue( {
                 el: smk.addToOverlay( inc[ 'tool-location.popup-location-html' ] ),
                 data: this.widget,
@@ -72,14 +74,39 @@ include.module( 'tool-location', [ 'tool', 'widgets', 'tool-location.popup-locat
                         return dd.toFixed( 4 )
                     },
                     identifyFeatures: function () {
-                        self.reset()
-                        smk.$viewer.identifyFeatures( self.location )
+                        self.identifyHandler()
                     },
                     startMeasurement: function () {
-
                     },
                     startDirections: function () {
-                        var site = self.site
+                        self.directionsHandler()
+                    },
+                },
+                updated: function () {
+                    if ( self.visible )
+                        self.updatePopup()
+                }
+            } )
+        }
+
+        this.updatePopup = function () {}
+
+        smk.$viewer.handlePick( 1, function ( location ) {
+            self.active = true
+            self.site = location.map
+            self.pickLocation( location )
+
+            self.setDirectionsHandler()
+            self.setIdentifyHandler( function () {
+                self.reset()
+                smk.$viewer.identifyFeatures( location )
+            } )
+
+            return SMK.UTIL.findNearestSite( location.map )
+                .then( function ( site ) {
+                    self.site = site
+
+                    self.setDirectionsHandler( function () {
                         self.reset()
                         smk.$tool.directions.active = true
 
@@ -90,24 +117,8 @@ include.module( 'tool-location', [ 'tool', 'widgets', 'tool-location.popup-locat
                             .then( function () {
                                 return smk.$tool.directions.addWaypoint( site )
                             } )
-                    },
-                },
-                updated: function () {
-                    if ( self.visible )
-                        self.updatePopup()
-                }
-            } )
+                    } )
 
-        this.updatePopup = function () {}
-
-        smk.$viewer.handlePick( 1, function ( location ) {
-            self.active = true
-            self.site = location.map
-            self.pickLocation( location )
-
-            return SMK.UTIL.findNearestSite( location.map )
-                .then( function ( site ) {
-                    self.site = site
                     return true
                 } )
                 .catch( function ( err ) {
@@ -120,6 +131,8 @@ include.module( 'tool-location', [ 'tool', 'widgets', 'tool-location.popup-locat
         this.reset = function () {
             this.site = {}
             this.active = false
+            self.setDirectionsHandler()
+            self.setIdentifyHandler()
         }
 
         smk.$viewer.changedView( function () {
