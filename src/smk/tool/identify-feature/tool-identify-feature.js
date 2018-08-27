@@ -34,7 +34,7 @@ include.module( 'tool-identify-feature', [ 'feature-list' ], function ( inc ) {
                 self.featureSet.highlight()
             }
             else {
-                self.featureSet.pick()
+                smk.$tool[ 'identify' ].visible = false
             }
         } )
 

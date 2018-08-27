@@ -42,11 +42,15 @@ include.module( 'tool-identify', [ 'feature-list', 'widgets', 'tool-identify.pan
 
         self.changedActive( function () {
             if ( self.active ) {
-                if ( !self.showFeatures || self.showFeatures == 'identify-popup' )
+                if ( !self.showFeatures || self.showFeatures == 'identify-popup' ) {
                     if ( self.firstId )
                         setTimeout( function () {
                             smk.$viewer.identified.pick( self.firstId )
                         }, 50 )
+                }
+                else {
+                    smk.$viewer.identified.pick()
+                }
             }
         } )
 
