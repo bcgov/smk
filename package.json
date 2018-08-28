@@ -1,7 +1,7 @@
 {
   "name": "smk-client",
   "title": "smk-client",
-  "version": "0.8.0",
+  "version": "0.7.0",
   "devDependencies": {
     "connect-livereload": "^0.6.0",
     "glob": "^7.1.2",
