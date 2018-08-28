@@ -612,7 +612,7 @@
                     { type: 'about',        enabled: false },
                     { type: 'baseMaps',     enabled: false },
                     { type: 'coordinate',   enabled: false },
-                    { type: 'directions',   enabled: true },
+                    { type: 'directions',   enabled: false },
                     // { type: 'dropdown',     enabled: false }, -- so it won't be enabled by show-tools=all, no tools use it by default
                     { type: 'identify',     enabled: false },
                     { type: 'layers',       enabled: false },

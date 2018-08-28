@@ -515,7 +515,7 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
             throw new Error( 'attachment without URL or Id' )
 
         if ( !this.serviceUrl )
-            return this.resolveUrl( 'Attachments/' + id + ( type ? '.' + type : '' ) )
+            return this.resolveUrl( 'attachments/' + id + ( type ? '.' + type : '' ) )
         else
             return this.serviceUrl + '/MapConfigurations/' + this.lmfId + '/Attachments/' + id
     }

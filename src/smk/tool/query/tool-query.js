@@ -14,12 +14,12 @@ include.module( 'tool-query', [ 'feature-list', 'widgets', 'tool-query.panel-que
         props: [ 'id', 'title', 'value', 'type' ],
         data: function () {
             return {
-                input: this.value
+                input: this.value || ''
             }
         },
         watch: {
             value: function ( val ) {
-                this.input = val
+                this.input = val || ''
             }
         },
         mounted: function () {
@@ -93,14 +93,6 @@ include.module( 'tool-query', [ 'feature-list', 'widgets', 'tool-query.panel-que
             }
         },
         computed: {
-            isReady: {
-                get: function () {
-                    return this.parameters.every( function ( p ) {
-                        return p.prop.value != null
-                    } )
-                }
-            },
-
             isModified: {
                 get: function () {
                     return !this.parameters.every( function ( p ) {
