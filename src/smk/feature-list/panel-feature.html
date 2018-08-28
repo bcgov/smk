@@ -2,7 +2,8 @@
     <template slot="commands">
             <!-- v-if="tool.attributeView" -->
         <div class="smk-command-row">
-            <select class="smk-command"
+            <select class="smk-command" 
+                v-if="layer"
                 v-model="attributeView"
             >
                 <option value="default">Default View</option>        
@@ -48,6 +49,7 @@
     </template>
 
     <component class="smk-feature"
+        v-if="layer"
         v-bind:key="layer.id"
         v-bind:is="attributeView == 'default' ? attributeComponent : attributeView"
         v-bind="{
