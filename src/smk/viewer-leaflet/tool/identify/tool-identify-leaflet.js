@@ -15,5 +15,5 @@ include.module( 'tool-identify-leaflet', [ 'leaflet', 'tool-identify', 'feature-
     }
 
     SMK.TYPE.IdentifyTool.prototype.afterInitialize.push( inc[ 'feature-list-clustering-leaflet' ] )
-
+    
 } )

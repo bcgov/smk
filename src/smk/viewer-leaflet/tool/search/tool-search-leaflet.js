@@ -55,11 +55,13 @@ include.module( 'tool-search-leaflet', [ 'leaflet', 'tool-search' ], function ( 
             }
         } )
 
+        var padding = smk.$viewer.getPanelPadding( true )
+
         smk.on( this.id, {
             'zoom': function () {
                 smk.$viewer.map.fitBounds( searchMarkers.getBounds().pad( 0.25 ), {
-                    paddingTopLeft: L.point( 340, 40 ),
-                    paddingBottomRight: L.point( 40, 40 )
+                    paddingTopLeft: padding.topLeft,
+                    paddingBottomRight: padding.bottomRight
                 } )
             }
         } )
@@ -75,7 +77,8 @@ include.module( 'tool-search-leaflet', [ 'leaflet', 'tool-search' ], function ( 
                     return self.popupVm.$el
                 }, {
                     maxWidth: 200,
-                    autoPanPaddingTopLeft: L.point( 300, 100 )
+                    autoPanPaddingTopLeft: padding.topLeft,
+                    autoPanPaddingBottomRight: padding.bottomRight
                 } )
 
                 searchMarkers.addLayer( marker )
@@ -85,13 +88,13 @@ include.module( 'tool-search-leaflet', [ 'leaflet', 'tool-search' ], function ( 
                     popupopen: function ( e ) {
                         vw.searched.pick( f.id, { popupopen: true } )
 
-                        var zoom = precisionZoom[ f.properties.matchPrecision ] || precisionZoom._OTHER_
+                        // var zoom = precisionZoom[ f.properties.matchPrecision ] || precisionZoom._OTHER_
 
-                        var px = vw.map.project( e.popup._latlng, zoom )
-                        px.y -= e.popup._container.clientHeight / 2
-                        px.x -= 150
+                        // var px = vw.map.project( e.popup._latlng, zoom )
+                        // px.y -= e.popup._container.clientHeight / 2
+                        // px.x -= 150
 
-                        vw.map.flyTo( vw.map.unproject( px, zoom ), zoom, { animate: true } )
+                        // vw.map.flyTo( vw.map.unproject( px, zoom ), zoom, { animate: true } )
                     },
                     popupclose: function () {
                         vw.searched.pick( null, { popupclose: true } )

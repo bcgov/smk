@@ -161,5 +161,9 @@ include.module( 'tool-identify', [ 'feature-list', 'widgets', 'tool-identify.pan
         return this.pickedLocation.map
     }
 
+    IdentifyTool.prototype.isPanelVisible = function () {
+        return SMK.TYPE.FeatureList.prototype.isPanelVisible.call( this ) || this.showFeatures == "identify-feature"
+    }
+
     return IdentifyTool
 } )

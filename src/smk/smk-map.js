@@ -437,6 +437,10 @@ include.module( 'smk-map', [ 'jquery', 'util', 'theme-base' ], function () {
             } ) )
     }
 
+    SmkMap.prototype.getVar = function ( cssVar ) {
+        return $( this.$container ).css( '--' + cssVar )
+    }
+
     SmkMap.prototype.emit = function ( toolId, event, arg ) {
         this.$dispatcher.$emit( toolId + '.' + event, arg )
 

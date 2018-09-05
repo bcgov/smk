@@ -1,3 +1,9 @@
 .smk-map-frame {
     --overlay-padding: 7px;
+    --panel-width: 300px;
+    --panel-bottom: 0;
+}
+
+.smk-map-frame.smk-device-mobile {
+    --panel-bottom: 200px;
 }

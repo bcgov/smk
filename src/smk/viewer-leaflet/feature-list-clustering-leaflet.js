@@ -114,31 +114,36 @@ include.module( 'feature-list-clustering-leaflet', [ 'leaflet', 'feature-list-le
         }
         
         self.featureSet.zoomToFeature( function ( ev ) {
-            var old = self.featureSet.pick( null )
-
+            var bounds
             switch ( turf.getType( ev.feature ) ) {
             case 'Point':
-                self.cluster.zoomToShowLayer( self.marker[ ev.feature.id ], function () {
-                    if ( old )
-                        self.featureSet.pick( old )
-                } )
+                var ll = L.latLng( ev.feature.geometry.coordinates[ 1 ], ev.feature.geometry.coordinates[ 0 ] )
+                bounds = L.latLngBounds( [ ll, ll ] )
                 break;
 
             default:
                 if ( self.highlight[ ev.feature.id ] )
-                    smk.$viewer.map
-                        .once( 'zoomend moveend', function () {
-                            if ( old )
-                                self.featureSet.pick( old )
-                        } )
-                        .fitBounds( self.highlight[ ev.feature.id ].getBounds(), {
-                            paddingTopLeft: self.tlPadding,
-                            paddingBottomRight: self.brPadding,
-                                        // paddingTopLeft: L.point( 300, 100 ),
-                            animate: true
-                        } )
+                    bounds = self.highlight[ ev.feature.id ].getBounds()
             }
-        } )
+
+            if ( !bounds ) return
+
+            var old = self.featureSet.pick( null )
+
+            var padding = smk.$viewer.getPanelPadding( self.isPanelVisible() )
+
+            smk.$viewer.map
+                .once( 'zoomend moveend', function () {
+                    if ( old )
+                        self.featureSet.pick( old )
+                } )
+                .fitBounds( bounds, {
+                    paddingTopLeft: padding.topLeft,
+                    paddingBottomRight: padding.bottomRight,
+                    maxZoom: 15,        
+                    animate: true
+                } )
+    } )
 
         self.featureSet.clearedFeatures( function ( ev ) {
             self.cluster.clearLayers()

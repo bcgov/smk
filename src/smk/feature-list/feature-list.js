@@ -313,6 +313,11 @@ include.module( 'feature-list', [ 'tool', 'widgets',
         if ( delay )
             return SMK.UTIL.makePromise( function ( res ) { setTimeout( res, delay ) } )
     }
+
+    FeatureList.prototype.isPanelVisible = function () {
+        return this.showPanel
+    }
+
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
     Vue.component( 'feature-panel', {
@@ -392,7 +397,6 @@ include.module( 'feature-list', [ 'tool', 'widgets',
 
         this.attributeComponent = 'feature-properties'
     }
-
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
     return FeatureList
