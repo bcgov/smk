@@ -73,7 +73,6 @@ t.group( 'tool-coordinate' )
 
 t.group( 'check-directions' )
     .dir( 'smk/tool/directions/lib/*' )
-
 t.group( 'tool-directions' )
     .dir( 'smk/tool/directions/*' )
 
@@ -82,10 +81,8 @@ t.group( 'tool-dropdown' )
 
 t.group( 'check-identify' )
     .dir( 'smk/tool/identify/check/*' )
-
 t.group( 'tool-identify' )
     .dir( 'smk/tool/identify/*' )
-
 t.group( 'tool-identify-feature' )
     .dir( 'smk/tool/identify-feature/*' )
 
@@ -119,8 +116,12 @@ t.group( 'tool-query' )
 t.group( 'tool-scale' )
     .dir( 'smk/tool/scale/*' )
 
+t.group( 'check-search' )
+    .dir( 'smk/tool/search/check/*' )
 t.group( 'tool-search' )
     .dir( 'smk/tool/search/*' )
+t.group( 'tool-search-location' )
+    .dir( 'smk/tool/search-location/*' )
 
 t.group( 'tool-select' )
     .dir( 'smk/tool/select/*' )

@@ -127,17 +127,22 @@ include.module( 'tool-list-menu', [ 'tool', 'widgets', 'tool-list-menu.panel-lis
         this.currentTool.active = true
     }
 
-    ListMenuTool.prototype.addTool = function ( tool ) {
+    ListMenuTool.prototype.addTool = function ( tool, objs ) {
         var self = this
 
         tool.showTitle = true
 
-        this.toolStack[ 0 ].panel.subWidgets.push( {
-            id: tool.id,
-            type: tool.type,
-            widgetComponent: tool.widgetComponent,
-            widget: tool.widget
-        } )
+        if ( tool.useToolbar ) {
+            objs[ 0 ].add( tool )
+        }
+        else {
+            this.toolStack[ 0 ].panel.subWidgets.push( {
+                id: tool.id,
+                type: tool.type,
+                widgetComponent: tool.widgetComponent,
+                widget: tool.widget
+            } )
+        }
 
         tool.changedActive( function () {
             console.log( tool.id, tool.active, self.currentTool && self.currentTool.id )

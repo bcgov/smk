@@ -111,7 +111,7 @@ include.module( 'tool', [ 'jquery', 'event' ], function () {
                 objs[ 1 ].add( self )
             }
             else {
-                smk.$tool[ self.position ].addTool( self )
+                smk.$tool[ self.position ].addTool( self, objs )
             }
 
             return self.afterInitialize.forEach( function ( init ) {

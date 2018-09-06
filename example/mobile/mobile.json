@@ -38,6 +38,10 @@
       "position": "list-menu"
     },
     {
+      "type": "search",
+      "position": "list-menu"
+    },
+    {
       "type": "list-menu",
       "enabled": true,
       "title": "Mobile App"

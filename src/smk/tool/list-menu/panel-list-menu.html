@@ -12,7 +12,17 @@
             v-bind:enabled="!!previousTool"
         ></list-menu-previous-panel>
 
-        <div class="smk-title" v-html="currentTool.panel.title"></div>
+        <div class="smk-title">
+            <component 
+                v-if="currentTool.titleComponent"
+                v-bind:is="currentTool.titleComponent"
+                v-bind="currentTool.title"
+            ></component>
+            <span
+                v-else
+                v-html="currentTool.panel.title"
+            ></span>
+        </div>
 
         <list-menu-close
             id="close" 

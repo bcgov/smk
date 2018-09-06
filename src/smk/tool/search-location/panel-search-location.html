@@ -1,0 +1,21 @@
+<side-panel class="smk-search-location-panel" v-if="feature">
+    <template slot="header">
+        <h1></h1>
+    </template>
+
+    <template slot="commands">
+        <span class="smk-command" v-if="tool.identify" v-on:click="$$emit( 'identify' )">Identify features</span>
+        <span class="smk-command" v-if="tool.measure" v-on:click="$$emit( 'measure' )">Start measurement</span>
+        <span class="smk-command" v-if="tool.directions" v-on:click="$$emit( 'directions' )">Directions to here</span>
+    </template>    
+
+    <div class="smk-coordinate" v-if="feature.geometry">
+        <span class="smk-ordinate">
+            <label>latitude<div>{{ feature.geometry.coordinates[ 1 ] | formatNumber( 4 ) }}</div></label>
+        </span>
+        <span class="smk-ordinate">
+            <label>longitude<div>{{ feature.geometry.coordinates[ 0 ] | formatNumber( 4 ) }}</div></label>
+        </span>
+    </div>
+
+</side-panel>

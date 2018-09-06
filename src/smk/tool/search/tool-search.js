@@ -99,6 +99,7 @@ include.module( 'tool-search', [ 'tool', 'widgets', 'tool-search.widget-search-h
             title:      'Search for Location',
             widgetComponent: 'search-widget',
             panelComponent: 'search-panel',
+            useToolbar: true
         }, option ) )
     }
 
@@ -163,7 +164,8 @@ include.module( 'tool-search', [ 'tool', 'widgets', 'tool-search.widget-search-h
         smk.$viewer.searched.pickedFeature( function ( ev ) {
             self.highlightId = ev.feature && ev.feature.id
 
-            self.popupModel.feature = ev.feature
+            if ( self.showFeatures == 'search-popup' )
+                self.popupModel.feature = ev.feature
         } )
 
         // // smk.$viewer.selected.highlightedFeatures( function ( ev ) {
