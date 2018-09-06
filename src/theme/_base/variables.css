@@ -4,6 +4,15 @@
     --panel-bottom: 0;
 }
 
-.smk-map-frame.smk-device-mobile {
-    --panel-bottom: 200px;
+@media screen and (orientation: landscape) {
+    .smk-map-frame.smk-device-mobile {
+        /* --panel-bottom: 200px; */
+    }
 }
+
+@media screen and (orientation: portrait) {
+    .smk-map-frame.smk-device-mobile {
+        --panel-bottom: 200px;
+    }
+}
+

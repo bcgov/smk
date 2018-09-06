@@ -60,7 +60,6 @@ include.module( 'tool-select-leaflet', [ 'leaflet', 'tool-select', 'feature-list
             } )
         }
 
-        var padding = smk.$viewer.getPanelPadding( true )
 
         self.featureSet.zoomToFeature( function ( ev ) {
             if ( !self.highlight[ ev.feature.id ] ) return
@@ -76,6 +75,7 @@ include.module( 'tool-select-leaflet', [ 'leaflet', 'tool-select', 'feature-list
                 bounds = L.latLngBounds( [ ll, ll ] )
             }
 
+            var padding = smk.$viewer.getPanelPadding( true )
             smk.$viewer.map
                 .once( 'zoomend moveend', function () {
                     if ( old )
@@ -87,7 +87,6 @@ include.module( 'tool-select-leaflet', [ 'leaflet', 'tool-select', 'feature-list
                     animate: true,
                     maxZoom: 12
                 } )
-
         } )
 
     } )

@@ -59,10 +59,9 @@ include.module( 'tool-search-leaflet', [ 'leaflet', 'tool-search' ], function ( 
             }
         } )
 
-        var padding = smk.$viewer.getPanelPadding( true )
-
         smk.on( this.id, {
             'zoom': function () {
+                var padding = smk.$viewer.getPanelPadding( true )
                 smk.$viewer.map.fitBounds( searchMarkers.getBounds().pad( 0.25 ), {
                     paddingTopLeft: padding.topLeft,
                     paddingBottomRight: padding.bottomRight
@@ -71,6 +70,7 @@ include.module( 'tool-search-leaflet', [ 'leaflet', 'tool-search' ], function ( 
         } )
 
         vw.searched.addedFeatures( function ( ev ) {
+            var padding = smk.$viewer.getPanelPadding( true )
             ev.features.forEach( function ( f ) {
                 var marker = L.marker( { lat: f.geometry.coordinates[ 1 ], lng: f.geometry.coordinates[ 0 ] }, {
                     title: f.properties.fullAddress,
@@ -145,6 +145,7 @@ include.module( 'tool-search-leaflet', [ 'leaflet', 'tool-search' ], function ( 
             highlightLayer.setIcon( picked ? yellowMarker : highlighted ? yellowStarBig : yellowStar )
 
             if ( picked && self.showFeatures != 'search-popup' ) {
+                var padding = smk.$viewer.getPanelPadding( true )
                 var ll = highlightLayer.getLatLng()
                 smk.$viewer.map.fitBounds( L.latLngBounds( [ ll, ll ] ), {
                     paddingTopLeft: padding.topLeft,
