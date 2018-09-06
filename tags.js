@@ -110,8 +110,12 @@ t.group( 'tool-minimap' )
 t.group( 'tool-pan' )
     .dir( 'smk/tool/pan/*' )
 
+t.group( 'check-query' )
+    .dir( 'smk/tool/query/check/*' )
 t.group( 'tool-query' )
     .dir( 'smk/tool/query/*' )
+t.group( 'tool-query-feature' )
+    .dir( 'smk/tool/query-feature/*' )
 
 t.group( 'tool-scale' )
     .dir( 'smk/tool/scale/*' )

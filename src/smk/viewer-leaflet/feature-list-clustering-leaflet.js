@@ -80,7 +80,7 @@ include.module( 'feature-list-clustering-leaflet', [ 'leaflet', 'feature-list-le
             } )
         } )
 
-        if ( !self.showFeatures || self.showFeatures == 'identify-popup' ) {
+        if ( !self.showFeatures || self.showFeatures == 'identify-popup' || self.showFeatures == 'query-popup' ) {
             self.featureSet.pickedFeature( function ( ev ) {
                 if ( !ev.feature ) return
 

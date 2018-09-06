@@ -17,14 +17,14 @@
                 v-bind:class="{ 'smk-hidden': resultCount < 2 }" 
             >
                 <i class="material-icons smk-move smk-command smk-icon"
-                    v-on:click="$$emit( 'move-previous' )"
+                    v-on:click="$$emit( 'move-previous', { instance: instance } )"
                 >navigate_before</i>
 
                 <span class="smk-position"
                 >{{ resultPosition + 1 }} of {{ resultCount }}</span>
 
                 <i class="material-icons smk-move smk-command smk-icon"
-                    v-on:click="$$emit( 'move-next' )"
+                    v-on:click="$$emit( 'move-next', { instance: instance } )"
                 >navigate_next</i>
             </span>
         </div>
@@ -32,17 +32,17 @@
         <div class="smk-command-row">
             <span class="smk-command"
                 v-if="tool.zoom"
-                v-on:click="$$emit( 'zoom' )"
+                v-on:click="$$emit( 'zoom', { instance: instance } )"
             >Zoom to</span>
 
             <span class="smk-command"
                 v-if="tool.select"
-                v-on:click="$$emit( 'select' )"
+                v-on:click="$$emit( 'select', { instance: instance } )"
             >Add to selection</span>
 
             <span class="smk-command"
                 v-if="tool.directions"
-                v-on:click="$$emit( 'directions' )"
+                v-on:click="$$emit( 'directions', { instance: instance } )"
             >Directions to here</span>
         </div>
 
