@@ -123,8 +123,12 @@ t.group( 'tool-search' )
 t.group( 'tool-search-location' )
     .dir( 'smk/tool/search-location/*' )
 
+t.group( 'check-select' )
+    .dir( 'smk/tool/select/check/*' )
 t.group( 'tool-select' )
     .dir( 'smk/tool/select/*' )
+t.group( 'tool-select-feature' )
+    .dir( 'smk/tool/select-feature/*' )
 
 t.group( 'tool-version' )
     .dir( 'smk/tool/version/*' )

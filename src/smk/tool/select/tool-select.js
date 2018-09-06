@@ -39,6 +39,16 @@ include.module( 'tool-select', [ 'feature-list', 'widgets', 'tool-select.panel-s
 
         self.setMessage( 'Click on map to identify features and then add them to the selection.' )
 
+        self.changedActive( function () {
+            if ( self.active ) {
+                if ( !self.showFeatures || self.showFeatures == 'select-popup' ) {
+                }
+                else {
+                    smk.$viewer.selected.pick()
+                }
+            }
+        } )
+
         smk.on( this.id, {
             'activate': function () {
                 if ( !self.enabled ) return
