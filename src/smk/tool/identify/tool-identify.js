@@ -108,9 +108,6 @@ include.module( 'tool-identify', [ 'feature-list', 'widgets', 'tool-identify.pan
                 self.setMessage( 'No features found', 'warning' )
             }
             else {
-                if ( !self.showFeatures || self.showFeatures == 'identify-popup' )
-                    smk.$viewer.identified.pick( self.firstId )
-
                 var stat = smk.$viewer.identified.getStats()
 
                 var sub = SMK.UTIL.grammaticalNumber( stat.layerCount, null, null, 'on {} layers' )
@@ -119,6 +116,18 @@ include.module( 'tool-identify', [ 'feature-list', 'widgets', 'tool-identify.pan
                 if ( sub != '' ) sub = '<div class="smk-submessage">' + sub + '</div>'
 
                 self.setMessage( '<div>Identified ' + SMK.UTIL.grammaticalNumber( stat.featureCount, null, 'a feature', '{} features' ) + '</div>' + sub )
+
+                if ( !self.showFeatures || self.showFeatures == 'identify-popup' ) {
+                    smk.$viewer.identified.pick( self.firstId )
+                }
+                else {
+                    if ( stat.featureCount == 1 ) {
+                        var id = Object.keys( smk.$viewer.identified.featureSet )[ 0 ]
+                        smk.$viewer.identified.pick( id )
+                    }
+                } 
+
+
             }
         } )
 
