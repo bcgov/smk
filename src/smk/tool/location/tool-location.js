@@ -13,6 +13,7 @@ include.module( 'tool-location', [ 'tool', 'widgets', 'tool-location.popup-locat
 
         SMK.TYPE.Tool.prototype.constructor.call( this, $.extend( {
             title:      'Location',
+            position:   'toolbar',
             showPanel:  false
         }, option ) )
 
