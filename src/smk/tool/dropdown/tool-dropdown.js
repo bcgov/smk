@@ -27,6 +27,7 @@ include.module( 'tool-dropdown', [ 'tool', 'widgets', 'tool-dropdown.panel-dropd
 
         SMK.TYPE.Tool.prototype.constructor.call( this, $.extend( {
             title:          null,
+            position:       'toolbar',
             widgetComponent:'dropdown-widget',
             panelComponent: 'dropdown-panel',
         }, option ) )

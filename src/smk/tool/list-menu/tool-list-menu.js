@@ -44,6 +44,7 @@ include.module( 'tool-list-menu', [ 'tool', 'widgets', 'tool-list-menu.panel-lis
 
         SMK.TYPE.Tool.prototype.constructor.call( this, $.extend( {
             title:          'Menu',
+            position:       'toolbar',
             widgetComponent:'list-menu-widget',
             panelComponent: 'list-menu-panel',
         }, option ) )
@@ -127,15 +128,16 @@ include.module( 'tool-list-menu', [ 'tool', 'widgets', 'tool-list-menu.panel-lis
         this.currentTool.active = true
     }
 
-    ListMenuTool.prototype.addTool = function ( tool, objs ) {
+    ListMenuTool.prototype.addTool = function ( tool, smk ) {
         var self = this
 
-        tool.showTitle = true
 
         if ( tool.useToolbar ) {
-            objs[ 0 ].add( tool )
+            smk.$toolbar.add( tool )
         }
-        else {
+        else if ( tool.useList !== false ) {
+            tool.showTitle = true
+
             this.toolStack[ 0 ].panel.subWidgets.push( {
                 id: tool.id,
                 type: tool.type,
@@ -145,15 +147,11 @@ include.module( 'tool-list-menu', [ 'tool', 'widgets', 'tool-list-menu.panel-lis
         }
 
         tool.changedActive( function () {
-            console.log( tool.id, tool.active, self.currentTool && self.currentTool.id )
-            if ( tool.active ) {
-               
+            // console.log( tool.id, tool.active, self.currentTool && self.currentTool.id )
+            if ( tool.active ) {              
                 self.active = true
 
-                // if ( self.currentTool.id != tool.id )
                 self.pushTool( tool )
-            }
-            else {
             }
         } )
     }

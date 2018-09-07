@@ -17,6 +17,7 @@ include.module( 'tool-identify', [ 'feature-list', 'widgets', 'tool-identify.pan
 
         SMK.TYPE.FeatureList.prototype.constructor.call( this, $.extend( {
             order:              4,
+            position:           'menu',
             title:              'Identify Results',
             widgetComponent:    'identify-widget',
             panelComponent:     'identify-panel',

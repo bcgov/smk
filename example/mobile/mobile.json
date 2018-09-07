@@ -5,7 +5,7 @@
   "tools": [
     {
       "type": "layers",
-      "position": "list-menu"
+      "position": "shortcut-menu"
     },
     {
       "type": "location",
@@ -19,7 +19,7 @@
     },
     {
       "type": "measure",
-      "position": "list-menu"
+      "position": "shortcut-menu"
     },
     {
       "type": "directions",
@@ -53,6 +53,10 @@
     {
       "type": "dropdown",
       "enabled": false
+    },
+    {
+      "type": "shortcut-menu",
+      "enabled": true
     },
     {
       "type": "query",

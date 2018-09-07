@@ -415,28 +415,6 @@ include.module( 'smk-map', [ 'jquery', 'util', 'theme-base' ], function () {
         return $( html ).appendTo( this.$status ).get( 0 )
     }
 
-    SmkMap.prototype.getToolbar = function () {
-        var self = this
-
-        if ( this.$toolbar ) return this.$toolbar
-
-        return ( this.$toolbar = include( 'toolbar' )
-            .then( function ( inc ) {
-                return new SMK.TYPE.Toolbar( self )
-            } ) )
-    }
-
-    SmkMap.prototype.getSidepanel = function () {
-        var self = this
-
-        if ( this.$sidepanel ) return this.$sidepanel
-
-        return ( this.$sidepanel = include( 'sidepanel' )
-            .then( function ( inc ) {
-                return new SMK.TYPE.Sidepanel( self )
-            } ) )
-    }
-
     SmkMap.prototype.getVar = function ( cssVar ) {
         return $( this.$container ).css( '--' + cssVar )
     }

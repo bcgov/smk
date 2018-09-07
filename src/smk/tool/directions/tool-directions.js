@@ -189,6 +189,7 @@ include.module( 'tool-directions', [ 'tool', 'widgets', 'tool-directions.panel-d
 
         SMK.TYPE.Tool.prototype.constructor.call( this, $.extend( {
             order:          4,
+            position:       'menu',
             title:          'Route Planner',
             widgetComponent:'directions-widget',
             panelComponent: 'directions-panel',

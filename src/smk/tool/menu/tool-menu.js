@@ -21,6 +21,7 @@ include.module( 'tool-menu', [ 'tool', 'widgets', 'tool-menu.panel-menu-html' ],
 
         SMK.TYPE.Tool.prototype.constructor.call( this, $.extend( {
             title:          null,
+            position:       'toolbar',
             widgetComponent:'menu-widget',
             panelComponent: 'menu-panel',
         }, option ) )

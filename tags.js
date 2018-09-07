@@ -134,6 +134,12 @@ t.group( 'tool-select' )
 t.group( 'tool-select-feature' )
     .dir( 'smk/tool/select-feature/*' )
 
+t.group( 'tool-shortcut-menu' )
+    .dir( 'smk/tool/shortcut-menu/*' )
+
+t.group( 'tool-toolbar' )
+    .dir( 'smk/tool/toolbar/*' )
+
 t.group( 'tool-version' )
     .dir( 'smk/tool/version/*' )
 

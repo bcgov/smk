@@ -626,6 +626,7 @@
                     { type: 'scale',        enabled: false },
                     { type: 'search',       enabled: true },
                     { type: 'select',       enabled: false },
+                    { type: 'toolbar',      enabled: true },
                     // { type: 'version',      enabled: false }, -- so it won't be enabled by show-tools=all
                     { type: 'zoom',         enabled: false }
                 ]
