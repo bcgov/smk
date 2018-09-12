@@ -2,7 +2,7 @@
 
     <div class="smk-denom"
         v-if="scaleDenom"
-    >1 : {{ scaleDenom | formatNumber() }}</div>
+    >1 : {{ scaleDenom | formatNumber( 3 ) }}</div>
 
     <div class="smk-ruler">
         <div
@@ -26,8 +26,8 @@
             v-if="rulerLength"
         >
             <span class="smk-first">0</span>
-            <span class="smk-middle">{{ ( rulerLength / 2 ) | formatNumber( 1 ) }}</span>
-            <span class="smk-last">{{ rulerLength | formatNumber() }}{{ rulerUnit }}</span>
+            <span class="smk-middle">{{ ( rulerLength / 2 ) | formatNumber( 2 ) }}</span>
+            <span class="smk-last">{{ rulerLength | formatNumber( 2 ) }}{{ rulerUnit }}</span>
         </div>
     </div>
 

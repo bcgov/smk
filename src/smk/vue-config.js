@@ -23,15 +23,20 @@ include.module( 'vue-config', [ 'vue' ], function ( inc ) {
             .trim()
     }
 
-    Vue.filter( 'formatNumber', function ( value, decimalPlaces ) {
-        return formatNumber( value, decimalPlaces )
+    Vue.filter( 'formatNumber', function ( value, decimalPlaces, fractionPlaces ) {
+        return formatNumber( value, decimalPlaces, fractionPlaces )
     } )
 
-    function formatNumber( value, decimalPlaces ) {
-        var i = Math.floor( value ),
-            f = value - i
+    function formatNumber( value, precision, fractionPlaces ) {
+        var rounded = parseFloat( value.toPrecision( precision ) )
 
-        return i.toLocaleString() + ( decimalPlaces && decimalPlaces > 0 ? f.toFixed( decimalPlaces ).substr( 1 ) : '' )
+        if ( !fractionPlaces )
+            return rounded.toLocaleString()
+
+        var i = Math.floor( rounded ),
+            f = rounded - i
+
+        return i.toLocaleString() + f.toFixed( fractionPlaces ).substr( 1 )
     }
 
     Vue.filter( 'formatDate', function ( date ) {
@@ -66,19 +71,19 @@ include.module( 'vue-config', [ 'vue' ], function ( inc ) {
         if ( dim == 2 )
             switch ( unit ) {
                 case 'imperial':
-                case 'miles':           return formatNumber( value / metersPerUnit[ 'mi' ] / metersPerUnit[ 'mi' ], decimalPlaces ) + ' mi²'
+                case 'miles':           return formatNumber( value / metersPerUnit[ 'mi' ] / metersPerUnit[ 'mi' ], decimalPlaces ) + ' mi&sup2;'
 
-                case 'inches':          return formatNumber( value / metersPerUnit[ 'inches' ] / metersPerUnit[ 'inches' ], decimalPlaces ) + ' in²'
-                case 'feet':            return formatNumber( value / metersPerUnit[ 'ft' ] / metersPerUnit[ 'ft' ], decimalPlaces ) + ' ft²'
-                case 'yards':           return formatNumber( value / metersPerUnit[ 'yd' ] / metersPerUnit[ 'yd' ], decimalPlaces ) + ' yd²'
-                case 'nautical-miles':  return formatNumber( value / metersPerUnit[ 'nmi' ] / metersPerUnit[ 'nmi' ], decimalPlaces ) + ' nmi²'
-                case 'kilometers':      return formatNumber( value / 1000 / 1000, decimalPlaces ) + ' km²'
+                case 'inches':          return formatNumber( value / metersPerUnit[ 'inches' ] / metersPerUnit[ 'inches' ], decimalPlaces ) + ' in&sup2;'
+                case 'feet':            return formatNumber( value / metersPerUnit[ 'ft' ] / metersPerUnit[ 'ft' ], decimalPlaces ) + ' ft&sup2;'
+                case 'yards':           return formatNumber( value / metersPerUnit[ 'yd' ] / metersPerUnit[ 'yd' ], decimalPlaces ) + ' yd&sup2;'
+                case 'nautical-miles':  return formatNumber( value / metersPerUnit[ 'nmi' ] / metersPerUnit[ 'nmi' ], decimalPlaces ) + ' nmi&sup2;'
+                case 'kilometers':      return formatNumber( value / 1000 / 1000, decimalPlaces ) + ' km&sup2;'
                 case 'acres':           return formatNumber( value / metersPerUnit[ 'GunterChain' ] / metersPerUnit[ 'Furlong' ], decimalPlaces ) + ' acres'
                 case 'hectares':        return formatNumber( value / 100 / 100, decimalPlaces ) + ' ha'
 
                 case 'metric': /* jshint -W086 */
                 case 'meters': /* jshint -W086 */
-                default:                return formatNumber( value, decimalPlaces ) + ' m²'
+                default:                return formatNumber( value, decimalPlaces ) + ' m&sup2;'
             }
 
         return formatNumber( value, decimalPlaces )

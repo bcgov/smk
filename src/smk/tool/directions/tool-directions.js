@@ -311,11 +311,6 @@ include.module( 'tool-directions', [ 'tool', 'widgets', 'tool-directions.panel-d
         this.popupVm = new Vue( {
             el: smk.addToContainer( inc[ 'tool-directions.popup-directions-html' ] ),
             data: this.popupModel,
-            methods: {
-                formatDD: function ( dd ) {
-                    return dd.toFixed( 4 )
-                }
-            },
             updated: function () {
                 if ( this.site )
                     self.updatePopup()

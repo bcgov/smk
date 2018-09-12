@@ -13,6 +13,13 @@ include.module( 'tool-measure', [ 'tool', 'widgets', 'tool-measure.panel-measure
             return {
                 unit: 'metric'
             }
+        },
+        computed: {
+            dimensionalNumber: {
+                get: function () {
+                    return Vue.filter( 'dimensionalNumber' )
+                }
+            }
         }
     } )
 

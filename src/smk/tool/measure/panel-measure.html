@@ -56,7 +56,7 @@
             v-for="result in results"
         >
             <span class="smk-title" v-html="result.title"></span>
-            <span class="smk-value">{{ result.value | dimensionalNumber( result.dim, unit, 2 ) }}</span>
+            <span class="smk-value" v-html="dimensionalNumber( result.value, result.dim, unit, 5 )"></span>
         </div>
     </div>
 

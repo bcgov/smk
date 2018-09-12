@@ -71,9 +71,6 @@ include.module( 'tool-location', [ 'tool', 'widgets', 'tool-location.popup-locat
                 el: smk.addToOverlay( inc[ 'tool-location.popup-location-html' ] ),
                 data: this.widget,
                 methods: {
-                    formatDD: function ( dd ) {
-                        return dd.toFixed( 4 )
-                    },
                     identifyFeatures: function () {
                         self.identifyHandler()
                     },
