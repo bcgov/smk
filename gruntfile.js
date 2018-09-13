@@ -22,10 +22,19 @@ module.exports = function( grunt ) {
         // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
         copy: {
+            'readme': {
+                expand: true,
+                src: [ 'README.md', 'DEVELOPMENT.md', 'EXPORT.md' ],
+                dest: '<%= buildPath %>',
+                options: {
+                    process: '<%= processTemplate %>',
+                },
+            },
+
             'root': {
                 expand: true,
                 cwd: '<%= srcPath %>',
-                src: [ 'index.html', 'map-config.json', 'readme.md' ],
+                src: [ 'index.html', 'map-config.json' ],
                 dest: '<%= buildPath %>',
                 options: {
                     process: '<%= processTemplate %>',
@@ -262,6 +271,7 @@ module.exports = function( grunt ) {
     ] )
 
     grunt.registerTask( 'build-root', [
+        'copy:readme',
         'copy:root',
     ] )
 

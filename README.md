@@ -3,7 +3,9 @@
 ### A versatile and lightweight toolkit for building a simple web map.
 
 [Repository](https://github.com/bcgov/smk-client)
+|
 [Docs](https://bcgov.github.io/smk-client/)
+|
 [Issues](https://github.com/bcgov/smk/issues)
 
 **smk-client** is designed to make it easy to integrate a map into a web application.
