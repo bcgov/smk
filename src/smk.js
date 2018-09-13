@@ -674,7 +674,7 @@
                 branch:     '<%= gitinfo.local.branch.current.name %>',
                 lastCommit: '<%= gitinfo.local.branch.current.lastCommitTime %>'.replace( /^"|"$/g, '' ),
                 origin:     '<%= gitinfo.remote.origin.url %>',
-                version:    '<%= pom.project.version %>',
+                version:    '<%= package.version %>',
             }
 
         }, window.SMK ) )

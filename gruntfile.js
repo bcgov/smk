@@ -148,8 +148,20 @@ module.exports = function( grunt ) {
         zip: {
             dev: {
                 expand: true,
-                dest: '<%= buildPath %>/smk-<%= pom.project.version %>-development.zip',
-                src: [ './**/*', '!./build/**', '!./etc/**', '!./node*/**', '!./target/**' ]
+                dest: '<%= buildPath %>/smk-<%= package.version %>-development.zip',
+                src: [ './**/*', '!./etc/**', '!./node*/**', '!./target/**', '!./webapp/**' ],
+                router: function ( path ) {
+                    if ( path == './package.json' ) return null
+                    if ( path == './pom.xml' ) return null
+                    if ( path == './CODE_OF_CONDUCT.md' ) return null
+                    if ( path == './ISSUE_TEMPLATE.md' ) return null
+                    if ( path == './PULL_REQUEST_TEMPLATE.md' ) return null
+                    if ( path == './build/package.json' ) return './package.json'
+                    if ( path.startsWith( './build' ) ) return null
+
+                    // grunt.log.writeln( path )
+                    return path
+                }
             }
         },
 
@@ -254,9 +266,21 @@ module.exports = function( grunt ) {
     ] )
 
     grunt.registerTask( 'build-dev-kit', [
+        'write-build-info',
         'zip:dev',
     ] )
  
+    grunt.registerTask( 'write-build-info', function () {
+        var pkg = grunt.config( 'package' )
+        pkg.build = {
+            gitinfo: grunt.config( 'gitinfo' ),
+        }
+
+        var fn = grunt.template.process( '<%= buildPath %>/package.json' )
+        grunt.file.write( fn, JSON.stringify( pkg, null, '    ' ) )
+        grunt.log.ok( 'Wrote ' + fn )
+    } )
+
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     grunt.registerTask( 'default', [
