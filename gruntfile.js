@@ -34,7 +34,7 @@ module.exports = function( grunt ) {
             'root': {
                 expand: true,
                 cwd: '<%= srcPath %>',
-                src: [ 'index.html', 'map-config.json' ],
+                src: [ 'index.html', 'map-config.json', 'gruntfile.js' ],
                 dest: '<%= buildPath %>',
                 options: {
                     process: '<%= processTemplate %>',
@@ -64,7 +64,7 @@ module.exports = function( grunt ) {
                     process: '<%= processTemplate %>',
                 },
             },
-
+ 
             'example-images': {
                 expand: true,
                 cwd: '<%= examplePath %>',
@@ -191,7 +191,7 @@ module.exports = function( grunt ) {
 
             src: {
                 files: [ '<%= srcPath %>/**', 'smk-tags.js', 'lib/**', '!<%= srcPath %>/theme/**' ],
-                tasks: [ 'build' ]
+                tasks: [ 'clean:build', 'build' ]
             },
 
             themes: {
@@ -224,7 +224,6 @@ module.exports = function( grunt ) {
     ] )
 
     grunt.registerTask( 'build', [
-        'clean:build',
         'build-info',
         'build-lib',
         'build-images',
@@ -232,6 +231,7 @@ module.exports = function( grunt ) {
         'build-smk',
         'build-examples',
         'build-root',
+        'write-build-info:true',
         'clean:temp',
     ] )
 
@@ -277,13 +277,21 @@ module.exports = function( grunt ) {
 
     grunt.registerTask( 'build-dev-kit', [
         'write-build-info',
-        'zip:dev',
+        'zip:dev'
     ] )
  
-    grunt.registerTask( 'write-build-info', function () {
+    grunt.registerTask( 'write-build-info', function ( trimDeps ) {
         var pkg = grunt.config( 'package' )
         pkg.build = {
             gitinfo: grunt.config( 'gitinfo' ),
+        }
+
+        if ( trimDeps ) {
+            var deps = pkg[ 'devDependencies' ]
+            pkg[ 'devDependencies' ] = {
+                'grunt':                deps[ 'grunt' ],
+                'grunt-contrib-connect':deps[ 'grunt-contrib-connect' ],
+            }
         }
 
         var fn = grunt.template.process( '<%= buildPath %>/package.json' )
@@ -302,8 +310,9 @@ module.exports = function( grunt ) {
     grunt.registerTask( 'maven', [
         'mode:release',
         'clean:all',
+        'build-info',
+        'build-dev-kit',
         'build',
-        'build-dev-kit'
     ] )
 
 }
