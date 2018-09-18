@@ -1,7 +1,10 @@
 {
+  "version": "0.8.0",
   "name": "smk-client",
   "title": "smk-client",
-  "version": "0.8.0",
+  "license": "APSL-2.0",
+  "homepage": "https://bcgov.github.io/smk-client/",
+  "repository": "github:bcgov/smk-client",
   "devDependencies": {
     "connect-livereload": "^0.6.0",
     "glob": "^7.1.2",
