@@ -18,7 +18,7 @@ include.module( 'tool-select', [ 'feature-list', 'widgets', 'tool-select.panel-s
         SMK.TYPE.FeatureList.prototype.constructor.call( this, $.extend( {
             order:              5,
             position:           'menu',
-            title:              'Selection',
+            title:              'Selected Features',
             widgetComponent:    'select-widget',
             panelComponent:     'select-panel'
         }, option ) )
@@ -39,9 +39,19 @@ include.module( 'tool-select', [ 'feature-list', 'widgets', 'tool-select.panel-s
 
         self.setMessage( 'Click on map to identify features and then add them to the selection.' )
 
+        self.changedActive( function () {
+            if ( self.active ) {
+                if ( !self.showFeatures || self.showFeatures == 'select-popup' ) {
+                }
+                else {
+                    smk.$viewer.selected.pick()
+                }
+            }
+        } )
+
         smk.on( this.id, {
             'activate': function () {
-                if ( !self.visible || !self.enabled ) return
+                if ( !self.enabled ) return
 
                 self.active = !self.active
             },

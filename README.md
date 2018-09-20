@@ -1,33 +1,48 @@
 # smk-client
+## Simple Map Kit Client
+### A versatile and lightweight toolkit for building a simple web map.
 
-Simple Map Kit Client - A versatile and lightweight toolkit for building a simple web map.
+[Repository](https://github.com/bcgov/smk-client)
+|
+[Docs](https://bcgov.github.io/smk-client/)
+|
+[Issues](https://github.com/bcgov/smk/issues)
 
-[Client API](docs/SMK-Client-API.md) and [examples](docs/SMK-Client-API-Examples.md)
+**smk-client** is designed to make it easy to integrate a map into a web application.
 
-[Client Configuration](docs/SMK-Client-Configuration.md)
+The application only needs to include one `<script>` tag to load the library, and define a single `<div>` tag to contain the map.
+There is no other code for the application to write, the map functionality is defined completely by a JSON configuration structure.
 
-# Development
+Here is an example of a complete HTML page that uses smk-client to show a map:
 
-Clone this repo, let's say into `projects/smk-client`.
+```html
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <script src="smk.js" smk-container-sel="#smk-map-frame"></script>
+        <style>
+            #smk-map-frame { position: absolute; top: 0; left: 0; right: 0; bottom: 0; margin: 0; padding: 0; }
+        </style>
+    </head>
+    <body id="smk-map-frame"></body>
+</html>
+```
 
-Install [NodeJS](https://nodejs.org/en/).
+The [client API](https://bcgov.github.io/smk-client/SMK-Client-API) details how the application interacts with the map. 
+The interaction is via attributes on the `<script>` tag, and/or parameters passed to the page in the URL.
+There are [examples](https://bcgov.github.io/smk-client/SMK-Client-API-Examples) of the various ways the map can be configured.
 
-Install node modules:
+The [configuration](https://bcgov.github.io/smk-client/SMK-Client-Configuration) controls all aspects of the map.
 
-    > cd projects/smk-client
-    > npm install
+Creating the configuration by hand is tedious, for most uses it is easier to use the **smk-admin** tool.
+The smk-admin tool lets you edit the configuration in an interactive UI, and lets you test the map in a demo application.
+When you satisfied with the map, you can ask smk-admin to generate an export package that contains the smk-client library along with the configuration.
+This export package can be easily integrated into an application.
 
-Start Grunt in development mode:
+See [EXPORT.md](EXPORT.md) for more information on working with export packages.
 
-    > grunt
-
-Point browser at [https://localhost:8443](https://localhost:8443).
-
-Edit code, and when a file is saved, the website is automatically reloaded.
-
-The configurations in `example/config` are available to any of the pages at [https://localhost:8443](https://localhost:8443).
-Use a URL parameter like `config=config/bcparks-test.json`.
-
+See [DEVELOPMENT.md](DEVELOPMENT.md) for more information on doing development on smk-client.
 
 # License
 ```

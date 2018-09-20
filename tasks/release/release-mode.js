@@ -1,6 +1,7 @@
 module.exports = function( grunt ) {
 
     grunt.config( 'mode', 'release' )
+    grunt.config( 'reload', '' )
 
     grunt.registerTask( 'build-lib', [
         'jshint:lib',
@@ -80,7 +81,7 @@ module.exports = function( grunt ) {
         concat: {
             smk: {
                 options: {
-                    banner: '// SMK <%= pom.project.version %>\n',
+                    banner: '// SMK v<%= package.version %>\n',
                     process: function ( content, src ) {
                         if ( /smk.js$/.test( src ) )
                             return grunt.config( 'processTemplate' )( content, src )

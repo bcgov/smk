@@ -2,6 +2,8 @@ include.module( 'tool-markup-leaflet', [ 'leaflet', 'tool-markup' ], function ()
     "use strict";
 
     SMK.TYPE.MarkupTool.prototype.afterInitialize.push( function ( smk ) {
+        if ( smk.$device == 'mobile' ) return
+
         smk.$viewer.map.pm.addControls( {
             position: 'topright', // toolbar position, options are 'topleft', 'topright', 'bottomleft', 'bottomright'
             drawMarker: true,  // adds button to draw markers

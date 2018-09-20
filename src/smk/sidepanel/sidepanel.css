@@ -15,7 +15,8 @@
     position: absolute;
     top: 40px;
     left: 0;
-    bottom: 0;
+    bottom: var( --panel-bottom );
+    z-index: 10;
 }
 
 .smk-elastic-panel {
@@ -81,8 +82,8 @@
 
 .smk-sidepanel .smk-panel .smk-spinner {
     position:   absolute;
-    top:        2px;
-    right:      1px;
+    top:        8px;
+    right:      10px;
 }
 
 

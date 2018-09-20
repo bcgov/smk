@@ -13,6 +13,13 @@ include.module( 'tool-measure', [ 'tool', 'widgets', 'tool-measure.panel-measure
             return {
                 unit: 'metric'
             }
+        },
+        computed: {
+            dimensionalNumber: {
+                get: function () {
+                    return Vue.filter( 'dimensionalNumber' )
+                }
+            }
         }
     } )
 
@@ -60,7 +67,7 @@ include.module( 'tool-measure', [ 'tool', 'widgets', 'tool-measure.panel-measure
 
         smk.on( this.id, {
             'activate': function () {
-                if ( !self.visible || !self.enabled ) return
+                if ( !self.enabled ) return
 
                 self.active = !self.active
             },

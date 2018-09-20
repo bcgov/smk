@@ -3,9 +3,9 @@
     top: 0;
     left: 0;
     height: 30px;
-    min-width: 300px;
+    min-width: var( --panel-width );
 
-    z-index: 1;
+    z-index: 10;
     background-color: white;
     border-radius: 3px;
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65);
@@ -22,7 +22,7 @@
 }
 
 .smk-tool {
-    display: none;
+    display: inline-block;
     opacity: 0.5;
     border-radius: 3px;
     border: 1px solid transparent;
@@ -40,9 +40,9 @@
     background-color: white;
 }
 
-.smk-tool.smk-tool-visible {
+/* .smk-tool.smk-tool-visible {
     display: inline-block;
-}
+} */
 
 .smk-tool.smk-tool-enabled {
     opacity: 1.0;

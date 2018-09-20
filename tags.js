@@ -10,6 +10,7 @@ var t = new tg.TagSet()
 
 t.script( 'jquery', 'lib/jquery-3.3.1.min.js' )
 
+// t.script( 'vue', 'lib/vue-2.5.11.js' )
 t.script( 'vue', 'lib/vue-2.5.11.min.js' )
 t.script( 'vue-config', 'smk/vue-config.js' )
 
@@ -28,10 +29,7 @@ t.style( 'material-icons', 'https://fonts.googleapis.com/icon?family=Material+Ic
 // smk base
 // ==================================================================================
 
-t.group( 'smk-map' )
-    .script( 'smk/smk-map.js' )
-    .style( 'smk/smk-map-frame.css' )
-
+t.script( 'smk-map',    'smk/smk-map.js' )
 t.script( 'util',       'smk/util.js' )
 t.script( 'event',      'smk/event.js' )
 t.script( 'viewer',     'smk/viewer.js' )
@@ -75,18 +73,24 @@ t.group( 'tool-coordinate' )
 
 t.group( 'check-directions' )
     .dir( 'smk/tool/directions/lib/*' )
-
 t.group( 'tool-directions' )
     .dir( 'smk/tool/directions/*' )
 
 t.group( 'tool-dropdown' )
     .dir( 'smk/tool/dropdown/*' )
 
+t.group( 'check-identify' )
+    .dir( 'smk/tool/identify/check/*' )
 t.group( 'tool-identify' )
     .dir( 'smk/tool/identify/*' )
+t.group( 'tool-identify-feature' )
+    .dir( 'smk/tool/identify-feature/*' )
 
 t.group( 'tool-layers' )
     .dir( 'smk/tool/layers/*' )
+
+t.group( 'tool-list-menu' )
+    .dir( 'smk/tool/list-menu/*' )
 
 t.group( 'tool-location' )
     .dir( 'smk/tool/location/*' )
@@ -106,17 +110,35 @@ t.group( 'tool-minimap' )
 t.group( 'tool-pan' )
     .dir( 'smk/tool/pan/*' )
 
+t.group( 'check-query' )
+    .dir( 'smk/tool/query/check/*' )
 t.group( 'tool-query' )
     .dir( 'smk/tool/query/*' )
+t.group( 'tool-query-feature' )
+    .dir( 'smk/tool/query-feature/*' )
 
 t.group( 'tool-scale' )
     .dir( 'smk/tool/scale/*' )
 
+t.group( 'check-search' )
+    .dir( 'smk/tool/search/check/*' )
 t.group( 'tool-search' )
     .dir( 'smk/tool/search/*' )
+t.group( 'tool-search-location' )
+    .dir( 'smk/tool/search-location/*' )
 
+t.group( 'check-select' )
+    .dir( 'smk/tool/select/check/*' )
 t.group( 'tool-select' )
     .dir( 'smk/tool/select/*' )
+t.group( 'tool-select-feature' )
+    .dir( 'smk/tool/select-feature/*' )
+
+t.group( 'tool-shortcut-menu' )
+    .dir( 'smk/tool/shortcut-menu/*' )
+
+t.group( 'tool-toolbar' )
+    .dir( 'smk/tool/toolbar/*' )
 
 t.group( 'tool-version' )
     .dir( 'smk/tool/version/*' )
@@ -206,8 +228,8 @@ t.script( 'feature-list-esri3d', 'smk/viewer-esri3d/feature-list-esri3d.js' )
 
 t.sequence( 'esri3d' )
     .tag( 'leaflet' )
-    .style( 'https://js.arcgis.com/4.7/esri/css/main.css', { external: true } )
-    .script( 'https://js.arcgis.com/4.7/', { external: true } )
+    .style( 'https://js.arcgis.com/4.8/esri/css/main.css', { external: true } )
+    .script( 'https://js.arcgis.com/4.8/', { external: true } )
     // .script( 'lib/toGeoJSON.js' )
     // .script( 'https://unpkg.com/terraformer@1.0.7' )
     // .script( 'https://unpkg.com/terraformer-arcgis-parser@1.0.5' )
@@ -254,5 +276,23 @@ t.group( 'tool-zoom-esri3d' )
     .dir( 'smk/viewer-esri3d/tool/zoom/**/*' )
 
 // ==================================================================================
+// smk themes
+// ==================================================================================
+
+t.group( 'theme-base' )
+    .dir( 'theme/_base/**/*' )
+
+t.group( 'theme-alpha' )
+    .dir( 'theme/alpha/**/*' )
+
+t.group( 'theme-beta' )
+    .dir( 'theme/beta/**/*' )
+
+t.group( 'theme-gamma' )
+    .dir( 'theme/gamma/**/*' )
+
+t.group( 'theme-delta' )
+    .dir( 'theme/delta/**/*' )
+
 
 process.stdout.write( JSON.stringify( t, null, '    ' ) )

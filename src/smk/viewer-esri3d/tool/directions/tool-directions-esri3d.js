@@ -79,11 +79,9 @@ include.module( 'tool-directions-esri3d', [ 'esri3d', 'types-esri3d', 'util-esri
 
         this.changedActive( function () {
             if ( self.active ) {
-                smk.$viewer.view.padding = { left: 340 }
                 self.directionsLayer.visible = true
             }
             else {
-                smk.$viewer.view.padding = { left: 0 }
                 self.directionsLayer.visible = false
                 smk.$viewer.view.popup.close()
             }

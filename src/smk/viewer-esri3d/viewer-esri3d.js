@@ -247,12 +247,12 @@ include.module( 'viewer-esri3d', [ 'viewer', 'esri3d', 'types-esri3d', 'layer-es
         this.map.reorder( viewerLayer, zOrder )
     }
 
-    ViewerEsri3d.prototype.zoomToFeature = function ( layer, feature ) {
-        this.map.fitBounds( feature.highlightLayer.getBounds(), {
-            paddingTopLeft: L.point( 300, 100 ),
-            animate: false
-        } )
-    }
+    // ViewerEsri3d.prototype.zoomToFeature = function ( layer, feature ) {
+    //     this.map.fitBounds( feature.highlightLayer.getBounds(), {
+    //         paddingTopLeft: L.point( 300, 100 ),
+    //         animate: false
+    //     } )
+    // }
 
     var basemapHasLabels = {
         'ShadedRelief': true,

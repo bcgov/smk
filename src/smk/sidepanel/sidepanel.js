@@ -34,10 +34,9 @@ include.module( 'sidepanel', [ 'vue', 'sidepanel.sidepanel-html', 'sidepanel.pan
 
         if ( this.activeTool ) {
             this.activeTool.active = true
-            if ( this.activeTool.showPanel ) {
-                this.model.activeToolId = this.activeTool.id
-                this.container.addClass( 'smk-panel-expanded' )
-            }
+            
+            this.model.activeToolId = this.activeTool.id
+            this.container.addClass( 'smk-panel-expanded' )
         }
         else {
             this.model.activeToolId = null

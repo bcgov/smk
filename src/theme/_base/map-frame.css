@@ -1,0 +1,84 @@
+.smk-map-frame {
+    font-family: Helvetica,Arial,sans-serif;
+}
+
+.smk-map-frame.smk-hidden {
+    visibility: hidden;
+}
+
+/*************************************************************/
+
+.smk-map-frame .smk-viewer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+}
+
+/*************************************************************/
+
+.smk-map-frame .smk-overlay {
+    position: absolute;
+    top: var( --overlay-padding );
+    left: var( --overlay-padding );
+    right: var( --overlay-padding );
+    bottom: var( --overlay-padding );
+    z-index: 2;
+    border-radius: 5px;
+    pointer-events: none;
+    /* border: 1px solid black; */  
+}
+
+.smk-map-frame .smk-overlay .smk-status {
+    position: absolute;
+    right: 0;
+    bottom: 10px;
+
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: flex-end;
+}
+
+/*************************************************************/
+
+.smk-map-frame .smk-coordinate {
+    color: black;
+    font-size: 12px;
+    background-color: transparent;
+    cursor: default;
+}
+
+.smk-map-frame .smk-coordinate .smk-ordinate label {
+    display: inline-block;
+    font-size: 10px;
+    margin-right: 10px;
+    text-align: left;
+}
+
+.smk-map-frame .smk-coordinate .smk-ordinate div {
+    font-size: 14px;
+}
+
+/*************************************************************/
+
+.smk-map-frame .smk-address {
+}
+
+.smk-map-frame .smk-address .smk-street {
+    font-size: 15px;
+}
+
+.smk-map-frame .smk-address .smk-locality {
+    font-size: 12px;
+}
+
+.smk-map-frame .smk-address .smk-precision-locality .smk-locality {
+    font-size: 15px;
+}
+
+.smk-map-frame .smk-address .smk-locality-type {
+    font-size: 10px;
+}
+

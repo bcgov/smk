@@ -45,38 +45,47 @@ include.module( 'tool-search-leaflet', [ 'leaflet', 'tool-search' ], function ( 
 
         var searchMarkers = L.featureGroup( { pane: 'markerPane' } )
 
-        this.changedActive( function () {
-            if ( self.active ) {
+        self.changedActive( function () {
+            self.visible = self.active
+        } )
+
+        self.changedVisible( function () {
+            if ( self.visible ) {
                 vw.map.addLayer( searchMarkers )
             }
             else {
-                vw.searched.pick( null )
+                // vw.searched.pick( null )
                 vw.map.removeLayer( searchMarkers )
             }
         } )
 
         smk.on( this.id, {
             'zoom': function () {
+                var padding = smk.$viewer.getPanelPadding( true )
                 smk.$viewer.map.fitBounds( searchMarkers.getBounds().pad( 0.25 ), {
-                    paddingTopLeft: L.point( 340, 40 ),
-                    paddingBottomRight: L.point( 40, 40 )
+                    paddingTopLeft: padding.topLeft,
+                    paddingBottomRight: padding.bottomRight
                 } )
             }
         } )
 
         vw.searched.addedFeatures( function ( ev ) {
+            var padding = smk.$viewer.getPanelPadding( true )
             ev.features.forEach( function ( f ) {
                 var marker = L.marker( { lat: f.geometry.coordinates[ 1 ], lng: f.geometry.coordinates[ 0 ] }, {
                     title: f.properties.fullAddress,
                     riseOnHover: true,
                     icon: yellowStar
                 } )
-                .bindPopup( function () {
-                    return self.popupVm.$el
-                }, {
-                    maxWidth: 200,
-                    autoPanPaddingTopLeft: L.point( 300, 100 )
-                } )
+
+                if ( self.showFeatures == 'search-popup' )
+                    marker.bindPopup( function () {
+                        return self.popupVm.$el
+                    }, {
+                        maxWidth: 200,
+                        autoPanPaddingTopLeft: padding.topLeft,
+                        autoPanPaddingBottomRight: padding.bottomRight
+                    } )
 
                 searchMarkers.addLayer( marker )
                 f.highlightLayer = marker
@@ -85,13 +94,13 @@ include.module( 'tool-search-leaflet', [ 'leaflet', 'tool-search' ], function ( 
                     popupopen: function ( e ) {
                         vw.searched.pick( f.id, { popupopen: true } )
 
-                        var zoom = precisionZoom[ f.properties.matchPrecision ] || precisionZoom._OTHER_
+                        // var zoom = precisionZoom[ f.properties.matchPrecision ] || precisionZoom._OTHER_
 
-                        var px = vw.map.project( e.popup._latlng, zoom )
-                        px.y -= e.popup._container.clientHeight / 2
-                        px.x -= 150
+                        // var px = vw.map.project( e.popup._latlng, zoom )
+                        // px.y -= e.popup._container.clientHeight / 2
+                        // px.x -= 150
 
-                        vw.map.flyTo( vw.map.unproject( px, zoom ), zoom, { animate: true } )
+                        // vw.map.flyTo( vw.map.unproject( px, zoom ), zoom, { animate: true } )
                     },
                     popupclose: function () {
                         vw.searched.pick( null, { popupclose: true } )
@@ -110,20 +119,21 @@ include.module( 'tool-search-leaflet', [ 'leaflet', 'tool-search' ], function ( 
 
             if ( ev.feature ) {
                 var ly2 = ev.feature.highlightLayer
-                if ( !ly2.isPopupOpen() ) ly2.openPopup()
-                brightHighlight( ev.feature.highlightLayer, true, true )
+                if ( self.showFeatures == 'search-popup' )
+                    if ( !ly2.isPopupOpen() ) ly2.openPopup()
+                brightHighlight( ev.feature.highlightLayer, true, true, ev.feature )
             }
         } )
 
         vw.searched.highlightedFeatures( function ( ev ) {
             if ( ev.features )
                 ev.features.forEach( function ( f ) {
-                    brightHighlight( f.highlightLayer, true, vw.searched.isPicked( f.id ) )
+                    brightHighlight( f.highlightLayer, true, vw.searched.isPicked( f.id ), f )
                 } )
 
             if ( ev.was )
                 ev.was.forEach( function ( f ) {
-                    brightHighlight( f.highlightLayer, false, vw.searched.isPicked( f.id ) )
+                    brightHighlight( f.highlightLayer, false, vw.searched.isPicked( f.id ), f )
                 } )
         } )
 
@@ -131,8 +141,19 @@ include.module( 'tool-search-leaflet', [ 'leaflet', 'tool-search' ], function ( 
             searchMarkers.clearLayers()
         } )
 
-        function brightHighlight( highlightLayer, highlighted, picked ) {
+        function brightHighlight( highlightLayer, highlighted, picked, feature ) {
             highlightLayer.setIcon( picked ? yellowMarker : highlighted ? yellowStarBig : yellowStar )
+
+            if ( picked && self.showFeatures != 'search-popup' ) {
+                var padding = smk.$viewer.getPanelPadding( true )
+                var ll = highlightLayer.getLatLng()
+                smk.$viewer.map.fitBounds( L.latLngBounds( [ ll, ll ] ), {
+                    paddingTopLeft: padding.topLeft,
+                    paddingBottomRight: padding.bottomRight,
+                    // maxZoom: 15
+                    maxZoom: precisionZoom[ feature.properties.matchPrecision ] || precisionZoom._OTHER_
+                } )
+            }
         }
     } )
 

@@ -1,4 +1,4 @@
-include.module( 'smk-map', [ 'jquery', 'util' ], function () {
+include.module( 'smk-map', [ 'jquery', 'util', 'theme-base' ], function () {
     "use strict";
 
     function SmkMap( option ) {
@@ -25,11 +25,11 @@ include.module( 'smk-map', [ 'jquery', 'util' ], function () {
         $( this.$container )
             .addClass( 'smk-map-frame smk-hidden' )
 
-        var spinner = $( '<img class="smk-toplevel smk-spinner">' )
+        var spinner = $( '<img class="smk-startup smk-spinner">' )
             .attr( 'src', include.option( 'baseUrl' ) + '/images/spinner.gif' )
             .appendTo( this.$container )
 
-        var status = $( '<div class="smk-toplevel smk-status">' )
+        var status = $( '<div class="smk-startup smk-status">' )
             .text( 'Reticulating splines...' )
             .appendTo( this.$container )
 
@@ -277,17 +277,14 @@ include.module( 'smk-map', [ 'jquery', 'util' ], function () {
             if ( self.$option[ 'title-sel' ] )
                 $( self.$option[ 'title-sel' ] ).text( self.name )
 
-            if ( self.viewer.theme ) {
-                var id = self.viewer.theme.toLowerCase().replace( /[^a-z0-9]+/g, '-' ).replace( /^[-]|[-]$/g, '' )
+            var themes = [ 'base' ].concat( self.viewer.themes ).map( function ( th ) { return 'theme-' + th } )
+            
+            $( self.$container )
+                .addClass( themes.map( function ( th ) { return 'smk-' + th } ).join( ' ' ) )
 
-                $( self.$container )
-                    .addClass( 'smk-theme-' + id )
+            self.detectDevice()
 
-                var tag = 'theme-' + id
-                include.tag( tag, { loader: 'style', url: include.option( 'baseUrl' ) + 'theme/' + self.viewer.theme + '.css'  } )
-
-                return include( tag )
-            }
+            return include( themes )
         }
 
         function checkTools() {
@@ -296,8 +293,13 @@ include.module( 'smk-map', [ 'jquery', 'util' ], function () {
             if ( enabledTools.length == 0 ) return
 
             return SMK.UTIL.waitAll( enabledTools.map( function ( t ) {
-                return include( 'check-' + t.type )
+                var tag = 'check-' + t.type
+                return include( tag )
                     .then( function ( inc ) {
+                        if ( inc[ tag ] && typeof( inc[ tag ] ) == 'function' )
+                            return inc[ tag ]( self, t )
+                    } )
+                    .then( function () {
                         console.log( 'checked tool "' + t.type + '"' )
                     } )
                     .catch( function ( e ) {
@@ -413,26 +415,8 @@ include.module( 'smk-map', [ 'jquery', 'util' ], function () {
         return $( html ).appendTo( this.$status ).get( 0 )
     }
 
-    SmkMap.prototype.getToolbar = function () {
-        var self = this
-
-        if ( this.$toolbar ) return this.$toolbar
-
-        return ( this.$toolbar = include( 'toolbar' )
-            .then( function ( inc ) {
-                return new SMK.TYPE.Toolbar( self )
-            } ) )
-    }
-
-    SmkMap.prototype.getSidepanel = function () {
-        var self = this
-
-        if ( this.$sidepanel ) return this.$sidepanel
-
-    return ( this.$sidepanel = include( 'sidepanel' )
-            .then( function ( inc ) {
-                return new SMK.TYPE.Sidepanel( self )
-            } ) )
+    SmkMap.prototype.getVar = function ( cssVar ) {
+        return $( this.$container ).css( '--' + cssVar )
     }
 
     SmkMap.prototype.emit = function ( toolId, event, arg ) {
@@ -457,6 +441,28 @@ include.module( 'smk-map', [ 'jquery', 'util' ], function () {
         if ( !this.$tool[ toolId ] ) return
 
         return action.call( this.$tool[ toolId ] )
+    }
+
+    SmkMap.prototype.detectDevice = function () {
+        var dev = this.viewer.device
+        if ( dev == 'auto' ) {
+            var w =  $( window ).width()
+            dev = w >= this.viewer.deviceAutoBreakpoint ? 'desktop' : 'mobile'
+        }
+
+        if ( dev == this.$device )
+            return 
+
+        if ( this.$device )
+            $( this.$container )
+                .removeClass( 'smk-device-' + this.$device )
+
+        this.$device = dev
+        
+        $( this.$container )
+            .addClass( 'smk-device-' + this.$device )
+
+        return this.$device
     }
 
 } )

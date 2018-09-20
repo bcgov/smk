@@ -12,3 +12,16 @@
     outline: 0;
 }
 
+.smk-tool.smk-tool-title button {
+    width: auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.smk-tool.smk-tool-title span {
+    font-size: 15px;
+    margin-right: 5px;
+    margin-left: 5px;
+}
+

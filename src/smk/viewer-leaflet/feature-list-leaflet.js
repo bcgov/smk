@@ -7,19 +7,12 @@ include.module( 'feature-list-leaflet', [ 'leaflet', 'feature-list' ], function 
         this.highlight = {}
         this.featureHighlights = L.layerGroup( { pane: 'markerPane' } )
 
-        if ( this.showPanel ) {
-            this.tlPadding = L.point( 340, 40 )
-            this.brPadding = L.point( 40, 40 )
-        }
-        else {
-            this.tlPadding = L.point( 40, 40 )
-            this.brPadding = L.point( 40, 40 )
-        }
+        var padding = smk.$viewer.getPanelPadding( self.isPanelVisible() )
 
         this.popup = L.popup( {
                 maxWidth: 400,
-                autoPanPaddingTopLeft: this.tlPadding,
-                autoPanPaddingBottomRight: this.brPadding,
+                autoPanPaddingTopLeft: padding.topLeft,
+                autoPanPaddingBottomRight: padding.bottomRight,
                 offset: [ 0, -10 ]
             } )
             .setContent( function () { return self.popupVm.$el } )
@@ -37,7 +30,11 @@ include.module( 'feature-list-leaflet', [ 'leaflet', 'feature-list' ], function 
         } )
 
         self.changedActive( function () {
-            if ( self.active ) {
+            self.visible = self.active
+        } )
+
+        self.changedVisible( function () {
+            if ( self.visible ) {
                 self.featureHighlights.addTo( smk.$viewer.map )
             }
             else {

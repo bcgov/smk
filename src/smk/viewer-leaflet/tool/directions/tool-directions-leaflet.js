@@ -57,6 +57,8 @@ include.module( 'tool-directions-leaflet', [ 'leaflet', 'tool-directions' ], fun
             }
         } )
 
+        var padding = smk.$viewer.getPanelPadding( true )
+
         this.displayRoute = function ( points ) {
             reset()
 
@@ -80,8 +82,8 @@ include.module( 'tool-directions-leaflet', [ 'leaflet', 'tool-directions' ], fun
             var bounds = self.routeLayer.getBounds()
 
             smk.$viewer.map.fitBounds( bounds.pad( 0.25 ), {
-                paddingTopLeft: L.point( 340, 40 ),
-                paddingBottomRight: L.point( 40, 40 )
+                paddingTopLeft: padding.topLeft,
+                paddingBottomRight: padding.bottomRight
             } )
         }
 
@@ -125,8 +127,8 @@ include.module( 'tool-directions-leaflet', [ 'leaflet', 'tool-directions' ], fun
                             return self.popupVm.$el
                         }, {
                             maxWidth: 100,
-                            autoPanPaddingTopLeft: L.point( 340, 40 ),
-                            autoPanPaddingBottomRight: L.point( 40, 40 )
+                            autoPanPaddingTopLeft: padding.topLeft,
+                            autoPanPaddingBottomRight: padding.bottomRight
                         } )
                         .addTo( smk.$viewer.map )
                 } )
@@ -170,8 +172,8 @@ include.module( 'tool-directions-leaflet', [ 'leaflet', 'tool-directions' ], fun
                     }, {
                         closeButton: false,
                         maxWidth: 100,
-                        autoPanPaddingTopLeft: L.point( 340, 40 ),
-                        autoPanPaddingBottomRight: L.point( 40, 40 )
+                        autoPanPaddingTopLeft: padding.topLeft,
+                        autoPanPaddingBottomRight: padding.bottomRight
                     } )
                     .addTo( smk.$viewer.map )
                     .openPopup()
@@ -192,8 +194,8 @@ include.module( 'tool-directions-leaflet', [ 'leaflet', 'tool-directions' ], fun
                         return self.popupVm.$el
                     }, {
                         maxWidth: 100,
-                        autoPanPaddingTopLeft: L.point( 340, 40 ),
-                        autoPanPaddingBottomRight: L.point( 40, 40 )
+                        autoPanPaddingTopLeft: padding.topLeft,
+                        autoPanPaddingBottomRight: padding.bottomRight
                     } )
                     .addTo( smk.$viewer.map )
                     .openPopup()
@@ -206,7 +208,7 @@ include.module( 'tool-directions-leaflet', [ 'leaflet', 'tool-directions' ], fun
             },
 
             'zoom-waypoint': function ( ev ) {
-                smk.$viewer.map.flyTo( [ ev.waypoint.latitude, ev.waypoint.longitude ], 12 )
+                // smk.$viewer.map.flyTo( [ ev.waypoint.latitude, ev.waypoint.longitude ], 12 )
                 self.waypointLayers[ ev.index ].openPopup()
             }
         } )

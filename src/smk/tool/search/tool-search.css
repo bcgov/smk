@@ -38,11 +38,12 @@
     display: flex;
     justify-content: flex-start;
     align-items: stretch;
-}
-
-.smk-tool.smk-search-tool.smk-tool-visible {
     display: flex;
 }
+
+/* .smk-tool.smk-search-tool.smk-tool-visible {
+    display: flex;
+} */
 
 .smk-tool.smk-search-tool input {
     border: 0;

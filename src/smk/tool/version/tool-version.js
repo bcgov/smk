@@ -21,7 +21,8 @@ include.module( 'tool-version', [ 'tool', 'widgets', 'tool-version.panel-version
             widgetComponent:'version-widget',
             panelComponent: 'version-panel',
             title:          'SMK Build Info',
-            position:       'menu'
+            position:       'menu',
+            order:          99
         }, option ) )
 
     }
@@ -39,7 +40,7 @@ include.module( 'tool-version', [ 'tool', 'widgets', 'tool-version.panel-version
 
         smk.on( this.id, {
             'activate': function () {
-                if ( !self.visible || !self.enabled ) return
+                if ( !self.enabled ) return
 
                 self.active = !self.active
             }

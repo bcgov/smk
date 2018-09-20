@@ -1,14 +1,26 @@
-include.module( 'tool-location', [ 'tool', 'widgets', 'tool-location.popup-location-html' ], function ( inc ) {
+include.module( 'tool-location', [ 'tool', 'widgets', 'tool-location.popup-location-html', 'tool-location.panel-location-html' ], function ( inc ) {
     "use strict";
 
+    Vue.component( 'location-panel', {
+        extends: inc.widgets.toolPanel,
+        template: inc[ 'tool-location.panel-location-html' ],
+        props: [ 'site', 'tool' ]
+    } )
+
     function LocationTool( option ) {
-        this.makePropWidget( 'site', {} )
-        this.makePropWidget( 'tool', {} )
+        this.makeProp( 'site', {} )
+        this.makeProp( 'tool', {} )
 
         SMK.TYPE.Tool.prototype.constructor.call( this, $.extend( {
-            title:  'Location'
+            title:      'Location',
+            position:   'toolbar',
+            showPanel:  false
         }, option ) )
+
+        if ( this.showPanel )
+            this.panelComponent = 'location-panel'
     }
+
 
     SMK.TYPE.LocationTool = LocationTool
 
@@ -19,74 +31,106 @@ include.module( 'tool-location', [ 'tool', 'widgets', 'tool-location.popup-locat
     LocationTool.prototype.afterInitialize.push( function ( smk ) {
         var self = this
 
-        if ( smk.$tool.identify )
-            this.tool.identify = true
+        this.setIdentifyHandler = function ( handler ) {
+            if ( !smk.$tool.identify ) return
+
+            self.tool.identify = !!handler
+
+            self.identifyHandler = handler || function () {}
+        }
+        self.identifyHandler = function () {}
+        
+        this.setDirectionsHandler = function ( handler ) {
+            if ( !smk.$tool.directions ) return
+
+            self.tool.directions = !!handler
+
+            self.directionsHandler = handler || function () {}
+        }
+        self.directionsHandler = function () {}
 
         // if ( smk.$tool.measure )
         //     this.tool.measure = true
 
-        if ( smk.$tool.directions )
-            this.tool.directions = true
+        if ( this.showPanel ) {
+            smk.on( this.id, {
+                'identify': function () {
+                    self.identifyHandler()
+                },
 
-        this.vm = new Vue( {
-            el: smk.addToOverlay( inc[ 'tool-location.popup-location-html' ] ),
-            data: this.widget,
-            methods: {
-                formatDD: function ( dd ) {
-                    return dd.toFixed( 4 )
+                'measure': function () {
                 },
-                identifyFeatures: function () {
-                    var site = self.site
-                    self.reset()
-                    smk.$viewer.identifyFeatures( self.location )
-                },
-                startMeasurement: function () {
 
+                'directions': function () {
+                    self.directionsHandler()
+                }
+            } )
+        }
+        else {
+            this.vm = new Vue( {
+                el: smk.addToOverlay( inc[ 'tool-location.popup-location-html' ] ),
+                data: this.widget,
+                methods: {
+                    identifyFeatures: function () {
+                        self.identifyHandler()
+                    },
+                    startMeasurement: function () {
+                    },
+                    startDirections: function () {
+                        self.directionsHandler()
+                    },
                 },
-                startDirections: function () {
-                    var site = self.site
-                    self.reset()
-                    smk.$tool.directions.active = true
-
-                    smk.$tool.directions.activating
-                        .then( function () {
-                            return smk.$tool.directions.startAtCurrentLocation()
-                        } )
-                        .then( function () {
-                            return smk.$tool.directions.addWaypoint( site )
-                        } )
-                },
-            },
-            updated: function () {
-                if ( self.visible )
-                    self.updatePopup()
-            }
-        } )
+                updated: function () {
+                    if ( self.active )
+                        self.updatePopup()
+                }
+            } )
+        }
 
         this.updatePopup = function () {}
 
         smk.$viewer.handlePick( 1, function ( location ) {
-            // if ( !self.active ) return
+            self.active = true
+            self.site = location.map
+            self.pickLocation( location )
 
-            self.reset()
-
-            self.location = location
-            self.visible = true
+            self.setDirectionsHandler()
+            self.setIdentifyHandler( function () {
+                self.reset()
+                smk.$viewer.identifyFeatures( location )
+            } )
 
             return SMK.UTIL.findNearestSite( location.map )
                 .then( function ( site ) {
                     self.site = site
+
+                    self.setDirectionsHandler( function () {
+                        self.reset()
+                        smk.$tool.directions.active = true
+
+                        smk.$tool.directions.activating
+                            .then( function () {
+                                return smk.$tool.directions.startAtCurrentLocation()
+                            } )
+                            .then( function () {
+                                return smk.$tool.directions.addWaypoint( site )
+                            } )
+                    } )
+
                     return true
                 } )
                 .catch( function ( err ) {
-                    self.site = location.map
                     return true
                 } )
         } )
 
+        this.pickLocation = function ( location ) {} 
+
         this.reset = function () {
             this.site = {}
-            this.visible = false
+            this.active = false
+            self.setDirectionsHandler()
+            self.setIdentifyHandler()
         }
 
         smk.$viewer.changedView( function () {
@@ -97,13 +141,7 @@ include.module( 'tool-location', [ 'tool', 'widgets', 'tool-location.popup-locat
             if ( !self.active )
                 self.reset()
         } )
-
-        self.active = true
     } )
-
-    LocationTool.prototype.hasPickPriority = function () {
-        return true
-    }
 
     return LocationTool
 } )
