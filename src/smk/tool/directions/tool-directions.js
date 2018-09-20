@@ -189,7 +189,8 @@ include.module( 'tool-directions', [ 'tool', 'widgets', 'tool-directions.panel-d
 
         SMK.TYPE.Tool.prototype.constructor.call( this, $.extend( {
             order:          4,
-            title:          'Directions',
+            position:       'menu',
+            title:          'Route Planner',
             widgetComponent:'directions-widget',
             panelComponent: 'directions-panel',
         }, option ) )
@@ -208,8 +209,6 @@ include.module( 'tool-directions', [ 'tool', 'widgets', 'tool-directions.panel-d
 
         this.changedActive( function () {
             if ( self.active ) {
-                smk.withTool( 'location', function () { this.active = false } )
-
                 if ( self.waypoints.length == 0 ) {
                     self.activating = self.activating.then( function () {
                         return self.startAtCurrentLocation()
@@ -220,9 +219,6 @@ include.module( 'tool-directions', [ 'tool', 'widgets', 'tool-directions.panel-d
                         return self.findRoute()
                     } )
                 }
-            }
-            else {
-                smk.withTool( 'location', function () { this.active = true } )
             }
         } )
 
@@ -257,7 +253,7 @@ include.module( 'tool-directions', [ 'tool', 'widgets', 'tool-directions.panel-d
 
         smk.on( this.id, {
             'activate': function () {
-                if ( !self.visible || !self.enabled ) return
+                if ( !self.enabled ) return
 
                 self.active = !self.active
             },
@@ -315,11 +311,6 @@ include.module( 'tool-directions', [ 'tool', 'widgets', 'tool-directions.panel-d
         this.popupVm = new Vue( {
             el: smk.addToContainer( inc[ 'tool-directions.popup-directions-html' ] ),
             data: this.popupModel,
-            methods: {
-                formatDD: function ( dd ) {
-                    return dd.toFixed( 4 )
-                }
-            },
             updated: function () {
                 if ( this.site )
                     self.updatePopup()

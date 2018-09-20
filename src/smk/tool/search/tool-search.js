@@ -96,9 +96,11 @@ include.module( 'tool-search', [ 'tool', 'widgets', 'tool-search.widget-search-h
 
         SMK.TYPE.Tool.prototype.constructor.call( this, $.extend( {
             order:      2,
-            title:      'Search',
+            position:       'toolbar',
+            title:      'Search for Location',
             widgetComponent: 'search-widget',
             panelComponent: 'search-panel',
+            useToolbar: true
         }, option ) )
     }
 
@@ -113,7 +115,7 @@ include.module( 'tool-search', [ 'tool', 'widgets', 'tool-search.widget-search-h
 
         smk.on( this.id, {
             'activate': function ( ev ) {
-                if ( !self.visible || !self.enabled ) return
+                if ( !self.enabled ) return
 
                 if ( ev.toggle )
                     self.active = !self.active
@@ -163,7 +165,8 @@ include.module( 'tool-search', [ 'tool', 'widgets', 'tool-search.widget-search-h
         smk.$viewer.searched.pickedFeature( function ( ev ) {
             self.highlightId = ev.feature && ev.feature.id
 
-            self.popupModel.feature = ev.feature
+            if ( self.showFeatures == 'search-popup' )
+                self.popupModel.feature = ev.feature
         } )
 
         // // smk.$viewer.selected.highlightedFeatures( function ( ev ) {

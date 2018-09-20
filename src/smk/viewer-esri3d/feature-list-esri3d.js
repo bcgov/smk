@@ -33,13 +33,23 @@ include.module( 'feature-list-esri3d', [ 'esri3d', 'types-esri3d', 'util-esri3d'
         this.highlight = {}
 
         this.changedActive( function () {
+            self.visible = self.active
+        } )
+
+        self.changedVisible( function () {
+            self.featureListLayer.visible = self.visible
+            if ( self.visible ) {
+            }
+            else {
+                smk.$viewer.hidePopup()
+            }
+        } )
+
+        this.changedActive( function () {
             if ( self.active ) {
-                if ( self.showPanel )
-                    smk.$viewer.view.padding = { left: 340 }
                 self.featureListLayer.visible = true
             }
             else {
-                smk.$viewer.view.padding = { left: 0 }
                 self.featureListLayer.visible = false
                 smk.$viewer.hidePopup()
             }
@@ -51,11 +61,13 @@ include.module( 'feature-list-esri3d', [ 'esri3d', 'types-esri3d', 'util-esri3d'
         } )
 
         this.showPopup = function ( loc ) {
-            smk.$viewer.showPopup( self.popupVm.$el, loc, { title: self.title } )
+            if ( !self.showFeatures || self.showFeatures.endsWith( '-popup' ) )
+                smk.$viewer.showPopup( self.popupVm.$el, loc, { title: self.title } )
         }
 
         this.updatePopup = function () {
-            smk.$viewer.showPopup( self.popupVm.$el, null, { title: self.title } )
+            if ( !self.showFeatures || self.showFeatures.endsWith( '-popup' ) )
+                smk.$viewer.showPopup( self.popupVm.$el, null, { title: self.title } )
         }
 
         self.featureSet.clearedFeatures( function ( ev ) {
@@ -106,12 +118,12 @@ include.module( 'feature-list-esri3d', [ 'esri3d', 'types-esri3d', 'util-esri3d'
 
             if ( ev.feature ) {
                 self.picks = self.highlight[ ev.feature.id ].map( function( g ) {
+                    g.visible = false
+
                     return new E.Graphic( {
                         geometry: g.geometry,
                         symbol: stylePickFn( g.geometry.type )
                     } )
-
-                    g.visible = false
                 } )
                 self.featureListLayer.addMany( self.picks )
 

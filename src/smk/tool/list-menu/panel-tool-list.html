@@ -1,0 +1,10 @@
+<side-panel class="smk-tool-list-panel">
+
+    <component class="smk-tool"
+        v-for="tool in subWidgets"
+        v-bind:key="tool.id"
+        v-bind:is="tool.widgetComponent"
+        v-bind="tool.widget"
+    ></component>
+
+</side-panel>

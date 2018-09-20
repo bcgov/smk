@@ -28,10 +28,10 @@
 
     <div class="smk-coordinate" v-if="site.latitude">
         <span class="smk-ordinate">
-            <label>latitude<div>{{ formatDD( site.latitude ) }}</div></label>
+            <label>latitude<div>{{ site.latitude | formatNumber( 6, 3 ) }}</div></label>
         </span>
         <span class="smk-ordinate">
-            <label>longitude<div>{{ formatDD( site.longitude ) }}</div></label>
+            <label>longitude<div>{{ site.longitude | formatNumber( 6, 3 ) }}</div></label>
         </span>
     </div>
 </div>

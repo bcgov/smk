@@ -35,7 +35,11 @@ include.module( 'feature-list-clustering-leaflet', [ 'leaflet', 'feature-list-le
             } )
 
         self.changedActive( function () {
-            if ( self.active ) {
+            self.visible = self.active
+        } )
+
+        self.changedVisible( function () {
+            if ( self.visible ) {
                 self.cluster.addTo( smk.$viewer.map )
             }
             else {
@@ -76,63 +80,70 @@ include.module( 'feature-list-clustering-leaflet', [ 'leaflet', 'feature-list-le
             } )
         } )
 
-        self.featureSet.pickedFeature( function ( ev ) {
-            if ( !ev.feature ) return
+        if ( !self.showFeatures || self.showFeatures == 'identify-popup' || self.showFeatures == 'query-popup' ) {
+            self.featureSet.pickedFeature( function ( ev ) {
+                if ( !ev.feature ) return
 
-            var ly = self.marker[ ev.feature.id ]
-            var parent = self.cluster.getVisibleParent( ly )
+                var ly = self.marker[ ev.feature.id ]
+                var parent = self.cluster.getVisibleParent( ly )
 
-            if ( ly === parent || !parent ) {
-                self.popupModel.hasMultiple = false
-                self.popupFeatureIds = null
-                self.popupCurrentIndex = null
+                if ( ly === parent || !parent ) {
+                    self.popupModel.hasMultiple = false
+                    self.popupFeatureIds = null
+                    self.popupCurrentIndex = null
 
-                self.popup
-                    .setLatLng( ly.getLatLng() )
-                    .openOn( smk.$viewer.map )
-            }
-            else {
-                var featureIds = parent.getAllChildMarkers().map( function ( m ) {
-                    return m.options.featureId
-                } )
+                    self.popup
+                        .setLatLng( ly.getLatLng() )
+                        .openOn( smk.$viewer.map )
+                }
+                else {
+                    var featureIds = parent.getAllChildMarkers().map( function ( m ) {
+                        return m.options.featureId
+                    } )
 
-                self.popupModel.hasMultiple = true
-                self.popupCurrentIndex = featureIds.indexOf( ev.feature.id )
-                self.popupModel.position = ( self.popupCurrentIndex + 1 ) + ' / ' + featureIds.length
-                self.popupFeatureIds = featureIds
+                    self.popupModel.hasMultiple = true
+                    self.popupCurrentIndex = featureIds.indexOf( ev.feature.id )
+                    self.popupModel.position = ( self.popupCurrentIndex + 1 ) + ' / ' + featureIds.length
+                    self.popupFeatureIds = featureIds
 
-                self.popup
-                    .setLatLng( parent.getLatLng() )
-                    .openOn( smk.$viewer.map )
-            }
-        } )
-
+                    self.popup
+                        .setLatLng( parent.getLatLng() )
+                        .openOn( smk.$viewer.map )
+                }
+            } )
+        }
+        
         self.featureSet.zoomToFeature( function ( ev ) {
-            var old = self.featureSet.pick( null )
-
+            var bounds
             switch ( turf.getType( ev.feature ) ) {
             case 'Point':
-                self.cluster.zoomToShowLayer( self.marker[ ev.feature.id ], function () {
-                    if ( old )
-                        self.featureSet.pick( old )
-                } )
+                var ll = L.latLng( ev.feature.geometry.coordinates[ 1 ], ev.feature.geometry.coordinates[ 0 ] )
+                bounds = L.latLngBounds( [ ll, ll ] )
                 break;
 
             default:
                 if ( self.highlight[ ev.feature.id ] )
-                    smk.$viewer.map
-                        .once( 'zoomend moveend', function () {
-                            if ( old )
-                                self.featureSet.pick( old )
-                        } )
-                        .fitBounds( self.highlight[ ev.feature.id ].getBounds(), {
-                            paddingTopLeft: self.tlPadding,
-                            paddingBottomRight: self.brPadding,
-                                        // paddingTopLeft: L.point( 300, 100 ),
-                            animate: true
-                        } )
+                    bounds = self.highlight[ ev.feature.id ].getBounds()
             }
-        } )
+
+            if ( !bounds ) return
+
+            var old = self.featureSet.pick( null )
+
+            var padding = smk.$viewer.getPanelPadding( self.isPanelVisible() )
+
+            smk.$viewer.map
+                .once( 'zoomend moveend', function () {
+                    if ( old )
+                        self.featureSet.pick( old )
+                } )
+                .fitBounds( bounds, {
+                    paddingTopLeft: padding.topLeft,
+                    paddingBottomRight: padding.bottomRight,
+                    maxZoom: 15,        
+                    animate: true
+                } )
+    } )
 
         self.featureSet.clearedFeatures( function ( ev ) {
             self.cluster.clearLayers()

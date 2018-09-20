@@ -41,49 +41,52 @@ include.module( 'tool-select-leaflet', [ 'leaflet', 'tool-select', 'feature-list
             } )
         } )
 
-        self.featureSet.pickedFeature( function ( ev ) {
-            if ( !ev.feature ) return
+        if ( !self.showFeatures || self.showFeatures == 'select-popup' ) {
+            self.featureSet.pickedFeature( function ( ev ) {
+                if ( !ev.feature ) return
 
-            if ( !ev.feature.center ) {
-                var center = turf.centerOfMass( ev.feature.geometry )
+                if ( !ev.feature.center ) {
+                    var center = turf.centerOfMass( ev.feature.geometry )
 
-                if ( center.geometry )
-                    ev.feature.center = L.GeoJSON.coordsToLatLng( center.geometry.coordinates )
-                else
-                    ev.feature.center = L.GeoJSON.coordsToLatLng( center.coordinates )
-            }
+                    if ( center.geometry )
+                        ev.feature.center = L.GeoJSON.coordsToLatLng( center.geometry.coordinates )
+                    else
+                        ev.feature.center = L.GeoJSON.coordsToLatLng( center.coordinates )
+                }
 
-            self.popup
-                .setLatLng( ev.feature.center )
-                .openOn( smk.$viewer.map )
-        } )
+                self.popup
+                    .setLatLng( ev.feature.center )
+                    .openOn( smk.$viewer.map )
+            } )
+        }
+
 
         self.featureSet.zoomToFeature( function ( ev ) {
             if ( !self.highlight[ ev.feature.id ] ) return
 
             var old = self.featureSet.pick( null )
 
-            if ( self.highlight[ ev.feature.id ].getBounds )
-                smk.$viewer.map
-                    .once( 'zoomend moveend', function () {
-                        if ( old )
-                            self.featureSet.pick( old )
-                    } )
-                    .fitBounds( self.highlight[ ev.feature.id ].getBounds(), {
-                        paddingTopLeft: L.point( 300, 100 ),
-                        animate: true
-                    } )
+            var bounds
+            if ( self.highlight[ ev.feature.id ].getBounds ) {
+                bounds = self.highlight[ ev.feature.id ].getBounds()
+            }
+            else if ( self.highlight[ ev.feature.id ].getLatLng ) {
+                var ll = self.highlight[ ev.feature.id ].getLatLng()
+                bounds = L.latLngBounds( [ ll, ll ] )
+            }
 
-            if ( self.highlight[ ev.feature.id ].getLatLng )
-                smk.$viewer.map
-                    .once( 'zoomend moveend', function () {
-                        if ( old )
-                            self.featureSet.pick( old )
-                    } )
-                    .setView( self.highlight[ ev.feature.id ].getLatLng(), 12, {
-                        paddingTopLeft: L.point( 300, 100 ),
-                        animate: true
-                    } )
+            var padding = smk.$viewer.getPanelPadding( true )
+            smk.$viewer.map
+                .once( 'zoomend moveend', function () {
+                    if ( old )
+                        self.featureSet.pick( old )
+                } )
+                .fitBounds( bounds, {
+                    paddingTopLeft: padding.topLeft,
+                    paddingBottomRight: padding.bottomRight,
+                    animate: true,
+                    maxZoom: 12
+                } )
         } )
 
     } )

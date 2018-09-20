@@ -17,10 +17,12 @@ include.module( 'tool-identify', [ 'feature-list', 'widgets', 'tool-identify.pan
 
         SMK.TYPE.FeatureList.prototype.constructor.call( this, $.extend( {
             order:              4,
-            title:              'Identify',
+            position:           'menu',
+            title:              'Identify Results',
             widgetComponent:    'identify-widget',
             panelComponent:     'identify-panel',
-            showPanel:          false
+            showPanel:          false,
+            showFeatures:       'popup'
         }, option ) )
     }
 
@@ -41,25 +43,41 @@ include.module( 'tool-identify', [ 'feature-list', 'widgets', 'tool-identify.pan
 
         self.changedActive( function () {
             if ( self.active ) {
-                if ( self.firstId )
-                    setTimeout( function () {
-                        smk.$viewer.identified.pick( self.firstId )
-                    }, 50 )
+                if ( !self.showFeatures || self.showFeatures == 'identify-popup' ) {
+                    if ( self.firstId )
+                        setTimeout( function () {
+                            smk.$viewer.identified.pick( self.firstId )
+                        }, 50 )
+                }
+                else {
+                    smk.$viewer.identified.pick()
+                }
             }
         } )
 
+        // fallback handler if nothing else uses pick
         smk.$viewer.handlePick( 0, function ( location ) {
+            return startIdentify( location )
+        } )
+
+        smk.$viewer.handlePick( 2, function ( location ) {
+            if ( !self.active ) return
+
+            return startIdentify( location )
+        } )
+
+        var startIdentify = function ( location ) {
             self.pickedLocation = null
             return smk.$viewer.identifyFeatures( location )
                 .then( function () {
                     self.pickedLocation = location
                     return true
                 } )
-        } )
+        }
 
         smk.on( this.id, {
             'activate': function () {
-                if ( !self.visible || !self.enabled ) return
+                if ( !self.enabled ) return
 
                 self.active = !self.active
             },
@@ -88,12 +106,9 @@ include.module( 'tool-identify', [ 'feature-list', 'widgets', 'tool-identify.pan
             self.busy = false
 
             if ( smk.$viewer.identified.isEmpty() ) {
-                self.active = false
                 self.setMessage( 'No features found', 'warning' )
             }
             else {
-                smk.$viewer.identified.pick( self.firstId )
-
                 var stat = smk.$viewer.identified.getStats()
 
                 var sub = SMK.UTIL.grammaticalNumber( stat.layerCount, null, null, 'on {} layers' )
@@ -102,6 +117,18 @@ include.module( 'tool-identify', [ 'feature-list', 'widgets', 'tool-identify.pan
                 if ( sub != '' ) sub = '<div class="smk-submessage">' + sub + '</div>'
 
                 self.setMessage( '<div>Identified ' + SMK.UTIL.grammaticalNumber( stat.featureCount, null, 'a feature', '{} features' ) + '</div>' + sub )
+
+                if ( !self.showFeatures || self.showFeatures == 'identify-popup' ) {
+                    smk.$viewer.identified.pick( self.firstId )
+                }
+                else {
+                    if ( stat.featureCount == 1 ) {
+                        var id = Object.keys( smk.$viewer.identified.featureSet )[ 0 ]
+                        smk.$viewer.identified.pick( id )
+                    }
+                } 
+
+
             }
         } )
 
@@ -144,8 +171,8 @@ include.module( 'tool-identify', [ 'feature-list', 'widgets', 'tool-identify.pan
         return this.pickedLocation.map
     }
 
-    IdentifyTool.prototype.hasPickPriority = function ( toolIdSet ) {
-        return !toolIdSet.location
+    IdentifyTool.prototype.isPanelVisible = function () {
+        return SMK.TYPE.FeatureList.prototype.isPanelVisible.call( this ) || this.showFeatures == "identify-feature"
     }
 
     return IdentifyTool

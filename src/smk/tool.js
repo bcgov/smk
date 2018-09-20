@@ -13,18 +13,19 @@ include.module( 'tool', [ 'jquery', 'event' ], function () {
 
         this.makeProp( 'id', null )
         this.makeProp( 'title', null )
-        this.makeProp( 'visible', true, 'changedVisible' )
+        this.makeProp( 'visible', false, 'changedVisible' )
         this.makeProp( 'enabled', true, 'changedEnabled' )
         this.makeProp( 'active', false, 'changedActive' )
 
         this.makePropWidget( 'type', 'unknown' )
+        this.makePropWidget( 'showTitle', false )
 
         $.extend( this, option )
     }
 
     // Tool.prototype.type = 'unknown'
     Tool.prototype.order = 1
-    Tool.prototype.position = 'toolbar'
+    // Tool.prototype.position = 'toolbar'
     Tool.prototype.showPanel = true
 
     SMK.TYPE.Tool = Tool
@@ -45,6 +46,7 @@ include.module( 'tool', [ 'jquery', 'event' ], function () {
             get: function () { return self.widget[ name ] },
             set: function ( v ) {
                 if ( v == self.widget[ name ] ) return
+                // console.warn( self.id, name, v )                
                 self.widget[ name ] = v
                 self.panel[ name ] = v
                 if ( event ) self[ event ].call( self )
@@ -91,37 +93,19 @@ include.module( 'tool', [ 'jquery', 'event' ], function () {
     Tool.prototype.initialize = function ( smk ) {
         var self = this
 
-        var aux = {}
-        return SMK.UTIL.waitAll( [
-            smk.getToolbar(),
-            smk.getSidepanel()
-        ] )
-        .then( function ( objs ) {
-            if ( self.position != 'toolbar' && ( !( self.position in smk.$tool ) || !( 'addTool' in smk.$tool[ self.position ] ) ) ) {
-                console.warn( 'position "' + self.position + '" not defined' )
-                self.position = 'toolbar'
+        if ( this.position ) {
+            var pos = this.position
+            if ( !( pos in smk.$tool ) || !( 'addTool' in smk.$tool[ pos ] ) ) {
+                console.warn( 'position ' + pos + ' not available for tool ' + this.id )
+                pos = 'toolbar'
             }
 
-            if ( self.position == 'toolbar' ) {
-                if ( self.widgetComponent )
-                    objs[ 0 ].add( self )
+            smk.$tool[ pos ].addTool( this, smk )
+        }
 
-                if ( self.panelComponent )
-                    objs[ 1 ].add( self )
-            }
-            else {
-                smk.$tool[ self.position ].addTool( self )
-            }
-
-            return self.afterInitialize.forEach( function ( init ) {
-                init.call( self, smk )
-            } )
+        return this.afterInitialize.forEach( function ( init ) {
+            init.call( self, smk )
         } )
-    }
-    // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
-    //
-    Tool.prototype.hasPickPriority = function ( toolIdSet ) {
-        return false
     }
 
     return Tool

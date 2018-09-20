@@ -1,7 +1,10 @@
 {
+  "version": "0.8.0",
   "name": "smk-client",
   "title": "smk-client",
-  "version": "0.7.0",
+  "license": "APSL-2.0",
+  "homepage": "https://bcgov.github.io/smk-client/",
+  "repository": "github:bcgov/smk-client",
   "devDependencies": {
     "connect-livereload": "^0.6.0",
     "glob": "^7.1.2",
@@ -9,7 +12,7 @@
     "grunt-cli": "^1.2.0",
     "grunt-contrib-clean": "^1.1.0",
     "grunt-contrib-concat": "^1.0.1",
-    "grunt-contrib-connect": "=1.0.0",
+    "grunt-contrib-connect": "^1.0.0",
     "grunt-contrib-copy": "^1.0.0",
     "grunt-contrib-jshint": "^1.1.0",
     "grunt-contrib-uglify": "^3.3.0",

@@ -22,10 +22,19 @@ module.exports = function( grunt ) {
         // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
         copy: {
+            'readme': {
+                expand: true,
+                src: [ 'README.md', 'DEVELOPMENT.md', 'EXPORT.md' ],
+                dest: '<%= buildPath %>',
+                options: {
+                    process: '<%= processTemplate %>',
+                },
+            },
+
             'root': {
                 expand: true,
                 cwd: '<%= srcPath %>',
-                src: [ 'index.html', 'map-config.json', 'readme.md' ],
+                src: [ 'index.html', 'map-config.json', 'gruntfile.js' ],
                 dest: '<%= buildPath %>',
                 options: {
                     process: '<%= processTemplate %>',
@@ -49,8 +58,18 @@ module.exports = function( grunt ) {
             'examples': {
                 expand: true,
                 cwd: '<%= examplePath %>',
-                src: [ '**', '!attachments/**', '!config/**' ],
-                dest: '<%= buildPath %>/example'
+                src: [ '**/*.html', '!attachments/**', '!config/**' ],
+                dest: '<%= buildPath %>/example',
+                options: {
+                    process: '<%= processTemplate %>',
+                },
+            },
+ 
+            'example-images': {
+                expand: true,
+                cwd: '<%= examplePath %>',
+                src: [ '**', '!**/*.html', '!attachments/**', '!config/**' ],
+                dest: '<%= buildPath %>/example',
             },
 
             'themes': {
@@ -76,6 +95,10 @@ module.exports = function( grunt ) {
 
             'build': {
                 src: [ '<%= buildPath %>/**', '!<%= buildPath %>', '!<%= buildPath %>/attachments/**', '!<%= buildPath %>/config/**' ]
+            },
+
+            'themes': {
+                src: [ '<%= buildPath %>/theme/**' ]
             },
 
             'example-data': {
@@ -134,8 +157,20 @@ module.exports = function( grunt ) {
         zip: {
             dev: {
                 expand: true,
-                dest: '<%= buildPath %>/smk-<%= pom.project.version %>-development.zip',
-                src: [ './**/*', '!./build/**', '!./etc/**', '!./node*/**', '!./target/**' ]
+                dest: '<%= buildPath %>/smk-<%= package.version %>-development.zip',
+                src: [ './**/*', '!./etc/**', '!./node*/**', '!./target/**', '!./webapp/**' ],
+                router: function ( path ) {
+                    if ( path == './package.json' ) return null
+                    if ( path == './pom.xml' ) return null
+                    if ( path == './CODE_OF_CONDUCT.md' ) return null
+                    if ( path == './ISSUE_TEMPLATE.md' ) return null
+                    if ( path == './PULL_REQUEST_TEMPLATE.md' ) return null
+                    if ( path == './build/package.json' ) return './package.json'
+                    if ( path.startsWith( './build' ) ) return null
+
+                    // grunt.log.writeln( path )
+                    return path
+                }
             }
         },
 
@@ -155,8 +190,13 @@ module.exports = function( grunt ) {
             },
 
             src: {
-                files: [ '<%= srcPath %>/**', 'smk-tags.js', 'lib/**' ],
-                tasks: [ 'build' ]
+                files: [ '<%= srcPath %>/**', 'smk-tags.js', 'lib/**', '!<%= srcPath %>/theme/**' ],
+                tasks: [ 'clean:build', 'build' ]
+            },
+
+            themes: {
+                files: [ '<%= srcPath %>/theme/**' ],
+                tasks: [ 'build-themes' ]
             },
 
             test: {
@@ -184,7 +224,6 @@ module.exports = function( grunt ) {
     ] )
 
     grunt.registerTask( 'build', [
-        'clean:build',
         'build-info',
         'build-lib',
         'build-images',
@@ -192,6 +231,7 @@ module.exports = function( grunt ) {
         'build-smk',
         'build-examples',
         'build-root',
+        'write-build-info:true',
         'clean:temp',
     ] )
 
@@ -216,11 +256,13 @@ module.exports = function( grunt ) {
     ] )
 
     grunt.registerTask( 'build-themes', [
+        'clean:themes',
         'copy:themes',
     ] )
 
     grunt.registerTask( 'build-examples', [
         'copy:examples',
+        'copy:example-images',
     ] )
 
     grunt.registerTask( 'build-example-data', [
@@ -229,13 +271,34 @@ module.exports = function( grunt ) {
     ] )
 
     grunt.registerTask( 'build-root', [
+        'copy:readme',
         'copy:root',
     ] )
 
     grunt.registerTask( 'build-dev-kit', [
-        'zip:dev',
+        'write-build-info',
+        'zip:dev'
     ] )
  
+    grunt.registerTask( 'write-build-info', function ( trimDeps ) {
+        var pkg = grunt.config( 'package' )
+        pkg.build = {
+            gitinfo: grunt.config( 'gitinfo' ),
+        }
+
+        if ( trimDeps ) {
+            var deps = pkg[ 'devDependencies' ]
+            pkg[ 'devDependencies' ] = {
+                'grunt':                deps[ 'grunt' ],
+                'grunt-contrib-connect':deps[ 'grunt-contrib-connect' ],
+            }
+        }
+
+        var fn = grunt.template.process( '<%= buildPath %>/package.json' )
+        grunt.file.write( fn, JSON.stringify( pkg, null, '    ' ) )
+        grunt.log.ok( 'Wrote ' + fn )
+    } )
+
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     grunt.registerTask( 'default', [
@@ -247,8 +310,9 @@ module.exports = function( grunt ) {
     grunt.registerTask( 'maven', [
         'mode:release',
         'clean:all',
+        'build-info',
+        'build-dev-kit',
         'build',
-        'build-dev-kit'
     ] )
 
 }

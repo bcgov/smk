@@ -90,6 +90,8 @@ include.module( 'viewer-leaflet', [ 'viewer', 'leaflet', 'layer-leaflet', 'featu
                 screen: ev.containerPoint,
             } )
         } )
+
+        self.getVar = function () { return smk.getVar.apply( smk, arguments ) }
     }
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
@@ -189,13 +191,39 @@ include.module( 'viewer-leaflet', [ 'viewer', 'leaflet', 'layer-leaflet', 'featu
         this.map.addLayer( viewerLayer )
     }
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
-    //
-    ViewerLeaflet.prototype.zoomToFeature = function ( layer, feature ) {
-        this.map.fitBounds( feature.highlightLayer.getBounds(), {
-            paddingTopLeft: L.point( 300, 100 ),
-            animate: false
-        } )
+    ViewerLeaflet.prototype.getPanelPadding = function ( panelVisible ) {
+        var overlayPadding = parseInt( this.getVar( 'overlay-padding' ) )
+        var panelPadding = 10 
+        var padding = overlayPadding + panelPadding
+        
+        var width = parseInt( this.getVar( 'panel-width' ) )
+        var bottom = parseInt( this.getVar( 'panel-bottom' ) )
+        var size = this.map.getSize()
+
+        if ( !panelVisible )
+            return {
+                topLeft: L.point( padding, padding ),
+                bottomRight: L.point( padding, padding ),
+            }
+
+        if ( bottom > 0 )
+            return {
+                topLeft: L.point( padding, size.y - overlayPadding - bottom + panelPadding ),
+                bottomRight: L.point( padding, padding ),
+            }
+
+        return {
+            topLeft: L.point( width + padding, padding ),
+            bottomRight: L.point( padding, padding ),
+        }
     }
+    //
+    // ViewerLeaflet.prototype.zoomToFeature = function ( layer, feature ) {
+    //     this.map.fitBounds( feature.highlightLayer.getBounds(), {
+    //         paddingTopLeft: L.point( 300, 100 ),
+    //         animate: false
+    //     } )
+    // }
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
     // ViewerLeaflet.prototype.getCurrentLocation = function () {
