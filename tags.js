@@ -10,8 +10,8 @@ var t = new tg.TagSet()
 
 t.script( 'jquery', 'lib/jquery-3.3.1.min.js' )
 
-t.script( 'vue', 'lib/vue-2.5.11.js' )
-// t.script( 'vue', 'lib/vue-2.5.11.min.js' )
+// t.script( 'vue', 'lib/vue-2.5.11.js' )
+t.script( 'vue', 'lib/vue-2.5.11.min.js' )
 t.script( 'vue-config', 'smk/vue-config.js' )
 
 t.script( 'turf', 'lib/turf-5.1.6.min.js' )
@@ -228,8 +228,8 @@ t.script( 'feature-list-esri3d', 'smk/viewer-esri3d/feature-list-esri3d.js' )
 
 t.sequence( 'esri3d' )
     .tag( 'leaflet' )
-    .style( 'https://js.arcgis.com/4.7/esri/css/main.css', { external: true } )
-    .script( 'https://js.arcgis.com/4.7/', { external: true } )
+    .style( 'https://js.arcgis.com/4.8/esri/css/main.css', { external: true } )
+    .script( 'https://js.arcgis.com/4.8/', { external: true } )
     // .script( 'lib/toGeoJSON.js' )
     // .script( 'https://unpkg.com/terraformer@1.0.7' )
     // .script( 'https://unpkg.com/terraformer-arcgis-parser@1.0.5' )
