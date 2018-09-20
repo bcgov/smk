@@ -69,16 +69,17 @@ include.module( 'tool-search-esri3d', [ 'esri3d', 'types-esri3d', 'util-esri3d',
         self.searchLayer = new E.layers.GraphicsLayer( { visible: false } )
         smk.$viewer.map.add( self.searchLayer )
 
+
         this.changedActive( function () {
-            if ( self.active ) {
-                smk.$viewer.view.padding = { left: 340 }
-                self.searchLayer.visible = true
+            self.visible = self.active
+        } )
+
+        self.changedVisible( function () {
+            self.searchLayer.visible = self.visible
+            if ( self.visible ) {
             }
             else {
-                smk.$viewer.view.padding = { left: 0 }
-                smk.$viewer.view.popup.close()
-                smk.$viewer.searched.pick( null )
-                self.searchLayer.visible = false
+                smk.$viewer.hidePopup()
             }
         } )
 
@@ -91,11 +92,13 @@ include.module( 'tool-search-esri3d', [ 'esri3d', 'types-esri3d', 'util-esri3d',
         this.showPopup = function ( feature, loc ) {
             self.popupModel.feature = feature
 
-            smk.$viewer.showPopup( self.popupVm.$el, loc, { title: self.title } )
+            if ( !self.showFeatures || self.showFeatures.endsWith( '-popup' ) )
+                smk.$viewer.showPopup( self.popupVm.$el, loc, { title: self.title } )
         }
 
         this.updatePopup = function () {
-            smk.$viewer.showPopup( self.popupVm.$el, null, { title: self.title } )
+            if ( !self.showFeatures || self.showFeatures.endsWith( '-popup' ) )
+                smk.$viewer.showPopup( self.popupVm.$el, null, { title: self.title } )
         }
 
         smk.$viewer.changedPopup( function () {

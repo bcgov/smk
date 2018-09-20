@@ -34,15 +34,7 @@ include.module( 'tool-location-esri3d', [ 'esri3d', 'types-esri3d', 'tool-locati
         smk.$viewer.map.add( self.locationLayer )
 
         this.updatePopup = function () {
-            var gr = new E.Graphic( {
-                geometry:   this.location.map,
-                symbol:     blueMarkerSymbol
-            } )
-
-            self.locationLayer.removeAll()
-            self.locationLayer.add( gr )
-
-            smk.$viewer.showPopup( self.vm.$el, this.location.map, { title: 'Location' } )
+            smk.$viewer.showPopup( self.vm.$el, null, { title: 'Location' } )
         }
 
         smk.$viewer.changedPopup( function () {
@@ -50,15 +42,28 @@ include.module( 'tool-location-esri3d', [ 'esri3d', 'types-esri3d', 'tool-locati
                 self.visible = false
         } )
 
-        self.changedVisible( function () {
-            if ( self.visible ) {
-                self.locationLayer.visible = true
-            }
+        self.changedActive( function () {
+            self.locationLayer.visible = self.active
+
+            if ( self.active ) {
+            } 
             else {
-                smk.$viewer.view.popup.close()
-                self.locationLayer.visible = false
+                smk.$viewer.view.popup.close()            
             }
         } )
+
+        self.pickLocation = function ( location ) {
+            var gr = new E.Graphic( {
+                geometry:   location.map,
+                symbol:     blueMarkerSymbol
+            } )
+
+            self.locationLayer.removeAll()
+            self.locationLayer.add( gr )
+
+            if ( !self.showPanel )
+                smk.$viewer.showPopup( self.vm.$el, location.map, { title: 'Location' } )
+        } 
     } )
 
 

@@ -81,7 +81,7 @@ include.module( 'tool-location', [ 'tool', 'widgets', 'tool-location.popup-locat
                     },
                 },
                 updated: function () {
-                    if ( self.visible )
+                    if ( self.active )
                         self.updatePopup()
                 }
             } )

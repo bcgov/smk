@@ -20,6 +20,7 @@ include.module( 'check-query', [], function ( inc ) {
 
         smk.tools.push( {
             type: showFeatures,
+            instance: tool.instance,
             enabled: true,
             position: tool.position
         } )
