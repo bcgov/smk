@@ -9,10 +9,10 @@ module.exports = function( grunt ) {
             grunt.log.ok( 'Build info taken from package.json' )
         }
         else {
-            if ( grunt.config( 'pom' ) )
+            // if ( grunt.config( 'pom' ) )
                 grunt.task.run( [ 'gitinfo' ] )
-            else
-                grunt.task.run( [ 'gitinfo', 'mavenEffectivePom:main', 'update-version' ] )
+            // else
+                // grunt.task.run( [ 'gitinfo', 'mavenEffectivePom:main', 'update-version' ] )
         }
     } )
 
