@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<name>smk-client</name>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>ca.bc.gov.app</groupId>
+	<artifactId>smk-client</artifactId>
+	<version>0.8.0</version>
+  	<packaging>war</packaging>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+	<build>
+		<finalName>smk-client</finalName>
+
+		<plugins>
+			<plugin>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.3</version>
+				<configuration>
+					<warSourceDirectory>${basedir}/webapp</warSourceDirectory>
+					<webResources>
+						<resource>
+							<directory>.</directory>
+							<includes>
+								<include>images/**</include>
+								<include>attachments/**</include>
+								<include>config/**</include>
+								<include>docs/**</include>
+								<include>example/**</include>
+								<include>theme/**</include>
+								<include>smk.js</include>
+								<include>index.html</include>
+								<include>gruntfile.js</include>
+								<include>package.json</include>
+								<include>README.md</include>
+								<include>EXPORT.md</include>
+								<include>DEVELOPMENT.md</include>
+							</includes>
+						</resource>
+					</webResources>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+					<compilerArgument>-Xlint:all</compilerArgument>
+					<showWarnings>true</showWarnings>
+					<showDeprecation>true</showDeprecation>
+				</configuration>
+			</plugin>
+
+		</plugins>
+	</build>
+</project>
