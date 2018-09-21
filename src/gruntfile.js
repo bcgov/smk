@@ -17,6 +17,8 @@ module.exports = function( grunt ) {
 
         buildPath: '../build',
 
+        basePath: '..',
+
         serverHost: 'localhost',
 
         // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -55,6 +57,14 @@ module.exports = function( grunt ) {
             //     dest: '<%= buildPath %>'
             // },
 
+            'pom': {
+                src: 'pom-template.xml',
+                dest: '<%= buildPath %>/pom.xml',
+                options: {
+                    process: '<%= processTemplate %>',
+                },
+            },
+
             // 'examples': {
             //     expand: true,
             //     cwd: '<%= examplePath %>',
@@ -78,6 +88,13 @@ module.exports = function( grunt ) {
             //     src: [ '**' ],
             //     dest: '<%= buildPath %>/theme'
             // },
+
+            'build': {
+                expand: true,
+                cwd: '<%= buildPath %>',
+                src: [ '**' ],
+                dest: '<%= basePath %>'
+            },
 
             'deploy': {}
         },
@@ -209,19 +226,22 @@ module.exports = function( grunt ) {
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    require( 'load-grunt-tasks' )( grunt, { config: '../package.json', requireResolution: true } )
+    require( 'load-grunt-tasks' )( grunt, { 
+        config: '../package.json', 
+        requireResolution: true 
+    } )
 
     grunt.loadTasks( 'tasks' )
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    grunt.registerTask( 'develop', [
-        'clean:all',
-        'build',
-        'build-example-data',
-        'connect',
-        'watch'
-    ] )
+    // grunt.registerTask( 'develop', [
+    //     'clean:all',
+    //     'build',
+    //     'build-example-data',
+    //     'connect',
+    //     'watch'
+    // ] )
 
     grunt.registerTask( 'build', [
         'build-info',
@@ -231,7 +251,8 @@ module.exports = function( grunt ) {
         'build-smk',
         // 'build-examples',
         // 'build-root',
-        'write-build-info:true',
+        // 'write-build-info:true',
+        'build-pom',
         'clean:temp',
     ] )
 
@@ -275,6 +296,10 @@ module.exports = function( grunt ) {
     //     'copy:root',
     // ] )
 
+    grunt.registerTask( 'build-pom', [
+        'copy:pom',
+    ] )
+
     grunt.registerTask( 'build-dev-kit', [
         'write-build-info',
         'zip:dev'
@@ -301,11 +326,27 @@ module.exports = function( grunt ) {
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    grunt.registerTask( 'default', [
+    grunt.registerTask( 'develop', [
         'mode:dev',
-        'use:https',
-        'develop'
+        'clean:all',
+        'build',
+        'copy:build',
+        'clean:all',
     ] )
+
+    grunt.registerTask( 'release', [
+        'mode:release',
+        'clean:all',
+        'build',
+        'copy:build',
+        'clean:all',
+    ] )
+
+    // grunt.registerTask( 'default', [
+    //     'mode:dev',
+    //     'use:https',
+    //     'develop'
+    // ] )
 
     grunt.registerTask( 'maven', [
         'mode:release',

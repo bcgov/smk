@@ -28,13 +28,13 @@ module.exports = function( grunt ) {
                     {
                         expand: true,
                         cwd: '<%= srcPath %>/smk',
-                        src: [ '**' ],
+                        src: [ '**', '!**/*.{gif,png,jpg,jpeg}' ],
                         dest: '<%= buildPath %>/smk'
                     },
                     {
                         expand: true,
                         cwd: '<%= srcPath %>/lib',
-                        src: [ '**' ],
+                        src: [ '**', '!include.js', '!tag-gen.js'  ],
                         dest: '<%= buildPath %>/lib'
                     },
                 ]
@@ -44,7 +44,7 @@ module.exports = function( grunt ) {
         concat: {
             smk: {
                 options: {
-                    banner: '// SMK\n',
+                    banner: '// SMK v<%= package.version %>\n',
                     process: '<%= processTemplate %>',
                 },
                 src: [
