@@ -1243,9 +1243,9 @@ window.include.SMK = true
             },
 
             BUILD: {
-                commit:     'ceee1b66a0097e32f87347124af108618cde8bb1',
+                commit:     'c5956c17a907cb4bd3665ee41bf85653b3ef40d7',
                 branch:     'reorganization',
-                lastCommit: '"2018-09-21 15:04:03 -0700"'.replace( /^"|"$/g, '' ),
+                lastCommit: '"2018-09-21 16:58:11 -0700"'.replace( /^"|"$/g, '' ),
                 origin:     'https://github.com/qqnluaq/smk-client.git',
                 version:    '0.8.0',
             }
