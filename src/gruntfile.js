@@ -69,6 +69,10 @@ module.exports = function( grunt ) {
                 src: [ '<%= buildPath %>/**' ]
             },
 
+            base: {
+                src: [ '<%= basePath %>/smk.js', '<%= basePath %>/smk', '<%= basePath %>/lib', '<%= basePath %>/index.html', '<%= basePath %>/pom.xml' ]  
+            },
+
             temp: {
                 src: [ '<%= buildPath %>/smk-tags-*.js' ]
             }
@@ -159,6 +163,7 @@ module.exports = function( grunt ) {
         'build-index',
         'build-pom',
         'clean:temp',
+        'clean:base',
         'copy:build',
         'clean:build',
     ] )
