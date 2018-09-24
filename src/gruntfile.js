@@ -13,7 +13,6 @@ module.exports = function( grunt ) {
         package: grunt.file.readJSON( '../package.json' ),
 
         srcPath: '.',
-        // examplePath: 'example',
 
         buildPath: '../build',
 
@@ -24,24 +23,15 @@ module.exports = function( grunt ) {
         // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
         copy: {
-            // 'readme': {
-            //     expand: true,
-            //     src: [ 'README.md', 'DEVELOPMENT.md', 'EXPORT.md' ],
-            //     dest: '<%= buildPath %>',
-            //     options: {
-            //         process: '<%= processTemplate %>',
-            //     },
-            // },
-
-            // 'root': {
-            //     expand: true,
-            //     cwd: '<%= srcPath %>',
-            //     src: [ 'index.html', 'map-config.json', 'gruntfile.js' ],
-            //     dest: '<%= buildPath %>',
-            //     options: {
-            //         process: '<%= processTemplate %>',
-            //     },
-            // },
+            'index': {
+                expand: true,
+                cwd: '<%= srcPath %>',
+                src: [ 'index.html' ],
+                dest: '<%= buildPath %>',
+                options: {
+                    process: '<%= processTemplate %>',
+                },
+            },
 
             'images': {
                 expand: true,
@@ -50,13 +40,6 @@ module.exports = function( grunt ) {
                 dest: '<%= buildPath %>/images'
             },
 
-            // 'example-data': {
-            //     expand: true,
-            //     cwd: '<%= examplePath %>',
-            //     src: [ 'attachments/**', 'config/**' ],
-            //     dest: '<%= buildPath %>'
-            // },
-
             'pom': {
                 src: 'pom-template.xml',
                 dest: '<%= buildPath %>/pom.xml',
@@ -64,30 +47,6 @@ module.exports = function( grunt ) {
                     process: '<%= processTemplate %>',
                 },
             },
-
-            // 'examples': {
-            //     expand: true,
-            //     cwd: '<%= examplePath %>',
-            //     src: [ '**/*.html', '!attachments/**', '!config/**' ],
-            //     dest: '<%= buildPath %>/example',
-            //     options: {
-            //         process: '<%= processTemplate %>',
-            //     },
-            // },
- 
-            // 'example-images': {
-            //     expand: true,
-            //     cwd: '<%= examplePath %>',
-            //     src: [ '**', '!**/*.html', '!attachments/**', '!config/**' ],
-            //     dest: '<%= buildPath %>/example',
-            // },
-
-            // 'themes': {
-            //     expand: true,
-            //     cwd: '<%= srcPath %>/theme',
-            //     src: [ '**' ],
-            //     dest: '<%= buildPath %>/theme'
-            // },
 
             'build': {
                 expand: true,
@@ -106,20 +65,8 @@ module.exports = function( grunt ) {
                 force: true
             },
 
-            all: {
+            build: {
                 src: [ '<%= buildPath %>/**' ]
-            },
-
-            'build': {
-                src: [ '<%= buildPath %>/**', '!<%= buildPath %>', '!<%= buildPath %>/attachments/**', '!<%= buildPath %>/config/**' ]
-            },
-
-            'themes': {
-                src: [ '<%= buildPath %>/theme/**' ]
-            },
-
-            'example-data': {
-                src: [ '<%= buildPath %>/attachments/**', '<%= buildPath %>/config/**' ]
             },
 
             temp: {
@@ -171,55 +118,23 @@ module.exports = function( grunt ) {
 
         // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-        zip: {
-            dev: {
-                expand: true,
-                dest: '<%= buildPath %>/smk-<%= package.version %>-development.zip',
-                src: [ './**/*', '!./etc/**', '!./node*/**', '!./target/**', '!./webapp/**' ],
-                router: function ( path ) {
-                    if ( path == './package.json' ) return null
-                    if ( path == './pom.xml' ) return null
-                    if ( path == './CODE_OF_CONDUCT.md' ) return null
-                    if ( path == './ISSUE_TEMPLATE.md' ) return null
-                    if ( path == './PULL_REQUEST_TEMPLATE.md' ) return null
-                    if ( path == './build/package.json' ) return './package.json'
-                    if ( path.startsWith( './build' ) ) return null
-
-                    // grunt.log.writeln( path )
-                    return path
-                }
-            }
-        },
-
-        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
         watch: {
             options: {
                 debounceDelay: 2000,
-                livereload: {
-                    host:   '<%= serverHost %>',
-                    key:    grunt.file.read( '../node_modules/grunt-contrib-connect/tasks/certs/server.key' ),
-                    cert:   grunt.file.read( '../node_modules/grunt-contrib-connect/tasks/certs/server.crt' )
-                },
-                livereloadOnError: false,
+                // livereload: {
+                //     host:   '<%= serverHost %>',
+                //     key:    grunt.file.read( '../node_modules/grunt-contrib-connect/tasks/certs/server.key' ),
+                //     cert:   grunt.file.read( '../node_modules/grunt-contrib-connect/tasks/certs/server.crt' )
+                // },
+                // livereloadOnError: false,
                 spawn: false
                 // interrupt: true,
             },
 
             src: {
-                files: [ '<%= srcPath %>/**', 'smk-tags.js', 'lib/**', '!<%= srcPath %>/theme/**' ],
-                tasks: [ 'clean:build', 'build' ]
+                files: [ '<%= srcPath %>/**' ],
+                tasks: [ 'build' ]
             },
-
-            themes: {
-                files: [ '<%= srcPath %>/theme/**' ],
-                tasks: [ 'build-themes' ]
-            },
-
-            test: {
-                files: [ '<%= examplePath %>/**' ],
-                tasks: [ 'build-examples', 'build-example-data' ]
-            }
         }
 
     } )
@@ -235,25 +150,17 @@ module.exports = function( grunt ) {
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    // grunt.registerTask( 'develop', [
-    //     'clean:all',
-    //     'build',
-    //     'build-example-data',
-    //     'connect',
-    //     'watch'
-    // ] )
-
     grunt.registerTask( 'build', [
+        'clean:build',
         'build-info',
         'build-lib',
         'build-images',
-        // 'build-themes',
         'build-smk',
-        // 'build-examples',
-        // 'build-root',
-        // 'write-build-info:true',
+        'build-index',
         'build-pom',
         'clean:temp',
+        'copy:build',
+        'clean:build',
     ] )
 
     grunt.registerTask( 'write-tag-head-foot', function () {
@@ -276,83 +183,23 @@ module.exports = function( grunt ) {
         'copy:images',
     ] )
 
-    // grunt.registerTask( 'build-themes', [
-    //     'clean:themes',
-    //     'copy:themes',
-    // ] )
-
-    // grunt.registerTask( 'build-examples', [
-    //     'copy:examples',
-    //     'copy:example-images',
-    // ] )
-
-    // grunt.registerTask( 'build-example-data', [
-    //     'clean:example-data',
-    //     'copy:example-data',
-    // ] )
-
-    // grunt.registerTask( 'build-root', [
-    //     'copy:readme',
-    //     'copy:root',
-    // ] )
+    grunt.registerTask( 'build-index', [
+        'copy:index',
+    ] )
 
     grunt.registerTask( 'build-pom', [
         'copy:pom',
     ] )
 
-    grunt.registerTask( 'build-dev-kit', [
-        'write-build-info',
-        'zip:dev'
-    ] )
- 
-    grunt.registerTask( 'write-build-info', function ( trimDeps ) {
-        var pkg = grunt.config( 'package' )
-        pkg.build = {
-            gitinfo: grunt.config( 'gitinfo' ),
-        }
-
-        if ( trimDeps ) {
-            var deps = pkg[ 'devDependencies' ]
-            pkg[ 'devDependencies' ] = {
-                'grunt':                deps[ 'grunt' ],
-                'grunt-contrib-connect':deps[ 'grunt-contrib-connect' ],
-            }
-        }
-
-        var fn = grunt.template.process( '<%= buildPath %>/package.json' )
-        grunt.file.write( fn, JSON.stringify( pkg, null, '    ' ) )
-        grunt.log.ok( 'Wrote ' + fn )
-    } )
-
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     grunt.registerTask( 'develop', [
         'mode:dev',
-        'clean:all',
         'build',
-        'copy:build',
-        'clean:all',
     ] )
 
     grunt.registerTask( 'release', [
         'mode:release',
-        'clean:all',
-        'build',
-        'copy:build',
-        'clean:all',
-    ] )
-
-    // grunt.registerTask( 'default', [
-    //     'mode:dev',
-    //     'use:https',
-    //     'develop'
-    // ] )
-
-    grunt.registerTask( 'maven', [
-        'mode:release',
-        'clean:all',
-        'build-info',
-        'build-dev-kit',
         'build',
     ] )
 

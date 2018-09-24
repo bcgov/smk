@@ -8,20 +8,19 @@
   "dependencies": {
     "grunt": "^1.0.3",
     "grunt-cli": "^1.2.0",
-    "grunt-contrib-connect": "^1.0.0"
+    "grunt-contrib-connect": "^1.0.0",
+    "grunt-zip": "^0.17.1"
   },
   "devDependencies": {
     "connect-livereload": "^0.6.0",
     "glob": "^7.1.2",
+    "grunt-gitinfo": "^0.1.8",
+    "grunt-contrib-copy": "^1.0.0",
     "grunt-contrib-clean": "^1.1.0",
     "grunt-contrib-concat": "^1.0.1",
-    "grunt-contrib-copy": "^1.0.0",
     "grunt-contrib-jshint": "^1.1.0",
     "grunt-contrib-uglify": "^3.3.0",
     "grunt-contrib-watch": "^1.1.0",
-    "grunt-gitinfo": "^0.1.8",
-    "grunt-maven-effective-pom": "0.0.6",
-    "grunt-zip": "^0.17.1",
     "jshint-stylish": "^2.2.1",
     "load-grunt-tasks": "~4.0.0"
   }
