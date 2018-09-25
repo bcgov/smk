@@ -7,7 +7,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>ca.bc.gov.app</groupId>
 	<artifactId>smk-client</artifactId>
-	<version>0.8.1</version>
+	<version><!--%= package.version %--></version>
   	<packaging>war</packaging>
 
 	<properties>

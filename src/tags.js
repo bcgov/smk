@@ -1,6 +1,6 @@
 var tg = require( './lib/tag-gen' )
 
-tg.globOption.cwd = 'src'
+tg.globOption.cwd = '.'
 
 var t = new tg.TagSet()
 

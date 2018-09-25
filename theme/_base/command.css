@@ -1,0 +1,65 @@
+.smk-map-frame .smk-command {
+    cursor: pointer;
+    color: blue;
+    padding: 2px;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    margin-left: -2px;
+    font-size: 12px;
+    user-select: none;
+}
+
+.smk-map-frame .smk-command.smk-icon {
+    color: black;
+    padding: 0;
+    width: 26px;
+    height: 26px;
+    font-size: 24px;
+}
+
+.smk-map-frame .smk-command.smk-disabled {
+    color: lightgray;
+    font-style: italic;
+}
+
+.smk-map-frame .smk-command.smk-icon.smk-disabled {
+    font-style: normal;
+}
+
+.smk-map-frame .smk-command:hover {
+    border: 1px solid black;
+}
+
+.smk-map-frame .smk-command.smk-disabled:hover {
+    border: 1px solid transparent;
+}
+
+.smk-map-frame select.smk-command {
+    background-color: white;
+}
+
+.smk-map-frame select.smk-command:focus {
+    outline: 0;
+}
+
+.smk-map-frame .smk-commands {
+    margin-bottom: 1px;
+}
+
+.smk-map-frame .smk-active, .smk-tool-active {
+    background-color: #d2d9e6;
+}
+
+.smk-map-frame .smk-item {
+    border-radius: 5px;
+    margin-bottom: 1px;
+    cursor: default;
+}
+
+.smk-map-frame .smk-item:hover {
+    background-color: #d2d9e6;
+}
+
+.smk-map-frame .smk-item.smk-disabled:hover {
+    background-color: transparent;
+}

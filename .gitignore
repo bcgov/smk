@@ -36,3 +36,5 @@
 **/build/**
 **/node/**
 **/bin/**
+/lib/
+/smk
