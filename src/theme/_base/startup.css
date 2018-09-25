@@ -1,0 +1,22 @@
+.smk-map-frame .smk-startup.smk-spinner {
+    z-index: 99999;
+    visibility: visible;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 64px;
+    height: 64px;
+    margin-top: -32px;
+    margin-left: -32px;
+}
+
+.smk-map-frame .smk-startup.smk-status {
+    z-index: 99999;
+    visibility: visible;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    text-align: center;
+    padding-bottom: 30px;
+}

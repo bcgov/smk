@@ -40,6 +40,13 @@ module.exports = function( grunt ) {
                 dest: '<%= buildPath %>/images'
             },
 
+            'themes': {
+                expand: true,
+                cwd: '<%= srcPath %>/theme',
+                src: [ '**' ],
+                dest: '<%= buildPath %>/theme'
+            },
+
             'pom': {
                 src: 'pom-template.xml',
                 dest: '<%= buildPath %>/pom.xml',
@@ -159,6 +166,7 @@ module.exports = function( grunt ) {
         'build-info',
         'build-lib',
         'build-images',
+        'build-themes',
         'build-smk',
         'build-index',
         'build-pom',
@@ -186,6 +194,10 @@ module.exports = function( grunt ) {
 
     grunt.registerTask( 'build-images', [
         'copy:images',
+    ] )
+
+    grunt.registerTask( 'build-themes', [
+        'copy:themes',
     ] )
 
     grunt.registerTask( 'build-index', [
