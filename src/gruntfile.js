@@ -143,7 +143,7 @@ module.exports = function( grunt ) {
             },
 
             src: {
-                files: [ '<%= srcPath %>/**' ],
+                files: [ '<%= srcPath %>/smk/**', '<%= srcPath %>/theme/**', '<%= srcPath %>/index.html', '<%= srcPath %>/smk.js', '<%= srcPath %>/tags.js' ],
                 tasks: [ 'build' ]
             },
         }
