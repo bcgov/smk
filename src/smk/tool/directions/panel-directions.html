@@ -5,7 +5,12 @@
     </template>
 
     <template slot="commands">
-        <span class="smk-command-col">
+        <div class="smk-command-row">
+            <div class="smk-command"
+                v-bind:class="{ 'smk-disabled': busy || !hasRoute }"
+                v-on:click="!busy && $$emit( 'route' )"
+            >Route</div>
+
             <div class="smk-command"
                 v-bind:class="{ 'smk-disabled': busy }"
                 v-on:click="!busy && $$emit( 'reverse' )"
@@ -15,9 +20,54 @@
                 v-bind:class="{ 'smk-disabled': busy }"
                 v-on:click="!busy && $$emit( 'clear' )"
             >Reset</div>
-        </span>
 
-        <span class="smk-command-col">
+            <div class="smk-command-spacer"></div>
+
+            <label class="smk-command"
+                v-bind:class="{ 'smk-disabled': busy }"
+            ><input type="checkbox"
+                v-model="options"
+                v-on:change="!busy && $$emit( 'config', getConfigState() )"
+            >Options</label>
+
+            <!-- <div class="smk-command"
+                v-bind:class="{ 'smk-disabled': busy }"
+                v-on:click="!busy && $$emit( 'options' )"
+            >Options</div> -->
+        </div>
+
+        <div class="smk-command-row" v-if="options">
+            <label class="smk-command"
+                v-bind:class="{ 'smk-disabled': busy }"
+            ><input type="checkbox"
+                v-model="optimal"
+                v-on:change="!busy && $$emit( 'config', getConfigState() )"
+            >Optimal</label>
+
+            <label class="smk-command"
+                v-bind:class="{ 'smk-disabled': busy }"
+            ><input type="checkbox"
+                v-model="roundTrip"
+                v-on:change="!busy && $$emit( 'config', getConfigState() )"
+            >Round trip</label>
+
+            <div class="smk-command-spacer"></div>
+
+            <label class="smk-command"
+                v-bind:class="{ 'smk-disabled': busy }"
+            ><input type="radio" value="shortest"
+                v-model="criteria"
+                v-on:change="!busy && $$emit( 'config', getConfigState() )"
+            >Shortest</label>
+
+            <label class="smk-command"
+                v-bind:class="{ 'smk-disabled': busy }"
+            ><input type="radio" value="fastest"
+                v-model="criteria"
+                v-on:change="!busy && $$emit( 'config', getConfigState() )"
+            >Fastest</label>
+        </div>
+        <!-- <span class="smk-command-col">
             <label class="smk-command"
                 v-bind:class="{ 'smk-disabled': busy }"
             ><input type="checkbox"
@@ -47,7 +97,7 @@
                 v-model="criteria"
                 v-on:change="!busy && $$emit( 'config', getConfigState() )"
             >Fastest</label>
-        </span>
+        </span> -->
     </template>
 
     <template slot="status" v-if="statusMessage || busy">
@@ -97,7 +147,7 @@
         ></address-search>
     </div>
 
-    <div class="smk-directions">
+    <!-- <div class="smk-directions">
         <div class="smk-direction"
             v-for="( direction, i ) in directions"
             v-on:mouseenter="$$emit( 'hover-direction', { highlight: i } )"
@@ -110,6 +160,6 @@
                 v-if="direction.distance"
             >for {{ direction.distance }} ({{ direction.time }})</span>
         </div>
-    </div>
+    </div> -->
 
 </side-panel>
