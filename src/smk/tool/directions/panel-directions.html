@@ -1,7 +1,6 @@
 <side-panel class="smk-directions-panel" v-bind:class="{ 'smk-busy': busy }">
     <template slot="header">
         <h1>{{ title }}</h1>
-        <!-- <busy-spinner v-bind:busy="busy"></busy-spinner>  -->
     </template>
 
     <template slot="commands">
@@ -29,11 +28,6 @@
                 v-model="options"
                 v-on:change="!busy && $$emit( 'config', getConfigState() )"
             >Options</label>
-
-            <!-- <div class="smk-command"
-                v-bind:class="{ 'smk-disabled': busy }"
-                v-on:click="!busy && $$emit( 'options' )"
-            >Options</div> -->
         </div>
 
         <div class="smk-command-row" v-if="options">
@@ -67,37 +61,6 @@
                 v-on:change="!busy && $$emit( 'config', getConfigState() )"
             >Fastest</label>
         </div>
-        <!-- <span class="smk-command-col">
-            <label class="smk-command"
-                v-bind:class="{ 'smk-disabled': busy }"
-            ><input type="checkbox"
-                v-model="optimal"
-                v-on:change="!busy && $$emit( 'config', getConfigState() )"
-            >Optimal order</label>
-
-            <label class="smk-command"
-                v-bind:class="{ 'smk-disabled': busy }"
-            ><input type="checkbox"
-                v-model="roundTrip"
-                v-on:change="!busy && $$emit( 'config', getConfigState() )"
-            >Round trip</label>
-        </span>
-
-        <span class="smk-command-col">
-            <label class="smk-command"
-                v-bind:class="{ 'smk-disabled': busy }"
-            ><input type="radio" value="shortest"
-                v-model="criteria"
-                v-on:change="!busy && $$emit( 'config', getConfigState() )"
-            >Shortest</label>
-
-            <label class="smk-command"
-                v-bind:class="{ 'smk-disabled': busy }"
-            ><input type="radio" value="fastest"
-                v-model="criteria"
-                v-on:change="!busy && $$emit( 'config', getConfigState() )"
-            >Fastest</label>
-        </span> -->
     </template>
 
     <template slot="status" v-if="statusMessage || busy">
@@ -105,6 +68,13 @@
         <status-message message="Calculating" status="progress" v-if="busy"></status-message>        
         <busy-spinner v-bind:busy="busy"></busy-spinner> 
     </template>
+
+    <div class="smk-waypoint smk-item">
+        <address-search class="smk-description" placeholder="Click on point, or enter address"
+            v-model="newAddress"
+            v-on:update="$$emit( 'new-waypoint', $event )"
+        ></address-search>
+    </div>
 
     <draggable class="smk-waypoints"
         v-bind:list="waypoints"
@@ -139,27 +109,5 @@
             >delete</i>
         </div>
     </draggable>
-
-    <div class="smk-waypoint smk-item">
-        <address-search class="smk-description" placeholder="Click on point, or enter address"
-            v-model="newAddress"
-            v-on:update="$$emit( 'new-waypoint', $event )"
-        ></address-search>
-    </div>
-
-    <!-- <div class="smk-directions">
-        <div class="smk-direction"
-            v-for="( direction, i ) in directions"
-            v-on:mouseenter="$$emit( 'hover-direction', { highlight: i } )"
-            v-on:mouseleave="$$emit( 'hover-direction', { highlight: null } )"
-            v-on:click="$$emit( 'pick-direction', { pick: i } )"
-            v-bind:class="{ 'smk-highlight': i == directionHighlight, 'smk-pick': i == directionPick }"
-        >
-            <span class="smk-instruction">{{ direction.instruction }}</span>
-            <span class="smk-metric"
-                v-if="direction.distance"
-            >for {{ direction.distance }} ({{ direction.time }})</span>
-        </div>
-    </div> -->
 
 </side-panel>

@@ -208,7 +208,7 @@ include.module( 'tool-directions-leaflet', [ 'leaflet', 'tool-directions' ], fun
                 //     } )
                     .addTo( smk.$viewer.map )
                 //     .openPopup()
-                zoomToPoint( p )
+                // zoomToPoint( p )
             },
 
             'pick-direction': function ( ev ) {
