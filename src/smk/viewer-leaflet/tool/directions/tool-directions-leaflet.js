@@ -50,14 +50,44 @@ include.module( 'tool-directions-leaflet', [ 'leaflet', 'tool-directions' ], fun
         var self = this
 
         this.changedActive( function () {
-            if ( self.active ) {
+            self.visible = self.active
+        } )
+
+        this.changedVisible( function () {
+            if ( self.visible ) {
+                if ( self.routeLayer )
+                    smk.$viewer.map.addLayer( self.routeLayer )
+
+                if ( self.directionHighlightLayer )
+                    smk.$viewer.map.addLayer( self.directionHighlightLayer )
+
+                if ( self.directionPickLayer )
+                    smk.$viewer.map.addLayer( self.directionPickLayer )
+
+                if ( self.waypointLayers && self.waypointLayers.length > 0 ) {
+                    self.waypointLayers.forEach( function ( l ) {
+                        smk.$viewer.map.addLayer( l )
+                    } )
+                }
             }
             else {
-                reset()
+                if ( self.routeLayer )
+                    smk.$viewer.map.removeLayer( self.routeLayer )
+
+                if ( self.directionHighlightLayer )
+                    smk.$viewer.map.removeLayer( self.directionHighlightLayer )
+
+                if ( self.directionPickLayer )
+                    smk.$viewer.map.removeLayer( self.directionPickLayer )
+
+                if ( self.waypointLayers && self.waypointLayers.length > 0 ) {
+                    self.waypointLayers.forEach( function ( l ) {
+                        smk.$viewer.map.removeLayer( l )
+                    } )
+                }
             }
         } )
 
-        var padding = smk.$viewer.getPanelPadding( true )
 
         this.displayRoute = function ( points ) {
             reset()
@@ -80,6 +110,7 @@ include.module( 'tool-directions-leaflet', [ 'leaflet', 'tool-directions' ], fun
             smk.$viewer.map.addLayer( self.routeLayer )
 
             var bounds = self.routeLayer.getBounds()
+            var padding = smk.$viewer.getPanelPadding( true )
 
             smk.$viewer.map.fitBounds( bounds.pad( 0.25 ), {
                 paddingTopLeft: padding.topLeft,
@@ -119,16 +150,7 @@ include.module( 'tool-directions-leaflet', [ 'leaflet', 'tool-directions' ], fun
                     }
 
                     return L.marker( [ w.latitude, w.longitude ], {
-                            // title: w.fullAddress,
                             icon: icon
-                        } )
-                        .bindPopup( function () {
-                            self.popupModel.site = popup
-                            return self.popupVm.$el
-                        }, {
-                            maxWidth: 100,
-                            autoPanPaddingTopLeft: padding.topLeft,
-                            autoPanPaddingBottomRight: padding.bottomRight
                         } )
                         .addTo( smk.$viewer.map )
                 } )
@@ -155,7 +177,7 @@ include.module( 'tool-directions-leaflet', [ 'leaflet', 'tool-directions' ], fun
             self.waypointLayers = null
         }
 
-        smk.on( this.id, {
+        smk.on( 'directions-route', {
             'hover-direction': function ( ev ) {
                 if ( self.directionHighlightLayer ) {
                     smk.$viewer.map.removeLayer( self.directionHighlightLayer )
@@ -166,17 +188,7 @@ include.module( 'tool-directions-leaflet', [ 'leaflet', 'tool-directions' ], fun
 
                 var p = self.directions[ ev.highlight ].point
                 self.directionHighlightLayer = L.circleMarker( [ p[ 1 ], p[ 0 ] ] )
-                    .bindPopup( function () {
-                        self.popupModel.site = self.directions[ ev.highlight ]
-                        return self.popupVm.$el
-                    }, {
-                        closeButton: false,
-                        maxWidth: 100,
-                        autoPanPaddingTopLeft: padding.topLeft,
-                        autoPanPaddingBottomRight: padding.bottomRight
-                    } )
                     .addTo( smk.$viewer.map )
-                    .openPopup()
             },
 
             'pick-direction': function ( ev ) {
@@ -189,27 +201,33 @@ include.module( 'tool-directions-leaflet', [ 'leaflet', 'tool-directions' ], fun
 
                 var p = self.directions[ ev.pick ].point
                 self.directionPickLayer = L.circleMarker( [ p[ 1 ], p[ 0 ] ], { radius: 15 } )
-                    .bindPopup( function () {
-                        self.popupModel.site = self.directions[ ev.pick ]
-                        return self.popupVm.$el
-                    }, {
-                        maxWidth: 100,
-                        autoPanPaddingTopLeft: padding.topLeft,
-                        autoPanPaddingBottomRight: padding.bottomRight
-                    } )
                     .addTo( smk.$viewer.map )
-                    .openPopup()
 
-                smk.$viewer.map.panTo( [ p[ 1 ], p[ 0 ] ] )
+                zoomToPoint( p )
             },
+        } )
 
+        function zoomToPoint( point, maxZoom ) {
+            var ll = L.latLng( point[ 1 ], point[ 0 ] )
+            var bounds = L.latLngBounds( [ ll, ll ] )
+            var padding = smk.$viewer.getPanelPadding( true )
+
+            smk.$viewer.map
+                .fitBounds( bounds, {
+                    paddingTopLeft: padding.topLeft,
+                    paddingBottomRight: padding.bottomRight,
+                    maxZoom: maxZoom || 15,        
+                    animate: true
+                } )
+        }
+
+        smk.on( this.id, {
             'clear': function ( ev ) {
                 reset()
             },
 
             'zoom-waypoint': function ( ev ) {
-                // smk.$viewer.map.flyTo( [ ev.waypoint.latitude, ev.waypoint.longitude ], 12 )
-                self.waypointLayers[ ev.index ].openPopup()
+                zoomToPoint( [ ev.waypoint.longitude, ev.waypoint.latitude ] )
             }
         } )
     } )

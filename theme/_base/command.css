@@ -63,3 +63,15 @@
 .smk-map-frame .smk-item.smk-disabled:hover {
     background-color: transparent;
 }
+
+.smk-map-frame .smk-command-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    align-content: flex-end;
+}
+
+.smk-map-frame .smk-command-row .smk-command-spacer {
+    flex-grow: 1;
+}

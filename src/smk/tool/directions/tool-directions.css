@@ -10,13 +10,16 @@
 .smk-sidepanel .smk-panel.smk-directions-panel .smk-body {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: stretch;
     align-content: stretch;
     height: 100%;
     overflow-y: hidden;
 }
 
+.smk-directions-panel .smk-waypoints {
+    overflow-y: auto;
+}
 
 .smk-directions-panel .smk-waypoint {
     display: flex;
@@ -97,15 +100,6 @@
     background-color: rgb(87%, 96.5%, 99.1%);
 }
 
-.smk-directions-panel .smk-body .smk-directions {
-    position: relative;
-    /* flex: 1 0; */
-    overflow-x: hidden;
-    overflow-y: auto;
-    height: 100%;
-    margin-top: 5px;
-}
-
 .smk-directions-popup .smk-address {
     margin-bottom: 10px;
 }
@@ -153,4 +147,8 @@
 
 pre.smk-popup {
     font-family: sans-serif;
+}
+
+.smk-directions-panel .smk-directions {
+    overflow-y: auto;
 }

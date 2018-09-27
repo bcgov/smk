@@ -1,7 +1,14 @@
-include.module( 'tool-directions', [ 'tool', 'widgets', 'tool-directions.panel-directions-html', 'tool-directions.popup-directions-html', 'tool-directions.address-search-html' ], function ( inc ) {
+include.module( 'tool-directions', [ 'tool', 'widgets', 'tool-directions.panel-directions-html', 'tool-directions.address-search-html' ], function ( inc ) {
     "use strict";
 
     var request
+
+    function interpolate( p1, p2, t ) {
+        return [
+            p1[ 0 ] + ( p2[ 0 ] - p1[ 0 ] ) * t,
+            p1[ 1 ] + ( p2[ 1 ] - p1[ 1 ] ) * t
+        ]
+    }
 
     function findRoute( points, option ) {
         if ( request )
@@ -29,6 +36,33 @@ include.module( 'tool-directions', [ 'tool', 'widgets', 'tool-directions.panel-d
             if ( !data.routeFound ) throw new Error( 'failed to find route' )
 
             return data
+        } )
+        .catch( function () {
+            return {
+                distance: '10',
+                timeText: '10 mins',
+                route: points.map( function ( p ) { return [ p.longitude, p.latitude ] } ),
+                directions: points
+                    .map( function ( p ) {
+                        return { text: 'waypoint: ' + p.longitude + ', ' + p.latitude, point: [ p.longitude, p.latitude ] }
+                    } )
+                    .reduce( function ( accum, v ) {
+                        if ( accum.length == 0 ) {
+                            accum.push( v )
+                            return accum
+                        }
+
+                        var prev = accum[ accum.length - 1 ]
+
+                        accum.push( { text: 'turn left for 1km (1:00)', point: interpolate( prev.point, v.point, 0.2 ) } )
+                        accum.push( { text: 'go straight for 2km (2:00)', point: interpolate( prev.point, v.point, 0.4 ) } )
+                        accum.push( { text: 'turn right for 3km (3:00)', point: interpolate( prev.point, v.point, 0.6 ) } )
+                        accum.push( { text: 'go backwards for 4km (4:00)', point: interpolate( prev.point, v.point, 0.8 ) } )
+                        accum.push( v )
+
+                        return accum 
+                    }, [] )
+            }
         } )
     }
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
@@ -143,7 +177,7 @@ include.module( 'tool-directions', [ 'tool', 'widgets', 'tool-directions.panel-d
     Vue.component( 'directions-panel', {
         extends: inc.widgets.toolPanel,
         template: inc[ 'tool-directions.panel-directions-html' ],
-        props: [ 'busy', 'waypoints', 'directions', 'directionHighlight', 'directionPick', 'statusMessage', 'config' ],
+        props: [ 'busy', 'waypoints', 'statusMessage', 'config', 'hasRoute' ],
         data: function () {
             return Object.assign( {}, this.config )
         },
@@ -175,16 +209,15 @@ include.module( 'tool-directions', [ 'tool', 'widgets', 'tool-directions.panel-d
 
         this.makePropPanel( 'busy', false )
         this.makePropPanel( 'waypoints', [] )
-        this.makePropPanel( 'directions', [] )
-        this.makePropPanel( 'directionHighlight', null )
-        this.makePropPanel( 'directionPick', null )
         this.makePropPanel( 'statusMessage', null )
+        this.makePropPanel( 'hasRoute', false )
         this.makePropPanel( 'config', {
             optimal:    false,
             roundTrip:  false,
             criteria:   'shortest',
             newAddress: null,
-            apiKey:     option.apiKey
+            apiKey:     option.apiKey,
+            options:    false
         } )
 
         SMK.TYPE.Tool.prototype.constructor.call( this, $.extend( {
@@ -196,6 +229,8 @@ include.module( 'tool-directions', [ 'tool', 'widgets', 'tool-directions.panel-d
         }, option ) )
 
         this.activating = SMK.UTIL.resolved()
+
+        this.directions = []
     }
 
     SMK.TYPE.DirectionsTool = DirectionsTool
@@ -300,24 +335,11 @@ include.module( 'tool-directions', [ 'tool', 'widgets', 'tool-directions.panel-d
                     } )
                 }
             },
-        } )
 
-        // = : = : = : = : = : = : = : = : = : = : = : = : = : = : = : = : = : = : =
-
-        this.popupModel = {
-            site:       null
-        }
-
-        this.popupVm = new Vue( {
-            el: smk.addToContainer( inc[ 'tool-directions.popup-directions-html' ] ),
-            data: this.popupModel,
-            updated: function () {
-                if ( this.site )
-                    self.updatePopup()
+            'route': function ( ev ) {
+                smk.$tool[ 'directions-route' ].active = true 
             }
         } )
-
-        this.updatePopup = function () {}
 
     } )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
@@ -355,6 +377,7 @@ include.module( 'tool-directions', [ 'tool', 'widgets', 'tool-directions.panel-d
         var self = this
 
         this.waypoints = []
+        this.hasRoute = false
 
         return this.findRoute()
     }
@@ -379,6 +402,7 @@ include.module( 'tool-directions', [ 'tool', 'widgets', 'tool-directions.panel-d
 
         this.setMessage( 'Calculating...', 'progress' )
         this.busy = true
+        this.hasRoute = false
 
         return SMK.UTIL.promiseFinally( findRoute( points, this.config ).then( function ( data ) {
             self.displayRoute( data.route )
@@ -410,6 +434,8 @@ include.module( 'tool-directions', [ 'tool', 'widgets', 'tool-directions.panel-d
                 } )
                 return dir
             } )
+
+            self.hasRoute = true
 
             self.directions.unshift( {
                 instruction: 'Start!',
