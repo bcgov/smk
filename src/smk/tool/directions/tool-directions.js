@@ -37,33 +37,34 @@ include.module( 'tool-directions', [ 'tool', 'widgets', 'tool-directions.panel-d
 
             return data
         } )
-        .catch( function () {
-            return {
-                distance: '10',
-                timeText: '10 mins',
-                route: points.map( function ( p ) { return [ p.longitude, p.latitude ] } ),
-                directions: points
-                    .map( function ( p ) {
-                        return { text: 'waypoint: ' + p.longitude + ', ' + p.latitude, point: [ p.longitude, p.latitude ] }
-                    } )
-                    .reduce( function ( accum, v ) {
-                        if ( accum.length == 0 ) {
-                            accum.push( v )
-                            return accum
-                        }
+        // uncomment to inject dummy results
+        // .catch( function () {
+        //     return {
+        //         distance: '10',
+        //         timeText: '10 mins',
+        //         route: points.map( function ( p ) { return [ p.longitude, p.latitude ] } ),
+        //         directions: points
+        //             .map( function ( p ) {
+        //                 return { text: 'waypoint: ' + p.longitude + ', ' + p.latitude, point: [ p.longitude, p.latitude ] }
+        //             } )
+        //             .reduce( function ( accum, v ) {
+        //                 if ( accum.length == 0 ) {
+        //                     accum.push( v )
+        //                     return accum
+        //                 }
 
-                        var prev = accum[ accum.length - 1 ]
+        //                 var prev = accum[ accum.length - 1 ]
 
-                        accum.push( { text: 'turn left for 1km (1:00)', point: interpolate( prev.point, v.point, 0.2 ) } )
-                        accum.push( { text: 'go straight for 2km (2:00)', point: interpolate( prev.point, v.point, 0.4 ) } )
-                        accum.push( { text: 'turn right for 3km (3:00)', point: interpolate( prev.point, v.point, 0.6 ) } )
-                        accum.push( { text: 'go backwards for 4km (4:00)', point: interpolate( prev.point, v.point, 0.8 ) } )
-                        accum.push( v )
+        //                 accum.push( { text: 'turn left for 1km (1:00)', point: interpolate( prev.point, v.point, 0.2 ) } )
+        //                 accum.push( { text: 'go straight for 2km (2:00)', point: interpolate( prev.point, v.point, 0.4 ) } )
+        //                 accum.push( { text: 'turn right for 3km (3:00)', point: interpolate( prev.point, v.point, 0.6 ) } )
+        //                 accum.push( { text: 'go backwards for 4km (4:00)', point: interpolate( prev.point, v.point, 0.8 ) } )
+        //                 accum.push( v )
 
-                        return accum 
-                    }, [] )
-            }
-        } )
+        //                 return accum 
+        //             }, [] )
+        //     }
+        // } )
     }
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
