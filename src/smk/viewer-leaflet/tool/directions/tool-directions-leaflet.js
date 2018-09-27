@@ -150,17 +150,8 @@ include.module( 'tool-directions-leaflet', [ 'leaflet', 'tool-directions' ], fun
                     }
 
                     return L.marker( [ w.latitude, w.longitude ], {
-                            // title: w.fullAddress,
                             icon: icon
                         } )
-                        // .bindPopup( function () {
-                        //     self.popupModel.site = popup
-                        //     return self.popupVm.$el
-                        // }, {
-                        //     maxWidth: 100,
-                        //     autoPanPaddingTopLeft: padding.topLeft,
-                        //     autoPanPaddingBottomRight: padding.bottomRight
-                        // } )
                         .addTo( smk.$viewer.map )
                 } )
         }
@@ -197,18 +188,7 @@ include.module( 'tool-directions-leaflet', [ 'leaflet', 'tool-directions' ], fun
 
                 var p = self.directions[ ev.highlight ].point
                 self.directionHighlightLayer = L.circleMarker( [ p[ 1 ], p[ 0 ] ] )
-                //     .bindPopup( function () {
-                //         self.popupModel.site = self.directions[ ev.highlight ]
-                //         return self.popupVm.$el
-                //     }, {
-                //         closeButton: false,
-                //         maxWidth: 100,
-                //         autoPanPaddingTopLeft: padding.topLeft,
-                //         autoPanPaddingBottomRight: padding.bottomRight
-                //     } )
                     .addTo( smk.$viewer.map )
-                //     .openPopup()
-                // zoomToPoint( p )
             },
 
             'pick-direction': function ( ev ) {
@@ -221,18 +201,8 @@ include.module( 'tool-directions-leaflet', [ 'leaflet', 'tool-directions' ], fun
 
                 var p = self.directions[ ev.pick ].point
                 self.directionPickLayer = L.circleMarker( [ p[ 1 ], p[ 0 ] ], { radius: 15 } )
-                //     .bindPopup( function () {
-                //         self.popupModel.site = self.directions[ ev.pick ]
-                //         return self.popupVm.$el
-                //     }, {
-                //         maxWidth: 100,
-                //         autoPanPaddingTopLeft: padding.topLeft,
-                //         autoPanPaddingBottomRight: padding.bottomRight
-                //     } )
                     .addTo( smk.$viewer.map )
-                //     .openPopup()
 
-                // smk.$viewer.map.panTo( [ p[ 1 ], p[ 0 ] ] )
                 zoomToPoint( p )
             },
         } )
@@ -257,8 +227,6 @@ include.module( 'tool-directions-leaflet', [ 'leaflet', 'tool-directions' ], fun
             },
 
             'zoom-waypoint': function ( ev ) {
-                // smk.$viewer.map.flyTo( [ ev.waypoint.latitude, ev.waypoint.longitude ], 12 )
-                // self.waypointLayers[ ev.index ].openPopup()
                 zoomToPoint( [ ev.waypoint.longitude, ev.waypoint.latitude ] )
             }
         } )

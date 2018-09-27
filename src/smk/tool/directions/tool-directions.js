@@ -1,4 +1,4 @@
-include.module( 'tool-directions', [ 'tool', 'widgets', 'tool-directions.panel-directions-html', 'tool-directions.popup-directions-html', 'tool-directions.address-search-html' ], function ( inc ) {
+include.module( 'tool-directions', [ 'tool', 'widgets', 'tool-directions.panel-directions-html', 'tool-directions.address-search-html' ], function ( inc ) {
     "use strict";
 
     var request
@@ -340,24 +340,6 @@ include.module( 'tool-directions', [ 'tool', 'widgets', 'tool-directions.panel-d
                 smk.$tool[ 'directions-route' ].active = true 
             }
         } )
-
-
-        // = : = : = : = : = : = : = : = : = : = : = : = : = : = : = : = : = : = : =
-
-        this.popupModel = {
-            site:       null
-        }
-
-        this.popupVm = new Vue( {
-            el: smk.addToContainer( inc[ 'tool-directions.popup-directions-html' ] ),
-            data: this.popupModel,
-            updated: function () {
-                if ( this.site )
-                    self.updatePopup()
-            }
-        } )
-
-        this.updatePopup = function () {}
 
     } )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
