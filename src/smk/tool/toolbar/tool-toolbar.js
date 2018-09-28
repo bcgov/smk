@@ -25,6 +25,8 @@ include.module( 'tool-toolbar', [ 'tool', 'toolbar', 'sidepanel' ], function ( i
             this.toolbar.add( tool )
 
         this.sidepanel.add( tool )
+
+        return true
     }
 
     return ToolBarTool

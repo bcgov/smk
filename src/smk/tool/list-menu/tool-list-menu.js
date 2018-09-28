@@ -154,6 +154,8 @@ include.module( 'tool-list-menu', [ 'tool', 'widgets', 'tool-list-menu.panel-lis
                 self.pushTool( tool )
             }
         } )
+
+        return true
     }
 
     return ListMenuTool

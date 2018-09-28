@@ -37,6 +37,8 @@ include.module( 'tool-shortcut-menu', [ 'tool', 'tool-shortcut-menu.shortcut-men
     ShortcutMenuTool.prototype.addTool = function ( tool, smk ) {
         var self = this
 
+        if ( smk.$device == 'desktop' ) return false
+
         this.model.widgets.push( {
             id:                 tool.id,
             widgetComponent:    tool.widgetComponent,
@@ -45,6 +47,8 @@ include.module( 'tool-shortcut-menu', [ 'tool', 'tool-shortcut-menu.shortcut-men
 
         tool.useList = false
         smk.$tool[ 'list-menu' ].addTool( tool )
+
+        return true
     }
 
     return ShortcutMenuTool
