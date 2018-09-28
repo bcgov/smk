@@ -40,6 +40,8 @@ include.module( 'tool-version', [ 'tool', 'widgets', 'tool-version.panel-version
 
         this.config = SMK.UTIL.projection( 'lmfId', 'lmfRevision', 'createdBy', '_rev', 'published' )( smk )
 
+        this.config.enabledTools = Object.keys( smk.$tool ).sort()
+
         smk.on( this.id, {
             'activate': function () {
                 if ( !self.enabled ) return

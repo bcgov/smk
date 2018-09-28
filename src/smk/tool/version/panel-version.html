@@ -33,6 +33,11 @@
             <dd>{{ config.createdBy }}</dd>
         </template>
 
+        <template v-if="config.enabledTools">
+            <dt>Enabled Tools</dt>
+            <dd>{{ config.enabledTools.join( ', ' ) }}</dd>
+        </template>
+
         <dt>SMK Built by</dt>
         <dd>
             <div><a href="http://www.vividsolutions.com/">Vivid Solutions</a> for <a href="https://data.gov.bc.ca/">Data BC</a></div>
