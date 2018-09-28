@@ -3,7 +3,7 @@ include.module( 'tool-minimap', [ 'tool' ], function () {
 
     function MinimapTool( option ) {
         SMK.TYPE.Tool.prototype.constructor.call( this, $.extend( {
-            order: 1
+            // order: 1
         }, option ) )
     }
 

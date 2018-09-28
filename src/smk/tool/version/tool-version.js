@@ -13,16 +13,18 @@ include.module( 'tool-version', [ 'tool', 'widgets', 'tool-version.panel-version
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
     function VersionTool( option ) {
-        this.makePropWidget( 'icon', 'build' )
+        this.makePropWidget( 'icon', null )
+
         this.makePropPanel( 'build', SMK.BUILD )
         this.makePropPanel( 'config', null )
 
         SMK.TYPE.Tool.prototype.constructor.call( this, $.extend( {
             widgetComponent:'version-widget',
             panelComponent: 'version-panel',
-            title:          'SMK Build Info',
-            position:       'menu',
-            order:          99
+            title:          'Version Info',
+            position:       'list-menu',
+            order:          99,
+            icon:           'build'
         }, option ) )
 
     }

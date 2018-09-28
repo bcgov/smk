@@ -41,16 +41,17 @@ include.module( 'tool-measure', [ 'tool', 'widgets', 'tool-measure.panel-measure
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
     function MeasureTool( option ) {
-        this.makePropWidget( 'icon', 'straighten' )
+        this.makePropWidget( 'icon' )//, 'straighten' )
+
         this.makePropPanel( 'busy', false )
         this.makePropPanel( 'results', [] )
         this.makePropPanel( 'viewer', {} )
         this.makePropPanel( 'statusMessage', null )
 
         SMK.TYPE.Tool.prototype.constructor.call( this, $.extend( {
-            order:          6,
-            position:       'menu',
-            title:          'Measurement',
+            // order:          6,
+            // position:       'menu',
+            // title:          'Measurement',
             widgetComponent:'measure-widget',
             panelComponent: 'measure-panel',
         }, option ) )

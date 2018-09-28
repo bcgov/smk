@@ -296,6 +296,8 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
     Viewer.prototype.updateLayersVisible = function () {
         var self = this
 
+        if ( !self.layerDisplayContext ) return
+        
         var pending = {}
         self.layerDisplayContext.getLayerIds().forEach( function ( id ) {
             pending[ id ] = true

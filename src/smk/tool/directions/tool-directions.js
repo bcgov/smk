@@ -10,7 +10,7 @@ include.module( 'tool-directions', [ 'tool', 'widgets', 'tool-directions.panel-d
         ]
     }
 
-    function findRoute( points, option ) {
+    function findRoute( points, option, apiKey ) {
         if ( request )
             request.abort()
 
@@ -28,7 +28,7 @@ include.module( 'tool-directions', [ 'tool', 'widgets', 'tool-directions.panel-d
                 url:        'https://routerdlv.api.gov.bc.ca/' + ( option.optimal ? 'optimalDirections' : 'directions' ) + '.json',
                 data:       query,
                 headers: {
-                    apikey: option.apiKey
+                    apikey: apiKey
                 }
             } ) ).then( res, rej )
         } )
@@ -206,7 +206,7 @@ include.module( 'tool-directions', [ 'tool', 'widgets', 'tool-directions.panel-d
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
     function DirectionsTool( option ) {
-        this.makePropWidget( 'icon', 'directions_car' )
+        this.makePropWidget( 'icon', null ) //'directions_car' )
 
         this.makePropPanel( 'busy', false )
         this.makePropPanel( 'waypoints', [] )
@@ -217,16 +217,16 @@ include.module( 'tool-directions', [ 'tool', 'widgets', 'tool-directions.panel-d
             roundTrip:  false,
             criteria:   'shortest',
             newAddress: null,
-            apiKey:     option.apiKey,
             options:    false
         } )
 
         SMK.TYPE.Tool.prototype.constructor.call( this, $.extend( {
-            order:          4,
-            position:       'menu',
-            title:          'Route Planner',
+            // order:          4,
+            // position:       'menu',
+            // title:          'Route Planner',
             widgetComponent:'directions-widget',
             panelComponent: 'directions-panel',
+            apiKey:         null
         }, option ) )
 
         this.activating = SMK.UTIL.resolved()
@@ -405,7 +405,7 @@ include.module( 'tool-directions', [ 'tool', 'widgets', 'tool-directions.panel-d
         this.busy = true
         this.hasRoute = false
 
-        return SMK.UTIL.promiseFinally( findRoute( points, this.config ).then( function ( data ) {
+        return SMK.UTIL.promiseFinally( findRoute( points, this.config, this.apiKey ).then( function ( data ) {
             self.displayRoute( data.route )
 
             if ( data.visitOrder && data.visitOrder.findIndex( function ( v, i ) { return points[ v ].index != i } ) != -1 ) {

@@ -3,7 +3,9 @@ include.module( 'tool-scale', [ 'tool', 'tool-scale.scale-html' ], function ( in
 
     function ScaleTool( option ) {
         SMK.TYPE.Tool.prototype.constructor.call( this, $.extend( {
-            order: 2
+            // order: 2
+            showFactor: false,
+            showBar:    false,
         }, option ) )
     }
 

@@ -13,12 +13,12 @@ include.module( 'tool-identify', [ 'feature-list', 'widgets', 'tool-identify.pan
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
     function IdentifyTool( option ) {
-        this.makePropWidget( 'icon', 'info_outline' )
+        this.makePropWidget( 'icon', null )//'info_outline' )
 
         SMK.TYPE.FeatureList.prototype.constructor.call( this, $.extend( {
-            order:              4,
-            position:           'menu',
-            title:              'Identify Results',
+            // order:              4,
+            // position:           'menu',
+            // title:              'Identify Results',
             widgetComponent:    'identify-widget',
             panelComponent:     'identify-panel',
             showPanel:          false,
