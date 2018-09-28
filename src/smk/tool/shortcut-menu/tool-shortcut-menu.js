@@ -5,7 +5,7 @@ include.module( 'tool-shortcut-menu', [ 'tool', 'tool-shortcut-menu.shortcut-men
     //
     function ShortcutMenuTool( option ) {    
         SMK.TYPE.Tool.prototype.constructor.call( this, $.extend( {
-            order: 10
+            // order: 10
         }, option ) )
 
         this.model = {

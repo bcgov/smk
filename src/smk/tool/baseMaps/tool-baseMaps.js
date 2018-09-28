@@ -59,7 +59,8 @@ include.module( 'tool-baseMaps', [ 'tool', 'widgets', 'viewer', 'leaflet', 'tool
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
     function BaseMapsTool( option ) {
-        this.makePropWidget( 'icon', 'map' )
+        this.makePropWidget( 'icon', null ) //'map' )
+        
         this.makePropPanel( 'center', null )
         this.makePropPanel( 'zoom', null )
         this.makePropPanel( 'current', null )
@@ -70,11 +71,12 @@ include.module( 'tool-baseMaps', [ 'tool', 'widgets', 'viewer', 'leaflet', 'tool
         } )
 
         SMK.TYPE.Tool.prototype.constructor.call( this, $.extend( {
-            order:          3,
-            position:       'menu',
-            title:          'Base Maps',
+            // order:          3,
+            // position:       'menu',
+            // title:          'Base Maps',
             widgetComponent:'baseMaps-widget',
             panelComponent: 'baseMaps-panel',
+            choices:        null
         }, option ) )
     }
 

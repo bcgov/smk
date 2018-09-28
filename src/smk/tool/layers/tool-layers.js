@@ -42,7 +42,8 @@ include.module( 'tool-layers', [ 'tool', 'widgets', 'tool-layers.panel-layers-ht
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
     function LayersTool( option ) {
-        this.makePropWidget( 'icon', 'layers' )
+        this.makePropWidget( 'icon' ) //, 'layers' )
+
         this.makePropPanel( 'busy', false )
         this.makePropPanel( 'items', [] )
         this.makePropPanel( 'allVisible', true )
@@ -52,11 +53,12 @@ include.module( 'tool-layers', [ 'tool', 'widgets', 'tool-layers.panel-layers-ht
         } )
 
         SMK.TYPE.Tool.prototype.constructor.call( this, $.extend( {
-            order:          3,
-            position:       'menu',
-            title:          'Layers',
+            // order:          3,
+            // position:       'menu',
+            // title:          'Layers',
             widgetComponent:'layers-widget',
             panelComponent: 'layers-panel',
+            display:        null
         }, option ) )
     }
 

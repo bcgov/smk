@@ -609,26 +609,28 @@
                     }
                 },
                 tools: [
-                    { type: 'about',        enabled: false },
-                    { type: 'baseMaps',     enabled: false },
-                    { type: 'coordinate',   enabled: false },
-                    { type: 'directions',   enabled: false },
+                    { type: 'about',        enabled: false, order: 1, position: 'list-menu',    icon: 'help',           title: 'About SMK' },
+                    { type: 'baseMaps',     enabled: false, order: 3, position: 'list-menu',    icon: 'map',            title: 'Base Maps' },
+                    { type: 'coordinate',   enabled: false, order: 3 },
+                    { type: 'directions',   enabled: false, order: 4, position: 'list-menu',    icon: 'directions_car', title: 'Route Planner' },
                     // { type: 'dropdown',     enabled: false }, -- so it won't be enabled by show-tools=all, no tools use it by default
-                    { type: 'identify',     enabled: false },
-                    { type: 'layers',       enabled: false },
+                    { type: 'identify',     enabled: false, order: 5, position: 'list-menu',    icon: 'info_outline',   title: 'Identify Results' },
+                    { type: 'layers',       enabled: false, order: 3, position: 'list-menu',    icon: 'layers',         title: 'Layers' },
+                    { type: 'list-menu',    enabled: false },
                     { type: 'location',     enabled: true },
-                    { type: 'markup',       enabled: true },
-                    { type: 'measure',      enabled: false },
-                    { type: 'menu',         enabled: false },
-                    { type: 'minimap',      enabled: false },
+                    { type: 'markup',       enabled: true,  order: 3 },
+                    { type: 'measure',      enabled: false, order: 6, position: 'list-menu',    icon: 'straighten',     title: 'Measurement' },
+                    // { type: 'menu',         enabled: false }, -- so it won't be enabled by show-tools=all, no tools use it by default
+                    { type: 'minimap',      enabled: false, order: 1 },
                     { type: 'pan',          enabled: false },
                     // { type: 'query',        enabled: false }, -- so it won't be enabled by show-tools=all, as it needs an instance
-                    { type: 'scale',        enabled: false },
-                    { type: 'search',       enabled: true },
-                    { type: 'select',       enabled: false },
+                    { type: 'scale',        enabled: false, order: 2 },
+                    { type: 'search',       enabled: true,  order: 2, position: 'toolbar',      icon: 'search',         title: 'Search for Location' },
+                    { type: 'select',       enabled: false, order: 6, position: 'list-menu',    icon: 'select_all',     title: 'Selected Features' },
+                    { type: 'shortcut-menu',enabled: false, order: 10 },
                     { type: 'toolbar',      enabled: true },
                     // { type: 'version',      enabled: false }, -- so it won't be enabled by show-tools=all
-                    { type: 'zoom',         enabled: false }
+                    { type: 'zoom',         enabled: false, order: 1 }
                 ]
             },
 

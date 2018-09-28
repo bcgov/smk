@@ -88,16 +88,17 @@ include.module( 'tool-search', [ 'tool', 'widgets', 'tool-search.widget-search-h
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
     function SearchTool( option ) {
-        this.makePropWidget( 'icon', 'search' )
+        this.makePropWidget( 'icon' ) //, 'search' )
         this.makePropWidget( 'initialSearch', 0 )
+
         this.makePropPanel( 'busy', false )
         this.makePropPanel( 'results', [] )
         this.makePropPanel( 'highlightId', null )
 
         SMK.TYPE.Tool.prototype.constructor.call( this, $.extend( {
-            order:      2,
-            position:       'toolbar',
-            title:      'Search for Location',
+            // order:      2,
+            // position:       'toolbar',
+            // title:      'Search for Location',
             widgetComponent: 'search-widget',
             panelComponent: 'search-panel',
             useToolbar: true

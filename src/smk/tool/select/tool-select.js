@@ -13,12 +13,12 @@ include.module( 'tool-select', [ 'feature-list', 'widgets', 'tool-select.panel-s
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
     function SelectTool( option ) {
-        this.makePropWidget( 'icon', 'select_all' )
+        this.makePropWidget( 'icon' )//, 'select_all' )
 
         SMK.TYPE.FeatureList.prototype.constructor.call( this, $.extend( {
-            order:              5,
-            position:           'menu',
-            title:              'Selected Features',
+            // order:              5,
+            // position:           'menu',
+            // title:              'Selected Features',
             widgetComponent:    'select-widget',
             panelComponent:     'select-panel'
         }, option ) )

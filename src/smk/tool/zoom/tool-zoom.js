@@ -3,7 +3,7 @@ include.module( 'tool-zoom', [ 'tool' ], function () {
 
     function ZoomTool( option ) {
         SMK.TYPE.Tool.prototype.constructor.call( this, $.extend( {
-            order: 1
+            // order: 1
         }, option ) )
     }
 
