@@ -1,6 +1,29 @@
 <div class="smk-sidepanel" v-bind:class="{ expanded: activeToolId != null }">
 
     <div class="smk-elastic-panel">
+        <div class="smk-title">
+            <i class="smk-command smk-icon material-icons" title="Go Back"
+                v-on:click="hasPrevious && trigger( 'sidepanel', 'previous-panel' )"
+                v-bind:class="{ 'smk-disabled': !hasPrevious }"
+            >arrow_back</i>
+
+            <div v-if="activeToolId && tool[ activeToolId ]">
+                <component 
+                    v-if="tool[ activeToolId ].titleComponent"
+                    v-bind:is="tool[ activeToolId ].titleComponent"
+                    v-bind="tool[ activeToolId ].panel"
+                ></component>
+                <template
+                    v-else
+                    v-html="tool[ activeToolId ].panel.title"
+                ></template>
+            </div>
+
+            <i class="smk-command smk-icon material-icons" title="Close Panel"
+                v-on:click="trigger( 'sidepanel', 'close-panel' )"
+            >close</i>
+        </div>
+
         <component class="smk-panel"
             v-if="activeToolId && tool[ activeToolId ]"
             v-bind:is="tool[ activeToolId ].panelComponent"

@@ -5,19 +5,19 @@ include.module( 'tool-list-menu', [ 'tool', 'widgets', 'tool-list-menu.panel-lis
         extends: inc.widgets.toolButton,
     } )
 
-    Vue.component( 'list-menu-previous-panel', {
-        extends: inc.widgets.toolButton,
-    } )
+    // Vue.component( 'list-menu-previous-panel', {
+    //     extends: inc.widgets.toolButton,
+    // } )
 
-    Vue.component( 'list-menu-close', {
-        extends: inc.widgets.toolButton,
-    } )
+    // Vue.component( 'list-menu-close', {
+    //     extends: inc.widgets.toolButton,
+    // } )
 
-    Vue.component( 'list-menu-panel', {
-        extends: inc.widgets.toolPanel,
-        template: inc[ 'tool-list-menu.panel-list-menu-html' ],
-        props: [ 'visible', 'enabled', 'active', 'currentTool', 'previousTool' ]
-    } )
+    // Vue.component( 'list-menu-panel', {
+    //     extends: inc.widgets.toolPanel,
+    //     template: inc[ 'tool-list-menu.panel-list-menu-html' ],
+    //     props: [ 'visible', 'enabled', 'active', 'currentTool', 'previousTool' ]
+    // } )
 
     Vue.component( 'tool-list-panel', {
         extends: inc.widgets.toolPanel,
@@ -27,29 +27,32 @@ include.module( 'tool-list-menu', [ 'tool', 'widgets', 'tool-list-menu.panel-lis
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
     function ListMenuTool( option ) {
-        this.toolStack = [
-            {
-                panelComponent: 'tool-list-panel',
-                panel: {
-                    title: null,
-                    subWidgets: []
-                }
-            }            
-        ]
+        // this.toolStack = [
+        //     {
+        //         panelComponent: 'tool-list-panel',
+        //         panel: {
+        //             title: null,
+        //             subWidgets: []
+        //         }
+        //     }            
+        // ]
 
         this.makePropWidget( 'icon', 'menu' )
 
-        this.makePropPanel( 'currentTool', this.toolStack[ 0 ] )
-        this.makePropPanel( 'previousTool', null )
+        // this.makePropPanel( 'currentTool', this.toolStack[ 0 ] )
+        // this.makePropPanel( 'previousTool', null )
+        this.makePropPanel( 'subWidgets', [] )
+        
 
         SMK.TYPE.Tool.prototype.constructor.call( this, $.extend( {
             title:          'Menu',
             position:       'toolbar',
             widgetComponent:'list-menu-widget',
-            panelComponent: 'list-menu-panel',
+            panelComponent: 'tool-list-panel',
+            // panelComponent: 'list-menu-panel',
         }, option ) )
 
-        this.toolStack[ 0 ].panel.title = this.title
+        // this.toolStack[ 0 ].panel.title = this.title
     }
 
     SMK.TYPE.ListMenuTool = ListMenuTool
@@ -138,7 +141,8 @@ include.module( 'tool-list-menu', [ 'tool', 'widgets', 'tool-list-menu.panel-lis
         else if ( tool.useList !== false ) {
             tool.showTitle = true
 
-            this.toolStack[ 0 ].panel.subWidgets.push( {
+            // this.toolStack[ 0 ].panel.subWidgets.push( {
+            this.subWidgets.push( {
                 id: tool.id,
                 type: tool.type,
                 widgetComponent: tool.widgetComponent,

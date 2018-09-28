@@ -35,6 +35,15 @@
     width: 300px;
 }
 
+.smk-sidepanel .smk-title {
+    display: flex;
+    justify-content: space-between;    
+    align-items: flex-start;
+    margin-top: 5px;
+    margin-left: 1px;
+    margin-right: 1px;
+}
+
 .smk-sidepanel .smk-panel {
     display: flex;
     flex-direction: column;

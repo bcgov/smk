@@ -2,13 +2,14 @@ include.module( 'sidepanel', [ 'vue', 'sidepanel.sidepanel-html', 'sidepanel.pan
     "use strict";
 
     Vue.component( 'side-panel', {
-        template: inc[ 'sidepanel.panel-html' ]
+        template: inc[ 'sidepanel.panel-html' ],
     } )
 
     function Sidepanel( smk ) {
         this.model = {
             activeToolId: null,
-            tool: {}
+            tool: {},
+            hasPrevious: false
         }
 
         var el = smk.addToOverlay( inc[ 'sidepanel.sidepanel-html' ] )
@@ -21,7 +22,7 @@ include.module( 'sidepanel', [ 'vue', 'sidepanel.sidepanel-html', 'sidepanel.pan
                     smk.emit( toolId, event, arg )
                 }
             }
-    } )
+        } )
 
         this.container = $( smk.$container )
     }
@@ -50,6 +51,7 @@ include.module( 'sidepanel', [ 'vue', 'sidepanel.sidepanel-html', 'sidepanel.pan
         if ( tool.showPanel )
             this.vm.$set( this.model.tool, tool.id, {
                 panelComponent: tool.panelComponent,
+                titleComponent: tool.titleComponent,
                 panel: tool.panel
             } )
 
