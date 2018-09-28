@@ -43,15 +43,15 @@ include.module( 'tool-identify', [ 'feature-list', 'widgets', 'tool-identify.pan
 
         self.changedActive( function () {
             if ( self.active ) {
-                if ( !self.showFeatures || self.showFeatures == 'identify-popup' ) {
-                    if ( self.firstId )
-                        setTimeout( function () {
-                            smk.$viewer.identified.pick( self.firstId )
-                        }, 50 )
-                }
-                else {
+                // if ( !self.showFeatures || self.showFeatures == 'identify-popup' ) {
+                //     if ( self.firstId )
+                //         setTimeout( function () {
+                //             smk.$viewer.identified.pick( self.firstId )
+                //         }, 50 )
+                // }
+                // else {
                     smk.$viewer.identified.pick()
-                }
+                // }
             }
         } )
 
@@ -118,52 +118,52 @@ include.module( 'tool-identify', [ 'feature-list', 'widgets', 'tool-identify.pan
 
                 self.setMessage( '<div>Identified ' + SMK.UTIL.grammaticalNumber( stat.featureCount, null, 'a feature', '{} features' ) + '</div>' + sub )
 
-                if ( !self.showFeatures || self.showFeatures == 'identify-popup' ) {
-                    smk.$viewer.identified.pick( self.firstId )
-                }
-                else {
+                // if ( !self.showFeatures || self.showFeatures == 'identify-popup' ) {
+                //     smk.$viewer.identified.pick( self.firstId )
+                // }
+                // else {
                     if ( stat.featureCount == 1 ) {
                         var id = Object.keys( smk.$viewer.identified.featureSet )[ 0 ]
                         smk.$viewer.identified.pick( id )
                     }
-                } 
+                // } 
 
 
             }
         } )
 
-        var onChangedViewStart = SMK.UTIL.makeDelayedCall( function () {
-            var picked = smk.$viewer.identified.getPicked()
-            if ( !picked ) return
+        // var onChangedViewStart = SMK.UTIL.makeDelayedCall( function () {
+        //     var picked = smk.$viewer.identified.getPicked()
+        //     if ( !picked ) return
 
-            // console.log( 'onChangedViewStart' )
+        //     // console.log( 'onChangedViewStart' )
 
-            self.wasPickedId = picked.id
-            smk.$viewer.identified.pick( null )
-        }, { delay: 400 } )
+        //     self.wasPickedId = picked.id
+        //     smk.$viewer.identified.pick( null )
+        // }, { delay: 400 } )
 
-        var onChangedViewEnd = SMK.UTIL.makeDelayedCall( function () {
-            if ( !self.wasPickedId ) return
+        // var onChangedViewEnd = SMK.UTIL.makeDelayedCall( function () {
+        //     if ( !self.wasPickedId ) return
 
-            // console.log( 'onChangedViewEnd' )
+        //     // console.log( 'onChangedViewEnd' )
 
-            smk.$viewer.identified.pick( self.wasPickedId )
-            self.wasPickedId = null
-        }, { delay: 410 } )
+        //     smk.$viewer.identified.pick( self.wasPickedId )
+        //     self.wasPickedId = null
+        // }, { delay: 410 } )
 
-        smk.$viewer.changedView( function ( ev ) {
-            if ( !self.active ) return
+        // smk.$viewer.changedView( function ( ev ) {
+        //     if ( !self.active ) return
 
-            if ( ev.operation == 'move' ) return
+        //     if ( ev.operation == 'move' ) return
 
-            // console.log( self.wasPickedId, ev )
+        //     // console.log( self.wasPickedId, ev )
 
-            if ( ev.after == 'start' ) return onChangedViewStart()
-            if ( ev.after == 'end' ) return onChangedViewEnd()
-        } )
+        //     if ( ev.after == 'start' ) return onChangedViewStart()
+        //     if ( ev.after == 'end' ) return onChangedViewEnd()
+        // } )
 
-        if ( smk.$tool.directions && !smk.$tool.location )
-            this.popupModel.tool.directions = true
+        // if ( smk.$tool.directions && !smk.$tool.location )
+        //     this.popupModel.tool.directions = true
 
     } )
 
@@ -172,7 +172,8 @@ include.module( 'tool-identify', [ 'feature-list', 'widgets', 'tool-identify.pan
     }
 
     IdentifyTool.prototype.isPanelVisible = function () {
-        return SMK.TYPE.FeatureList.prototype.isPanelVisible.call( this ) || this.showFeatures == "identify-feature"
+        return true
+        // return SMK.TYPE.FeatureList.prototype.isPanelVisible.call( this ) || this.showFeatures == "identify-feature"
     }
 
     return IdentifyTool

@@ -80,38 +80,38 @@ include.module( 'feature-list-clustering-leaflet', [ 'leaflet', 'feature-list-le
             } )
         } )
 
-        if ( !self.showFeatures || self.showFeatures == 'identify-popup' || self.showFeatures == 'query-popup' ) {
-            self.featureSet.pickedFeature( function ( ev ) {
-                if ( !ev.feature ) return
+        // if ( !self.showFeatures || self.showFeatures == 'identify-popup' || self.showFeatures == 'query-popup' ) {
+        //     self.featureSet.pickedFeature( function ( ev ) {
+        //         if ( !ev.feature ) return
 
-                var ly = self.marker[ ev.feature.id ]
-                var parent = self.cluster.getVisibleParent( ly )
+        //         var ly = self.marker[ ev.feature.id ]
+        //         var parent = self.cluster.getVisibleParent( ly )
 
-                if ( ly === parent || !parent ) {
-                    self.popupModel.hasMultiple = false
-                    self.popupFeatureIds = null
-                    self.popupCurrentIndex = null
+        //         if ( ly === parent || !parent ) {
+        //             self.popupModel.hasMultiple = false
+        //             self.popupFeatureIds = null
+        //             self.popupCurrentIndex = null
 
-                    self.popup
-                        .setLatLng( ly.getLatLng() )
-                        .openOn( smk.$viewer.map )
-                }
-                else {
-                    var featureIds = parent.getAllChildMarkers().map( function ( m ) {
-                        return m.options.featureId
-                    } )
+        //             self.popup
+        //                 .setLatLng( ly.getLatLng() )
+        //                 .openOn( smk.$viewer.map )
+        //         }
+        //         else {
+        //             var featureIds = parent.getAllChildMarkers().map( function ( m ) {
+        //                 return m.options.featureId
+        //             } )
 
-                    self.popupModel.hasMultiple = true
-                    self.popupCurrentIndex = featureIds.indexOf( ev.feature.id )
-                    self.popupModel.position = ( self.popupCurrentIndex + 1 ) + ' / ' + featureIds.length
-                    self.popupFeatureIds = featureIds
+        //             self.popupModel.hasMultiple = true
+        //             self.popupCurrentIndex = featureIds.indexOf( ev.feature.id )
+        //             self.popupModel.position = ( self.popupCurrentIndex + 1 ) + ' / ' + featureIds.length
+        //             self.popupFeatureIds = featureIds
 
-                    self.popup
-                        .setLatLng( parent.getLatLng() )
-                        .openOn( smk.$viewer.map )
-                }
-            } )
-        }
+        //             self.popup
+        //                 .setLatLng( parent.getLatLng() )
+        //                 .openOn( smk.$viewer.map )
+        //         }
+        //     } )
+        // }
         
         self.featureSet.zoomToFeature( function ( ev ) {
             var bounds
@@ -143,7 +143,7 @@ include.module( 'feature-list-clustering-leaflet', [ 'leaflet', 'feature-list-le
                     maxZoom: 15,        
                     animate: true
                 } )
-    } )
+        } )
 
         self.featureSet.clearedFeatures( function ( ev ) {
             self.cluster.clearLayers()
