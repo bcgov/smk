@@ -126,7 +126,8 @@ include.module( 'tool-layers', [ 'tool', 'widgets', 'tool-layers.panel-layers-ht
         if ( this.display )
             smk.$viewer.setLayerDisplay( this.display )
 
-        this.items = smk.$viewer.layerDisplayContext.root.items
+        if ( smk.$viewer.layerDisplayContext )
+            this.items = smk.$viewer.layerDisplayContext.root.items
 
         return smk.$viewer.updateLayersVisible()
     } )
