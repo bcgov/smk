@@ -1,34 +1,34 @@
-<div class="smk-sidepanel" v-bind:class="{ expanded: activeToolId != null }">
+<div class="smk-sidepanel" v-bind:class="{ expanded: !!currentTool }">
 
     <div class="smk-elastic-panel">
         <div class="smk-title">
             <i class="smk-command smk-icon material-icons" title="Go Back"
-                v-on:click="hasPrevious && trigger( 'sidepanel', 'previous-panel' )"
-                v-bind:class="{ 'smk-disabled': !hasPrevious }"
+                v-on:click="previousPanel()"
+                v-bind:class="{ 'smk-disabled': depth() <= 1 }"
             >arrow_back</i>
-
-            <div v-if="activeToolId && tool[ activeToolId ]">
+{{ depth() }}
+            <div v-if="currentTool">
                 <component 
-                    v-if="tool[ activeToolId ].titleComponent"
-                    v-bind:is="tool[ activeToolId ].titleComponent"
-                    v-bind="tool[ activeToolId ].panel"
+                    v-if="currentTool.titleComponent"
+                    v-bind:is="currentTool.titleComponent"
+                    v-bind="currentTool.panel"
                 ></component>
-                <template
+                <span
                     v-else
-                    v-html="tool[ activeToolId ].panel.title"
-                ></template>
+                    v-html="currentTool.panel.title"
+                ></span>
             </div>
 
             <i class="smk-command smk-icon material-icons" title="Close Panel"
-                v-on:click="trigger( 'sidepanel', 'close-panel' )"
+                v-on:click="closePanel()"
             >close</i>
         </div>
 
         <component class="smk-panel"
-            v-if="activeToolId && tool[ activeToolId ]"
-            v-bind:is="tool[ activeToolId ].panelComponent"
-            v-bind:key="activeToolId"
-            v-bind="tool[ activeToolId ].panel"
+            v-if="currentTool"
+            v-bind:is="currentTool.panelComponent"
+            v-bind:key="currentTool.id"
+            v-bind="currentTool.panel"
         ></component>
     </div>
 

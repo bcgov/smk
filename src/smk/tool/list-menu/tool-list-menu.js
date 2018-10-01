@@ -43,13 +43,13 @@ include.module( 'tool-list-menu', [ 'tool', 'widgets', 'tool-list-menu.panel-lis
         // this.makePropPanel( 'previousTool', null )
         this.makePropPanel( 'subWidgets', [] )
         
-
         SMK.TYPE.Tool.prototype.constructor.call( this, $.extend( {
             title:          'Menu',
             position:       'toolbar',
             widgetComponent:'list-menu-widget',
             panelComponent: 'tool-list-panel',
             // panelComponent: 'list-menu-panel',
+            currentTool:    null
         }, option ) )
 
         // this.toolStack[ 0 ].panel.title = this.title
@@ -64,17 +64,17 @@ include.module( 'tool-list-menu', [ 'tool', 'widgets', 'tool-list-menu.panel-lis
     ListMenuTool.prototype.afterInitialize.push( function ( smk ) {
         var self = this
 
-        smk.on( 'previous-panel', {
-            'activate': function () {
-                self.popTool()
-            }
-        } )
+        // smk.on( 'previous-panel', {
+        //     'activate': function () {
+        //         self.popTool()
+        //     }
+        // } )
 
-        smk.on( 'close', {
-            'activate': function () {
-                self.active = false
-            }
-        } )
+        // smk.on( 'close', {
+        //     'activate': function () {
+        //         self.active = false
+        //     }
+        // } )
 
         smk.on( this.id, {
             'activate': function () {
@@ -84,62 +84,66 @@ include.module( 'tool-list-menu', [ 'tool', 'widgets', 'tool-list-menu.panel-lis
             },
         } )
 
-        self.changedActive( function () {
-            if ( self.active ) {
-                self.currentTool.active = true
-            }
-            else {
-                self.currentTool.active = false
-            }
-        } )
+        // self.changedActive( function () {
+        //     if ( self.active ) {
+        //         if ( self.currentTool )
+        //             self.currentTool.active = true
+        //     }
+        //     else {
+        //         if ( self.currentTool )
+        //             self.currentTool.active = false
+        //     }
+        // } )
     } )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
-    ListMenuTool.prototype.popTool = function () {
-        console.log( 'pop',this.toolStack.length )
-        if ( this.toolStack.length == 1 ) return 1
+    // ListMenuTool.prototype.popTool = function () {
+    //     console.log( 'pop',this.toolStack.length )
+    //     if ( this.toolStack.length == 1 ) return 1
 
-        var top = this.toolStack.length - 1
+    //     var top = this.toolStack.length - 1
         
-        this.toolStack[ top ].active = false
-        this.toolStack.pop()
+    //     this.toolStack[ top ].active = false
+    //     this.toolStack.pop()
 
-        this.currentTool = this.toolStack[ top - 1 ]
-        this.currentTool.active = true
+    //     this.currentTool = this.toolStack[ top - 1 ]
+    //     this.currentTool.active = true
 
-        this.previousTool = this.toolStack[ top - 2 ]
+    //     this.previousTool = this.toolStack[ top - 2 ]
 
-        return this.toolStack.length
-    }
+    //     return this.toolStack.length
+    // }
 
-    ListMenuTool.prototype.pushTool = function ( tool ) {
-        console.log( 'push', tool.id, this.toolStack.length )
+    // ListMenuTool.prototype.pushTool = function ( tool ) {
+    //     console.log( 'push', tool.id, this.toolStack.length )
 
-        if ( this.currentTool && this.currentTool.id == tool.id )
-            return
+    //     if ( this.currentTool && this.currentTool.id == tool.id )
+    //         return
 
-        if ( tool.widgetComponent )
-            while ( this.popTool() > 1 ) {}
+    //     if ( tool.widgetComponent )
+    //         while ( this.popTool() > 1 ) {}
 
-        this.currentTool.active = false
+    //     this.currentTool.active = false
 
-        this.toolStack.push( tool )
+    //     this.toolStack.push( tool )
 
-        this.previousTool = this.currentTool
+    //     this.previousTool = this.currentTool
 
-        this.currentTool = tool
-        this.currentTool.active = true
-    }
+    //     this.currentTool = tool
+    //     this.currentTool.active = true
+    // }
 
     ListMenuTool.prototype.addTool = function ( tool, smk ) {
         var self = this
 
+        tool.subPanel = true
+        smk.$sidepanel.addTool( tool )
 
-        if ( tool.useToolbar ) {
-            smk.$toolbar.add( tool )
-        }
-        else if ( tool.useList !== false ) {
-            tool.showTitle = true
+        // if ( tool.useToolbar ) {
+            // smk.$toolbar.add( tool )
+        // }
+        // else if ( tool.useList !== false ) {
+            // tool.showTitle = true
 
             // this.toolStack[ 0 ].panel.subWidgets.push( {
             this.subWidgets.push( {
@@ -148,15 +152,21 @@ include.module( 'tool-list-menu', [ 'tool', 'widgets', 'tool-list-menu.panel-lis
                 widgetComponent: tool.widgetComponent,
                 widget: tool.widget
             } )
-        }
+        // }
 
         tool.changedActive( function () {
-            // console.log( tool.id, tool.active, self.currentTool && self.currentTool.id )
+        //     // console.log( tool.id, tool.active, self.currentTool && self.currentTool.id )
             if ( tool.active ) {              
                 self.active = true
 
-                self.pushTool( tool )
+        //         self.currentTool = tool
+        //         // self.pushTool( tool )
             }
+        //     else {
+        //         if ( self.currentTool.id == tool.id )
+        //             self.currentTool = null
+
+        //     }
         } )
 
         return true
