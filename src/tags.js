@@ -116,6 +116,8 @@ t.group( 'check-query' )
     .dir( 'smk/tool/query/check/*' )
 t.group( 'tool-query' )
     .dir( 'smk/tool/query/*' )
+t.group( 'tool-query-results' )
+    .dir( 'smk/tool/query-results/*' )
 t.group( 'tool-query-feature' )
     .dir( 'smk/tool/query-feature/*' )
 
