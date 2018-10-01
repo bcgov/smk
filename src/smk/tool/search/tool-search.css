@@ -58,14 +58,12 @@
     outline: 0;
 }
 
-/* - - - - - - - - - - - - - - - - - - - - - - - - */
 
-.smk-search-popup .smk-address {
-    margin-bottom: 10px;
+.smk-sidepanel .smk-search-location-panel .smk-body .smk-address {
+    font-weight: bold;
 }
 
-.smk-search-popup .smk-commands {
-    border-top: 1px solid gray;
-    margin-top: 10px;
-    padding-top: 5px;
+.smk-sidepanel .smk-search-location-panel .smk-body .smk-coordinate {
+    margin-top: 5px;
 }
+

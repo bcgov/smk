@@ -1,4 +1,4 @@
-include.module( 'tool-search', [ 'tool', 'widgets', 'tool-search.widget-search-html', 'tool-search.panel-search-html', 'tool-search.popup-search-html' ], function ( inc ) {
+include.module( 'tool-search', [ 'tool', 'widgets', 'tool-search.widget-search-html', 'tool-search.panel-search-html' ], function ( inc ) {
     "use strict";
 
     var request
@@ -177,46 +177,6 @@ include.module( 'tool-search', [ 'tool', 'widgets', 'tool-search.widget-search-h
             self.results = []
         } )
 
-        // = : = : = : = : = : = : = : = : = : = : = : = : = : = : = : = : = : = : =
-
-        this.popupModel = {
-            feature: null,
-            tool: {}
-        }
-
-        if ( smk.$tool.directions )
-            this.popupModel.tool.directions = true
-
-        this.popupVm = new Vue( {
-            el: smk.addToContainer( inc[ 'tool-search.popup-search-html' ] ),
-            data: self.popupModel,
-            methods: {
-                directionsToFeature: function ( feature ) {
-                    smk.$tool.directions.active = true
-
-                    smk.$tool.directions.activating
-                        .then( function () {
-                            return smk.$tool.directions.startAtCurrentLocation()
-                        } )
-                        .then( function () {
-                            return SMK.UTIL.findNearestSite( { latitude: feature.geometry.coordinates[ 1 ], longitude: feature.geometry.coordinates[ 0 ] } )
-                                .then( function ( site ) {
-                                    return smk.$tool.directions.addWaypoint( site )
-                                } )
-                                .catch( function ( err ) {
-                                    console.warn( err )
-                                    return smk.$tool.directions.addWaypoint()
-                                } )
-                        } )
-                },
-            },
-            updated: function () {
-                if ( this.feature )
-                    self.updatePopup()
-            }
-        } )
-
-        this.updatePopup = function () {}
     } )
 
     return SearchTool

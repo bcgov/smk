@@ -54,7 +54,6 @@ include.module( 'tool-search-leaflet', [ 'leaflet', 'tool-search' ], function ( 
                 vw.map.addLayer( searchMarkers )
             }
             else {
-                // vw.searched.pick( null )
                 vw.map.removeLayer( searchMarkers )
             }
         } )
@@ -78,32 +77,12 @@ include.module( 'tool-search-leaflet', [ 'leaflet', 'tool-search' ], function ( 
                     icon: yellowStar
                 } )
 
-                if ( self.showFeatures == 'search-popup' )
-                    marker.bindPopup( function () {
-                        return self.popupVm.$el
-                    }, {
-                        maxWidth: 200,
-                        autoPanPaddingTopLeft: padding.topLeft,
-                        autoPanPaddingBottomRight: padding.bottomRight
-                    } )
-
                 searchMarkers.addLayer( marker )
                 f.highlightLayer = marker
 
                 marker.on( {
-                    popupopen: function ( e ) {
+                    click: function ( e ) {
                         vw.searched.pick( f.id, { popupopen: true } )
-
-                        // var zoom = precisionZoom[ f.properties.matchPrecision ] || precisionZoom._OTHER_
-
-                        // var px = vw.map.project( e.popup._latlng, zoom )
-                        // px.y -= e.popup._container.clientHeight / 2
-                        // px.x -= 150
-
-                        // vw.map.flyTo( vw.map.unproject( px, zoom ), zoom, { animate: true } )
-                    },
-                    popupclose: function () {
-                        vw.searched.pick( null, { popupclose: true } )
                     },
                 } )
 
@@ -113,14 +92,10 @@ include.module( 'tool-search-leaflet', [ 'leaflet', 'tool-search' ], function ( 
         vw.searched.pickedFeature( function ( ev ) {
             if ( ev.was ) {
                 var ly1 = ev.was.highlightLayer
-                if ( ly1.isPopupOpen() && !ev.popupclose ) ly1.closePopup()
                 brightHighlight( ly1, vw.searched.isHighlighted( ev.was.id ), false )
             }
 
             if ( ev.feature ) {
-                var ly2 = ev.feature.highlightLayer
-                if ( self.showFeatures == 'search-popup' )
-                    if ( !ly2.isPopupOpen() ) ly2.openPopup()
                 brightHighlight( ev.feature.highlightLayer, true, true, ev.feature )
             }
         } )

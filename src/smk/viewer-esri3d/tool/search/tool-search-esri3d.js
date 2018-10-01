@@ -76,34 +76,12 @@ include.module( 'tool-search-esri3d', [ 'esri3d', 'types-esri3d', 'util-esri3d',
 
         self.changedVisible( function () {
             self.searchLayer.visible = self.visible
-            if ( self.visible ) {
-            }
-            else {
-                smk.$viewer.hidePopup()
-            }
         } )
 
         smk.on( this.id, {
             'zoom': function () {
                 smk.$viewer.view.goTo( self.searchLayer.graphics )
             }
-        } )
-
-        this.showPopup = function ( feature, loc ) {
-            self.popupModel.feature = feature
-
-            if ( !self.showFeatures || self.showFeatures.endsWith( '-popup' ) )
-                smk.$viewer.showPopup( self.popupVm.$el, loc, { title: self.title } )
-        }
-
-        this.updatePopup = function () {
-            if ( !self.showFeatures || self.showFeatures.endsWith( '-popup' ) )
-                smk.$viewer.showPopup( self.popupVm.$el, null, { title: self.title } )
-        }
-
-        smk.$viewer.changedPopup( function () {
-            if ( !smk.$viewer.isPopupVisible() )
-                smk.$viewer.searched.pick( null )
         } )
 
         smk.$viewer.handlePick( 3, function ( location ) {
@@ -163,10 +141,7 @@ include.module( 'tool-search-esri3d', [ 'esri3d', 'types-esri3d', 'util-esri3d',
                 var loc = ev.feature.graphic.normal.geometry
                 var zoom = precisionZoom[ ev.feature.properties.matchPrecision ] || precisionZoom._OTHER_
 
-                self.showPopup()
-                smk.$viewer.view.goTo( { target: loc, zoom: zoom } ).then( function () {
-                    self.showPopup( ev.feature, loc )
-                } )
+                smk.$viewer.view.goTo( { target: loc, zoom: zoom } ) 
             }
         } )
 
@@ -184,7 +159,6 @@ include.module( 'tool-search-esri3d', [ 'esri3d', 'types-esri3d', 'util-esri3d',
 
         smk.$viewer.searched.clearedFeatures( function ( ev ) {
             self.searchLayer.removeAll()
-            smk.$viewer.view.popup.close()
         } )
 
         function showGraphic( feature, graphic ) {
