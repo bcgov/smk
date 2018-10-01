@@ -22,6 +22,10 @@
     font-style: italic;
 }
 
+.smk-map-frame .smk-command.smk-hidden {
+    visibility: hidden;
+}
+
 .smk-map-frame .smk-command.smk-icon.smk-disabled {
     font-style: normal;
 }

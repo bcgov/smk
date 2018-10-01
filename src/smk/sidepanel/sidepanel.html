@@ -4,9 +4,9 @@
         <div class="smk-title">
             <i class="smk-command smk-icon material-icons" title="Go Back"
                 v-on:click="previousPanel()"
-                v-bind:class="{ 'smk-disabled': depth() <= 1 }"
+                v-bind:class="{ 'smk-hidden': depth() <= 1 }"
             >arrow_back</i>
-{{ depth() }}
+
             <div v-if="currentTool">
                 <component 
                     v-if="currentTool.titleComponent"

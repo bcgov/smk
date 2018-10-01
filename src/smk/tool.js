@@ -27,6 +27,7 @@ include.module( 'tool', [ 'jquery', 'event' ], function () {
     Tool.prototype.order = 1
     // Tool.prototype.position = 'toolbar'
     Tool.prototype.showPanel = true
+    Tool.prototype.subPanel = 0
 
     SMK.TYPE.Tool = Tool
 

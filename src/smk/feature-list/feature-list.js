@@ -344,6 +344,7 @@ include.module( 'feature-list', [ 'tool', 'widgets',
 
         SMK.TYPE.Tool.prototype.constructor.call( this, $.extend( {
             // debugView: false
+            subPanel: 1
         }, option ) )
     }
 

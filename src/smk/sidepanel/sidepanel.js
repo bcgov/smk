@@ -9,31 +9,13 @@ include.module( 'sidepanel', [ 'vue', 'sidepanel.sidepanel-html', 'sidepanel.pan
         var self = this
 
         this.model = {
-            // activeToolId: null,
-            tool: {},
-            // hasPrevious: false,
             currentTool: null
         }
 
         this.toolStack = []
-        //     {
-        //         panelComponent: 'tool-list-panel',
-        //         panel: {
-        //             title: null,
-        //             subWidgets: []
-        //         }
-        //     }            
-        // ]
-
-        // this.makePropWidget( 'icon', 'menu' )
-
-        // this.makePropPanel( 'currentTool', this.toolStack[ 0 ] )
-        // this.makePropPanel( 'previousTool', null )
-
-        var el = smk.addToOverlay( inc[ 'sidepanel.sidepanel-html' ] )
 
         this.vm = new Vue( {
-            el: el,
+            el: smk.addToOverlay( inc[ 'sidepanel.sidepanel-html' ] ),
             data: this.model,
             methods: {
                 'trigger': function ( toolId, event, arg ) {
@@ -58,42 +40,6 @@ include.module( 'sidepanel', [ 'vue', 'sidepanel.sidepanel-html', 'sidepanel.pan
         this.container = $( smk.$container )
     }
 
-    // Sidepanel.prototype.setActiveTool = function ( tool ) {
-    //     if ( this.activeTool )
-    //         this.activeTool.active = false
-
-    //     this.activeTool = tool
-
-    //     if ( this.activeTool ) {
-    //         this.activeTool.active = true
-            
-    //         this.model.activeToolId = this.activeTool.id
-    //         this.container.addClass( 'smk-panel-expanded' )
-    //     }
-    //     else {
-    //         this.model.activeToolId = null
-    //         this.container.removeClass( 'smk-panel-expanded' )
-    //     }
-    // }
-
-    // Sidepanel.prototype.add = function ( tool ) {
-    //     var self = this
-
-    //     if ( tool.showPanel )
-    //         this.vm.$set( this.model.tool, tool.id, {
-    //             panelComponent: tool.panelComponent,
-    //             titleComponent: tool.titleComponent,
-    //             panel: tool.panel
-    //         } )
-
-    //     tool.changedActive( function () {
-    //         if ( tool.active )
-    //             self.setActiveTool( tool )
-    //         else
-    //             self.setActiveTool( null )
-    //     } )
-    // }
-
     Sidepanel.prototype.closePanel = function () {
         this.model.currentTool = null
 
@@ -104,12 +50,16 @@ include.module( 'sidepanel', [ 'vue', 'sidepanel.sidepanel-html', 'sidepanel.pan
 
     Sidepanel.prototype.setCurrentTool = function ( tool ) {
         this.model.currentTool = {
-            id: tool.id,
+            id:             tool.id,
             panelComponent: tool.panelComponent,
             titleComponent: tool.titleComponent,
-            panel: tool.panel,
-            subPanel: tool.subPanel
+            panel:          tool.panel,
+            subPanel:       tool.subPanel
         }
+    }
+
+    Sidepanel.prototype.isToolStacked = function ( tool ) {
+        return this.toolStack.some( function ( t ) { return t.id == tool.id } )
     }
 
     Sidepanel.prototype.popTool = function () {
@@ -123,7 +73,6 @@ include.module( 'sidepanel', [ 'vue', 'sidepanel.sidepanel-html', 'sidepanel.pan
 
         if ( top > 0 ) {
             this.setCurrentTool( this.toolStack[ top - 1 ] )
-            // this.model.currentTool = this.toolStack[ top - 1 ]
             this.toolStack[ top - 1 ].active = true
         }
         else {
@@ -137,34 +86,27 @@ include.module( 'sidepanel', [ 'vue', 'sidepanel.sidepanel-html', 'sidepanel.pan
     Sidepanel.prototype.pushTool = function ( tool ) {
         console.log( 'push', tool.id, this.toolStack.length )
 
-        if ( this.toolStack.some( function ( t ) { return t.id == tool.id } ) ) {
+        if ( this.isToolStacked( tool ) ) {
             tool = this.toolStack[ this.toolStack.length - 1 ]
-            console.log( 'already in stack, top is', tool.id )
+            // console.log( 'already in stack, top is', tool.id )
         }
         else {
-        // if ( this.currentTool && this.currentTool.id == tool.id )
-            // return
-
-            if ( !tool.subPanel )
-                if ( this.model.currentTool ) {
-                    while ( this.model.currentTool.subPanel )
-                        this.popTool()
+            if ( this.model.currentTool ) {
+                // console.log( 'current', this.model.currentTool.id, this.model.currentTool.subPanel, tool.subPanel )
+                while ( this.model.currentTool && this.model.currentTool.subPanel >= tool.subPanel ) {
+                    // console.log( this.model.currentTool.subPanel, tool.subPanel )
                     this.popTool()
                 }
-                else {
-                    while ( this.toolStack.length > 0 && this.toolStack[ this.toolStack.length - 1 ].subPanel )
-                        this.toolStack.pop()
+            }
+            else if ( this.toolStack.length > 0 ) {
+                // console.log( 'no current', this.toolStack[ this.toolStack.length - 1 ].subPanel, tool.subPanel )
+                while ( this.toolStack.length > 0 && this.toolStack[ this.toolStack.length - 1 ].subPanel >= tool.subPanel ) {
+                    // console.log( this.toolStack[ this.toolStack.length - 1 ].subPanel, tool.subPanel )
                     this.toolStack.pop()
                 }
-        // if ( tool.widgetComponent )
-            // while ( this.popTool() > 1 ) {}
-
-        // this.currentTool.active = false
+            }
 
             this.toolStack.push( tool )
-
-        // this.previousTool = this.currentTool
-
         }
 
         if ( this.model.currentTool == null ) {
@@ -173,38 +115,19 @@ include.module( 'sidepanel', [ 'vue', 'sidepanel.sidepanel-html', 'sidepanel.pan
             } )
         }
 
-        // this.model.currentTool = tool
         this.setCurrentTool( tool )
-        // this.currentTool.active = true
     }
 
     Sidepanel.prototype.addTool = function ( tool, smk ) {
         var self = this
 
-        // if ( tool.useToolbar ) {
-            // smk.$toolbar.add( tool )
-        // }
-        // else if ( tool.useList !== false ) {
-            // tool.showTitle = true
-
-            // this.toolStack[ 0 ].panel.subWidgets.push( {
-            // this.subWidgets.push( {
-            //     id: tool.id,
-            //     type: tool.type,
-            //     widgetComponent: tool.widgetComponent,
-            //     widget: tool.widget
-            // } )
-        // }
-
         tool.changedActive( function () {
             // console.log( tool.id, tool.active, self.currentTool && self.currentTool.id )
             if ( tool.active ) {              
-                // self.active = true
-
                 self.pushTool( tool )
             }
             else {
-                if ( self.model.currentTool != null && tool.id == self.model.currentTool.id ) {
+                if ( self.isToolStacked( tool ) ) {
                     self.closePanel()
                 }
             }
@@ -212,7 +135,6 @@ include.module( 'sidepanel', [ 'vue', 'sidepanel.sidepanel-html', 'sidepanel.pan
 
         return true
     }
-
 
     SMK.TYPE.Sidepanel = Sidepanel
 

@@ -6,9 +6,9 @@
     cursor: move;
 }
 
-.smk-map-frame.smk-panel-expanded .smk-viewer .leaflet-left {
+/* .smk-map-frame.smk-panel-expanded .smk-viewer .leaflet-left {
     left: 310px;
-}
+} */
 
 .smk-sidepanel {
     display: none;
@@ -42,6 +42,12 @@
     margin-top: 5px;
     margin-left: 1px;
     margin-right: 1px;
+}
+
+.smk-sidepanel .smk-title div {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 5px;
 }
 
 .smk-sidepanel .smk-panel {

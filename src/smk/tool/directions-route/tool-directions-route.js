@@ -19,6 +19,7 @@ include.module( 'tool-directions-route', [ 'tool', 'widgets', 'tool-directions-r
             order:          4,
             position:       'menu',
             title:          'Route',
+            subPanel:       1,
             panelComponent: 'route-panel',
         }, option ) )
 
