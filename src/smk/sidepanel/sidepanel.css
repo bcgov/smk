@@ -30,7 +30,7 @@
     max-height: 100%;
 }
 
-.smk-sidepanel.expanded {
+.smk-sidepanel.smk-expanded {
     display: block;
     width: 300px;
 }
@@ -38,16 +38,20 @@
 .smk-sidepanel .smk-title {
     display: flex;
     justify-content: space-between;    
-    align-items: flex-start;
+    align-items: center;
     margin-top: 5px;
     margin-left: 1px;
     margin-right: 1px;
 }
 
+.smk-sidepanel .smk-title .smk-command {
+    align-self: flex-start;
+}
+
 .smk-sidepanel .smk-title div {
     font-size: 18px;
     font-weight: bold;
-    margin-top: 5px;
+    /* margin-top: 5px; */
 }
 
 .smk-sidepanel .smk-panel {

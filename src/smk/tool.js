@@ -16,6 +16,7 @@ include.module( 'tool', [ 'jquery', 'event' ], function () {
         this.makeProp( 'visible', false, 'changedVisible' )
         this.makeProp( 'enabled', true, 'changedEnabled' )
         this.makeProp( 'active', false, 'changedActive' )
+        this.makeProp( 'class', null )
 
         this.makePropWidget( 'type', 'unknown' )
         this.makePropWidget( 'showTitle', false )

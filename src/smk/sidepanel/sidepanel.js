@@ -36,8 +36,6 @@ include.module( 'sidepanel', [ 'vue', 'sidepanel.sidepanel-html', 'sidepanel.pan
                 }
             },
         } )
-
-        this.container = $( smk.$container )
     }
 
     Sidepanel.prototype.closePanel = function () {
@@ -49,13 +47,23 @@ include.module( 'sidepanel', [ 'vue', 'sidepanel.sidepanel-html', 'sidepanel.pan
     } 
 
     Sidepanel.prototype.setCurrentTool = function ( tool ) {
+        var titleProps
+        if ( tool.widgetComponent )
+            titleProps = { title: tool.title }
+        else
+            titleProps = tool.widget
+
         this.model.currentTool = {
             id:             tool.id,
+            class:          tool.class,
+            subPanel:       tool.subPanel,
             panelComponent: tool.panelComponent,
-            titleComponent: tool.titleComponent,
             panel:          tool.panel,
-            subPanel:       tool.subPanel
+            titleComponent: tool.titleComponent,
+            titleProps:     titleProps
         }
+
+
     }
 
     Sidepanel.prototype.isToolStacked = function ( tool ) {
@@ -78,7 +86,6 @@ include.module( 'sidepanel', [ 'vue', 'sidepanel.sidepanel-html', 'sidepanel.pan
         else {
             this.model.currentTool = null
         }
-        // this.previousTool = this.toolStack[ top - 2 ]
 
         return this.toolStack.length
     }
