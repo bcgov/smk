@@ -7,28 +7,6 @@ include.module( 'feature-list-leaflet', [ 'leaflet', 'feature-list' ], function 
         this.highlight = {}
         this.featureHighlights = L.layerGroup( { pane: 'markerPane' } )
 
-        var padding = smk.$viewer.getPanelPadding( self.isPanelVisible() )
-
-        this.popup = L.popup( {
-                maxWidth: 400,
-                autoPanPaddingTopLeft: padding.topLeft,
-                autoPanPaddingBottomRight: padding.bottomRight,
-                offset: [ 0, -10 ]
-            } )
-            .setContent( function () { return self.popupVm.$el } )
-
-        this.updatePopup = SMK.UTIL.makeDelayedCall( function () {
-            self.popup.update()
-        }, { delay: 500 } )
-
-        smk.$viewer.map.on( {
-            popupclose: function ( ev ) {
-                if ( ev.popup !== self.popup ) return
-
-                self.featureSet.pick( null, { popupclose: true } )
-            },
-        } )
-
         self.changedActive( function () {
             self.visible = self.active
         } )
@@ -39,7 +17,6 @@ include.module( 'feature-list-leaflet', [ 'leaflet', 'feature-list' ], function 
             }
             else {
                 smk.$viewer.map.removeLayer( self.featureHighlights )
-                self.popup.remove()
             }
         } )
 
@@ -50,10 +27,6 @@ include.module( 'feature-list-leaflet', [ 'leaflet', 'feature-list' ], function 
 
             if ( ev.feature ) {
                 showHighlight( ev.feature.id, true )
-            }
-            else {
-                if ( self.popup.isOpen() && !ev.popupclose )
-                    self.popup.remove()
             }
         } )
 
@@ -72,7 +45,6 @@ include.module( 'feature-list-leaflet', [ 'leaflet', 'feature-list' ], function 
 
         self.featureSet.clearedFeatures( function ( ev ) {
             self.featureHighlights.clearLayers()
-            self.popup.remove()
             self.highlight = {}
         } )
 

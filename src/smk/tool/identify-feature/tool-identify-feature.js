@@ -93,8 +93,6 @@ include.module( 'tool-identify-feature', [ 'feature-list' ], function ( inc ) {
                 properties: Object.assign( {}, ev.feature.properties )
             }
 
-            self.title = '<h3>' + self.layer.title + '</h3>' + '<h2>' + self.feature.title + '</h2>'
-
             self.setAttributeComponent( ly, ev.feature )
 
             self.resultPosition = featureIds.indexOf( ev.feature.id )

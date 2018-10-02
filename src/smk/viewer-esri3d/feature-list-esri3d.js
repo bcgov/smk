@@ -38,11 +38,6 @@ include.module( 'feature-list-esri3d', [ 'esri3d', 'types-esri3d', 'util-esri3d'
 
         self.changedVisible( function () {
             self.featureListLayer.visible = self.visible
-            if ( self.visible ) {
-            }
-            else {
-                smk.$viewer.hidePopup()
-            }
         } )
 
         this.changedActive( function () {
@@ -51,24 +46,8 @@ include.module( 'feature-list-esri3d', [ 'esri3d', 'types-esri3d', 'util-esri3d'
             }
             else {
                 self.featureListLayer.visible = false
-                smk.$viewer.hidePopup()
             }
         } )
-
-        smk.$viewer.changedPopup( function () {
-            if ( !smk.$viewer.isPopupVisible() )
-                self.featureSet.pick( null )
-        } )
-
-        this.showPopup = function ( loc ) {
-            if ( !self.showFeatures || self.showFeatures.endsWith( '-popup' ) )
-                smk.$viewer.showPopup( self.popupVm.$el, loc, { title: self.title } )
-        }
-
-        this.updatePopup = function () {
-            if ( !self.showFeatures || self.showFeatures.endsWith( '-popup' ) )
-                smk.$viewer.showPopup( self.popupVm.$el, null, { title: self.title } )
-        }
 
         self.featureSet.clearedFeatures( function ( ev ) {
             self.featureListLayer.removeAll()
@@ -100,15 +79,6 @@ include.module( 'feature-list-esri3d', [ 'esri3d', 'types-esri3d', 'util-esri3d'
         } )
 
         self.featureSet.pickedFeature( function ( ev ) {
-            if ( ev.feature ) {
-                var featureIds = Object.keys( self.highlight )
-
-                self.popupModel.hasMultiple = true
-                self.popupCurrentIndex = featureIds.indexOf( ev.feature.id )
-                self.popupModel.position = ( self.popupCurrentIndex + 1 ) + ' / ' + featureIds.length
-                self.popupFeatureIds = featureIds
-            }
-
             if ( self.picks )
                 self.featureListLayer.removeMany( self.picks )
 
@@ -130,13 +100,8 @@ include.module( 'feature-list-esri3d', [ 'esri3d', 'types-esri3d', 'util-esri3d'
                 self.featureListLayer.removeMany( self.highlight[ ev.feature.id ] )
 
                 var loc = self.clickLocation ? self.clickLocation.geometry : self.highlight[ ev.feature.id ][ 0 ].geometry
-                smk.$viewer.view.goTo( loc ).then( function () {
-                    self.showPopup( loc )
-                } )
+                smk.$viewer.view.goTo( loc ) 
             }
-
-            if ( ev.was && !ev.feature )
-                smk.$viewer.hidePopup()
         } )
 
         self.featureSet.zoomToFeature( function ( ev ) {

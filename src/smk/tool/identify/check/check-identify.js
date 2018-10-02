@@ -21,7 +21,8 @@ include.module( 'check-identify', [], function ( inc ) {
         smk.tools.push( {
             type: 'identify-feature',
             enabled: true,
-            position: tool.position
+            position: tool.position,
+            title: tool.title
         } )
     }
     

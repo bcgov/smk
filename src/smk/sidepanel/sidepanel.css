@@ -36,10 +36,12 @@
 }
 
 .smk-sidepanel .smk-title {
+    flex-shrink: 0;
+
     display: flex;
     justify-content: space-between;    
     align-items: center;
-    margin-top: 5px;
+    margin-top: 1px;
     margin-left: 1px;
     margin-right: 1px;
 }
