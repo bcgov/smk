@@ -209,6 +209,27 @@
                     "description": "Find features by Species",
                     "parameters": [
                         {
+                            "id": "param21",
+                            "type": "select-unique",
+                            "title": "Species code1",
+                            "value": null,
+                            "uniqueAttribute": "SPECIES_CODE"
+                        },
+                        {
+                            "id": "param22",
+                            "type": "select-unique",
+                            "title": "Species code2",
+                            "value": null,
+                            "uniqueAttribute": "SPECIES_CODE"
+                        },
+                        {
+                            "id": "param23",
+                            "type": "select-unique",
+                            "title": "Species code3",
+                            "value": null,
+                            "uniqueAttribute": "SPECIES_CODE"
+                        },
+                        {
                             "id": "param2",
                             "type": "select-unique",
                             "title": "Species code",
