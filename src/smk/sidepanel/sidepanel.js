@@ -3,6 +3,12 @@ include.module( 'sidepanel', [ 'vue', 'sidepanel.sidepanel-html', 'sidepanel.pan
 
     Vue.component( 'side-panel', {
         template: inc[ 'sidepanel.panel-html' ],
+        props: {
+            showHeader: {
+                type: Boolean,
+                default: true
+            }
+        }
     } )
 
     function Sidepanel( smk ) {

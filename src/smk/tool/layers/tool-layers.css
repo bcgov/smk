@@ -50,19 +50,19 @@
     left: -20px;
 }
 
-.smk-layers-panel .smk-folder .smk-item .smk-title {
+.smk-layers-panel .smk-folder .smk-item .smk-layer-title {
     display: inline-block;
     margin-left: 5px;
     margin-top: 5px;
     margin-bottom: 5px;
 }
 
-.smk-layers-panel .smk-folder .smk-item.smk-obscured .smk-title {
+.smk-layers-panel .smk-folder .smk-item.smk-obscured .smk-layer-title {
     font-style: italic;
     color: gray;
 }
 
-.smk-layers-panel .smk-folder .smk-item.smk-disabled .smk-title {
+.smk-layers-panel .smk-folder .smk-item.smk-disabled .smk-layer-title {
     font-style: italic;
     color: gray;
     text-decoration: line-through;
