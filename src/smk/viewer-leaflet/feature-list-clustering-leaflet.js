@@ -130,7 +130,7 @@ include.module( 'feature-list-clustering-leaflet', [ 'leaflet', 'feature-list-le
 
             var old = self.featureSet.pick( null )
 
-            var padding = smk.$viewer.getPanelPadding( self.isPanelVisible() )
+            var padding = smk.$viewer.getPanelPadding( true )
 
             smk.$viewer.map
                 .once( 'zoomend moveend', function () {

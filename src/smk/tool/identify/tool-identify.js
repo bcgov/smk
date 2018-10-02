@@ -8,7 +8,7 @@ include.module( 'tool-identify', [ 'feature-list', 'widgets', 'tool-identify.pan
     Vue.component( 'identify-panel', {
         extends: inc.widgets.toolPanel,
         template: inc[ 'tool-identify.panel-identify-html' ],
-        props: [ 'busy', 'layers', 'highlightId', 'statusMessage' ],
+        props: [ 'layers', 'highlightId' ],
     } )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
@@ -169,11 +169,6 @@ include.module( 'tool-identify', [ 'feature-list', 'widgets', 'tool-identify.pan
 
     IdentifyTool.prototype.getLocation = function () {
         return this.pickedLocation.map
-    }
-
-    IdentifyTool.prototype.isPanelVisible = function () {
-        return true
-        // return SMK.TYPE.FeatureList.prototype.isPanelVisible.call( this ) || this.showFeatures == "identify-feature"
     }
 
     return IdentifyTool

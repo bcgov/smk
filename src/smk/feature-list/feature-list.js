@@ -135,10 +135,6 @@ include.module( 'feature-list', [ 'tool', 'widgets', 'sidepanel',
             } )
         } )
     } )
-
-    FeatureList.prototype.isPanelVisible = function () {
-        return true
-    }
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
     Vue.component( 'feature-panel', {
