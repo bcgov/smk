@@ -16,6 +16,7 @@ include.module( 'tool', [ 'jquery', 'event' ], function () {
         this.makeProp( 'visible', false, 'changedVisible' )
         this.makeProp( 'enabled', true, 'changedEnabled' )
         this.makeProp( 'active', false, 'changedActive' )
+        this.makeProp( 'class', null )
 
         this.makePropWidget( 'type', 'unknown' )
         this.makePropWidget( 'showTitle', false )
@@ -27,6 +28,7 @@ include.module( 'tool', [ 'jquery', 'event' ], function () {
     Tool.prototype.order = 1
     // Tool.prototype.position = 'toolbar'
     Tool.prototype.showPanel = true
+    Tool.prototype.subPanel = 0
 
     SMK.TYPE.Tool = Tool
 
@@ -88,19 +90,39 @@ include.module( 'tool', [ 'jquery', 'event' ], function () {
             }
         } )
     }
+
+    Tool.prototype.addTool = function ( tool, smk ) {
+        return false
+    }
+
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
     Tool.prototype.initialize = function ( smk ) {
         var self = this
 
-        if ( this.position ) {
-            var pos = this.position
-            if ( !( pos in smk.$tool ) || !( 'addTool' in smk.$tool[ pos ] ) ) {
-                console.warn( 'position ' + pos + ' not available for tool ' + this.id )
-                pos = 'toolbar'
+        var positions
+        if ( Array.isArray( this.position ) )
+            positions = this.position
+        else if ( this.position )
+            positions = [ this.position ]
+        else
+            positions = []
+        positions.push( 'toolbar' )
+
+        var found = positions.some( function ( p ) { 
+            if ( !( p in smk.$tool ) ) {
+                console.warn( 'position ' + p + ' not available for tool ' + self.id )
+                return false
             }
 
-            smk.$tool[ pos ].addTool( this, smk )
+            if ( p == self.id )
+                return false 
+
+            return smk.$tool[ p ].addTool( self, smk )
+        } )
+
+        if ( !found ) {
+            console.warn( 'no position found for tool ' + self.id )
         }
 
         return this.afterInitialize.forEach( function ( init ) {

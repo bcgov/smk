@@ -1,4 +1,4 @@
-include.module( 'tool-search', [ 'tool', 'widgets', 'tool-search.widget-search-html', 'tool-search.panel-search-html', 'tool-search.popup-search-html' ], function ( inc ) {
+include.module( 'tool-search', [ 'tool', 'sidepanel', 'widgets', 'tool-search.widget-search-html', 'tool-search.panel-search-html' ], function ( inc ) {
     "use strict";
 
     var request
@@ -73,7 +73,7 @@ include.module( 'tool-search', [ 'tool', 'widgets', 'tool-search.widget-search-h
     Vue.component( 'search-panel', {
         extends: inc.widgets.toolPanel,
         template: inc[ 'tool-search.panel-search-html' ],
-        props: [ 'busy', 'results', 'highlightId' ],
+        props: [ 'results', 'highlightId' ],
         methods: {
             isEmpty: function () {
                 return !this.results || this.results.length == 0
@@ -91,23 +91,21 @@ include.module( 'tool-search', [ 'tool', 'widgets', 'tool-search.widget-search-h
         this.makePropWidget( 'icon' ) //, 'search' )
         this.makePropWidget( 'initialSearch', 0 )
 
-        this.makePropPanel( 'busy', false )
         this.makePropPanel( 'results', [] )
         this.makePropPanel( 'highlightId', null )
 
-        SMK.TYPE.Tool.prototype.constructor.call( this, $.extend( {
+        SMK.TYPE.PanelTool.prototype.constructor.call( this, $.extend( {
             // order:      2,
             // position:       'toolbar',
             // title:      'Search for Location',
             widgetComponent: 'search-widget',
             panelComponent: 'search-panel',
-            useToolbar: true
         }, option ) )
     }
 
     SMK.TYPE.SearchTool = SearchTool
 
-    $.extend( SearchTool.prototype, SMK.TYPE.Tool.prototype )
+    $.extend( SearchTool.prototype, SMK.TYPE.PanelTool.prototype )
     SearchTool.prototype.afterInitialize = []
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
@@ -177,46 +175,6 @@ include.module( 'tool-search', [ 'tool', 'widgets', 'tool-search.widget-search-h
             self.results = []
         } )
 
-        // = : = : = : = : = : = : = : = : = : = : = : = : = : = : = : = : = : = : =
-
-        this.popupModel = {
-            feature: null,
-            tool: {}
-        }
-
-        if ( smk.$tool.directions )
-            this.popupModel.tool.directions = true
-
-        this.popupVm = new Vue( {
-            el: smk.addToContainer( inc[ 'tool-search.popup-search-html' ] ),
-            data: self.popupModel,
-            methods: {
-                directionsToFeature: function ( feature ) {
-                    smk.$tool.directions.active = true
-
-                    smk.$tool.directions.activating
-                        .then( function () {
-                            return smk.$tool.directions.startAtCurrentLocation()
-                        } )
-                        .then( function () {
-                            return SMK.UTIL.findNearestSite( { latitude: feature.geometry.coordinates[ 1 ], longitude: feature.geometry.coordinates[ 0 ] } )
-                                .then( function ( site ) {
-                                    return smk.$tool.directions.addWaypoint( site )
-                                } )
-                                .catch( function ( err ) {
-                                    console.warn( err )
-                                    return smk.$tool.directions.addWaypoint()
-                                } )
-                        } )
-                },
-            },
-            updated: function () {
-                if ( this.feature )
-                    self.updatePopup()
-            }
-        } )
-
-        this.updatePopup = function () {}
     } )
 
     return SearchTool

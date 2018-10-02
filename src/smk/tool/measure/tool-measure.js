@@ -1,4 +1,4 @@
-include.module( 'tool-measure', [ 'tool', 'widgets', 'tool-measure.panel-measure-html' ], function ( inc ) {
+include.module( 'tool-measure', [ 'tool', 'widgets', 'sidepanel', 'tool-measure.panel-measure-html' ], function ( inc ) {
     "use strict";
 
     Vue.component( 'measure-widget', {
@@ -8,7 +8,7 @@ include.module( 'tool-measure', [ 'tool', 'widgets', 'tool-measure.panel-measure
     Vue.component( 'measure-panel', {
         extends: inc.widgets.toolPanel,
         template: inc[ 'tool-measure.panel-measure-html' ],
-        props: [ 'busy', 'results', 'viewer', 'statusMessage' ],
+        props: [ 'results', 'viewer' ],
         data: function () {
             return {
                 unit: 'metric'
@@ -43,12 +43,10 @@ include.module( 'tool-measure', [ 'tool', 'widgets', 'tool-measure.panel-measure
     function MeasureTool( option ) {
         this.makePropWidget( 'icon' )//, 'straighten' )
 
-        this.makePropPanel( 'busy', false )
         this.makePropPanel( 'results', [] )
         this.makePropPanel( 'viewer', {} )
-        this.makePropPanel( 'statusMessage', null )
 
-        SMK.TYPE.Tool.prototype.constructor.call( this, $.extend( {
+        SMK.TYPE.PanelTool.prototype.constructor.call( this, $.extend( {
             // order:          6,
             // position:       'menu',
             // title:          'Measurement',
@@ -59,7 +57,7 @@ include.module( 'tool-measure', [ 'tool', 'widgets', 'tool-measure.panel-measure
 
     SMK.TYPE.MeasureTool = MeasureTool
 
-    $.extend( MeasureTool.prototype, SMK.TYPE.Tool.prototype )
+    $.extend( MeasureTool.prototype, SMK.TYPE.PanelTool.prototype )
     MeasureTool.prototype.afterInitialize = []
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
@@ -74,21 +72,6 @@ include.module( 'tool-measure', [ 'tool', 'widgets', 'tool-measure.panel-measure
             },
         } )
     } )
-
-    MeasureTool.prototype.setMessage = function ( message, status, delay ) {
-        if ( !message ) {
-            this.statusMessage = null
-            return
-        }
-
-        this.statusMessage = {
-            message: message,
-            status: status
-        }
-
-        if ( delay )
-            return SMK.UTIL.makePromise( function ( res ) { setTimeout( res, delay ) } )
-    }
 
     return MeasureTool
 } )

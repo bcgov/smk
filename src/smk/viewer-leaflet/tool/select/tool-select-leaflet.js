@@ -41,26 +41,6 @@ include.module( 'tool-select-leaflet', [ 'leaflet', 'tool-select', 'feature-list
             } )
         } )
 
-        if ( !self.showFeatures || self.showFeatures == 'select-popup' ) {
-            self.featureSet.pickedFeature( function ( ev ) {
-                if ( !ev.feature ) return
-
-                if ( !ev.feature.center ) {
-                    var center = turf.centerOfMass( ev.feature.geometry )
-
-                    if ( center.geometry )
-                        ev.feature.center = L.GeoJSON.coordsToLatLng( center.geometry.coordinates )
-                    else
-                        ev.feature.center = L.GeoJSON.coordsToLatLng( center.coordinates )
-                }
-
-                self.popup
-                    .setLatLng( ev.feature.center )
-                    .openOn( smk.$viewer.map )
-            } )
-        }
-
-
         self.featureSet.zoomToFeature( function ( ev ) {
             if ( !self.highlight[ ev.feature.id ] ) return
 

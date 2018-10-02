@@ -8,13 +8,11 @@
       "position": "shortcut-menu"
     },
     {
-      "type": "location",
-      "showPanel": true
+      "type": "location"
     },
     {
       "type": "identify",
       "position": "list-menu",
-      "showFeatures": "identify-feature",
       "debugView": true
     },
     {
@@ -35,10 +33,6 @@
     },
     {
       "type": "select",
-      "position": "list-menu"
-    },
-    {
-      "type": "search",
       "position": "list-menu"
     },
     {

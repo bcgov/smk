@@ -8,7 +8,7 @@ include.module( 'tool-select', [ 'feature-list', 'widgets', 'tool-select.panel-s
     Vue.component( 'select-panel', {
         extends: inc.widgets.toolPanel,
         template: inc[ 'tool-select.panel-select-html' ],
-        props: [ 'busy', 'layers', 'highlightId', 'statusMessage' ],
+        props: [ 'layers', 'highlightId' ],
     } )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //

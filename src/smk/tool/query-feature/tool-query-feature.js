@@ -7,6 +7,7 @@ include.module( 'tool-query-feature', [ 'feature-list' ], function ( inc ) {
             order:              4,
             title:              'query Results1',
             panelComponent:     'feature-panel',
+            subPanel:           2
         }, option ) )
     }
 
@@ -17,10 +18,9 @@ include.module( 'tool-query-feature', [ 'feature-list' ], function ( inc ) {
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
     QueryFeatureTool.prototype.afterInitialize.unshift( function ( smk ) {
-        if ( !( this.instance in smk.$viewer.query ) )
-            throw new Error( '"' + this.instance + '" is not a defined query' )
-
         this.featureSet = smk.$viewer.queried[ this.instance ]
+
+        this.title = smk.$viewer.query[ this.instance ].title
     } )
 
     QueryFeatureTool.prototype.afterInitialize.push( function ( smk ) {
@@ -85,8 +85,6 @@ include.module( 'tool-query-feature', [ 'feature-list' ], function ( inc ) {
                 title:      ev.feature.title,
                 properties: Object.assign( {}, ev.feature.properties )
             }
-
-            self.title = '<h3>' + self.layer.title + '</h3>' + '<h2>' + self.feature.title + '</h2>'
 
             self.setAttributeComponent( ly, ev.feature )
 

@@ -1,10 +1,5 @@
-include.module( 'tool-search-location', [ 'tool', 'widgets', 'tool-search-location.panel-search-location-html', 'tool-search-location.address-html' ], function ( inc ) {
+include.module( 'tool-search-location', [ 'tool', 'widgets', 'tool-search-location.panel-search-location-html' ], function ( inc ) {
     "use strict";
-
-    Vue.component( 'address-display', {
-        template: inc[ 'tool-search-location.address-html' ],
-        props: [ 'address' ]
-    } )
 
     Vue.component( 'search-location-panel', {
         extends: inc.widgets.toolPanel,
@@ -17,8 +12,9 @@ include.module( 'tool-search-location', [ 'tool', 'widgets', 'tool-search-locati
         this.makeProp( 'tool', {} )
 
         SMK.TYPE.Tool.prototype.constructor.call( this, $.extend( {
+            title: 'Search Location',
             panelComponent: 'search-location-panel',
-            titleComponent: 'address-display'
+            subPanel:       1,
         }, option ) )
     }
 
@@ -39,6 +35,7 @@ include.module( 'tool-search-location', [ 'tool', 'widgets', 'tool-search-locati
             }
             else {
                 smk.$tool[ 'search' ].visible = false
+                smk.$viewer.searched.pick()
             }
         } )
 
@@ -70,7 +67,6 @@ include.module( 'tool-search-location', [ 'tool', 'widgets', 'tool-search-locati
             self.feature = ev.feature
 
             if ( ev.feature ) {
-                self.title = { address: ev.feature.properties }
                 self.active = true
             }
         } )

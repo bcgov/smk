@@ -22,7 +22,7 @@
                 v-on:click="$$emit( 'set-item-visible', { id: item.id, visible: !item.isVisible, deep: $event.shiftKey } )"
             >{{ item.isVisible && item.isEnabled ? 'visibility' : 'visibility_off' }}</i>
 
-            <span class="smk-title"
+            <span class="smk-layer-title"
                 v-bind:title="'ID: ' + ( item.id )"
             >{{ item.title }}</span>
         </div>

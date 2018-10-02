@@ -1,10 +1,8 @@
-<side-panel class="smk-feature-list-panel" v-bind:class="{ 'smk-busy': busy }">
-    <template slot="header">
-        <!-- <busy-spinner v-bind:busy="busy"></busy-spinner>  -->
-
-        <slot name="header"></slot>
-    </template>
-
+<side-panel class="smk-feature-list-panel"
+    v-bind:busy="busy"
+    v-bind:message="message"
+    v-bind:status="status"
+>
     <template slot="commands">
         <slot name="commands" v-bind:featureCount="featureCount"></slot>
 
@@ -16,11 +14,6 @@
 
             <slot name="command-row" v-bind:featureCount="featureCount"></slot>
         </div>
-    </template>
-
-    <template slot="status" v-if="statusMessage">
-        <status-message v-bind="statusMessage"></status-message>        
-        <busy-spinner v-bind:busy="busy"></busy-spinner> 
     </template>
 
     <div class="smk-layer"

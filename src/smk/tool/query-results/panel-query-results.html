@@ -1,0 +1,14 @@
+<feature-list-panel class="smk-query-panel"
+    v-bind="featureListProps()"
+>
+    <template slot="command-row" slot-scope="list">
+        <div class="smk-command-row">
+            <span class="smk-command"
+                v-bind:class="{ 'smk-disabled': busy }"
+                v-if="list.featureCount > 1"
+                v-on:click="!busy && $$emit( 'add-all' )"
+            >Add all to selection</span>
+        </div>
+    </template>
+
+</feature-list-panel>
