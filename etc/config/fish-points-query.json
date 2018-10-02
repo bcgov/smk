@@ -1,12 +1,11 @@
 {
     "tools": [
-        { "type": "dropdown" },
-        { "type": "query", "instance": "746--query1", "position": "menu", "icon": "account_balance" },
-        { "type": "query", "instance": "746--query2", "position": "menu", "icon": "account_box" },
-        { "type": "query", "instance": "746--query4", "position": "menu", "icon": "account_box" },
-        { "type": "query", "instance": "746--query5", "position": "menu", "icon": "account_box" },
-        { "type": "query", "instance": "746--query6", "position": "menu", "icon": "account_box" },
-        { "type": "query", "instance": "746--query3", "position": "menu", "icon": "bug_report" }
+        { "type": "query", "instance": "746--query1", "position": "list-menu", "icon": "account_balance" },
+        { "type": "query", "instance": "746--query2", "position": "list-menu", "icon": "account_box" },
+        { "type": "query", "instance": "746--query4", "position": "list-menu", "icon": "account_box" },
+        { "type": "query", "instance": "746--query5", "position": "list-menu", "icon": "account_box" },
+        { "type": "query", "instance": "746--query6", "position": "list-menu", "icon": "account_box" },
+        { "type": "query", "instance": "746--query3", "position": "list-menu", "icon": "bug_report" }
     ],
      "layers": [
         {

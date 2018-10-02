@@ -2,11 +2,11 @@
     v-bind="featureListProps()"
 >
     <template slot="header">
-        <h1 v-if="title">{{ title }}</h1>
-        <div class="smk-description">{{ description }}</div>
+        <!-- <h1 v-if="title">{{ title }}</h1> -->
+        <!-- <div class="smk-description">{{ description }}</div> -->
     </template>
 
-    <template slot="commands">
+    <!-- <template slot="commands">
         <div class="smk-parameters">
             <component class="smk-parameter"
                 v-for="( parameter, i ) in parameters"
@@ -20,11 +20,11 @@
                 v-on:execute="$$emit( 'execute' )"
             ></component>
         </div>
-    </template>
+    </template> -->
 
     <template slot="command-row" slot-scope="list">
         <div class="smk-command-row">
-            <span class="smk-command"
+            <!-- <span class="smk-command"
                 v-bind:class="{ 'smk-disabled': busy }"
                 v-on:click="!busy && $$emit( 'execute' )"
             >Search</span>
@@ -32,7 +32,7 @@
             <span class="smk-command"
                 v-bind:class="{ 'smk-disabled': list.featureCount == 0 && !isModified || busy}"
                 v-on:click="( list.featureCount > 0 || isModified ) && !busy && $$emit( 'reset' )"
-            >Reset</span>
+            >Reset</span> -->
 
             <span class="smk-command"
                 v-bind:class="{ 'smk-disabled': busy }"
@@ -41,7 +41,7 @@
             >Add all to selection</span>
         </div>
 
-        <div class="smk-command-row">
+        <!-- <div class="smk-command-row">
             <label class="smk-command smk-larger"
                 v-bind:class="{ 'smk-disabled': busy }"
                 v-if="within != null"
@@ -50,7 +50,7 @@
                 v-model="within"
                 v-on:change="$$emit( 'config', getConfigState() )"
             >Within current extent</label><br/>
-        </div>
+        </div> -->
     </template>
 
 </feature-list-panel>

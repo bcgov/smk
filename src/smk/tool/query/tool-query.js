@@ -113,7 +113,7 @@ include.module( 'tool-query', [ 'feature-list', 'widgets', 'tool-query.panel-que
             within: true
         } )
 
-        SMK.TYPE.FeatureList.prototype.constructor.call( this, $.extend( {
+        SMK.TYPE.Tool.prototype.constructor.call( this, $.extend( {
             order:          4,
             position:       'menu',
             title:          'Query',
@@ -127,8 +127,8 @@ include.module( 'tool-query', [ 'feature-list', 'widgets', 'tool-query.panel-que
 
     SMK.TYPE.QueryTool = QueryTool
 
-    $.extend( QueryTool.prototype, SMK.TYPE.FeatureList.prototype )
-    QueryTool.prototype.afterInitialize = SMK.TYPE.FeatureList.prototype.afterInitialize.concat( [] )
+    $.extend( QueryTool.prototype, SMK.TYPE.Tool.prototype )
+    QueryTool.prototype.afterInitialize = SMK.TYPE.Tool.prototype.afterInitialize.concat( [] )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
     QueryTool.prototype.afterInitialize.unshift( function ( smk ) {
@@ -250,6 +250,21 @@ include.module( 'tool-query', [ 'feature-list', 'widgets', 'tool-query.panel-que
         } )
 
     } )
+
+    QueryTool.prototype.setMessage = function ( message, status, delay ) {
+        if ( !message ) {
+            this.statusMessage = null
+            return
+        }
+
+        this.statusMessage = {
+            message: message,
+            status: status
+        }
+
+        if ( delay )
+            return SMK.UTIL.makePromise( function ( res ) { setTimeout( res, delay ) } )
+    }
 
     function asyncIterator( test, body, delay ) {
         return SMK.UTIL.makePromise( function ( res, rej ) {
