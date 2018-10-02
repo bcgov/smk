@@ -60,7 +60,7 @@ include.module( 'tool-query', [ 'feature-list', 'widgets', 'tool-query.panel-que
     Vue.component( 'query-panel', {
         extends: inc.widgets.toolPanel,
         template: inc[ 'tool-query.panel-query-html' ],
-        props: [ 'busy', 'layers', 'highlightId', 'description', 'parameters', 'config', 'statusMessage' ],
+        props: [ 'busy', 'description', 'parameters', 'config', 'statusMessage' ],
         data: function () {
             return Object.assign( {}, this.config )
         },
@@ -109,6 +109,8 @@ include.module( 'tool-query', [ 'feature-list', 'widgets', 'tool-query.panel-que
 
         this.makePropPanel( 'description', null )
         this.makePropPanel( 'parameters', null )
+        this.makePropPanel( 'statusMessage', null )
+        this.makePropPanel( 'busy', null )
         this.makePropPanel( 'config', {
             within: true
         } )
