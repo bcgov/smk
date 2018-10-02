@@ -1,4 +1,4 @@
-include.module( 'tool-directions', [ 'tool', 'widgets', 'tool-directions.panel-directions-html', 'tool-directions.address-search-html' ], function ( inc ) {
+include.module( 'tool-directions', [ 'tool', 'widgets', 'sidepanel', 'tool-directions.panel-directions-html', 'tool-directions.address-search-html' ], function ( inc ) {
     "use strict";
 
     var request
@@ -178,7 +178,7 @@ include.module( 'tool-directions', [ 'tool', 'widgets', 'tool-directions.panel-d
     Vue.component( 'directions-panel', {
         extends: inc.widgets.toolPanel,
         template: inc[ 'tool-directions.panel-directions-html' ],
-        props: [ 'busy', 'waypoints', 'statusMessage', 'config', 'hasRoute' ],
+        props: [ 'waypoints', 'config', 'hasRoute' ],
         data: function () {
             return Object.assign( {}, this.config )
         },
@@ -208,9 +208,7 @@ include.module( 'tool-directions', [ 'tool', 'widgets', 'tool-directions.panel-d
     function DirectionsTool( option ) {
         this.makePropWidget( 'icon', null ) //'directions_car' )
 
-        this.makePropPanel( 'busy', false )
         this.makePropPanel( 'waypoints', [] )
-        this.makePropPanel( 'statusMessage', null )
         this.makePropPanel( 'hasRoute', false )
         this.makePropPanel( 'config', {
             optimal:    false,
@@ -220,7 +218,7 @@ include.module( 'tool-directions', [ 'tool', 'widgets', 'tool-directions.panel-d
             options:    false
         } )
 
-        SMK.TYPE.Tool.prototype.constructor.call( this, $.extend( {
+        SMK.TYPE.PanelTool.prototype.constructor.call( this, $.extend( {
             // order:          4,
             // position:       'menu',
             // title:          'Route Planner',
@@ -236,7 +234,7 @@ include.module( 'tool-directions', [ 'tool', 'widgets', 'tool-directions.panel-d
 
     SMK.TYPE.DirectionsTool = DirectionsTool
 
-    $.extend( DirectionsTool.prototype, SMK.TYPE.Tool.prototype )
+    $.extend( DirectionsTool.prototype, SMK.TYPE.PanelTool.prototype )
     DirectionsTool.prototype.afterInitialize = []
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
@@ -450,21 +448,6 @@ include.module( 'tool-directions', [ 'tool', 'widgets', 'tool-directions.panel-d
         } ), function () {
             self.busy = false
         } )
-    }
-
-    DirectionsTool.prototype.setMessage = function ( message, status, delay ) {
-        if ( !message ) {
-            this.statusMessage = null
-            return
-        }
-
-        this.statusMessage = {
-            message: message,
-            status: status
-        }
-
-        if ( delay )
-            return SMK.UTIL.makePromise( function ( res ) { setTimeout( res, delay ) } )
     }
 
     return DirectionsTool

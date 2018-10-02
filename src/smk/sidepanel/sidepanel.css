@@ -102,18 +102,18 @@
 
 .smk-sidepanel .smk-panel .smk-spinner {
     position:   absolute;
-    top:        8px;
+    top:        4px;
     right:      10px;
 }
 
 
 .smk-sidepanel div.smk-message {
-    font-weight: bold;
-    font-size: 15px;
-    /* margin-bottom: 5px; */
+    position: relative;
+    flex-shrink: 0;
+
+    font-size: 14px;
+    padding: 4px 0;
     text-align: center;
-    min-height: 40px;
-    border-radius: 10px;
     background-color: rgb(87.8%, 100%, 88.6%);
 
     display: none;

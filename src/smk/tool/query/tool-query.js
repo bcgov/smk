@@ -1,4 +1,4 @@
-include.module( 'tool-query', [ 'feature-list', 'widgets', 'tool-query.panel-query-html', 'tool-query.parameter-input-html', 'tool-query.parameter-select-html', 'tool-query.parameter-constant-html' ], function ( inc ) {
+include.module( 'tool-query', [ 'feature-list', 'widgets', 'sidepanel', 'tool-query.panel-query-html', 'tool-query.parameter-input-html', 'tool-query.parameter-select-html', 'tool-query.parameter-constant-html' ], function ( inc ) {
     "use strict";
 
     Vue.component( 'parameter-constant', {
@@ -60,7 +60,7 @@ include.module( 'tool-query', [ 'feature-list', 'widgets', 'tool-query.panel-que
     Vue.component( 'query-panel', {
         extends: inc.widgets.toolPanel,
         template: inc[ 'tool-query.panel-query-html' ],
-        props: [ 'busy', 'description', 'parameters', 'config', 'statusMessage' ],
+        props: [ 'description', 'parameters', 'config' ],
         data: function () {
             return Object.assign( {}, this.config )
         },
@@ -109,13 +109,11 @@ include.module( 'tool-query', [ 'feature-list', 'widgets', 'tool-query.panel-que
 
         this.makePropPanel( 'description', null )
         this.makePropPanel( 'parameters', null )
-        this.makePropPanel( 'statusMessage', null )
-        this.makePropPanel( 'busy', null )
         this.makePropPanel( 'config', {
             within: true
         } )
 
-        SMK.TYPE.Tool.prototype.constructor.call( this, $.extend( {
+        SMK.TYPE.PanelTool.prototype.constructor.call( this, $.extend( {
             order:          4,
             position:       'menu',
             title:          'Query',
@@ -129,7 +127,7 @@ include.module( 'tool-query', [ 'feature-list', 'widgets', 'tool-query.panel-que
 
     SMK.TYPE.QueryTool = QueryTool
 
-    $.extend( QueryTool.prototype, SMK.TYPE.Tool.prototype )
+    $.extend( QueryTool.prototype, SMK.TYPE.PanelTool.prototype )
     QueryTool.prototype.afterInitialize = SMK.TYPE.Tool.prototype.afterInitialize.concat( [] )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
@@ -252,21 +250,6 @@ include.module( 'tool-query', [ 'feature-list', 'widgets', 'tool-query.panel-que
         } )
 
     } )
-
-    QueryTool.prototype.setMessage = function ( message, status, delay ) {
-        if ( !message ) {
-            this.statusMessage = null
-            return
-        }
-
-        this.statusMessage = {
-            message: message,
-            status: status
-        }
-
-        if ( delay )
-            return SMK.UTIL.makePromise( function ( res ) { setTimeout( res, delay ) } )
-    }
 
     function asyncIterator( test, body, delay ) {
         return SMK.UTIL.makePromise( function ( res, rej ) {

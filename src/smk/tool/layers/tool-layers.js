@@ -14,7 +14,7 @@ include.module( 'tool-layers', [ 'tool', 'widgets', 'tool-layers.panel-layers-ht
     Vue.component( 'layers-panel', {
         extends: inc.widgets.toolPanel,
         template: inc[ 'tool-layers.panel-layers-html' ],
-        props: [ 'busy', 'items', 'config', 'allVisible' ],
+        props: [ 'items', 'config', 'allVisible' ],
         data: function () {
             return Object.assign( {}, this.config )
         },

@@ -1,4 +1,4 @@
-include.module( 'tool-search', [ 'tool', 'widgets', 'tool-search.widget-search-html', 'tool-search.panel-search-html' ], function ( inc ) {
+include.module( 'tool-search', [ 'tool', 'sidepanel', 'widgets', 'tool-search.widget-search-html', 'tool-search.panel-search-html' ], function ( inc ) {
     "use strict";
 
     var request
@@ -73,7 +73,7 @@ include.module( 'tool-search', [ 'tool', 'widgets', 'tool-search.widget-search-h
     Vue.component( 'search-panel', {
         extends: inc.widgets.toolPanel,
         template: inc[ 'tool-search.panel-search-html' ],
-        props: [ 'busy', 'results', 'highlightId' ],
+        props: [ 'results', 'highlightId' ],
         methods: {
             isEmpty: function () {
                 return !this.results || this.results.length == 0
@@ -91,23 +91,21 @@ include.module( 'tool-search', [ 'tool', 'widgets', 'tool-search.widget-search-h
         this.makePropWidget( 'icon' ) //, 'search' )
         this.makePropWidget( 'initialSearch', 0 )
 
-        this.makePropPanel( 'busy', false )
         this.makePropPanel( 'results', [] )
         this.makePropPanel( 'highlightId', null )
 
-        SMK.TYPE.Tool.prototype.constructor.call( this, $.extend( {
+        SMK.TYPE.PanelTool.prototype.constructor.call( this, $.extend( {
             // order:      2,
             // position:       'toolbar',
             // title:      'Search for Location',
             widgetComponent: 'search-widget',
             panelComponent: 'search-panel',
-            useToolbar: true
         }, option ) )
     }
 
     SMK.TYPE.SearchTool = SearchTool
 
-    $.extend( SearchTool.prototype, SMK.TYPE.Tool.prototype )
+    $.extend( SearchTool.prototype, SMK.TYPE.PanelTool.prototype )
     SearchTool.prototype.afterInitialize = []
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //

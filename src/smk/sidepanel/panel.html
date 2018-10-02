@@ -1,4 +1,14 @@
-<div>
+<div
+    v-bind:class="{ 'smk-busy': busy }"
+>
+    <div class="smk-message" 
+        v-bind:class="'smk-' + ( status || 'summary' )" 
+        v-if="message"
+    >
+        <span v-html="message"></span>
+        <busy-spinner v-bind:size="16" v-bind:busy="busy"></busy-spinner>
+    </div>            
+
     <div class="smk-header" v-if="showHeader">
         <slot name="header"></slot>
 
@@ -8,8 +18,6 @@
     </div>
 
     <div class="smk-body">
-        <slot name="status"></slot>
-
         <slot></slot>
     </div>
 </div>

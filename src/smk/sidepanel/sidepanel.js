@@ -7,6 +7,18 @@ include.module( 'sidepanel', [ 'vue', 'sidepanel.sidepanel-html', 'sidepanel.pan
             showHeader: {
                 type: Boolean,
                 default: true
+            },
+            status: {
+                type: String,
+                default: ''
+            },
+            message: {
+                type: String,
+                default: ''
+            },
+            busy: {
+                type: Boolean,
+                default: false
             }
         }
     } )
@@ -150,7 +162,37 @@ include.module( 'sidepanel', [ 'vue', 'sidepanel.sidepanel-html', 'sidepanel.pan
     }
 
     SMK.TYPE.Sidepanel = Sidepanel
+    // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+    //
+    function PanelTool( option ) {
+        this.makePropPanel( 'busy', false )
+        this.makePropPanel( 'status', null )
+        this.makePropPanel( 'message', null )
 
+        SMK.TYPE.Tool.prototype.constructor.call( this, $.extend( {
+        }, option ) )
+    }
+
+    SMK.TYPE.PanelTool = PanelTool
+
+    $.extend( PanelTool.prototype, SMK.TYPE.Tool.prototype )
+    PanelTool.prototype.afterInitialize = []
+
+    PanelTool.prototype.setMessage = function ( message, status, delay ) {
+        if ( !message ) {
+            this.status = null
+            this.message = null
+            return
+        }
+
+        this.status = status
+        this.message = message
+
+        if ( delay )
+            return SMK.UTIL.makePromise( function ( res ) { setTimeout( res, delay ) } )
+    }
+    // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+    //
     return Sidepanel
 
 } )
