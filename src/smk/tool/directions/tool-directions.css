@@ -65,21 +65,9 @@
     color: red;
 }
 
-.smk-directions-panel .smk-waypoint .smk-address-search {
-    margin-left: 22px;
-    margin-right: 50px;
-    margin-top: 3px;
-    margin-bottom: 3px;
-}
-
-.smk-directions-popup .smk-address {
-    margin-bottom: 10px;
-}
-
-.smk-directions-popup .smk-commands {
-    border-top: 1px solid gray;
-    margin-top: 10px;
-    padding-top: 5px;
+.smk-directions-panel .smk-address-search {
+    margin: 3px;
+    width: calc( 100% - 6px );
 }
 
 .smk-direction {
