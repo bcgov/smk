@@ -22,10 +22,11 @@
     </div>
 
     <template slot="commands">
-        <div class="smk-command-row">
+        <div class="smk-command-row" style="align-items: flex-end">
             <span class="smk-command"
                 v-bind:class="{ 'smk-disabled': busy }"
                 v-on:click="!busy && $$emit( 'execute' )"
+                style="font-size: 15px"
             >Search</span>
 
             <span class="smk-command"
