@@ -154,10 +154,16 @@ include.module( 'tool-query', [ 'feature-list', 'widgets', 'sidepanel', 'tool-qu
 
         self.changedActive( function () {
             if ( self.active ) {
-                switch ( self.onActivate ) {
-                case 'execute':
-                    smk.emit( self.id, 'execute' )
-                    break
+                if ( self.onActivate ) {
+                    switch ( self.onActivate ) {
+                    case 'execute':
+                        smk.emit( self.id, 'execute' )
+                        break
+                    }
+                }
+                else {
+                    if ( !self.featureSet.isEmpty() )
+                        smk.$tool[ 'query-results--' + self.instance ].active = true
                 }
             }
         } )

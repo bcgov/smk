@@ -42,6 +42,9 @@ include.module( 'tool-query-feature', [ 'feature-list' ], function ( inc ) {
         } )
 
         smk.on( this.id, {
+            'previous-panel': function () {
+                self.featureSet.pick()
+            },
             'zoom': function ( ev ) {
                 self.featureSet.zoomTo( featureIds[ self.resultPosition ] )
             },

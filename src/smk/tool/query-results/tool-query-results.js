@@ -49,6 +49,19 @@ include.module( 'tool-query-results', [ 'feature-list', 'widgets', 'tool-query-r
         this.tool.select = smk.$tool.select
         this.tool.zoom = smk.$tool.zoom
 
+        self.changedActive( function () {
+            if ( self.active ) {
+                if ( self.featureSet.getPicked() )
+                    smk.$tool[ 'query-feature--' + self.instance ].active = true
+            }
+        } )
+
+        smk.on( this.id, {
+            'previous-panel': function () {
+                self.featureSet.clear()
+            },
+        } )
+
         self.featureSet.addedFeatures( function ( ev ) {
             var stat = self.featureSet.getStats()
 

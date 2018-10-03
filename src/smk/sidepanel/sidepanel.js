@@ -40,12 +40,14 @@ include.module( 'sidepanel', [ 'vue', 'sidepanel.sidepanel-html', 'sidepanel.pan
                     smk.emit( toolId, event, arg )
                 },
 
-                'previousPanel': function () {
-                    if ( self.toolStack.length > 1 )
-                        self.popTool()
+                'previousPanel': function () {                    
+                    if ( self.toolStack.length < 2 ) return
+                    smk.emit( this.currentTool.id, 'previous-panel' )
+                    self.popTool()
                 },
 
                 'closePanel': function () {
+                    smk.emit( this.currentTool.id, 'close-panel' )
                     self.closePanel()
                 },
 
@@ -89,7 +91,7 @@ include.module( 'sidepanel', [ 'vue', 'sidepanel.sidepanel-html', 'sidepanel.pan
     }
 
     Sidepanel.prototype.popTool = function ( tool ) {
-        console.log( 'pop',this.toolStack.length )
+        // console.log( 'pop',this.toolStack.length )
         if ( this.toolStack.length == 0 ) return 0
 
         var top = this.toolStack.length - 1
@@ -112,25 +114,21 @@ include.module( 'sidepanel', [ 'vue', 'sidepanel.sidepanel-html', 'sidepanel.pan
     }
 
     Sidepanel.prototype.pushTool = function ( tool ) {
-        console.log( 'push', tool.id, this.toolStack.length )
+        // console.log( 'push', tool.id, this.toolStack.length )
 
         if ( this.isToolStacked( tool ) ) {
             tool = this.toolStack[ this.toolStack.length - 1 ]
             // console.log( 'already in stack, top is', tool.id )
         }
         else {
-            if ( this.model.currentTool ) {
-                // console.log( 'current', this.model.currentTool.id, this.model.currentTool.subPanel, tool.subPanel )
-                while ( this.model.currentTool && this.model.currentTool.subPanel >= tool.subPanel ) {
-                    // console.log( this.model.currentTool.subPanel, tool.subPanel )
-                    this.popTool()
-                }
-            }
-            else if ( this.toolStack.length > 0 ) {
-                // console.log( 'no current', this.toolStack[ this.toolStack.length - 1 ].subPanel, tool.subPanel )
-                while ( this.toolStack.length > 0 && this.toolStack[ this.toolStack.length - 1 ].subPanel >= tool.subPanel ) {
-                    // console.log( this.toolStack[ this.toolStack.length - 1 ].subPanel, tool.subPanel )
+            if ( this.toolStack.length > 0 ) {
+                var top = this.toolStack[ this.toolStack.length - 1 ]
+                // console.log( 'pop?', top.id, top.subPanel, '>=', tool.id, tool.subPanel )
+                while ( this.toolStack.length > 0 && top.subPanel >= tool.subPanel ) {
+                    // console.log( 'popping', top.id )
                     this.toolStack.pop()
+                    top.active = false
+                    top = this.toolStack[ this.toolStack.length - 1 ]
                 }
             }
 
@@ -144,6 +142,7 @@ include.module( 'sidepanel', [ 'vue', 'sidepanel.sidepanel-html', 'sidepanel.pan
         }
 
         this.setCurrentTool( tool )
+        // console.log( 'after push', this.toolStack.map( function ( t ) { return [ t.id, t.subPanel ] } ) )
     }
 
     Sidepanel.prototype.addTool = function ( tool, smk ) {
