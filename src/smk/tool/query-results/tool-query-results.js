@@ -4,7 +4,7 @@ include.module( 'tool-query-results', [ 'feature-list', 'widgets', 'tool-query-r
     Vue.component( 'query-results-panel', {
         extends: inc.widgets.toolPanel,
         template: inc[ 'tool-query-results.panel-query-results-html' ],
-        props: [ 'layers', 'highlightId' ],
+        props: [ 'tool', 'layers', 'highlightId' ],
         methods: {
             featureListProps: function () {
                 var self = this
@@ -20,6 +20,8 @@ include.module( 'tool-query-results', [ 'feature-list', 'widgets', 'tool-query-r
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
     function QueryResultsTool( option ) {
+        this.makePropPanel( 'tool', {} )
+
         SMK.TYPE.FeatureList.prototype.constructor.call( this, $.extend( {
             panelComponent: 'query-results-panel',
             subPanel:       1,
@@ -43,6 +45,9 @@ include.module( 'tool-query-results', [ 'feature-list', 'widgets', 'tool-query-r
 
     QueryResultsTool.prototype.afterInitialize.push( function ( smk ) {
         var self = this
+
+        this.tool.select = smk.$tool.select
+        this.tool.zoom = smk.$tool.zoom
 
         self.featureSet.addedFeatures( function ( ev ) {
             var stat = self.featureSet.getStats()

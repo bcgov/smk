@@ -8,12 +8,14 @@ include.module( 'tool-identify', [ 'feature-list', 'widgets', 'tool-identify.pan
     Vue.component( 'identify-panel', {
         extends: inc.widgets.toolPanel,
         template: inc[ 'tool-identify.panel-identify-html' ],
-        props: [ 'layers', 'highlightId' ],
+        props: [ 'tool', 'layers', 'highlightId' ],
     } )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
     function IdentifyTool( option ) {
         this.makePropWidget( 'icon', null )//'info_outline' )
+
+        this.makePropPanel( 'tool', {} )
 
         SMK.TYPE.FeatureList.prototype.constructor.call( this, $.extend( {
             // order:              4,
@@ -38,6 +40,9 @@ include.module( 'tool-identify', [ 'feature-list', 'widgets', 'tool-identify.pan
 
     IdentifyTool.prototype.afterInitialize.push( function ( smk ) {
         var self = this
+
+        this.tool.select = smk.$tool.select
+        this.tool.zoom = smk.$tool.zoom
 
         self.setMessage( 'Click on map to identify features.' )
 
