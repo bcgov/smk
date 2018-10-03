@@ -38,8 +38,12 @@
                 v-model="attributeView"
             >
                 <option value="default">Default View</option>        
-                <option v-bind:value="'feature-template-' + layer.id">Template View</option>        
-                <option value="feature-description">Description View</option>        
+                <option v-bind:value="'feature-template-' + layer.id"
+                    v-if="attributeComponent == 'feature-template-' + layer.id"
+                >Template View</option>        
+                <option value="feature-description"
+                    v-if="attributeComponent == 'feature-description'"
+                >Description View</option>        
                 <option value="feature-attributes">Attributes View</option>        
                 <option value="feature-properties">Properties View</option>        
             </select>
