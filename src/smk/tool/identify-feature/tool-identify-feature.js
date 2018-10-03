@@ -38,6 +38,11 @@ include.module( 'tool-identify-feature', [ 'feature-list' ], function ( inc ) {
             }
         } )
 
+        smk.$viewer.startedIdentify( function () {
+            self.active = false
+            smk.$sidepanel.popTool( self )
+        } )
+
         smk.on( this.id, {
             'zoom': function () {
                 self.featureSet.zoomTo( featureIds[ self.resultPosition ] )

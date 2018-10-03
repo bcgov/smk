@@ -88,12 +88,15 @@ include.module( 'sidepanel', [ 'vue', 'sidepanel.sidepanel-html', 'sidepanel.pan
         return this.toolStack.some( function ( t ) { return t.id == tool.id } )
     }
 
-    Sidepanel.prototype.popTool = function () {
+    Sidepanel.prototype.popTool = function ( tool ) {
         console.log( 'pop',this.toolStack.length )
         if ( this.toolStack.length == 0 ) return 0
 
         var top = this.toolStack.length - 1
 
+        if ( tool && this.toolStack[ top ].id != tool.id )
+            return 
+            
         this.toolStack[ top ].active = false
         this.toolStack.pop()
 
