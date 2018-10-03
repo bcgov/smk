@@ -32,7 +32,7 @@
 
 .smk-sidepanel.smk-expanded {
     display: block;
-    width: 300px;
+    width: var( --panel-width );
 }
 
 .smk-sidepanel .smk-title {
