@@ -62,6 +62,7 @@ include.module( 'tool-list-menu', [ 'tool', 'widgets', 'tool-list-menu.panel-lis
         tool.changedActive( function () {
             if ( tool.active ) {              
                 self.active = true
+                tool.active = true // if list-menu isn't active, this is needed
             }
         } )
 
