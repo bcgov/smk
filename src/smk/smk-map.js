@@ -284,6 +284,9 @@ include.module( 'smk-map', [ 'jquery', 'util', 'theme-base' ], function () {
 
             self.detectDevice()
 
+            if ( self.viewer.panelWidth )
+                self.setVar( 'panel-width', self.viewer.panelWidth + 'px' )
+
             return include( themes )
         }
 
@@ -417,6 +420,10 @@ include.module( 'smk-map', [ 'jquery', 'util', 'theme-base' ], function () {
 
     SmkMap.prototype.getVar = function ( cssVar ) {
         return $( this.$container ).css( '--' + cssVar )
+    }
+
+    SmkMap.prototype.setVar = function ( cssVar, value ) {
+        return $( this.$container ).css( '--' + cssVar, value )
     }
 
     SmkMap.prototype.emit = function ( toolId, event, arg ) {

@@ -1,7 +1,4 @@
-<side-panel class="smk-version-panel">
-    <template slot="header">
-        <h1>{{ title }}</h1>
-    </template>
+<side-panel class="smk-version-panel" v-bind:showHeader="false">
     <dl>
         <dt>SMK Version</dt>
         <dd>{{ build.version }}</dd>
@@ -31,6 +28,11 @@
         <template v-if="config.createdBy">
             <dt>Map Created By</dt>
             <dd>{{ config.createdBy }}</dd>
+        </template>
+
+        <template v-if="config.enabledTools">
+            <dt>Enabled Tools</dt>
+            <dd>{{ config.enabledTools.join( ', ' ) }}</dd>
         </template>
 
         <dt>SMK Built by</dt>

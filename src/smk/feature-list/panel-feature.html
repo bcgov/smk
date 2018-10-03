@@ -1,32 +1,23 @@
 <side-panel class="smk-feature-panel">
     <template slot="commands">
-            <!-- v-if="tool.attributeView" -->
-        <div class="smk-command-row">
-            <select class="smk-command" 
-                v-if="layer"
-                v-model="attributeView"
-            >
-                <option value="default">Default View</option>        
-                <option v-bind:value="'feature-template-' + layer.id">Template View</option>        
-                <option value="feature-description">Description View</option>        
-                <option value="feature-attributes">Attributes View</option>        
-                <option value="feature-properties">Properties View</option>        
-            </select>
+        <div class="smk-command-row" v-if="resultCount > 1">
+            <div class="smk-command-spacer"></div>
 
-            <span class="smk-navigator"
-                v-bind:class="{ 'smk-hidden': resultCount < 2 }" 
-            >
+            <span class="smk-navigator">
                 <i class="material-icons smk-move smk-command smk-icon"
                     v-on:click="$$emit( 'move-previous', { instance: instance } )"
                 >navigate_before</i>
 
-                <span class="smk-position"
-                >{{ resultPosition + 1 }} of {{ resultCount }}</span>
+                <span class="smk-position">{{ resultPosition + 1 }}</span>
+                of
+                <span class="smk-position">{{ resultCount }}</span>
 
                 <i class="material-icons smk-move smk-command smk-icon"
                     v-on:click="$$emit( 'move-next', { instance: instance } )"
                 >navigate_next</i>
             </span>
+
+            <div class="smk-command-spacer"></div>
         </div>
 
         <div class="smk-command-row">
@@ -40,10 +31,22 @@
                 v-on:click="$$emit( 'select', { instance: instance } )"
             >Add to selection</span>
 
-            <span class="smk-command"
-                v-if="tool.directions"
-                v-on:click="$$emit( 'directions', { instance: instance } )"
-            >Directions to here</span>
+            <div class="smk-command-spacer"></div>
+
+            <select class="smk-command" 
+                v-if="layer"
+                v-model="attributeView"
+            >
+                <option value="default">Default View</option>        
+                <option v-bind:value="'feature-template-' + layer.id"
+                    v-if="attributeComponent == 'feature-template-' + layer.id"
+                >Template View</option>        
+                <option value="feature-description"
+                    v-if="attributeComponent == 'feature-description'"
+                >Description View</option>        
+                <option value="feature-attributes">Attributes View</option>        
+                <option value="feature-properties">Properties View</option>        
+            </select>
         </div>
 
     </template>

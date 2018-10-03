@@ -1,33 +1,47 @@
 ( function () {
     "use strict";
 
-    var util = {}
-    installPolyfills( util )
-    setupGlobalSMK( util )
+    function isIE() {
+        return navigator.userAgent.indexOf( "MSIE " ) > -1 || navigator.userAgent.indexOf( "Trident/" ) > -1;
+    }
 
-    var documentReadyPromise
+    try {
+        if ( isIE() )
+            throw new Error( 'SMK will not function in Internet Explorer 11. Use Google Chrome, or Microsoft Edge, or Firefox, or Safari.' )
 
-    var bootstrapScriptEl = document.currentScript
+        var util = {}
+        installPolyfills( util )
+        setupGlobalSMK( util )
 
-    var timer
-    SMK.BOOT = SMK.BOOT
-        .then( parseScriptElement )
-        .then( function ( attr ) {
-            timer = 'SMK initialize ' + attr.id
-            console.time( timer )
-            return attr
+        var documentReadyPromise
+
+        var bootstrapScriptEl = document.currentScript
+
+        var timer
+        SMK.BOOT = SMK.BOOT
+            .then( parseScriptElement )
+            .then( function ( attr ) {
+                timer = 'SMK initialize ' + attr.id
+                console.time( timer )
+                return attr
+            } )
+            .then( resolveConfig )
+            .then( initializeSmkMap )
+            .catch( SMK.ON_FAILURE )
+
+        util.promiseFinally( SMK.BOOT, function () {
+            console.timeEnd( timer )
         } )
-        .then( resolveConfig )
-        .then( initializeSmkMap )
-        .catch( SMK.ON_FAILURE )
-
-    util.promiseFinally( SMK.BOOT, function () {
-        console.timeEnd( timer )
-    } )
-
+    }
+    catch ( e ) {
+        setTimeout( function () {
+            document.querySelector( 'body' ).appendChild( failureMessage( e ) )
+        }, 1000 )
+    }
 // = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 
     function parseScriptElement() {
+
         var smkAttr = {
             'id':           attrString( '1' ),
             'container-sel':attrString( '#smk-map-frame' ),
@@ -609,63 +623,36 @@
                     }
                 },
                 tools: [
-                    { type: 'about',        enabled: false },
-                    { type: 'baseMaps',     enabled: false },
-                    { type: 'coordinate',   enabled: false },
-                    { type: 'directions',   enabled: false },
+                    { type: 'about',        enabled: false, order: 1, position: 'list-menu',                        icon: 'help',           title: 'About SMK' },
+                    { type: 'baseMaps',     enabled: false, order: 3, position: [ 'shortcut-menu', 'list-menu' ],   icon: 'map',            title: 'Base Maps' },
+                    { type: 'coordinate',   enabled: false, order: 3 },
+                    { type: 'directions',   enabled: false, order: 4, position: [ 'shortcut-menu', 'list-menu' ],   icon: 'directions_car', title: 'Route Planner' },
                     // { type: 'dropdown',     enabled: false }, -- so it won't be enabled by show-tools=all, no tools use it by default
-                    { type: 'identify',     enabled: false },
-                    { type: 'layers',       enabled: false },
+                    { type: 'identify',     enabled: false, order: 5, position: 'list-menu',                        icon: 'info_outline',   title: 'Identify Results' },
+                    { type: 'layers',       enabled: false, order: 3, position: [ 'shortcut-menu', 'list-menu' ],   icon: 'layers',         title: 'Layers' },
+                    { type: 'list-menu',    enabled: false },
                     { type: 'location',     enabled: true },
-                    { type: 'markup',       enabled: true },
-                    { type: 'measure',      enabled: false },
-                    { type: 'menu',         enabled: false },
-                    { type: 'minimap',      enabled: false },
+                    { type: 'markup',       enabled: true,  order: 3 },
+                    { type: 'measure',      enabled: false, order: 6, position: [ 'shortcut-menu', 'list-menu' ],   icon: 'straighten',     title: 'Measurement' },
+                    // { type: 'menu',         enabled: false }, -- so it won't be enabled by show-tools=all, no tools use it by default
+                    { type: 'minimap',      enabled: false, order: 1 },
                     { type: 'pan',          enabled: false },
                     // { type: 'query',        enabled: false }, -- so it won't be enabled by show-tools=all, as it needs an instance
-                    { type: 'scale',        enabled: false },
-                    { type: 'search',       enabled: true },
-                    { type: 'select',       enabled: false },
+                    { type: 'scale',        enabled: false, order: 2 },
+                    { type: 'search',       enabled: true,  order: 2, position: 'toolbar',                          icon: 'search',         title: 'Search for Location' },
+                    { type: 'select',       enabled: false, order: 6, position: 'list-menu',                        icon: 'select_all',     title: 'Selected Features' },
+                    { type: 'shortcut-menu',enabled: false, order: 10 },
                     { type: 'toolbar',      enabled: true },
                     // { type: 'version',      enabled: false }, -- so it won't be enabled by show-tools=all
-                    { type: 'zoom',         enabled: false }
+                    { type: 'zoom',         enabled: false, order: 1 }
                 ]
             },
 
             BOOT: Promise.resolve(),
             TAGS_DEFINED: false,
             ON_FAILURE: function ( e ) {
-                if ( !e ) return
-
-                if ( e.parseSource )
-                    e.message += ',\n  while parsing ' + e.parseSource
-
-                console.error( e )
-
-                var message = document.createElement( 'div' )
-                message.innerHTML = '\
-                    <div style="\
-                        display:flex;\
-                        flex-direction:column;\
-                        justify-content:center;\
-                        align-items:center;\
-                        border: 5px solid red;\
-                        padding: 20px;\
-                        margin: 20px;\
-                        position: absolute;\
-                        top: 0;\
-                        left: 0;\
-                        right: 0;\
-                        bottom: 0;\
-                    ">\
-                        <h1>SMK Client</h1>\
-                        <h2>Initialization failed</h2>\
-                        <pre style="white-space: normal">{}</pre>\
-                    </div>\
-                '.replace( /\s+/g, ' ' ).replace( '{}', e || '' )
-
                 whenDocumentReady().then( function () {
-                    document.querySelector( 'body' ).appendChild( message )
+                    document.querySelector( 'body' ).appendChild( failureMessage( e ) )
                 } )
             },
 
@@ -678,6 +665,37 @@
             }
 
         }, window.SMK ) )
+    }
+
+    function failureMessage( e ) {
+        if ( e.parseSource )
+            e.message += ',\n  while parsing ' + e.parseSource
+
+        console.error( e )
+
+        var message = document.createElement( 'div' )
+        message.innerHTML = '\
+            <div style="\
+                display:flex;\
+                flex-direction:column;\
+                justify-content:center;\
+                align-items:center;\
+                border: 5px solid red;\
+                padding: 20px;\
+                margin: 20px;\
+                position: absolute;\
+                top: 0;\
+                left: 0;\
+                right: 0;\
+                bottom: 0;\
+            ">\
+                <h1>SMK Client</h1>\
+                <h2>Initialization failed</h2>\
+                <pre style="white-space: normal">{}</pre>\
+            </div>\
+        '.replace( /\s+/g, ' ' ).replace( '{}', e || '' )
+
+        return message
     }
 
 } )();

@@ -10,13 +10,16 @@
 .smk-sidepanel .smk-panel.smk-directions-panel .smk-body {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: stretch;
     align-content: stretch;
     height: 100%;
     overflow-y: hidden;
 }
 
+.smk-directions-panel .smk-waypoints {
+    overflow-y: auto;
+}
 
 .smk-directions-panel .smk-waypoint {
     display: flex;
@@ -62,58 +65,9 @@
     color: red;
 }
 
-.smk-directions-panel .smk-waypoint .smk-address-search {
-    margin-left: 22px;
-    margin-right: 50px;
-    margin-top: 3px;
-    margin-bottom: 3px;
-}
-
-.smk-directions-panel div.smk-message {
-    font-weight: bold;
-    font-size: 15px;
-    margin-bottom: 5px;
-    text-align: center;
-    min-height: 40px;
-    border-radius: 10px;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-.smk-directions-panel .smk-message.smk-error {
-    color: red;
-    background-color: rgb(100%, 87.8%, 87.8%);
-}
-
-.smk-directions-panel .smk-message.smk-summary {
-    background-color: rgb(87.8%, 100%, 88.6%);
-}
-
-.smk-directions-panel .smk-message.smk-progress {
-    color: blue;
-    background-color: rgb(87%, 96.5%, 99.1%);
-}
-
-.smk-directions-panel .smk-body .smk-directions {
-    position: relative;
-    /* flex: 1 0; */
-    overflow-x: hidden;
-    overflow-y: auto;
-    height: 100%;
-    margin-top: 5px;
-}
-
-.smk-directions-popup .smk-address {
-    margin-bottom: 10px;
-}
-
-.smk-directions-popup .smk-commands {
-    border-top: 1px solid gray;
-    margin-top: 10px;
-    padding-top: 5px;
+.smk-directions-panel .smk-address-search {
+    margin: 3px;
+    width: calc( 100% - 6px );
 }
 
 .smk-direction {
@@ -153,4 +107,8 @@
 
 pre.smk-popup {
     font-family: sans-serif;
+}
+
+.smk-directions-panel .smk-directions {
+    overflow-y: auto;
 }

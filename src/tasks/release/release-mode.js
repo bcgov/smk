@@ -70,7 +70,7 @@ module.exports = function( grunt ) {
                     },
                     {
                         expand: true,
-                        cwd: 'lib',
+                        cwd: '<%= srcPath %>/lib',
                         src: 'include.js',
                         dest: '<%= buildPath %>/lib'
                     }
@@ -90,7 +90,7 @@ module.exports = function( grunt ) {
                     }
                 },
                 src: [
-                    'lib/include.js',
+                    '<%= buildPath %>/lib/include.js',
                     '<%= buildPath %>/smk-tags-head.js',
                     '<%= buildPath %>/tags/*',
                     '<%= buildPath %>/smk-tags-foot.js',

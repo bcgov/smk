@@ -1,9 +1,8 @@
-<side-panel class="smk-layers-panel" v-bind:class="{ 'smk-busy': busy }">
-    <template slot="header">
-        <h1>{{ title }}</h1>
-        <!-- <busy-spinner v-bind:busy="busy"></busy-spinner>  -->
-    </template>
-
+<side-panel class="smk-layers-panel" 
+    v-bind:busy="busy"
+    v-bind:message="busy ? 'Loading data' : ( !items || items.length == 0 ) ? 'No layers are configured' : ''"
+    v-bind:status="busy ? 'progress' : ( !items || items.length == 0 ) ? 'warning' : ''"
+>
     <template slot="commands">
         <i class="smk-all-visibility material-icons smk-command smk-icon"
             v-bind:title="'Toggle visibility of all layers.\nSHIFT-click to toggle visibility on each layer.'"
@@ -20,12 +19,6 @@
             v-model="legend"
             v-on:change="!busy && $$emit( 'config', getConfigState() )"
         >Legend</label>
-    </template>
-
-    <template slot="status" v-if="!items || items.length == 0 || busy">
-        <status-message message="No layers are configured" status="warning" v-if="!busy"></status-message>        
-        <status-message message="Loading data" status="progress" v-if="busy"></status-message>        
-        <busy-spinner v-bind:busy="busy"></busy-spinner> 
     </template>
     
     <layer-display 

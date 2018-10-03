@@ -3,10 +3,10 @@ module.exports = function( grunt ) {
 
         processTemplate: function ( content, srcpath ) {
             var count = 0
-            var out = content.replace( /\<\%\=\s*[^%]+\s*\%\>/gi, function (m) {
+            var out = content.replace( /\<(?:!--)?\%\=\s*([^%]+)\s*\%(?:--)?\>/gi, function ( m, t ) {
                 grunt.verbose.writeln( srcpath + ': ' + m );
                 count += 1
-                return grunt.template.process( m );
+                return grunt.template.process( '<%=' + t + '%>' );
             } )
             if ( count > 0 )
                 grunt.log.ok( count + ' template replacement(s) in ' + srcpath )

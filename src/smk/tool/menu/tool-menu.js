@@ -86,6 +86,8 @@ include.module( 'tool-menu', [ 'tool', 'widgets', 'tool-menu.panel-menu-html' ],
             if ( tool.id == self.selectedTool.id )
                 self.activeToolId = tool.active ? tool.id : null
         } )
+
+        return true
     }
 
     return MenuTool

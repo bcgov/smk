@@ -1,0 +1,84 @@
+/* toolbar.css */
+
+.smk-theme-delta .smk-toolbar  {
+    background-color: transparent;
+    box-shadow: none;
+}
+
+.smk-theme-delta .smk-tool {
+    border: 1px solid transparent;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65);
+    background-color: white;
+}
+
+.smk-theme-delta .smk-tool.smk-tool-active {
+    background-color: yellow;
+}
+
+
+/* sidepanel.css */
+
+.smk-theme-delta .smk-sidepanel {
+    top: 30px;
+}
+
+.smk-theme-delta .smk-elastic-panel {
+    display: flex;
+    flex-direction: column;
+
+    background-color: transparent;
+    box-shadow: none;
+}
+
+.smk-theme-delta .smk-sidepanel .smk-panel .smk-header {
+    background-color: white;
+    border-radius: 3px;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65);
+    z-index: 1;
+    margin-bottom: 0;
+}
+
+.smk-theme-delta .smk-sidepanel .smk-panel .smk-body {
+    background-color: white;
+    border-radius: 3px;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65);
+    z-index: 2;
+    margin-left: 1px;
+    margin-right: 1px;
+    padding: 5px;
+}
+
+
+/* menu.css */
+
+.smk-theme-delta .smk-sidepanel .smk-panel.smk-menu-panel {
+    border: 0;
+    background-color: transparent;   
+    flex-direction: row;
+
+}
+
+.smk-theme-delta .smk-sidepanel .smk-panel.smk-menu-panel > .smk-header {
+    background-color: transparent;
+    box-shadow: none;
+    flex-direction: column;
+    margin-right: 0;
+}
+
+.smk-theme-delta .smk-sidepanel .smk-panel.smk-menu-panel > .smk-body {
+    background-color: transparent;
+    box-shadow: none;
+    padding-top: 1px;
+    padding-bottom: 2px;
+    flex-grow: 1;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+
+/* tool-base-maps.css */
+
+.smk-theme-delta .smk-base-maps-panel .smk-base-map-sample  {
+    width: 100px !important;
+    height: 100px !important;
+}

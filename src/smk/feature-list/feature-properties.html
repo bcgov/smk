@@ -10,7 +10,7 @@
         <div class="smk-attribute"
             v-for="(attr) in sortedProperties"
         >
-            <span class="smk-title" v-html="insertWordBreaks( attr )"></span>
+            <span class="smk-attribute-title" v-html="insertWordBreaks( attr )"></span>
             <span class="smk-value" v-html="formatValue( feature.properties[ attr ] )"></span>
         </div>
     </div>

@@ -43,7 +43,7 @@
     padding-bottom: 2px;
 }
 
-.smk-feature-panel .smk-attribute .smk-title {
+.smk-feature-panel .smk-attribute .smk-attribute-title {
     display: inline-block;
     vertical-align: top;
     width: 33%;
@@ -61,16 +61,8 @@
 
 .smk-feature-panel .smk-commands {
     /* border-top: 1px solid gray; */
-    padding-top: 5px;
+    /* padding-top: 5px; */
     user-select: none;
-}
-
-.smk-feature-panel .smk-commands .smk-command-row {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: flex-start;
-    align-content: flex-end;
 }
 
 .smk-feature-panel .smk-command {
@@ -78,7 +70,7 @@
 }
 
 .smk-feature-panel .smk-navigator {
-    flex-grow: 1;
+    /* flex-grow: 1; */
 
     display: flex;
     flex-direction: row;
@@ -97,7 +89,7 @@
     white-space: nowrap;
     display: inline-block;
     font-weight: bold;
-    margin: 0 2px;
+    margin: 0 5px;
 }
 
 .smk-feature-panel .smk-navigator .smk-move {

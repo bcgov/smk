@@ -95,6 +95,8 @@ include.module( 'tool-dropdown', [ 'tool', 'widgets', 'tool-dropdown.panel-dropd
             if ( tool.id == self.selectedTool.id )
                 self.activeToolId = tool.active ? tool.id : null
         } )
+
+        return true
     }
 
     return DropdownTool

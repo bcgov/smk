@@ -7,7 +7,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>ca.bc.gov.app</groupId>
 	<artifactId>smk-client</artifactId>
-	<version>0.8.0</version>
+	<version>0.8.1</version>
   	<packaging>war</packaging>
 
 	<properties>
@@ -25,8 +25,23 @@
 					<warSourceDirectory>${basedir}/webapp</warSourceDirectory>
 					<webResources>
 						<resource>
-							<!-- this is relative to the pom.xml directory -->
-							<directory>build</directory>
+							<directory>.</directory>
+							<includes>
+								<include>images/**</include>
+								<include>attachments/**</include>
+								<include>config/**</include>
+								<include>docs/**</include>
+								<include>example/**</include>
+								<include>theme/**</include>
+								<include>smk.js</include>
+								<include>smk-*.zip</include>
+								<include>index.html</include>
+								<include>gruntfile.js</include>
+								<include>package.json</include>
+								<include>README.md</include>
+								<include>EXPORT.md</include>
+								<include>DEVELOPMENT.md</include>
+							</includes>
 						</resource>
 					</webResources>
 				</configuration>
@@ -71,7 +86,7 @@
                             <goal>npm</goal>
                         </goals>
                         <configuration>
-                            <arguments>install</arguments>
+                            <arguments>install --production</arguments>
                         </configuration>
                     </execution>
 
@@ -86,6 +101,7 @@
                     </execution>
                 </executions>
 			</plugin>
+
 		</plugins>
 	</build>
 </project>

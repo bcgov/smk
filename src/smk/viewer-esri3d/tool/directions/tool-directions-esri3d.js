@@ -78,24 +78,12 @@ include.module( 'tool-directions-esri3d', [ 'esri3d', 'types-esri3d', 'util-esri
         smk.$viewer.map.add( self.directionsLayer )
 
         this.changedActive( function () {
-            if ( self.active ) {
-                self.directionsLayer.visible = true
-            }
-            else {
-                self.directionsLayer.visible = false
-                smk.$viewer.view.popup.close()
-            }
+            self.visible = self.active
         } )
 
-        this.showPopup = function ( site, loc ) {
-            self.popupModel.site = site
-
-            smk.$viewer.showPopup( self.popupVm.$el, loc, { title: self.title } )
-        }
-
-        this.updatePopup = function () {
-            smk.$viewer.showPopup( self.popupVm.$el, null, { title: self.title } )
-        }
+        this.changedVisible( function () {
+            self.directionsLayer.visible = self.visible
+        } )
 
         smk.$viewer.handlePick( 3, function ( location ) {
             if ( !self.active ) return
@@ -106,7 +94,6 @@ include.module( 'tool-directions-esri3d', [ 'esri3d', 'types-esri3d', 'util-esri
                     if ( hit.results.length == 0 ) return
                     if ( !hit.results[ 0 ].graphic ) return
 
-                    self.showPopup( hit.results[ 0 ].graphic.attributes, hit.results[ 0 ].graphic.geometry )
                     return true
                 } )
         } )
@@ -175,11 +162,9 @@ include.module( 'tool-directions-esri3d', [ 'esri3d', 'types-esri3d', 'util-esri
 
         function reset() {
             self.directionsLayer.removeAll()
-
-            smk.$viewer.view.popup.close()
         }
 
-        smk.on( this.id, {
+        smk.on( 'directions-route', {
             'hover-direction': function ( ev ) {
                 self.directionsLayer.remove( self.highlightGraphic )
 
@@ -213,33 +198,47 @@ include.module( 'tool-directions-esri3d', [ 'esri3d', 'types-esri3d', 'util-esri
                 } )
 
                 self.directionsLayer.add( self.highlightGraphic )
-
-                smk.$viewer.view.goTo( { center: p, zoom: 12 } ).then( function () {
-                    self.showPopup( self.directions[ ev.highlight ], g )
-                } )
             },
 
             'pick-direction': function ( ev ) {
-                // if ( self.directionPickLayer ) {
-                //     smk.$viewer.map.removeLayer( self.directionPickLayer )
-                //     self.directionPickLayer = null
-                // }
+                self.directionsLayer.remove( self.pickGraphic )
 
-                // if ( !ev.pick )
-                //     return
+                if ( ev.pick == null ) return
 
-                // var p = self.directions[ ev.pick ].point
-                // self.directionPickLayer = L.circleMarker( [ p[ 1 ], p[ 0 ] ], { radius: 15 } )
-                //     .bindPopup( self.directions[ ev.pick ].instruction, {
-                //         autoPanPaddingTopLeft: L.point( 340, 40 ),
-                //         autoPanPaddingBottomRight: L.point( 40, 40 )
-                //     } )
-                //     .addTo( smk.$viewer.map )
-                //     .openPopup()
+                var p = self.directions[ ev.pick ].point
+                var g = { type: 'point', latitude: p[ 1 ], longitude: p[ 0 ] }
 
-                // smk.$viewer.map.panTo( [ p[ 1 ], p[ 0 ] ] )
+                self.pickGraphic = new E.Graphic( {
+                    geometry: g,
+                    symbol: {
+                        type: 'point-3d',
+                        symbolLayers: [
+                            {
+                                type:       'icon',
+                                size:       '30px',
+                                anchor:     'center',
+                                material: {
+                                    color: [ 0, 0, 0, 0 ]
+                                },
+                                resource: {
+                                    primitive: 'circle'
+                                },
+                                outline: {
+                                    color: 'blue',
+                                    size: '2px'
+                                }
+                            }
+                        ]
+                    }
+                } )
+
+                self.directionsLayer.add( self.pickGraphic )
+
+                smk.$viewer.view.goTo( { center: p, zoom: 12 } )
             },
+        } )
 
+        smk.on( this.id, {
             'clear': function ( ev ) {
                 reset()
             },
@@ -248,9 +247,7 @@ include.module( 'tool-directions-esri3d', [ 'esri3d', 'types-esri3d', 'util-esri
                 var gr = self.waypointGraphics[ ev.index ]
                 var w = ev.waypoint
 
-                smk.$viewer.view.goTo( { center: [ w.longitude, w.latitude ], zoom: 12 } ).then( function () {
-                    self.showPopup( gr.attributes, { type: 'point', latitude: w.latitude, longitude: w.longitude } )
-                } )
+                smk.$viewer.view.goTo( { center: [ w.longitude, w.latitude ], zoom: 12 } )
             }
         } )
     } )

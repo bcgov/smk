@@ -13,14 +13,16 @@ include.module( 'tool-about', [ 'tool', 'widgets', 'tool-about.panel-about-html'
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
     function AboutTool( option ) {
-        this.makePropWidget( 'icon', 'help' )
+        this.makePropWidget( 'icon', null ) //'help' )
+
         this.makePropPanel( 'content', null )
 
         SMK.TYPE.Tool.prototype.constructor.call( this, $.extend( {
             widgetComponent:'about-widget',
             panelComponent: 'about-panel',
-            title:          'About SMK',
-            position:       'menu'
+            // title:          'About SMK',
+            // position:       'menu'
+            content:        null
         }, option ) )
 
     }

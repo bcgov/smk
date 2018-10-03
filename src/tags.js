@@ -1,6 +1,6 @@
 var tg = require( './lib/tag-gen' )
 
-tg.globOption.cwd = 'src'
+tg.globOption.cwd = '.'
 
 var t = new tg.TagSet()
 
@@ -72,9 +72,11 @@ t.group( 'tool-coordinate' )
     .dir( 'smk/tool/coordinate/*' )
 
 t.group( 'check-directions' )
-    .dir( 'smk/tool/directions/lib/*' )
+    .dir( 'smk/tool/directions/check/**/*' )
 t.group( 'tool-directions' )
     .dir( 'smk/tool/directions/*' )
+t.group( 'tool-directions-route' )
+    .dir( 'smk/tool/directions-route/*' )
 
 t.group( 'tool-dropdown' )
     .dir( 'smk/tool/dropdown/*' )
@@ -114,6 +116,8 @@ t.group( 'check-query' )
     .dir( 'smk/tool/query/check/*' )
 t.group( 'tool-query' )
     .dir( 'smk/tool/query/*' )
+t.group( 'tool-query-results' )
+    .dir( 'smk/tool/query-results/*' )
 t.group( 'tool-query-feature' )
     .dir( 'smk/tool/query-feature/*' )
 

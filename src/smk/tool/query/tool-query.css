@@ -1,23 +1,28 @@
-.smk-description {
+.smk-sidepanel .smk-query-panel .smk-description {
     font-size: 14px;
     font-style: italic;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    text-align: center;
 }
 
-.smk-parameters {
+.smk-sidepanel .smk-query-panel .smk-parameters {
     margin: 10px 0;
 }
 
-.smk-parameter {
+.smk-sidepanel .smk-query-panel .smk-parameter {
     margin-top: 10px;
 }
 
-.smk-parameter label {
+.smk-sidepanel .smk-query-panel .smk-parameter label {
     font-size: 12px;
     display: block;
     width: calc( 100% - 10px );
 }
 
-.smk-parameter input, .smk-parameter select, .smk-parameter span {
+.smk-sidepanel .smk-query-panel .smk-parameter input, 
+.smk-sidepanel .smk-query-panel .smk-parameter select, 
+.smk-sidepanel .smk-query-panel .smk-parameter span {
     display: block;
     width: 100%;
     border: 0;
@@ -27,7 +32,9 @@
     background-color: white;
 }
 
-.smk-parameter input:focus, .smk-parameter select:focus, .smk-parameter span:focus {
+.smk-sidepanel .smk-query-panel .smk-parameter input:focus, 
+.smk-sidepanel .smk-query-panel .smk-parameter select:focus, 
+.smk-sidepanel .smk-query-panel .smk-parameter span:focus {
     outline: 0;
     border-bottom: 1px dashed gray;
 }

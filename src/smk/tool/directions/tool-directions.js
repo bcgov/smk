@@ -1,9 +1,16 @@
-include.module( 'tool-directions', [ 'tool', 'widgets', 'tool-directions.panel-directions-html', 'tool-directions.popup-directions-html', 'tool-directions.address-search-html' ], function ( inc ) {
+include.module( 'tool-directions', [ 'tool', 'widgets', 'sidepanel', 'tool-directions.panel-directions-html', 'tool-directions.address-search-html' ], function ( inc ) {
     "use strict";
 
     var request
 
-    function findRoute( points, option ) {
+    function interpolate( p1, p2, t ) {
+        return [
+            p1[ 0 ] + ( p2[ 0 ] - p1[ 0 ] ) * t,
+            p1[ 1 ] + ( p2[ 1 ] - p1[ 1 ] ) * t
+        ]
+    }
+
+    function findRoute( points, option, apiKey ) {
         if ( request )
             request.abort()
 
@@ -21,7 +28,7 @@ include.module( 'tool-directions', [ 'tool', 'widgets', 'tool-directions.panel-d
                 url:        'https://routerdlv.api.gov.bc.ca/' + ( option.optimal ? 'optimalDirections' : 'directions' ) + '.json',
                 data:       query,
                 headers: {
-                    apikey: option.apiKey
+                    apikey: apiKey
                 }
             } ) ).then( res, rej )
         } )
@@ -30,6 +37,34 @@ include.module( 'tool-directions', [ 'tool', 'widgets', 'tool-directions.panel-d
 
             return data
         } )
+        // uncomment to inject dummy results
+        // .catch( function () {
+        //     return {
+        //         distance: '10',
+        //         timeText: '10 mins',
+        //         route: points.map( function ( p ) { return [ p.longitude, p.latitude ] } ),
+        //         directions: points
+        //             .map( function ( p ) {
+        //                 return { text: 'waypoint: ' + p.longitude + ', ' + p.latitude, point: [ p.longitude, p.latitude ] }
+        //             } )
+        //             .reduce( function ( accum, v ) {
+        //                 if ( accum.length == 0 ) {
+        //                     accum.push( v )
+        //                     return accum
+        //                 }
+
+        //                 var prev = accum[ accum.length - 1 ]
+
+        //                 accum.push( { text: 'turn left for 1km (1:00)', point: interpolate( prev.point, v.point, 0.2 ) } )
+        //                 accum.push( { text: 'go straight for 2km (2:00)', point: interpolate( prev.point, v.point, 0.4 ) } )
+        //                 accum.push( { text: 'turn right for 3km (3:00)', point: interpolate( prev.point, v.point, 0.6 ) } )
+        //                 accum.push( { text: 'go backwards for 4km (4:00)', point: interpolate( prev.point, v.point, 0.8 ) } )
+        //                 accum.push( v )
+
+        //                 return accum 
+        //             }, [] )
+        //     }
+        // } )
     }
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
@@ -143,7 +178,7 @@ include.module( 'tool-directions', [ 'tool', 'widgets', 'tool-directions.panel-d
     Vue.component( 'directions-panel', {
         extends: inc.widgets.toolPanel,
         template: inc[ 'tool-directions.panel-directions-html' ],
-        props: [ 'busy', 'waypoints', 'directions', 'directionHighlight', 'directionPick', 'statusMessage', 'config' ],
+        props: [ 'waypoints', 'config', 'hasRoute' ],
         data: function () {
             return Object.assign( {}, this.config )
         },
@@ -171,36 +206,35 @@ include.module( 'tool-directions', [ 'tool', 'widgets', 'tool-directions.panel-d
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
     function DirectionsTool( option ) {
-        this.makePropWidget( 'icon', 'directions_car' )
+        this.makePropWidget( 'icon', null ) //'directions_car' )
 
-        this.makePropPanel( 'busy', false )
         this.makePropPanel( 'waypoints', [] )
-        this.makePropPanel( 'directions', [] )
-        this.makePropPanel( 'directionHighlight', null )
-        this.makePropPanel( 'directionPick', null )
-        this.makePropPanel( 'statusMessage', null )
+        this.makePropPanel( 'hasRoute', false )
         this.makePropPanel( 'config', {
             optimal:    false,
             roundTrip:  false,
             criteria:   'shortest',
             newAddress: null,
-            apiKey:     option.apiKey
+            options:    false
         } )
 
-        SMK.TYPE.Tool.prototype.constructor.call( this, $.extend( {
-            order:          4,
-            position:       'menu',
-            title:          'Route Planner',
+        SMK.TYPE.PanelTool.prototype.constructor.call( this, $.extend( {
+            // order:          4,
+            // position:       'menu',
+            // title:          'Route Planner',
             widgetComponent:'directions-widget',
             panelComponent: 'directions-panel',
+            apiKey:         null
         }, option ) )
 
         this.activating = SMK.UTIL.resolved()
+
+        this.directions = []
     }
 
     SMK.TYPE.DirectionsTool = DirectionsTool
 
-    $.extend( DirectionsTool.prototype, SMK.TYPE.Tool.prototype )
+    $.extend( DirectionsTool.prototype, SMK.TYPE.PanelTool.prototype )
     DirectionsTool.prototype.afterInitialize = []
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
@@ -300,24 +334,11 @@ include.module( 'tool-directions', [ 'tool', 'widgets', 'tool-directions.panel-d
                     } )
                 }
             },
-        } )
 
-        // = : = : = : = : = : = : = : = : = : = : = : = : = : = : = : = : = : = : =
-
-        this.popupModel = {
-            site:       null
-        }
-
-        this.popupVm = new Vue( {
-            el: smk.addToContainer( inc[ 'tool-directions.popup-directions-html' ] ),
-            data: this.popupModel,
-            updated: function () {
-                if ( this.site )
-                    self.updatePopup()
+            'route': function ( ev ) {
+                smk.$tool[ 'directions-route' ].active = true 
             }
         } )
-
-        this.updatePopup = function () {}
 
     } )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
@@ -355,6 +376,7 @@ include.module( 'tool-directions', [ 'tool', 'widgets', 'tool-directions.panel-d
         var self = this
 
         this.waypoints = []
+        this.hasRoute = false
 
         return this.findRoute()
     }
@@ -379,8 +401,9 @@ include.module( 'tool-directions', [ 'tool', 'widgets', 'tool-directions.panel-d
 
         this.setMessage( 'Calculating...', 'progress' )
         this.busy = true
+        this.hasRoute = false
 
-        return SMK.UTIL.promiseFinally( findRoute( points, this.config ).then( function ( data ) {
+        return SMK.UTIL.promiseFinally( findRoute( points, this.config, this.apiKey ).then( function ( data ) {
             self.displayRoute( data.route )
 
             if ( data.visitOrder && data.visitOrder.findIndex( function ( v, i ) { return points[ v ].index != i } ) != -1 ) {
@@ -411,6 +434,8 @@ include.module( 'tool-directions', [ 'tool', 'widgets', 'tool-directions.panel-d
                 return dir
             } )
 
+            self.hasRoute = true
+
             self.directions.unshift( {
                 instruction: 'Start!',
                 point: [ points[ 0 ].longitude, points[ 0 ].latitude ]
@@ -423,21 +448,6 @@ include.module( 'tool-directions', [ 'tool', 'widgets', 'tool-directions.panel-d
         } ), function () {
             self.busy = false
         } )
-    }
-
-    DirectionsTool.prototype.setMessage = function ( message, status, delay ) {
-        if ( !message ) {
-            this.statusMessage = null
-            return
-        }
-
-        this.statusMessage = {
-            message: message,
-            status: status
-        }
-
-        if ( delay )
-            return SMK.UTIL.makePromise( function ( res ) { setTimeout( res, delay ) } )
     }
 
     return DirectionsTool

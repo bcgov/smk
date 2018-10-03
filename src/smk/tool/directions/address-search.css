@@ -8,8 +8,9 @@
     border: none;
     vertical-align: top;
     background-color: transparent;
-    padding-left: 4px;
     font: 400 11px system-ui;
+    border-radius: 2px;
+    height: 15px;
 }
 
 .smk-address-search input:focus {
@@ -19,7 +20,7 @@
 
 .smk-popup-list {
     z-index: 5;
-    /* position: absolute; */
+    position: absolute;
     top: 20px;
     border: 1px solid gray;
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65);

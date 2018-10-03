@@ -5,7 +5,7 @@ include.module( 'tool-shortcut-menu', [ 'tool', 'tool-shortcut-menu.shortcut-men
     //
     function ShortcutMenuTool( option ) {    
         SMK.TYPE.Tool.prototype.constructor.call( this, $.extend( {
-            order: 10
+            // order: 10
         }, option ) )
 
         this.model = {
@@ -37,14 +37,17 @@ include.module( 'tool-shortcut-menu', [ 'tool', 'tool-shortcut-menu.shortcut-men
     ShortcutMenuTool.prototype.addTool = function ( tool, smk ) {
         var self = this
 
+        if ( smk.$device == 'desktop' ) return false
+
+        smk.$sidepanel.addTool( tool )
+
         this.model.widgets.push( {
             id:                 tool.id,
             widgetComponent:    tool.widgetComponent,
             widget:             tool.widget,
         } )
 
-        tool.useList = false
-        smk.$tool[ 'list-menu' ].addTool( tool )
+        return true
     }
 
     return ShortcutMenuTool

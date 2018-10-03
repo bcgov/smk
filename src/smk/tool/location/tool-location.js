@@ -1,4 +1,4 @@
-include.module( 'tool-location', [ 'tool', 'widgets', 'tool-location.popup-location-html', 'tool-location.panel-location-html' ], function ( inc ) {
+include.module( 'tool-location', [ 'tool', 'widgets', 'tool-location.panel-location-html' ], function ( inc ) {
     "use strict";
 
     Vue.component( 'location-panel', {
@@ -12,13 +12,11 @@ include.module( 'tool-location', [ 'tool', 'widgets', 'tool-location.popup-locat
         this.makeProp( 'tool', {} )
 
         SMK.TYPE.Tool.prototype.constructor.call( this, $.extend( {
+            class:      'smk-location-panel',
             title:      'Location',
             position:   'toolbar',
-            showPanel:  false
+            panelComponent: 'location-panel',
         }, option ) )
-
-        if ( this.showPanel )
-            this.panelComponent = 'location-panel'
     }
 
 
@@ -52,42 +50,18 @@ include.module( 'tool-location', [ 'tool', 'widgets', 'tool-location.popup-locat
         // if ( smk.$tool.measure )
         //     this.tool.measure = true
 
-        if ( this.showPanel ) {
-            smk.on( this.id, {
-                'identify': function () {
-                    self.identifyHandler()
-                },
+        smk.on( this.id, {
+            'identify': function () {
+                self.identifyHandler()
+            },
 
-                'measure': function () {
-                },
+            'measure': function () {
+            },
 
-                'directions': function () {
-                    self.directionsHandler()
-                }
-            } )
-        }
-        else {
-            this.vm = new Vue( {
-                el: smk.addToOverlay( inc[ 'tool-location.popup-location-html' ] ),
-                data: this.widget,
-                methods: {
-                    identifyFeatures: function () {
-                        self.identifyHandler()
-                    },
-                    startMeasurement: function () {
-                    },
-                    startDirections: function () {
-                        self.directionsHandler()
-                    },
-                },
-                updated: function () {
-                    if ( self.active )
-                        self.updatePopup()
-                }
-            } )
-        }
-
-        this.updatePopup = function () {}
+            'directions': function () {
+                self.directionsHandler()
+            }
+        } )
 
         smk.$viewer.handlePick( 1, function ( location ) {
             self.active = true
