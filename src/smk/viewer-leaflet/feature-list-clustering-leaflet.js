@@ -45,10 +45,6 @@ include.module( 'feature-list-clustering-leaflet', [ 'leaflet', 'feature-list-le
                 },
             } )
 
-        self.changedActive( function () {
-            self.visible = self.active
-        } )
-
         self.changedVisible( function () {
             if ( self.visible ) {
                 self.cluster.addTo( smk.$viewer.map )

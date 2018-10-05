@@ -98,9 +98,9 @@ include.module( 'sidepanel', [ 'vue', 'sidepanel.sidepanel-html', 'sidepanel.pan
 
         if ( tool && this.toolStack[ top ].id != tool.id )
             return 
-            
-        this.toolStack[ top ].active = false
-        this.toolStack.pop()
+
+        var removed = this.toolStack.pop()
+        removed.active = false
 
         if ( top > 0 ) {
             this.setCurrentTool( this.toolStack[ top - 1 ] )
