@@ -1852,9 +1852,9 @@ window.include.SMK = true
             },
 
             BUILD: {
-                commit:     '8dab4b697f1f753c6d599683ec7d34217cf74a58',
+                commit:     '5dc5fa8a80b56d66eb780af42bca4600856cff6d',
                 branch:     'master',
-                lastCommit: '"2018-10-05 16:59:30 -0700"'.replace( /^"|"$/g, '' ),
+                lastCommit: '"2018-10-09 09:38:07 -0700"'.replace( /^"|"$/g, '' ),
                 origin:     'https://github.com/qqnluaq/smk-client.git',
                 version:    '0.8.1',
             }
