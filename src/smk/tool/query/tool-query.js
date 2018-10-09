@@ -150,8 +150,6 @@ include.module( 'tool-query', [ 'feature-list', 'widgets', 'sidepanel', 'tool-qu
     QueryTool.prototype.afterInitialize.push( function ( smk ) {
         var self = this
 
-        self.setMessage( 'Configure parameters and click Search.' )
-
         self.changedActive( function () {
             if ( self.active ) {
                 if ( self.onActivate ) {
@@ -194,7 +192,7 @@ include.module( 'tool-query', [ 'feature-list', 'widgets', 'sidepanel', 'tool-qu
 
             'reset': function ( ev ) {
                 self.featureSet.clear()
-                self.setMessage( 'Configure parameters and click Search.' )
+                self.setMessage() 
 
                 self.parameters.forEach( function ( p, i ) {
                     p.prop.value = self.query.parameters[ i ].value
@@ -204,7 +202,7 @@ include.module( 'tool-query', [ 'feature-list', 'widgets', 'sidepanel', 'tool-qu
             'execute': function ( ev ) {
                 self.featureSet.clear()
                 self.busy = true
-                self.setMessage( 'Executing query', 'progress' )
+                self.setMessage( 'Searching for features', 'progress' )
 
                 var param = {}
                 self.parameters.forEach( function ( p, i ) {
@@ -216,6 +214,7 @@ include.module( 'tool-query', [ 'feature-list', 'widgets', 'sidepanel', 'tool-qu
                         return self.query.queryLayer( param, self.config, smk.$viewer )
                     } )
                     .then( function ( features ) {
+                        self.setMessage()
                         return asyncIterator(
                             function () {
                                 return features.length > 0
@@ -229,7 +228,7 @@ include.module( 'tool-query', [ 'feature-list', 'widgets', 'sidepanel', 'tool-qu
                     } )
                     .catch( function ( err ) {
                         console.warn( err )
-                        self.setMessage( 'Query returned no results', 'warning' )
+                        self.setMessage( 'No features found', 'warning' )
                     } ), function () {
                         self.busy = false
                     } )
@@ -247,12 +246,6 @@ include.module( 'tool-query', [ 'feature-list', 'widgets', 'sidepanel', 'tool-qu
                     } ) )
                 } )
             }
-        } )
-
-        self.featureSet.addedFeatures( function ( ev ) {
-            var stat = self.featureSet.getStats()
-
-            self.setMessage( '<div>Found ' + SMK.UTIL.grammaticalNumber( stat.featureCount, null, 'a feature', '{} features' ) + '</div>' )
         } )
 
     } )

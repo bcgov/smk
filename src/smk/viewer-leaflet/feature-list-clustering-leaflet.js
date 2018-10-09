@@ -1,6 +1,17 @@
 include.module( 'feature-list-clustering-leaflet', [ 'leaflet', 'feature-list-leaflet', 'turf' ], function ( inc ) {
     "use strict";
 
+    var base = include.option( 'baseUrl' ) + '/images/feature-list'
+
+    var whiteMarker = new L.Icon( {
+        iconUrl:        base + '/marker-icon-white.png',
+        shadowUrl:      base + '/marker-shadow.png',
+        iconSize:       [ 25, 41 ],
+        iconAnchor:     [ 12, 41 ],
+        popupAnchor:    [ 1, -34 ],
+        shadowSize:     [ 41, 41 ]
+    } )
+
     return function ( smk ) {
         var self = this
 
@@ -34,10 +45,6 @@ include.module( 'feature-list-clustering-leaflet', [ 'leaflet', 'feature-list-le
                 },
             } )
 
-        self.changedActive( function () {
-            self.visible = self.active
-        } )
-
         self.changedVisible( function () {
             if ( self.visible ) {
                 self.cluster.addTo( smk.$viewer.map )
@@ -68,6 +75,12 @@ include.module( 'feature-list-clustering-leaflet', [ 'leaflet', 'feature-list-le
                         style: self.styleFeature()
                     } )
                 }
+
+                if ( !self.highlight[ f.id ] )
+                    self.highlight[ f.id ] = L.marker( center, {
+                        title: f.title,
+                        icon: whiteMarker
+                    } )
 
                 if ( !center )
                     center = L.GeoJSON.coordsToLatLng( turf.centerOfMass( f.geometry ).geometry.coordinates )

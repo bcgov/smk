@@ -33,11 +33,9 @@ include.module( 'tool-query-feature', [ 'feature-list' ], function ( inc ) {
 
         self.changedActive( function () {
             if ( self.active ) {
-                smk.$tool[ 'query--' + self.instance ].visible = true
                 self.featureSet.highlight()
             }
             else {
-                smk.$tool[ 'query--' + self.instance ].visible = false
             }
         } )
 

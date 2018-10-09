@@ -16,17 +16,20 @@
         </div>
     </template>
 
+
     <div class="smk-layer"
         v-for="layer in layers"
         v-if="layer && layer.features.length > 0"
-        v-on:mouseenter="$$emit( 'hover', { features: layer.features } )"
-        v-on:mouseleave="$$emit( 'hover', { features: null } )"
     >
+        <!-- v-on:mouseenter="$$emit( 'hover', { features: layer.features } )" -->
+        <!-- v-on:mouseleave="$$emit( 'hover', { features: null } )" -->
         <h2>{{ layer.title }}<span class="smk-count" v-if="layer.features.length > 1">({{ layer.features.length }})</span></h2>
         <div class="smk-feature smk-item" title="Click to see attributes"
             v-for="feature in layer.features"
             v-bind:class="{ 'smk-highlighted': feature.id == highlightId }"
             v-on:click="$$emit( 'active', { featureId: feature.id } )"
+            v-on:mouseenter="$$emit( 'hover', { features: [ feature ] } )"
+            v-on:mouseleave="$$emit( 'hover', { features: null } )"
         >
             <span >{{ feature.title }}</span>
 

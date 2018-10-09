@@ -23,6 +23,17 @@
     margin-left: -10px;
 }
 
+.smk-feature-panel .smk-layer {
+    font-size: 15px;
+    font-weight: bold;
+    position: sticky;
+    top: 0;
+    background-color: white;
+    padding: 5px;
+    border-bottom: 1px solid darkgrey;
+}
+
+
 .smk-header + .smk-attributes {
     border-top: 1px solid gray;
 }
