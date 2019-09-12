@@ -2,7 +2,7 @@ include.module( 'tool-zoom-leaflet', [ 'tool-zoom', 'leaflet' ], function () {
     "use strict";
 
     SMK.TYPE.ZoomTool.prototype.afterInitialize.push( function ( smk ) {
-        if ( smk.$device == 'mobile' ) return
+        // if ( smk.$device == 'mobile' ) return
 
         if ( this.mouseWheel !== false ) {
             smk.$viewer.map.scrollWheelZoom.enable()
