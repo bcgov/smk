@@ -7,7 +7,7 @@
         <i class="smk-all-visibility material-icons smk-command smk-icon"
             v-bind:title="'Toggle visibility of all layers.\nSHIFT-click to toggle visibility on each layer.'"
             v-on:click="$$emit( 'set-all-layers-visible', { visible: !allVisible, deep: $event.shiftKey } )"
-        >{{ allVisible ? 'visibility' : 'visibility_off' }}</i>
+        >{{ allVisible ? glyph.visible || 'visibility' : glyph.hidden || 'visibility_off' }}</i>
 
         <input class="smk-filter" placeholder="Filter layers" 
             v-model="filter" 
@@ -23,6 +23,7 @@
     
     <layer-display 
         v-bind:items="items"
+        v-bind:glyph="glyph"
         id="layers"
     ></layer-display>
 </side-panel>

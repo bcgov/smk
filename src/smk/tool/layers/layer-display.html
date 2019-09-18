@@ -20,7 +20,7 @@
             <i class="smk-visibility material-icons smk-command smk-icon"
                 v-bind:title="'Toggle visibility of \'' + item.title + '\'' + ( item.type == 'folder' ? '\nSHIFT-click to toggle visibility on internal layers.' : '' ) "
                 v-on:click="$$emit( 'set-item-visible', { id: item.id, visible: !item.isVisible, deep: $event.shiftKey } )"
-            >{{ item.isVisible && item.isEnabled ? 'visibility' : 'visibility_off' }}</i>
+            >{{ item.isVisible && item.isEnabled ? glyph.visible || 'visibility' : glyph.hidden || 'visibility_off' }}</i>
 
             <span class="smk-layer-title"
                 v-bind:title="'ID: ' + ( item.id )"
