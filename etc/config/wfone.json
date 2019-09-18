@@ -1,176 +1,165 @@
 {
-  "smkId": "wfone-public-mobile",
-  "smkRevision": 1,
-  "name": "wfone-public-mobile",
-  "createdBy": "vivid",
-  "published": false,
-  "viewer": {
-    "type": "leaflet",
-    "initialExtent": [
-      -123.97822866216305,
-      48.85118990316143,
-      -122.88096914067867,
-      48.25579824757873
+    "smkId": "wfone-public-mobile",
+    "smkRevision": 1,
+    "name": "wfone-public-mobile",
+    "createdBy": "vivid",
+    "published": false,
+    "viewer": {
+        "type": "leaflet",
+        "initialExtent": [
+            -123.97822866216305,
+            48.85118990316143,
+            -122.88096914067867,
+            48.25579824757873
+        ],
+        "baseMap": "Topographic"
+    },
+    "tools": [
+        {
+            "type": "location",
+            "title": "Location",
+            "position": "toolbar",
+            "enabled": false
+        },
+        {
+            "type": "coordinate",
+            "enabled": false
+        },
+        {
+            "type": "attribution",
+            "enabled": true
+        },
+        {
+            "type": "sidebar",
+            "enabled": true
+        },
+        {
+            "type": "layers",
+            "enabled": true
+        },
+        {
+            "type": "identify",
+            "title": "Identify",
+            "enabled": false,
+            "position": "toolbar"
+        },
+        {
+            "type": "pan",
+            "enabled": true
+        },
+        {
+            "type": "zoom",
+            "enabled": true,
+            "mouseWheel": true,
+            "doubleClick": true,
+            "box": true,
+            "control": true
+        },
+        {
+            "type": "measure",
+            "enabled": false
+        },
+        {
+            "type": "markup",
+            "enabled": false
+        },
+        {
+            "type": "scale",
+            "enabled": false,
+            "showFactor": true,
+            "showBar": true
+        },
+        {
+            "type": "minimap",
+            "enabled": false,
+            "baseMap": "Topographic"
+        },
+        {
+            "type": "directions",
+            "enabled": false
+        },
+        {
+            "type": "about",
+            "enabled": false,
+            "content": ""
+        },
+        {
+            "type": "baseMaps",
+            "enabled": true,
+            "choices": [
+                "Topographic",
+                "Streets",
+                "Imagery",
+                "Oceans",
+                "NationalGeographic",
+                "DarkGray",
+                "Gray"
+            ]
+        },
+        {
+            "type": "select",
+            "enabled": false
+        },
+        {
+            "type": "search",
+            "enabled": true
+        }
     ],
-    "baseMap": "Topographic"
-  },
-  "tools": [
-    {
-      "type": "location",
-      "title": "Location",
-      "position": "toolbar",
-      "enabled": false
-    },
-    {
-      "type": "coordinate",
-      "enabled": false
-    },
-    {
-      "type": "attribution",
-      "enabled": true
-    },
-    {
-      "type": "sidebar",
-      "enabled": true
-    },
-    {
-      "type": "layers",
-      "enabled": true
-    },
-    {
-      "type": "identify",
-      "title": "Identify",
-      "enabled": false,
-      "position": "toolbar"
-    },
-    {
-      "type": "pan",
-      "enabled": true
-    },
-    {
-      "type": "zoom",
-      "enabled": true,
-      "mouseWheel": true,
-      "doubleClick": true,
-      "box": true,
-      "control": true
-    },
-    {
-      "type": "measure",
-      "enabled": false
-    },
-    {
-      "type": "markup",
-      "enabled": false
-    },
-    {
-      "type": "scale",
-      "enabled": false,
-      "showFactor": true,
-      "showBar": true
-    },
-    {
-      "type": "minimap",
-      "enabled": false,
-      "baseMap": "Topographic"
-    },
-    {
-      "type": "directions",
-      "enabled": false
-    },
-    {
-      "type": "about",
-      "enabled": false,
-      "content": ""
-    },
-    {
-      "type": "baseMaps",
-      "enabled": true,
-      "choices": [
-        "Topographic",
-        "Streets",
-        "Imagery",
-        "Oceans",
-        "NationalGeographic",
-        "DarkGray",
-        "Gray"
-      ]
-    },
-    {
-      "type": "select",
-      "enabled": false
-    },
-    {
-      "type": "search",
-      "enabled": true
-    }
-  ],
-  "layers": [
-    {
-      "type": "esri-dynamic",
-      "id": 31071,
-      "title": "Active Wildfires",
-      "isVisible": true,
-      "attribution": "Copyright 117 DataBC, Government of British Columbia",
-      "attributes": [
-        
-      ],
-      "isFeatureLayer": true,
-      "serviceUrl": "https://services6.arcgis.com/ubm4tcTYICKBpist/arcgis/rest/services/BCWS_ActiveFires_PublicView/FeatureServer/0",
-      "metadataUrl": "https://catalogue.data.gov.bc.ca/dataset/diagnostic-facilities",
-      "where": "FIRE_STATUS <> 'Out'",
-      "opacity": 1,
-      "scaleMin": 500000,
-      "scaleMax": 0
-    },
-    {
-      "type": "esri-dynamic",
-      "id": 31072,
-      "title": "Danger Rating",
-      "isVisible": false,
-      "attribution": "Copyright 117 DataBC, Government of British Columbia",
-      "attributes": [
-        
-      ],
-      "isFeatureLayer": true,
-      "serviceUrl": "https://services6.arcgis.com/ubm4tcTYICKBpist/arcgis/rest/services/British_Columbia_Danger_Rating/FeatureServer/0",
-      "metadataUrl": "https://catalogue.data.gov.bc.ca/dataset/diagnostic-facilities",
-      "where": "",
-      "opacity": 0.25,
-      "scaleMin": 500000,
-      "scaleMax": 0
-    },
-    {
-      "type": "esri-dynamic",
-      "id": 31073,
-      "title": "Fire Perimeters",
-      "isVisible": false,
-      "attribution": "Copyright 117 DataBC, Government of British Columbia",
-      "attributes": [
-        
-      ],
-      "isFeatureLayer": true,
-      "serviceUrl": "https://services6.arcgis.com/ubm4tcTYICKBpist/arcgis/rest/services/BCWS_FirePerimeters_PublicView/FeatureServer/0",
-      "metadataUrl": "https://catalogue.data.gov.bc.ca/dataset/diagnostic-facilities",
-      "where": "FIRE_STATUS <> 'Out'",
-      "opacity": 1,
-      "scaleMin": 500000,
-      "scaleMax": 0
-    },
-    {
-      "type": "esri-dynamic",
-      "id": 31074,
-      "title": "BC Fire Centres",
-      "isVisible": true,
-      "attribution": "Copyright 117 DataBC, Government of British Columbia",
-      "attributes": [
-        
-      ],
-      "serviceUrl": "https://tiles.arcgis.com/tiles/ubm4tcTYICKBpist/arcgis/rest/services/BCWS_FireCenterBdys2/MapServer",
-      "metadataUrl": "https://catalogue.data.gov.bc.ca/dataset/diagnostic-facilities",
-      "opacity": 1,
-      "scaleMin": 500000,
-      "scaleMax": 0
-    }
-  ]
+    "layers": [
+        {
+            "type": "esri-feature",
+            "id": 31071,
+            "title": "Active Wildfires",
+            "isVisible": true,
+            "attribution": "Copyright 117 DataBC, Government of British Columbia",
+            "attributes": [],
+            "serviceUrl": "https://services6.arcgis.com/ubm4tcTYICKBpist/arcgis/rest/services/BCWS_ActiveFires_PublicView/FeatureServer",
+            "metadataUrl": "https://catalogue.data.gov.bc.ca/dataset/diagnostic-facilities",
+            "where": "FIRE_STATUS <> 'Out'",
+            "opacity": 1,
+            "scaleMin": 500000,
+            "scaleMax": 0
+        },
+        {
+            "type": "esri-feature",
+            "id": 31072,
+            "title": "Danger Rating",
+            "isVisible": false,
+            "attribution": "Copyright 117 DataBC, Government of British Columbia",
+            "attributes": [],
+            "serviceUrl": "https://services6.arcgis.com/ubm4tcTYICKBpist/arcgis/rest/services/British_Columbia_Danger_Rating/FeatureServer",
+            "metadataUrl": "https://catalogue.data.gov.bc.ca/dataset/diagnostic-facilities",
+            "where": "",
+            "opacity": 0.25,
+            "scaleMin": 500000,
+            "scaleMax": 0
+        },
+        {
+            "type": "esri-feature",
+            "id": 31073,
+            "title": "Fire Perimeters",
+            "isVisible": false,
+            "attribution": "Copyright 117 DataBC, Government of British Columbia",
+            "attributes": [],
+            "serviceUrl": "https://services6.arcgis.com/ubm4tcTYICKBpist/arcgis/rest/services/BCWS_FirePerimeters_PublicView/FeatureServer",
+            "metadataUrl": "https://catalogue.data.gov.bc.ca/dataset/diagnostic-facilities",
+            "where": "FIRE_STATUS <> 'Out'",
+            "opacity": 1,
+            "scaleMin": 500000,
+            "scaleMax": 0
+        },
+        {
+            "type": "esri-tiled",
+            "id": 31074,
+            "title": "BC Fire Centres",
+            "isVisible": true,
+            "attribution": "Copyright 117 DataBC, Government of British Columbia",
+            "attributes": [],
+            "serviceUrl": "https://tiles.arcgis.com/tiles/ubm4tcTYICKBpist/arcgis/rest/services/BCWS_FireCenterBdys2/MapServer",
+            "metadataUrl": "https://catalogue.data.gov.bc.ca/dataset/diagnostic-facilities",
+            "opacity": 1,
+            "scaleMin": 500000,
+            "scaleMax": 0
+        }
+    ]
 }

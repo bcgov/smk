@@ -170,7 +170,9 @@ t.group( 'viewer-leaflet' )
 t.sequence( 'leaflet' )
     .script( 'lib/leaflet/leaflet-1.5.1.min.js' )
     .style( 'lib/leaflet/leaflet-1.5.1.css' )
-    .script( 'lib/leaflet/esri-leaflet-2.1.0.min.js' )
+    .script( 'lib/leaflet/esri-leaflet-2.3.0.min.js' )
+    .script( 'lib/leaflet/esri-leaflet-renderers.js' )
+    .script( 'lib/leaflet/esri-leaflet-legend-compat-src-2.0.1.js')
 
 
 t.group( 'tool-coordinate-leaflet' )

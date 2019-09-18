@@ -37,7 +37,7 @@ include.module( 'smk-map', [ 'jquery', 'util', 'theme-base' ], function () {
             SMK.UTIL.resolved()
                 .then( loadConfigs )
                 .then( mergeConfigs )
-                .then( resolveConfig )
+                // .then( resolveConfig )
                 .then( initMapFrame )
                 .then( checkTools )
                 .then( loadViewer )
