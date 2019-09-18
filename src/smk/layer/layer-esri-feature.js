@@ -13,29 +13,13 @@ include.module( 'layer.layer-esri-feature-js', [ 'layer.layer-js', 'terraformer'
     EsriFeatureLayer.prototype.getLegends = function () {
         var self = this
 
-        var serviceUrl = this.config.serviceUrl + '/legend'
-        var dynamicLayers = '[' + this.config.dynamicLayers.join( ',' ) + ']'
+        if ( !this.legendCache ) return SMK.UTIL.resolved()
 
-        var data = {
-            f:             'json',
-            dynamicLayers: dynamicLayers
-        }
-
-        return SMK.UTIL.makePromise( function ( res, rej ) {
-            $.ajax( {
-                url:        serviceUrl,
-                type:       "post",
-                data:       data,
-                dataType:   "json",
-            } ).then( res, rej )
-        } )
-        .then ( function ( data ) {
-            var layer = data.layers[0]; // should only get one back...
-
-            return layer.legend.map( function( obj ) {
+        return SMK.UTIL.resolved().then( function () { 
+            return self.legendCache.layers[ 0 ].legend.map( function ( lg ) {
                 return {
-                    url: 'data:image/png;base64,' + obj.imageData,
-                    title: obj.label
+                    url: 'data:image/png;base64,' + lg.imageData,
+                    title: lg.label
                 }
             } )
         } )

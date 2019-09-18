@@ -11,6 +11,8 @@ include.module( 'layer-leaflet.layer-esri-feature-leaflet-js', [ 'layer.layer-es
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
     SMK.TYPE.Layer[ 'esri-feature' ][ 'leaflet' ].create = function ( layers, zIndex ) {
+        var self = this
+
         if ( layers.length != 1 ) throw new Error( 'only 1 config allowed' )
 
         var serviceUrl  = layers[ 0 ].config.serviceUrl
@@ -29,6 +31,14 @@ include.module( 'layer-leaflet.layer-esri-feature-leaflet-js', [ 'layer.layer-es
             where:  layers[ 0 ].config.where
         } )
         
+        if ( layers[ 0 ].legendCache == null )
+            layer.legend( function ( err, leg ) {
+                if ( err )
+                    layers[ 0 ].legendCache = false
+                else
+                    layers[ 0 ].legendCache = leg
+            } )
+
         layer.on( 'load', function ( ev ) {
             if ( layer._currentImage )
                 layer._currentImage.setZIndex( zIndex )

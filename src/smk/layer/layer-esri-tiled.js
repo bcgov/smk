@@ -14,11 +14,9 @@ include.module( 'layer.layer-esri-tiled-js', [ 'layer.layer-js', 'terraformer' ]
         var self = this
 
         var serviceUrl = this.config.serviceUrl + '/legend'
-        var dynamicLayers = '[' + this.config.dynamicLayers.join( ',' ) + ']'
 
         var data = {
             f:             'json',
-            dynamicLayers: dynamicLayers
         }
 
         return SMK.UTIL.makePromise( function ( res, rej ) {
