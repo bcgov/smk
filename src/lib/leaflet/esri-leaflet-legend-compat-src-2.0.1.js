@@ -135,11 +135,12 @@ EsriLeaflet.Legend.include({
       if (error) {
         return callback.call(context, error);
       }
-
+      
+      var ls = response.layers || [ response ]
       var layers = [];
-      for (var i = 0, len = response.layers.length; i < len; i++) {
-        if (!response.layers[i].subLayerIds) {
-          layers.push(response.layers[i]);
+      for (var i = 0, len = ls.length; i < len; i++) {
+        if (!ls[i].subLayerIds) {
+          layers.push(ls[i]);
         }
       }
 
@@ -174,6 +175,9 @@ EsriLeaflet.Legend.include({
   },
 
   _getLayerLegend: function(layer, callback, context) {
+    if ( layer.drawingInfo )
+      return callback( null, layer )
+
     this._service.request(layer.id, {
       f: 'json'
     }, callback, context);
