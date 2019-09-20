@@ -31,13 +31,13 @@ include.module( 'layer-leaflet.layer-esri-feature-leaflet-js', [ 'layer.layer-es
             where:  layers[ 0 ].config.where
         } )
         
-        if ( layers[ 0 ].legendCache == null )
+        if ( layers[ 0 ].legendCacheResolve ) {
             layer.legend( function ( err, leg ) {
-                if ( err )
-                    layers[ 0 ].legendCache = false
-                else
-                    layers[ 0 ].legendCache = leg
+                console.log(err,leg)
+                layers[ 0 ].legendCacheResolve( err ? null : leg.layers[ 0 ].legend )
+                layers[ 0 ].legendCacheResolve = null
             } )
+        }
 
         layer.on( 'load', function ( ev ) {
             if ( layer._currentImage )

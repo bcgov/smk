@@ -2,7 +2,13 @@ include.module( 'layer.layer-esri-feature-js', [ 'layer.layer-js', 'terraformer'
     "use strict";
 
     function EsriFeatureLayer() {
+        var self = this
+
         SMK.TYPE.Layer.prototype.constructor.apply( this, arguments )
+
+        this.legendCache = SMK.UTIL.makePromise( function ( res, rej ) {
+            self.legendCacheResolve = res
+        } )
     }
 
     $.extend( EsriFeatureLayer.prototype, SMK.TYPE.Layer.prototype )
@@ -10,13 +16,11 @@ include.module( 'layer.layer-esri-feature-js', [ 'layer.layer-js', 'terraformer'
     SMK.TYPE.Layer[ 'esri-feature' ] = EsriFeatureLayer
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
-    EsriFeatureLayer.prototype.getLegends = function () {
-        var self = this
+    EsriFeatureLayer.prototype.initLegends = function () {
+        return this.legendCache.then( function ( legends ) {
+            if ( !legends ) return
 
-        if ( !this.legendCache ) return SMK.UTIL.resolved()
-
-        return SMK.UTIL.resolved().then( function () { 
-            return self.legendCache.layers[ 0 ].legend.map( function ( lg ) {
+            return legends.map( function ( lg ) {
                 return {
                     url: 'data:image/png;base64,' + lg.imageData,
                     title: lg.label

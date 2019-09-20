@@ -10,7 +10,7 @@ include.module( 'layer.layer-esri-tiled-js', [ 'layer.layer-js', 'terraformer' ]
     SMK.TYPE.Layer[ 'esri-tiled' ] = EsriTiledLayer
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
-    EsriTiledLayer.prototype.getLegends = function () {
+    EsriTiledLayer.prototype.initLegends = function () {
         var self = this
 
         var serviceUrl = this.config.serviceUrl + '/legend'

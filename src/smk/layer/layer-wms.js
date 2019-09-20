@@ -18,7 +18,7 @@ include.module( 'layer.layer-wms-js', [ 'layer.layer-js' ], function () {
         return true
     }
 
-    WmsLayer.prototype.getLegends = function () {
+    WmsLayer.prototype.initLegends = function () {
         var url =  this.config.serviceUrl + '?' + $.param( {
             SERVICE:    'WMS',
             VERSION:    '1.1.1',
