@@ -67,8 +67,20 @@ include.module( 'layer.layer-js', [ 'jquery', 'util', 'event' ], function () {
 
     Layer.prototype.hasChildren = function () { return false }
 
-    Layer.prototype.getLegends = function () {
+    Layer.prototype.initLegends = function () {
         return SMK.UTIL.resolved()
+    }
+
+    Layer.prototype.getLegends = function () {
+        var self = this
+        
+        if ( !this.legendPromise ) {
+            this.legendPromise = SMK.UTIL.makePromise( function ( res, rej ) {
+                res( self.initLegends() )
+            } )        
+        }
+
+        return this.legendPromise
     }
 
     Layer.prototype.getFeaturesAtPoint = function ( arg ) {
