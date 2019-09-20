@@ -32,14 +32,13 @@ include.module( 'layer.layer-esri-feature-js', [ 'layer.layer-js', 'terraformer'
     EsriFeatureLayer.prototype.getFeaturesInArea = function ( area, view, option ) {
         var self = this
 
-        var serviceUrl  = this.config.serviceUrl + '/identify'
-        var dynamicLayers = '[' + this.config.dynamicLayers.join( ',' ) + ']'
+        var serviceUrl  = this.config.serviceUrl + '/query'
         var esriFeature = Terraformer.ArcGIS.convert( area )
 
         var data = {
             f:              'json',
-            dynamicLayers:  dynamicLayers,
-            sr:             4326,
+            inSR:           4326,
+            outSR:          4326,
             tolerance:      0,
             mapExtent:      view.extent.join( ',' ),
             imageDisplay:   [ view.screen.width, view.screen.height, 96 ].join( ',' ),
@@ -47,7 +46,8 @@ include.module( 'layer.layer-esri-feature-js', [ 'layer.layer-js', 'terraformer'
             returnZ:        false,
             returnM:        false,
             geometryType:   'esriGeometryPolygon',
-            geometry:       JSON.stringify( esriFeature.geometry )
+            geometry:       JSON.stringify( esriFeature.geometry ),
+            outFields:      '*'
         }
 
         return SMK.UTIL.makePromise( function ( res, rej ) {
@@ -60,9 +60,9 @@ include.module( 'layer.layer-esri-feature-js', [ 'layer.layer-js', 'terraformer'
         } )
         .then( function ( data ) {
             if ( !data ) throw new Error( 'no features' )
-            if ( !data.results || data.results.length == 0 ) throw new Error( 'no features' )
+            if ( !data.features || data.features.length == 0 ) throw new Error( 'no features' )
 
-            return data.results.map( function ( r, i ) {
+            return data.features.map( function ( r, i ) {
                 var f = {}
 
                 if ( r.displayFieldName )

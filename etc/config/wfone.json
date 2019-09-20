@@ -40,7 +40,7 @@
         {
             "type": "identify",
             "title": "Identify",
-            "enabled": false,
+            "enabled": true,
             "position": "toolbar"
         },
         {
@@ -140,7 +140,6 @@
             "title": "Fire Perimeters",
             "isVisible": false,
             "attribution": "Copyright 117 DataBC, Government of British Columbia",
-            "attributes": [],
             "serviceUrl": "https://services6.arcgis.com/ubm4tcTYICKBpist/arcgis/rest/services/BCWS_FirePerimeters_PublicView/FeatureServer/0",
             "metadataUrl": "https://catalogue.data.gov.bc.ca/dataset/diagnostic-facilities",
             "where": "FIRE_STATUS <> 'Out'",
@@ -152,14 +151,14 @@
             "type": "esri-tiled",
             "id": 31074,
             "title": "BC Fire Centres",
-            "isVisible": true,
+            "isVisible": false,
             "attribution": "Copyright 117 DataBC, Government of British Columbia",
-            "attributes": [],
             "serviceUrl": "https://tiles.arcgis.com/tiles/ubm4tcTYICKBpist/arcgis/rest/services/BCWS_FireCenterBdys2/MapServer",
             "metadataUrl": "https://catalogue.data.gov.bc.ca/dataset/diagnostic-facilities",
             "opacity": 1,
             "scaleMin": 500000,
-            "scaleMax": 0
+            "scaleMax": 0,
+            "isQueryable": false
         }
     ]
 }
