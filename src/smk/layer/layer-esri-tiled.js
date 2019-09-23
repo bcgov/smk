@@ -43,12 +43,12 @@ include.module( 'layer.layer-esri-tiled-js', [ 'layer.layer-js', 'terraformer' ]
         var self = this
 
         var serviceUrl  = this.config.serviceUrl + '/identify'
-        var dynamicLayers = '[' + this.config.dynamicLayers.join( ',' ) + ']'
+        // var dynamicLayers = '[' + this.config.dynamicLayers.join( ',' ) + ']'
         var esriFeature = Terraformer.ArcGIS.convert( area )
 
         var data = {
             f:              'json',
-            dynamicLayers:  dynamicLayers,
+            // dynamicLayers:  dynamicLayers,
             sr:             4326,
             tolerance:      0,
             mapExtent:      view.extent.join( ',' ),
