@@ -28,7 +28,8 @@ include.module( 'layer-leaflet.layer-esri-feature-leaflet-js', [ 'layer.layer-es
 
         var layer = L.esri.featureLayer( {
             url:    serviceUrl,
-            where:  layers[ 0 ].config.where
+            where:  layers[ 0 ].config.where,
+            drawingInfo: layers[ 0 ].config.drawingInfo
         } )
         
         if ( layers[ 0 ].legendCacheResolve ) {
