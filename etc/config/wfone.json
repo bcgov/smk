@@ -182,7 +182,8 @@
                                 "imageData": "iVBORw0KGgoAAAANSUhEUgAAAAwAAAAOCAYAAAAbvf3sAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3QUQFjQDwAUAMQAAAhZJREFUKM99kj9oU1EUxr9z77v59/raxjaxpg1JqoLGogiV1rroZhclVQfdXEQcdCiIKdhJjCCiCEIFwcHBrQ6CjlINVIpah1IVDa1ESZqkxDR9SZOXd69DTIuD/sYf3znD+Q7wh5PH/fgX45fCf4tzY1vhgR2cnR92OS4ccTuO7has5W9P9gMA6GxsO54+W2nKWFt30MtH/AY7qDsIhpPmAcxGb6zmAeBmvB/U2nD/jNG3v1eLR4PtY7wz1ENMQEkrq6zq80ZxOdETzy8BaA5Mjur6UFjEhwZCE57hy0QeHxo/56AsE6puwi6lHzSyH6/7r2aKbM9ODyJdPBzaxk9ogUESwcPQ/FGQ8ABMAzMC4J2hGLm8++6eaiPtUJckp6A+n8H3AkB9+TWICyglQUIHuTrAuSMAJXd9SDdmNakARgBxAeICdjHVDAo34NDBdD9UrQxl1wyNgdjbHCmXhh/Ktj4pq7p5XhI6mKcbvL0XkI2CuV5eyZWlYqnvVTQklpVSL1S9DNLcIKcBcnvBO4KA5oSVmX+XTNU/f8nZigHA6UclM1Oyp6SZeyI3fpnEBEjokBtrldridHLhzfTjh8lq6lveljR+MYg7U2kAQDbhC2rtgVGm+wdBzJCVQur9Qmrm3qvK3MvFemmzh1vxCK4lllptC0bwFNalc2nVrs98tczMmrQA4NiId+ufJq5E8D8ORA0AwG8kgMOYqNPZSgAAAABJRU5ErkJggg==",
                                 "contentType": "image/png"
                             },
-                            "label": "Active Fires (not fires of note)"
+                            "label": "Active Fires (not fires of note)",
+                            "skipLegend": true
                         },
                         {
                             "value": "Under Control",
@@ -197,7 +198,8 @@
                                 "imageData": "iVBORw0KGgoAAAANSUhEUgAAAAwAAAAOCAYAAAAbvf3sAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3QUQFjQDwAUAMQAAAhZJREFUKM99kj9oU1EUxr9z77v59/raxjaxpg1JqoLGogiV1rroZhclVQfdXEQcdCiIKdhJjCCiCEIFwcHBrQ6CjlINVIpah1IVDa1ESZqkxDR9SZOXd69DTIuD/sYf3znD+Q7wh5PH/fgX45fCf4tzY1vhgR2cnR92OS4ccTuO7has5W9P9gMA6GxsO54+W2nKWFt30MtH/AY7qDsIhpPmAcxGb6zmAeBmvB/U2nD/jNG3v1eLR4PtY7wz1ENMQEkrq6zq80ZxOdETzy8BaA5Mjur6UFjEhwZCE57hy0QeHxo/56AsE6puwi6lHzSyH6/7r2aKbM9ODyJdPBzaxk9ogUESwcPQ/FGQ8ABMAzMC4J2hGLm8++6eaiPtUJckp6A+n8H3AkB9+TWICyglQUIHuTrAuSMAJXd9SDdmNakARgBxAeICdjHVDAo34NDBdD9UrQxl1wyNgdjbHCmXhh/Ktj4pq7p5XhI6mKcbvL0XkI2CuV5eyZWlYqnvVTQklpVSL1S9DNLcIKcBcnvBO4KA5oSVmX+XTNU/f8nZigHA6UclM1Oyp6SZeyI3fpnEBEjokBtrldridHLhzfTjh8lq6lveljR+MYg7U2kAQDbhC2rtgVGm+wdBzJCVQur9Qmrm3qvK3MvFemmzh1vxCK4lllptC0bwFNalc2nVrs98tczMmrQA4NiId+ufJq5E8D8ORA0AwG8kgMOYqNPZSgAAAABJRU5ErkJggg==",
                                 "contentType": "image/png"
                             },
-                            "label": "Active Fires (not fires of note)"
+                            "label": "Active Fires (not fires of note)",
+                            "skipLegend": true
                         },
                         {
                             "value": "Out of Control",
@@ -212,7 +214,8 @@
                                 "imageData": "iVBORw0KGgoAAAANSUhEUgAAAAwAAAAOCAYAAAAbvf3sAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3QUQFjQDwAUAMQAAAhZJREFUKM99kj9oU1EUxr9z77v59/raxjaxpg1JqoLGogiV1rroZhclVQfdXEQcdCiIKdhJjCCiCEIFwcHBrQ6CjlINVIpah1IVDa1ESZqkxDR9SZOXd69DTIuD/sYf3znD+Q7wh5PH/fgX45fCf4tzY1vhgR2cnR92OS4ccTuO7has5W9P9gMA6GxsO54+W2nKWFt30MtH/AY7qDsIhpPmAcxGb6zmAeBmvB/U2nD/jNG3v1eLR4PtY7wz1ENMQEkrq6zq80ZxOdETzy8BaA5Mjur6UFjEhwZCE57hy0QeHxo/56AsE6puwi6lHzSyH6/7r2aKbM9ODyJdPBzaxk9ogUESwcPQ/FGQ8ABMAzMC4J2hGLm8++6eaiPtUJckp6A+n8H3AkB9+TWICyglQUIHuTrAuSMAJXd9SDdmNakARgBxAeICdjHVDAo34NDBdD9UrQxl1wyNgdjbHCmXhh/Ktj4pq7p5XhI6mKcbvL0XkI2CuV5eyZWlYqnvVTQklpVSL1S9DNLcIKcBcnvBO4KA5oSVmX+XTNU/f8nZigHA6UclM1Oyp6SZeyI3fpnEBEjokBtrldridHLhzfTjh8lq6lveljR+MYg7U2kAQDbhC2rtgVGm+wdBzJCVQur9Qmrm3qvK3MvFemmzh1vxCK4lllptC0bwFNalc2nVrs98tczMmrQA4NiId+ufJq5E8D8ORA0AwG8kgMOYqNPZSgAAAABJRU5ErkJggg==",
                                 "contentType": "image/png"
                             },
-                            "label": "Active Fires (not fires of note)"
+                            "label": "Active Fires (not fires of note)",
+                            "skipLegend": true
                         },
                         {
                             "value": "Not Active",
@@ -242,7 +245,8 @@
                                 "imageData": "iVBORw0KGgoAAAANSUhEUgAAAAwAAAAOCAYAAAAbvf3sAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3QUQFTkprFYJ8wAAAiFJREFUKM99kjFrU1EAhc999777XnPfbfIaaUKaQNMEjHbQWiWQpahDq4gl7aS/oLiIdjFSnIoRRHDUX+DoILhIoHYwVAQLEiK2aSOm1bZJi21Sm7y+XAeNxUG/8XA4wzkH+M34WC/+xfSN/r+F6xNH5kAwqJ1JJvm5VIpH43Gtoz+8NwAAINfSATx7vgEAGBsfP+bz+VJCyiHOOQzDeA8g/zib3QKA+5kBkE7ClcnJcDAUyoTD4QnbtoOUUriu+81xnBe1nZ1sdmZmFQAoAFwYHRWBUOhWIpG4fXFkRB6PxaARAiGEJTyeYcMw2FAymZ/P5Q60RMwD2+/vt237aqSvj0QjEQR7e6HrOjRNg1dK9Ph8aY9pDl5OpwkzewYJYywspDwBAMvlMiilUErB0HWYpglKaUgpFV+vVPJMKQVCCCiloJSiur0NQ9eh6zo455BC4KDVwuHhodQ0jWj1rYJijFVc1y06jvOnXs45hBDwer1ot9vVer2+0djbU1rp8w+02+2yUupls9kEZwyGYcBjmrC9XjDGUFlff1deWflY3dxUFAA+LC46p4eHly0p/V1dXXFLCG4JAdd194tLSwuvcrmn87ncwte1tRaZnorg0ZMvAIDM7GzE1919ybKss4QQ2Wg0SoVC4fWbubm3n4rF7wB+DfcgE8Wd7GpnbZ0Q4tmv142dWq21Wio19nZ3HQA4n7KP/nT3ZhT/49RJCQD4Cf/TszxdxDHIAAAAAElFTkSuQmCC",
                                 "contentType": "image/png"
                             },
-                            "label": "Not Active"
+                            "label": "Not Active",
+                            "skipLegend": true
                         }
                     ]
                 },
@@ -305,7 +309,7 @@
                     "type": "simple",
                     "symbol": {
                         "type": "esriSFS",
-                        "style": "esriSFSBackwardDiagonal",
+                        "style": "esriSFSSolid",
                         "color": [
                             78,
                             78,
