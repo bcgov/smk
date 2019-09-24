@@ -175,6 +175,11 @@ EsriLeaflet.Legend.include({
   },
 
   _getLayerLegend: function(layer, callback, context) {
+    if ( this.options.drawingInfo ) {
+      layer.drawingInfo = JSON.parse( JSON.stringify( this.options.drawingInfo ) )
+      return callback( null, layer )
+    }
+
     if ( layer.drawingInfo )
       return callback( null, layer )
 
@@ -234,6 +239,7 @@ EsriLeaflet.Legend.include({
     EsriLeaflet.Util.reduce(
       this._getRendererSymbols(drawingInfo.renderer), [],
       function(curr, symbol, cb) {
+        if (symbol.skipLegend) return cb(null,curr)
         self._renderSymbol(symbol, function(err, image) {
           if (err) {
             return cb(err, curr);
