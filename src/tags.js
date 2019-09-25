@@ -68,6 +68,9 @@ t.group( 'tool-about' )
 t.group( 'tool-baseMaps' )
     .dir( 'smk/tool/baseMaps/*' )
 
+t.group( 'tool-bespoke' )
+    .dir( 'smk/tool/bespoke/*' )
+
 t.group( 'tool-coordinate' )
     .dir( 'smk/tool/coordinate/*' )
 

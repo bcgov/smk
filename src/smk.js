@@ -662,6 +662,21 @@
                 lastCommit: '<%= gitinfo.local.branch.current.lastCommitTime %>'.replace( /^"|"$/g, '' ),
                 origin:     '<%= gitinfo.remote.origin.url %>',
                 version:    '<%= package.version %>',
+            },
+
+            HANDLER: {
+                handler: {},
+                set: function ( id, method, handler ) {
+                    if ( !this.handler[ id ] ) this.handler[ id ] = {}
+                    this.handler[ id ][ method ] = handler 
+                },
+                get: function ( id, method ) {
+                    if ( this.handler[ id ] && this.handler[ id ][ method ] ) return this.handler[ id ][ method ]
+
+                    return function () {
+                        console.warn( 'handler ' + id + '.' + method + ' invoked' )
+                    }
+                }
             }
 
         }, window.SMK ) )

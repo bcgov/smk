@@ -16,6 +16,22 @@
   },
   "tools": [
     {
+      "type": "bespoke",
+      "title": "Bespoke Tool",
+      "position": "toolbar",
+      "enabled": true,
+      "order": 99
+    },
+    {
+      "type": "bespoke",
+      "instance": "foo",
+      "title": "Bespoke Tool #2",
+      "position": "toolbar",
+      "enabled": true,
+      "order": 99,
+      "icon": "fingerprint"
+    },
+    {
       "type": "location",
       "title": "Location",
       "position": "toolbar",
