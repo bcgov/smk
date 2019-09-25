@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title></title>
+        <!-- SMK BOOTSTRAP - - - - - - - -->
+        <script src="../../smk.js"
+            smk-container-sel="#smk-map-frame"
+            smk-title-sel="#header-title, head title"
+            smk-config="./wfone.json|theme=wf|?"
+        ></script>
+        <!-- - - - - - - - - - - - - - - -->
+        <%= reload %>
+        <style>
+            #header {
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 70px;
+
+                border-bottom:      2px solid #fcba19;
+                background-color: #036;
+                font-family:        Helvetica,Arial,sans-serif;
+
+                display:            flex;
+                justify-content:    flex-start;
+                align-items:        center;
+            }
+
+            #header img {
+                margin-left:    10px;
+                margin-bottom:  10px;
+            }
+
+            #header-title {
+                color:          white;
+                margin-left:    20px;
+
+                display:        flex;
+                flex-direction: column;
+                justify-content:center;
+                align-items:    flex-start;
+                font-size:      30px;
+            }
+
+            #smk-map-frame {
+                position: absolute;
+                top: 72px;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                margin: 0;
+                padding: 0;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div id="header">
+            <img src="bc-gov-logo-transparent.png">
+            <div id="header-title"></div>
+        </div>
+        <div id="smk-map-frame"></div>
+    </body>
+
+    <script>
+        SMK.HANDLER.set( 'bespoke', 'initialized', function ( smk ) {
+            console.log( 'init!' )
+        } )
+        SMK.HANDLER.set( 'bespoke', 'activated', function ( smk, tool ) {
+            console.log( 'active!' )
+            var html = '<div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vel sapien auctor, blandit mi eget, iaculis erat. Nam rutrum luctus est, sed accumsan sapien rhoncus ac. Curabitur in suscipit sem. Integer mollis risus cursus tempor ullamcorper. Nullam mollis urna at ante consequat, eget rhoncus velit varius. Sed posuere tortor nec eleifend feugiat. Cras vestibulum dolor ut elit aliquet, nec auctor magna lacinia. Pellentesque eget quam quis mi iaculis venenatis. Vestibulum vel enim risus.</div>'
+            var el = $( html ).get(0)            
+            tool.content = el.innerHTML
+        } )
+        
+        SMK.HANDLER.set( 'bespoke--foo', 'activated', function ( smk, tool ) {
+            console.log( 'foo active!' )
+            var html = '<div>Foo? Foo!</div>'
+            var el = $( html ).get(0)            
+            tool.content = el.innerHTML
+        } )
+    </script>
+</html>
