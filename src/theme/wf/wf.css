@@ -29,15 +29,16 @@
     justify-content: center;
 }
 
-.smk-theme-wf .smk-tool.smk-tool-active {
-    background-color: yellow;
+.smk-theme-wf .smk-toolbar .smk-tool.smk-tool-active, .smk-theme-wf .smk-toolbar .smk-tool.smk-tool-active button {
+    background-color: #003366;
+    color: white;
 }
 
-.smk-theme-wf .smk-tool.smk-tool-title button {
+.smk-theme-wf .smk-toolbar .smk-tool.smk-tool-title button {
     flex-direction: column;
 }
 
-.smk-theme-wf .smk-tool.smk-tool-title span {
+.smk-theme-wf .smk-toolbar .smk-tool.smk-tool-title span {
     display: block;
     font-size: 10px;
     margin: 0;

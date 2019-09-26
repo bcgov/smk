@@ -17,16 +17,18 @@
   "tools": [
     {
       "type": "bespoke",
-      "title": "Bespoke Tool",
+      "title": "Near Me",
       "position": "toolbar",
       "enabled": true,
-      "order": 99
+      "showTitle": true,
+      "icon": "my_location",
+      "order": 80
     },
     {
       "type": "bespoke",
       "instance": "foo",
-      "title": "Bespoke Tool #2",
-      "position": "toolbar",
+      "title": "Who am I",
+      "position": "list-menu",
       "enabled": true,
       "order": 99,
       "icon": "fingerprint"
@@ -41,6 +43,7 @@
       "type": "layers",
       "enabled": true,
       "showTitle": true,
+      "position": "toolbar",
       "glyph": {
         "visible": "check_box",
         "hidden": "check_box_outline_blank"
@@ -77,11 +80,21 @@
         "NationalGeographic",
         "DarkGray",
         "Gray"
-      ]
+      ],
+      "position": "list-menu"
     },
     {
       "type": "search",
       "enabled": false
+    },
+    {
+      "type": "list-menu",
+      "icon": "more_horiz",
+      "title": "More",
+      "position": "toolbar",
+      "enabled": true,
+      "showTitle": true,
+      "order": 99
     }
   ],
   "layers": [
