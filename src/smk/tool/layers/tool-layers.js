@@ -7,14 +7,14 @@ include.module( 'tool-layers', [ 'tool', 'widgets', 'tool-layers.panel-layers-ht
 
     Vue.component( 'layer-display', {
         template: inc[ 'tool-layers.layer-display-html' ],
-        props: [ 'id', 'items' ],
+        props: [ 'id', 'items', 'glyph' ],
         mixins: [ inc.widgets.emit ],
     } )
 
     Vue.component( 'layers-panel', {
         extends: inc.widgets.toolPanel,
         template: inc[ 'tool-layers.panel-layers-html' ],
-        props: [ 'items', 'config', 'allVisible' ],
+        props: [ 'items', 'config', 'allVisible', 'glyph' ],
         data: function () {
             return Object.assign( {}, this.config )
         },
@@ -49,7 +49,9 @@ include.module( 'tool-layers', [ 'tool', 'widgets', 'tool-layers.panel-layers-ht
         this.makePropPanel( 'allVisible', true )
         this.makePropPanel( 'config', {
             legend: false,
-            filter: null
+            filter: null,
+        } )
+        this.makePropPanel( 'glyph', {
         } )
 
         SMK.TYPE.Tool.prototype.constructor.call( this, $.extend( {

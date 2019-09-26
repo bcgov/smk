@@ -10,7 +10,7 @@ include.module( 'layer.layer-vector-js', [ 'layer.layer-js' ], function () {
     SMK.TYPE.Layer[ 'vector' ] = VectorLayer
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
-    VectorLayer.prototype.getLegends = function ( viewer, width, height ) {
+    VectorLayer.prototype.initLegends = function ( viewer, width, height ) {
         var self = this
 
         if ( width == null ) width = 20

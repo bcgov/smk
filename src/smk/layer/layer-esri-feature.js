@@ -1,57 +1,44 @@
-include.module( 'layer.layer-esri-dynamic-js', [ 'layer.layer-js', 'terraformer' ], function () {
+include.module( 'layer.layer-esri-feature-js', [ 'layer.layer-js', 'terraformer' ], function () {
     "use strict";
 
-    function EsriDynamicLayer() {
-        SMK.TYPE.Layer.prototype.constructor.apply( this, arguments )
-    }
-
-    $.extend( EsriDynamicLayer.prototype, SMK.TYPE.Layer.prototype )
-
-    SMK.TYPE.Layer[ 'esri-dynamic' ] = EsriDynamicLayer
-    // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
-    //
-    EsriDynamicLayer.prototype.initLegends = function () {
+    function EsriFeatureLayer() {
         var self = this
 
-        var serviceUrl = this.config.serviceUrl + '/legend'
-        var dynamicLayers = '[' + this.config.dynamicLayers.join( ',' ) + ']'
+        SMK.TYPE.Layer.prototype.constructor.apply( this, arguments )
 
-        var data = {
-            f:             'json',
-            dynamicLayers: dynamicLayers
-        }
-
-        return SMK.UTIL.makePromise( function ( res, rej ) {
-            $.ajax( {
-                url:        serviceUrl,
-                type:       "post",
-                data:       data,
-                dataType:   "json",
-            } ).then( res, rej )
+        this.legendCache = SMK.UTIL.makePromise( function ( res, rej ) {
+            self.legendCacheResolve = res
         } )
-        .then ( function ( data ) {
-            var layer = data.layers[0]; // should only get one back...
+    }
 
-            return layer.legend.map( function( obj ) {
+    $.extend( EsriFeatureLayer.prototype, SMK.TYPE.Layer.prototype )
+
+    SMK.TYPE.Layer[ 'esri-feature' ] = EsriFeatureLayer
+    // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+    //
+    EsriFeatureLayer.prototype.initLegends = function () {
+        return this.legendCache.then( function ( legends ) {
+            if ( !legends ) return
+
+            return legends.map( function ( lg ) {
                 return {
-                    url: 'data:image/png;base64,' + obj.imageData,
-                    title: obj.label
+                    url: 'data:image/png;base64,' + lg.imageData,
+                    title: lg.label
                 }
             } )
         } )
     }
 
-    EsriDynamicLayer.prototype.getFeaturesInArea = function ( area, view, option ) {
+    EsriFeatureLayer.prototype.getFeaturesInArea = function ( area, view, option ) {
         var self = this
 
-        var serviceUrl  = this.config.serviceUrl + '/identify'
-        var dynamicLayers = '[' + this.config.dynamicLayers.join( ',' ) + ']'
+        var serviceUrl  = this.config.serviceUrl + '/query'
         var esriFeature = Terraformer.ArcGIS.convert( area )
 
         var data = {
             f:              'json',
-            dynamicLayers:  dynamicLayers,
-            sr:             4326,
+            inSR:           4326,
+            outSR:          4326,
             tolerance:      0,
             mapExtent:      view.extent.join( ',' ),
             imageDisplay:   [ view.screen.width, view.screen.height, 96 ].join( ',' ),
@@ -59,7 +46,8 @@ include.module( 'layer.layer-esri-dynamic-js', [ 'layer.layer-js', 'terraformer'
             returnZ:        false,
             returnM:        false,
             geometryType:   'esriGeometryPolygon',
-            geometry:       JSON.stringify( esriFeature.geometry )
+            geometry:       JSON.stringify( esriFeature.geometry ),
+            outFields:      '*'
         }
 
         return SMK.UTIL.makePromise( function ( res, rej ) {
@@ -72,9 +60,9 @@ include.module( 'layer.layer-esri-dynamic-js', [ 'layer.layer-js', 'terraformer'
         } )
         .then( function ( data ) {
             if ( !data ) throw new Error( 'no features' )
-            if ( !data.results || data.results.length == 0 ) throw new Error( 'no features' )
+            if ( !data.features || data.features.length == 0 ) throw new Error( 'no features' )
 
-            return data.results.map( function ( r, i ) {
+            return data.features.map( function ( r, i ) {
                 var f = {}
 
                 if ( r.displayFieldName )
@@ -94,7 +82,7 @@ include.module( 'layer.layer-esri-dynamic-js', [ 'layer.layer-js', 'terraformer'
         } )
     }
 
-    // EsriDynamicLayer.prototype.getFeaturesAtPoint = function ( location, view, option ) {
+    // EsriFeatureLayer.prototype.getFeaturesAtPoint = function ( location, view, option ) {
     //     var self = this
 
     //     var serviceUrl  = this.config.serviceUrl + '/identify'
