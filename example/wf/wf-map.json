@@ -1,0 +1,100 @@
+{
+  "smkId": "wfone-public-mobile",
+  "smkRevision": 1,
+  "name": "Fire Status",
+  "createdBy": "vivid",
+  "published": false,
+  "viewer": {
+    "type": "leaflet",
+    "initialExtent": [
+      -123.97822866216305,
+      48.85118990316143,
+      -122.88096914067867,
+      48.25579824757873
+    ],
+    "baseMap": "Topographic"
+  },
+  "tools": [
+    {
+      "type": "bespoke",
+      "title": "Near Me",
+      "position": "toolbar",
+      "enabled": true,
+      "showTitle": true,
+      "icon": "my_location",
+      "order": 80
+    },
+    {
+      "type": "bespoke",
+      "instance": "foo",
+      "title": "Who am I",
+      "position": "list-menu",
+      "enabled": true,
+      "order": 99,
+      "icon": "fingerprint"
+    },
+    {
+      "type": "location",
+      "title": "Location",
+      "position": "toolbar",
+      "enabled": false
+    },
+    {
+      "type": "layers",
+      "enabled": true,
+      "showTitle": true,
+      "position": "toolbar",
+      "glyph": {
+        "visible": "check_box",
+        "hidden": "check_box_outline_blank"
+      }
+    },
+    {
+      "type": "identify",
+      "title": "Identify",
+      "enabled": true,
+      "showTitle": true,
+      "position": "toolbar"
+    },
+    {
+      "type": "pan",
+      "enabled": true
+    },
+    {
+      "type": "zoom",
+      "enabled": true,
+      "mouseWheel": true,
+      "doubleClick": true,
+      "box": true,
+      "control": true
+    },
+    {
+      "type": "baseMaps",
+      "enabled": true,
+      "showTitle": true,
+      "choices": [
+        "Topographic",
+        "Streets",
+        "Imagery",
+        "Oceans",
+        "NationalGeographic",
+        "DarkGray",
+        "Gray"
+      ],
+      "position": "list-menu"
+    },
+    {
+      "type": "search",
+      "enabled": false
+    },
+    {
+      "type": "list-menu",
+      "icon": "more_horiz",
+      "title": "More",
+      "position": "toolbar",
+      "enabled": true,
+      "showTitle": true,
+      "order": 99
+    }
+  ]
+}
