@@ -23,8 +23,14 @@ include.module( 'sidepanel', [ 'vue', 'sidepanel.sidepanel-html', 'sidepanel.pan
         }
     } )
 
+    var SidepanelEvent = SMK.TYPE.Event.define( [
+        'changedVisible',
+    ] )
+
     function Sidepanel( smk ) {
         var self = this
+
+        SidepanelEvent.prototype.constructor.call( this )
 
         this.model = {
             currentTool: null
@@ -56,6 +62,10 @@ include.module( 'sidepanel', [ 'vue', 'sidepanel.sidepanel-html', 'sidepanel.pan
                 }
             },
         } )
+    }    
+
+    Sidepanel.prototype.isPanelVisible = function () {
+        return this.model.currentTool != null
     }
 
     Sidepanel.prototype.closePanel = function () {
@@ -64,6 +74,8 @@ include.module( 'sidepanel', [ 'vue', 'sidepanel.sidepanel-html', 'sidepanel.pan
         this.toolStack.forEach( function ( t ) {
             t.active = false
         } )
+
+        this.changedVisible()
     } 
 
     Sidepanel.prototype.setCurrentTool = function ( tool ) {
@@ -83,7 +95,7 @@ include.module( 'sidepanel', [ 'vue', 'sidepanel.sidepanel-html', 'sidepanel.pan
             titleProps:     titleProps
         }
 
-
+        this.changedVisible()
     }
 
     Sidepanel.prototype.isToolStacked = function ( tool ) {
@@ -108,6 +120,7 @@ include.module( 'sidepanel', [ 'vue', 'sidepanel.sidepanel-html', 'sidepanel.pan
         }
         else {
             this.model.currentTool = null
+            this.changedVisible()
         }
 
         return this.toolStack.length
@@ -162,6 +175,8 @@ include.module( 'sidepanel', [ 'vue', 'sidepanel.sidepanel-html', 'sidepanel.pan
 
         return true
     }
+
+    $.extend( Sidepanel.prototype, SidepanelEvent.prototype )
 
     SMK.TYPE.Sidepanel = Sidepanel
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
