@@ -1,7 +1,13 @@
 /* variables.css */
 
-.smk-map-frame.smk-theme-wf {
+.smk-theme-wf.smk-map-frame {
     --overlay-padding: 0px;
+}
+
+/* map-frame.css */
+
+.smk-theme-wf.smk-map-frame.smk-sidepanel-active .smk-viewer {
+    bottom: 50%;
 }
 
 /* toolbar.css */

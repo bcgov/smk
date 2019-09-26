@@ -19,7 +19,9 @@ include.module( 'tool-toolbar', [ 'tool', 'toolbar', 'sidepanel' ], function ( i
 
         this.sidepanel = smk.$sidepanel = new SMK.TYPE.Sidepanel( smk )
         this.sidepanel.changedVisible( function () {
-            $( smk.$container ).toggleClass( 'smk-sidebar', smk.$sidepanel.isPanelVisible() )
+            $( smk.$container ).toggleClass( 'smk-sidepanel-active', smk.$sidepanel.isPanelVisible() )
+
+            smk.$viewer.map.invalidateSize()
         } )
     } )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
