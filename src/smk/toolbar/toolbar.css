@@ -2,7 +2,7 @@
     position: absolute;
     top: 0;
     left: 0;
-    height: 30px;
+    height: var( --toolbar-height );
     min-width: var( --panel-width );
 
     z-index: 10;

@@ -40,6 +40,7 @@
     {
       "type": "layers",
       "enabled": true,
+      "showTitle": true,
       "glyph": {
         "visible": "check_box",
         "hidden": "check_box_outline_blank"
@@ -49,6 +50,7 @@
       "type": "identify",
       "title": "Identify",
       "enabled": true,
+      "showTitle": true,
       "position": "toolbar"
     },
     {
@@ -66,6 +68,7 @@
     {
       "type": "baseMaps",
       "enabled": true,
+      "showTitle": true,
       "choices": [
         "Topographic",
         "Streets",

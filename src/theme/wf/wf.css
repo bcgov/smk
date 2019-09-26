@@ -2,6 +2,7 @@
 
 .smk-theme-wf.smk-map-frame {
     --overlay-padding: 0px;
+    --toolbar-height: 45px;
 }
 
 /* map-frame.css */
@@ -32,6 +33,15 @@
     background-color: yellow;
 }
 
+.smk-theme-wf .smk-tool.smk-tool-title button {
+    flex-direction: column;
+}
+
+.smk-theme-wf .smk-tool.smk-tool-title span {
+    display: block;
+    font-size: 10px;
+    margin: 0;
+}
 
 /* sidepanel.css */
 
@@ -40,7 +50,7 @@
     width: initial;
     height: 50%;
     right: 0;
-    bottom: 30px;
+    bottom: var( --toolbar-height );
     border-bottom: 1px solid black;
 }
 
