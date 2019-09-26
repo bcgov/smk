@@ -217,7 +217,11 @@ include.module( 'viewer-leaflet', [ 'viewer', 'leaflet', 'layer-leaflet', 'featu
             bottomRight: L.point( padding, padding ),
         }
     }
-    //
+
+    ViewerLeaflet.prototype.mapResized = SMK.UTIL.makeDelayedCall( function () { 
+        this.map.invalidateSize() 
+    }, { delay: 250 } )
+    
     // ViewerLeaflet.prototype.zoomToFeature = function ( layer, feature ) {
     //     this.map.fitBounds( feature.highlightLayer.getBounds(), {
     //         paddingTopLeft: L.point( 300, 100 ),

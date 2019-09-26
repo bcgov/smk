@@ -21,7 +21,7 @@ include.module( 'tool-toolbar', [ 'tool', 'toolbar', 'sidepanel' ], function ( i
         this.sidepanel.changedVisible( function () {
             $( smk.$container ).toggleClass( 'smk-sidepanel-active', smk.$sidepanel.isPanelVisible() )
 
-            smk.$viewer.map.invalidateSize()
+            smk.$viewer.mapResized()
         } )
     } )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
