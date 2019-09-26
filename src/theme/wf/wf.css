@@ -7,17 +7,15 @@
 /* toolbar.css */
 
 .smk-theme-wf .smk-toolbar  {
-    /* background-color: transparent; */
     box-shadow: none;
     bottom: 0;
     top: initial;
     right: 0;
     justify-content: space-around;
+    border-top: 1px solid black;
 }
 
 .smk-theme-wf .smk-tool {
-    /* border: 1px solid transparent; */
-    /* box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65); */
     background-color: white;
     flex-grow: 1;
     display: flex;
@@ -33,35 +31,33 @@
 
 .smk-theme-wf .smk-sidepanel {
     top: initial;
-    bottom: 30px;
+    width: initial;
     height: 50%;
     right: 0;
+    bottom: 30px;
+    border-bottom: 1px solid black;
+}
+
+.smk-theme-wf .smk-sidepanel.smk-expanded {
+    display: flex;
     width: initial;
 }
 
 .smk-theme-wf .smk-elastic-panel {
+    flex-grow: 1;
+
     display: flex;
     flex-direction: column;
 
-    /* background-color: transparent; */
-    /* box-shadow: none; */
+    box-shadow: none;
 }
 
 .smk-theme-wf .smk-sidepanel .smk-panel .smk-header {
-    /* background-color: white; */
-    /* border-radius: 3px; */
-    /* box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65); */
     z-index: 1;
-    /* margin-bottom: 0; */
 }
 
 .smk-theme-wf .smk-sidepanel .smk-panel .smk-body {
-    /* background-color: white; */
-    /* border-radius: 3px; */
-    /* box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65); */
     z-index: 2;
-    /* margin-left: 1px; */
-    /* margin-right: 1px; */
     padding: 5px;
 }
 
