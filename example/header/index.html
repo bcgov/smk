@@ -71,7 +71,7 @@
             console.log( 'active!' )
             var html = '<div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vel sapien auctor, blandit mi eget, iaculis erat. Nam rutrum luctus est, sed accumsan sapien rhoncus ac. Curabitur in suscipit sem. Integer mollis risus cursus tempor ullamcorper. Nullam mollis urna at ante consequat, eget rhoncus velit varius. Sed posuere tortor nec eleifend feugiat. Cras vestibulum dolor ut elit aliquet, nec auctor magna lacinia. Pellentesque eget quam quis mi iaculis venenatis. Vestibulum vel enim risus.</div>'
             var el = $( html ).get(0)            
-            tool.content = el.innerHTML
+            tool.content = el
         } )
         
         SMK.HANDLER.set( 'bespoke--foo', 'activated', function ( smk, tool ) {
