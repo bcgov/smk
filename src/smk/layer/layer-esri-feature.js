@@ -50,6 +50,9 @@ include.module( 'layer.layer-esri-feature-js', [ 'layer.layer-js', 'terraformer'
             outFields:      '*'
         }
 
+        if ( this.config.where )
+            data.where = this.config.where
+
         return SMK.UTIL.makePromise( function ( res, rej ) {
             $.ajax( {
                 url:            serviceUrl,
