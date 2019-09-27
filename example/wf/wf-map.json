@@ -95,6 +95,10 @@
       "enabled": true,
       "showTitle": true,
       "order": 99
+    },
+    {
+      "type": "markup",
+      "enabled": false
     }
   ]
 }
