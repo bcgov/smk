@@ -1,4 +1,9 @@
-.smk-tool button {
+.smk-tool {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.smk-tool i {
     background-color: transparent;
     border: 0;
     padding: 0;
@@ -8,11 +13,11 @@
     height: 26px;
 }
 
-.smk-tool button:focus {
+.smk-tool:focus {
     outline: 0;
 }
 
-.smk-tool.smk-tool-title button {
+.smk-tool.smk-tool-title {
     width: auto;
     display: flex;
     flex-direction: row;

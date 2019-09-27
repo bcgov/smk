@@ -23,19 +23,21 @@
     border-radius: 0;
 }
 
-.smk-theme-wf .smk-tool {
+/* widgets.css */
+
+.smk-theme-wf .smk-toolbar .smk-tool {
     background-color: white;
     flex-grow: 1;
     display: flex;
     justify-content: center;
 }
 
-.smk-theme-wf .smk-toolbar .smk-tool.smk-tool-active, .smk-theme-wf .smk-toolbar .smk-tool.smk-tool-active button {
+.smk-theme-wf .smk-toolbar .smk-tool.smk-tool-active {
     background-color: #003366;
     color: white;
 }
 
-.smk-theme-wf .smk-toolbar .smk-tool.smk-tool-title button {
+.smk-theme-wf .smk-toolbar .smk-tool.smk-tool-title {
     flex-direction: column;
 }
 

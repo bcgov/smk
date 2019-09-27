@@ -48,7 +48,7 @@
 }
 
 .smk-sidepanel .smk-tool-list-panel .smk-body .smk-tool {
-    display: block;
+    display: flex;
 }
 
 .smk-sidepanel .smk-panel.smk-list-menu-panel .smk-body .smk-header {
