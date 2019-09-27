@@ -10,13 +10,13 @@
 
 .smk-base-map-sample {
     border-radius: 5px;
+    margin: 5px;
+    padding: 4px;
 }
 
 .smk-base-map {
-    padding: 4px;
     border-radius: 5px;
     border: 1px solid transparent;
-    margin: 5px;
 }
 
 .smk-base-map:hover {

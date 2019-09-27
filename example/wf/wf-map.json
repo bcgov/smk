@@ -81,7 +81,11 @@
         "DarkGray",
         "Gray"
       ],
-      "position": "list-menu"
+      "position": "list-menu",
+      "mapStyle": {
+          "width": "60px",
+          "height": "100px"
+      }
     },
     {
       "type": "search",
