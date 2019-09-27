@@ -20,6 +20,7 @@
     right: 0;
     justify-content: space-around;
     border-top: 1px solid black;
+    border-radius: 0;
 }
 
 .smk-theme-wf .smk-tool {
