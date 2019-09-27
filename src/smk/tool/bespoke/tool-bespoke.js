@@ -10,6 +10,22 @@ include.module( 'tool-bespoke', [ 'tool', 'widgets', 'tool-bespoke.panel-bespoke
         template: inc[ 'tool-bespoke.panel-bespoke-html' ],
         props: [ 'content' ]
     } )
+
+    Vue.directive( 'content', {
+        unbind: function ( el, binding ) {
+            // console.log( 'unbind', binding )
+        },
+
+        inserted: function ( el, binding ) {
+            // console.log( 'inserted', binding )
+
+            $( el ).append( binding.value.content )
+        },
+
+        update: function ( el, binding ) {
+            // console.log( 'update', binding )
+        }
+    } )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
     function BespokeTool( option ) {
