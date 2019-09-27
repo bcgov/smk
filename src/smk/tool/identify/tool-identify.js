@@ -103,7 +103,7 @@ include.module( 'tool-identify', [ 'feature-list', 'widgets', 'tool-identify.pan
         smk.$viewer.startedIdentify( function ( ev ) {
             self.busy = true
             self.firstId = null
-            self.active = true
+            // self.active = true
             self.setMessage( 'Fetching features', 'progress' )
         } )
 
@@ -115,6 +115,7 @@ include.module( 'tool-identify', [ 'feature-list', 'widgets', 'tool-identify.pan
                 self.setMessage( 'No features found', 'warning' )
             }
             else {
+                self.active = true
                 var stat = smk.$viewer.identified.getStats()
 
                 var sub = SMK.UTIL.grammaticalNumber( stat.layerCount, null, null, 'on {} layers' )

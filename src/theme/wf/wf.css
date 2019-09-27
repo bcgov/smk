@@ -78,6 +78,17 @@
     padding: 5px;
 }
 
+.smk-theme-wf .smk-sidepanel .smk-message.smk-summary {
+    display: none;
+}
+
+.smk-theme-wf .smk-sidepanel .smk-message.smk-progress {
+    display: none;
+}
+
+.smk-theme-wf .smk-sidepanel .smk-message.smk-warning {
+    display: none;
+}
 
 /* menu.css */
 
