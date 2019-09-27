@@ -54,7 +54,8 @@
       "title": "Identify",
       "enabled": true,
       "showTitle": true,
-      "position": "toolbar"
+      "position": "toolbar",
+      "tolerance": 10
     },
     {
       "type": "pan",

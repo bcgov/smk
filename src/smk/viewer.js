@@ -414,14 +414,23 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
         throw new Error( 'not implemented' )
     }
 
+    Viewer.prototype.circleInMap = function ( screenCenter, pixelRadius, sides ) {
+        var self = this
+
+        return turf.polygon( [ 
+            SMK.UTIL.circlePoints( screenCenter, pixelRadius, sides )
+                .map( function ( p ) { 
+                    return self.screenToMap( p ) 
+                } ) 
+        ] )
+    }
+
     Viewer.prototype.identifyFeatures = function ( location ) {
         var self = this
 
-        var identifyOptions = SMK.UTIL.projection( 'tolerance' )
-
-        var baseOption = Object.assign( {
-            tolerance: 5
-        }, identifyOptions( this.identifyTool() ) )
+        var tolerance = this.identifyTool().tolerance || 5
+        var searchArea = this.circleInMap( location.screen, tolerance, 12 )
+        this.temporaryFeature( 'identify', searchArea )
 
         var view = this.getView()
 
@@ -433,17 +442,20 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
         this.layerIds.forEach( function ( id, i ) {
             var ly = self.layerId[ id ]
 
-            // if ( !ly.visible ) return
             if ( !self.layerDisplayContext.isItemVisible( id ) ) return
             if ( ly.config.isQueryable === false ) return
             if ( !ly.inScaleRange( view ) ) return
 
-            var option = Object.assign( {}, baseOption, identifyOptions( ly.config ), { layer: self.visibleLayer[ id ] } )
+            var option = {
+                tolerance: ly.config.tolerance || tolerance,
+                layer: ly 
+            }
 
-            var searchArea = turf.polygon( [ SMK.UTIL.circlePoints( location.screen, baseOption.tolerance, 12 ).map( function ( p ) { return self.screenToMap( p ) } ) ] )
+            var layerSearchArea = searchArea 
+            if ( option.tolerance != tolerance )
+                layerSearchArea = self.circleInMap( location.screen, option.tolerance, 12 )
 
-            var p = ly.getFeaturesInArea( searchArea, view, option )
-            // var p = ly.getFeaturesAtPoint( location, view, option )
+            var p = ly.getFeaturesInArea( layerSearchArea, view, option )
             if ( !p ) return
 
             promises.push(
