@@ -72,8 +72,16 @@
     box-shadow: none;
 }
 
+.smk-theme-wf .smk-elastic-panel .smk-title .smk-command {
+    order: 1;
+}
+
 .smk-theme-wf .smk-sidepanel .smk-panel .smk-header {
     z-index: 1;
+    background-color: #ccc;
+    border: none;
+    margin: 0;
+    padding: 1px;
 }
 
 .smk-theme-wf .smk-sidepanel .smk-panel .smk-body {
@@ -92,6 +100,18 @@
 .smk-theme-wf .smk-sidepanel .smk-message.smk-warning {
     display: none;
 }
+
+.smk-theme-wf .smk-sidepanel .smk-title {
+    background-color: #ccc;
+    border: none;
+    margin: 0;
+    padding: 1px 1px 1px 5px;
+}
+
+.smk-theme-wf .smk-sidepanel .smk-title div {
+    flex-grow: 1;
+}
+
 
 /* menu.css */
 
