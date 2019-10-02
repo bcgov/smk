@@ -3,7 +3,7 @@
     top: 0;
     left: 0;
     height: var( --toolbar-height );
-    min-width: var( --panel-width );
+    /* min-width: var( --panel-width ); */
 
     z-index: 10;
     background-color: white;

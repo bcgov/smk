@@ -1,19 +1,19 @@
 /* variables.css */
 
-.smk-theme-wf.smk-map-frame {
+.smk-device-mobile.smk-theme-wf.smk-map-frame {
     --overlay-padding: 0px;
     --toolbar-height: 45px;
 }
 
 /* map-frame.css */
 
-.smk-theme-wf.smk-map-frame.smk-sidepanel-active .smk-viewer {
+.smk-device-mobile.smk-theme-wf.smk-map-frame.smk-sidepanel-active .smk-viewer {
     bottom: 50%;
 }
 
 /* toolbar.css */
 
-.smk-theme-wf .smk-toolbar  {
+.smk-device-mobile.smk-theme-wf .smk-toolbar  {
     box-shadow: none;
     bottom: 0;
     top: initial;
@@ -25,23 +25,23 @@
 
 /* widgets.css */
 
-.smk-theme-wf .smk-toolbar .smk-tool {
+.smk-device-mobile.smk-theme-wf .smk-toolbar .smk-tool {
     background-color: white;
     flex-grow: 1;
     display: flex;
     justify-content: center;
 }
 
-.smk-theme-wf .smk-toolbar .smk-tool.smk-tool-active {
+.smk-device-mobile.smk-theme-wf .smk-toolbar .smk-tool.smk-tool-active {
     background-color: #003366;
     color: white;
 }
 
-.smk-theme-wf .smk-toolbar .smk-tool.smk-tool-title {
+.smk-device-mobile.smk-theme-wf .smk-toolbar .smk-tool.smk-tool-title {
     flex-direction: column;
 }
 
-.smk-theme-wf .smk-toolbar .smk-tool.smk-tool-title span {
+.smk-device-mobile.smk-theme-wf .smk-toolbar .smk-tool.smk-tool-title span {
     display: block;
     font-size: 10px;
     margin: 0;
@@ -49,7 +49,7 @@
 
 /* sidepanel.css */
 
-.smk-theme-wf .smk-sidepanel {
+.smk-device-mobile.smk-theme-wf .smk-sidepanel {
     top: initial;
     width: initial;
     height: 50%;
@@ -58,12 +58,12 @@
     border-bottom: 1px solid black;
 }
 
-.smk-theme-wf .smk-sidepanel.smk-expanded {
+.smk-device-mobile.smk-theme-wf .smk-sidepanel.smk-expanded {
     display: flex;
     width: initial;
 }
 
-.smk-theme-wf .smk-elastic-panel {
+.smk-device-mobile.smk-theme-wf .smk-elastic-panel {
     flex-grow: 1;
 
     display: flex;
@@ -72,11 +72,11 @@
     box-shadow: none;
 }
 
-.smk-theme-wf .smk-elastic-panel .smk-title .smk-command {
+.smk-device-mobile.smk-theme-wf .smk-elastic-panel .smk-title .smk-command {
     order: 1;
 }
 
-.smk-theme-wf .smk-sidepanel .smk-panel .smk-header {
+.smk-device-mobile.smk-theme-wf .smk-sidepanel .smk-panel .smk-header {
     z-index: 1;
     background-color: #ccc;
     border: none;
@@ -84,48 +84,48 @@
     padding: 1px;
 }
 
-.smk-theme-wf .smk-sidepanel .smk-panel .smk-body {
+.smk-device-mobile.smk-theme-wf .smk-sidepanel .smk-panel .smk-body {
     z-index: 2;
     padding: 5px;
 }
 
-.smk-theme-wf .smk-sidepanel .smk-message.smk-summary {
+/*.smk-device-mobile*/.smk-theme-wf .smk-sidepanel .smk-message.smk-summary {
     display: none;
 }
 
-.smk-theme-wf .smk-sidepanel .smk-message.smk-progress {
+/*.smk-device-mobile*/.smk-theme-wf .smk-sidepanel .smk-message.smk-progress {
     display: none;
 }
 
-.smk-theme-wf .smk-sidepanel .smk-message.smk-warning {
+/*.smk-device-mobile*/.smk-theme-wf .smk-sidepanel .smk-message.smk-warning {
     display: none;
 }
 
-.smk-theme-wf .smk-sidepanel .smk-title {
+.smk-device-mobile.smk-theme-wf .smk-sidepanel .smk-title {
     background-color: #ccc;
     border: none;
     margin: 0;
     padding: 1px 1px 1px 5px;
 }
 
-.smk-theme-wf .smk-sidepanel .smk-title div {
+.smk-device-mobile.smk-theme-wf .smk-sidepanel .smk-title div {
     flex-grow: 1;
 }
 
 
 /* menu.css */
 
-.smk-theme-wf .smk-sidepanel .smk-panel.smk-menu-panel {
+.smk-device-mobile.smk-theme-wf .smk-sidepanel .smk-panel.smk-menu-panel {
     border: 0;
     background-color: transparent;   
 }
 
-.smk-theme-wf .smk-sidepanel .smk-panel.smk-menu-panel > .smk-header {
+.smk-device-mobile.smk-theme-wf .smk-sidepanel .smk-panel.smk-menu-panel > .smk-header {
     background-color: transparent;
     box-shadow: none;
 }
 
-.smk-theme-wf .smk-sidepanel .smk-panel.smk-menu-panel > .smk-body {
+.smk-device-mobile.smk-theme-wf .smk-sidepanel .smk-panel.smk-menu-panel > .smk-body {
     background-color: transparent;
     box-shadow: none;
     padding-top: 1px;

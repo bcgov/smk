@@ -39,6 +39,7 @@ include.module( 'smk-map', [ 'jquery', 'util', 'theme-base' ], function () {
                 .then( mergeConfigs )
                 // .then( resolveConfig )
                 .then( initMapFrame )
+                .then( resolveDeviceConfig )
                 .then( checkTools )
                 .then( loadViewer )
                 .then( loadTools )
@@ -290,6 +291,20 @@ include.module( 'smk-map', [ 'jquery', 'util', 'theme-base' ], function () {
             return include( themes )
         }
 
+        function resolveDeviceConfig() {
+            findProperty( self, 'tools', 'enabled', function ( val ) {
+                if ( typeof val == 'string' ) return val == self.$device
+            } )
+
+            findProperty( self, 'tools', 'showTitle', function ( val ) {
+                if ( typeof val == 'string' ) return val == self.$device
+            } )
+
+            findProperty( self, 'tools', 'control', function ( val ) {
+                if ( typeof val == 'string' ) return val == self.$device
+            } )
+        }
+
         function checkTools() {
             if ( !self.tools ) return
             var enabledTools = self.tools.filter( function ( t ) { return t.enabled !== false } )
@@ -472,4 +487,21 @@ include.module( 'smk-map', [ 'jquery', 'util', 'theme-base' ], function () {
         return this.$device
     }
 
+
+    function findProperty( obj, collectionName, propName, cb ) {
+        if ( !( collectionName in obj ) )
+            throw new Error( collectionName + ' is not in obj' )
+
+        if ( !Array.isArray( obj[ collectionName ] ) )
+            throw new Error( collectionName + ' is not an array' )
+
+        obj[ collectionName ].forEach( function ( item ) {
+            if ( !( propName in item ) ) return
+
+            var res = cb( item[ propName ] )
+            if ( res === undefined ) return
+
+            item[ propName ] = res
+        } )
+    }
 } )
