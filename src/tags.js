@@ -303,5 +303,8 @@ t.group( 'theme-gamma' )
 t.group( 'theme-delta' )
     .dir( 'theme/delta/**/*' )
 
+t.group( 'theme-wf' )
+    .dir( 'theme/wf/**/*' )
+
 
 process.stdout.write( JSON.stringify( t, null, '    ' ) )

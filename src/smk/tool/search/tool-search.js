@@ -112,6 +112,8 @@ include.module( 'tool-search', [ 'tool', 'sidepanel', 'widgets', 'tool-search.wi
     SearchTool.prototype.afterInitialize.push( function ( smk ) {
         var self = this
 
+        smk.$container.classList.add( 'smk-tool-search' )
+
         smk.on( this.id, {
             'activate': function ( ev ) {
                 if ( !self.enabled ) return

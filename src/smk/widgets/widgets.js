@@ -18,15 +18,15 @@ include.module( 'widgets', [ 'vue', 'widgets.tool-button-html' ], function ( inc
             props: { 'id': String, 'type': String, 'title': String, 'visible': Boolean, 'enabled': Boolean, 'active': Boolean, 'icon': String, 'showTitle': Boolean },
             computed: {
                 classes: function () {
-                    var c = {}
-                    c[ 'smk-tool' ] = true
-                    c[ 'smk-' + this.type + '-tool' ] = true
-                    return Object.assign( c, {
+                    var c = {
+                        'smk-tool': true,
                         'smk-tool-active': this.active,
                         'smk-tool-visible': this.visible,
                         'smk-tool-enabled': this.enabled,
                         'smk-tool-title': this.showTitle
-                    } )
+                    }
+                    c[ 'smk-' + this.type + '-tool' ] = true
+                    return c
                 }
             }
         } ),

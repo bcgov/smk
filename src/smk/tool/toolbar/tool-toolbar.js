@@ -16,7 +16,13 @@ include.module( 'tool-toolbar', [ 'tool', 'toolbar', 'sidepanel' ], function ( i
     //
     ToolBarTool.prototype.afterInitialize.push( function ( smk ) {
         this.toolbar = smk.$toolbar = new SMK.TYPE.Toolbar( smk )
+
         this.sidepanel = smk.$sidepanel = new SMK.TYPE.Sidepanel( smk )
+        this.sidepanel.changedVisible( function () {
+            $( smk.$container ).toggleClass( 'smk-sidepanel-active', smk.$sidepanel.isPanelVisible() )
+
+            smk.$viewer.mapResized()
+        } )
     } )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
