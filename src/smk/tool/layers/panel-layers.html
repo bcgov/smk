@@ -7,20 +7,24 @@
         <slot></slot>
 
         <i class="smk-all-visibility material-icons smk-command smk-icon"
+            v-if="command.allVisibility !== false"
             v-bind:title="'Toggle visibility of all layers.\nSHIFT-click to toggle visibility on each layer.'"
             v-on:click="$$emit( 'set-all-layers-visible', { visible: !allVisible, deep: $event.shiftKey } )"
         >{{ allVisible ? glyph.visible || 'visibility' : glyph.hidden || 'visibility_off' }}</i>
 
         <input class="smk-filter" placeholder="Filter layers" 
+            v-if="command.filter !== false"
             v-model="filter" 
             v-on:input="$$emit( 'config', getConfigState() )"
         >
 
         <label class="smk-legend-toggle smk-command"
         ><input type="checkbox"
+            v-if="command.legend !== false"
             v-model="legend"
             v-on:change="!busy && $$emit( 'config', getConfigState() )"
         >Legend</label>
+
     </template>
     
     <layer-display 

@@ -47,6 +47,10 @@
       "glyph": {
         "visible": "check_box",
         "hidden": "check_box_outline_blank"
+      },
+      "command": {
+          "allVisibility": false,
+          "filter": false
       }
     },
     {
