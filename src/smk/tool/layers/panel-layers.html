@@ -4,6 +4,8 @@
     v-bind:status="busy ? 'progress' : ( !items || items.length == 0 ) ? 'warning' : ''"
 >
     <template slot="commands">
+        <slot></slot>
+
         <i class="smk-all-visibility material-icons smk-command smk-icon"
             v-bind:title="'Toggle visibility of all layers.\nSHIFT-click to toggle visibility on each layer.'"
             v-on:click="$$emit( 'set-all-layers-visible', { visible: !allVisible, deep: $event.shiftKey } )"
@@ -14,7 +16,7 @@
             v-on:input="$$emit( 'config', getConfigState() )"
         >
 
-        <label class="smk-command"
+        <label class="smk-legend-toggle smk-command"
         ><input type="checkbox"
             v-model="legend"
             v-on:change="!busy && $$emit( 'config', getConfigState() )"

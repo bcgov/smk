@@ -35,6 +35,32 @@
     width: var( --panel-width );
 }
 
+.smk-sidepanel .smk-panel .smk-commands {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    align-content: flex-start;
+}
+
+.smk-sidepanel .smk-commands .smk-panel-go-back {
+}
+
+.smk-sidepanel .smk-commands .smk-panel-title {
+    flex-grow: 1;
+    min-height: 26px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.smk-sidepanel .smk-commands .smk-panel-close {
+}
+
+.smk-sidepanel .smk-commands .smk-separator {
+    flex-basis: 100%;
+}
+
 .smk-sidepanel .smk-title {
     flex-shrink: 0;
 
