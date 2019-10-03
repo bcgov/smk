@@ -140,7 +140,7 @@ include.module( 'feature-list', [ 'tool', 'widgets', 'sidepanel',
     Vue.component( 'feature-panel', {
         extends: inc.widgets.toolPanel,
         template: inc[ 'feature-list.panel-feature-html' ],
-        props: [ 'feature', 'layer', 'attributeComponent', 'tool', 'resultPosition', 'resultCount', 'instance' ],
+        props: [ 'feature', 'layer', 'attributeComponent', 'tool', 'resultPosition', 'resultCount', 'instance', 'command' ],
         data: function () {
             return {
                 'attributeView': 'default'
@@ -157,6 +157,7 @@ include.module( 'feature-list', [ 'tool', 'widgets', 'sidepanel',
         this.makePropPanel( 'resultCount', null )
         this.makePropPanel( 'instance', null )
         this.makePropPanel( 'attributeView', 'default' )
+        this.makePropPanel( 'command', {} )
 
         SMK.TYPE.Tool.prototype.constructor.call( this, $.extend( {
             // debugView: false

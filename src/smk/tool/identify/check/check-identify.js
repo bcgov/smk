@@ -22,7 +22,8 @@ include.module( 'check-identify', [], function ( inc ) {
             type: 'identify-feature',
             enabled: true,
             position: tool.position,
-            title: tool.title
+            title: tool.title,
+            command: tool.command
         } )
     }
     

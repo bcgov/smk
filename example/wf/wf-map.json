@@ -59,7 +59,10 @@
       "enabled": true,
       "showTitle": "mobile",
       "position": "toolbar",
-      "tolerance": 10
+      "tolerance": 10,
+      "command": {
+          "attributeMode": false
+      }
     },
     {
       "type": "pan",
