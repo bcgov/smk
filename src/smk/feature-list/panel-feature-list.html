@@ -42,4 +42,8 @@
             v-bind:href="layer.metadataUrl"
         >Layer information</a> -->
     </div>
+
+    <div v-if="layers.length == 0">
+        Click on the map to identify features under the clicked point.
+    </div>
 </side-panel>
