@@ -58,16 +58,12 @@
     border-bottom: 1px solid black;
 }
 
-.smk-device-mobile.smk-theme-wf .smk-sidepanel.smk-expanded {
-    display: flex;
-    width: initial;
-}
-
 .smk-device-mobile.smk-theme-wf .smk-elastic-panel {
-    flex-grow: 1;
-
-    display: flex;
-    flex-direction: column;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
 
     box-shadow: none;
 }
@@ -114,18 +110,6 @@
 /*.smk-device-mobile*/.smk-theme-wf .smk-sidepanel .smk-message.smk-warning {
     display: none;
 }
-
-/* .smk-device-mobile.smk-theme-wf .smk-sidepanel .smk-title {
-    background-color: #ccc;
-    border: none;
-    margin: 0;
-    padding: 1px 1px 1px 5px;
-}
-
-.smk-device-mobile.smk-theme-wf .smk-sidepanel .smk-title div {
-    flex-grow: 1;
-} */
-
 
 /* menu.css */
 
