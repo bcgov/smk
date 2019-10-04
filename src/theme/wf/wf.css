@@ -19,7 +19,7 @@
     top: initial;
     right: 0;
     justify-content: space-around;
-    border-top: 1px solid black;
+    border-top: 1px solid #ccc;
     border-radius: 0;
 }
 
@@ -55,7 +55,7 @@
     height: 50%;
     right: 0;
     bottom: var( --toolbar-height );
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid #ccc;
 }
 
 .smk-device-mobile.smk-theme-wf .smk-elastic-panel {
