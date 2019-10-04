@@ -145,7 +145,52 @@
                     ]
                 },
                 "transparency": 0
-            }
+            },
+            "attributes": [
+                {
+                    "id": "FIRE_YEAR",
+                    "name": "FIRE_YEAR",
+                    "title": "Year of Discovery",
+                    "visible": true
+                },
+                {
+                    "id": "FIRE_CAUSE",
+                    "name": "FIRE_CAUSE",
+                    "title": "Suspected Cause",
+                    "visible": true
+                },
+                {
+                    "id": "GEOGRAPHIC_DESCRIPTION",
+                    "name": "GEOGRAPHIC_DESCRIPTION",
+                    "title": "Apporximate Location",
+                    "visible": true
+                },
+                {
+                    "id": "CURRENT_SIZE",
+                    "name": "CURRENT_SIZE",
+                    "title": "Estimated Size",
+                    "visible": true
+                },
+                {
+                    "id": "FIRE_STATUS",
+                    "name": "FIRE_STATUS",
+                    "title": "Stage of Control",
+                    "visible": true
+                },
+                {
+                    "id": "FIRE_OF_NOTE_NAME",
+                    "name": "FIRE_OF_NOTE_NAME",
+                    "title": "Fire of Note Name",
+                    "visible": true
+                },
+                {
+                    "id": "FIRE_OF_NOTE_URL",
+                    "name": "FIRE_OF_NOTE_URL",
+                    "title": "Fire of Note URL",
+                    "visible": true
+                }
+            ],
+            "popupTemplate": "<div><div class=\"smk-layer\">{{ layer.title }}</div><div class=\"smk-attributes\"v-if=\"layer.attributes && layer.attributes.length > 0\"><div style=\"padding-top: 15px;\"v-for=\"(attr,index) in layer.attributes\"v-if=\"attr.visible !== false && index===0\"><span style=\"display: inline-block; vertical-align: top;padding-right: 15px;font-size: 12px;text-align: right;width: 30%; margin-left:17%;font-weight:bold\" v-html=\"insertWordBreaks( attr.title )\"></span><span style=\" display: inline-block;vertical-align: top;padding-left: 10px;font-size: 13px;text-align: left;font-weight:bold\" v-html=\"formatValue( feature.properties[ attr.name ] )\"></span></div><div style=\"padding-top: 15px;\"v-for=\"(attr,index) in layer.attributes\"v-if=\"attr.visible !== false && index!==0\"><span style=\"display: inline-block; vertical-align: top;padding-right: 15px;font-size: 12px;text-align: right;width: 30%; margin-left:17%\" v-html=\"insertWordBreaks( attr.title )\"></span><span style=\" display: inline-block;vertical-align: top;padding-left: 10px;font-size: 13px;text-align: left;\" v-html=\"formatValue( feature.properties[ attr.name ] )\"></span></div></div></div>"
         },
         {
             "type": "esri-feature",
@@ -159,7 +204,8 @@
             "where": "",
             "opacity": 0.25,
             "scaleMin": 500000,
-            "scaleMax": 0
+            "scaleMax": 0,
+            "popupTemplate": "<div><div class=\"smk-layer\">{{ layer.title }}</div><div class=\"smk-attributes\"v-if=\"layer.attributes && layer.attributes.length > 0\"><div style=\"padding-top: 15px;\"v-for=\"(attr,index) in layer.attributes\"v-if=\"attr.visible !== false && index===0\"><span style=\"display: inline-block; vertical-align: top;padding-right: 15px;font-size: 12px;text-align: right;width: 30%; margin-left:17%;font-weight:bold\" v-html=\"insertWordBreaks( attr.title )\"></span><span style=\" display: inline-block;vertical-align: top;padding-left: 10px;font-size: 13px;text-align: left;font-weight:bold\" v-html=\"formatValue( feature.properties[ attr.name ] )\"></span></div><div style=\"padding-top: 15px;\"v-for=\"(attr,index) in layer.attributes\"v-if=\"attr.visible !== false && index!==0\"><span style=\"display: inline-block; vertical-align: top;padding-right: 15px;font-size: 12px;text-align: right;width: 30%; margin-left:17%\" v-html=\"insertWordBreaks( attr.title )\"></span><span style=\" display: inline-block;vertical-align: top;padding-left: 10px;font-size: 13px;text-align: left;\" v-html=\"formatValue( feature.properties[ attr.name ] )\"></span></div></div></div>"
         },
         {
             "type": "esri-feature",
@@ -172,7 +218,40 @@
             "where": "FIRE_STATUS <> 'Out'",
             "opacity": 1,
             "scaleMin": 500000,
-            "scaleMax": 0
+            "scaleMax": 0,
+            "attributes": [
+                {
+                    "id": "FIRE_NUMBER",
+                    "name": "FIRE_NUMBER",
+                    "title": "Fire Perimeter Number",
+                    "visible": true
+                },
+                {
+                    "id": "TRACK_DATE",
+                    "name": "TRACK_DATE",
+                    "title": "Track Date",
+                    "visible": true
+                },
+                {
+                    "id": "FIRE_STATUS",
+                    "name": "FIRE_STATUS",
+                    "title": "Stage of Control",
+                    "visible": true
+                },
+                {
+                    "id": "FIRE_OF_NOTE_NAME",
+                    "name": "FIRE_OF_NOTE_NAME",
+                    "title": "Fire of Note",
+                    "visible": true
+                },
+                {
+                    "id": "FIRE_OF_NOTE_URL",
+                    "name": "FIRE_OF_NOTE_URL",
+                    "title": "Fire of Note URL",
+                    "visible": true
+                }
+            ],
+            "popupTemplate": "<div><div class=\"smk-layer\">{{ layer.title }}</div><div class=\"smk-attributes\"v-if=\"layer.attributes && layer.attributes.length > 0\"><div style=\"padding-top: 15px;\"v-for=\"(attr,index) in layer.attributes\"v-if=\"attr.visible !== false && index===0\"><span style=\"display: inline-block; vertical-align: top;padding-right: 15px;font-size: 12px;text-align: right;width: 30%; margin-left:17%;font-weight:bold\" v-html=\"insertWordBreaks( attr.title )\"></span><span style=\" display: inline-block;vertical-align: top;padding-left: 10px;font-size: 13px;text-align: left;font-weight:bold\" v-html=\"formatValue( feature.properties[ attr.name ] )\"></span></div><div style=\"padding-top: 15px;\"v-for=\"(attr,index) in layer.attributes\"v-if=\"attr.visible !== false && index!==0\"><span style=\"display: inline-block; vertical-align: top;padding-right: 15px;font-size: 12px;text-align: right;width: 30%; margin-left:17%\" v-html=\"insertWordBreaks( attr.title )\"></span><span style=\" display: inline-block;vertical-align: top;padding-left: 10px;font-size: 13px;text-align: left;\" v-html=\"formatValue( feature.properties[ attr.name ] )\"></span></div></div></div>"
         },
         {
             "type": "esri-tiled",
@@ -185,7 +264,65 @@
             "opacity": 1,
             "scaleMin": 500000,
             "scaleMax": 0,
-            "isQueryable": false
+            "isQueryable": false,
+            "popupTemplate": "<div><div class=\"smk-layer\">{{ layer.title }}</div><div class=\"smk-attributes\"v-if=\"layer.attributes && layer.attributes.length > 0\"><div style=\"padding-top: 15px;\"v-for=\"(attr,index) in layer.attributes\"v-if=\"attr.visible !== false && index===0\"><span style=\"display: inline-block; vertical-align: top;padding-right: 15px;font-size: 12px;text-align: right;width: 30%; margin-left:17%;font-weight:bold\" v-html=\"insertWordBreaks( attr.title )\"></span><span style=\" display: inline-block;vertical-align: top;padding-left: 10px;font-size: 13px;text-align: left;font-weight:bold\" v-html=\"formatValue( feature.properties[ attr.name ] )\"></span></div><div style=\"padding-top: 15px;\"v-for=\"(attr,index) in layer.attributes\"v-if=\"attr.visible !== false && index!==0\"><span style=\"display: inline-block; vertical-align: top;padding-right: 15px;font-size: 12px;text-align: right;width: 30%; margin-left:17%\" v-html=\"insertWordBreaks( attr.title )\"></span><span style=\" display: inline-block;vertical-align: top;padding-left: 10px;font-size: 13px;text-align: left;\" v-html=\"formatValue( feature.properties[ attr.name ] )\"></span></div></div></div>"
+        },
+        {
+            "type": "esri-feature",
+            "id": 31075,
+            "title": "Bans and Prohibitions",
+            "isVisible": false,
+            "attribution": "Copyright 117 DataBC, Government of British Columbia",
+            "attributes": [
+                {
+                    "id": "FireCentre",
+                    "name": "FireCentre",
+                    "title": "Fire Centre",
+                    "visible": true
+                },
+                {
+                    "id": "Name",
+                    "name": "Name",
+                    "title": "Name",
+                    "visible": true
+                },
+                {
+                    "id": "DateActive",
+                    "name": "DateActive",
+                    "title": "Date Active",
+                    "visible": true
+                },
+                {
+                    "id": "DateDeactivated",
+                    "name": "DateDeactivated",
+                    "title": "Date Deactivated",
+                    "visible": true
+                },
+                {
+                    "id": "Type",
+                    "name": "Type",
+                    "title": "Type",
+                    "visible": true
+                },
+                {
+                    "id": "Comments",
+                    "name": "Comments",
+                    "title": "Comments",
+                    "visible": true
+                },
+                {
+                    "id": "URL",
+                    "name": "URL",
+                    "title": "URL",
+                    "visible": true
+                }
+            ],
+            "serviceUrl": "https://services6.arcgis.com/ubm4tcTYICKBpist/ArcGIS/rest/services/British_Columbia_Bans_and_Prohibition_Areas/FeatureServer/0",
+            "metadataUrl": "https://catalogue.data.gov.bc.ca/dataset/diagnostic-facilities",
+            "where": "",
+            "scaleMin": 500000,
+            "scaleMax": 0,
+            "popupTemplate": "<div><div class=\"smk-layer\">{{ layer.title }}</div><div class=\"smk-attributes\"v-if=\"layer.attributes && layer.attributes.length > 0\"><div style=\"padding-top: 15px;\"v-for=\"(attr,index) in layer.attributes\"v-if=\"attr.visible !== false && index===0\"><span style=\"display: inline-block; vertical-align: top;padding-right: 15px;font-size: 12px;text-align: right;width: 30%; margin-left:17%;font-weight:bold\" v-html=\"insertWordBreaks( attr.title )\"></span><span style=\" display: inline-block;vertical-align: top;padding-left: 10px;font-size: 13px;text-align: left;font-weight:bold\" v-html=\"formatValue( feature.properties[ attr.name ] )\"></span></div><div style=\"padding-top: 15px;\"v-for=\"(attr,index) in layer.attributes\"v-if=\"attr.visible !== false && index!==0\"><span style=\"display: inline-block; vertical-align: top;padding-right: 15px;font-size: 12px;text-align: right;width: 30%; margin-left:17%\" v-html=\"insertWordBreaks( attr.title )\"></span><span style=\" display: inline-block;vertical-align: top;padding-left: 10px;font-size: 13px;text-align: left;\" v-html=\"formatValue( feature.properties[ attr.name ] )\"></span></div></div></div>"
         },
         {
             "type": "esri-feature",
@@ -226,14 +363,131 @@
                 "scaleSymbols": true,
                 "transparency": 0,
                 "labelingInfo": null
-            }
+            },
+            "attributes": [
+                {
+                    "id": "Name",
+                    "name": "Name",
+                    "title": "Name",
+                    "visible": true
+                },
+                {
+                    "id": "DateActive",
+                    "name": "DateActive",
+                    "title": "Date Active",
+                    "visible": true
+                },
+                {
+                    "id": "DateDeactivated",
+                    "name": "DateDeactivated",
+                    "title": "Date Deactivated",
+                    "visible": true
+                },
+                {
+                    "id": "Type",
+                    "name": "Type",
+                    "title": "Type",
+                    "visible": true
+                },
+                {
+                    "id": "Status",
+                    "name": "Status",
+                    "title": "Status",
+                    "visible": true
+                },
+                {
+                    "id": "FireCentre",
+                    "name": "FireCentre",
+                    "title": "Fire Centre",
+                    "visible": true
+                },
+                {
+                    "id": "URL",
+                    "name": "URL",
+                    "title": "URL",
+                    "visible": true
+                }
+            ],
+            "popupTemplate": "<div><div class=\"smk-layer\">{{ layer.title }}</div><div class=\"smk-attributes\"v-if=\"layer.attributes && layer.attributes.length > 0\"><div style=\"padding-top: 15px;\"v-for=\"(attr,index) in layer.attributes\"v-if=\"attr.visible !== false && index===0\"><span style=\"display: inline-block; vertical-align: top;padding-right: 15px;font-size: 12px;text-align: right;width: 20%; margin-left:17%;font-weight:bold\" v-html=\"insertWordBreaks( attr.title )\"></span><span style=\" display: inline-block;vertical-align: top;padding-left: 10px;font-size: 13px;text-align: left;font-weight:bold\" v-html=\"formatValue( feature.properties[ attr.name ] )\"></span></div><div style=\"padding-top: 15px;\"v-for=\"(attr,index) in layer.attributes\"v-if=\"attr.visible !== false && index!==0\"><span style=\"display: inline-block; vertical-align: top;padding-right: 15px;font-size: 12px;text-align: right;width: 20%; margin-left:17%\" v-html=\"insertWordBreaks( attr.title )\"></span><span style=\" display: inline-block;vertical-align: top;padding-left: 10px;font-size: 13px;text-align: left;\" v-html=\"formatValue( feature.properties[ attr.name ] )\"></span></div></div></div>"
         },
         {
             "type": "wms",
             "id": "whse-land-and-natural-resource-prot-current-fire-polys-sp",
             "title": "Fire Perimeters - Current",
             "serviceUrl": "https://openmaps.gov.bc.ca/geo/pub/wms",
-            "layerName": "WHSE_LAND_AND_NATURAL_RESOURCE.PROT_CURRENT_FIRE_POLYS_SP"
+            "layerName": "WHSE_LAND_AND_NATURAL_RESOURCE.PROT_CURRENT_FIRE_POLYS_SP",
+            "popupTemplate": "<div><div class=\"smk-layer\">{{ layer.title }}</div><div class=\"smk-attributes\"v-if=\"layer.attributes && layer.attributes.length > 0\"><div style=\"padding-top: 15px;\"v-for=\"(attr,index) in layer.attributes\"v-if=\"attr.visible !== false && index===0\"><span style=\"display: inline-block; vertical-align: top;padding-right: 15px;font-size: 12px;text-align: right;width: 30%; margin-left:17%;font-weight:bold\" v-html=\"insertWordBreaks( attr.title )\"></span><span style=\" display: inline-block;vertical-align: top;padding-left: 10px;font-size: 13px;text-align: left;font-weight:bold\" v-html=\"formatValue( feature.properties[ attr.name ] )\"></span></div><div style=\"padding-top: 15px;\"v-for=\"(attr,index) in layer.attributes\"v-if=\"attr.visible !== false && index!==0\"><span style=\"display: inline-block; vertical-align: top;padding-right: 15px;font-size: 12px;text-align: right;width: 30%; margin-left:17%\" v-html=\"insertWordBreaks( attr.title )\"></span><span style=\" display: inline-block;vertical-align: top;padding-left: 10px;font-size: 13px;text-align: left;\" v-html=\"formatValue( feature.properties[ attr.name ] )\"></span></div></div></div>"
+        },
+        {
+            "type": "esri-feature",
+            "id": 31078,
+            "title": "Prescribed Fire",
+            "isVisible": false,
+            "attribution": "Copyright 117 DataBC, Government of British Columbia",
+            "attributes": [],
+            "serviceUrl": "https://services6.arcgis.com/ubm4tcTYICKBpist/ArcGIS/rest/services/British_Columbia_Prescribed_Fire/FeatureServer/0",
+            "metadataUrl": "https://catalogue.data.gov.bc.ca/dataset/diagnostic-facilities",
+            "where": "",
+            "scaleMin": 500000,
+            "scaleMax": 0,
+            "popupTemplate": "<div><div class=\"smk-layer\">{{ layer.title }}</div><div class=\"smk-attributes\"v-if=\"layer.attributes && layer.attributes.length > 0\"><div style=\"padding-top: 15px;\"v-for=\"(attr,index) in layer.attributes\"v-if=\"attr.visible !== false && index===0\"><span style=\"display: inline-block; vertical-align: top;padding-right: 15px;font-size: 12px;text-align: right;width: 30%; margin-left:17%;font-weight:bold\" v-html=\"insertWordBreaks( attr.title )\"></span><span style=\" display: inline-block;vertical-align: top;padding-left: 10px;font-size: 13px;text-align: left;font-weight:bold\" v-html=\"formatValue( feature.properties[ attr.name ] )\"></span></div><div style=\"padding-top: 15px;\"v-for=\"(attr,index) in layer.attributes\"v-if=\"attr.visible !== false && index!==0\"><span style=\"display: inline-block; vertical-align: top;padding-right: 15px;font-size: 12px;text-align: right;width: 30%; margin-left:17%\" v-html=\"insertWordBreaks( attr.title )\"></span><span style=\" display: inline-block;vertical-align: top;padding-left: 10px;font-size: 13px;text-align: left;\" v-html=\"formatValue( feature.properties[ attr.name ] )\"></span></div></div></div>"
+        },
+        {
+            "type": "esri-feature",
+            "id": 31079,
+            "title": "Closed Recreation Sites",
+            "isVisible": false,
+            "attribution": "Copyright 117 DataBC, Government of British Columbia",
+            "attributes": [
+                {
+                    "id": "PROJECT_NAME",
+                    "name": "PROJECT_NAME",
+                    "title": "Name",
+                    "visible": true
+                },
+                {
+                    "id": "SITE_LOCATION",
+                    "name": "SITE_LOCATION",
+                    "title": "Site Location",
+                    "visible": true
+                },
+                {
+                    "id": "SITE_DESCRIPTION_BRIEF",
+                    "name": "SITE_DESCRIPTION_BRIEF",
+                    "title": "Site Desicription",
+                    "visible": true
+                },
+                {
+                    "id": "CLOSURE_IND",
+                    "name": "CLOSURE_IND",
+                    "title": "Closure Indicator",
+                    "visible": true
+                },
+                {
+                    "id": "CLOSURE_DATE",
+                    "name": "CLOSURE_DATE",
+                    "title": "Closure Date",
+                    "visible": true
+                },
+                {
+                    "id": "CLOSURE_TYPE",
+                    "name": "CLOSURE_TYPE",
+                    "title": "Closure Type",
+                    "visible": true
+                },
+                {
+                    "id": "CLOSURE_COMMENT",
+                    "name": "CLOSURE_COMMENT",
+                    "title": "Closure Comment",
+                    "visible": true
+                }
+            ],
+            "serviceUrl": "https://services6.arcgis.com/ubm4tcTYICKBpist/ArcGIS/rest/services/RecSitesReservesInterpForests_DetailsClosures_publicView/FeatureServer/0",
+            "metadataUrl": "https://catalogue.data.gov.bc.ca/dataset/diagnostic-facilities",
+            "where": "CLOSURE_IND = 'Y'",
+            "scaleMin": 500000,
+            "scaleMax": 0,
+            "popupTemplate": "<div><div class=\"smk-layer\">{{ layer.title }}</div><div class=\"smk-attributes\"v-if=\"layer.attributes && layer.attributes.length > 0\"><div style=\"padding-top: 15px;\"v-for=\"(attr,index) in layer.attributes\"v-if=\"attr.visible !== false && index===0\"><span style=\"display: inline-block; vertical-align: top;padding-right: 15px;font-size: 12px;text-align: right;width: 30%; margin-left:17%;font-weight:bold\" v-html=\"insertWordBreaks( attr.title )\"></span><span style=\" display: inline-block;vertical-align: top;padding-left: 10px;font-size: 13px;text-align: left;font-weight:bold; width:30%;\" v-html=\"formatValue( feature.properties[ attr.name ] )\"></span></div><div style=\"padding-top: 15px;\"v-for=\"(attr,index) in layer.attributes\"v-if=\"attr.visible !== false && index!==0\"><span style=\"display: inline-block; vertical-align: top;padding-right: 15px;font-size: 12px;text-align: right;width: 30%; margin-left:17%\" v-html=\"insertWordBreaks( attr.title )\"></span><span style=\" display: inline-block;vertical-align: top;padding-left: 10px;font-size: 13px;text-align: left;width:30%;\" v-html=\"formatValue( feature.properties[ attr.name ] )\"></span></div></div></div>"
         },
         {
             "type": "wms",
