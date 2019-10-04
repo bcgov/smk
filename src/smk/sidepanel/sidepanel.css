@@ -44,9 +44,11 @@
 }
 
 .smk-sidepanel .smk-commands .smk-panel-go-back {
+    order: 10;
 }
 
 .smk-sidepanel .smk-commands .smk-panel-title {
+    order: 20;
     flex-grow: 1;
     min-height: 26px;
     display: flex;
@@ -55,9 +57,11 @@
 }
 
 .smk-sidepanel .smk-commands .smk-panel-close {
+    order: 30;
 }
 
 .smk-sidepanel .smk-commands .smk-separator {
+    order: 100;
     flex-basis: 100%;
 }
 

@@ -77,7 +77,7 @@
 }
 
 .smk-device-mobile.smk-theme-wf .smk-sidepanel .smk-panel .smk-commands .smk-panel-go-back {
-    order: 1;
+    order: 29;
 }
 
 .smk-device-mobile.smk-theme-wf .smk-sidepanel .smk-panel .smk-commands .smk-panel-title {
@@ -86,17 +86,12 @@
     padding-left: 4px;
 }
 
-.smk-device-mobile.smk-theme-wf .smk-sidepanel .smk-panel .smk-commands .smk-panel-close {
-    order: 2;
-}
-
 .smk-device-mobile.smk-theme-wf .smk-sidepanel .smk-panel .smk-commands .smk-separator {
     display: none;
 }
 
 .smk-device-mobile.smk-theme-wf .smk-sidepanel .smk-panel .smk-body {
     z-index: 2;
-    padding: 5px;
 }
 
 /*.smk-device-mobile*/.smk-theme-wf .smk-sidepanel .smk-message.smk-summary {
@@ -133,6 +128,21 @@
 /* panel-feature.css */
 
 .smk-theme-wf .smk-feature-panel .smk-navigator {
+    order: 22;
     flex-grow: 1;
     justify-content: center;
+}
+
+.smk-theme-wf .smk-feature-list-panel .smk-commands .smk-clear {
+    order: 25;
+}
+
+.smk-theme-wf .smk-feature-panel .smk-commands .smk-zoom {
+    order: 25;
+}
+
+/* tool-layers.css */
+
+.smk-theme-wf .smk-layers-panel .smk-commands .smk-legend-toggle {
+    order: 25;
 }
