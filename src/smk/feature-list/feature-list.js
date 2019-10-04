@@ -10,7 +10,7 @@ include.module( 'feature-list', [ 'tool', 'widgets', 'sidepanel',
     Vue.component( 'feature-list-panel', {
         extends: inc.widgets.toolPanel,
         template: inc[ 'feature-list.panel-feature-list-html' ],
-        props: [ 'layers', 'highlightId', 'canRemove', 'canClear' ],
+        props: [ 'layers', 'highlightId', 'canRemove', 'canClear', 'command' ],
         computed: {
             featureCount: {
                 get: function () {
@@ -62,6 +62,7 @@ include.module( 'feature-list', [ 'tool', 'widgets', 'sidepanel',
     function FeatureList( option ) {
         this.makePropPanel( 'layers', [] )
         this.makePropPanel( 'highlightId', null )
+        this.makePropPanel( 'command', {} )
 
         SMK.TYPE.PanelTool.prototype.constructor.call( this, $.extend( {
             debugView: false

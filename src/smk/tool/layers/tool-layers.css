@@ -10,6 +10,7 @@
 }
 
 .smk-layers-panel .smk-commands .smk-all-visibility {
+    order: 60
 }
 
 .smk-layers-panel .smk-commands .smk-filter {
@@ -21,9 +22,11 @@
     vertical-align: top;
     /* flex-basis: 100%; */
     flex-grow: 1;
+    order: 70
 }
 
 .smk-layers-panel .smk-commands .smk-legend-toggle {
+    order: 80
 }
 
 /* .smk-layers-panel input.smk-filter {

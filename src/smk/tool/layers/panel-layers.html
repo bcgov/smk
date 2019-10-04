@@ -6,6 +6,8 @@
     <template slot="commands">
         <slot></slot>
 
+        <div class="smk-separator"></div>
+
         <i class="smk-all-visibility material-icons smk-command smk-icon"
             v-if="command.allVisibility !== false"
             v-bind:title="'Toggle visibility of all layers.\nSHIFT-click to toggle visibility on each layer.'"

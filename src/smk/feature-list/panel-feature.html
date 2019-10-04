@@ -2,6 +2,8 @@
     <template slot="commands">
         <slot></slot>
 
+        <div class="smk-separator"></div>
+
         <span class="smk-navigator" v-if="resultCount > 1 && command.navigator !== false">
             <i class="material-icons smk-move smk-command smk-icon"
                 v-on:click="$$emit( 'move-previous', { instance: instance } )"

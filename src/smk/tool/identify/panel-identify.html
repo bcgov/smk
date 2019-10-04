@@ -5,9 +5,11 @@
     <template slot="commands">
         <slot></slot>
 
-        <span class="smk-command && command.select !== false"
+        <div class="smk-separator" v-if="command.clear !== false"></div>
+
+        <span class="smk-command"
             v-bind:class="{ 'smk-disabled': busy }"
-            v-if="tool.select && list.featureCount > 1"
+            v-if="tool.select && list.featureCount > 1 && command.select !== false"
             v-on:click="$$emit( 'add-all' )"
         >Add all to selection</span>
     </template>

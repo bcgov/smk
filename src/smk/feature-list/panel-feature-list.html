@@ -6,7 +6,7 @@
     <template slot="commands">
         <slot name="commands" v-bind:featureCount="featureCount"></slot>
 
-        <span class="smk-command smk-clear" v-if="canClear"
+        <span class="smk-command smk-clear" v-if="canClear && command.clear !== false"
             v-bind:class="{ 'smk-disabled': featureCount == 0 }"
             v-on:click="$$emit( 'clear' )"
         >Clear</span>

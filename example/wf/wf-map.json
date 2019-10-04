@@ -61,7 +61,8 @@
       "position": "toolbar",
       "tolerance": 10,
       "command": {
-          "attributeMode": false
+          "attributeMode": false,
+          "clear": false
       }
     },
     {

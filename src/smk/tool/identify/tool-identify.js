@@ -8,7 +8,7 @@ include.module( 'tool-identify', [ 'feature-list', 'widgets', 'tool-identify.pan
     Vue.component( 'identify-panel', {
         extends: inc.widgets.toolPanel,
         template: inc[ 'tool-identify.panel-identify-html' ],
-        props: [ 'tool', 'layers', 'highlightId' ],
+        props: [ 'tool', 'layers', 'highlightId', 'command' ],
     } )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //

@@ -2,31 +2,6 @@
     v-bind:class="currentTool ? [ currentTool.class, 'smk-expanded' ] : []"
 >
     <div class="smk-elastic-panel">
-        <!-- <div class="smk-title"
-            v-bind:class=
-        >
-            <i class="smk-command smk-icon material-icons" title="Go Back"
-                v-on:click="previousPanel()"
-                v-bind:class="{ 'smk-hidden': depth() <= 1 }"
-            >arrow_back</i>
-
-            <div v-if="currentTool">
-                <component 
-                    v-if="currentTool.titleComponent"
-                    v-bind:is="currentTool.titleComponent"
-                    v-bind="currentTool.titleProps"
-                ></component>
-                <span
-                    v-else
-                    v-html="currentTool.panel.title"
-                ></span>
-            </div>
-
-            <i class="smk-command smk-icon material-icons" title="Close Panel"
-                v-on:click="closePanel()"
-            >close</i>
-        </div> -->
-
         <component class="smk-panel"
             v-if="currentTool"
             v-bind:is="currentTool.panelComponent"
@@ -53,8 +28,6 @@
             <i class="smk-panel-close smk-command smk-icon material-icons" title="Close Panel"
                 v-on:click="closePanel()"
             >close</i>
-
-            <div class="smk-separator"></div>
         </component>
     </div>
 
