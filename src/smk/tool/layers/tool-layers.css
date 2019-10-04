@@ -1,15 +1,35 @@
-.smk-layers-panel .smk-header .smk-commands {
+/* .smk-layers-panel .smk-header .smk-commands {
     height: 28px;
 
     display: flex;
     align-items: center;
-}
+} */
 
 .smk-layers-panel .smk-header .smk-commands label {
     white-space: nowrap;
 }
 
-.smk-layers-panel input.smk-filter {
+.smk-layers-panel .smk-commands .smk-all-visibility {
+    order: 60
+}
+
+.smk-layers-panel .smk-commands .smk-filter {
+    margin-bottom: 0;
+    border: 0;
+    font-size: 15px;
+    padding: 3px;
+    background-color: white;
+    vertical-align: top;
+    /* flex-basis: 100%; */
+    flex-grow: 1;
+    order: 70
+}
+
+.smk-layers-panel .smk-commands .smk-legend-toggle {
+    order: 80
+}
+
+/* .smk-layers-panel input.smk-filter {
     margin-bottom: 0;
     border: 0;
     font-size: 15px;
@@ -17,7 +37,7 @@
     background-color: white;
     vertical-align: top;
     flex-basis: 100%;
-}
+} */
 
 .smk-layers-panel input.smk-filter:focus {
     outline: 0;

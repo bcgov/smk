@@ -14,7 +14,7 @@ include.module( 'tool-layers', [ 'tool', 'widgets', 'tool-layers.panel-layers-ht
     Vue.component( 'layers-panel', {
         extends: inc.widgets.toolPanel,
         template: inc[ 'tool-layers.panel-layers-html' ],
-        props: [ 'items', 'config', 'allVisible', 'glyph' ],
+        props: [ 'items', 'config', 'allVisible', 'glyph', 'command' ],
         data: function () {
             return Object.assign( {}, this.config )
         },
@@ -51,8 +51,8 @@ include.module( 'tool-layers', [ 'tool', 'widgets', 'tool-layers.panel-layers-ht
             legend: false,
             filter: null,
         } )
-        this.makePropPanel( 'glyph', {
-        } )
+        this.makePropPanel( 'glyph', {} )
+        this.makePropPanel( 'command', {} )
 
         SMK.TYPE.Tool.prototype.constructor.call( this, $.extend( {
             // order:          3,

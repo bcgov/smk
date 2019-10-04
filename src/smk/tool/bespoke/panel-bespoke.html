@@ -1,4 +1,8 @@
-<side-panel class="smk-bespoke-panel" v-bind:showHeader="false">
+<side-panel class="smk-bespoke-panel" v-bind:showHeader="true">
+    <template slot="commands">
+        <slot></slot>
+    </template>
+
     <div 
         class="smk-bespoke-content" 
         v-content="{ content: content }"

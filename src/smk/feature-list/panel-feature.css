@@ -2,11 +2,6 @@
     position: relative;
 }
 
-.smk-feature-panel .smk-header {
-    padding-left: 10px;
-    /* padding-bottom: 5px; */
-}
-
 .smk-feature-panel .smk-header h2 {
     padding-bottom: 5px;
     font-size: 18px;
@@ -71,25 +66,40 @@
 }
 
 .smk-feature-panel .smk-commands {
-    /* border-top: 1px solid gray; */
-    /* padding-top: 5px; */
     user-select: none;
 }
 
-.smk-feature-panel .smk-command {
-    margin-right: 10px;
-}
-
-.smk-feature-panel .smk-navigator {
-    /* flex-grow: 1; */
+.smk-feature-panel .smk-commands .smk-navigator {
+    flex-grow: 1;
 
     display: flex;
     flex-direction: row;
-    justify-content: flex-end;
+    justify-content: center;
     align-items: center;
     align-content: flex-end;
-    /* margin-top: -4px; */
-    /* margin-right: -6px; */
+    order: 60
+}
+
+.smk-feature-panel .smk-commands .smk-separator ~ .smk-separator {
+    display: none;
+}
+
+.smk-feature-panel .smk-commands .smk-navigator ~ .smk-separator {
+    order: 100;
+    border: none;
+    display: block;
+}
+
+.smk-feature-panel .smk-commands .smk-zoom {
+    order: 110
+}
+
+.smk-feature-panel .smk-commands .smk-select {
+    order: 120
+}
+
+.smk-feature-panel .smk-commands .smk-attribute-mode {
+    order: 130
 }
 
 .smk-feature-panel .smk-navigator.smk-hidden {

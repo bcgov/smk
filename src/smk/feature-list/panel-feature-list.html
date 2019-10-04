@@ -6,16 +6,12 @@
     <template slot="commands">
         <slot name="commands" v-bind:featureCount="featureCount"></slot>
 
-        <div class="smk-command-row">
-            <span class="smk-command" v-if="canClear"
-                v-bind:class="{ 'smk-disabled': featureCount == 0 }"
-                v-on:click="$$emit( 'clear' )"
-            >Clear</span>
+        <span class="smk-command smk-clear" v-if="canClear && command.clear !== false"
+            v-bind:class="{ 'smk-disabled': featureCount == 0 }"
+            v-on:click="$$emit( 'clear' )"
+        >Clear</span>
 
-            <slot name="command-row" v-bind:featureCount="featureCount"></slot>
-        </div>
     </template>
-
 
     <div class="smk-layer"
         v-for="layer in layers"
@@ -45,5 +41,9 @@
             v-if="layer.metadataUrl"
             v-bind:href="layer.metadataUrl"
         >Layer information</a> -->
+    </div>
+
+    <div v-if="layers.length == 0">
+        Click on the map to identify features under the clicked point.
     </div>
 </side-panel>
