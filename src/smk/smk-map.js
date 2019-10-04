@@ -487,6 +487,12 @@ include.module( 'smk-map', [ 'jquery', 'util', 'theme-base' ], function () {
         return this.$device
     }
 
+    SmkMap.prototype.showFeature = function ( acetate, geometry, opt ) {
+        if ( this.$viewer.temporaryFeature )
+            this.$viewer.temporaryFeature( acetate, geometry, opt )
+    }
+    
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     function findProperty( obj, collectionName, propName, cb ) {
         if ( !( collectionName in obj ) )

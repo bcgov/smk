@@ -222,11 +222,15 @@ include.module( 'viewer-leaflet', [ 'viewer', 'leaflet', 'layer-leaflet', 'featu
         this.map.invalidateSize() 
     }, { delay: 250 } )
 
-    ViewerLeaflet.prototype.temporaryFeature = function ( acetate, geometry ) {
+    ViewerLeaflet.prototype.temporaryFeature = function ( acetate, geometry, opt ) {
         if ( !this.acetate ) this.acetate = {}
         if ( !this.acetate[ acetate ] ) this.acetate[ acetate ] = L.layerGroup().addTo( this.map )
 
-        this.acetate[ acetate ].clearLayers().addLayer( L.GeoJSON.geometryToLayer( geometry ) )
+        this.acetate[ acetate ].clearLayers()
+
+        if ( geometry ) {
+            this.acetate[ acetate ].addLayer( L.geoJSON( geometry, opt ) )
+        }
     }
     // ViewerLeaflet.prototype.zoomToFeature = function ( layer, feature ) {
     //     this.map.fitBounds( feature.highlightLayer.getBounds(), {
