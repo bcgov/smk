@@ -20,6 +20,43 @@ include.module( 'sidepanel', [ 'vue', 'sidepanel.sidepanel-html', 'sidepanel.pan
                 type: Boolean,
                 default: false
             }
+        },
+        data: function () {
+
+        },
+        methods: {
+            startSwipe: function ( ev ) {
+                // console.log('startSwipe',ev)
+                this.xDown = ev.touches[0].clientX;                                      
+                this.yDown = ev.touches[0].clientY;                             
+            },
+            moveSwipe: function ( ev ) {
+                // console.log('moveSwipe',ev,this.xDown,this.yDown)
+                if ( !this.xDown || !this.yDown )
+                    return
+            
+                var xDiff = this.xDown - ev.touches[0].clientX
+                var yDiff = this.yDown - ev.touches[0].clientY
+            
+                if ( Math.abs( xDiff ) > Math.abs( yDiff ) ) {
+                    if ( xDiff > 0 ) {
+                        /* left swipe */ 
+                    } else {
+                        /* right swipe */
+                    }                       
+                } else {
+                    if ( yDiff > 0 ) {
+                        /* up swipe */ 
+                        this.$$emit( 'swipe-up' )
+                    } else { 
+                        /* down swipe */
+                        this.$$emit( 'swipe-down' )
+                    }                                                                 
+                }
+
+                this.xDown = null;
+                this.yDown = null;                                                             
+            }
         }
     } )
 

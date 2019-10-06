@@ -93,7 +93,16 @@ include.module( 'feature-list', [ 'tool', 'widgets', 'sidepanel',
 
             'remove': function ( ev ) {
                 self.featureSet.remove( [ ev.featureId ] )
+            },
+
+            'swipe-up': function ( ev ) {
+                console.log( 'swipe-up' )
+            },
+
+            'swipe-down': function ( ev ) {
+                console.log( 'swipe-down' )
             }
+
         } )
 
         // = : = : = : = : = : = : = : = : = : = : = : = : = : = : = : = : = : = : =
