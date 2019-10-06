@@ -1,5 +1,6 @@
 <div class="smk-sidepanel" 
-    v-bind:class="currentTool ? [ currentTool.class, 'smk-expanded' ] : []"
+    v-bind:class="currentTool ? [ currentTool.class, 'smk-open' ] : []"
+    v-bind:class="{ 'smk-expand': currentTool && currentTool.panel.expand }"
 >
     <div class="smk-elastic-panel">
         <component class="smk-panel"

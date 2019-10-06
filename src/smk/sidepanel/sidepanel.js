@@ -21,9 +21,6 @@ include.module( 'sidepanel', [ 'vue', 'sidepanel.sidepanel-html', 'sidepanel.pan
                 default: false
             }
         },
-        data: function () {
-
-        },
         methods: {
             startSwipe: function ( ev ) {
                 // console.log('startSwipe',ev)
@@ -47,10 +44,10 @@ include.module( 'sidepanel', [ 'vue', 'sidepanel.sidepanel-html', 'sidepanel.pan
                 } else {
                     if ( yDiff > 0 ) {
                         /* up swipe */ 
-                        this.$$emit( 'swipe-up' )
+                        this.$emit( 'swipe-up' )
                     } else { 
                         /* down swipe */
-                        this.$$emit( 'swipe-down' )
+                        this.$emit( 'swipe-down' )
                     }                                                                 
                 }
 

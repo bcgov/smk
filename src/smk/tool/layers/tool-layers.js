@@ -14,7 +14,7 @@ include.module( 'tool-layers', [ 'tool', 'widgets', 'tool-layers.panel-layers-ht
     Vue.component( 'layers-panel', {
         extends: inc.widgets.toolPanel,
         template: inc[ 'tool-layers.panel-layers-html' ],
-        props: [ 'items', 'config', 'allVisible', 'glyph', 'command' ],
+        props: [ 'items', 'config', 'allVisible', 'glyph', 'command', '' ],
         data: function () {
             return Object.assign( {}, this.config )
         },
@@ -49,7 +49,7 @@ include.module( 'tool-layers', [ 'tool', 'widgets', 'tool-layers.panel-layers-ht
         this.makePropPanel( 'allVisible', true )
         this.makePropPanel( 'config', {
             legend: false,
-            filter: null,
+            filter: null
         } )
         this.makePropPanel( 'glyph', {} )
         this.makePropPanel( 'command', {} )
@@ -108,6 +108,19 @@ include.module( 'tool-layers', [ 'tool', 'widgets', 'tool-layers.panel-layers-ht
             'set-item-visible': function ( ev ) {
                 smk.$viewer.layerDisplayContext.setItemVisible( ev.id, ev.visible, ev.deep )
                 smk.$viewer.updateLayersVisible()
+            },
+
+            'swipe-up': function ( ev ) {                
+                console.log('swipe up',self)
+                self.expand = true
+            },
+
+            'swipe-down': function ( ev ) {
+                console.log('swipe down',self)
+                if ( self.expand )
+                    self.expand = false
+                else 
+                    smk.$sidepanel.closePanel()
             },
         } )
 

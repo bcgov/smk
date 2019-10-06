@@ -33,7 +33,7 @@ include.module( 'widgets', [ 'vue', 'widgets.tool-button-html' ], function ( inc
 
         toolPanel: Vue.extend( {
             mixins: [ emit ],
-            props: [ 'id', 'title', 'visible', 'enabled', 'active', 'busy', 'message', 'status' ],
+            props: [ 'id', 'title', 'visible', 'enabled', 'active', 'busy', 'message', 'status', 'expand' ],
         } )
 
     }

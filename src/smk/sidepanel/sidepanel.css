@@ -19,6 +19,11 @@
     z-index: 10;
 }
 
+.smk-sidepanel.smk-open {
+    display: block;
+    width: var( --panel-width );
+}
+
 .smk-elastic-panel {
     display: flex;
     flex-direction: column;
@@ -30,10 +35,6 @@
     max-height: 100%;
 }
 
-.smk-sidepanel.smk-expanded {
-    display: block;
-    width: var( --panel-width );
-}
 
 .smk-sidepanel .smk-panel .smk-commands {
     display: flex;
