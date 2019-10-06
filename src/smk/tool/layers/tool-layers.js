@@ -14,7 +14,7 @@ include.module( 'tool-layers', [ 'tool', 'widgets', 'tool-layers.panel-layers-ht
     Vue.component( 'layers-panel', {
         extends: inc.widgets.toolPanel,
         template: inc[ 'tool-layers.panel-layers-html' ],
-        props: [ 'items', 'config', 'allVisible', 'glyph', 'command', '' ],
+        props: [ 'items', 'config', 'allVisible', 'glyph', 'command' ],
         data: function () {
             return Object.assign( {}, this.config )
         },
@@ -111,14 +111,14 @@ include.module( 'tool-layers', [ 'tool', 'widgets', 'tool-layers.panel-layers-ht
             },
 
             'swipe-up': function ( ev ) {                
-                console.log('swipe up',self)
-                self.expand = true
+                // console.log('swipe up',self)
+                self.panel.expand = true
             },
 
             'swipe-down': function ( ev ) {
-                console.log('swipe down',self)
-                if ( self.expand )
-                    self.expand = false
+                // console.log('swipe down',self)
+                if ( self.panel.expand )
+                    self.panel.expand = false
                 else 
                     smk.$sidepanel.closePanel()
             },

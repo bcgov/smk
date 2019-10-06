@@ -135,6 +135,12 @@
     border-bottom: 1px solid #ccc;
 }
 
+.smk-device-mobile.smk-theme-wf .smk-sidepanel.smk-expand {
+    top: 0;
+    height: initial;
+    right: 0;
+}
+
 .smk-device-mobile.smk-theme-wf .smk-elastic-panel {
     position: absolute;
     top: 0;

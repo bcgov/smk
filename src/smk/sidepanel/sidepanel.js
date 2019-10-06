@@ -121,7 +121,7 @@ include.module( 'sidepanel', [ 'vue', 'sidepanel.sidepanel-html', 'sidepanel.pan
 
         this.model.currentTool = {
             id:             tool.id,
-            class:          tool.class,
+            // class:          tool.class,
             subPanel:       tool.subPanel,
             panelComponent: tool.panelComponent,
             panel:          tool.panel,
