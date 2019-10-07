@@ -7,8 +7,12 @@
 
 /* map-frame.css */
 
+.smk-device-mobile.smk-theme-wf.smk-map-frame .smk-viewer {
+    bottom: var( --toolbar-height );
+}
+
 .smk-device-mobile.smk-theme-wf.smk-map-frame.smk-sidepanel-active .smk-viewer {
-    bottom: 50%;
+    bottom: calc( 50% + var( --toolbar-height ) );
 }
 
 .smk-theme-wf .smk-command {
@@ -128,28 +132,28 @@
 
 .smk-device-mobile.smk-theme-wf .smk-sidepanel {
     top: initial;
-    width: initial;
-    /* height: 50%; */
-    height: 0;
+    left: 0;
     right: 0;
     bottom: var( --toolbar-height );
+
+    width: initial;
+    height: 50%;
+
     border-bottom: 1px solid #ccc;
+    opacity: 1;
 }
 
-.smk-device-mobile.smk-theme-wf .smk-sidepanel.smk-open {
-    animation-duration: 1s;
-    animation-name: grow-sidepanel;
-    animation-fill-mode: forwards;
+.smk-device-mobile.smk-theme-wf .smk-sidepanel.sidepanel-slide-enter-active, 
+.smk-device-mobile.smk-theme-wf .smk-sidepanel.sidepanel-slide-leave-active {
+    transition-property: all;
+    transition-duration: 0.5s;
+    transition-timing-function: ease-in-out;
 }
 
-@keyframes grow-sidepanel {
-    from {
-        height: 0;
-    }
-
-    to {
-        height: 50%;
-    }
+.smk-device-mobile.smk-theme-wf .smk-sidepanel.sidepanel-slide-enter, 
+.smk-device-mobile.smk-theme-wf .smk-sidepanel.sidepanel-slide-leave-to {
+    opacity: 0;
+    height: 0;
 }
 
 .smk-device-mobile.smk-theme-wf .smk-sidepanel.smk-expand {
@@ -157,7 +161,6 @@
     height: initial;
     right: 0;
 }
-
 
 .smk-device-mobile.smk-theme-wf .smk-elastic-panel {
     position: absolute;

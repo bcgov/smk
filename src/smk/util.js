@@ -106,6 +106,10 @@ include.module( 'util', null, function ( inc ) {
         makeDelayedCall: function ( fn, option ) {
             var timeoutId
 
+            option = Object.assign( {
+                delay: 200,
+            }, option )
+
             function cancel() {
                 if ( timeoutId ) clearTimeout( timeoutId )
                 timeoutId = null
@@ -119,11 +123,17 @@ include.module( 'util', null, function ( inc ) {
 
                 timeoutId = setTimeout( function () {
                     timeoutId = null
-                    fn.apply( ctxt, args )
-                }, option.delay || 200 )
+                    try {
+                        fn.apply( ctxt, args )
+                    }
+                    catch ( e ) {
+                        console.warn( 'during makeDelayedCall: ', e )
+                    }
+                }, option.delay )
             }
 
             delayedCall.cancel = cancel
+            delayedCall.option = option
 
             return delayedCall
         },

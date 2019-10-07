@@ -6,22 +6,13 @@
     cursor: move;
 }
 
-/* .smk-map-frame.smk-panel-expanded .smk-viewer .leaflet-left {
-    left: 310px;
-} */
-
 .smk-sidepanel {
-    display: none;
     position: absolute;
     top: 40px;
     left: 0;
+    width: var( --panel-width );
     bottom: var( --panel-bottom );
     z-index: 10;
-}
-
-.smk-sidepanel.smk-open {
-    display: block;
-    width: var( --panel-width );
 }
 
 .smk-elastic-panel {
@@ -34,7 +25,6 @@
     pointer-events: auto;
     max-height: 100%;
 }
-
 
 .smk-sidepanel .smk-panel .smk-commands {
     display: flex;
