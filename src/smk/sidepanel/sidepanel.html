@@ -6,6 +6,7 @@
 >
     <div class="smk-sidepanel" 
         v-show="visible"
+        v-bind:class="[ currentTool && currentTool.panel.expand ? 'smk-expand-' + currentTool.panel.expand : '' ]"
     >
         <div class="smk-elastic-panel">
             <component class="smk-panel"
