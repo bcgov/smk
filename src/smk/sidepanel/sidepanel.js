@@ -98,7 +98,6 @@ include.module( 'sidepanel', [ 'vue', 'sidepanel.sidepanel-html', 'sidepanel.pan
 
                 'beforeShow': function () {
                     // console.log( 'beforeShow' )
-                    // self.changedVisible()
                 },
 
                 'afterShow': function () {
@@ -113,7 +112,6 @@ include.module( 'sidepanel', [ 'vue', 'sidepanel.sidepanel-html', 'sidepanel.pan
 
                 'afterHide': function () {
                     // console.log( 'afterHide' )
-                    // self.changedVisible()
                 }
 
             },
@@ -129,6 +127,7 @@ include.module( 'sidepanel', [ 'vue', 'sidepanel.sidepanel-html', 'sidepanel.pan
 
         this.toolStack.forEach( function ( t ) {
             t.active = false
+            t.panel.expand = 0
         } )
     } 
 

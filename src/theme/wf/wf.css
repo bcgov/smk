@@ -12,7 +12,7 @@
 }
 
 .smk-device-mobile.smk-theme-wf.smk-map-frame.smk-sidepanel-active .smk-viewer {
-    bottom: calc( 50% + var( --toolbar-height ) );
+    bottom: 50%;
 }
 
 .smk-theme-wf .smk-command {
@@ -131,13 +131,12 @@
 /* sidepanel.css */
 
 .smk-device-mobile.smk-theme-wf .smk-sidepanel {
-    top: initial;
+    top: 50%;
     left: 0;
     right: 0;
     bottom: var( --toolbar-height );
 
     width: initial;
-    height: 50%;
 
     border-bottom: 1px solid #ccc;
     opacity: 1;
@@ -145,21 +144,19 @@
 
 .smk-device-mobile.smk-theme-wf .smk-sidepanel.sidepanel-slide-enter-active, 
 .smk-device-mobile.smk-theme-wf .smk-sidepanel.sidepanel-slide-leave-active {
-    transition-property: all;
-    transition-duration: 0.5s;
-    transition-timing-function: ease-in-out;
+    transition: all 1s ease-in-out;
 }
 
 .smk-device-mobile.smk-theme-wf .smk-sidepanel.sidepanel-slide-enter, 
 .smk-device-mobile.smk-theme-wf .smk-sidepanel.sidepanel-slide-leave-to {
     opacity: 0;
-    height: 0;
+    top: 100%
 }
 
-.smk-device-mobile.smk-theme-wf .smk-sidepanel.smk-expand {
+.smk-device-mobile.smk-theme-wf .smk-sidepanel.smk-expand-1 {
     top: 0;
-    height: initial;
     right: 0;
+    transition: top 1s ease-in-out;
 }
 
 .smk-device-mobile.smk-theme-wf .smk-elastic-panel {
