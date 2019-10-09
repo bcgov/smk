@@ -26,15 +26,6 @@
       "showSwipe": true
     },
     {
-      "type": "bespoke",
-      "instance": "foo",
-      "title": "Who am I",
-      "position": "list-menu",
-      "enabled": true,
-      "order": 99,
-      "icon": "fingerprint"
-    },
-    {
       "type": "location",
       "title": "Location",
       "position": "toolbar",
@@ -59,7 +50,7 @@
       "title": "Identify",
       "enabled": true,
       "showTitle": "mobile",
-      "position": "toolbar",
+      "position": "list-menu",
       "tolerance": 10,
       "command": {
           "attributeMode": false,
