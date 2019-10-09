@@ -14,7 +14,7 @@
         v-on:touchstart="startSwipe"
         v-on:touchmove="moveSwipe"
     >
-        <div class="smk-swipe-handle"></div>
+        <div class="smk-swipe-handle" v-if="showSwipe"></div>
         
         <slot name="header"></slot>
 

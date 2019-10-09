@@ -8,6 +8,10 @@ include.module( 'sidepanel', [ 'vue', 'sidepanel.sidepanel-html', 'sidepanel.pan
                 type: Boolean,
                 default: true
             },
+            showSwipe: {
+                type: Boolean,
+                default: false
+            },
             status: {
                 type: String,
                 default: ''
