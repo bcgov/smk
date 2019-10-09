@@ -65,6 +65,11 @@
     font-weight: normal;
 }
 
+.smk-device-mobile.smk-theme-wf .smk-command.smk-icon.smk-panel-go-back,
+.smk-device-mobile.smk-theme-wf .smk-command.smk-icon.smk-panel-close {
+    padding: 4px;
+}
+
 .smk-theme-wf .smk-command.smk-icon:hover {
     border: 1px solid black;
     outline: none;
@@ -194,4 +199,5 @@
 /*.smk-device-mobile*/.smk-theme-wf .smk-feature-panel .smk-commands .smk-zoom {
     order: 55;
 }
+
 
