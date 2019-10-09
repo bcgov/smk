@@ -8,7 +8,7 @@ include.module( 'tool-bespoke', [ 'tool', 'widgets', 'tool-bespoke.panel-bespoke
     Vue.component( 'bespoke-panel', {
         extends: inc.widgets.toolPanel,
         template: inc[ 'tool-bespoke.panel-bespoke-html' ],
-        props: [ 'content' ]
+        props: [ 'content', 'showSwipe' ]
     } )
 
     Vue.directive( 'content', {
@@ -32,6 +32,7 @@ include.module( 'tool-bespoke', [ 'tool', 'widgets', 'tool-bespoke.panel-bespoke
         this.makePropWidget( 'icon', 'extension' ) 
 
         this.makePropPanel( 'content', null )
+        this.makePropPanel( 'showSwipe', false )
 
         SMK.TYPE.Tool.prototype.constructor.call( this, $.extend( {
             widgetComponent:'bespoke-widget',
@@ -60,7 +61,20 @@ include.module( 'tool-bespoke', [ 'tool', 'widgets', 'tool-bespoke.panel-bespoke
                     SMK.HANDLER.get( self.id, 'activated' )( smk, self )
                 else
                     SMK.HANDLER.get( self.id, 'deactivated' )( smk, self )
-            }
+            },
+
+            'swipe-up': function ( ev ) {                
+                // console.log('swipe up',self)
+                self.panel.expand = 1
+            },
+
+            'swipe-down': function ( ev ) {
+                // console.log('swipe down',self)
+                if ( self.panel.expand )
+                    self.panel.expand = 0
+                else 
+                    smk.$sidepanel.closePanel()
+            },
         } )
 
         SMK.HANDLER.get( self.id, 'initialized' )( smk, self )

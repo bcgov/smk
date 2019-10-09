@@ -220,7 +220,7 @@ include.module( 'viewer-leaflet', [ 'viewer', 'leaflet', 'layer-leaflet', 'featu
 
     ViewerLeaflet.prototype.mapResized = SMK.UTIL.makeDelayedCall( function () { 
         this.map.invalidateSize() 
-    }, { delay: 250 } )
+    }, { delay: 50 } )
 
     ViewerLeaflet.prototype.temporaryFeature = function ( acetate, geometry, opt ) {
         if ( !this.acetate ) this.acetate = {}

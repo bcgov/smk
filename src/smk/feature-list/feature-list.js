@@ -10,7 +10,7 @@ include.module( 'feature-list', [ 'tool', 'widgets', 'sidepanel',
     Vue.component( 'feature-list-panel', {
         extends: inc.widgets.toolPanel,
         template: inc[ 'feature-list.panel-feature-list-html' ],
-        props: [ 'layers', 'highlightId', 'canRemove', 'canClear', 'command' ],
+        props: [ 'layers', 'highlightId', 'canRemove', 'canClear', 'command', 'showSwipe' ],
         computed: {
             featureCount: {
                 get: function () {
@@ -93,7 +93,16 @@ include.module( 'feature-list', [ 'tool', 'widgets', 'sidepanel',
 
             'remove': function ( ev ) {
                 self.featureSet.remove( [ ev.featureId ] )
+            },
+
+            'swipe-up': function ( ev ) {
+                console.log( 'swipe-up' )
+            },
+
+            'swipe-down': function ( ev ) {
+                console.log( 'swipe-down' )
             }
+
         } )
 
         // = : = : = : = : = : = : = : = : = : = : = : = : = : = : = : = : = : = : =

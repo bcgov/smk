@@ -1,34 +1,41 @@
-<div class="smk-sidepanel" 
-    v-bind:class="currentTool ? [ currentTool.class, 'smk-expanded' ] : []"
+<transition name="sidepanel-slide"
+    v-on:before-enter="beforeShow"
+    v-on:after-enter="afterShow"
+    v-on:before-leave="beforeHide"
+    v-on:after-leave="afterHide"
 >
-    <div class="smk-elastic-panel">
-        <component class="smk-panel"
-            v-if="currentTool"
-            v-bind:is="currentTool.panelComponent"
-            v-bind:key="currentTool.id"
-            v-bind="currentTool.panel"
-        >
-            <i class="smk-panel-go-back smk-command smk-icon material-icons" title="Go Back"
-                v-on:click="previousPanel()"
-                v-bind:class="{ 'smk-hidden': depth() <= 1 }"
-            >arrow_back</i>
+    <div class="smk-sidepanel" 
+        v-show="visible"
+        v-bind:class="[ currentTool && currentTool.panel.expand ? 'smk-expand-' + currentTool.panel.expand : '' ]"
+    >
+        <div class="smk-elastic-panel">
+            <component class="smk-panel"
+                v-if="currentTool"
+                v-bind:is="currentTool.panelComponent"
+                v-bind:key="currentTool.id"
+                v-bind="currentTool.panel"
+            >
+                <i class="smk-panel-go-back smk-command smk-icon material-icons" title="Go Back"
+                    v-on:click="previousPanel()"
+                    v-bind:class="{ 'smk-hidden': depth() <= 1 }"
+                >arrow_back</i>
 
-            <template v-if="currentTool">
-                <component 
-                    v-if="currentTool.titleComponent"
-                    v-bind:is="currentTool.titleComponent"
-                    v-bind="currentTool.titleProps"
-                ></component>
-                <span class="smk-panel-title"
-                    v-else
-                    v-html="currentTool.panel.title"
-                ></span>
-            </template>
+                <template v-if="currentTool">
+                    <component 
+                        v-if="currentTool.titleComponent"
+                        v-bind:is="currentTool.titleComponent"
+                        v-bind="currentTool.titleProps"
+                    ></component>
+                    <span class="smk-panel-title"
+                        v-else
+                        v-html="currentTool.panel.title"
+                    ></span>
+                </template>
 
-            <i class="smk-panel-close smk-command smk-icon material-icons" title="Close Panel"
-                v-on:click="closePanel()"
-            >close</i>
-        </component>
+                <i class="smk-panel-close smk-command smk-icon material-icons" title="Close Panel"
+                    v-on:click="closePanel()"
+                >close</i>
+            </component>
+        </div>
     </div>
-
-</div>
+</transition>

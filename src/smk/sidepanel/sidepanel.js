@@ -8,6 +8,10 @@ include.module( 'sidepanel', [ 'vue', 'sidepanel.sidepanel-html', 'sidepanel.pan
                 type: Boolean,
                 default: true
             },
+            showSwipe: {
+                type: Boolean,
+                default: false
+            },
             status: {
                 type: String,
                 default: ''
@@ -19,6 +23,40 @@ include.module( 'sidepanel', [ 'vue', 'sidepanel.sidepanel-html', 'sidepanel.pan
             busy: {
                 type: Boolean,
                 default: false
+            }
+        },
+        methods: {
+            startSwipe: function ( ev ) {
+                // console.log('startSwipe',ev)
+                this.xDown = ev.touches[0].clientX;                                      
+                this.yDown = ev.touches[0].clientY;                             
+            },
+            moveSwipe: function ( ev ) {
+                // console.log('moveSwipe',ev,this.xDown,this.yDown)
+                if ( !this.xDown || !this.yDown )
+                    return
+            
+                var xDiff = this.xDown - ev.touches[0].clientX
+                var yDiff = this.yDown - ev.touches[0].clientY
+            
+                if ( Math.abs( xDiff ) > Math.abs( yDiff ) ) {
+                    if ( xDiff > 0 ) {
+                        /* left swipe */ 
+                    } else {
+                        /* right swipe */
+                    }                       
+                } else {
+                    if ( yDiff > 0 ) {
+                        /* up swipe */ 
+                        this.$emit( 'swipe-up' )
+                    } else { 
+                        /* down swipe */
+                        this.$emit( 'swipe-down' )
+                    }                                                                 
+                }
+
+                this.xDown = null;
+                this.yDown = null;                                                             
             }
         }
     } )
@@ -33,7 +71,8 @@ include.module( 'sidepanel', [ 'vue', 'sidepanel.sidepanel-html', 'sidepanel.pan
         SidepanelEvent.prototype.constructor.call( this )
 
         this.model = {
-            currentTool: null
+            currentTool: null,
+            visible: false
         }
 
         this.toolStack = []
@@ -59,23 +98,41 @@ include.module( 'sidepanel', [ 'vue', 'sidepanel.sidepanel-html', 'sidepanel.pan
 
                 'depth': function () {
                     return self.toolStack.length
+                },
+
+                'beforeShow': function () {
+                    // console.log( 'beforeShow' )
+                },
+
+                'afterShow': function () {
+                    // console.log( 'afterShow' )
+                    self.changedVisible()
+                },
+
+                'beforeHide': function () {
+                    // console.log( 'beforeHide' )
+                    self.changedVisible()
+                },
+
+                'afterHide': function () {
+                    // console.log( 'afterHide' )
                 }
+
             },
         } )
     }    
 
     Sidepanel.prototype.isPanelVisible = function () {
-        return this.model.currentTool != null
+        return this.model.visible
     }
 
     Sidepanel.prototype.closePanel = function () {
-        this.model.currentTool = null
+        this.model.visible = false
 
         this.toolStack.forEach( function ( t ) {
             t.active = false
+            t.panel.expand = 0
         } )
-
-        this.changedVisible()
     } 
 
     Sidepanel.prototype.setCurrentTool = function ( tool ) {
@@ -87,7 +144,6 @@ include.module( 'sidepanel', [ 'vue', 'sidepanel.sidepanel-html', 'sidepanel.pan
 
         this.model.currentTool = {
             id:             tool.id,
-            class:          tool.class,
             subPanel:       tool.subPanel,
             panelComponent: tool.panelComponent,
             panel:          tool.panel,
@@ -95,7 +151,7 @@ include.module( 'sidepanel', [ 'vue', 'sidepanel.sidepanel-html', 'sidepanel.pan
             titleProps:     titleProps
         }
 
-        this.changedVisible()
+        this.model.visible = true
     }
 
     Sidepanel.prototype.isToolStacked = function ( tool ) {
@@ -119,8 +175,7 @@ include.module( 'sidepanel', [ 'vue', 'sidepanel.sidepanel-html', 'sidepanel.pan
             this.toolStack[ top - 1 ].active = true
         }
         else {
-            this.model.currentTool = null
-            this.changedVisible()
+            this.closePanel()
         }
 
         return this.toolStack.length
@@ -148,7 +203,7 @@ include.module( 'sidepanel', [ 'vue', 'sidepanel.sidepanel-html', 'sidepanel.pan
             this.toolStack.push( tool )
         }
 
-        if ( this.model.currentTool == null ) {
+        if ( !this.isPanelVisible() ) {
             this.toolStack.forEach( function ( t ) {
                 t.active = true
             } )

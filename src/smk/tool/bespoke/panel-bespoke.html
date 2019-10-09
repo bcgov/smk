@@ -1,4 +1,9 @@
-<side-panel class="smk-bespoke-panel" v-bind:showHeader="true">
+<side-panel class="smk-bespoke-panel" 
+    showHeader="true"
+    v-bind:showSwipe="showSwipe"
+    v-on:swipe-up="showSwipe && $$emit('swipe-up')"
+    v-on:swipe-down="showSwipe && $$emit('swipe-down')"    
+>
     <template slot="commands">
         <slot></slot>
     </template>

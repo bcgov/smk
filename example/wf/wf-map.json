@@ -22,7 +22,8 @@
       "enabled": true,
       "showTitle": "mobile",
       "icon": "my_location",
-      "order": 80
+      "order": 80,
+      "showSwipe": true
     },
     {
       "type": "bespoke",

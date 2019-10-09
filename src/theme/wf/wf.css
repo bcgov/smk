@@ -7,6 +7,10 @@
 
 /* map-frame.css */
 
+.smk-device-mobile.smk-theme-wf.smk-map-frame .smk-viewer {
+    bottom: var( --toolbar-height );
+}
+
 .smk-device-mobile.smk-theme-wf.smk-map-frame.smk-sidepanel-active .smk-viewer {
     bottom: 50%;
 }
@@ -132,12 +136,32 @@
 /* sidepanel.css */
 
 .smk-device-mobile.smk-theme-wf .smk-sidepanel {
-    top: initial;
-    width: initial;
-    height: 50%;
+    top: 50%;
+    left: 0;
     right: 0;
     bottom: var( --toolbar-height );
+
+    width: initial;
+
     border-bottom: 1px solid #ccc;
+    opacity: 1;
+}
+
+.smk-device-mobile.smk-theme-wf .smk-sidepanel.sidepanel-slide-enter-active, 
+.smk-device-mobile.smk-theme-wf .smk-sidepanel.sidepanel-slide-leave-active {
+    transition: all 1s ease-in-out;
+}
+
+.smk-device-mobile.smk-theme-wf .smk-sidepanel.sidepanel-slide-enter, 
+.smk-device-mobile.smk-theme-wf .smk-sidepanel.sidepanel-slide-leave-to {
+    opacity: 0;
+    top: 100%
+}
+
+.smk-device-mobile.smk-theme-wf .smk-sidepanel.smk-expand-1 {
+    top: 0;
+    right: 0;
+    transition: top 1s ease-in-out;
 }
 
 .smk-device-mobile.smk-theme-wf .smk-elastic-panel {

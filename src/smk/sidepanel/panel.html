@@ -9,7 +9,13 @@
         <busy-spinner v-bind:size="16" v-bind:busy="busy"></busy-spinner>
     </div>            
 
-    <div class="smk-header" v-if="showHeader">
+    <div class="smk-header" 
+        v-if="showHeader"
+        v-on:touchstart="startSwipe"
+        v-on:touchmove="moveSwipe"
+    >
+        <div class="smk-swipe-handle" v-if="showSwipe"></div>
+        
         <slot name="header"></slot>
 
         <div class="smk-commands">

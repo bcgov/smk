@@ -2,6 +2,9 @@
     v-bind:busy="busy"
     v-bind:message="busy ? 'Loading data' : ( !items || items.length == 0 ) ? 'No layers are configured' : ''"
     v-bind:status="busy ? 'progress' : ( !items || items.length == 0 ) ? 'warning' : ''"
+    showSwipe="true"
+    v-on:swipe-up="$$emit('swipe-up')"
+    v-on:swipe-down="$$emit('swipe-down')"    
 >
     <template slot="commands">
         <slot></slot>

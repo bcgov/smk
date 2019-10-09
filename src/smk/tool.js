@@ -4,7 +4,7 @@ include.module( 'tool', [ 'jquery', 'event' ], function () {
     var ToolEvent = SMK.TYPE.Event.define( [
         'changedVisible',
         'changedEnabled',
-        'changedActive',
+        'changedActive'
     ] )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
@@ -16,7 +16,9 @@ include.module( 'tool', [ 'jquery', 'event' ], function () {
         this.makeProp( 'visible', false, 'changedVisible' )
         this.makeProp( 'enabled', true, 'changedEnabled' )
         this.makeProp( 'active', false, 'changedActive' )
-        this.makeProp( 'class', null )
+        // this.makeProp( 'class', null )
+
+        this.makePropPanel( 'expand', 0 )
 
         this.makePropWidget( 'type', 'unknown' )
         this.makePropWidget( 'showTitle', false )
