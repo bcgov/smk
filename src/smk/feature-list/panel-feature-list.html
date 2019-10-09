@@ -23,7 +23,7 @@
     >
         <!-- v-on:mouseenter="$$emit( 'hover', { features: layer.features } )" -->
         <!-- v-on:mouseleave="$$emit( 'hover', { features: null } )" -->
-        <h2>{{ layer.title }}<span class="smk-count" v-if="layer.features.length > 1">({{ layer.features.length }})</span></h2>
+        <!-- <h2>{{ layer.title }}<span class="smk-count" v-if="layer.features.length > 1">({{ layer.features.length }})</span></h2> -->
         <div class="smk-feature smk-item" title="Click to see attributes"
             v-for="feature in layer.features"
             v-bind:class="{ 'smk-highlighted': feature.id == highlightId }"

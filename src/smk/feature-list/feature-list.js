@@ -29,7 +29,8 @@ include.module( 'feature-list', [ 'tool', 'widgets', 'sidepanel',
             },
             formatValue: function ( val ) {
                 if ( /^https?[:][/]{2}[^/]/.test( ( '' + val ).trim() ) ) {
-                    return '<a href="'+ val + '" target="_blank">' + val + '</a>'
+                    //return '<a href="'+ val + '" target="_blank">' + val + '</a>'
+                    return '<a href="'+ val + '" target="_blank">' + 'Click to Open' + '</a>'
                 }
 
                 return val
