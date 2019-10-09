@@ -97,7 +97,21 @@ include.module( 'tool-identify', [ 'feature-list', 'widgets', 'tool-identify.pan
 
             'clear': function ( ev ) {
                 self.setMessage( 'Click on map to identify features.' )
-            }
+            },
+
+            'swipe-up': function ( ev ) {                
+                // console.log('swipe up',self)
+                self.panel.expand = 1
+            },
+
+            'swipe-down': function ( ev ) {
+                // console.log('swipe down',self)
+                if ( self.panel.expand )
+                    self.panel.expand = 0
+                else 
+                    smk.$sidepanel.closePanel()
+            },
+
         } )
 
         smk.$viewer.startedIdentify( function ( ev ) {
