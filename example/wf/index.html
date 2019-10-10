@@ -80,5 +80,54 @@
             // console.log( 'foo active!' )
             tool.content = '<div>I am a legend in my own mind</div>'
         } )
+
+        include( 'feature-list' ).then( function () {
+            Vue.component( 'wf-feature', {
+                template: '#wf-feature-template',
+                extends: SMK.TYPE.VueFeatureComponent
+            } )
+        } )
     </script>
+
+    <style>
+        .wf-feature-attribute {
+            padding-top: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            word-break: break-word;
+        }
+
+        .wf-feature-attribute.wf-title-feature-attribute {
+            font-weight: bold;
+            padding-top: 0px;
+        }
+
+        .wf-feature-attribute-title {
+            flex-basis: 40%;
+            font-size: 11px;
+            text-align: right;
+        }
+
+        .wf-feature-attribute-value {
+            flex-basis: 55%;
+            font-size: 13px;
+            text-align: left;
+        }
+    </style>
+
+    <template id="wf-feature-template">
+        <div>
+            <div class="smk-attributes" v-if="layer.attributes && layer.attributes.length > 0">
+                <div class="wf-feature-attribute wf-title-feature-attribute" v-if="layer.attributes.length > 0">
+                    <span class="wf-feature-attribute-title" v-html="insertWordBreaks( layer.attributes[ 0 ].title )"></span>
+                    <span class="wf-feature-attribute-value" v-html="formatValue( feature.properties[ layer.attributes[ 0 ].name ] )"></span>
+                </div>
+                <div class="wf-feature-attribute" v-for="(attr,index) in layer.attributes" v-if="attr.visible !== false && index > 0">
+                    <span class="wf-feature-attribute-title" v-html="insertWordBreaks( attr.title )"></span>
+                    <span class="wf-feature-attribute-value" v-html="formatValue( feature.properties[ attr.name ] )"></span>
+                </div>
+            </div>
+        </div>
+    </template>
 </html>

@@ -21,7 +21,7 @@ include.module( 'feature-list', [ 'tool', 'widgets', 'sidepanel',
         },
     } )
 
-    var featureComponent = Vue.extend( {
+    var featureComponent = SMK.TYPE.VueFeatureComponent = Vue.extend( {
         props: [ 'feature', 'layer', 'showHeader' ],
         methods: {
             insertWordBreaks: function ( str ) {
@@ -29,7 +29,7 @@ include.module( 'feature-list', [ 'tool', 'widgets', 'sidepanel',
             },
             formatValue: function ( val ) {
                 if ( /^https?[:][/]{2}[^/]/.test( ( '' + val ).trim() ) ) {
-                    return '<a href="'+ val + '" target="_blank">' + val + '</a>'
+                    return '<a href="'+ val + '" target="_blank">Open in new window</a>'
                 }
 
                 return val

@@ -190,7 +190,7 @@
           "visible": true
         }
       ],
-      "popupTemplate": "<div><div class=\"smk-attributes\"v-if=\"layer.attributes && layer.attributes.length > 0\"><div style=\"padding-top: 15px;\"v-for=\"(attr,index) in layer.attributes\"v-if=\"attr.visible !== false && index===0\"><span style=\"display: inline-block; vertical-align: top;padding-right: 15px;font-size: 12px;text-align: right;width: 30%; margin-left:17%;font-weight:bold\" v-html=\"insertWordBreaks( attr.title )\"></span><span style=\" display: inline-block;vertical-align: top;padding-left: 10px;font-size: 13px;text-align: left;font-weight:bold\" v-html=\"formatValue( feature.properties[ attr.name ] )\"></span></div><div style=\"padding-top: 15px;\"v-for=\"(attr,index) in layer.attributes\"v-if=\"attr.visible !== false && index!==0\"><span style=\"display: inline-block; vertical-align: top;padding-right: 15px;font-size: 12px;text-align: right;width: 30%; margin-left:17%\" v-html=\"insertWordBreaks( attr.title )\"></span><span style=\" display: inline-block;vertical-align: top;padding-left: 10px;font-size: 13px;text-align: left;\" v-html=\"formatValue( feature.properties[ attr.name ] )\"></span></div></div></div>"
+      "popupTemplate": "@wf-feature"
     },
     {
       "type": "esri-feature",
@@ -205,7 +205,7 @@
       "opacity": 0.25,
       "scaleMin": 500000,
       "scaleMax": 0,
-      "popupTemplate": "<div><div class=\"smk-attributes\"v-if=\"layer.attributes && layer.attributes.length > 0\"><div style=\"padding-top: 15px;\"v-for=\"(attr,index) in layer.attributes\"v-if=\"attr.visible !== false && index===0\"><span style=\"display: inline-block; vertical-align: top;padding-right: 15px;font-size: 12px;text-align: right;width: 30%; margin-left:17%;font-weight:bold\" v-html=\"insertWordBreaks( attr.title )\"></span><span style=\" display: inline-block;vertical-align: top;padding-left: 10px;font-size: 13px;text-align: left;font-weight:bold\" v-html=\"formatValue( feature.properties[ attr.name ] )\"></span></div><div style=\"padding-top: 15px;\"v-for=\"(attr,index) in layer.attributes\"v-if=\"attr.visible !== false && index!==0\"><span style=\"display: inline-block; vertical-align: top;padding-right: 15px;font-size: 12px;text-align: right;width: 30%; margin-left:17%\" v-html=\"insertWordBreaks( attr.title )\"></span><span style=\" display: inline-block;vertical-align: top;padding-left: 10px;font-size: 13px;text-align: left;\" v-html=\"formatValue( feature.properties[ attr.name ] )\"></span></div></div></div>"
+      "popupTemplate": "@wf-feature"
     },
     {
       "type": "esri-feature",
@@ -251,7 +251,7 @@
           "visible": true
         }
       ],
-      "popupTemplate": "<div><div class=\"smk-attributes\"v-if=\"layer.attributes && layer.attributes.length > 0\"><div style=\"padding-top: 15px;\"v-for=\"(attr,index) in layer.attributes\"v-if=\"attr.visible !== false && index===0\"><span style=\"display: inline-block; vertical-align: top;padding-right: 15px;font-size: 12px;text-align: right;width: 30%; margin-left:17%;font-weight:bold\" v-html=\"insertWordBreaks( attr.title )\"></span><span style=\" display: inline-block;vertical-align: top;padding-left: 10px;font-size: 13px;text-align: left;font-weight:bold\" v-html=\"formatValue( feature.properties[ attr.name ] )\"></span></div><div style=\"padding-top: 15px;\"v-for=\"(attr,index) in layer.attributes\"v-if=\"attr.visible !== false && index!==0\"><span style=\"display: inline-block; vertical-align: top;padding-right: 15px;font-size: 12px;text-align: right;width: 30%; margin-left:17%\" v-html=\"insertWordBreaks( attr.title )\"></span><span style=\" display: inline-block;vertical-align: top;padding-left: 10px;font-size: 13px;text-align: left;\" v-html=\"formatValue( feature.properties[ attr.name ] )\"></span></div></div></div>"
+      "popupTemplate": "@wf-feature"
     },
     {
       "type": "esri-tiled",
@@ -265,7 +265,7 @@
       "scaleMin": 500000,
       "scaleMax": 0,
       "isQueryable": false,
-      "popupTemplate": "<div><div class=\"smk-attributes\"v-if=\"layer.attributes && layer.attributes.length > 0\"><div style=\"padding-top: 15px;\"v-for=\"(attr,index) in layer.attributes\"v-if=\"attr.visible !== false && index===0\"><span style=\"display: inline-block; vertical-align: top;padding-right: 15px;font-size: 12px;text-align: right;width: 30%; margin-left:17%;font-weight:bold\" v-html=\"insertWordBreaks( attr.title )\"></span><span style=\" display: inline-block;vertical-align: top;padding-left: 10px;font-size: 13px;text-align: left;font-weight:bold\" v-html=\"formatValue( feature.properties[ attr.name ] )\"></span></div><div style=\"padding-top: 15px;\"v-for=\"(attr,index) in layer.attributes\"v-if=\"attr.visible !== false && index!==0\"><span style=\"display: inline-block; vertical-align: top;padding-right: 15px;font-size: 12px;text-align: right;width: 30%; margin-left:17%\" v-html=\"insertWordBreaks( attr.title )\"></span><span style=\" display: inline-block;vertical-align: top;padding-left: 10px;font-size: 13px;text-align: left;\" v-html=\"formatValue( feature.properties[ attr.name ] )\"></span></div></div></div>"
+      "popupTemplate": "@wf-feature"
     },
     {
       "type": "esri-feature",
@@ -322,7 +322,7 @@
       "where": "",
       "scaleMin": 500000,
       "scaleMax": 0,
-      "popupTemplate": "<div><div class=\"smk-attributes\"v-if=\"layer.attributes && layer.attributes.length > 0\"><div style=\"padding-top: 15px;\"v-for=\"(attr,index) in layer.attributes\"v-if=\"attr.visible !== false && index===0\"><span style=\"display: inline-block; vertical-align: top;padding-right: 15px;font-size: 12px;text-align: right;width: 30%; margin-left:17%;font-weight:bold\" v-html=\"insertWordBreaks( attr.title )\"></span><span style=\" display: inline-block;vertical-align: top;padding-left: 10px;font-size: 13px;text-align: left;font-weight:bold\" v-html=\"formatValue( feature.properties[ attr.name ] )\"></span></div><div style=\"padding-top: 15px;\"v-for=\"(attr,index) in layer.attributes\"v-if=\"attr.visible !== false && index!==0\"><span style=\"display: inline-block; vertical-align: top;padding-right: 15px;font-size: 12px;text-align: right;width: 30%; margin-left:17%\" v-html=\"insertWordBreaks( attr.title )\"></span><span style=\" display: inline-block;vertical-align: top;padding-left: 10px;font-size: 13px;text-align: left;\" v-html=\"formatValue( feature.properties[ attr.name ] )\"></span></div></div></div>"
+      "popupTemplate": "@wf-feature"
     },
     {
       "type": "esri-feature",
@@ -408,7 +408,7 @@
           "visible": true
         }
       ],
-      "popupTemplate": "<div><div class=\"smk-attributes\"v-if=\"layer.attributes && layer.attributes.length > 0\"><div style=\"padding-top: 15px;\"v-for=\"(attr,index) in layer.attributes\"v-if=\"attr.visible !== false && index===0\"><span style=\"display: inline-block; vertical-align: top;padding-right: 15px;font-size: 12px;text-align: right;width: 20%; margin-left:17%;font-weight:bold\" v-html=\"insertWordBreaks( attr.title )\"></span><span style=\" display: inline-block;vertical-align: top;padding-left: 10px;font-size: 13px;text-align: left;font-weight:bold\" v-html=\"formatValue( feature.properties[ attr.name ] )\"></span></div><div style=\"padding-top: 15px;\"v-for=\"(attr,index) in layer.attributes\"v-if=\"attr.visible !== false && index!==0\"><span style=\"display: inline-block; vertical-align: top;padding-right: 15px;font-size: 12px;text-align: right;width: 20%; margin-left:17%\" v-html=\"insertWordBreaks( attr.title )\"></span><span style=\" display: inline-block;vertical-align: top;padding-left: 10px;font-size: 13px;text-align: left;\" v-html=\"formatValue( feature.properties[ attr.name ] )\"></span></div></div></div>"
+      "popupTemplate": "@wf-feature"
     },
     {
       "type": "wms",
@@ -416,7 +416,7 @@
       "title": "Fire Perimeters - Current",
       "serviceUrl": "https://openmaps.gov.bc.ca/geo/pub/wms",
       "layerName": "WHSE_LAND_AND_NATURAL_RESOURCE.PROT_CURRENT_FIRE_POLYS_SP",
-      "popupTemplate": "<div><div class=\"smk-attributes\"v-if=\"layer.attributes && layer.attributes.length > 0\"><div style=\"padding-top: 15px;\"v-for=\"(attr,index) in layer.attributes\"v-if=\"attr.visible !== false && index===0\"><span style=\"display: inline-block; vertical-align: top;padding-right: 15px;font-size: 12px;text-align: right;width: 30%; margin-left:17%;font-weight:bold\" v-html=\"insertWordBreaks( attr.title )\"></span><span style=\" display: inline-block;vertical-align: top;padding-left: 10px;font-size: 13px;text-align: left;font-weight:bold\" v-html=\"formatValue( feature.properties[ attr.name ] )\"></span></div><div style=\"padding-top: 15px;\"v-for=\"(attr,index) in layer.attributes\"v-if=\"attr.visible !== false && index!==0\"><span style=\"display: inline-block; vertical-align: top;padding-right: 15px;font-size: 12px;text-align: right;width: 30%; margin-left:17%\" v-html=\"insertWordBreaks( attr.title )\"></span><span style=\" display: inline-block;vertical-align: top;padding-left: 10px;font-size: 13px;text-align: left;\" v-html=\"formatValue( feature.properties[ attr.name ] )\"></span></div></div></div>"
+      "popupTemplate": "@wf-feature"
     },
     {
       "type": "esri-feature",
@@ -430,7 +430,7 @@
       "where": "",
       "scaleMin": 500000,
       "scaleMax": 0,
-      "popupTemplate": "<div><div class=\"smk-attributes\"v-if=\"layer.attributes && layer.attributes.length > 0\"><div style=\"padding-top: 15px;\"v-for=\"(attr,index) in layer.attributes\"v-if=\"attr.visible !== false && index===0\"><span style=\"display: inline-block; vertical-align: top;padding-right: 15px;font-size: 12px;text-align: right;width: 30%; margin-left:17%;font-weight:bold\" v-html=\"insertWordBreaks( attr.title )\"></span><span style=\" display: inline-block;vertical-align: top;padding-left: 10px;font-size: 13px;text-align: left;font-weight:bold\" v-html=\"formatValue( feature.properties[ attr.name ] )\"></span></div><div style=\"padding-top: 15px;\"v-for=\"(attr,index) in layer.attributes\"v-if=\"attr.visible !== false && index!==0\"><span style=\"display: inline-block; vertical-align: top;padding-right: 15px;font-size: 12px;text-align: right;width: 30%; margin-left:17%\" v-html=\"insertWordBreaks( attr.title )\"></span><span style=\" display: inline-block;vertical-align: top;padding-left: 10px;font-size: 13px;text-align: left;\" v-html=\"formatValue( feature.properties[ attr.name ] )\"></span></div></div></div>"
+      "popupTemplate": "@wf-feature"
     },
     {
       "type": "esri-feature",
@@ -487,7 +487,7 @@
       "where": "CLOSURE_IND = 'Y'",
       "scaleMin": 500000,
       "scaleMax": 0,
-      "popupTemplate": "<div><div class=\"smk-attributes\"v-if=\"layer.attributes && layer.attributes.length > 0\"><div style=\"padding-top: 15px;\"v-for=\"(attr,index) in layer.attributes\"v-if=\"attr.visible !== false && index===0\"><span style=\"display: inline-block; vertical-align: top;padding-right: 15px;font-size: 12px;text-align: right;width: 30%; margin-left:17%;font-weight:bold\" v-html=\"insertWordBreaks( attr.title )\"></span><span style=\" display: inline-block;vertical-align: top;padding-left: 10px;font-size: 13px;text-align: left;font-weight:bold; width:30%;\" v-html=\"formatValue( feature.properties[ attr.name ] )\"></span></div><div style=\"padding-top: 15px;\"v-for=\"(attr,index) in layer.attributes\"v-if=\"attr.visible !== false && index!==0\"><span style=\"display: inline-block; vertical-align: top;padding-right: 15px;font-size: 12px;text-align: right;width: 30%; margin-left:17%\" v-html=\"insertWordBreaks( attr.title )\"></span><span style=\" display: inline-block;vertical-align: top;padding-left: 10px;font-size: 13px;text-align: left;width:30%;\" v-html=\"formatValue( feature.properties[ attr.name ] )\"></span></div></div></div>",
+      "popupTemplate": "@wf-feature",
       "drawingInfo": {
         "renderer": {
           "type": "uniqueValue",
@@ -525,7 +525,8 @@
       "layerName": "op5:OP5_EVENT511_ACTIVE_V",
       "metadataUrl": "https://catalogue.data.gov.bc.ca/dataset/diagnostic-facilities",
       "scaleMin": 500000,
-      "scaleMax": 0
+      "scaleMax": 0,
+      "popupTemplate": "@wf-feature"
     }
   ]
 }
