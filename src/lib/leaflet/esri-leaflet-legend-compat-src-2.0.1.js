@@ -522,8 +522,8 @@ EsriLeaflet.Legend.SymbolRenderer = L.Class.extend({
       symbol.type === 'esriSFS') {
       ctx.width = ctx.height = EsriLeaflet.Legend.SymbolRenderer.DEFAULT_SIZE;
     } else {
-      ctx.width = symbol.width;
-      ctx.height = symbol.height;
+      ctx.width = Math.round( 0.5 + symbol.width );
+      ctx.height = Math.round( 0.5 + symbol.height );
     }
   },
 

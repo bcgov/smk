@@ -225,3 +225,15 @@
 }
 
 
+/* tool-layers.css */
+
+.smk-theme-wf .smk-layers-panel .smk-legend-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.smk-theme-wf .smk-layers-panel .smk-legend-title {
+    font-size: 12px;
+    margin-left: 5px;
+}

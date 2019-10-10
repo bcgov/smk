@@ -23,7 +23,9 @@ include.module( 'layer.layer-esri-feature-js', [ 'layer.layer-js', 'terraformer'
             return legends.map( function ( lg ) {
                 return {
                     url: 'data:image/png;base64,' + lg.imageData,
-                    title: lg.label
+                    title: lg.label,
+                    height: lg.height,
+                    width: lg.width
                 }
             } )
         } )

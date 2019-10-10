@@ -32,9 +32,9 @@
         >
             <span v-if="item.showLegend == 'waiting'">Requesting</span>
 
-            <div v-for="legend in item.legends">
-                <img v-bind:src="legend.url">
-                <span>{{ legend.title }}</span>
+            <div class="smk-legend-item" v-for="legend in item.legends">
+                <img v-bind:src="legend.url" v-bind:style="{ width: legend.width + 'px', height: legend.height + 'px' }">
+                <span class="smk-legend-title">{{ legend.title }}</span>
             </div>
         </div>
 
