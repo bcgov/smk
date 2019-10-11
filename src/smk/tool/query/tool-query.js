@@ -66,8 +66,9 @@ include.module( 'tool-query', [ 'feature-list', 'widgets', 'sidepanel', 'tool-qu
         },
         watch: {
             config: function ( val ) {
+                var self = this
                 Object.keys( val ).forEach( function ( k ) {
-                    this[ k ] = val[ k ]
+                    self[ k ] = val[ k ]
                 } )
             }
         },

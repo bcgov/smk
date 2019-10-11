@@ -90,8 +90,29 @@
       }
     },
     {
+      "type": "menu",
+      "icon": "search",
+      "title": "Search",
+      "position": "toolbar",
+      "enabled": true,
+      "showTitle": "mobile",
+      "order": 80
+    },
+    {
       "type": "search",
-      "enabled": false
+      "enabled": false,
+      "position": "menu"
+    },
+    {
+      "type": "query-place",
+      "enabled": true,
+      "position": "toolbar"
+    },
+    {
+      "type": "query",
+      "instance": "31071--fire",
+      "enabled": true,
+      "position": "toolbar"
     },
     {
       "type": "list-menu",

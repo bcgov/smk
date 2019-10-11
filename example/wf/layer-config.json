@@ -181,7 +181,39 @@
         }
       ],
       "popupTemplate": "@wf-feature",
-      "titleAttribute": "FIRE_NUMBER"
+      "titleAttribute": "FIRE_NUMBER",
+      "queries": [
+        {
+          "id": "fire",
+          "title": "Search for Fires",
+          "description": "",
+          "parameters": [
+            {
+              "id": "param1",
+              "type": "input",
+              "title": "Fire Number"
+            }
+          ],
+          "predicate": {
+            "operator": "and",
+            "arguments": [
+              {
+                "operator": "contains",
+                "arguments": [
+                  {
+                    "operand": "attribute",
+                    "name": "FIRE_NUMBER"
+                  },
+                  {
+                    "operand": "parameter",
+                    "id": "param1"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
     },
     {
       "type": "esri-feature",
