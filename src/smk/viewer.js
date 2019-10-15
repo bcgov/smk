@@ -257,7 +257,8 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
             self.layerId[ 'place' ] = {
                 id: 'place',
                 config: {
-                    title: 'Place'
+                    title: 'Place',
+                    popupTemplate: "@feature-place"
                 }
             }
         }

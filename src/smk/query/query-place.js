@@ -21,28 +21,8 @@ include.module( 'query.query-place-js', [ 'query.query-js' ], function () {
     }
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
-    // PlaceQuery.prototype.fetchUniqueValues = function ( attribute, viewer ) {
-    //     var value = {}
-    //     var hasNull = false
-    //     viewer.visibleLayer[ this.layerId ].eachLayer( function ( ly ) {
-    //         if ( ly.feature.properties[ attribute ] == null )
-    //             hasNull = true
-    //         else
-    //             value[ ly.feature.properties[ attribute ] ] = true
-    //     } )
-
-    //     return SMK.UTIL.resolved( Object.keys( value ).concat( hasNull ? [ null ] : [] ) )
-    // }
-    // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
-    //
     PlaceQuery.prototype.queryLayer = function ( param, config, viewer ) {
         var self = this
-
-        // var layerConfig = viewer.layerId[ this.layerId ].config
-
-        // var test = makeTest( this.predicate, param )
-
-        // if ( !test ) throw new Error( 'test is empty' )
 
         var query = {
             ver:            1.2,

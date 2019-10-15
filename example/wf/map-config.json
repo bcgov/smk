@@ -101,18 +101,26 @@
     {
       "type": "search",
       "enabled": false,
-      "position": "menu"
+      "position": "toolbar"
     },
     {
       "type": "query-place",
       "enabled": true,
-      "position": "toolbar"
+      "position": "toolbar",
+      "command": {
+        "attributeMode": false,
+        "clear": false
+      }
     },
     {
       "type": "query",
       "instance": "31071--fire",
       "enabled": true,
-      "position": "toolbar"
+      "position": "toolbar",
+      "command": {
+        "attributeMode": false,
+        "clear": false
+      }
     },
     {
       "type": "list-menu",

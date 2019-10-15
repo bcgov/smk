@@ -93,13 +93,7 @@ include.module( 'query.query-esri-feature-js', [ 'query.query-js' ], function ()
 
         var layerConfig = viewer.layerId[ this.layerId ].config
 
-        if ( layerConfig.dynamicLayers.length != 1 )
-            throw new Error( 'more than one dynamic layer def' )
-
-        var serviceUrl  = layerConfig.serviceUrl + '/dynamicLayer/query'
-
-        var dynamicLayer = JSON.parse( layerConfig.dynamicLayers[ 0 ] )
-        delete dynamicLayer.drawingInfo
+        var serviceUrl  = layerConfig.serviceUrl + '/query'
 
         var whereClause = makeWhereClause( this.predicate, param )
         if ( !whereClause ) throw new Error( 'filter is empty' )
@@ -108,7 +102,6 @@ include.module( 'query.query-esri-feature-js', [ 'query.query-js' ], function ()
 
         var data = {
             f:                  'geojson',
-            layer:              JSON.stringify( dynamicLayer ).replace( /^"|"$/g, '' ),
             where:              whereClause,
             outFields:          attrs.join( ',' ),
             inSR:               4326,

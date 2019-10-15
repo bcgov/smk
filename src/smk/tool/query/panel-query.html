@@ -3,9 +3,9 @@
     v-bind:message="message"
     v-bind:status="status"
 >
-    <template slot="header">
-        <div class="smk-description">{{ description }}</div>
-    </template>
+    <!-- <template slot="header"> -->
+        <!-- <div class="smk-description">{{ description }}</div> -->
+    <!-- </template> -->
 
     <div class="smk-parameters">
         <component class="smk-parameter"
@@ -22,29 +22,29 @@
     </div>
 
     <template slot="commands">
-        <div class="smk-command-row" style="align-items: flex-end">
-            <span class="smk-command"
-                v-bind:class="{ 'smk-disabled': busy }"
-                v-on:click="!busy && $$emit( 'execute' )"
-                style="font-size: 15px"
-            >Search</span>
+        <slot></slot>
 
-            <span class="smk-command"
-                v-bind:class="{ 'smk-disabled': !isModified || busy}"
-                v-on:click="isModified && !busy && $$emit( 'reset' )"
-            >Reset</span>
+        <div class="smk-separator"></div>
 
-            <div class="smk-command-spacer"></div>
+        <span class="smk-search smk-command"
+            v-bind:class="{ 'smk-disabled': busy }"
+            v-on:click="!busy && $$emit( 'execute' )"
+            style="font-size: 15px"
+        >Search</span>
 
-            <label class="smk-command smk-larger"
-                v-bind:class="{ 'smk-disabled': busy }"
-                v-if="within != null"
-            ><input type="checkbox"
-                v-bind:disabled="busy"
-                v-model="within"
-                v-on:change="$$emit( 'config', getConfigState() )"
-            >Within current extent</label><br/>
-        </div>
+        <span class="smk-reset smk-command"
+            v-bind:class="{ 'smk-disabled': !isModified || busy}"
+            v-on:click="isModified && !busy && $$emit( 'reset' )"
+        >Reset</span>
+
+        <label class="smk-within-extent smk-command smk-larger"
+            v-bind:class="{ 'smk-disabled': busy }"
+            v-if="within != null"
+        ><input type="checkbox"
+            v-bind:disabled="busy"
+            v-model="within"
+            v-on:change="$$emit( 'config', getConfigState() )"
+        >Within current extent</label><br/>
     </template>
 
 </side-panel>

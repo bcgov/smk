@@ -38,3 +38,15 @@
     outline: 0;
     border-bottom: 1px dashed gray;
 }
+
+.smk-query-panel .smk-commands .smk-search {
+    order: 60
+}
+
+.smk-query-panel .smk-commands .smk-reset {
+    order: 80
+}
+
+.smk-query-panel .smk-commands .smk-within-extent {
+    order: 70
+}
