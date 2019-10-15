@@ -15,8 +15,8 @@ include.module( 'tool-query-place', [ 'feature-list', 'widgets', 'sidepanel', 't
     function QueryPlaceTool( option ) {
         SMK.TYPE.QueryTool.prototype.constructor.call( this, $.extend( {
             order:          4,
-            position:       'menu',
-            title:          'Search for place',
+            // position:       'menu',
+            // title:          'Location',
             widgetComponent:'query-place-widget',
             instance:       'place'
         }, option ) )

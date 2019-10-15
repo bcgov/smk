@@ -185,7 +185,7 @@
       "queries": [
         {
           "id": "fire",
-          "title": "Search for Fires",
+          "title": "Active Fires",
           "description": "",
           "parameters": [
             {

@@ -3,7 +3,7 @@ include.module( 'query.query-place-js', [ 'query.query-js' ], function () {
 
     function PlaceQuery() {
         SMK.TYPE.Query.prototype.constructor.apply( this, arguments )
-        this.title = 'Search for location'
+        this.title = 'Location'
         this.parameters = [ {
             id: 'param1',
             type: 'input',

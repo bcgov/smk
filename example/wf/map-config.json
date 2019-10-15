@@ -105,8 +105,10 @@
     },
     {
       "type": "query-place",
+      "icon": "search",
       "enabled": true,
-      "position": "toolbar",
+      "showTitle": true,
+      "position": "menu",
       "command": {
         "attributeMode": false,
         "clear": false
@@ -114,9 +116,11 @@
     },
     {
       "type": "query",
+      "icon": "search",
       "instance": "31071--fire",
       "enabled": true,
-      "position": "toolbar",
+      "showTitle": true,
+      "position": "menu",
       "command": {
         "attributeMode": false,
         "clear": false
