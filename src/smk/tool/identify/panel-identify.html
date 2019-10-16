@@ -3,9 +3,11 @@
     canClear="true"
     showSwipe="true"
 >
-    <template slot="commands">
+    <template slot="header">
         <slot></slot>
+    </template>
 
+    <template slot="commands">
         <div class="smk-separator" v-if="command.clear !== false"></div>
 
         <span class="smk-command"
@@ -14,4 +16,9 @@
             v-on:click="$$emit( 'add-all' )"
         >Add all to selection</span>
     </template>
+
+    <div v-if="layers.length == 0">
+        Click on the map to identify features under the clicked point.
+    </div>
+
 </feature-list-panel>

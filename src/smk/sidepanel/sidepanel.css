@@ -15,7 +15,7 @@
     z-index: 10;
 }
 
-.smk-elastic-panel {
+.smk-sidepanel .smk-elastic-panel {
     display: flex;
     flex-direction: column;
 
@@ -26,7 +26,31 @@
     max-height: 100%;
 }
 
-.smk-sidepanel .smk-panel .smk-commands {
+.smk-sidepanel .smk-panel {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+    height: 100%;
+    min-height: 0;
+}
+
+.smk-panel .smk-header {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    align-content: flex-start;
+
+    position: relative;
+    border-bottom: 1px solid gray;
+    margin-left: 1px;
+    margin-right: 1px;
+    margin-bottom: 5px;
+    flex-shrink: 0;
+}
+
+.smk-panel .smk-commands {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -34,11 +58,11 @@
     align-content: flex-start;
 }
 
-.smk-sidepanel .smk-commands .smk-panel-go-back {
+.smk-panel .smk-panel-go-back {
     order: 10;
 }
 
-.smk-sidepanel .smk-commands .smk-panel-title {
+.smk-panel .smk-panel-title {
     order: 20;
     flex-grow: 1;
     min-height: 26px;
@@ -47,17 +71,17 @@
     align-items: center;
 }
 
-.smk-sidepanel .smk-commands .smk-panel-close {
+.smk-panel .smk-panel-close {
     order: 30;
 }
 
-.smk-sidepanel .smk-commands .smk-separator {
+.smk-panel .smk-separator {
     order: 50;
     flex-basis: 100%;
     border-bottom: 1px solid gray;
 }
 
-.smk-sidepanel .smk-title {
+/* .smk-sidepanel .smk-title {
     flex-shrink: 0;
 
     display: flex;
@@ -78,18 +102,9 @@
 .smk-sidepanel .smk-title div {
     font-size: 18px;
     font-weight: bold;
-}
+} */
 
-.smk-sidepanel .smk-panel {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: stretch;
-    height: 100%;
-    min-height: 0;
-}
-
-.smk-device-mobile .smk-sidepanel .smk-panel .smk-swipe-handle {
+.smk-device-mobile .smk-panel .smk-header .smk-swipe-handle {
     position: absolute;
     top: 2px;
     left: 50%;
@@ -103,16 +118,7 @@
     border-radius: 3px;
 }
 
-.smk-sidepanel .smk-panel .smk-header {
-    position: relative;
-    border-bottom: 1px solid gray;
-    margin-left: 1px;
-    margin-right: 1px;
-    margin-bottom: 5px;
-    flex-shrink: 0;
-}
-
-.smk-sidepanel .smk-panel .smk-body {
+.smk-panel .smk-body {
     position: relative;
     /* flex: 1 0; */
     padding-left: 5px;
@@ -123,7 +129,7 @@
     height: 100%;
 }
 
-.smk-sidepanel .smk-panel h1 {
+/* .smk-sidepanel .smk-panel h1 {
     margin-top: 0;
     padding-bottom: 5px;
     margin-bottom: 0;
@@ -134,16 +140,16 @@
     margin-top: 0;
     margin-bottom: 2px;
     font-size: 15px;
-}
+} */
 
-.smk-sidepanel .smk-panel .smk-spinner {
+.smk-panel .smk-spinner {
     position:   absolute;
     top:        4px;
     right:      10px;
 }
 
 
-.smk-sidepanel div.smk-message {
+.smk-panel div.smk-message {
     position: relative;
     flex-shrink: 0;
 
@@ -158,29 +164,29 @@
     align-items: center;
 }
 
-.smk-sidepanel .smk-message.smk-error {
+.smk-panel .smk-message.smk-error {
     display: flex;
     color: red;
     background-color: rgb(100%, 87.8%, 87.8%);
 }
 
-.smk-sidepanel .smk-message.smk-summary {
+.smk-panel .smk-message.smk-summary {
     display: flex;
 }
 
-.smk-sidepanel .smk-message.smk-progress {
+.smk-panel .smk-message.smk-progress {
     display: flex;
     color: blue;
     background-color: rgb(87%, 96.5%, 99.1%);
 }
 
-.smk-sidepanel .smk-message.smk-warning {
+.smk-panel .smk-message.smk-warning {
     display: flex;
     color: orange;
     background-color: rgb(100%, 94.4%, 87.8%);
 }
 
-.smk-sidepanel .smk-submessage {
+.smk-panel .smk-submessage {
     font-size: 12px;
 }
 

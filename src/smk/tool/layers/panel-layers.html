@@ -6,10 +6,11 @@
     v-on:swipe-up="$$emit('swipe-up')"
     v-on:swipe-down="$$emit('swipe-down')"    
 >
-    <template slot="commands">
+    <template slot="header">
         <slot></slot>
+    </template>
 
-        <div class="smk-separator"></div>
+    <template slot="commands">
 
         <i class="smk-all-visibility material-icons smk-command smk-icon"
             v-if="command.allVisibility !== false"
@@ -18,7 +19,7 @@
         >{{ allVisible ? glyph.visible || 'visibility' : glyph.hidden || 'visibility_off' }}</i>
 
         <input class="smk-filter" placeholder="Filter layers" 
-            v-if="command.filter !== false"
+            v-show="command.filter !== false"
             v-model="filter" 
             v-on:input="$$emit( 'config', getConfigState() )"
         >

@@ -1,6 +1,10 @@
-<side-panel class="smk-tool-list-panel" v-bind:showHeader="true">
-
-    <template slot="commands">
+<side-panel class="smk-tool-list-panel" 
+    v-bind:showHeader="true"
+    showSwipe="true"
+    v-on:swipe-up="$$emit('swipe-up')"
+    v-on:swipe-down="$$emit('swipe-down')"    
+>
+    <template slot="header">
         <slot></slot>
     </template>
 

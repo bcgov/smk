@@ -1,6 +1,4 @@
-<div
-    v-bind:class="{ 'smk-busy': busy }"
->
+<div v-bind:class="{ 'smk-busy': busy }">
     <div class="smk-message" 
         v-bind:class="'smk-' + ( status || 'summary' )" 
         v-if="message"
@@ -17,10 +15,10 @@
         <div class="smk-swipe-handle" v-if="showSwipe"></div>
         
         <slot name="header"></slot>
+    </div>
 
-        <div class="smk-commands">
-            <slot name="commands"></slot>
-        </div>
+    <div class="smk-commands">
+        <slot name="commands"></slot>
     </div>
 
     <div class="smk-body">

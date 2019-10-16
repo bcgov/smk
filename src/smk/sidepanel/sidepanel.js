@@ -41,16 +41,17 @@ include.module( 'sidepanel', [ 'vue', 'sidepanel.sidepanel-html', 'sidepanel.pan
             
                 if ( Math.abs( xDiff ) > Math.abs( yDiff ) ) {
                     if ( xDiff > 0 ) {
-                        /* left swipe */ 
-                    } else {
-                        /* right swipe */
+                        this.$emit( 'swipe-left' )
+                    } 
+                    else {
+                        this.$emit( 'swipe-right' )
                     }                       
-                } else {
+                } 
+                else {
                     if ( yDiff > 0 ) {
-                        /* up swipe */ 
                         this.$emit( 'swipe-up' )
-                    } else { 
-                        /* down swipe */
+                    } 
+                    else { 
                         this.$emit( 'swipe-down' )
                     }                                                                 
                 }
