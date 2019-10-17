@@ -8,7 +8,7 @@ include.module( 'tool-menu', [ 'tool', 'widgets', 'tool-menu.panel-menu-html' ],
     Vue.component( 'menu-panel', {
         extends: inc.widgets.toolPanel,
         template: inc[ 'tool-menu.panel-menu-html' ],
-        props: [ 'visible', 'enabled', 'active', 'subWidgets', 'subPanels', 'activeToolId' ]
+        props: [ 'visible', 'enabled', 'active', 'subWidgets', 'subPanels', 'activeToolId', 'activeTool' ]
     } )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
@@ -18,6 +18,7 @@ include.module( 'tool-menu', [ 'tool', 'widgets', 'tool-menu.panel-menu-html' ],
         this.makePropPanel( 'subWidgets', [] )
         this.makePropPanel( 'subPanels', {} )
         this.makePropPanel( 'activeToolId', null )
+        this.makePropPanel( 'activeTool', null )
 
         SMK.TYPE.Tool.prototype.constructor.call( this, $.extend( {
             title:          null,
@@ -45,9 +46,16 @@ include.module( 'tool-menu', [ 'tool', 'widgets', 'tool-menu.panel-menu-html' ],
         } )
 
         self.changedActive( function () {
-            console.log('menu active',self.active,self.selectedTool && self.selectedTool.id)
+            // console.log('menu active',self.active,self.selectedTool && self.selectedTool.id)
             if ( self.selectedTool )
                 self.selectedTool.active = self.active
+        } )
+
+        smk.$sidepanel.changedTool( function ( tool ) {
+            if ( tool.id in self.subPanels )
+                self.activeTool = tool
+            else
+                self.activeTool = null
         } )
     } )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
@@ -73,45 +81,6 @@ include.module( 'tool-menu', [ 'tool', 'widgets', 'tool-menu.panel-menu-html' ],
             panelComponent: tool.panelComponent,
             panel: tool.panel
         } )
-
-        if ( tool.widgetComponent ) {
-            tool.changedActive( function () {
-                console.log( tool.id, tool.active, self.selectedTool && self.selectedTool.id, self.active )
-                if ( tool.active ) {
-                    if ( self.selectedTool && self.selectedTool.id != tool.id ) {
-                        var prev = self.selectedTool
-                        self.selectedTool = tool
-                        prev.active = false
-                    }
-                    else if ( !self.selectedTool ) {
-                        self.selectedTool = tool
-                    }
-                    self.active = true
-                }
-                else {
-                    if ( self.selectedTool && self.selectedTool.id == tool.id ) {
-                        self.selectedTool = null
-                        self.activeToolId = null
-                    }
-                    // if ( self.selectedTool.id == tool.id && self.active )
-                        // tool.active = true
-                }
-
-                if ( self.selectedTool && tool.id == self.selectedTool.id )
-                    self.activeToolId = tool.active ? tool.id : null
-            } )
-        }
-        else {
-            tool.changedActive( function () {
-                console.log( tool.id, tool.active )
-                if ( tool.active ) {
-                    self.activeToolId = tool.id 
-                }
-                else {
-                    self.activeToolId = null
-                }
-            } )
-        }
 
         return true
     }

@@ -64,6 +64,7 @@ include.module( 'sidepanel', [ 'vue', 'sidepanel.sidepanel-html', 'sidepanel.pan
 
     var SidepanelEvent = SMK.TYPE.Event.define( [
         'changedVisible',
+        'changedTool',
     ] )
 
     function Sidepanel( smk ) {
@@ -139,7 +140,7 @@ include.module( 'sidepanel', [ 'vue', 'sidepanel.sidepanel-html', 'sidepanel.pan
     } 
 
     Sidepanel.prototype.setCurrentTool = function ( tool ) {
-        console.log('setCurrentTool',tool)
+        // console.log('setCurrentTool',tool)
         var titleProps
         if ( tool.widgetComponent )
             titleProps = { title: tool.title }
@@ -167,6 +168,7 @@ include.module( 'sidepanel', [ 'vue', 'sidepanel.sidepanel-html', 'sidepanel.pan
         }
 
         this.model.visible = true
+        this.changedTool( this.model.currentTool )
     }
 
     Sidepanel.prototype.isToolStacked = function ( tool ) {
@@ -206,9 +208,9 @@ include.module( 'sidepanel', [ 'vue', 'sidepanel.sidepanel-html', 'sidepanel.pan
         else {
             if ( this.toolStack.length > 0 ) {
                 var top = this.toolStack[ this.toolStack.length - 1 ]
-                console.log( 'pop?', top.id, top.subPanel, '>=', tool.id, tool.subPanel )
+                // console.log( 'pop?', top.id, top.subPanel, '>=', tool.id, tool.subPanel )
                 while ( this.toolStack.length > 0 && top.subPanel >= tool.subPanel ) {
-                    console.log( 'popping', top.id )
+                    // console.log( 'popping', top.id )
                     this.toolStack.pop()
                     top.active = false
                     top = this.toolStack[ this.toolStack.length - 1 ]
@@ -234,7 +236,7 @@ include.module( 'sidepanel', [ 'vue', 'sidepanel.sidepanel-html', 'sidepanel.pan
         this.usePanel[ tool.id ] = usePanel !== false
 
         tool.changedActive( function () {
-            console.log( tool.id, tool.active, self.currentTool && self.currentTool.id )
+            // console.log( tool.id, tool.active, self.currentTool && self.currentTool.id )
             if ( tool.active ) {              
                 self.pushTool( tool )
             }

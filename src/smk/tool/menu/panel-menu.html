@@ -1,4 +1,5 @@
 <side-panel class="smk-menu-panel">
+
     <template slot="header">
         <component class="smk-tool"
             v-for="tool in subWidgets"
@@ -6,14 +7,22 @@
             v-bind:is="tool.widgetComponent"
             v-bind="tool.widget"
         ></component>
-
-        <slot></slot>
     </template>
 
-    <component class="smk-panel"
+    <!-- <component class="smk-panel"
         v-if="activeToolId && subPanels[ activeToolId ]"
         v-bind:is="subPanels[ activeToolId ].panelComponent"
-        v-bind="subPanels[ activeToolId ].panel"
-    ></component>
+        v-bind="subPanels[ activeToolId ].panel"        
+    >
+        <slot></slot>
+    </component> -->
+
+    <component class="smk-panel"
+        v-if="activeTool"
+        v-bind:is="activeTool.panelComponent"
+        v-bind="activeTool.panel"        
+    >
+        <slot></slot>
+    </component>
 
 </side-panel>
