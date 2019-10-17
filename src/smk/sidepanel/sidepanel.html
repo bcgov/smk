@@ -10,10 +10,10 @@
     >
         <div class="smk-elastic-panel">
             <component class="smk-panel"
-                v-if="currentTool"
-                v-bind:is="currentTool.panelComponent"
-                v-bind:key="currentTool.id"
-                v-bind="currentTool.panel"
+                v-if="currentPanel"
+                v-bind:is="currentPanel.panelComponent"
+                v-bind:key="currentPanel.id"
+                v-bind="currentPanel.panel"
             >
                 <i class="smk-panel-go-back smk-command smk-icon material-icons" title="Go Back"
                     v-on:click="previousPanel()"

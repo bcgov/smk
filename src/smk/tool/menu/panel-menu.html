@@ -1,11 +1,13 @@
 <side-panel class="smk-menu-panel">
-    <template slot="commands">
+    <template slot="header">
         <component class="smk-tool"
             v-for="tool in subWidgets"
             v-bind:key="tool.id"
             v-bind:is="tool.widgetComponent"
             v-bind="tool.widget"
         ></component>
+
+        <slot></slot>
     </template>
 
     <component class="smk-panel"
