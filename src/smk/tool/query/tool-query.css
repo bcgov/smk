@@ -7,11 +7,11 @@
 }
 
 .smk-sidepanel .smk-query-panel .smk-parameters {
-    margin: 10px 0;
+    /* margin: 10px 0; */
 }
 
 .smk-sidepanel .smk-query-panel .smk-parameter {
-    margin-top: 10px;
+    /* margin-top: 10px; */
 }
 
 .smk-sidepanel .smk-query-panel .smk-parameter label {
@@ -37,6 +37,10 @@
 .smk-sidepanel .smk-query-panel .smk-parameter span:focus {
     outline: 0;
     border-bottom: 1px dashed gray;
+}
+
+.smk-query-panel .smk-commands {
+    order: 1;
 }
 
 .smk-query-panel .smk-commands .smk-search {

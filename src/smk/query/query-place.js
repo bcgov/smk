@@ -7,7 +7,7 @@ include.module( 'query.query-place-js', [ 'query.query-js' ], function () {
         this.parameters = [ {
             id: 'param1',
             type: 'input',
-            title: 'Location'
+            title: 'Place or road name'
         } ]
     }
 
