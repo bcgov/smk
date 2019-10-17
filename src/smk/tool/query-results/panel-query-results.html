@@ -2,10 +2,12 @@
     v-bind="featureListProps()"
     showSwipe="true"
 >
-    <template slot="commands">
+    <template slot="header">
         <slot></slot>
+    </template>
 
-        <div class="smk-separator" v-if="command.clear !== false"></div>
+    <template slot="commands">
+        <!-- <div class="smk-separator" v-if="command.clear !== false"></div> -->
 
         <span class="smk-command"
             v-bind:class="{ 'smk-disabled': busy }"

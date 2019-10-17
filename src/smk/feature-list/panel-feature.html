@@ -1,8 +1,11 @@
 <side-panel class="smk-feature-panel">
-    <template slot="commands">
+    <template slot="header">
         <slot></slot>
+    </template>
 
-        <div class="smk-separator"></div>
+    <template slot="commands">
+
+        <!-- <div class="smk-separator"></div> -->
 
         <span class="smk-navigator" v-if="resultCount > 1 && command.navigator !== false">
             <i class="material-icons smk-move smk-command smk-icon"
