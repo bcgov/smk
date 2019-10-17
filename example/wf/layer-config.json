@@ -192,6 +192,11 @@
               "id": "param1",
               "type": "input",
               "title": "Fire Number"
+            },
+            {
+              "id": "param2",
+              "type": "constant",
+              "value": "Out"
             }
           ],
           "predicate": {
@@ -207,6 +212,24 @@
                   {
                     "operand": "parameter",
                     "id": "param1"
+                  }
+                ]
+              },
+              {
+                "operator": "not",
+                "arguments": [
+                  {
+                    "operator": "equals",
+                    "arguments": [
+                        {
+                            "operand": "attribute",
+                            "name": "FIRE_STATUS"
+                        },
+                        {
+                            "operand": "parameter",
+                            "id": "param2"
+                        }
+                    ]
                   }
                 ]
               }
