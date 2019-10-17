@@ -209,10 +209,18 @@
 .smk-device-mobile.smk-theme-wf .smk-sidepanel .smk-panel.smk-menu-panel > .smk-header {
     background-color: transparent;
     box-shadow: none;
+    order: 1;
+    justify-content: space-between;
 }
 
-.smk-device-mobile.smk-theme-wf .smk-sidepanel .smk-panel.smk-menu-panel > .smk-commands {
-    order: 1;
+.smk-device-mobile.smk-theme-wf .smk-sidepanel .smk-panel.smk-menu-panel > .smk-header .smk-tool-title {
+    flex-grow: 1;
+    justify-content: center;
+}
+
+.smk-device-mobile.smk-theme-wf .smk-sidepanel .smk-panel.smk-menu-panel > .smk-header .smk-tool-title.smk-tool-active {
+    background-color: #003366;
+    color: white;
 }
 
 .smk-device-mobile.smk-theme-wf .smk-sidepanel .smk-panel.smk-menu-panel > .smk-body {
