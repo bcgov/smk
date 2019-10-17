@@ -95,13 +95,16 @@ include.module( 'sidepanel', [ 'vue', 'sidepanel.sidepanel-html', 'sidepanel.pan
                     self.popTool()
                 },
 
+                'hasPrevious': function () {
+                    var len = self.toolStack.length
+                    if ( len < 2 ) return false
+                    if ( self.toolStack[ len - 2 ].container ) return false
+                    return true
+                },
+
                 'closePanel': function () {
                     smk.emit( this.currentTool.id, 'close-panel' )
                     self.closePanel()
-                },
-
-                'depth': function () {
-                    return self.toolStack.length
                 },
 
                 'beforeShow': function () {

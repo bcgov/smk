@@ -9,14 +9,6 @@
         ></component>
     </template>
 
-    <!-- <component class="smk-panel"
-        v-if="activeToolId && subPanels[ activeToolId ]"
-        v-bind:is="subPanels[ activeToolId ].panelComponent"
-        v-bind="subPanels[ activeToolId ].panel"        
-    >
-        <slot></slot>
-    </component> -->
-
     <component class="smk-panel"
         v-if="activeTool"
         v-bind:is="activeTool.panelComponent"

@@ -17,20 +17,18 @@
             >
                 <i class="smk-panel-go-back smk-command smk-icon material-icons" title="Go Back"
                     v-on:click="previousPanel()"
-                    v-bind:class="{ 'smk-hidden': depth() <= 1 }"
+                    v-show="hasPrevious()"
                 >arrow_back</i>
 
-                <template v-if="currentTool">
-                    <component 
-                        v-if="currentTool.titleComponent"
-                        v-bind:is="currentTool.titleComponent"
-                        v-bind="currentTool.titleProps"
-                    ></component>
-                    <span class="smk-panel-title"
-                        v-else
-                        v-html="currentTool.panel.title"
-                    ></span>
-                </template>
+                <component class="smk-panel-title"
+                    v-if="currentTool.titleComponent"
+                    v-bind:is="currentTool.titleComponent"
+                    v-bind="currentTool.titleProps"
+                ></component>
+                <span class="smk-panel-title"
+                    v-else
+                    v-html="currentTool.panel.title"
+                ></span>
 
                 <i class="smk-panel-close smk-command smk-icon material-icons" title="Close Panel"
                     v-on:click="closePanel()"

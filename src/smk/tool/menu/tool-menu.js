@@ -8,7 +8,7 @@ include.module( 'tool-menu', [ 'tool', 'widgets', 'tool-menu.panel-menu-html' ],
     Vue.component( 'menu-panel', {
         extends: inc.widgets.toolPanel,
         template: inc[ 'tool-menu.panel-menu-html' ],
-        props: [ 'visible', 'enabled', 'active', 'subWidgets', 'subPanels', 'activeToolId', 'activeTool' ]
+        props: [ 'visible', 'enabled', 'active', 'subWidgets', 'activeTool' ]
     } )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
@@ -16,8 +16,6 @@ include.module( 'tool-menu', [ 'tool', 'widgets', 'tool-menu.panel-menu-html' ],
         this.makePropWidget( 'icon', 'menu' )
 
         this.makePropPanel( 'subWidgets', [] )
-        this.makePropPanel( 'subPanels', {} )
-        this.makePropPanel( 'activeToolId', null )
         this.makePropPanel( 'activeTool', null )
 
         SMK.TYPE.Tool.prototype.constructor.call( this, $.extend( {
@@ -25,7 +23,10 @@ include.module( 'tool-menu', [ 'tool', 'widgets', 'tool-menu.panel-menu-html' ],
             position:       'toolbar',
             widgetComponent:'menu-widget',
             panelComponent: 'menu-panel',
+            container:      true
         }, option ) )
+
+        this.containedId = {}
     }
 
     SMK.TYPE.MenuTool = MenuTool
@@ -47,15 +48,18 @@ include.module( 'tool-menu', [ 'tool', 'widgets', 'tool-menu.panel-menu-html' ],
 
         self.changedActive( function () {
             // console.log('menu active',self.active,self.selectedTool && self.selectedTool.id)
-            if ( self.selectedTool )
-                self.selectedTool.active = self.active
+            if ( self.selectedToolId )
+                smk.$tool[ self.selectedToolId ].active = self.active
         } )
 
         smk.$sidepanel.changedTool( function ( tool ) {
-            if ( tool.id in self.subPanels )
+            if ( tool.id in self.containedId ) {
                 self.activeTool = tool
-            else
+                self.selectedToolId = tool.id
+            }
+            else {
                 self.activeTool = null
+            }
         } )
     } )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
@@ -63,8 +67,8 @@ include.module( 'tool-menu', [ 'tool', 'widgets', 'tool-menu.panel-menu-html' ],
     MenuTool.prototype.addTool = function ( tool, smk ) {
         var self = this
 
-        if ( !this.selectedTool && !tool.subPanel )
-            this.selectedTool = tool
+        if ( !this.selectedToolId && !tool.subPanel )
+            this.selectedToolId = tool.id
 
         tool.subPanel = tool.subPanel + 1
         smk.$sidepanel.addTool( tool, smk, false )
@@ -77,10 +81,7 @@ include.module( 'tool-menu', [ 'tool', 'widgets', 'tool-menu.panel-menu-html' ],
                 widget: tool.widget
             } )
 
-        Vue.set( this.subPanels, tool.id, {
-            panelComponent: tool.panelComponent,
-            panel: tool.panel
-        } )
+        this.containedId[ tool.id ] = true
 
         return true
     }
