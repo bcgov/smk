@@ -209,7 +209,6 @@
 .smk-device-mobile.smk-theme-wf .smk-sidepanel .smk-panel.smk-menu-panel > .smk-header {
     background-color: transparent;
     box-shadow: none;
-    order: 1;
     justify-content: space-between;
 }
 

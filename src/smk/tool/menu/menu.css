@@ -1,20 +1,29 @@
 .smk-sidepanel .smk-panel.smk-menu-panel > .smk-header {
-    border: 0;
-    box-shadow: 0px 2px 12px -3px rgba(0, 0, 0, 0.65);
-    padding-top: 0;
-    margin-bottom: 0;
-    padding-left: 0;
-    margin-left: 0;
-}
-
-.smk-sidepanel .smk-panel.smk-menu-panel > .smk-header {
-    padding-bottom: 0;
+    padding: 0;
+    margin: 0;
     font-size: 16px;
-    height: 30px;
 
     display: flex;
+    flex-direction: column;
     justify-content: flex-start;
     align-items: stretch;
+}
+
+.smk-sidepanel .smk-panel.smk-menu-panel > .smk-header .smk-menu-title {   
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.smk-sidepanel .smk-panel.smk-menu-panel > .smk-header .smk-menu-widgets {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.smk-sidepanel .smk-panel.smk-menu-panel > .smk-header .smk-menu-widgets .smk-tool-title {
+    flex-grow: 1;
+    justify-content: center;
 }
 
 .smk-sidepanel .smk-panel.smk-menu-panel > .smk-body {
@@ -26,4 +35,9 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: stretch;
+}
+
+.smk-sidepanel .smk-panel.smk-menu-panel > .smk-body .smk-header {
+    border: 0;
+    margin: 0;
 }

@@ -6,7 +6,7 @@
 >
     <div class="smk-sidepanel" 
         v-show="visible"
-        v-bind:class="[ currentTool && currentTool.panel.expand ? 'smk-expand-' + currentTool.panel.expand : '' ]"
+        v-bind:class="[ currentPanel && currentPanel.panel.expand ? 'smk-expand-' + currentPanel.panel.expand : '' ]"
     >
         <div class="smk-elastic-panel">
             <component class="smk-panel"
@@ -17,17 +17,17 @@
             >
                 <i class="smk-panel-go-back smk-command smk-icon material-icons" title="Go Back"
                     v-on:click="previousPanel()"
-                    v-show="hasPrevious()"
+                    v-bind:style="{ visibility: hasPrevious() ? 'visible': 'hidden' }"
                 >arrow_back</i>
 
                 <component class="smk-panel-title"
-                    v-if="currentTool.titleComponent"
-                    v-bind:is="currentTool.titleComponent"
-                    v-bind="currentTool.titleProps"
+                    v-if="currentPanel.titleComponent"
+                    v-bind:is="currentPanel.titleComponent"
+                    v-bind="currentPanel.titleProps"
                 ></component>
                 <span class="smk-panel-title"
                     v-else
-                    v-html="currentTool.panel.title"
+                    v-html="currentPanel.panel.title"
                 ></span>
 
                 <i class="smk-panel-close smk-command smk-icon material-icons" title="Close Panel"

@@ -289,4 +289,4 @@ include.module( 'sidepanel', [ 'vue', 'sidepanel.sidepanel-html', 'sidepanel.pan
     //
     return Sidepanel
 
-} )
+} ) 
