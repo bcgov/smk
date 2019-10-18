@@ -5,6 +5,10 @@
         return navigator.userAgent.indexOf( "MSIE " ) > -1 || navigator.userAgent.indexOf( "Trident/" ) > -1;
     }
 
+    var documentReadyPromise
+
+    var bootstrapScriptEl = document.currentScript
+
     try {
         if ( isIE() )
             throw new Error( 'SMK will not function in Internet Explorer 11. Use Google Chrome, or Microsoft Edge, or Firefox, or Safari.' )
@@ -12,32 +16,50 @@
         var util = {}
         installPolyfills( util )
         setupGlobalSMK( util )
-
-        var documentReadyPromise
-
-        var bootstrapScriptEl = document.currentScript
-
-        var timer
-        SMK.BOOT = SMK.BOOT
-            .then( parseScriptElement )
-            .then( function ( attr ) {
-                timer = 'SMK initialize ' + attr.id
-                console.time( timer )
-                return attr
-            } )
-            .then( resolveConfig )
-            .then( initializeSmkMap )
-            .catch( SMK.ON_FAILURE )
-
-        util.promiseFinally( SMK.BOOT, function () {
-            console.timeEnd( timer )
-        } )
     }
     catch ( e ) {
         setTimeout( function () {
             document.querySelector( 'body' ).appendChild( failureMessage( e ) )
         }, 1000 )
     }
+
+    SMK.INIT = function ( option ) {
+        if ( option ) {
+            bootstrapScriptEl = {
+                src: bootstrapScriptEl.src,
+                attributes: Object.keys( option ).reduce( function ( acc, key ) {
+                    acc[ key ] = { value: option[ key ] }
+                    return acc
+                }, {} )
+            }
+        }
+
+        try {
+            var timer
+            SMK.BOOT = SMK.BOOT
+                .then( parseScriptElement )
+                .then( function ( attr ) {
+                    timer = 'SMK initialize ' + attr.id
+                    console.time( timer )
+                    return attr
+                } )
+                .then( resolveConfig )
+                .then( initializeSmkMap )
+                .catch( SMK.ON_FAILURE )
+
+            util.promiseFinally( SMK.BOOT, function () {
+                console.timeEnd( timer )
+            } )
+
+            return SMK.BOOT
+        }
+        catch ( e ) {
+            setTimeout( function () {
+                document.querySelector( 'body' ).appendChild( failureMessage( e ) )
+            }, 1000 )
+        }
+    }
+
 // = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 
     function parseScriptElement() {

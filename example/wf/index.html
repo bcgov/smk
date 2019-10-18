@@ -6,10 +6,10 @@
         <title></title>
         <!-- SMK BOOTSTRAP - - - - - - - -->
         <script src="../../smk.js"
-            smk-container-sel="#smk-map-frame"
-            smk-title-sel="#header-title, head title"
-            smk-config="./map-config.json|./layer-config.json|theme=wf|?"
         ></script>
+            <!-- smk-container-sel="#smk-map-frame" -->
+            <!-- smk-title-sel="#header-title, head title" -->
+            <!-- smk-config="./map-config.json|./layer-config.json|theme=wf|?" -->
         <!-- - - - - - - - - - - - - - - -->
         <%= reload %>
         <style>
@@ -66,25 +66,31 @@
     </body>
 
     <script>
-        SMK.HANDLER.set( 'bespoke', 'initialized', function ( smk ) {
-            // console.log( 'init!' )
-        } )
-        SMK.HANDLER.set( 'bespoke', 'activated', function ( smk, tool ) {
-            // console.log( 'active!' )
-            var html = '<div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vel sapien auctor, blandit mi eget, iaculis erat. Nam rutrum luctus est, sed accumsan sapien rhoncus ac. Curabitur in suscipit sem. Integer mollis risus cursus tempor ullamcorper. Nullam mollis urna at ante consequat, eget rhoncus velit varius. Sed posuere tortor nec eleifend feugiat. Cras vestibulum dolor ut elit aliquet, nec auctor magna lacinia. Pellentesque eget quam quis mi iaculis venenatis. Vestibulum vel enim risus.</div>'
-            var el = $( html ).get(0)            
-            tool.content = el.innerHTML
-        } )
-        
-        SMK.HANDLER.set( 'bespoke--foo', 'activated', function ( smk, tool ) {
-            // console.log( 'foo active!' )
-            tool.content = '<div>I am a legend in my own mind</div>'
-        } )
+        SMK.INIT( {
+            'smk-container-sel': "#smk-map-frame",
+            'smk-title-sel': "#header-title, head title",
+            'smk-config': "./map-config.json|./layer-config.json|theme=wf|?",
+        } ).then( function () {
+            SMK.HANDLER.set( 'bespoke', 'initialized', function ( smk ) {
+                // console.log( 'init!' )
+            } )
+            SMK.HANDLER.set( 'bespoke', 'activated', function ( smk, tool ) {
+                // console.log( 'active!' )
+                var html = '<div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vel sapien auctor, blandit mi eget, iaculis erat. Nam rutrum luctus est, sed accumsan sapien rhoncus ac. Curabitur in suscipit sem. Integer mollis risus cursus tempor ullamcorper. Nullam mollis urna at ante consequat, eget rhoncus velit varius. Sed posuere tortor nec eleifend feugiat. Cras vestibulum dolor ut elit aliquet, nec auctor magna lacinia. Pellentesque eget quam quis mi iaculis venenatis. Vestibulum vel enim risus.</div>'
+                var el = $( html ).get(0)            
+                tool.content = el.innerHTML
+            } )
+            
+            SMK.HANDLER.set( 'bespoke--foo', 'activated', function ( smk, tool ) {
+                // console.log( 'foo active!' )
+                tool.content = '<div>I am a legend in my own mind</div>'
+            } )
 
-        include( 'feature-list' ).then( function () {
-            Vue.component( 'wf-feature', {
-                template: '#wf-feature-template',
-                extends: SMK.TYPE.VueFeatureComponent
+            include( 'feature-list' ).then( function () {
+                Vue.component( 'wf-feature', {
+                    template: '#wf-feature-template',
+                    extends: SMK.TYPE.VueFeatureComponent
+                } )
             } )
         } )
     </script>
