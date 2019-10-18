@@ -18,6 +18,7 @@
     font-size: 12px;
     display: block;
     width: calc( 100% - 10px );
+    position: relative;
 }
 
 .smk-sidepanel .smk-query-panel .smk-parameter input, 
@@ -47,10 +48,15 @@
     order: 60
 }
 
-.smk-query-panel .smk-commands .smk-reset {
-    order: 80
-}
-
 .smk-query-panel .smk-commands .smk-within-extent {
     order: 70
 }
+
+.smk-sidepanel .smk-query-panel .smk-parameter .smk-parameter-reset {
+    width: 20px;
+    height: 20px;
+    font-size: 20px;
+    position: absolute;
+    right: -8px;
+    bottom: 4px;
+} 

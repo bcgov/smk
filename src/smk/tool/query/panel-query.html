@@ -15,6 +15,7 @@
             v-bind="parameter.prop"
             v-on:input="$$emit( 'parameter-input', { index: i, value: $event.value } )"
             v-on:mounted="$$emit( 'parameter-mounted', { index: i } )"
+            v-on:reset="$$emit( 'parameter-reset', { index: i } )"
             v-on:pickDown="$emit( 'pickDown' )"
             v-on:pickUp="$emit( 'pickUp' )"
             v-on:execute="$$emit( 'execute' )"
@@ -34,19 +35,11 @@
             style="font-size: 15px"
         >Search</span>
 
-        <span class="smk-reset smk-command"
-            v-bind:class="{ 'smk-disabled': !isModified || busy}"
-            v-on:click="isModified && !busy && $$emit( 'reset' )"
-        >Reset</span>
-
-        <label class="smk-within-extent smk-command smk-larger"
-            v-bind:class="{ 'smk-disabled': busy }"
+        <toggle-button class="smk-within-extent"
             v-if="within != null"
-        ><input type="checkbox"
-            v-bind:disabled="busy"
             v-model="within"
             v-on:change="$$emit( 'config', getConfigState() )"
-        >Within current extent</label>
+        >Within current extent</toggle-button>
     </template>
 
 </side-panel>

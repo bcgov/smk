@@ -24,12 +24,11 @@
             v-on:input="$$emit( 'config', getConfigState() )"
         >
 
-        <label class="smk-legend-toggle smk-command"
-        ><input type="checkbox"
+        <toggle-button class="smk-legend-toggle"
             v-if="command.legend !== false"
             v-model="legend"
             v-on:change="!busy && $$emit( 'config', getConfigState() )"
-        >Legend</label>
+        >Legend</toggle-button>
 
     </template>
     
