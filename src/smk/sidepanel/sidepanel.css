@@ -123,6 +123,26 @@
     height: 100%;
 }
 
+.smk-sidepanel .smk-panel .smk-above-body {
+    position: relative;
+}
+
+.smk-sidepanel .smk-panel .smk-can-scroll-up {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.smk-sidepanel .smk-panel .smk-below-body {
+    position: relative;
+}
+
+.smk-sidepanel .smk-panel .smk-can-scroll-down {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+
 .smk-sidepanel .smk-panel h1 {
     margin-top: 0;
     padding-bottom: 5px;

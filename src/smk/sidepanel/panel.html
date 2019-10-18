@@ -23,7 +23,21 @@
         </div>
     </div>
 
-    <div class="smk-body">
+    <div class="smk-above-body">
+        <i class="smk-can-scroll-up material-icons" 
+            v-if="canScrollUp"
+        >arrow_drop_up</i>
+    </div>
+
+    <div class="smk-body" ref="body"
+        v-on:scroll="scrollBody"
+    >
         <slot></slot>
+    </div>
+
+    <div class="smk-below-body">
+        <i class="smk-can-scroll-down material-icons" 
+            v-if="canScrollDown"
+        >arrow_drop_down</i>
     </div>
 </div>

@@ -23,6 +23,14 @@ include.module( 'sidepanel', [ 'vue', 'sidepanel.sidepanel-html', 'sidepanel.pan
             busy: {
                 type: Boolean,
                 default: false
+            },
+            canScrollUp: {
+                type: Boolean,
+                default: false
+            },
+            canScrollDown: {
+                type: Boolean,
+                default: false
             }
         },
         methods: {
@@ -57,7 +65,23 @@ include.module( 'sidepanel', [ 'vue', 'sidepanel.sidepanel-html', 'sidepanel.pan
 
                 this.xDown = null;
                 this.yDown = null;                                                             
+            },
+            scrollBody: function ( ev ) {
+                this.updateScroll()
+            },            
+            updateScroll: function () {
+                var el = this.$refs.body
+                this.canScrollUp = el.scrollTop > 0
+                this.canScrollDown = ( el.scrollTop + el.clientHeight ) < el.scrollHeight
             }
+        },
+        mounted: function () {
+            console.log('mounted')
+            this.$nextTick( this.updateScroll )
+        },
+        updated: function () {
+            console.log('updated')
+            this.$nextTick( this.updateScroll )
         }
     } )
 
