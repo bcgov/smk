@@ -4,7 +4,7 @@ include.module( 'tool-query-results', [ 'feature-list', 'widgets', 'tool-query-r
     Vue.component( 'query-results-panel', {
         extends: inc.widgets.toolPanel,
         template: inc[ 'tool-query-results.panel-query-results-html' ],
-        props: [ 'tool', 'layers', 'highlightId' ],
+        props: [ 'tool', 'layers', 'highlightId', 'command' ],
         methods: {
             featureListProps: function () {
                 var self = this

@@ -171,7 +171,7 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
                 self.loading = true
             } )
 
-            ly.finishedLoading( function () {
+            ly.finishedLoading( function () {   
                 self.loading = self.anyLayersLoading()
             } )
         }
@@ -248,6 +248,20 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
                 self.changedDevice( dev )
         }, { delay: 500 } ) )
 
+        if ( smk.$tool[ 'query-place' ] ) {
+            self.queried.place = new SMK.TYPE.FeatureSet()
+
+            self.query.place = new SMK.TYPE.Query.place( 'place' )
+
+            self.layerIds.push( 'place' )
+            self.layerId[ 'place' ] = {
+                id: 'place',
+                config: {
+                    title: '',
+                    popupTemplate: "@feature-place"
+                }
+            }
+        }
         // self.changedDevice( function ( dev ) { console.log( 'device change', dev ) } )
     }
 

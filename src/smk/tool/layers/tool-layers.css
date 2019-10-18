@@ -5,8 +5,12 @@
     align-items: center;
 } */
 
-.smk-layers-panel .smk-header .smk-commands label {
+/* .smk-layers-panel .smk-header .smk-commands label {
     white-space: nowrap;
+} */
+
+.smk-layers-panel .smk-commands  {
+    justify-content: flex-end;
 }
 
 .smk-layers-panel .smk-commands .smk-all-visibility {

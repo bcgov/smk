@@ -66,8 +66,9 @@ include.module( 'tool-query', [ 'feature-list', 'widgets', 'sidepanel', 'tool-qu
         },
         watch: {
             config: function ( val ) {
+                var self = this
                 Object.keys( val ).forEach( function ( k ) {
-                    this[ k ] = val[ k ]
+                    self[ k ] = val[ k ]
                 } )
             }
         },
@@ -182,6 +183,9 @@ include.module( 'tool-query', [ 'feature-list', 'widgets', 'sidepanel', 'tool-qu
                 self.parameters[ ev.index ].mounted()
             },
 
+            'parameter-reset': function ( ev ) {
+                self.parameters[ ev.index ].prop.value = self.query.parameters[ ev.index ].value
+            },
             // 'active', function ( ev ) {
             //     smk.$viewer[ self.featureSetProperty ].pick( ev.featureId )
             // } )

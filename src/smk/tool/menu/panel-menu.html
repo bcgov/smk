@@ -1,17 +1,24 @@
 <side-panel class="smk-menu-panel">
+
     <template slot="header">
-        <component class="smk-tool"
-            v-for="tool in subWidgets"
-            v-bind:key="tool.id"
-            v-bind:is="tool.widgetComponent"
-            v-bind="tool.widget"
-        ></component>
+        <div class="smk-menu-title">
+            <slot></slot>
+        </div>
+
+        <div class="smk-menu-widgets">
+            <component class="smk-tool"
+                v-for="tool in subWidgets"
+                v-bind:key="tool.id"
+                v-bind:is="tool.widgetComponent"
+                v-bind="tool.widget"
+            ></component>
+        </div>
     </template>
 
     <component class="smk-panel"
-        v-if="activeToolId && subPanels[ activeToolId ]"
-        v-bind:is="subPanels[ activeToolId ].panelComponent"
-        v-bind="subPanels[ activeToolId ].panel"
+        v-if="activeTool"
+        v-bind:is="activeTool.panelComponent"
+        v-bind="activeTool.panel"        
     ></component>
 
 </side-panel>

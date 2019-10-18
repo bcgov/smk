@@ -1,4 +1,4 @@
-include.module( 'tool-list-menu', [ 'tool', 'widgets', 'tool-list-menu.panel-list-menu-html', 'tool-list-menu.panel-tool-list-html' ], function ( inc ) {
+include.module( 'tool-list-menu', [ 'tool', 'widgets', 'tool-list-menu.panel-tool-list-html' ], function ( inc ) {
     "use strict";
 
     Vue.component( 'list-menu-widget', {
@@ -8,7 +8,7 @@ include.module( 'tool-list-menu', [ 'tool', 'widgets', 'tool-list-menu.panel-lis
     Vue.component( 'tool-list-panel', {
         extends: inc.widgets.toolPanel,
         template: inc[ 'tool-list-menu.panel-tool-list-html' ],
-        props: [ 'visible', 'enabled', 'active', 'subWidgets' ]
+        props: [ 'subWidgets' ]
     } )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
@@ -39,6 +39,19 @@ include.module( 'tool-list-menu', [ 'tool', 'widgets', 'tool-list-menu.panel-lis
                 if ( !self.enabled ) return
 
                 self.active = !self.active
+            },
+
+            'swipe-up': function ( ev ) {                
+                // console.log('swipe up',self)
+                self.panel.expand = 1
+            },
+
+            'swipe-down': function ( ev ) {
+                // console.log('swipe down',self)
+                if ( self.panel.expand )
+                    self.panel.expand = 0
+                else 
+                    smk.$sidepanel.closePanel()
             },
         } )
     } )

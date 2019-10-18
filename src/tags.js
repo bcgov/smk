@@ -124,6 +124,11 @@ t.group( 'tool-query-results' )
 t.group( 'tool-query-feature' )
     .dir( 'smk/tool/query-feature/*' )
 
+t.group( 'check-query-place' )
+    .dir( 'smk/tool/query-place/check/*' )
+t.group( 'tool-query-place' )
+    .dir( 'smk/tool/query-place/*' )
+
 t.group( 'tool-scale' )
     .dir( 'smk/tool/scale/*' )
 
@@ -204,6 +209,9 @@ t.group( 'tool-measure-leaflet' )
 
 t.group( 'tool-query-leaflet' )
     .dir( 'smk/viewer-leaflet/tool/query/**/*' )
+
+t.group( 'tool-query-place-leaflet' )
+    .dir( 'smk/viewer-leaflet/tool/query-place/**/*' )
 
 t.group( 'tool-scale-leaflet' )
     .dir( 'smk/viewer-leaflet/tool/scale/**/*' )

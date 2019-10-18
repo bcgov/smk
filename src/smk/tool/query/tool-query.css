@@ -7,17 +7,18 @@
 }
 
 .smk-sidepanel .smk-query-panel .smk-parameters {
-    margin: 10px 0;
+    /* margin: 10px 0; */
 }
 
 .smk-sidepanel .smk-query-panel .smk-parameter {
-    margin-top: 10px;
+    /* margin-top: 10px; */
 }
 
 .smk-sidepanel .smk-query-panel .smk-parameter label {
     font-size: 12px;
     display: block;
     width: calc( 100% - 10px );
+    position: relative;
 }
 
 .smk-sidepanel .smk-query-panel .smk-parameter input, 
@@ -38,3 +39,24 @@
     outline: 0;
     border-bottom: 1px dashed gray;
 }
+
+.smk-query-panel .smk-commands {
+    order: 1;
+}
+
+.smk-query-panel .smk-commands .smk-search {
+    order: 60
+}
+
+.smk-query-panel .smk-commands .smk-within-extent {
+    order: 70
+}
+
+.smk-sidepanel .smk-query-panel .smk-parameter .smk-parameter-reset {
+    width: 20px;
+    height: 20px;
+    font-size: 20px;
+    position: absolute;
+    right: -8px;
+    bottom: 4px;
+} 

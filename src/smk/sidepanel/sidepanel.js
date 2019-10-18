@@ -49,16 +49,17 @@ include.module( 'sidepanel', [ 'vue', 'sidepanel.sidepanel-html', 'sidepanel.pan
             
                 if ( Math.abs( xDiff ) > Math.abs( yDiff ) ) {
                     if ( xDiff > 0 ) {
-                        /* left swipe */ 
-                    } else {
-                        /* right swipe */
+                        this.$emit( 'swipe-left' )
+                    } 
+                    else {
+                        this.$emit( 'swipe-right' )
                     }                       
-                } else {
+                } 
+                else {
                     if ( yDiff > 0 ) {
-                        /* up swipe */ 
                         this.$emit( 'swipe-up' )
-                    } else { 
-                        /* down swipe */
+                    } 
+                    else { 
                         this.$emit( 'swipe-down' )
                     }                                                                 
                 }
@@ -87,6 +88,7 @@ include.module( 'sidepanel', [ 'vue', 'sidepanel.sidepanel-html', 'sidepanel.pan
 
     var SidepanelEvent = SMK.TYPE.Event.define( [
         'changedVisible',
+        'changedTool',
     ] )
 
     function Sidepanel( smk ) {
@@ -96,10 +98,12 @@ include.module( 'sidepanel', [ 'vue', 'sidepanel.sidepanel-html', 'sidepanel.pan
 
         this.model = {
             currentTool: null,
+            currentPanel: null,
             visible: false
         }
 
         this.toolStack = []
+        this.usePanel = {}
 
         this.vm = new Vue( {
             el: smk.addToOverlay( inc[ 'sidepanel.sidepanel-html' ] ),
@@ -115,13 +119,16 @@ include.module( 'sidepanel', [ 'vue', 'sidepanel.sidepanel-html', 'sidepanel.pan
                     self.popTool()
                 },
 
+                'hasPrevious': function () {
+                    var len = self.toolStack.length
+                    if ( len < 2 ) return false
+                    if ( self.toolStack[ len - 2 ].container ) return false
+                    return true
+                },
+
                 'closePanel': function () {
                     smk.emit( this.currentTool.id, 'close-panel' )
                     self.closePanel()
-                },
-
-                'depth': function () {
-                    return self.toolStack.length
                 },
 
                 'beforeShow': function () {
@@ -160,6 +167,7 @@ include.module( 'sidepanel', [ 'vue', 'sidepanel.sidepanel-html', 'sidepanel.pan
     } 
 
     Sidepanel.prototype.setCurrentTool = function ( tool ) {
+        // console.log('setCurrentTool',tool)
         var titleProps
         if ( tool.widgetComponent )
             titleProps = { title: tool.title }
@@ -175,7 +183,19 @@ include.module( 'sidepanel', [ 'vue', 'sidepanel.sidepanel-html', 'sidepanel.pan
             titleProps:     titleProps
         }
 
+        if ( this.usePanel[ tool.id ] ) {
+            this.model.currentPanel = {
+                id:             tool.id,
+                subPanel:       tool.subPanel,
+                panelComponent: tool.panelComponent,
+                panel:          tool.panel,
+                titleComponent: tool.titleComponent,
+                titleProps:     titleProps
+            }
+        }
+
         this.model.visible = true
+        this.changedTool( this.model.currentTool )
     }
 
     Sidepanel.prototype.isToolStacked = function ( tool ) {
@@ -237,8 +257,10 @@ include.module( 'sidepanel', [ 'vue', 'sidepanel.sidepanel-html', 'sidepanel.pan
         // console.log( 'after push', this.toolStack.map( function ( t ) { return [ t.id, t.subPanel ] } ) )
     }
 
-    Sidepanel.prototype.addTool = function ( tool, smk ) {
+    Sidepanel.prototype.addTool = function ( tool, smk, usePanel ) {
         var self = this
+
+        this.usePanel[ tool.id ] = usePanel !== false
 
         tool.changedActive( function () {
             // console.log( tool.id, tool.active, self.currentTool && self.currentTool.id )
@@ -291,4 +313,4 @@ include.module( 'sidepanel', [ 'vue', 'sidepanel.sidepanel-html', 'sidepanel.pan
     //
     return Sidepanel
 
-} )
+} ) 

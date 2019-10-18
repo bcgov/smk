@@ -174,11 +174,11 @@
     box-shadow: none;
 }
 
-.smk-theme-wf .smk-sidepanel .smk-panel .smk-commands .smk-panel-title {
+.smk-theme-wf .smk-sidepanel .smk-panel .smk-panel-title {
     font-weight: bold;
 }
 
-.smk-device-mobile.smk-theme-wf .smk-sidepanel .smk-panel .smk-commands .smk-panel-title {
+.smk-device-mobile.smk-theme-wf .smk-sidepanel .smk-panel .smk-panel-title {
     padding-top: 2px;
     padding-left: 4px;
 }
@@ -209,6 +209,17 @@
 .smk-device-mobile.smk-theme-wf .smk-sidepanel .smk-panel.smk-menu-panel > .smk-header {
     background-color: transparent;
     box-shadow: none;
+    justify-content: space-between;
+}
+
+.smk-device-mobile.smk-theme-wf .smk-sidepanel .smk-panel.smk-menu-panel > .smk-header .smk-tool-title {
+    flex-grow: 1;
+    justify-content: center;
+}
+
+.smk-device-mobile.smk-theme-wf .smk-sidepanel .smk-panel.smk-menu-panel > .smk-header .smk-tool-title.smk-tool-active {
+    background-color: #003366;
+    color: white;
 }
 
 .smk-device-mobile.smk-theme-wf .smk-sidepanel .smk-panel.smk-menu-panel > .smk-body {

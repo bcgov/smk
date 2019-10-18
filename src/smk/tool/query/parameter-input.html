@@ -8,5 +8,8 @@
             v-on:keyup.up="$emit( 'pickUp' )"
             v-on:keyup.enter="$emit( 'execute' )"
         >
+        <i class="smk-parameter-reset smk-command smk-icon material-icons" title="Reset"
+            v-on:click="$emit( 'reset' )"
+        >cancel</i>
     </label>
 </div>
