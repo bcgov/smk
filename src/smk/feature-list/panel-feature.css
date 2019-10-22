@@ -64,6 +64,10 @@
     font-size: 12px;
 }
 
+.smk-feature-panel .smk-value .material-icons {
+    font-size: 12px;
+}
+
 .smk-feature-panel .smk-commands {
     user-select: none;
 }

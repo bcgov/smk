@@ -3,6 +3,8 @@ include.module( 'feature-list', [ 'tool', 'widgets', 'sidepanel',
     'feature-list.feature-attributes-html',
     'feature-list.feature-properties-html',
     'feature-list.feature-description-html',
+    'feature-list.feature-formatted-html',
+    'feature-list.format-link-html',
     'feature-list.panel-feature-html'
 ], function ( inc ) {
     "use strict";
@@ -22,7 +24,7 @@ include.module( 'feature-list', [ 'tool', 'widgets', 'sidepanel',
     } )
 
     var featureComponent = SMK.TYPE.VueFeatureComponent = Vue.extend( {
-        props: [ 'feature', 'layer', 'showHeader' ],
+        props: [ 'feature', 'layer', 'showHeader', 'attributes' ],
         methods: {
             insertWordBreaks: function ( str ) {
                 return str.replace( /[^a-z0-9 ]+/ig, function ( m ) { return '<wbr>' + m } )
@@ -33,6 +35,15 @@ include.module( 'feature-list', [ 'tool', 'widgets', 'sidepanel',
                 }
 
                 return val
+            },
+            formatAttribute: function ( attr ) {
+                /* jshint evil: true */
+
+                var m = attr.format.match( /^(.+)[(](.+)[)]$/)
+                if ( !m )
+                    return formatter[ attr.format ]( attr, this.feature, this.layer )()
+
+                return formatter[ m[ 1 ] ]( attr, this.feature, this.layer )( eval( m[ 2 ] ) )
             }
         }
     } )
@@ -57,6 +68,7 @@ include.module( 'feature-list', [ 'tool', 'widgets', 'sidepanel',
         extends: featureComponent,
         template: inc[ 'feature-list.feature-description-html' ],
     } )
+
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
     function FeatureList( option ) {
@@ -150,35 +162,66 @@ include.module( 'feature-list', [ 'tool', 'widgets', 'sidepanel',
     Vue.component( 'feature-panel', {
         extends: inc.widgets.toolPanel,
         template: inc[ 'feature-list.panel-feature-html' ],
-        props: [ 'feature', 'layer', 'attributeComponent', 'tool', 'resultPosition', 'resultCount', 'instance', 'command', 'attributes' ],
+        props: [ 'feature', 'layer', 'attributeComponent', 'tool', 'resultPosition', 'resultCount', 'instance', 'command' ],
         data: function () {
             return {
                 'attributeView': 'default'
             }
+        },
+        computed: {
+            attributes: {
+                get: function () {
+                    var ft = this.feature
+                    if ( !this.layer.attributes ) return []
+                    return this.layer.attributes
+                        .filter( function ( at ) { return at.visible !== false } )
+                        .map( function ( at ) {
+                            return {
+                                id: at.name || at.title,
+                                name: at.name,
+                                title: at.title,
+                                value: at.name ? ft.properties[ at.name ] : at.value,
+                                format: at.format || 'simple'
+                            } 
+                        } )
+                }
+            }
         }
     } )
 
-    var attributeFormatComponent = SMK.TYPE.VueAttributeFormatComponent = Vue.extend( {
-        props: [ 'feature', 'layer', 'attribute' ],
-        template: '<span class="smk-value">{{ format( attribute.value )"></span>'
-        // methods: {
-        //     insertWordBreaks: function ( str ) {
-        //         return str.replace( /[^a-z0-9 ]+/ig, function ( m ) { return '<wbr>' + m } )
-        //     },
-        //     formatValue: function ( val ) {
-        //         if ( /^https?[:][/]{2}[^/]/.test( ( '' + val ).trim() ) ) {
-        //             return '<a href="'+ val + '" target="_blank">Open in new window</a>'
-        //         }
+    function makeFormatter( template, input ) {
+        var component = Vue.extend( {
+            template: template
+        } )
+        var formatInput = input || function () {}
+        return function ( attribute, feature, layer ) {
+            return function () {
+                var inp = formatInput.apply( null, arguments )
+                var c1 = Vue.extend( {
+                    extends: component,
+                    data: function () {
+                        return Object.assign( {
+                            attribute: attribute,
+                            feature: feature,
+                            layer: layer
+                        }, inp )
+                    }
+                } )
+                return new c1().$mount().$el.outerHTML
+            }
+        }
+    }
 
-        //         return val
-        //     }
-        // }
-    } )
-
-    Vue.component( 'attribute-format', {
-        extends: attributeFormatComponent,
-        template: inc[ 'feature-list.panel-feature-html' ],
-    } )
+    var formatter = {
+        simple: makeFormatter( '<span class="smk-value">{{ attribute.value }}</span>' ),
+        asLocalTimestamp: makeFormatter( '<span class="smk-value" v-if="attribute.value">{{ ( new Date( attribute.value ) ).toLocaleString() }}</span>' ),
+        asUnit: makeFormatter( '<span class="smk-value" v-if="attribute.value">{{ attribute.value }} <span class="smk-unit">{{ unit }}</span></span>', function ( unit ) { 
+            return { unit: unit } 
+        } ),
+        asLink: makeFormatter( inc[ 'feature-list.format-link-html' ], function ( url ) {
+            return { url: url }
+        } )
+    }
 
     function FeaturePanel( option ) {
         this.makePropPanel( 'feature', null )

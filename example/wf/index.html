@@ -124,14 +124,14 @@
 
     <template id="wf-feature-template">
         <div>
-            <div class="smk-attributes" v-if="layer.attributes && layer.attributes.length > 0">
-                <div class="wf-feature-attribute wf-title-feature-attribute" v-if="layer.attributes.length > 0">
-                    <span class="wf-feature-attribute-title" v-html="insertWordBreaks( layer.attributes[ 0 ].title )"></span>
-                    <span class="wf-feature-attribute-value" v-html="formatValue( feature.properties[ layer.attributes[ 0 ].name ] )"></span>
+            <div class="smk-attributes" v-if="attributes && attributes.length > 0">
+                <div class="wf-feature-attribute wf-title-feature-attribute" v-if="attributes.length > 0">
+                    <span class="wf-feature-attribute-title" v-html="insertWordBreaks( attributes[ 0 ].title )"></span>
+                    <span class="wf-feature-attribute-value" v-html="formatAttribute( attributes[ 0 ] )"></span>
                 </div>
-                <div class="wf-feature-attribute" v-for="(attr,index) in layer.attributes" v-if="attr.visible !== false && index > 0">
+                <div class="wf-feature-attribute" v-for="(attr,index) in attributes" v-if="attr.visible !== false && index > 0">
                     <span class="wf-feature-attribute-title" v-html="insertWordBreaks( attr.title )"></span>
-                    <span class="wf-feature-attribute-value" v-html="formatValue( feature.properties[ attr.name ] )"></span>
+                    <span class="wf-feature-attribute-value" v-html="formatAttribute( attr )"></span>
                 </div>
             </div>
         </div>
