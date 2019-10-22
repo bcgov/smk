@@ -153,7 +153,8 @@
         },
         {
           "name": "IGNITION_DATE",
-          "title": "Date of Discovery"
+          "title": "Date of Discovery",
+          "format": "asLocalTimestamp"
         },
         {
           "name": "FIRE_CAUSE",
@@ -165,7 +166,9 @@
         },
         {
           "name": "CURRENT_SIZE",
-          "title": "Estimated Size, ha"
+          "title": "Estimated Size",
+          "format": "asUnit('ha')"
+
         },
         {
           "name": "FIRE_STATUS",
@@ -173,7 +176,8 @@
         },
         {
           "name": "FIRE_OF_NOTE_NAME",
-          "title": "Fire of Note Name"
+          "title": "Fire of Note Name",
+          "format": "asLink(feature.properties.FIRE_OF_NOTE_URL)"
         },
         {
           "name": "FIRE_OF_NOTE_URL",

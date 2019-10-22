@@ -150,12 +150,34 @@ include.module( 'feature-list', [ 'tool', 'widgets', 'sidepanel',
     Vue.component( 'feature-panel', {
         extends: inc.widgets.toolPanel,
         template: inc[ 'feature-list.panel-feature-html' ],
-        props: [ 'feature', 'layer', 'attributeComponent', 'tool', 'resultPosition', 'resultCount', 'instance', 'command' ],
+        props: [ 'feature', 'layer', 'attributeComponent', 'tool', 'resultPosition', 'resultCount', 'instance', 'command', 'attributes' ],
         data: function () {
             return {
                 'attributeView': 'default'
             }
         }
+    } )
+
+    var attributeFormatComponent = SMK.TYPE.VueAttributeFormatComponent = Vue.extend( {
+        props: [ 'feature', 'layer', 'attribute' ],
+        template: '<span class="smk-value">{{ format( attribute.value )"></span>'
+        // methods: {
+        //     insertWordBreaks: function ( str ) {
+        //         return str.replace( /[^a-z0-9 ]+/ig, function ( m ) { return '<wbr>' + m } )
+        //     },
+        //     formatValue: function ( val ) {
+        //         if ( /^https?[:][/]{2}[^/]/.test( ( '' + val ).trim() ) ) {
+        //             return '<a href="'+ val + '" target="_blank">Open in new window</a>'
+        //         }
+
+        //         return val
+        //     }
+        // }
+    } )
+
+    Vue.component( 'attribute-format', {
+        extends: attributeFormatComponent,
+        template: inc[ 'feature-list.panel-feature-html' ],
     } )
 
     function FeaturePanel( option ) {
@@ -168,6 +190,7 @@ include.module( 'feature-list', [ 'tool', 'widgets', 'sidepanel',
         this.makePropPanel( 'instance', null )
         this.makePropPanel( 'attributeView', 'default' )
         this.makePropPanel( 'command', {} )
+        this.makePropPanel( 'attributes', null )
 
         SMK.TYPE.Tool.prototype.constructor.call( this, $.extend( {
             // debugView: false
