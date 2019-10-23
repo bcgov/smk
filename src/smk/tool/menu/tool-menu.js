@@ -71,7 +71,8 @@ include.module( 'tool-menu', [ 'tool', 'widgets', 'tool-menu.panel-menu-html' ],
             this.selectedToolId = tool.id
 
         tool.subPanel = tool.subPanel + 1
-        smk.$sidepanel.addTool( tool, smk, false )
+
+        smk.getSidepanel().addTool( tool, smk, false )
 
         if ( tool.widgetComponent )
             this.subWidgets.push( {

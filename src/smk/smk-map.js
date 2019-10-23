@@ -1,4 +1,4 @@
-include.module( 'smk-map', [ 'jquery', 'util', 'theme-base' ], function () {
+include.module( 'smk-map', [ 'jquery', 'util', 'theme-base', 'sidepanel' ], function () {
     "use strict";
 
     function SmkMap( option ) {
@@ -431,6 +431,22 @@ include.module( 'smk-map', [ 'jquery', 'util', 'theme-base' ], function () {
             this.$status = this.addToOverlay( '<div class="smk-status">' )
 
         return $( html ).appendTo( this.$status ).get( 0 )
+    }
+
+    SmkMap.prototype.getSidepanel = function () {
+        var self = this
+
+        if ( this.$sidepanel ) return this.$sidepanel
+
+        this.$sidepanel = new SMK.TYPE.Sidepanel( this )
+
+        this.$sidepanel.changedVisible( function () {
+            $( self.$container ).toggleClass( 'smk-sidepanel-active', self.$sidepanel.isPanelVisible() )
+
+            self.$viewer.mapResized()
+        } )
+
+        return this.$sidepanel
     }
 
     SmkMap.prototype.getVar = function ( cssVar ) {

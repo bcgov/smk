@@ -1,4 +1,4 @@
-include.module( 'sidepanel', [ 'vue', 'sidepanel.sidepanel-html', 'sidepanel.panel-html' ], function ( inc ) {
+include.module( 'sidepanel', [ 'vue', 'tool', 'sidepanel.sidepanel-html', 'sidepanel.panel-html' ], function ( inc ) {
     "use strict";
 
     Vue.component( 'side-panel', {

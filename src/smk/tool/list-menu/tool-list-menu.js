@@ -61,7 +61,8 @@ include.module( 'tool-list-menu', [ 'tool', 'widgets', 'tool-list-menu.panel-too
         var self = this
 
         tool.subPanel = tool.subPanel + 1
-        smk.$sidepanel.addTool( tool )
+
+        smk.getSidepanel().addTool( tool, smk )
 
         tool.showTitle = true
 

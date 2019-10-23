@@ -44,13 +44,8 @@ t.group( 'layer' )
 t.group( 'query' )
     .dir( 'smk/query/**/*' )
 
-t.group( 'toolbar' )
-    .dir( 'smk/toolbar/**/*' )
-    .tag( 'material-icons' )
-
 t.group( 'sidepanel' )
     .dir( 'smk/sidepanel/**/*' )
-    .tag( 'material-icons' )
 
 t.group( 'feature-list' )
     .dir( 'smk/feature-list/**/*' )
@@ -298,6 +293,7 @@ t.group( 'tool-zoom-esri3d' )
 
 t.group( 'theme-base' )
     .dir( 'theme/_base/**/*' )
+    .tag( 'material-icons' )
 
 t.group( 'theme-alpha' )
     .dir( 'theme/alpha/**/*' )

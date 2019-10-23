@@ -1,4 +1,4 @@
-include.module( 'tool-toolbar', [ 'tool', 'toolbar', 'sidepanel' ], function ( inc ) {
+include.module( 'tool-toolbar', [ 'tool', 'tool-toolbar.toolbar-html' ], function ( inc ) {
     "use strict";
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
@@ -6,6 +6,10 @@ include.module( 'tool-toolbar', [ 'tool', 'toolbar', 'sidepanel' ], function ( i
         SMK.TYPE.Tool.prototype.constructor.call( this, $.extend( {
             order: 0
         }, option ) )
+
+        this.model = {
+            tools: [],
+        }
     }
 
     SMK.TYPE.ToolBarTool = ToolBarTool
@@ -15,22 +19,29 @@ include.module( 'tool-toolbar', [ 'tool', 'toolbar', 'sidepanel' ], function ( i
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
     ToolBarTool.prototype.afterInitialize.push( function ( smk ) {
-        this.toolbar = smk.$toolbar = new SMK.TYPE.Toolbar( smk )
-
-        this.sidepanel = smk.$sidepanel = new SMK.TYPE.Sidepanel( smk )
-        this.sidepanel.changedVisible( function () {
-            $( smk.$container ).toggleClass( 'smk-sidepanel-active', smk.$sidepanel.isPanelVisible() )
-
-            smk.$viewer.mapResized()
+        this.vm = new Vue( {
+            el: smk.addToOverlay( inc[ 'tool-toolbar.toolbar-html' ] ),
+            data: this.model,
+            methods: {
+                trigger: function ( toolId, event, arg ) {
+                    smk.emit( toolId, event, arg )
+                }
+            }
         } )
     } )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
-    ToolBarTool.prototype.addTool = function ( tool ) {
-        if ( tool.widgetComponent )
-            this.toolbar.add( tool )
+    ToolBarTool.prototype.addTool = function ( tool, smk ) {
+        if ( tool.widgetComponent ) {
+            this.model.tools.push( {
+                id: tool.id,
+                type: tool.type,
+                widgetComponent: tool.widgetComponent,
+                widget: tool.widget
+            } )
+        }
 
-        this.sidepanel.addTool( tool )
+        smk.getSidepanel().addTool( tool )
 
         return true
     }
