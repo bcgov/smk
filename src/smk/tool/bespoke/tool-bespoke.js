@@ -53,14 +53,9 @@ include.module( 'tool-bespoke', [ 'tool', 'widgets', 'tool-bespoke.panel-bespoke
 
         smk.on( this.id, {
             'activate': function () {
-                if ( !self.enabled ) return
+                // if ( !self.enabled ) return
 
                 self.active = !self.active
-
-                if ( self.active )
-                    SMK.HANDLER.get( self.id, 'activated' )( smk, self )
-                else
-                    SMK.HANDLER.get( self.id, 'deactivated' )( smk, self )
             },
 
             'swipe-up': function ( ev ) {                
@@ -75,6 +70,13 @@ include.module( 'tool-bespoke', [ 'tool', 'widgets', 'tool-bespoke.panel-bespoke
                 else 
                     smk.$sidepanel.closePanel()
             },
+        } )
+
+        this.changedActive( function () {
+            if ( self.active )
+                SMK.HANDLER.get( self.id, 'activated' )( smk, self )
+            else
+                SMK.HANDLER.get( self.id, 'deactivated' )( smk, self )
         } )
 
         SMK.HANDLER.get( self.id, 'initialized' )( smk, self )
