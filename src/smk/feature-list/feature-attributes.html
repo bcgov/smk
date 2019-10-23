@@ -7,14 +7,13 @@
     <div class="smk-layer">{{ layer.title }}</div>
 
     <div class="smk-attributes"
-        v-if="layer.attributes && layer.attributes.length > 0"
+        v-if="attributes && attributes.length > 0"
     >
         <div class="smk-attribute"
-            v-for="attr in layer.attributes"
-            v-if="attr.visible !== false"
+            v-for="attr in attributes"
         >
             <span class="smk-attribute-title" v-html="insertWordBreaks( attr.title )"></span>
-            <span class="smk-value" v-html="formatValue( feature.properties[ attr.name ] )"></span>
+            <span class="smk-value" v-html="formatAttribute( attr )"></span>
         </div>
     </div>
 </div>

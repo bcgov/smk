@@ -154,7 +154,7 @@
         {
           "name": "IGNITION_DATE",
           "title": "Date of Discovery",
-          "format": "asLocalTimestamp"
+          "format": "asLocalDate"
         },
         {
           "name": "FIRE_CAUSE",
@@ -279,7 +279,7 @@
         {
           "name": "TRACK_DATE",
           "title": "Track Date",
-          "format": "asLocalTimestamp"
+          "format": "asLocalDate"
         },
         {
           "name": "FIRE_STATUS",
@@ -326,12 +326,12 @@
         {
           "name": "DateActive",
           "title": "Date Active",
-          "format": "asLocalTimestamp"
+          "format": "asLocalDate"
         },
         {
           "name": "DateDeactivated",
           "title": "Date Deactivated",
-          "format": "asLocalTimestamp"
+          "format": "asLocalDate"
         },
         {
           "name": "Type",
@@ -403,12 +403,12 @@
         {
           "name": "DateActive",
           "title": "Date Active",
-          "format": "asLocalTimestamp"
+          "format": "asLocalDate"
         },
         {
           "name": "DateDeactivated",
           "title": "Date Deactivated",
-          "format": "asLocalTimestamp"
+          "format": "asLocalDate"
         },
         {
           "name": "Type",
@@ -510,7 +510,7 @@
         {
           "name": "CLOSURE_DATE",
           "title": "Closure Date",
-          "format": "asLocalTimestamp"
+          "format": "asLocalDate"
         },
         {
           "name": "CLOSURE_TYPE",

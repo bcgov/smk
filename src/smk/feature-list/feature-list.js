@@ -3,7 +3,6 @@ include.module( 'feature-list', [ 'tool', 'widgets', 'sidepanel',
     'feature-list.feature-attributes-html',
     'feature-list.feature-properties-html',
     'feature-list.feature-description-html',
-    'feature-list.feature-formatted-html',
     'feature-list.format-link-html',
     'feature-list.panel-feature-html'
 ], function ( inc ) {
@@ -215,6 +214,8 @@ include.module( 'feature-list', [ 'tool', 'widgets', 'sidepanel',
     var formatter = {
         simple: makeFormatter( '<span class="smk-value">{{ attribute.value }}</span>' ),
         asLocalTimestamp: makeFormatter( '<span class="smk-value" v-if="attribute.value">{{ ( new Date( attribute.value ) ).toLocaleString() }}</span>' ),
+        asLocalDate: makeFormatter( '<span class="smk-value" v-if="attribute.value">{{ ( new Date( attribute.value ) ).toLocaleDateString() }}</span>' ),
+        asLocalTime: makeFormatter( '<span class="smk-value" v-if="attribute.value">{{ ( new Date( attribute.value ) ).toLocaleTimeString() }}</span>' ),
         asUnit: makeFormatter( '<span class="smk-value" v-if="attribute.value">{{ attribute.value }} <span class="smk-unit">{{ unit }}</span></span>', function ( unit ) { 
             return { unit: unit } 
         } ),
