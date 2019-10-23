@@ -104,13 +104,13 @@ include.module( 'query.query-esri-dynamic-js', [ 'query.query-js' ], function ()
         var whereClause = makeWhereClause( this.predicate, param )
         if ( !whereClause ) throw new Error( 'filter is empty' )
 
-        var attrs = layerConfig.attributes.filter( function ( a ) { return a.visible !== false } ).map( function ( a ) { return a.name } )
+        // var attrs = layerConfig.attributes.filter( function ( a ) { return a.visible !== false } ).map( function ( a ) { return a.name } )
 
         var data = {
             f:                  'geojson',
             layer:              JSON.stringify( dynamicLayer ).replace( /^"|"$/g, '' ),
             where:              whereClause,
-            outFields:          attrs.join( ',' ),
+            outFields:          '*', //attrs.join( ',' ),
             inSR:               4326,
             outSR:              4326,
             returnGeometry:     true,

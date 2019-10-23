@@ -40,7 +40,7 @@ include.module( 'feature-set', [ 'jquery', 'util', 'event', 'turf' ], function (
                 // console.warn( 'collision', f, id, nonce )
 
                 var other = self.featureSet[ id ]
-                if ( SMK.UTIL.isDeepEqual( f.properties, other.properties ) ) {
+                if ( SMK.UTIL.isDeepEqual( f.properties, other.properties ) && SMK.UTIL.isDeepEqual( f.geometry, other.geometry ) ) {
                     // console.warn( 'already present', f, other )
                     return
                 }

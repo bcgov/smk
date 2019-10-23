@@ -46,6 +46,7 @@
             >Description View</option>        
             <option value="feature-attributes">Attributes View</option>        
             <option value="feature-properties">Properties View</option>        
+            <option value="feature-formatted">Formatted View</option>        
         </select>
 
     </template>
@@ -55,8 +56,9 @@
         v-bind:key="layer.id"
         v-bind:is="attributeView == 'default' ? attributeComponent : attributeView"
         v-bind="{
-            layer:   layer,
-            feature: feature,
+            layer:      layer,
+            feature:    feature,
+            attributes: attributes,
         }"
     ></component>
 </side-panel>

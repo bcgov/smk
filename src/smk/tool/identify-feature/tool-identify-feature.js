@@ -88,7 +88,9 @@ include.module( 'tool-identify-feature', [ 'feature-list' ], function ( inc ) {
                     return {
                         visible:at.visible,
                         title:  at.title,
-                        name:   at.name
+                        name:   at.name,
+                        format: at.format,
+                        value:  at.value
                     }
                 } )
             }

@@ -153,7 +153,8 @@
         },
         {
           "name": "IGNITION_DATE",
-          "title": "Date of Discovery"
+          "title": "Date of Discovery",
+          "format": "asLocalDate"
         },
         {
           "name": "FIRE_CAUSE",
@@ -165,7 +166,8 @@
         },
         {
           "name": "CURRENT_SIZE",
-          "title": "Estimated Size, ha"
+          "title": "Estimated Size",
+          "format": "asUnit('ha')"
         },
         {
           "name": "FIRE_STATUS",
@@ -173,11 +175,8 @@
         },
         {
           "name": "FIRE_OF_NOTE_NAME",
-          "title": "Fire of Note Name"
-        },
-        {
-          "name": "FIRE_OF_NOTE_URL",
-          "title": "Fire of Note Information"
+          "title": "Fire of Note Information",
+          "format": "asLink(this.feature.properties.FIRE_OF_NOTE_URL)"
         }
       ],
       "popupTemplate": "@wf-feature",
@@ -243,16 +242,22 @@
       "id": 31072,
       "title": "Danger Rating",
       "isVisible": false,
-      "isQueryable": false,
+      "isQueryable": true,
       "attribution": "Copyright 117 DataBC, Government of British Columbia",
-      "attributes": [],
       "serviceUrl": "https://services6.arcgis.com/ubm4tcTYICKBpist/arcgis/rest/services/British_Columbia_Danger_Rating/FeatureServer/0",
       "metadataUrl": "https://catalogue.data.gov.bc.ca/dataset/diagnostic-facilities",
       "where": "",
       "opacity": 0.25,
       "scaleMin": 500000,
       "scaleMax": 0,
-      "popupTemplate": "@wf-feature"
+      "popupTemplate": "@wf-feature",
+      "titleAttribute": "LABEL",
+      "attributes": [
+          {
+              "name": "LABEL",
+              "title": "Danger Rating"
+          }
+      ]
     },
     {
       "type": "esri-feature",
@@ -273,7 +278,8 @@
         },
         {
           "name": "TRACK_DATE",
-          "title": "Track Date"
+          "title": "Track Date",
+          "format": "asLocalDate"
         },
         {
           "name": "FIRE_STATUS",
@@ -281,11 +287,8 @@
         },
         {
           "name": "FIRE_OF_NOTE_NAME",
-          "title": "Fire of Note Name"
-        },
-        {
-          "name": "FIRE_OF_NOTE_URL",
-          "title": "Fire of Note Information"
+          "title": "Fire of Note Information",
+          "format": "asLink(this.feature.properties.FIRE_OF_NOTE_URL)"
         }
       ],
       "popupTemplate": "@wf-feature",
@@ -322,11 +325,13 @@
         },
         {
           "name": "DateActive",
-          "title": "Date Active"
+          "title": "Date Active",
+          "format": "asLocalDate"
         },
         {
           "name": "DateDeactivated",
-          "title": "Date Deactivated"
+          "title": "Date Deactivated",
+          "format": "asLocalDate"
         },
         {
           "name": "Type",
@@ -337,8 +342,9 @@
           "title": "Comments"
         },
         {
-          "name": "URL",
-          "title": "More Information"
+          "title": "More Information",
+          "value": "See Here",
+          "format": "asLink(this.feature.properties.URL)"
         }
       ],
       "serviceUrl": "https://services6.arcgis.com/ubm4tcTYICKBpist/ArcGIS/rest/services/British_Columbia_Bans_and_Prohibition_Areas/FeatureServer/0",
@@ -396,11 +402,13 @@
         },
         {
           "name": "DateActive",
-          "title": "Date Active"
+          "title": "Date Active",
+          "format": "asLocalDate"
         },
         {
           "name": "DateDeactivated",
-          "title": "Date Deactivated"
+          "title": "Date Deactivated",
+          "format": "asLocalDate"
         },
         {
           "name": "Type",
@@ -415,8 +423,9 @@
           "title": "Fire Centre"
         },
         {
-          "name": "URL",
-          "title": "More Information"
+          "title": "More Information",
+          "value": "See Here",
+          "format": "asLink(this.feature.properties.URL)"
         }
       ],
       "popupTemplate": "@wf-feature",
@@ -429,7 +438,8 @@
       "serviceUrl": "https://openmaps.gov.bc.ca/geo/pub/wms",
       "layerName": "WHSE_LAND_AND_NATURAL_RESOURCE.PROT_CURRENT_FIRE_POLYS_SP",
       "isQueryable": false,
-      "popupTemplate": "@wf-feature"
+      "popupTemplate": "@wf-feature",
+      "titleAttribute": "FIRE_NUMBER"
     },
     {
       "type": "esri-feature",
@@ -438,13 +448,41 @@
       "isVisible": false,
       "isQueryable": false,
       "attribution": "Copyright 117 DataBC, Government of British Columbia",
-      "attributes": [],
       "serviceUrl": "https://services6.arcgis.com/ubm4tcTYICKBpist/ArcGIS/rest/services/British_Columbia_Prescribed_Fire/FeatureServer/0",
       "metadataUrl": "https://catalogue.data.gov.bc.ca/dataset/diagnostic-facilities",
       "where": "",
       "scaleMin": 500000,
       "scaleMax": 0,
-      "popupTemplate": "@wf-feature"
+      "popupTemplate": "@wf-feature",
+      "titleAttribute": "OBJECTID",
+      "attributes": [
+        {
+            "name": "Fire_Centre",
+            "title": "Fire Centre"
+        },
+        {
+            "name": "Fire_Zone",
+            "title": "Fire Zone"
+        },
+        {
+            "name": "ManagementObjective",
+            "title": "Management Objective"
+        },
+        {
+            "name": "Proposed_Area",
+            "title": "Proposed Area",
+            "format": "asUnit('ha')"
+        },
+        {
+            "name": "Status",
+            "title": "Status"
+        },
+        {
+          "title": "More Information",
+          "value": "See Here",
+          "format": "asLink(this.feature.properties.URL)"
+        }
+      ]
     },
     {
       "type": "esri-feature",
@@ -471,7 +509,8 @@
         },
         {
           "name": "CLOSURE_DATE",
-          "title": "Closure Date"
+          "title": "Closure Date",
+          "format": "asLocalDate"
         },
         {
           "name": "CLOSURE_TYPE",
