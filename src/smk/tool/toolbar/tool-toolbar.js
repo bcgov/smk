@@ -32,13 +32,18 @@ include.module( 'tool-toolbar', [ 'tool', 'tool-toolbar.toolbar-html' ], functio
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
     ToolBarTool.prototype.addTool = function ( tool, smk ) {
-        if ( tool.widgetComponent ) {
+        if ( tool.widgetComponent && !tool.parentId ) {
+            tool.parentId = this.id 
+            
             this.model.tools.push( {
                 id: tool.id,
                 type: tool.type,
                 widgetComponent: tool.widgetComponent,
                 widget: tool.widget
             } )
+        }
+
+        if ( tool.parentId ) {
         }
 
         smk.getSidepanel().addTool( tool, smk )

@@ -31,6 +31,7 @@ include.module( 'tool', [ 'jquery', 'event' ], function () {
     // Tool.prototype.position = 'toolbar'
     Tool.prototype.showPanel = true
     Tool.prototype.subPanel = 0
+    Tool.prototype.parentId = null
 
     SMK.TYPE.Tool = Tool
 

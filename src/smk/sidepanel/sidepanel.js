@@ -30,7 +30,7 @@ include.module( 'sidepanel', [ 'vue', 'tool', 'sidepanel.sidepanel-html', 'sidep
             },
             canScrollDown: {
                 type: Boolean,
-                default: false
+                default: false  
             }
         },
         methods: {
@@ -159,12 +159,45 @@ include.module( 'sidepanel', [ 'vue', 'tool', 'sidepanel.sidepanel-html', 'sidep
 
     Sidepanel.prototype.closePanel = function () {
         this.model.visible = false
-
-        this.toolStack.forEach( function ( t ) {
-            t.active = false
-            t.panel.expand = 0
-        } )
+        // console.log('closePanel',this.toolStack)
+        // this.toolStack.forEach( function ( t ) {
+        //     t.active = false
+        //     t.panel.expand = 0
+        // } )
     } 
+
+    Sidepanel.prototype.setPanel = function ( tool ) {
+        // console.log('setCurrentTool',tool)
+        var titleProps
+        if ( tool.widgetComponent )
+            titleProps = { title: tool.title }
+        else
+            titleProps = tool.widget
+
+        // this.model.currentTool = {
+        //     id:             tool.id,
+        //     subPanel:       tool.subPanel,
+        //     panelComponent: tool.panelComponent,
+        //     panel:          tool.panel,
+        //     titleComponent: tool.titleComponent,
+        //     titleProps:     titleProps
+        // }
+
+        // if ( this.usePanel[ tool.id ] ) {
+            this.model.currentPanel = {
+                id:             tool.id,
+                subPanel:       tool.subPanel,
+                panelComponent: tool.panelComponent,
+                panel:          tool.panel,
+                titleComponent: tool.titleComponent,
+                titleProps:     titleProps
+            }
+        // }
+
+        this.model.visible = true
+        // this.changedTool( this.model.currentTool )
+        this.changedTool( tool )
+    }
 
     Sidepanel.prototype.setCurrentTool = function ( tool ) {
         // console.log('setCurrentTool',tool)
@@ -195,7 +228,8 @@ include.module( 'sidepanel', [ 'vue', 'tool', 'sidepanel.sidepanel-html', 'sidep
         }
 
         this.model.visible = true
-        this.changedTool( this.model.currentTool )
+        // this.changedTool( this.model.currentTool )
+        this.changedTool( tool )
     }
 
     Sidepanel.prototype.isToolStacked = function ( tool ) {
@@ -263,11 +297,12 @@ include.module( 'sidepanel', [ 'vue', 'tool', 'sidepanel.sidepanel-html', 'sidep
         this.usePanel[ tool.id ] = usePanel !== false
 
         tool.changedActive( function () {
-            // console.log( tool.id, tool.active, self.currentTool && self.currentTool.id )
+            console.log( tool.id, tool.active )
             if ( tool.active ) {              
                 self.pushTool( tool )
             }
             else {
+                console.log( '!active', tool.id )
                 if ( self.isToolStacked( tool ) ) {
                     self.closePanel()
                 }
