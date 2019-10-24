@@ -23,6 +23,8 @@ include.module( 'tool-list-menu', [ 'tool', 'widgets', 'tool-list-menu.panel-too
             panelComponent: 'tool-list-panel',
             currentTool:    null
         }, option ) )
+
+        this.toolIds = []
     }
 
     SMK.TYPE.ListMenuTool = ListMenuTool
@@ -54,32 +56,53 @@ include.module( 'tool-list-menu', [ 'tool', 'widgets', 'tool-list-menu.panel-too
                     smk.$sidepanel.closePanel()
             },
         } )
+
+        this.changedActive( function () {
+            if ( self.active ) {
+                self.toolIds.forEach( function ( id ) {
+                    smk.$tool[ id ].active = false
+                } )
+            }
+        } )
     } )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
     ListMenuTool.prototype.addTool = function ( tool, smk ) {
         var self = this
 
-        tool.subPanel = tool.subPanel + 1
+        // tool.subPanel = tool.subPanel + 1
+
+        if ( !tool.parentId )
+            tool.parentId = this.id
 
         smk.getSidepanel().addTool( tool, smk )
 
         tool.showTitle = true
 
-        this.subWidgets.push( {
-            id: tool.id,
-            type: tool.type,
-            widgetComponent: tool.widgetComponent,
-            widget: tool.widget
-        } )
+        if ( tool.widgetComponent )
+            this.subWidgets.push( {
+                id: tool.id,
+                type: tool.type,
+                widgetComponent: tool.widgetComponent,
+                widget: tool.widget
+            } )
+
+        this.toolIds.push( tool.id )
 
         tool.changedActive( function () {
-            if ( tool.active ) {              
-                if ( !self.active ) {
-                    self.active = true
-                    tool.active = true // if list-menu isn't active, this is needed
-                }
+            if ( tool.active ) {
+                // this.model.activeToolId = tool.id
+                self.active = false
+                self.toolIds.forEach( function ( id ) {
+                    smk.$tool[ id ].active = id == tool.id
+                } )
             }
+            // if ( tool.active ) {              
+            //     if ( !self.active ) {
+            //         self.active = true
+            //         tool.active = true // if list-menu isn't active, this is needed
+            //     }
+            // }
         } )
 
         return true

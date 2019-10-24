@@ -11,14 +11,17 @@
                 v-bind:key="tool.id"
                 v-bind:is="tool.widgetComponent"
                 v-bind="tool.widget"
+                v-bind:active="tool.selected"
             ></component>
         </div>
     </template>
-
+{{subPanels.map(p=>p.id+p.panel.active)}}
     <component class="smk-panel"
-        v-if="activeTool"
-        v-bind:is="activeTool.panelComponent"
-        v-bind="activeTool.panel"        
+        v-for="tool in subPanels"
+        v-bind:is="tool.panelComponent"
+        v-bind:key="tool.id"
+        v-bind="tool.panel"
     ></component>
+        <!-- v-if="tool.panel.active" -->
 
 </side-panel>

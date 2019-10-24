@@ -23,7 +23,8 @@ include.module( 'check-identify', [], function ( inc ) {
             enabled: true,
             position: tool.position,
             title: tool.title,
-            command: tool.command
+            command: tool.command,
+            parentId: tool.id
         } )
     }
     

@@ -10,8 +10,8 @@ var t = new tg.TagSet()
 
 t.script( 'jquery', 'lib/jquery-3.3.1.min.js' )
 
-// t.script( 'vue', 'lib/vue-2.5.11.js' )
-t.script( 'vue', 'lib/vue-2.5.11.min.js' )
+t.script( 'vue', 'lib/vue-2.5.11.js' )
+// t.script( 'vue', 'lib/vue-2.5.11.min.js' )
 t.script( 'vue-config', 'smk/vue-config.js' )
 
 t.script( 'turf', 'lib/turf-5.1.6.min.js' )

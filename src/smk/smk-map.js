@@ -311,6 +311,7 @@ include.module( 'smk-map', [ 'jquery', 'util', 'theme-base', 'sidepanel' ], func
             if ( enabledTools.length == 0 ) return
 
             return SMK.UTIL.waitAll( enabledTools.map( function ( t ) {
+                t.id = t.type + ( t.instance ? '--' + t.instance : '' )
                 var tag = 'check-' + t.type
                 return include( tag )
                     .then( function ( inc ) {

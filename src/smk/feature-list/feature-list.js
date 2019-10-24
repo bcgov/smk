@@ -116,6 +116,12 @@ include.module( 'feature-list', [ 'tool', 'widgets', 'sidepanel',
 
         } )
 
+        this.changedActive( function () {
+            // if ( !self.active )
+                // self.featureSet.clear()
+            // console.log( 'feature list active', self.active )
+        } )
+
         // = : = : = : = : = : = : = : = : = : = : = : = : = : = : = : = : = : = : =
 
         self.featureSet.addedFeatures( function ( ev ) {

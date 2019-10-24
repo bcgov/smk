@@ -99,11 +99,18 @@ include.module( 'sidepanel', [ 'vue', 'tool', 'sidepanel.sidepanel-html', 'sidep
         this.model = {
             currentTool: null,
             currentPanel: null,
-            visible: false
+            visible: false,
+            panels: []
+        }
+
+        function getTool( id ) {
+            return self.model.panels.find( function ( t ) { return t.id == id } )
         }
 
         this.toolStack = []
         this.usePanel = {}
+        this.hasPrevious = {}
+
 
         this.vm = new Vue( {
             el: smk.addToOverlay( inc[ 'sidepanel.sidepanel-html' ] ),
@@ -113,22 +120,41 @@ include.module( 'sidepanel', [ 'vue', 'tool', 'sidepanel.sidepanel-html', 'sidep
                     smk.emit( toolId, event, arg )
                 },
 
-                'previousPanel': function () {                    
-                    if ( self.toolStack.length < 2 ) return
-                    smk.emit( this.currentTool.id, 'previous-panel' )
-                    self.popTool()
+                'previousPanel': function ( id ) {     
+                    var t = getTool( id )
+                    if ( t ) {
+                        var pt = getTool( t.parentId )
+                        if ( pt ) {
+                            smk.$tool[ t.id ].active = false
+                            smk.$tool[ pt.id ].active = true
+                        }
+                    }
+                    // if ( self.toolStack.length < 2 ) return
+                    smk.emit( id, 'previous-panel' )
+                    // self.popTool()
                 },
 
-                'hasPrevious': function () {
-                    var len = self.toolStack.length
-                    if ( len < 2 ) return false
-                    if ( self.toolStack[ len - 2 ].container ) return false
-                    return true
+                'hasPrevious': function ( id ) {                    
+                    var t = getTool( id )
+                    console.log('hasPrevious',t)
+                    if ( t.hasPreviousCallback )
+                        return t.hasPreviousCallback()
+
+                    return !!t.parentId
+                    // if ( this.model.panel )
+
+                    // var len = self.toolStack.length
+                    // if ( len < 2 ) return false
+                    // if ( self.toolStack[ len - 2 ].container ) return false
+                    // return true
                 },
 
-                'closePanel': function () {
-                    smk.emit( this.currentTool.id, 'close-panel' )
-                    self.closePanel()
+                'closePanel': function ( id ) {
+                    // smk.emit( this.currentTool.id, 'close-panel' )
+                    // self.closePanel()
+                    this.panels.forEach( function ( t ) {
+                        smk.$tool[ t.id ].active = false
+                    } )
                 },
 
                 'beforeShow': function () {
@@ -158,11 +184,13 @@ include.module( 'sidepanel', [ 'vue', 'tool', 'sidepanel.sidepanel-html', 'sidep
     }
 
     Sidepanel.prototype.closePanel = function () {
-        this.model.visible = false
+        // this.model.visible = false
         // console.log('closePanel',this.toolStack)
         // this.toolStack.forEach( function ( t ) {
         //     t.active = false
         //     t.panel.expand = 0
+        // } )
+
         // } )
     } 
 
@@ -200,7 +228,7 @@ include.module( 'sidepanel', [ 'vue', 'tool', 'sidepanel.sidepanel-html', 'sidep
     }
 
     Sidepanel.prototype.setCurrentTool = function ( tool ) {
-        // console.log('setCurrentTool',tool)
+        console.log('setCurrentTool',tool)
         var titleProps
         if ( tool.widgetComponent )
             titleProps = { title: tool.title }
@@ -291,22 +319,36 @@ include.module( 'sidepanel', [ 'vue', 'tool', 'sidepanel.sidepanel-html', 'sidep
         // console.log( 'after push', this.toolStack.map( function ( t ) { return [ t.id, t.subPanel ] } ) )
     }
 
-    Sidepanel.prototype.addTool = function ( tool, smk, usePanel ) {
+    Sidepanel.prototype.addTool = function ( tool, smk, hasPreviousCallback ) {
         var self = this
 
-        this.usePanel[ tool.id ] = usePanel !== false
+        this.model.panels.push( {
+            id:             tool.id,
+            parentId:       tool.parentId,
+            type:           tool.type,
+            panel:          tool.panel,
+            panelComponent: tool.panelComponent,
+            titleComponent: tool.titleComponent,
+            titleProps:     tool.widgetComponent ? { title: tool.title } : tool.widget,
+            hasPrevious:    tool.hasPrevious || !!tool.parentId            
+        } )
+
+        // this.hasPrevious[ tool.id ] = hasPreviousCallback
+        // this.usePanel[ tool.id ] = usePanel !== false
 
         tool.changedActive( function () {
-            console.log( tool.id, tool.active )
-            if ( tool.active ) {              
-                self.pushTool( tool )
-            }
-            else {
-                console.log( '!active', tool.id )
-                if ( self.isToolStacked( tool ) ) {
-                    self.closePanel()
-                }
-            }
+            self.model.visible = self.model.panels.some( function ( t ) { return t.panel.active } )
+
+            // console.log( tool.id, tool.active, self.model.visible )
+            // if ( tool.active ) {              
+            //     self.pushTool( tool )
+            // }
+            // else {
+            //     console.log( '!active', tool.id )
+            //     if ( self.isToolStacked( tool ) ) {
+            //         self.closePanel()
+            //     }
+            // }
         } )
 
         return true

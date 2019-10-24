@@ -9,7 +9,9 @@ include.module( 'tool-toolbar', [ 'tool', 'tool-toolbar.toolbar-html' ], functio
 
         this.model = {
             tools: [],
+            activeToolId: null
         }
+
     }
 
     SMK.TYPE.ToolBarTool = ToolBarTool
@@ -32,8 +34,10 @@ include.module( 'tool-toolbar', [ 'tool', 'tool-toolbar.toolbar-html' ], functio
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
     ToolBarTool.prototype.addTool = function ( tool, smk ) {
+        var self = this
+
         if ( tool.widgetComponent && !tool.parentId ) {
-            tool.parentId = this.id 
+            // tool.parentId = this.id 
             
             this.model.tools.push( {
                 id: tool.id,
@@ -45,9 +49,20 @@ include.module( 'tool-toolbar', [ 'tool', 'tool-toolbar.toolbar-html' ], functio
 
         if ( tool.parentId ) {
         }
-
+        
         smk.getSidepanel().addTool( tool, smk )
 
+        tool.changedActive( function () {
+            if ( tool.active ) {
+                // this.model.activeToolId = tool.id
+                self.model.tools.forEach( function ( t ) {
+                    smk.$tool[ t.id ].active = t.id == tool.id
+                } )
+            }
+            else {
+
+            }
+        } )
         return true
     }
 
