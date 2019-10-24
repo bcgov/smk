@@ -102,29 +102,26 @@ include.module( 'tool', [ 'jquery', 'event' ], function () {
     Tool.prototype.initialize = function ( smk ) {
         var self = this
 
-        var positions
-        if ( Array.isArray( this.position ) )
-            positions = this.position
-        else if ( this.position )
-            positions = [ this.position ]
-        else
-            positions = []
-        positions.push( 'toolbar' )
+        var positions = [].concat( this.position || [] )
 
-        var found = positions.some( function ( p ) { 
-            if ( !( p in smk.$tool ) ) {
-                console.warn( 'position ' + p + ' not available for tool ' + self.id )
-                return false
+        if ( positions.length ) {
+            positions.push( 'toolbar' )
+
+            var found = positions.some( function ( p ) { 
+                if ( !( p in smk.$tool ) ) {
+                    console.warn( 'position ' + p + ' not available for tool ' + self.id )
+                    return false
+                }
+
+                if ( p == self.id )
+                    return false 
+
+                return smk.$tool[ p ].addTool( self, smk )
+            } )
+
+            if ( !found ) {
+                console.warn( 'no position found for tool ' + self.id )
             }
-
-            if ( p == self.id )
-                return false 
-
-            return smk.$tool[ p ].addTool( self, smk )
-        } )
-
-        if ( !found ) {
-            console.warn( 'no position found for tool ' + self.id )
         }
 
         return this.afterInitialize.forEach( function ( init ) {
