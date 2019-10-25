@@ -160,10 +160,6 @@ include.module( 'tool-query', [ 'feature-list', 'widgets', 'sidepanel', 'tool-qu
                         break
                     }
                 }
-                else {
-                    if ( !self.featureSet.isEmpty() )
-                        smk.$tool[ 'query-results--' + self.instance ].active = true
-                }
             }
         } )
 

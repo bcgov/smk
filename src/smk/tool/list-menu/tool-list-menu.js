@@ -44,17 +44,12 @@ include.module( 'tool-list-menu', [ 'tool', 'widgets', 'tool-list-menu.panel-too
             },
 
             'swipe-up': function ( ev ) {                
-                // console.log('swipe up',self)
-                self.panel.expand = 1
+                smk.$sidepanel.setExpand( 2 )
             },
 
             'swipe-down': function ( ev ) {
-                // console.log('swipe down',self)
-                if ( self.panel.expand )
-                    self.panel.expand = 0
-                else 
-                    smk.$sidepanel.closePanel()
-            },
+                smk.$sidepanel.incrExpand( -1 )
+            }
         } )
 
         this.changedActive( function () {
@@ -70,10 +65,10 @@ include.module( 'tool-list-menu', [ 'tool', 'widgets', 'tool-list-menu.panel-too
     ListMenuTool.prototype.addTool = function ( tool, smk ) {
         var self = this
 
-        // tool.subPanel = tool.subPanel + 1
-
-        if ( !tool.parentId )
+        if ( !tool.parentId ) {
             tool.parentId = this.id
+            tool.hasPrevious = true
+        }
 
         smk.getSidepanel().addTool( tool, smk )
 
@@ -91,18 +86,11 @@ include.module( 'tool-list-menu', [ 'tool', 'widgets', 'tool-list-menu.panel-too
 
         tool.changedActive( function () {
             if ( tool.active ) {
-                // this.model.activeToolId = tool.id
                 self.active = false
                 self.toolIds.forEach( function ( id ) {
                     smk.$tool[ id ].active = id == tool.id
                 } )
             }
-            // if ( tool.active ) {              
-            //     if ( !self.active ) {
-            //         self.active = true
-            //         tool.active = true // if list-menu isn't active, this is needed
-            //     }
-            // }
         } )
 
         return true

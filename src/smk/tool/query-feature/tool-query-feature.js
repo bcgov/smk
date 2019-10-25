@@ -7,7 +7,7 @@ include.module( 'tool-query-feature', [ 'feature-list' ], function ( inc ) {
             order:              4,
             title:              'query Results1',
             panelComponent:     'feature-panel',
-            subPanel:           2
+            // subPanel:           2
         }, option ) )
     }
 

@@ -7,8 +7,6 @@
     </template>
 
     <template slot="commands">
-        <!-- <div class="smk-separator" v-if="command.clear !== false"></div> -->
-
         <span class="smk-command"
             v-bind:class="{ 'smk-disabled': busy }"
             v-if="tool.select && list.featureCount > 1"

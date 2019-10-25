@@ -6,7 +6,7 @@
 >
     <div class="smk-sidepanel" 
         v-show="visible"
-        v-bind:class="[ currentPanel && currentPanel.panel.expand ? 'smk-expand-' + currentPanel.panel.expand : '' ]"
+        v-bind:class="[ 'smk-expand-' + expand ]"
     >
         <div class="smk-elastic-panel">
             <component class="smk-panel"
@@ -38,5 +38,3 @@
         </div>
     </div>
 </transition>
-
-                    <!-- v-bind:style="{ visibility: hasPrevious( tool.id ) ? 'visible': 'hidden' }" -->

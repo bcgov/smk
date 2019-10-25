@@ -8,25 +8,20 @@
         <div class="smk-menu-widgets">
             <component class="smk-tool"
                 v-for="w in subWidgets"
-                v-bind:key="1 + w.id"
+                v-bind:key="'w' + w.id"
                 v-bind:is="w.widgetComponent"
                 v-bind="w.widget"
                 v-bind:active="w.selected"
             ></component>
         </div>
     </template>
-    <div 
-        v-for="p in subPanels"
-        v-bind:key="2 + p.id"
-    >{{ p.id }} {{ p.panel.active }}</div>
-<!-- {{subPanels.map(p=>p.id+p.panel.active)}} -->
+
     <component class="smk-panel"
         v-for="p in subPanels"
         v-if="p.panel.active"
-        v-bind:key="3 + p.id"
+        v-bind:key="'p' + p.id"
         v-bind:is="p.panelComponent"
         v-bind="p.panel"
     ></component>
-        <!-- v-if="tool.panel.active" -->
 
 </side-panel>

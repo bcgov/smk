@@ -16,7 +16,6 @@ include.module( 'tool', [ 'jquery', 'event' ], function () {
         this.makeProp( 'visible', false, 'changedVisible' )
         this.makeProp( 'enabled', true, 'changedEnabled' )
         this.makeProp( 'active', false, 'changedActive' )
-        // this.makeProp( 'class', null )
 
         this.makePropPanel( 'expand', 0 )
         this.makePropPanel( 'hasPrevious', false )
@@ -25,13 +24,14 @@ include.module( 'tool', [ 'jquery', 'event' ], function () {
         this.makePropWidget( 'showTitle', false )
 
         $.extend( this, option )
+
+        this.hasPrevious = !!this.parentId
     }
 
-    // Tool.prototype.type = 'unknown'
     Tool.prototype.order = 1
     // Tool.prototype.position = 'toolbar'
     Tool.prototype.showPanel = true
-    Tool.prototype.subPanel = 0
+    // Tool.prototype.subPanel = 0
     Tool.prototype.parentId = null
 
     SMK.TYPE.Tool = Tool
@@ -49,10 +49,13 @@ include.module( 'tool', [ 'jquery', 'event' ], function () {
         self.widget[ name ] = initial
         self.panel[ name ] = initial
         Object.defineProperty( self, name, {
-            get: function () { return self.widget[ name ] },
+            get: function () { 
+                return self.widget[ name ] 
+            },
             set: function ( v ) {
-                if ( v == self.widget[ name ] ) return
-                // console.warn( self.id, name, v )                
+                // if ( name == 'active')
+                    // console.warn('SET', self.widget.id,name,self.widget[ name ],self.panel[ name ],v )
+                if ( v == self.widget[ name ] && v == self.panel[ name ] ) return
                 self.widget[ name ] = v
                 self.panel[ name ] = v
                 if ( event ) self[ event ].call( self )
