@@ -18,7 +18,7 @@
             >
                 <i class="smk-panel-go-back smk-command smk-icon material-icons" title="Go Back"
                     v-on:click="previousPanel( tool.id )"
-                    v-bind:style="{ visibility: tool.hasPrevious ? 'visible': 'hidden' }"
+                    v-bind:style="{ visibility: tool.panel.hasPrevious ? 'visible': 'hidden' }"
                 >arrow_back</i>
 
                 <component class="smk-panel-title"

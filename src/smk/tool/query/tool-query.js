@@ -169,6 +169,7 @@ include.module( 'tool-query', [ 'feature-list', 'widgets', 'sidepanel', 'tool-qu
 
         smk.on( this.id, {
             'activate': function () {
+                // console.log('tq activate',self.active)
                 if ( !self.enabled ) return
 
                 self.active = !self.active

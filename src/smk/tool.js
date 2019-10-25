@@ -19,6 +19,7 @@ include.module( 'tool', [ 'jquery', 'event' ], function () {
         // this.makeProp( 'class', null )
 
         this.makePropPanel( 'expand', 0 )
+        this.makePropPanel( 'hasPrevious', false )
 
         this.makePropWidget( 'type', 'unknown' )
         this.makePropWidget( 'showTitle', false )

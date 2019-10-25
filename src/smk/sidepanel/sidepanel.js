@@ -322,7 +322,8 @@ include.module( 'sidepanel', [ 'vue', 'tool', 'sidepanel.sidepanel-html', 'sidep
     Sidepanel.prototype.addTool = function ( tool, smk, hasPreviousCallback ) {
         var self = this
 
-        this.model.panels.push( {
+        var p = {
+        // this.model.panels.push( {
             id:             tool.id,
             parentId:       tool.parentId,
             type:           tool.type,
@@ -330,8 +331,10 @@ include.module( 'sidepanel', [ 'vue', 'tool', 'sidepanel.sidepanel-html', 'sidep
             panelComponent: tool.panelComponent,
             titleComponent: tool.titleComponent,
             titleProps:     tool.widgetComponent ? { title: tool.title } : tool.widget,
-            hasPrevious:    tool.hasPrevious || !!tool.parentId            
-        } )
+            // hasPrevious:    tool.hasPrevious || !!tool.parentId            
+        }
+
+        this.model.panels.push( p )
 
         // this.hasPrevious[ tool.id ] = hasPreviousCallback
         // this.usePanel[ tool.id ] = usePanel !== false

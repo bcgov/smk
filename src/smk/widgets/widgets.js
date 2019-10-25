@@ -54,7 +54,7 @@ include.module( 'widgets', [ 'vue', 'widgets.tool-button-html', 'widgets.toggle-
 
         toolPanel: Vue.extend( {
             mixins: [ emit ],
-            props: [ 'id', 'title', 'visible', 'enabled', 'active', 'busy', 'message', 'status', 'expand' ],
+            props: [ 'id', 'title', 'visible', 'enabled', 'active', 'busy', 'message', 'status', 'expand', 'hasPrevious' ],
         } )
 
     }
