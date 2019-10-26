@@ -4,7 +4,8 @@ include.module( 'tool', [ 'jquery', 'event' ], function () {
     var ToolEvent = SMK.TYPE.Event.define( [
         'changedVisible',
         'changedEnabled',
-        'changedActive'
+        'changedActive',
+        'changedGroup'
     ] )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
@@ -16,6 +17,7 @@ include.module( 'tool', [ 'jquery', 'event' ], function () {
         this.makeProp( 'visible', false, 'changedVisible' )
         this.makeProp( 'enabled', true, 'changedEnabled' )
         this.makeProp( 'active', false, 'changedActive' )
+        this.makeProp( 'group', false, 'changedGroup' )
 
         this.makePropPanel( 'expand', 0 )
         this.makePropPanel( 'hasPrevious', false )
@@ -128,6 +130,12 @@ include.module( 'tool', [ 'jquery', 'event' ], function () {
                 console.warn( 'no position found for tool ' + self.id )
             }
         }
+
+        this.changedActive( function () {
+            self.group = smk.relatedTools( self.id ).some( function ( t ) {
+                return t.active
+            } )
+        } )
 
         return this.afterInitialize.forEach( function ( init ) {
             init.call( self, smk )

@@ -508,6 +508,10 @@ include.module( 'smk-map', [ 'jquery', 'util', 'theme-base', 'sidepanel' ], func
         if ( this.$viewer.temporaryFeature )
             this.$viewer.temporaryFeature( acetate, geometry, opt )
     }
+
+    SmkMap.prototype.relatedTools = function ( id ) {
+        
+    }
     
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

@@ -46,11 +46,18 @@ include.module( 'tool-identify', [ 'feature-list', 'widgets', 'tool-identify.pan
 
         self.setMessage( 'Click on map to identify features.' )
 
-        self.changedActive( function () {
-            if ( self.active ) {
-                smk.$viewer.identified.pick()
+        smk.$sidepanel.changedVisible( function () {
+            if ( !smk.$sidepanel.isPanelVisible() ) {
+                console.log('clear')
+                smk.$viewer.identified.clear()
             }
         } )
+        // self.changedActive( function () {
+            // if ( self.active ) {
+                // smk.$viewer.identified.clear()
+                // smk.$viewer.identified.pick()
+            // }
+        // } )
 
         // fallback handler if nothing else uses pick
         smk.$viewer.handlePick( 0, function ( location ) {

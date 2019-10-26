@@ -29,12 +29,12 @@ include.module( 'tool-identify-feature', [ 'feature-list' ], function ( inc ) {
         this.tool.zoom = smk.$tool.zoom
 
         self.changedActive( function () {
+            smk.$tool[ self.parentId ].visible = self.active
+
             if ( self.active ) {
-                // smk.$tool[ 'identify' ].visible = true
                 self.featureSet.highlight()
             }
             else {
-                // smk.$tool[ 'identify' ].visible = false
                 self.featureSet.pick()
             }
         } )
