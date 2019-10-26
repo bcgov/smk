@@ -509,8 +509,12 @@ include.module( 'smk-map', [ 'jquery', 'util', 'theme-base', 'sidepanel' ], func
             this.$viewer.temporaryFeature( acetate, geometry, opt )
     }
 
-    SmkMap.prototype.relatedTools = function ( id ) {
-        
+    SmkMap.prototype.getToolGroup = function ( rootId ) {
+        return this.$group[ rootId ]
+    }
+
+    SmkMap.prototype.setToolGroup = function ( rootId, ids ) {
+        this.$group[ rootId ] = ids
     }
     
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

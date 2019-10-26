@@ -27,7 +27,8 @@ include.module( 'tool', [ 'jquery', 'event' ], function () {
 
         $.extend( this, option )
 
-        this.hasPrevious = !!this.parentId
+        this.setParent( option.parentId )
+        // this.hasPrevious = !!this.parentId
     }
 
     Tool.prototype.order = 1
@@ -102,6 +103,26 @@ include.module( 'tool', [ 'jquery', 'event' ], function () {
 
     Tool.prototype.addTool = function ( tool, smk ) {
         return false
+    }
+
+    Tool.prototype.setParentId = function ( toolId, smk ) {
+        var self = this
+
+        this.parentId = toolId
+        this.hasPrevious = !!toolId
+        
+        if ( !this.parentId ) {
+            this.rootId = this.id
+        }
+        else {
+            var rootId = toolId
+            while ( smk.$tool[ rootId ] && smk.$tool[ rootId ].parentId ) {
+                rootId = smk.$tool[ rootId ].parentId
+            }
+            this.rootId = rootId
+        }
+
+        smk.setToolGroup( this.rootId, smk.$tool.filter( function ( t ) { return t.rootId == self.rootId } ).map( function( t ) { return t.id } ) )
     }
 
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _

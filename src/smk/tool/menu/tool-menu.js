@@ -26,7 +26,7 @@ include.module( 'tool-menu', [ 'tool', 'widgets', 'tool-menu.panel-menu-html' ],
             container:      true
         }, option ) )
 
-        this.hasPrevious = false
+        // this.hasPrevious = false
     }
 
     SMK.TYPE.MenuTool = MenuTool

@@ -66,8 +66,8 @@ include.module( 'tool-list-menu', [ 'tool', 'widgets', 'tool-list-menu.panel-too
         var self = this
 
         if ( !tool.parentId ) {
-            tool.parentId = this.id
-            tool.hasPrevious = true
+            tool.setParentId( this.id )
+            // tool.hasPrevious = true
         }
 
         smk.getSidepanel().addTool( tool, smk )
