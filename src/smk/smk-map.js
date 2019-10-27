@@ -5,6 +5,8 @@ include.module( 'smk-map', [ 'jquery', 'util', 'theme-base', 'sidepanel' ], func
         this.$option = option
 
         this.$dispatcher = new Vue()
+
+        this.$group = {}
     }
 
     SMK.TYPE.SmkMap = SmkMap

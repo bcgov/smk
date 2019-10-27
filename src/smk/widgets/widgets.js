@@ -49,6 +49,11 @@ include.module( 'widgets', [ 'vue', 'widgets.tool-button-html', 'widgets.toggle-
                     c[ 'smk-' + this.type + '-tool' ] = true
                     return c
                 }
+            },
+            watch: {
+                active: function () {
+                    console.log( 'watch', this.active )
+                }
             }
         } ),
 

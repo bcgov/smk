@@ -27,7 +27,7 @@ include.module( 'tool', [ 'jquery', 'event' ], function () {
 
         $.extend( this, option )
 
-        this.setParent( option.parentId )
+        // this.setParentId( option.parentId )
         // this.hasPrevious = !!this.parentId
     }
 
@@ -121,14 +121,16 @@ include.module( 'tool', [ 'jquery', 'event' ], function () {
             }
             this.rootId = rootId
         }
-
-        smk.setToolGroup( this.rootId, smk.$tool.filter( function ( t ) { return t.rootId == self.rootId } ).map( function( t ) { return t.id } ) )
+        
+        smk.setToolGroup( this.rootId, Object.keys( smk.$tool ).filter( function ( id ) { return smk.$tool[ id ].rootId == self.rootId } ) )
     }
 
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
     Tool.prototype.initialize = function ( smk ) {
         var self = this
+
+        this.setParentId( this.parentId, smk )
 
         var positions = [].concat( this.position || [] )
 
@@ -152,10 +154,14 @@ include.module( 'tool', [ 'jquery', 'event' ], function () {
             }
         }
 
-        this.changedActive( function () {
-            self.group = smk.relatedTools( self.id ).some( function ( t ) {
-                return t.active
+        this.changedActive( SMK.UTIL.makeDelayedCall( function () {
+            self.group = smk.getToolGroup( self.rootId ).some( function ( id ) {
+                return smk.$tool[ id ].active
             } )
+        }, { delay: 10 } ) )
+
+        this.changedGroup( function () {
+            console.log( self.id, self.rootId, self.group, self.widget.group )
         } )
 
         return this.afterInitialize.forEach( function ( init ) {
