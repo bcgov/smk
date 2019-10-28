@@ -42,32 +42,30 @@ include.module( 'tool-toolbar', [ 'tool', 'tool-toolbar.toolbar-html' ], functio
                 type: tool.type,
                 widgetComponent: tool.widgetComponent,
                 widget: tool.widget,
-                selected: false
             } )
         }
 
         this.toolIds.push( tool.id )
+        // console.log( tool.id, smk.getToolGroup( tool.id ), smk.$group )
 
         smk.getSidepanel().addTool( tool, smk )
 
-        tool.changedActive( function () {
-            if ( tool.active ) {
-                self.toolIds.forEach( function ( id ) {
-                    smk.$tool[ id ].active = id == tool.id
-                } )
-            }
-            else {
-            }
+        if ( tool.id == tool.rootId ) 
+            smk.getToolGroup( tool.id ).forEach( function ( id ) {
+                smk.$tool[ id ].changedActive( function () {
+                    if ( smk.$tool[ id ].active ) {
+                        self.model.tools.forEach( function ( t ) {
+                            if ( t.id != smk.$tool[ t.id ].rootId ) return
 
-            self.model.tools.forEach( function ( w ) {
-                w.selected = self.toolIds.some( function ( id ) {
-                    if ( !smk.$tool[ id ].active ) return false
-
-                    if ( w.id == id ) return true
-                    if ( w.id == smk.$tool[ id ].parentId ) return true
+                            smk.getToolGroup( t.id ).forEach( function ( id1 ) {
+                                smk.$tool[ id1 ].active = id == id1
+                            } )
+                        } )
+                    }
+                    else {
+                    }
                 } )
             } )
-        } )
 
         return true
     }
