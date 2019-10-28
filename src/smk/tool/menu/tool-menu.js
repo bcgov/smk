@@ -45,6 +45,14 @@ include.module( 'tool-menu', [ 'tool', 'widgets', 'tool-menu.panel-menu-html' ],
 
             'previous-panel': function ( ev ) {
                 smk.$tool[ self.previousId ].active = true
+            },
+
+            'swipe-up': function ( ev ) {                
+                smk.$sidepanel.setExpand( 2 )
+            },
+
+            'swipe-down': function ( ev ) {
+                smk.$sidepanel.incrExpand( -1 )
             }
         } )
 
