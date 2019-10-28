@@ -12,7 +12,8 @@
       -122.88096914067867,
       48.25579824757873
     ],
-    "baseMap": "Topographic"
+    "baseMap": "Topographic",
+    "minZoom": 4
   },
   "tools": [
     {

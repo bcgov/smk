@@ -26,6 +26,7 @@ include.module( 'viewer-leaflet', [ 'viewer', 'leaflet', 'layer-leaflet', 'featu
             boxZoom:            false,
             doubleClickZoom:    false,
             zoomSnap:           0,
+            minZoom:            smk.viewer.minZoom
         } )
 
         self.map.scrollWheelZoom.disable()
