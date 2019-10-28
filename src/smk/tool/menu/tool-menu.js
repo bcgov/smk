@@ -25,8 +25,6 @@ include.module( 'tool-menu', [ 'tool', 'widgets', 'tool-menu.panel-menu-html' ],
             panelComponent: 'menu-panel',
             container:      true
         }, option ) )
-
-        // this.hasPrevious = false
     }
 
     SMK.TYPE.MenuTool = MenuTool
@@ -49,6 +47,17 @@ include.module( 'tool-menu', [ 'tool', 'widgets', 'tool-menu.panel-menu-html' ],
                 smk.$tool[ self.previousId ].active = true
             }
         } )
+
+        this.changedActive( function () {
+            if ( self.active ) {
+                smk.$tool[ self.selectedId ].active = true
+            }
+            else {
+                self.subPanels.forEach( function ( t ) {
+                    smk.$tool[ t.id ].active = false
+                } )
+            }
+        } ) 
     } )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
@@ -65,16 +74,8 @@ include.module( 'tool-menu', [ 'tool', 'widgets', 'tool-menu.panel-menu-html' ],
 
             this.subWidgets.push( w )
 
-            smk.on( tool.id, {
-                'activate': SMK.UTIL.makeDelayedCall( function () {
-                    // console.log('click',tool.id)
-                    self.subWidgets.forEach( function ( w ) {
-                        w.selected = w.id == tool.id
-                        smk.$tool[ w.id ].active = w.selected
-                        // console.log('selected',w.id,smk.$tool[ w.id ].panel.active)
-                    } )
-                }, { delay: 5 } )
-            } )
+            if ( !self.selectedId )
+                self.selectedId = tool.rootId
         }
 
         this.subPanels.push( {
@@ -92,7 +93,7 @@ include.module( 'tool-menu', [ 'tool', 'widgets', 'tool-menu.panel-menu-html' ],
 
                 self.hasPrevious = !!tool.parentId
                 self.previousId = tool.parentId
-                // console.log('prev?',self.hasPrevious)
+                self.selectedId = tool.rootId
             }
             else {                
             }

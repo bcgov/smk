@@ -53,11 +53,11 @@ include.module( 'tool-list-menu', [ 'tool', 'widgets', 'tool-list-menu.panel-too
         } )
 
         this.changedActive( function () {
-            if ( self.active ) {
+            // if ( self.active ) {
                 self.toolIds.forEach( function ( id ) {
                     smk.$tool[ id ].active = false
                 } )
-            }
+            // }
         } )
     } )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
@@ -66,8 +66,7 @@ include.module( 'tool-list-menu', [ 'tool', 'widgets', 'tool-list-menu.panel-too
         var self = this
 
         if ( !tool.parentId ) {
-            tool.setParentId( this.id )
-            // tool.hasPrevious = true
+            tool.setParentId( this.id, smk )
         }
 
         smk.getSidepanel().addTool( tool, smk )

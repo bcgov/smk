@@ -26,9 +26,6 @@ include.module( 'tool', [ 'jquery', 'event' ], function () {
         this.makePropWidget( 'showTitle', false )
 
         $.extend( this, option )
-
-        // this.setParentId( option.parentId )
-        // this.hasPrevious = !!this.parentId
     }
 
     Tool.prototype.order = 1
@@ -114,15 +111,25 @@ include.module( 'tool', [ 'jquery', 'event' ], function () {
         if ( !this.parentId ) {
             this.rootId = this.id
         }
-        else {
-            var rootId = toolId
-            while ( smk.$tool[ rootId ] && smk.$tool[ rootId ].parentId ) {
-                rootId = smk.$tool[ rootId ].parentId
-            }
-            this.rootId = rootId
+
+        var group = {}
+        Object.keys( smk.$tool ).forEach( function ( id ) {
+            var r = smk.$tool[ id ].rootId = findRoot( id, smk )
+            if ( !group[ r ] ) 
+                group[ r ] = [] 
+            
+            group[ r ].push( id )
+        } )
+
+        smk.$group = group
+    }
+
+    function findRoot( toolId, smk ) {
+        var rootId = toolId
+        while ( smk.$tool[ rootId ] && smk.$tool[ rootId ].parentId ) {
+            rootId = smk.$tool[ rootId ].parentId
         }
-        
-        smk.setToolGroup( this.rootId, Object.keys( smk.$tool ).filter( function ( id ) { return smk.$tool[ id ].rootId == self.rootId } ) )
+        return rootId
     }
 
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
@@ -154,14 +161,14 @@ include.module( 'tool', [ 'jquery', 'event' ], function () {
             }
         }
 
-        this.changedActive( SMK.UTIL.makeDelayedCall( function () {
-            self.group = smk.getToolGroup( self.rootId ).some( function ( id ) {
+        this.changedActive( function () {
+            var ids = smk.getToolGroup( self.rootId )
+            var g = ids.some( function ( id ) {
                 return smk.$tool[ id ].active
             } )
-        }, { delay: 10 } ) )
-
-        this.changedGroup( function () {
-            console.log( self.id, self.rootId, self.group, self.widget.group )
+            ids.forEach( function ( id ) {
+                smk.$tool[ id ].group = g
+            } )
         } )
 
         return this.afterInitialize.forEach( function ( init ) {

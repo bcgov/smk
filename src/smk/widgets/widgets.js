@@ -50,11 +50,6 @@ include.module( 'widgets', [ 'vue', 'widgets.tool-button-html', 'widgets.toggle-
                     return c
                 }
             },
-            watch: {
-                active: function () {
-                    console.log( 'watch', this.active )
-                }
-            }
         } ),
 
         toolPanel: Vue.extend( {

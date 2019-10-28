@@ -163,6 +163,14 @@ include.module( 'tool-query', [ 'feature-list', 'widgets', 'sidepanel', 'tool-qu
             }
         } )
 
+        self.changedGroup( function () {
+            if ( !self.group ) {
+                // console.log('clear')
+                self.featureSet.clear()
+                self.featureSet.pick()
+            }
+        } )
+
         smk.on( this.id, {
             'activate': function () {
                 // console.log('tq activate',self.active)

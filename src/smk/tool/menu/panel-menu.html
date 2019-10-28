@@ -11,7 +11,7 @@
                 v-bind:key="'w' + w.id"
                 v-bind:is="w.widgetComponent"
                 v-bind="w.widget"
-                v-bind:active="w.selected"
+                v-bind:active="w.widget.group"
             ></component>
         </div>
     </template>
