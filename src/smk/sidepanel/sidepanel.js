@@ -118,8 +118,8 @@ include.module( 'sidepanel', [ 'vue', 'tool', 'sidepanel.sidepanel-html', 'sidep
                     if ( t ) {
                         var pt = getTool( t.parentId )
                         if ( pt ) {
-                            smk.$tool[ t.id ].active = false
                             smk.$tool[ pt.id ].active = true
+                            smk.$tool[ t.id ].active = false
                         }
                     }
 
