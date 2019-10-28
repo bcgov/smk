@@ -34,8 +34,12 @@ include.module( 'tool-query-feature', [ 'feature-list' ], function ( inc ) {
         self.changedActive( function () {
             if ( self.active ) {
                 self.featureSet.highlight()
+                Vue.nextTick( function () {
+                    smk.$tool[ self.parentId ].visible = true
+                } )
             }
             else {
+                self.featureSet.pick()
             }
         } )
 

@@ -29,10 +29,11 @@ include.module( 'tool-identify-feature', [ 'feature-list' ], function ( inc ) {
         this.tool.zoom = smk.$tool.zoom
 
         self.changedActive( function () {
-            smk.$tool[ self.parentId ].visible = self.active
-
             if ( self.active ) {
                 self.featureSet.highlight()
+                Vue.nextTick( function () {
+                    smk.$tool[ self.parentId ].visible = true
+                } )
             }
             else {
                 self.featureSet.pick()
