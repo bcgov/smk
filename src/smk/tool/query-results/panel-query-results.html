@@ -1,14 +1,12 @@
 <feature-list-panel class="smk-query-panel"
     v-bind="featureListProps()"
-    showSwipe="true"
+    v-bind:showSwipe="true"
 >
     <template slot="header">
         <slot></slot>
     </template>
 
     <template slot="commands">
-        <!-- <div class="smk-separator" v-if="command.clear !== false"></div> -->
-
         <span class="smk-command"
             v-bind:class="{ 'smk-disabled': busy }"
             v-if="tool.select && list.featureCount > 1"

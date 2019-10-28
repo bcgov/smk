@@ -6,32 +6,33 @@
 >
     <div class="smk-sidepanel" 
         v-show="visible"
-        v-bind:class="[ currentPanel && currentPanel.panel.expand ? 'smk-expand-' + currentPanel.panel.expand : '' ]"
+        v-bind:class="[ 'smk-expand-' + expand ]"
     >
         <div class="smk-elastic-panel">
             <component class="smk-panel"
-                v-if="currentPanel"
-                v-bind:is="currentPanel.panelComponent"
-                v-bind:key="currentPanel.id"
-                v-bind="currentPanel.panel"
+                v-for="tool in panels"
+                v-if="tool.panel.active"
+                v-bind:is="tool.panelComponent"
+                v-bind:key="tool.id"
+                v-bind="tool.panel"
             >
                 <i class="smk-panel-go-back smk-command smk-icon material-icons" title="Go Back"
-                    v-on:click="previousPanel()"
-                    v-bind:style="{ visibility: hasPrevious() ? 'visible': 'hidden' }"
+                    v-on:click="previousPanel( tool.id )"
+                    v-bind:style="{ visibility: tool.panel.hasPrevious ? 'visible': 'hidden' }"
                 >arrow_back</i>
 
                 <component class="smk-panel-title"
-                    v-if="currentPanel.titleComponent"
-                    v-bind:is="currentPanel.titleComponent"
-                    v-bind="currentPanel.titleProps"
+                    v-if="tool.titleComponent"
+                    v-bind:is="tool.titleComponent"
+                    v-bind="tool.titleProps"
                 ></component>
                 <span class="smk-panel-title"
                     v-else
-                    v-html="currentPanel.panel.title"
+                    v-html="tool.panel.title"
                 ></span>
 
                 <i class="smk-panel-close smk-command smk-icon material-icons" title="Close Panel"
-                    v-on:click="closePanel()"
+                    v-on:click="closePanel( tool.id )"
                 >close</i>
             </component>
         </div>

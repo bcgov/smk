@@ -53,23 +53,18 @@ include.module( 'tool-bespoke', [ 'tool', 'widgets', 'tool-bespoke.panel-bespoke
 
         smk.on( this.id, {
             'activate': function () {
-                // if ( !self.enabled ) return
+                if ( !self.enabled ) return
 
                 self.active = !self.active
             },
 
             'swipe-up': function ( ev ) {                
-                // console.log('swipe up',self)
-                self.panel.expand = 1
+                smk.$sidepanel.setExpand( 2 )
             },
 
             'swipe-down': function ( ev ) {
-                // console.log('swipe down',self)
-                if ( self.panel.expand )
-                    self.panel.expand = 0
-                else 
-                    smk.$sidepanel.closePanel()
-            },
+                smk.$sidepanel.incrExpand( -1 )
+            }
         } )
 
         this.changedActive( function () {

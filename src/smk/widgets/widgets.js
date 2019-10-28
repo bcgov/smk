@@ -49,12 +49,12 @@ include.module( 'widgets', [ 'vue', 'widgets.tool-button-html', 'widgets.toggle-
                     c[ 'smk-' + this.type + '-tool' ] = true
                     return c
                 }
-            }
+            },
         } ),
 
         toolPanel: Vue.extend( {
             mixins: [ emit ],
-            props: [ 'id', 'title', 'visible', 'enabled', 'active', 'busy', 'message', 'status', 'expand' ],
+            props: [ 'id', 'title', 'visible', 'enabled', 'active', 'busy', 'message', 'status', 'expand', 'hasPrevious' ],
         } )
 
     }

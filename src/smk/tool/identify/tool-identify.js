@@ -46,17 +46,10 @@ include.module( 'tool-identify', [ 'feature-list', 'widgets', 'tool-identify.pan
 
         self.setMessage( 'Click on map to identify features.' )
 
-        self.changedActive( function () {
-            if ( self.active ) {
-                // if ( !self.showFeatures || self.showFeatures == 'identify-popup' ) {
-                //     if ( self.firstId )
-                //         setTimeout( function () {
-                //             smk.$viewer.identified.pick( self.firstId )
-                //         }, 50 )
-                // }
-                // else {
-                    smk.$viewer.identified.pick()
-                // }
+        self.changedGroup( function () {
+            if ( !self.group ) {
+                smk.$viewer.identified.clear()
+                smk.$viewer.identified.pick()
             }
         } )
 
@@ -100,16 +93,11 @@ include.module( 'tool-identify', [ 'feature-list', 'widgets', 'tool-identify.pan
             },
 
             'swipe-up': function ( ev ) {                
-                // console.log('swipe up',self)
-                self.panel.expand = 1
+                smk.$sidepanel.setExpand( 2 )
             },
 
             'swipe-down': function ( ev ) {
-                // console.log('swipe down',self)
-                if ( self.panel.expand )
-                    self.panel.expand = 0
-                else 
-                    smk.$sidepanel.closePanel()
+                smk.$sidepanel.incrExpand( -1 )
             },
 
         } )
@@ -125,7 +113,7 @@ include.module( 'tool-identify', [ 'feature-list', 'widgets', 'tool-identify.pan
             self.busy = false
 
             if ( smk.$viewer.identified.isEmpty() ) {
-                smk.$sidepanel.closePanel(0)
+                smk.$sidepanel.closePanel()
                 self.setMessage( 'No features found', 'warning' )
             }
             else {
@@ -139,53 +127,12 @@ include.module( 'tool-identify', [ 'feature-list', 'widgets', 'tool-identify.pan
 
                 self.setMessage( '<div>Identified ' + SMK.UTIL.grammaticalNumber( stat.featureCount, null, 'a feature', '{} features' ) + '</div>' + sub )
 
-                // if ( !self.showFeatures || self.showFeatures == 'identify-popup' ) {
-                //     smk.$viewer.identified.pick( self.firstId )
-                // }
-                // else {
-                    if ( stat.featureCount == 1 ) {
-                        var id = Object.keys( smk.$viewer.identified.featureSet )[ 0 ]
-                        smk.$viewer.identified.pick( id )
-                    }
-                // } 
-
-
+                if ( stat.featureCount == 1 ) {
+                    var id = Object.keys( smk.$viewer.identified.featureSet )[ 0 ]
+                    smk.$viewer.identified.pick( id )
+                }
             }
         } )
-
-        // var onChangedViewStart = SMK.UTIL.makeDelayedCall( function () {
-        //     var picked = smk.$viewer.identified.getPicked()
-        //     if ( !picked ) return
-
-        //     // console.log( 'onChangedViewStart' )
-
-        //     self.wasPickedId = picked.id
-        //     smk.$viewer.identified.pick( null )
-        // }, { delay: 400 } )
-
-        // var onChangedViewEnd = SMK.UTIL.makeDelayedCall( function () {
-        //     if ( !self.wasPickedId ) return
-
-        //     // console.log( 'onChangedViewEnd' )
-
-        //     smk.$viewer.identified.pick( self.wasPickedId )
-        //     self.wasPickedId = null
-        // }, { delay: 410 } )
-
-        // smk.$viewer.changedView( function ( ev ) {
-        //     if ( !self.active ) return
-
-        //     if ( ev.operation == 'move' ) return
-
-        //     // console.log( self.wasPickedId, ev )
-
-        //     if ( ev.after == 'start' ) return onChangedViewStart()
-        //     if ( ev.after == 'end' ) return onChangedViewEnd()
-        // } )
-
-        // if ( smk.$tool.directions && !smk.$tool.location )
-        //     this.popupModel.tool.directions = true
-
     } )
 
     IdentifyTool.prototype.getLocation = function () {

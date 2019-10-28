@@ -23,14 +23,12 @@ include.module( 'sidepanel', [ 'vue', 'tool', 'sidepanel.sidepanel-html', 'sidep
             busy: {
                 type: Boolean,
                 default: false
-            },
-            canScrollUp: {
-                type: Boolean,
-                default: false
-            },
-            canScrollDown: {
-                type: Boolean,
-                default: false
+            }
+        },
+        data: function () {
+            return {
+                canScrollUp: false,
+                canScrollDown: false
             }
         },
         methods: {
@@ -77,15 +75,16 @@ include.module( 'sidepanel', [ 'vue', 'tool', 'sidepanel.sidepanel-html', 'sidep
             }
         },
         mounted: function () {
-            console.log('mounted')
+            // console.log('mounted')
             this.$nextTick( this.updateScroll )
         },
         updated: function () {
-            console.log('updated')
+            // console.log('updated')
             this.$nextTick( this.updateScroll )
         }
     } )
-
+    // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+    //
     var SidepanelEvent = SMK.TYPE.Event.define( [
         'changedVisible',
         'changedTool',
@@ -97,13 +96,14 @@ include.module( 'sidepanel', [ 'vue', 'tool', 'sidepanel.sidepanel-html', 'sidep
         SidepanelEvent.prototype.constructor.call( this )
 
         this.model = {
-            currentTool: null,
-            currentPanel: null,
-            visible: false
+            visible: false,
+            expand: 0,
+            panels: []
         }
 
-        this.toolStack = []
-        this.usePanel = {}
+        function getTool( id ) {
+            return self.model.panels.find( function ( t ) { return t.id == id } )
+        }
 
         this.vm = new Vue( {
             el: smk.addToOverlay( inc[ 'sidepanel.sidepanel-html' ] ),
@@ -113,21 +113,20 @@ include.module( 'sidepanel', [ 'vue', 'tool', 'sidepanel.sidepanel-html', 'sidep
                     smk.emit( toolId, event, arg )
                 },
 
-                'previousPanel': function () {                    
-                    if ( self.toolStack.length < 2 ) return
-                    smk.emit( this.currentTool.id, 'previous-panel' )
-                    self.popTool()
+                'previousPanel': function ( id ) {     
+                    var t = getTool( id )
+                    if ( t ) {
+                        var pt = getTool( t.parentId )
+                        if ( pt ) {
+                            smk.$tool[ pt.id ].active = true
+                            smk.$tool[ t.id ].active = false
+                        }
+                    }
+
+                    smk.emit( id, 'previous-panel' )
                 },
 
-                'hasPrevious': function () {
-                    var len = self.toolStack.length
-                    if ( len < 2 ) return false
-                    if ( self.toolStack[ len - 2 ].container ) return false
-                    return true
-                },
-
-                'closePanel': function () {
-                    smk.emit( this.currentTool.id, 'close-panel' )
+                'closePanel': function ( id ) {
                     self.closePanel()
                 },
 
@@ -151,127 +150,60 @@ include.module( 'sidepanel', [ 'vue', 'tool', 'sidepanel.sidepanel-html', 'sidep
 
             },
         } )
+
+        this.closePanel = function () {
+            self.model.panels.forEach( function ( t ) {
+                smk.$tool[ t.id ].active = false
+            } )
+        }
+
+        this.changedVisible( function () {
+            if ( self.isPanelVisible() ) {
+                self.model.expand = 1
+            }
+            else {
+                self.model.expand = 0
+            }
+        } )
     }    
 
-    Sidepanel.prototype.isPanelVisible = function () {
-        return this.model.visible
+    Sidepanel.prototype.getExpand = function () {
+        return this.model.expand
     }
 
-    Sidepanel.prototype.closePanel = function () {
-        this.model.visible = false
-
-        this.toolStack.forEach( function ( t ) {
-            t.active = false
-            t.panel.expand = 0
-        } )
-    } 
-
-    Sidepanel.prototype.setCurrentTool = function ( tool ) {
-        // console.log('setCurrentTool',tool)
-        var titleProps
-        if ( tool.widgetComponent )
-            titleProps = { title: tool.title }
-        else
-            titleProps = tool.widget
-
-        this.model.currentTool = {
-            id:             tool.id,
-            subPanel:       tool.subPanel,
-            panelComponent: tool.panelComponent,
-            panel:          tool.panel,
-            titleComponent: tool.titleComponent,
-            titleProps:     titleProps
-        }
-
-        if ( this.usePanel[ tool.id ] ) {
-            this.model.currentPanel = {
-                id:             tool.id,
-                subPanel:       tool.subPanel,
-                panelComponent: tool.panelComponent,
-                panel:          tool.panel,
-                titleComponent: tool.titleComponent,
-                titleProps:     titleProps
-            }
-        }
-
-        this.model.visible = true
-        this.changedTool( this.model.currentTool )
-    }
-
-    Sidepanel.prototype.isToolStacked = function ( tool ) {
-        return this.toolStack.some( function ( t ) { return t.id == tool.id } )
-    }
-
-    Sidepanel.prototype.popTool = function ( tool ) {
-        // console.log( 'pop',this.toolStack.length )
-        if ( this.toolStack.length == 0 ) return 0
-
-        var top = this.toolStack.length - 1
-
-        if ( tool && this.toolStack[ top ].id != tool.id )
-            return 
-
-        var removed = this.toolStack.pop()
-        removed.active = false
-
-        if ( top > 0 ) {
-            this.setCurrentTool( this.toolStack[ top - 1 ] )
-            this.toolStack[ top - 1 ].active = true
+    Sidepanel.prototype.setExpand = function ( val ) {
+        if ( val ) {
+            this.model.expand = val
+            return this.model.expand
         }
         else {
             this.closePanel()
         }
-
-        return this.toolStack.length
     }
 
-    Sidepanel.prototype.pushTool = function ( tool ) {
-        // console.log( 'push', tool.id, this.toolStack.length )
-
-        if ( this.isToolStacked( tool ) ) {
-            tool = this.toolStack[ this.toolStack.length - 1 ]
-            // console.log( 'already in stack, top is', tool.id )
-        }
-        else {
-            if ( this.toolStack.length > 0 ) {
-                var top = this.toolStack[ this.toolStack.length - 1 ]
-                // console.log( 'pop?', top.id, top.subPanel, '>=', tool.id, tool.subPanel )
-                while ( this.toolStack.length > 0 && top.subPanel >= tool.subPanel ) {
-                    // console.log( 'popping', top.id )
-                    this.toolStack.pop()
-                    top.active = false
-                    top = this.toolStack[ this.toolStack.length - 1 ]
-                }
-            }
-
-            this.toolStack.push( tool )
-        }
-
-        if ( !this.isPanelVisible() ) {
-            this.toolStack.forEach( function ( t ) {
-                t.active = true
-            } )
-        }
-
-        this.setCurrentTool( tool )
-        // console.log( 'after push', this.toolStack.map( function ( t ) { return [ t.id, t.subPanel ] } ) )
+    Sidepanel.prototype.incrExpand = function ( incr ) {
+        return this.setExpand( Math.max( 0, this.getExpand() + ( incr || 1 ) ) )
     }
 
-    Sidepanel.prototype.addTool = function ( tool, smk, usePanel ) {
+    Sidepanel.prototype.isPanelVisible = function () {
+        return this.model.visible
+    }
+    
+    Sidepanel.prototype.addTool = function ( tool, smk ) {
         var self = this
 
-        this.usePanel[ tool.id ] = usePanel !== false
+        this.model.panels.push( {
+            id:             tool.id,
+            parentId:       tool.parentId,
+            type:           tool.type,
+            panel:          tool.panel,
+            panelComponent: tool.panelComponent,
+            titleComponent: tool.titleComponent,
+            titleProps:     tool.widgetComponent ? { title: tool.title } : tool.widget,
+        } )
 
         tool.changedActive( function () {
-            // console.log( tool.id, tool.active, self.currentTool && self.currentTool.id )
-            if ( tool.active ) {              
-                self.pushTool( tool )
-            }
-            else {
-                if ( self.isToolStacked( tool ) ) {
-                    self.closePanel()
-                }
-            }
+            self.model.visible = self.model.panels.some( function ( t ) { return t.panel.active } )
         } )
 
         return true

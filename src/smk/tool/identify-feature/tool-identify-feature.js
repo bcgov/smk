@@ -30,18 +30,19 @@ include.module( 'tool-identify-feature', [ 'feature-list' ], function ( inc ) {
 
         self.changedActive( function () {
             if ( self.active ) {
-                smk.$tool[ 'identify' ].visible = true
                 self.featureSet.highlight()
+                Vue.nextTick( function () {
+                    smk.$tool[ self.parentId ].visible = true
+                } )
             }
             else {
-                smk.$tool[ 'identify' ].visible = false
                 self.featureSet.pick()
             }
         } )
 
         smk.$viewer.startedIdentify( function () {
             self.active = false
-            smk.$sidepanel.popTool( self )
+            // smk.$sidepanel.popTool( self )
         } )
 
         smk.on( this.id, {

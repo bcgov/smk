@@ -6,12 +6,14 @@ include.module( 'check-query-place', [], function ( inc ) {
             type: 'query-results',
             instance: 'place',
             enabled: true,
+            parentId: tool.id
         } ) )
 
         smk.tools.push( Object.assign( {}, tool, {
             type: 'query-feature',
             instance: 'place',
             enabled: true,
+            parentId: 'query-results--place'
         } ) )
     }
     

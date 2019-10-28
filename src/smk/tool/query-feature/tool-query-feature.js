@@ -7,7 +7,7 @@ include.module( 'tool-query-feature', [ 'feature-list' ], function ( inc ) {
             order:              4,
             title:              'query Results1',
             panelComponent:     'feature-panel',
-            subPanel:           2
+            // subPanel:           2
         }, option ) )
     }
 
@@ -34,8 +34,12 @@ include.module( 'tool-query-feature', [ 'feature-list' ], function ( inc ) {
         self.changedActive( function () {
             if ( self.active ) {
                 self.featureSet.highlight()
+                Vue.nextTick( function () {
+                    smk.$tool[ self.parentId ].visible = true
+                } )
             }
             else {
+                self.featureSet.pick()
             }
         } )
 

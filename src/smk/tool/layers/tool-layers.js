@@ -111,17 +111,12 @@ include.module( 'tool-layers', [ 'tool', 'widgets', 'tool-layers.panel-layers-ht
             },
 
             'swipe-up': function ( ev ) {                
-                // console.log('swipe up',self)
-                self.panel.expand = 1
+                smk.$sidepanel.setExpand( 2 )
             },
 
             'swipe-down': function ( ev ) {
-                // console.log('swipe down',self)
-                if ( self.panel.expand )
-                    self.panel.expand = 0
-                else 
-                    smk.$sidepanel.closePanel()
-            },
+                smk.$sidepanel.incrExpand( -1 )
+            }
         } )
 
 

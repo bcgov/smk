@@ -5,6 +5,8 @@ include.module( 'smk-map', [ 'jquery', 'util', 'theme-base', 'sidepanel' ], func
         this.$option = option
 
         this.$dispatcher = new Vue()
+
+        this.$group = {}
     }
 
     SMK.TYPE.SmkMap = SmkMap
@@ -311,6 +313,7 @@ include.module( 'smk-map', [ 'jquery', 'util', 'theme-base', 'sidepanel' ], func
             if ( enabledTools.length == 0 ) return
 
             return SMK.UTIL.waitAll( enabledTools.map( function ( t ) {
+                t.id = t.type + ( t.instance ? '--' + t.instance : '' )
                 var tag = 'check-' + t.type
                 return include( tag )
                     .then( function ( inc ) {
@@ -506,6 +509,14 @@ include.module( 'smk-map', [ 'jquery', 'util', 'theme-base', 'sidepanel' ], func
     SmkMap.prototype.showFeature = function ( acetate, geometry, opt ) {
         if ( this.$viewer.temporaryFeature )
             this.$viewer.temporaryFeature( acetate, geometry, opt )
+    }
+
+    SmkMap.prototype.getToolGroup = function ( rootId ) {
+        return this.$group[ rootId ]
+    }
+
+    SmkMap.prototype.setToolGroup = function ( rootId, ids ) {
+        this.$group[ rootId ] = ids
     }
     
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

@@ -7,18 +7,21 @@
 
         <div class="smk-menu-widgets">
             <component class="smk-tool"
-                v-for="tool in subWidgets"
-                v-bind:key="tool.id"
-                v-bind:is="tool.widgetComponent"
-                v-bind="tool.widget"
+                v-for="w in subWidgets"
+                v-bind:key="'w' + w.id"
+                v-bind:is="w.widgetComponent"
+                v-bind="w.widget"
+                v-bind:active="w.widget.group"
             ></component>
         </div>
     </template>
 
     <component class="smk-panel"
-        v-if="activeTool"
-        v-bind:is="activeTool.panelComponent"
-        v-bind="activeTool.panel"        
+        v-for="p in subPanels"
+        v-if="p.panel.active"
+        v-bind:key="'p' + p.id"
+        v-bind:is="p.panelComponent"
+        v-bind="p.panel"
     ></component>
 
 </side-panel>

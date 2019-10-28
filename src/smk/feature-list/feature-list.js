@@ -107,14 +107,20 @@ include.module( 'feature-list', [ 'tool', 'widgets', 'sidepanel',
             },
 
             'swipe-up': function ( ev ) {
-                console.log( 'swipe-up' )
+                smk.$sidepanel.setExpand( 2 )
             },
 
             'swipe-down': function ( ev ) {
-                console.log( 'swipe-down' )
+                smk.$sidepanel.incrExpand( -1 )
             }
 
         } )
+
+        // this.changedActive( function () {
+            // if ( !self.active )
+                // self.featureSet.clear()
+            // console.log( 'feature list active', self.active )
+        // } )
 
         // = : = : = : = : = : = : = : = : = : = : = : = : = : = : = : = : = : = : =
 
@@ -238,7 +244,6 @@ include.module( 'feature-list', [ 'tool', 'widgets', 'sidepanel',
 
         SMK.TYPE.Tool.prototype.constructor.call( this, $.extend( {
             // debugView: false
-            subPanel: 1
         }, option ) )
     }
 

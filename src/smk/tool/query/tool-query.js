@@ -160,15 +160,20 @@ include.module( 'tool-query', [ 'feature-list', 'widgets', 'sidepanel', 'tool-qu
                         break
                     }
                 }
-                else {
-                    if ( !self.featureSet.isEmpty() )
-                        smk.$tool[ 'query-results--' + self.instance ].active = true
-                }
+            }
+        } )
+
+        self.changedGroup( function () {
+            if ( !self.group ) {
+                // console.log('clear')
+                self.featureSet.clear()
+                self.featureSet.pick()
             }
         } )
 
         smk.on( this.id, {
             'activate': function () {
+                // console.log('tq activate',self.active)
                 if ( !self.enabled ) return
 
                 self.active = !self.active

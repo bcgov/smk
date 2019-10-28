@@ -24,7 +24,7 @@ include.module( 'tool-query-results', [ 'feature-list', 'widgets', 'tool-query-r
 
         SMK.TYPE.FeatureList.prototype.constructor.call( this, $.extend( {
             panelComponent: 'query-results-panel',
-            subPanel:       1,
+            // subPanel:       1,
         }, option ) )
 
         if ( !this.instance )
@@ -49,12 +49,10 @@ include.module( 'tool-query-results', [ 'feature-list', 'widgets', 'tool-query-r
         this.tool.select = smk.$tool.select
         this.tool.zoom = smk.$tool.zoom
 
-        self.changedActive( function () {
-            if ( self.active ) {
-                if ( self.featureSet.getPicked() )
-                    smk.$tool[ 'query-feature--' + self.instance ].active = true
-            }
-        } )
+        // self.changedActive( function () {
+        //     if ( self.active ) {
+        //     }
+        // } )
 
         smk.on( this.id, {
             'previous-panel': function () {
