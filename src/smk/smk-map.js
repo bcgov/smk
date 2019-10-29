@@ -452,6 +452,35 @@ include.module( 'smk-map', [ 'jquery', 'util', 'theme-base', 'sidepanel' ], func
         return this.$sidepanel
     }
 
+    SmkMap.prototype.setEditFocus = function ( focus ) {
+        $( this.$container ).toggleClass( 'smk-edit-focus', focus )
+    }
+
+    SmkMap.prototype.debugMessage = function ( opt ) {
+        if ( !this.debugVm ) {
+            this.debugVm = new Vue( {
+                el: this.addToOverlay( '<div class="smk-debug"><div v-for="k in keys">{{ k }} : {{ status[ k ] }}</div></div>' ),
+                data: {
+                    status: {}
+                },
+                computed: {
+                    keys: {
+                        get: function () {
+                            return Object.keys( this.status )
+                        }
+                    }
+                }
+            } )
+        }
+
+        opt.ts = (new Date()).toLocaleTimeString()
+        var d = this.debugVm.$data
+        Object.keys( opt || {} ).forEach( function ( k ) {
+            Vue.set( d.status, k, opt[ k ] )
+        } )
+
+    }
+
     SmkMap.prototype.getVar = function ( cssVar ) {
         return $( this.$container ).css( '--' + cssVar )
     }

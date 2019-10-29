@@ -191,6 +191,10 @@ include.module( 'tool-query', [ 'feature-list', 'widgets', 'sidepanel', 'tool-qu
             'parameter-reset': function ( ev ) {
                 self.parameters[ ev.index ].prop.value = self.query.parameters[ ev.index ].value
             },
+
+            'parameter-change': function ( ev ) {
+                smk.setEditFocus( ev.active )
+            },
             // 'active', function ( ev ) {
             //     smk.$viewer[ self.featureSetProperty ].pick( ev.featureId )
             // } )
