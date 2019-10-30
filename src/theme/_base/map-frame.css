@@ -84,6 +84,7 @@
 
 
 .smk-map-frame .smk-overlay .smk-debug {
+    display: none;
     position: absolute;
     bottom: 50px;
     left: 0;
