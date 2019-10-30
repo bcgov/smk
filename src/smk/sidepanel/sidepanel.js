@@ -141,20 +141,22 @@ include.module( 'sidepanel', [ 'vue', 'tool', 'sidepanel.sidepanel-html', 'sidep
 
                 'beforeHide': function () {
                     // console.log( 'beforeHide' )
-                    self.changedVisible()
+                    // self.changedVisible()
                 },
 
                 'afterHide': function () {
                     // console.log( 'afterHide' )
+                    self.changedVisible()
                 }
 
             },
         } )
 
         this.closePanel = function () {
-            self.model.panels.forEach( function ( t ) {
-                smk.$tool[ t.id ].active = false
-            } )
+            self.model.visible = false
+            // self.model.panels.forEach( function ( t ) {
+            //     smk.$tool[ t.id ].active = false
+            // } )
         }
 
         this.changedVisible( function () {
@@ -163,6 +165,10 @@ include.module( 'sidepanel', [ 'vue', 'tool', 'sidepanel.sidepanel-html', 'sidep
             }
             else {
                 self.model.expand = 0
+
+                self.model.panels.forEach( function ( t ) {
+                    smk.$tool[ t.id ].active = false
+                } )
             }
         } )
     }    
