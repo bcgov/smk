@@ -193,29 +193,37 @@ include.module( 'viewer-leaflet', [ 'viewer', 'leaflet', 'layer-leaflet', 'featu
     }
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     ViewerLeaflet.prototype.getPanelPadding = function ( panelVisible ) {
-        var overlayPadding = parseInt( this.getVar( 'overlay-padding' ) )
-        var panelPadding = 10 
-        var padding = overlayPadding + panelPadding
-        
-        var width = parseInt( this.getVar( 'panel-width' ) )
-        var bottom = parseInt( this.getVar( 'panel-bottom' ) )
+        var sbp = this.getSidepanelPosition()
         var size = this.map.getSize()
 
-        if ( !panelVisible )
-            return {
-                topLeft: L.point( padding, padding ),
-                bottomRight: L.point( padding, padding ),
-            }
+        var aboveHeight = sbp.top,
+            belowHeight = size.y - sbp.top - sbp.height,
+            leftWidth = sbp.left,
+            rightWidth = size.x - sbp.left - sbp.width
 
-        if ( bottom > 0 )
-            return {
-                topLeft: L.point( padding, size.y - overlayPadding - bottom + panelPadding ),
-                bottomRight: L.point( padding, padding ),
-            }
-
-        return {
-            topLeft: L.point( width + padding, padding ),
-            bottomRight: L.point( padding, padding ),
+        if ( Math.max( aboveHeight, belowHeight ) > Math.max( leftWidth, rightWidth ) ) {
+            if ( aboveHeight > belowHeight ) 
+                return {
+                    topLeft: L.point( 0, 0 ),
+                    bottomRight: L.point( 0, size.y - sbp.top )
+                }
+            else
+                return {
+                    topLeft: L.point( 0, sbp.top + sbp.height ),
+                    bottomRight: L.point( 0, 0 )
+                }
+        }
+        else {
+            if ( leftWidth > rightWidth ) 
+                return {
+                    topLeft: L.point( 0, 0 ),
+                    bottomRight: L.point( size.x - sbp.left, 0 )
+                }
+            else
+                return {
+                    topLeft: L.point( sbp.left + sbp.width, 0 ),
+                    bottomRight: L.point( 0, 0 )
+                }
         }
     }
 
