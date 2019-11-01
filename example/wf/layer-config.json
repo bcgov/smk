@@ -159,7 +159,7 @@
             {
               "id": "param1",
               "type": "input",
-              "title": "Part of a fire number"
+              "title": "Fire Name, Number, Location, or Stage of Control"
             },
             {
               "id": "param2",
@@ -170,19 +170,76 @@
           "predicate": {
             "operator": "and",
             "arguments": [
-              {
-                "operator": "contains",
-                "arguments": [
-                  {
-                    "operand": "attribute",
-                    "name": "FIRE_NUMBER"
-                  },
-                  {
-                    "operand": "parameter",
-                    "id": "param1"
-                  }
-                ]
-              },
+                {
+                    "operator": "or",
+                    "arguments": [              
+                        {
+                            "operator": "contains",
+                            "arguments": [
+                                {
+                                    "operand": "attribute",
+                                    "name": "FIRE_NUMBER"
+                                },
+                                {
+                                    "operand": "parameter",
+                                    "id": "param1"
+                                }
+                            ]
+                        },
+                        {
+                            "operator": "contains",
+                            "arguments": [
+                                {
+                                    "operand": "attribute",
+                                    "name": "FIRE_CAUSE"
+                                },
+                                {
+                                    "operand": "parameter",
+                                    "id": "param1"
+                                }
+                            ]
+                        },
+                        {
+                            "operator": "contains",
+                            "arguments": [
+                                {
+                                    "operand": "attribute",
+                                    "name": "GEOGRAPHIC_DESCRIPTION"
+                                },
+                                {
+                                    "operand": "parameter",
+                                    "id": "param1"
+                                }
+                            ]
+                        },
+                        {
+                            "operator": "contains",
+                            "arguments": [
+                                {
+                                    "operand": "attribute",
+                                    "name": "FIRE_STATUS"
+                                },
+                                {
+                                    "operand": "parameter",
+                                    "id": "param1"
+                                }
+                            ]
+                        },
+                        {
+                            "operator": "contains",
+                            "arguments": [
+                                {
+                                    "operand": "attribute",
+                                    "name": "FIRE_OF_NOTE_NAME"
+                                },
+                                {
+                                    "operand": "parameter",
+                                    "id": "param1"
+                                }
+                            ]
+                        }
+                    ]
+                },
               {
                 "operator": "not",
                 "arguments": [
