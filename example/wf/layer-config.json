@@ -319,9 +319,48 @@
     },
     {
       "type": "esri-feature",
+      "id": "evacuation-orders-and-alerts",
+      "title": "Evacuation Orders and Alerts",
+      "isVisible": true,
+      "isQueryable": true,
+      "attribution": "Copyright 117 DataBC, Government of British Columbia",
+      "serviceUrl": "https://services6.arcgis.com/ubm4tcTYICKBpist/ArcGIS/rest/services/Evacuation_Orders_and_Alerts/FeatureServer/0",
+      "metadataUrl": "https://catalogue.data.gov.bc.ca/dataset/diagnostic-facilities",
+      "where": "",
+      "opacity": 0.25,
+      "scaleMin": 500000,
+      "scaleMax": 0,
+      "popupTemplate": "@wf-feature",
+      "titleAttribute": "EVENT_NAME",
+      "attributes": [
+        {
+            "name": "EVENT_NAME",
+            "title": "Name"
+        },
+        {
+            "name": "EVENT_TYPE",
+            "title": "Type"
+        },
+        {
+            "name": "DATE_MODIFIED",
+            "title": "Date",
+            "format": "asLocalDate"
+        },
+        {
+            "name": "ISSUING_AGENCY",
+            "title": "Issuing Agency"
+        },
+        {
+            "name": "ORDER_ALERT_STATUS",
+            "title": "Status"
+        }
+      ]
+    },
+    {
+      "type": "esri-feature",
       "id": 31073,
       "title": "Fire Perimeters",
-      "isVisible": false,
+      "isVisible": true,
       "attribution": "Copyright 117 DataBC, Government of British Columbia",
       "serviceUrl": "https://services6.arcgis.com/ubm4tcTYICKBpist/arcgis/rest/services/BCWS_FirePerimeters_PublicView/FeatureServer/0",
       "metadataUrl": "https://catalogue.data.gov.bc.ca/dataset/diagnostic-facilities",
@@ -356,7 +395,7 @@
       "type": "esri-tiled",
       "id": 31074,
       "title": "BC Fire Centres",
-      "isVisible": false,
+      "isVisible": true,
       "isQueryable": false,
       "attribution": "Copyright 117 DataBC, Government of British Columbia",
       "serviceUrl": "https://tiles.arcgis.com/tiles/ubm4tcTYICKBpist/arcgis/rest/services/BCWS_FireCenterBdys2/MapServer",
