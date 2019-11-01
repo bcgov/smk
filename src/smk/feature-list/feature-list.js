@@ -38,12 +38,11 @@ include.module( 'feature-list', [ 'tool', 'widgets', 'sidepanel',
             formatAttribute: function ( attr ) {
                 /* jshint evil: true */
 
-                var m = attr.format.match( /^(.+)[(](.+?)([.]([^.]+))?[)]$/)
+                var m = attr.format.match( /^(.+)[(](.+)[)]$/)
                 if ( !m )
                     return formatter[ attr.format ]( attr, this.feature, this.layer )()
 
-                // return formatter[ m[ 1 ] ]( attr, this.feature, this.layer )( eval( m[ 2 ] ) )
-                return formatter[ m[ 1 ] ]( attr, this.feature, this.layer )( this.feature.properties, m[4] )
+                return formatter[ m[ 1 ] ]( attr, this.feature, this.layer )( eval( m[ 2 ] ) )
             }
         }
     } )
@@ -224,11 +223,10 @@ include.module( 'feature-list', [ 'tool', 'widgets', 'sidepanel',
         asLocalDate: makeFormatter( '<span class="smk-value" v-if="attribute.value">{{ ( new Date( attribute.value ) ).toLocaleDateString() }}</span>' ),
         asLocalTime: makeFormatter( '<span class="smk-value" v-if="attribute.value">{{ ( new Date( attribute.value ) ).toLocaleTimeString() }}</span>' ),
         asUnit: makeFormatter( '<span class="smk-value" v-if="attribute.value">{{ attribute.value }} <span class="smk-unit">{{ unit }}</span></span>', function ( unit ) { 
-            return { unit: 'ha' } 
+            return { unit: unit } 
         } ),
-        asLink: makeFormatter( inc[ 'feature-list.format-link-html' ], function ( obj, field ) {
-            console.log(obj,field)
-            return { url: obj[field] }
+        asLink: makeFormatter( inc[ 'feature-list.format-link-html' ], function ( url ) {
+            return { url: url }
         } )
     }
 
