@@ -242,9 +242,17 @@ include.module( 'sidepanel', [ 'vue', 'tool', 'sidepanel.sidepanel-html', 'sidep
         this.status = status
         this.message = message
 
-        if ( delay )
-            return SMK.UTIL.makePromise( function ( res ) { setTimeout( res, delay ) } )
+        if ( delay === null ) return
+
+        this.clearMessage.option.delay = delay || 2000 
+        this.clearMessage()
     }
+
+    PanelTool.prototype.clearMessage = SMK.UTIL.makeDelayedCall( function () {
+        this.status = null
+        this.message = null        
+    }, { delay: 2000 } )
+
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
     return Sidepanel

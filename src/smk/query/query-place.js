@@ -44,16 +44,20 @@ include.module( 'query.query-place-js', [ 'query.query-js' ], function () {
             if ( !data ) throw new Error( 'no features' )
             if ( !data.features || data.features.length == 0 ) throw new Error( 'no features' )
 
-            return data.features.map( function ( feature ) {
-                if ( !feature.geometry.coordinates ) return;
+            var features = data.features.map( function ( feature ) {
+                    if ( !feature.geometry.coordinates ) return;
 
-                // exclude whole province match
-                if ( feature.properties.fullAddress == 'BC' ) return;
+                    // exclude whole province match
+                    if ( feature.properties.fullAddress == 'BC' ) return;
 
-                feature.title = feature.properties.fullAddress
-                return feature
-            } )
-            .filter( function ( f ) { return f } )
+                    feature.title = feature.properties.fullAddress
+                    return feature
+                } )
+                .filter( function ( f ) { return f } )
+
+            if ( features.length == 0 ) throw new Error( 'no features' )
+
+            return features
         } )
     }
 

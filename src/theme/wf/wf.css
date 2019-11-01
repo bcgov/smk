@@ -203,16 +203,42 @@
     z-index: 2;
 }
 
+/*.smk-device-mobile*/.smk-theme-wf .smk-sidepanel .smk-message {
+    order: 0;
+    z-index: 99999;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+    padding: 6px;
+    border-radius: 6px;    
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/*.smk-device-mobile*/.smk-theme-wf .smk-sidepanel .smk-message .smk-spinner {
+    position: static;
+}
+
+/*.smk-device-mobile*/.smk-theme-wf .smk-sidepanel .smk-message div {
+    display: inline-block;
+}
+
 /*.smk-device-mobile*/.smk-theme-wf .smk-sidepanel .smk-message.smk-summary {
-    display: none;
+    /* display: none; */
 }
 
 /*.smk-device-mobile*/.smk-theme-wf .smk-sidepanel .smk-message.smk-progress {
-    display: none;
+    /* display: none; */
 }
 
 /*.smk-device-mobile*/.smk-theme-wf .smk-sidepanel .smk-message.smk-warning {
-    display: none;
+    /* display: none; */
 }
 
 /* menu.css */
@@ -278,9 +304,12 @@
 /* tool-query.css */
 
 .smk-theme-wf .smk-query-panel .smk-commands {
-    order: 0;
+    order: 1;
     flex-direction: row-reverse;   
     justify-content: flex-start;
 }
 
+.smk-theme-wf .smk-query-panel .smk-body {
+    order: 2;
+}
 
