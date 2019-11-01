@@ -97,6 +97,8 @@ include.module( 'tool-query-feature', [ 'feature-list' ], function ( inc ) {
 
             self.resultCount = self.featureSet.getStats().featureCount 
             self.resultPosition = featureIds.indexOf( ev.feature.id )
+
+            smk.$viewer.panToFeature( ev.feature )
         } )
 
         self.featureSet.addedFeatures( function ( ev ) {

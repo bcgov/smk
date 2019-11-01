@@ -1,4 +1,4 @@
-include.module( 'viewer-leaflet', [ 'viewer', 'leaflet', 'layer-leaflet', 'feature-list-leaflet' ], function () {
+include.module( 'viewer-leaflet', [ 'viewer', 'leaflet', 'layer-leaflet', 'feature-list-leaflet', 'turf' ], function () {
     "use strict";
 
     function ViewerLeaflet() {
@@ -241,6 +241,39 @@ include.module( 'viewer-leaflet', [ 'viewer', 'leaflet', 'layer-leaflet', 'featu
             this.acetate[ acetate ].addLayer( L.geoJSON( geometry, opt ) )
         }
     }
+
+    ViewerLeaflet.prototype.panToFeature = function ( feature ) {
+        var bounds
+        switch ( turf.getType( feature ) ) {
+        case 'Point':
+            var ll = L.latLng( feature.geometry.coordinates[ 1 ], feature.geometry.coordinates[ 0 ] )
+            bounds = L.latLngBounds( [ ll, ll ] )
+            break;
+
+        // default:
+            // if ( self.highlight[ feature.id ] )
+                // bounds = self.highlight[ feature.id ].getBounds()
+        }
+
+        if ( !bounds ) return
+
+        // var old = self.featureSet.pick( null )
+
+        var padding = this.getPanelPadding()
+
+        this.map
+            // .once( 'zoomend moveend', function () {
+                // if ( old )
+                    // self.featureSet.pick( old )
+            // } )
+            .fitBounds( bounds, {
+                paddingTopLeft: padding.topLeft,
+                paddingBottomRight: padding.bottomRight,
+                maxZoom: this.map.getZoom(),        
+                animate: true
+            } )
+    } 
+
     // ViewerLeaflet.prototype.zoomToFeature = function ( layer, feature ) {
     //     this.map.fitBounds( feature.highlightLayer.getBounds(), {
     //         paddingTopLeft: L.point( 300, 100 ),

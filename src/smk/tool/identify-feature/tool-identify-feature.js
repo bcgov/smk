@@ -105,6 +105,8 @@ include.module( 'tool-identify-feature', [ 'feature-list' ], function ( inc ) {
             self.setAttributeComponent( ly, ev.feature )
 
             self.resultPosition = featureIds.indexOf( ev.feature.id )
+
+            smk.$viewer.panToFeature( ev.feature )
         } )
 
     } )
