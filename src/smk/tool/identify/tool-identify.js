@@ -113,7 +113,7 @@ include.module( 'tool-identify', [ 'feature-list', 'widgets', 'tool-identify.pan
             self.busy = false
 
             if ( smk.$viewer.identified.isEmpty() ) {
-                smk.$sidepanel.closePanel()
+                smk.$sidepanel.setExpand( 0 )
                 self.setMessage( 'No features found', 'warning' )
             }
             else {

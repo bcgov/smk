@@ -2,6 +2,7 @@
     <label>
         {{ title }}
         <input
+            ref="in"
             v-model="input"
             v-on:input="$emit( 'input', { value: $event.target.value } )"
             v-on:keyup.down="$emit( 'pickDown' )"

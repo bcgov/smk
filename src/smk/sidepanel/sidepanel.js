@@ -88,6 +88,7 @@ include.module( 'sidepanel', [ 'vue', 'tool', 'sidepanel.sidepanel-html', 'sidep
     var SidepanelEvent = SMK.TYPE.Event.define( [
         'changedVisible',
         'changedTool',
+        'changedSize',
     ] )
 
     function Sidepanel( smk ) {
@@ -127,7 +128,7 @@ include.module( 'sidepanel', [ 'vue', 'tool', 'sidepanel.sidepanel-html', 'sidep
                 },
 
                 'closePanel': function ( id ) {
-                    self.closePanel()
+                    self.setExpand( 0 )
                 },
 
                 'beforeShow': function () {
@@ -141,28 +142,26 @@ include.module( 'sidepanel', [ 'vue', 'tool', 'sidepanel.sidepanel-html', 'sidep
 
                 'beforeHide': function () {
                     // console.log( 'beforeHide' )
-                    self.changedVisible()
                 },
 
                 'afterHide': function () {
                     // console.log( 'afterHide' )
+                    self.changedVisible()
                 }
 
             },
         } )
 
-        this.closePanel = function () {
-            self.model.panels.forEach( function ( t ) {
-                smk.$tool[ t.id ].active = false
-            } )
-        }
-
         this.changedVisible( function () {
             if ( self.isPanelVisible() ) {
-                self.model.expand = 1
+                self.setExpand( 1 )
             }
             else {
-                self.model.expand = 0
+                self.changedSize()
+
+                self.model.panels.forEach( function ( t ) {
+                    smk.$tool[ t.id ].active = false
+                } )
             }
         } )
     }    
@@ -174,10 +173,11 @@ include.module( 'sidepanel', [ 'vue', 'tool', 'sidepanel.sidepanel-html', 'sidep
     Sidepanel.prototype.setExpand = function ( val ) {
         if ( val ) {
             this.model.expand = val
-            return this.model.expand
+            this.changedSize()
         }
         else {
-            this.closePanel()
+            this.model.visible = false
+            this.model.expand = 0
         }
     }
 
@@ -203,7 +203,11 @@ include.module( 'sidepanel', [ 'vue', 'tool', 'sidepanel.sidepanel-html', 'sidep
         } )
 
         tool.changedActive( function () {
+            var was = self.model.visible
             self.model.visible = self.model.panels.some( function ( t ) { return t.panel.active } )
+
+            if ( was == self.model.visible && tool.active )
+                self.changedSize()
         } )
 
         return true

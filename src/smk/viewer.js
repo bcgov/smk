@@ -263,6 +263,10 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
             }
         }
         // self.changedDevice( function ( dev ) { console.log( 'device change', dev ) } )
+
+        this.getSidepanelPosition = function () {
+            return smk.getSidepanelPosition()
+        }
     }
 
     Viewer.prototype.initializeLayers = function ( smk ) {

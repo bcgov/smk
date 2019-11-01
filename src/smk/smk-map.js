@@ -449,7 +449,26 @@ include.module( 'smk-map', [ 'jquery', 'util', 'theme-base', 'sidepanel' ], func
             self.$viewer.mapResized()
         } )
 
+        this.$sidepanel.changedSize( function () {
+            // console.log( 'changedSize', self.getSidepanelPosition() )
+        } )
+
         return this.$sidepanel
+    }
+
+    SmkMap.prototype.getSidepanelPosition = function () {
+        if ( !this.$sidepanel || !this.$sidepanel.isPanelVisible() ) 
+            return { left: 0, width: 0, top: 0, height: 0 }
+
+        var overlayEl = this.$overlay
+        var sidepanelEl = this.$sidepanel.vm.$el
+
+        return {
+            left: overlayEl.offsetLeft + sidepanelEl.offsetLeft,
+            top: overlayEl.offsetTop + sidepanelEl.offsetTop,
+            width: sidepanelEl.clientWidth,
+            height: sidepanelEl.clientHeight,
+        }
     }
 
     SmkMap.prototype.setEditFocus = function ( focus ) {
@@ -517,8 +536,21 @@ include.module( 'smk-map', [ 'jquery', 'util', 'theme-base', 'sidepanel' ], func
         var dev = this.viewer.device
         if ( dev == 'auto' ) {
             var w =  $( window ).width()
+            // this.debugMessage( {
+            //     width: w,
+            //     height: $( window ).height(),
+            //     iheight: window.innerHeight
+            // } )
             dev = w >= this.viewer.deviceAutoBreakpoint ? 'desktop' : 'mobile'
         }
+
+        this.setVar( 'map-width', $( this.$container ).width() + 'px' )
+        this.setVar( 'map-height', $( this.$container ).height() + 'px' )
+
+        // this.debugMessage( {
+            // width: $( this.$container ).width(),
+            // height: $( this.$container ).height(),
+        // } )
 
         if ( dev == this.$device )
             return 

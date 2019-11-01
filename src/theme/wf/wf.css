@@ -11,10 +11,6 @@
     bottom: var( --toolbar-height );
 }
 
-.smk-device-mobile.smk-theme-wf.smk-map-frame.smk-sidepanel-active .smk-viewer {
-    bottom: 50%;
-}
-
 .smk-theme-wf .smk-command {
     display: inline-block;
     color: white;
@@ -136,15 +132,17 @@
 /* sidepanel.css */
 
 .smk-device-mobile.smk-theme-wf .smk-sidepanel {
-    top: 50%;
     left: 0;
     right: 0;
     bottom: var( --toolbar-height );
 
     width: initial;
 
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid #888;
+    background-color: white;
     opacity: 1;
+
+    top: initial;
 }
 
 .smk-device-mobile.smk-theme-wf .smk-sidepanel.sidepanel-slide-enter-active, 
@@ -155,23 +153,36 @@
 .smk-device-mobile.smk-theme-wf .smk-sidepanel.sidepanel-slide-enter, 
 .smk-device-mobile.smk-theme-wf .smk-sidepanel.sidepanel-slide-leave-to {
     opacity: 0;
-    top: 100%
+    /* top: 100% */
+    /* height: 0; */
+
 }
 
 .smk-device-mobile.smk-theme-wf .smk-sidepanel.smk-expand-2 {
-    top: 0;
+    /* top: 0; */
     right: 0;
     transition: top 1s ease-in-out;
 }
 
-.smk-device-mobile.smk-theme-wf .smk-elastic-panel {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+.smk-device-mobile.smk-theme-wf .smk-sidepanel.smk-expand-2 .smk-elastic-panel {
+    max-height: calc( var( --map-height ) - var( --toolbar-height ) );
+    /* max-height: unset; */
+    transition: max-height 1s ease-in-out;
+}
 
+.smk-device-mobile.smk-theme-wf .smk-sidepanel .smk-elastic-panel {
     box-shadow: none;
+    max-height: calc( 50vh - var( --toolbar-height ) );
+}
+
+.smk-device-mobile.smk-theme-wf .smk-sidepanel.sidepanel-slide-enter .smk-elastic-panel, 
+.smk-device-mobile.smk-theme-wf .smk-sidepanel.sidepanel-slide-leave-to .smk-elastic-panel {
+    max-height: 0;
+}
+
+.smk-device-mobile.smk-theme-wf .smk-sidepanel.sidepanel-slide-enter-active .smk-elastic-panel, 
+.smk-device-mobile.smk-theme-wf .smk-sidepanel.sidepanel-slide-leave-active .smk-elastic-panel {
+    transition: all 1s ease-in-out;
 }
 
 .smk-theme-wf .smk-sidepanel .smk-panel .smk-panel-title {
@@ -181,6 +192,11 @@
 .smk-device-mobile.smk-theme-wf .smk-sidepanel .smk-panel .smk-panel-title {
     padding-top: 2px;
     padding-left: 4px;
+}
+
+.smk-device-mobile.smk-theme-wf .smk-sidepanel .smk-panel .smk-header {
+    margin-left: 0;
+    margin-right: 0;
 }
 
 .smk-device-mobile.smk-theme-wf .smk-sidepanel .smk-panel .smk-body {
@@ -231,12 +247,18 @@
 
 /* panel-feature.css */
 
+.smk-device-mobile.smk-theme-wf .smk-feature-panel .smk-commands {
+    flex-direction: row-reverse;   
+    justify-content: flex-start;
+}
+
 /*.smk-device-mobile*/.smk-theme-wf .smk-feature-panel .smk-commands .smk-navigator {
+    flex-grow: 0;
     justify-content: flex-end;
 }
 
 /*.smk-device-mobile*/.smk-theme-wf .smk-feature-panel .smk-commands .smk-zoom {
-    order: 55;
+    order: 70;
 }
 
 
@@ -252,3 +274,13 @@
     font-size: 12px;
     margin-left: 5px;
 }
+
+/* tool-query.css */
+
+.smk-theme-wf .smk-query-panel .smk-commands {
+    order: 0;
+    flex-direction: row-reverse;   
+    justify-content: flex-start;
+}
+
+
