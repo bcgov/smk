@@ -113,7 +113,8 @@
       "command": {
         "attributeMode": false,
         "clear": false
-      }
+      },
+      "order": 200
     },
     {
       "type": "query",
@@ -125,7 +126,8 @@
       "command": {
         "attributeMode": false,
         "clear": false
-      }
+      },
+      "order": 100
     },
     {
       "type": "list-menu",
