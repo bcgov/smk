@@ -444,7 +444,7 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
 
         var tolerance = this.identifyTool().tolerance || 5
         var searchArea = this.circleInMap( location.screen, tolerance, 12 )
-        this.temporaryFeature( 'identify', searchArea )
+        // this.temporaryFeature( 'identify', searchArea )
 
         var view = this.getView()
 
