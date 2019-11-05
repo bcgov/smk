@@ -252,6 +252,20 @@ include.module( 'feature-list', [ 'tool', 'widgets', 'sidepanel',
     $.extend( FeaturePanel.prototype, SMK.TYPE.Tool.prototype )
     FeaturePanel.prototype.afterInitialize = []
 
+    FeaturePanel.prototype.afterInitialize.push( function ( smk ) {
+        var self = this
+
+        smk.on( this.id, {
+            'swipe-up': function ( ev ) {
+                smk.$sidepanel.setExpand( 2 )
+            },
+
+            'swipe-down': function ( ev ) {
+                smk.$sidepanel.incrExpand( -1 )
+            }
+        } )
+    } )
+
     FeaturePanel.prototype.setAttributeComponent = function ( layer, feature ) {
         if ( layer.config.popupTemplate ) {
             var template

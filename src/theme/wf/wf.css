@@ -159,7 +159,7 @@
 }
 
 .smk-device-mobile.smk-theme-wf .smk-sidepanel.smk-expand-2 {
-    /* top: 0; */
+    top: 0;
     right: 0;
     transition: top 1s ease-in-out;
 }

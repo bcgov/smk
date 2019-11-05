@@ -1,4 +1,8 @@
-<side-panel class="smk-feature-panel">
+<side-panel class="smk-feature-panel"
+    v-bind:showSwipe="true"
+    v-on:swipe-up="$$emit('swipe-up')"
+    v-on:swipe-down="$$emit('swipe-down')"
+>
     <template slot="header">
         <slot></slot>
     </template>
