@@ -544,8 +544,8 @@ include.module( 'smk-map', [ 'jquery', 'util', 'theme-base', 'sidepanel' ], func
             dev = w >= this.viewer.deviceAutoBreakpoint ? 'desktop' : 'mobile'
         }
 
-        this.setVar( 'map-width', $( this.$container ).width() + 'px' )
-        this.setVar( 'map-height', $( this.$container ).height() + 'px' )
+        // this.setVar( 'map-width', $( this.$container ).width() + 'px' )
+        // this.setVar( 'map-height', $( this.$container ).height() + 'px' )
 
         // this.debugMessage( {
             // width: $( this.$container ).width(),

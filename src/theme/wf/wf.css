@@ -165,7 +165,7 @@
 }
 
 .smk-device-mobile.smk-theme-wf .smk-sidepanel.smk-expand-2 .smk-elastic-panel {
-    max-height: calc( var( --map-height ) - var( --toolbar-height ) );
+    /* max-height: calc( var( --map-height ) - var( --toolbar-height ) ); */
     /* max-height: unset; */
     transition: max-height 1s ease-in-out;
 }
