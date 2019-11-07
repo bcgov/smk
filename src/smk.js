@@ -67,7 +67,7 @@
         var smkAttr = {
             'id':           attrString( '1' ),
             'container-sel':attrString( '#smk-map-frame' ),
-            'title-sel':    attrString( 'head title' ),
+            // 'title-sel':    attrString( 'head title' ),
             'config':       attrList( '?smk-' ),
             'base-url':     attrString( ( new URL( bootstrapScriptEl.src.replace( 'smk.js', '' ), document.location ) ).toString() ),
             'service-url':  attrString( null, null ),
