@@ -15,22 +15,25 @@ include.module( 'layer-leaflet.layer-esri-feature-leaflet-js', [ 'layer.layer-es
 
         if ( layers.length != 1 ) throw new Error( 'only 1 config allowed' )
 
-        var serviceUrl  = layers[ 0 ].config.serviceUrl
-        var opacity     = layers[ 0 ].config.opacity
+        // var opacity     = layers[ 0 ].config.opacity
 
-        var minZoom
+        var cfg = {
+            url: layers[ 0 ].config.serviceUrl
+        }
+
         if ( layers[ 0 ].config.minScale )
-            minZoom = this.getZoomBracketForScale( layers[ 0 ].config.minScale )[ 1 ]
+            cfg.minZoom = this.getZoomBracketForScale( layers[ 0 ].config.minScale )[ 1 ]
 
-        var maxZoom
         if ( layers[ 0 ].config.maxScale )
-            maxZoom = this.getZoomBracketForScale( layers[ 0 ].config.maxScale )[ 1 ]
+            cfg.maxZoom = this.getZoomBracketForScale( layers[ 0 ].config.maxScale )[ 1 ]
 
-        var layer = L.esri.featureLayer( {
-            url:    serviceUrl,
-            where:  layers[ 0 ].config.where,
-            drawingInfo: layers[ 0 ].config.drawingInfo
-        } )
+        if ( layers[ 0 ].config.where )
+            cfg.where = layers[ 0 ].config.where
+
+        if ( layers[ 0 ].config.drawingInfo )
+            cfg.drawingInfo = layers[ 0 ].config.drawingInfo
+        
+        var layer = L.esri.featureLayer( cfg )
         
         if ( layers[ 0 ].legendCacheResolve ) {
             layer.legend( function ( err, leg ) {
