@@ -1,0 +1,96 @@
+{
+  "smkId": "wfone-public-mobile",
+  "smkRevision": 1,
+  "name": "wfone-public-mobile",
+  "createdBy": "vivid",
+  "published": false,
+  "viewer": {
+    "type": "leaflet",
+    "location": {
+        "extent": [
+            -123.5129561160918,
+            48.77200307901124,
+            -122.21397142118256,
+            49.72867079292322
+        ]
+    },
+    "baseMap": "Topographic",
+    "minZoom": 4
+  },
+  "tools": [
+    {
+      "type": "location",
+      "title": "Location",
+      "position": "toolbar",
+      "enabled": false
+    },
+    {
+      "type": "scale",
+      "enabled": true
+    },
+    {
+      "type": "layers",
+      "enabled": true,
+      "showTitle": "mobile",
+      "position": "toolbar",
+      "glyph": {
+        "visible": "check_box",
+        "hidden": "check_box_outline_blank"
+      },
+      "command": {
+        "allVisibility": true,
+        "filter": true
+      }
+    },
+    {
+      "type": "identify",
+      "title": "Identify",
+      "enabled": true,
+      "showTitle": "mobile",
+      "position": "list-menu",
+      "tolerance": 10,
+      "command": {
+        "attributeMode": false,
+        "clear": false
+      }
+    },
+    {
+      "type": "pan",
+      "enabled": true
+    },
+    {
+      "type": "zoom",
+      "enabled": true,
+      "mouseWheel": true,
+      "doubleClick": true,
+      "box": true,
+      "control": "desktop"
+    },
+    {
+      "type": "baseMaps",
+      "enabled": true,
+      "showTitle": "mobile",
+      "choices": [
+        "Topographic",
+        "Streets",
+        "Imagery",
+        "NationalGeographic",
+        "DarkGray",
+        "Gray"
+      ],
+      "position": "list-menu",
+      "mapStyle": {
+        "width": "120px",
+        "height": "120px"
+      }
+    },
+    {
+      "type": "search",
+      "enabled": false
+    },
+    {
+      "type": "markup",
+      "enabled": false
+    }
+  ]
+}

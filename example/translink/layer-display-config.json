@@ -1,0 +1,100 @@
+{
+    "tools": [
+        {
+            "type": "layers",
+            "display": [
+                { 
+                    "type": "folder",
+                    "title": "Truck Routes",
+                    "isVisible": true,
+                    "isExpanded": true,
+                    "items": [                
+                        {
+                            "type": "group",
+                            "title": "Truck Routes",
+                            "items": [
+                                { "id": "truck-routes-high-zoom" },
+                                { "id": "truck-routes" }
+                            ]
+                        },
+                        {
+                            "type": "group",
+                            "title": "Designated Municipal Truck Route",
+                            "items": [
+                                { "id": "designated-municipal-truck-routes-with-restrictions-high-zoom" },
+                                { "id": "designated-municipal-truck-route-with-restrictions" }
+                            ]
+                        }
+                    ]
+                },
+                { 
+                    "type": "folder",
+                    "title": "Truck Advisories & Restrictions",
+                    "isVisible": true,
+                    "isExpanded": true,
+                    "items": [                
+                        {
+                            "type": "group",
+                            "title": "Restrictions & Warnings",
+                            "items": [
+                                { "id": "truck-advisories-restrictions-high-zoom" },
+                                { "id": "truck-advisories-restrictions" }
+                            ]
+                        },
+                        {
+                            "type": "group",
+                            "title": "Temporary Road Closures",
+                            "items": [
+                                { "id": "temporary-road-closure-extent" },
+                                { "id": "temporary-road-closure" }
+                            ]
+                        }
+                    ]
+                },
+                { 
+                    "type": "folder",
+                    "title": "Height Restrictions",
+                    "isVisible": true,
+                    "isExpanded": true,
+                    "items": [                
+                        { "id": "overhead-directional-signs" },
+                        { "id": "overhead-structure-without-height-marker" },
+                        { "id": "overhead-structure-with-height-marker" }
+                    ]
+                },
+                { 
+                    "type": "folder",
+                    "title": "Special Areas & POIs",
+                    "isVisible": true,
+                    "isExpanded": true,
+                    "items": [                
+
+                        { "id": "inspection-station" },
+                        { "id": "cardlock" },
+                        { "id": "truck-parking" },
+                        { "id": "port-of-vancouver-facilities-terminals" },
+                        { "id": "industrial-area" },
+                        { "id": "downtown-vancouver" },
+                        {
+                            "type": "group",
+                            "title": "Major Road Network",
+                            "items": [
+                                { "id": "major-road-network-high-zoom" },
+                                { "id": "major-road-network" }
+                            ]
+                        },
+                        {
+                            "type": "group",
+                            "title": "Provincial Highway",
+                            "items": [
+                                { "id": "provincial-highway-high-zoom" },
+                                { "id": "provincial-highway" }
+                            ]
+                        },
+                        { "id": "metro-vancouver-boundary" }
+                    ]
+                }
+            ]
+        }
+    ]
+}
