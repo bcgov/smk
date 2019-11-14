@@ -408,8 +408,12 @@ include.module( 'smk-map', [ 'jquery', 'util', 'theme-base', 'sidepanel' ], func
                 .removeClass( 'smk-hidden' )
                 .fadeIn( 1000 )
 
+            self.$viewer.setLayerDisplay( self.$layerItems )
+
             if ( self.viewer.activeTool in self.$tool )
                 self.$tool[ self.viewer.activeTool ].active = true
+
+            return self.$viewer.updateLayersVisible()
         }
     }
 

@@ -67,7 +67,13 @@ include.module( 'viewer-leaflet', [ 'viewer', 'leaflet', 'layer-leaflet', 'featu
                 if ( self.deadViewerLayer[ ly._smk_id ] ) {
                     self.map.removeLayer( ly )
                     delete self.visibleLayer[ ly._smk_id ]
-                    // console.log( 'remove', ly._smk_id )
+                    // var ids = []
+                    // self.map.eachLayer( function ( ly ) { 
+                    //     if ( ly._smk_id )
+                    //         ids.push( ly._smk_id ) 
+                    //     if ( ly.refresh ) ly.refresh()
+                    // } )
+                    // console.log( 'remove', ly._smk_id, self.map.hasLayer( ly ), ids )
                 }
             } )
 
@@ -189,6 +195,7 @@ include.module( 'viewer-leaflet', [ 'viewer', 'leaflet', 'layer-leaflet', 'featu
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
     ViewerLeaflet.prototype.addViewerLayer = function ( viewerLayer ) {
+        // console.log( 'add', viewerLayer._smk_id )
         this.map.addLayer( viewerLayer )
     }
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _

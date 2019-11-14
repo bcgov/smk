@@ -86,6 +86,8 @@ t.group( 'tool-identify' )
 t.group( 'tool-identify-feature' )
     .dir( 'smk/tool/identify-feature/*' )
 
+t.group( 'check-layers' )
+    .dir( 'smk/tool/layers/check/*' )
 t.group( 'tool-layers' )
     .dir( 'smk/tool/layers/*' )
 

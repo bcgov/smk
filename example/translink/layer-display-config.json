@@ -30,7 +30,7 @@
                 { 
                     "type": "folder",
                     "title": "Truck Advisories & Restrictions",
-                    "isVisible": true,
+                    "isVisible": false,
                     "isExpanded": true,
                     "items": [                
                         {
@@ -54,7 +54,7 @@
                 { 
                     "type": "folder",
                     "title": "Height Restrictions",
-                    "isVisible": true,
+                    "isVisible": false,
                     "isExpanded": true,
                     "items": [                
                         { "id": "overhead-directional-signs" },
@@ -65,7 +65,7 @@
                 { 
                     "type": "folder",
                     "title": "Special Areas & POIs",
-                    "isVisible": true,
+                    "isVisible": false,
                     "isExpanded": true,
                     "items": [                
 

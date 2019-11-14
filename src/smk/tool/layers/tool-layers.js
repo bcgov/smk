@@ -78,6 +78,10 @@ include.module( 'tool-layers', [ 'tool', 'widgets', 'tool-layers.panel-layers-ht
                 if ( !self.enabled ) return
 
                 self.active = !self.active
+                if ( !self.active ) return
+
+                if ( smk.$viewer.layerDisplayContext )
+                    self.items = smk.$viewer.layerDisplayContext.root.items
             },
 
             'config': function ( ev ) {
@@ -131,15 +135,6 @@ include.module( 'tool-layers', [ 'tool', 'widgets', 'tool-layers.panel-layers-ht
         smk.$viewer.finishedLoading( function ( ev ) {
             self.busy = false
         } )
-
-
-        if ( this.display )
-            smk.$viewer.setLayerDisplay( this.display )
-
-        if ( smk.$viewer.layerDisplayContext )
-            this.items = smk.$viewer.layerDisplayContext.root.items
-
-        return smk.$viewer.updateLayersVisible()
     } )
 
     return LayersTool

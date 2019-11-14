@@ -177,7 +177,7 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
         }
 
         if ( Array.isArray( smk.layers ) ) {
-            var ldl = smk.layers.map( function ( layerConfig, i ) {
+            var items = smk.layers.map( function ( layerConfig, i ) {
                 var ly = createLayer( layerConfig )
     
                 if ( layerConfig.queries )
@@ -213,7 +213,8 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
                 }
             } )
 
-            this.setLayerDisplay( ldl )
+            if ( !smk.$layerItems )
+                smk.$layerItems = items
         }
 
         this.pickedLocation( function ( ev ) {
@@ -270,11 +271,11 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
     }
 
     Viewer.prototype.initializeLayers = function ( smk ) {
-        var self = this;
+        // var self = this;
 
-        if ( !smk.layers || smk.layers.length == 0 ) return SMK.UTIL.resolved()
+        // if ( !smk.layers || smk.layers.length == 0 ) return SMK.UTIL.resolved()
 
-        return self.updateLayersVisible()
+        // return self.updateLayersVisible()
     }
 
     Viewer.prototype.setLayerDisplay = function ( layerItems ) {
@@ -408,6 +409,7 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
         return ( this.layerIdPromise[ id ] = SMK.UTIL.resolved()
             .then( function () {
                 // try {
+                // console.log( 'create', id, type, self.type)
                 return SMK.TYPE.Layer[ type ][ self.type ].create.call( self, layers, zIndex )
                 // }
                 // catch ( e ) {
@@ -423,6 +425,7 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
     Viewer.prototype.afterCreateViewerLayer = function ( id, type, layers, viewerLayer ) {
         viewerLayer._smk_type = type
         viewerLayer._smk_id = id
+        // console.log( 'afterCreateViewerLayer', id, type )
 
         return viewerLayer
     }
