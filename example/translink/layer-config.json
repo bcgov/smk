@@ -6,9 +6,6 @@
       "title": "Metro Vancouver Boundary",
       "isVisible": true,
       "serviceUrl": "https://services7.arcgis.com/WpS8F3vcmrEQUG8m/arcgis/rest/services/MetroVancouverBoundary_FL_DEV_1/FeatureServer/0",
-      "scaleMin": null,
-      "scaleMax": null,
-      "where": null,
       "drawingInfo": {
         "renderer": {
           "type": "simple",
@@ -32,9 +29,6 @@
       "title": "Industrial Area",
       "isVisible": true,
       "serviceUrl": "https://services7.arcgis.com/WpS8F3vcmrEQUG8m/arcgis/rest/services/Land_Use_2011_FL_DEV/FeatureServer/0",
-      "scaleMin": null,
-      "scaleMax": null,
-      "where": null,
       "drawingInfo": {
         "renderer": {
           "type": "simple",
@@ -63,9 +57,6 @@
       "title": "Downtown Vancouver",
       "isVisible": true,
       "serviceUrl": "https://services7.arcgis.com/WpS8F3vcmrEQUG8m/arcgis/rest/services/Vancouver_Downtown_FL_DEV/FeatureServer/0",
-      "scaleMin": null,
-      "scaleMax": null,
-      "where": null,
       "drawingInfo": {
         "renderer": {
           "type": "simple",
@@ -95,8 +86,6 @@
       "isVisible": false,
       "serviceUrl": "https://services7.arcgis.com/WpS8F3vcmrEQUG8m/arcgis/rest/services/MRN_FL_DEV/FeatureServer/0",
       "scaleMin": 31281,
-      "scaleMax": 0,
-      "where": null,
       "drawingInfo": {
         "renderer": {
           "type": "simple",
@@ -147,7 +136,6 @@
       "isVisible": false,
       "serviceUrl": "https://services7.arcgis.com/WpS8F3vcmrEQUG8m/arcgis/rest/services/TruckRoutes_Dissolved_Reduced_FL_DEV/FeatureServer/0",
       "scaleMin": 31281,
-      "scaleMax": 0,
       "where": "Type = 'Provincial Highway'",
       "drawingInfo": {
         "renderer": {
@@ -172,7 +160,6 @@
       "title": "Provincial Highway",
       "isVisible": false,
       "serviceUrl": "https://services7.arcgis.com/WpS8F3vcmrEQUG8m/arcgis/rest/services/TruckRoutes_Dissolved_Reduced_FL_DEV/FeatureServer/0",
-      "scaleMin": 0,
       "scaleMax": 23167,
       "where": "Type = 'Provincial Highway'",
       "drawingInfo": {
@@ -199,7 +186,6 @@
       "isVisible": true,
       "serviceUrl": "https://services7.arcgis.com/WpS8F3vcmrEQUG8m/arcgis/rest/services/TruckRoutes_Dissolved_Reduced_FL_DEV/FeatureServer/0",
       "scaleMin": 27437,
-      "scaleMax": 0,
       "where": "(Type <> 'Designated Municipal Truck Route with Restrictions') AND (AdviseType = 'Restriction' OR AdviseType = 'Truck Travel Warning')",
       "drawingInfo": {
         "renderer": {
@@ -246,7 +232,6 @@
       "title": "Truck Advisories & Restrictions",
       "isVisible": true,
       "serviceUrl": "https://services7.arcgis.com/WpS8F3vcmrEQUG8m/arcgis/rest/services/TruckRoutes_Dissolved_Reduced_FL_DEV/FeatureServer/0",
-      "scaleMin": 0,
       "scaleMax": 28505,
       "where": "(Type <> 'Designated Municipal Truck Route with Restrictions') AND (AdviseType = 'Restriction' OR AdviseType = 'Truck Travel Warning')",
       "drawingInfo": {
@@ -295,7 +280,6 @@
       "isVisible": true,
       "serviceUrl": "https://services7.arcgis.com/WpS8F3vcmrEQUG8m/arcgis/rest/services/TruckRoutes_Dissolved_Reduced_FL_DEV/FeatureServer/0",
       "scaleMin": 31281,
-      "scaleMax": 0,
       "where": "Type = 'Designated Municipal Truck Route with Restrictions'",
       "drawingInfo": {
         "renderer": {
@@ -320,7 +304,6 @@
       "title": "Designated Municipal Truck Route with Restrictions",
       "isVisible": true,
       "serviceUrl": "https://services7.arcgis.com/WpS8F3vcmrEQUG8m/arcgis/rest/services/TruckRoutes_Dissolved_Reduced_FL_DEV/FeatureServer/0",
-      "scaleMin": 0,
       "scaleMax": 33416,
       "where": "Type = 'Designated Municipal Truck Route with Restrictions'",
       "drawingInfo": {
@@ -347,7 +330,6 @@
       "isVisible": true,
       "serviceUrl": "https://services7.arcgis.com/WpS8F3vcmrEQUG8m/arcgis/rest/services/TruckRoutes_Dissolved_Reduced_FL_DEV/FeatureServer/0",
       "scaleMin": 28505,
-      "scaleMax": 0,
       "where": "AdviseType = 'N/A'",
       "drawingInfo": {
         "renderer": {
@@ -505,8 +487,6 @@
       "isVisible": true,
       "serviceUrl": "https://services7.arcgis.com/WpS8F3vcmrEQUG8m/arcgis/rest/services/MetroVancouver_TruckParking_FL_DEV/FeatureServer/0",
       "scaleMin": 189394,
-      "scaleMax": 0,
-      "where": null,
       "drawingInfo": {
         "renderer": {
           "type": "simple",
@@ -529,8 +509,6 @@
       "isVisible": true,
       "serviceUrl": "https://services7.arcgis.com/WpS8F3vcmrEQUG8m/arcgis/rest/services/PMV_Facilities_FL_DEV_1/FeatureServer/0",
       "scaleMin": 207900,
-      "scaleMax": 0,
-      "where": null,
       "drawingInfo": null
     },
     {
@@ -540,7 +518,6 @@
       "isVisible": false,
       "serviceUrl": "https://services7.arcgis.com/WpS8F3vcmrEQUG8m/arcgis/rest/services/TR_OH_Structures_FL_DEV_1/FeatureServer/0",
       "scaleMin": 207900,
-      "scaleMax": 0,
       "where": "(HeightSign <> 'Y') AND (StructType = 'Advertisement Sign' OR StructType = 'Overhead Sign/Signal' OR StructType = 'Scale Sign')",
       "drawingInfo": {
         "renderer": {
@@ -564,7 +541,6 @@
       "isVisible": false,
       "serviceUrl": "https://services7.arcgis.com/WpS8F3vcmrEQUG8m/arcgis/rest/services/TR_OH_Structures_FL_DEV_1/FeatureServer/0",
       "scaleMin": 198647,
-      "scaleMax": 0,
       "where": "(HeightSign <> 'Y') AND (StructType <> 'Advertisement Sign' AND StructType <> 'Overhead Sign/Signal' AND StructType <> 'Scale Sign')",
       "drawingInfo": {
         "renderer": {
@@ -588,7 +564,6 @@
       "isVisible": true,
       "serviceUrl": "https://services7.arcgis.com/WpS8F3vcmrEQUG8m/arcgis/rest/services/TR_OH_Structures_FL_DEV_1/FeatureServer/0",
       "scaleMin": 198647,
-      "scaleMax": 0,
       "where": "HeightSign = 'Y'",
       "drawingInfo": {
         "renderer": {
@@ -612,7 +587,6 @@
       "isVisible": true,
       "serviceUrl": "https://services7.arcgis.com/WpS8F3vcmrEQUG8m/arcgis/rest/services/MetroVancouver_Cardlocks_FL_DEV/FeatureServer/0",
       "scaleMin": 198647,
-      "scaleMax": 0,
       "where": null,
       "drawingInfo": {
         "renderer": {
@@ -636,7 +610,6 @@
       "isVisible": true,
       "serviceUrl": "https://services7.arcgis.com/WpS8F3vcmrEQUG8m/arcgis/rest/services/MetroVancouver_InspectionStations_FL_DEV/FeatureServer/0",
       "scaleMin": 178426,
-      "scaleMax": 0,
       "where": null,
       "drawingInfo": {
         "renderer": {
@@ -660,7 +633,6 @@
       "isVisible": true,
       "serviceUrl": "https://services7.arcgis.com/WpS8F3vcmrEQUG8m/arcgis/rest/services/Temporary_Road_Closure_Extent_FL_DEV/FeatureServer/0",
       "scaleMin": 258006,
-      "scaleMax": 0,
       "where": "Status = 'Active'",
       "drawingInfo": {
         "renderer": {
@@ -696,7 +668,6 @@
       "isVisible": true,
       "serviceUrl": "https://services7.arcgis.com/WpS8F3vcmrEQUG8m/arcgis/rest/services/Temporary_Road_Closures_FL_DEV/FeatureServer/0",
       "scaleMin": 152384,
-      "scaleMax": 0,
       "where": "Status = 'Active'",
       "drawingInfo": {
         "renderer": {

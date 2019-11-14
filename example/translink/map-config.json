@@ -14,8 +14,8 @@
             49.72867079292322
         ]
     },
-    "baseMap": "Topographic",
-    "minZoom": 4
+    "baseMap": "Gray",
+    "minZoom": 10
   },
   "tools": [
     {
@@ -91,6 +91,11 @@
     {
       "type": "markup",
       "enabled": false
+    },
+    {
+      "type": "directions",
+      "enabled": true,
+      "apiKey": "ndLv6oEJN4z5FwwhDyaNoF4NfnYWXwVJ"
     }
   ]
 }
