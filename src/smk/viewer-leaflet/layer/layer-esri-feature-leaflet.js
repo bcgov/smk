@@ -21,11 +21,11 @@ include.module( 'layer-leaflet.layer-esri-feature-leaflet-js', [ 'layer.layer-es
             url: layers[ 0 ].config.serviceUrl
         }
 
-        if ( layers[ 0 ].config.minScale )
-            cfg.minZoom = this.getZoomBracketForScale( layers[ 0 ].config.minScale )[ 1 ]
+        if ( layers[ 0 ].config.scaleMin )
+            cfg.minZoom = this.getZoomBracketForScale( layers[ 0 ].config.scaleMin )[ 1 ]
 
-        if ( layers[ 0 ].config.maxScale )
-            cfg.maxZoom = this.getZoomBracketForScale( layers[ 0 ].config.maxScale )[ 1 ]
+        if ( layers[ 0 ].config.scaleMax )
+            cfg.maxZoom = this.getZoomBracketForScale( layers[ 0 ].config.scaleMax )[ 1 ]
 
         if ( layers[ 0 ].config.where )
             cfg.where = layers[ 0 ].config.where

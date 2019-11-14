@@ -20,6 +20,11 @@ include.module( 'layer-display', [ 'jquery', 'util', 'event' ], function () {
     }
 
     SMK.TYPE.LayerDisplay = LayerDisplay
+
+    LayerDisplay.prototype.getVisible = function ( viewScale ) {
+        return this.isVisible
+    }
+
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
     LayerDisplay.layer = function ( option, layerCatalog, forceVisible ) {
@@ -46,6 +51,11 @@ include.module( 'layer-display', [ 'jquery', 'util', 'event' ], function () {
 
             if ( !( 'isVisible' in option ) )
                 option.isVisible = ly.config.isVisible 
+
+            option.scale = { 
+                min: ly.config.scaleMin, 
+                max: ly.config.scaleMax 
+            }
         }
 
         LayerDisplay.prototype.constructor.call( this, option, forceVisible )
@@ -66,7 +76,17 @@ include.module( 'layer-display', [ 'jquery', 'util', 'event' ], function () {
         return layerCatalog[ this.id ].getLegends( viewer )
     }
 
-    // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+    LayerDisplay.layer.prototype.getVisible = function ( viewScale ) {
+        if ( !viewScale || !this.isVisible ) return this.isVisible
+        if ( !this.isEnabled ) return false
+
+        // console.log( this.id, this.scale.min, viewScale, this.scale.max )
+        if ( this.scale.min && this.scale.min < viewScale ) return false
+        if ( this.scale.max && this.scale.max > viewScale ) return false
+        return true
+    }
+
+     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
     LayerDisplay.folder = function ( option, layerCatalog, forceVisible ) {
         LayerDisplay.prototype.constructor.call( this, Object.assign( { isExpanded: false }, option ), forceVisible )
@@ -224,10 +244,12 @@ include.module( 'layer-display', [ 'jquery', 'util', 'event' ], function () {
     }
 
     LayerDisplayContext.prototype.isItemVisible = function ( id ) {
+        var scale = this.view && this.view.scale
+
         if ( !( id in this.itemId ) ) return false
 
         return this.itemId[ id ].reduce( function ( accum, ld ) {
-            return accum && ld.isVisible && ( ld.type == 'layer' ? ld.isEnabled : true )
+            return accum && ld.getVisible( scale ) 
         }, true )
     }
 
@@ -298,5 +320,10 @@ include.module( 'layer-display', [ 'jquery', 'util', 'event' ], function () {
 
             if ( item.type == 'group' ) return false 
         } )
+    }
+
+    LayerDisplayContext.prototype.setView = function ( view ) {
+        this.view = view
+        this.changedVisibility()        
     }
 } )

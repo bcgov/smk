@@ -278,7 +278,7 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
         // return self.updateLayersVisible()
     }
 
-    Viewer.prototype.setLayerDisplay = function ( layerItems ) {
+    Viewer.prototype.setLayerDisplayItems = function ( layerItems ) {
         var self = this
         
         this.layerDisplayContext = new SMK.TYPE.LayerDisplayContext( layerItems, this.layerId )
@@ -286,6 +286,18 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
         this.layerDisplayContext.changedVisibility( function () {
             self.changedLayerVisibility()
         } ) 
+
+        this.changedView( function () {
+            self.layerDisplayContext.setView( self.getView() )
+        } )
+    }
+
+    Viewer.prototype.getLayerDisplayItems = function () {
+        if ( !this.layerDisplayContext ) return []
+
+        this.layerDisplayContext.setView( this.getView() )        
+
+        return this.layerDisplayContext.root.items
     }
 
     Viewer.prototype.handlePick = function ( priority, handler ) {

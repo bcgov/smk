@@ -80,8 +80,7 @@ include.module( 'tool-layers', [ 'tool', 'widgets', 'tool-layers.panel-layers-ht
                 self.active = !self.active
                 if ( !self.active ) return
 
-                if ( smk.$viewer.layerDisplayContext )
-                    self.items = smk.$viewer.layerDisplayContext.root.items
+                self.items = smk.$viewer.getLayerDisplayItems()
             },
 
             'config': function ( ev ) {
