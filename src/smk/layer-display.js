@@ -3,10 +3,10 @@ include.module( 'layer-display', [ 'jquery', 'util', 'event' ], function () {
 
     function LayerDisplay( option, forceVisible ) {
         Object.assign( this, {
-            id:         null,
+            id:         SMK.UTIL.makeId( option.type, option.title ),
             type:       null,
             // opacity:    1,
-            title:      null,
+            title:      option.id,
             isVisible:  true,
             isActuallyVisible: null,
             isEnabled:  true,
@@ -69,15 +69,7 @@ include.module( 'layer-display', [ 'jquery', 'util', 'event' ], function () {
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
     LayerDisplay.folder = function ( option, layerCatalog, forceVisible ) {
-        if ( !option.id )
-            option.id = SMK.UTIL.makeId( option.type, option.title ) 
-
-        if ( !option.title )
-            option.title = option.id
-
-        LayerDisplay.prototype.constructor.call( this, option, forceVisible )
-
-        forceVisible = forceVisible || this.type == 'group'
+        LayerDisplay.prototype.constructor.call( this, Object.assign( { isExpanded: false }, option ), forceVisible )
 
         this.items = option.items.map( function ( item ) {
             return createLayerDisplay( item, layerCatalog, forceVisible )
@@ -107,7 +99,11 @@ include.module( 'layer-display', [ 'jquery', 'util', 'event' ], function () {
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
     LayerDisplay.group = function ( option, layerCatalog, forceVisible ) {
-        LayerDisplay.folder.prototype.constructor.call( this, option, layerCatalog, forceVisible )
+        LayerDisplay.prototype.constructor.call( this, Object.assign( option, { isExpanded: null } ), forceVisible )
+
+        this.items = option.items.map( function ( item ) {
+            return createLayerDisplay( item, layerCatalog, true )
+        } )
     }
 
     $.extend( LayerDisplay.group.prototype, LayerDisplay.folder.prototype )
