@@ -12,11 +12,11 @@ include.module( 'widgets', [ 'vue', 'widgets.tool-button-html', 'widgets.toggle-
     Vue.component( 'toggle-button', {
         template: inc[ 'widgets.toggle-button-html' ],
         props: { 
-            value: { type: Boolean, default: false },
-            iconOff: { type: String, default: 'toggle_off' },
-            iconOn: { type: String, default: 'toggle_on' },
-            titleOff: { type: String, default: 'Off. Click to turn on' },
-            titleOn: { type: String, default: 'On. Click to turn off' },
+            value:      { type: Boolean, default: false },
+            iconOff:    { type: String, default: 'toggle_off' },
+            iconOn:     { type: String, default: 'toggle_on' },
+            titleOff:   { type: String, default: 'Off. Click to turn on' },
+            titleOn:    { type: String, default: 'On. Click to turn off' },
         },
         model: {
             prop: 'value',
@@ -24,8 +24,7 @@ include.module( 'widgets', [ 'vue', 'widgets.tool-button-html', 'widgets.toggle-
         },
         methods: {
             clickToggle: function () {
-                this.value = !this.value
-                this.$emit( 'change', this.value )
+                this.$emit( 'change', !this.value )
             }
         }
     } )
