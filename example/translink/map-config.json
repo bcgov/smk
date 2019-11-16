@@ -94,8 +94,7 @@
     },
     {
       "type": "directions",
-      "enabled": true,
-      "apiKey": "ndLv6oEJN4z5FwwhDyaNoF4NfnYWXwVJ"
+      "enabled": true
     }
   ]
 }
