@@ -52,7 +52,11 @@
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-.smk-select-buttons {
+.smk-select-option {
+    padding: 3px;
+}
+
+.smk-options {
     border: 1px solid black;
     border-radius: 8px;
     padding: 1px;
@@ -60,12 +64,12 @@
     justify-content: space-around;
 }
 
-.smk-select-buttons .smk-command {
+.smk-options .smk-command {
     flex-grow: 1;
     text-align: center;
 }
 
-.smk-select-buttons .smk-selected-button {
+.smk-options .smk-selected-option {
     color: white;
     font-weight: bold;
     background-color: black;

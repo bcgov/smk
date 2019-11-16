@@ -1,4 +1,4 @@
-include.module( 'widgets', [ 'vue', 'widgets.tool-button-html', 'widgets.toggle-button-html', 'widgets.select-buttons-html' ], function ( inc ) {
+include.module( 'widgets', [ 'vue', 'widgets.tool-button-html', 'widgets.toggle-button-html', 'widgets.select-option-html' ], function ( inc ) {
     "use strict";
 
     var emit = {
@@ -29,8 +29,8 @@ include.module( 'widgets', [ 'vue', 'widgets.tool-button-html', 'widgets.toggle-
         }
     } )
 
-    Vue.component( 'select-buttons', {
-        template: inc[ 'widgets.select-buttons-html' ],
+    Vue.component( 'select-option', {
+        template: inc[ 'widgets.select-option-html' ],
         props: { 
             options: { type: Array, default: [] },
             value:   {},

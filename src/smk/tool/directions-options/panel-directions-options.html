@@ -10,7 +10,7 @@
     <template slot="commands">
     </template>
 
-    <select-buttons class="smk-directions-truck"
+    <select-option class="smk-directions-truck"
         xxv-if="command.truck !== false"
         v-bind:value="truck"
         v-on:change="!busy && $$emit( 'change', { truck: $event } )"
@@ -18,9 +18,9 @@
             { value: false, label: 'Car' },
             { value: true, label: 'Truck' }
         ]"
-    >Type of vehicle</select-buttons>
+    >Type of vehicle</select-option>
 
-    <select-buttons class="smk-directions-optimal"
+    <select-option class="smk-directions-optimal"
         xxv-if="command.criteria !== false"
         v-bind:value="optimal"
         v-on:change="!busy && $$emit( 'change', { optimal: $event } )"
@@ -28,9 +28,9 @@
             { value: false, label: 'No, leave as is' },
             { value: true, label: 'Yes, optimize route' }
         ]"
-    >Should route be optimized?</select-buttons>
+    >Should route be optimized?</select-option>
 
-    <select-buttons class="smk-directions-round-trip"
+    <select-option class="smk-directions-round-trip"
         xxv-if="command.criteria !== false"
         v-bind:value="roundTrip"
         v-on:change="!busy && $$emit( 'change', { roundTrip: $event } )"
@@ -38,9 +38,9 @@
             { value: false, label: 'No, one-way' },
             { value: true, label: 'Yes, a round-trip' }
         ]"
-    >Is this route a round-trip?</select-buttons>
+    >Is this route a round-trip?</select-option>
 
-    <select-buttons class="smk-directions-criteria"
+    <select-option class="smk-directions-criteria"
         xxv-if="command.criteria !== false"
         v-bind:value="criteria"
         v-on:change="!busy && $$emit( 'change', { criteria: $event } )"
@@ -48,6 +48,6 @@
             { value: 'shortest', label: 'Shortest route' },
             { value: 'fastest', label: 'Fastest route' }
         ]"
-    >Which is more important?</select-buttons>
+    >Which is more important?</select-option>
 
 </side-panel>
