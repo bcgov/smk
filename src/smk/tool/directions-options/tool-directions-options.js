@@ -4,11 +4,12 @@ include.module( 'tool-directions-options', [ 'tool', 'widgets', 'sidepanel', 'to
     Vue.component( 'directions-options-panel', {
         extends: inc.widgets.toolPanel,
         template: inc[ 'tool-directions-options.panel-directions-options-html' ],
-        props: [ 'optimal', 'roundTrip', 'criteria' ],
+        props: [ 'truck', 'optimal', 'roundTrip', 'criteria' ],
     } )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
     function DirectionsOptionsTool( option ) {
+        this.makePropPanel( 'truck', false )
         this.makePropPanel( 'optimal', false )
         this.makePropPanel( 'roundTrip', false )
         this.makePropPanel( 'criteria', 'shortest' )
