@@ -1,71 +1,82 @@
-include.module( 'tool-directions', [ 'tool', 'widgets', 'sidepanel', 'tool-directions.panel-directions-html', 'tool-directions.address-search-html' ], function ( inc ) {
+include.module( 'tool-directions', [ 
+    'tool', 
+    'widgets', 
+    'sidepanel', 
+    'tool-directions.panel-directions-html', 
+    'tool-directions.address-search-html', 
+    'tool-directions.router-api-js', 
+    'tool-directions-route', 
+    'tool-directions-options'  
+], function ( inc ) {
     "use strict";
 
-    var request
+    var routerApi = inc[ 'tool-directions.router-api-js' ]
+    // var request
 
-    function interpolate( p1, p2, t ) {
-        return [
-            p1[ 0 ] + ( p2[ 0 ] - p1[ 0 ] ) * t,
-            p1[ 1 ] + ( p2[ 1 ] - p1[ 1 ] ) * t
-        ]
-    }
+    // function interpolate( p1, p2, t ) {
+    //     return [
+    //         p1[ 0 ] + ( p2[ 0 ] - p1[ 0 ] ) * t,
+    //         p1[ 1 ] + ( p2[ 1 ] - p1[ 1 ] ) * t
+    //     ]
+    // }
 
-    function findRoute( points, option, apiKey ) {
-        if ( request )
-            request.abort()
+    // function findRoute( points, option, apiKey ) {
+    //     if ( request )
+    //         request.abort()
 
-        var query = {
-            points:     points.map( function ( w ) { return w.longitude + ',' + w.latitude } ).join( ',' ),
-            outputSRS:  4326,
-            criteria:   option.criteria,
-            roundTrip:  option.roundTrip
-        }
+    //     var query = {
+    //         points:     points.map( function ( w ) { return w.longitude + ',' + w.latitude } ).join( ',' ),
+    //         outputSRS:  4326,
+    //         criteria:   option.criteria,
+    //         roundTrip:  option.roundTrip
+    //     }
 
-        return SMK.UTIL.makePromise( function ( res, rej ) {
-            ( request = $.ajax( {
-                timeout:    10 * 1000,
-                dataType:   'json',
-                url:        'https://routerdlv.api.gov.bc.ca/' + ( option.optimal ? 'optimalDirections' : 'directions' ) + '.json',
-                data:       query,
-                headers: {
-                    apikey: apiKey
-                }
-            } ) ).then( res, rej )
-        } )
-        .then( function ( data ) {
-            if ( !data.routeFound ) throw new Error( 'failed to find route' )
+    //     return SMK.UTIL.makePromise( function ( res, rej ) {
+    //         ( request = $.ajax( {
+    //             timeout:    10 * 1000,
+    //             dataType:   'json',
+    //             // url:        'https://routerdlv.api.gov.bc.ca/' + ( option.optimal ? 'optimalDirections' : 'directions' ) + '.json',
+    //             url:        'https://router.api.gov.bc.ca/' + ( option.optimal ? 'optimalDirections' : 'directions' ) + '.json',
+    //             data:       query,
+    //             headers: {
+    //                 apikey: apiKey
+    //             }
+    //         } ) ).then( res, rej )
+    //     } )
+    //     .then( function ( data ) {
+    //         if ( !data.routeFound ) throw new Error( 'failed to find route' )
 
-            return data
-        } )
-        // uncomment to inject dummy results
-        // .catch( function () {
-        //     return {
-        //         distance: '10',
-        //         timeText: '10 mins',
-        //         route: points.map( function ( p ) { return [ p.longitude, p.latitude ] } ),
-        //         directions: points
-        //             .map( function ( p ) {
-        //                 return { text: 'waypoint: ' + p.longitude + ', ' + p.latitude, point: [ p.longitude, p.latitude ] }
-        //             } )
-        //             .reduce( function ( accum, v ) {
-        //                 if ( accum.length == 0 ) {
-        //                     accum.push( v )
-        //                     return accum
-        //                 }
+    //         return data
+    //     } )
+    //     // uncomment to inject dummy results
+    //     .catch( function () {
+    //         return {
+    //             distance: '10',
+    //             timeText: '10 mins',
+    //             route: points.map( function ( p ) { return [ p.longitude, p.latitude ] } ),
+    //             directions: points
+    //                 .map( function ( p ) {
+    //                     return { text: 'waypoint: ' + p.longitude + ', ' + p.latitude, point: [ p.longitude, p.latitude ] }
+    //                 } )
+    //                 .reduce( function ( accum, v ) {
+    //                     if ( accum.length == 0 ) {
+    //                         accum.push( v )
+    //                         return accum
+    //                     }
 
-        //                 var prev = accum[ accum.length - 1 ]
+    //                     var prev = accum[ accum.length - 1 ]
 
-        //                 accum.push( { text: 'turn left for 1km (1:00)', point: interpolate( prev.point, v.point, 0.2 ) } )
-        //                 accum.push( { text: 'go straight for 2km (2:00)', point: interpolate( prev.point, v.point, 0.4 ) } )
-        //                 accum.push( { text: 'turn right for 3km (3:00)', point: interpolate( prev.point, v.point, 0.6 ) } )
-        //                 accum.push( { text: 'go backwards for 4km (4:00)', point: interpolate( prev.point, v.point, 0.8 ) } )
-        //                 accum.push( v )
+    //                     accum.push( { text: 'turn left for 1km (1:00)', point: interpolate( prev.point, v.point, 0.2 ) } )
+    //                     accum.push( { text: 'go straight for 2km (2:00)', point: interpolate( prev.point, v.point, 0.4 ) } )
+    //                     accum.push( { text: 'turn right for 3km (3:00)', point: interpolate( prev.point, v.point, 0.6 ) } )
+    //                     accum.push( { text: 'go backwards for 4km (4:00)', point: interpolate( prev.point, v.point, 0.8 ) } )
+    //                     accum.push( v )
 
-        //                 return accum 
-        //             }, [] )
-        //     }
-        // } )
-    }
+    //                     return accum 
+    //                 }, [] )
+    //         }
+    //     } )
+    // }
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
     Vue.component( 'address-search', {
@@ -241,6 +252,9 @@ include.module( 'tool-directions', [ 'tool', 'widgets', 'sidepanel', 'tool-direc
     DirectionsTool.prototype.afterInitialize.push( function ( smk ) {
         var self = this
 
+        this.routePanel = smk.$tool[ 'directions-route' ]
+        this.routeOptions = smk.$tool[ 'directions-options' ]
+
         this.changedActive( function () {
             if ( self.active ) {
                 if ( self.waypoints.length == 0 ) {
@@ -336,7 +350,13 @@ include.module( 'tool-directions', [ 'tool', 'widgets', 'sidepanel', 'tool-direc
             },
 
             'route': function ( ev ) {
-                smk.$tool[ 'directions-route' ].active = true 
+                self.routePanel.active = true
+                // smk.$tool[ 'directions-route' ].active = true 
+            },
+
+            'options': function ( ev ) {
+                self.routeOptions.active = true
+                // smk.$tool[ 'directions-options' ].active = true 
             }
         } )
 
@@ -402,8 +422,16 @@ include.module( 'tool-directions', [ 'tool', 'widgets', 'sidepanel', 'tool-direc
         this.setMessage( 'Calculating...', 'progress' )
         this.busy = true
         this.hasRoute = false
+      
+        // return SMK.UTIL.promiseFinally( findRoute( points, this.config, this.apiKey ).then( function ( data ) {
+        var opt = {
+            criteria:           this.routeOptions.criteria,
+            roundTrip:          this.routeOptions.roundTrip,
+            optimal:            this.routeOptions.optimal,
+            // truck:              this.routeOptions.criteria,  
+        }
 
-        return SMK.UTIL.promiseFinally( findRoute( points, this.config, this.apiKey ).then( function ( data ) {
+        return SMK.UTIL.promiseFinally( routerApi.fetchDirections( points, opt ).then( function ( data ) {
             self.displayRoute( data.route )
 
             if ( data.visitOrder && data.visitOrder.findIndex( function ( v, i ) { return points[ v ].index != i } ) != -1 ) {
@@ -420,26 +448,28 @@ include.module( 'tool-directions', [ 'tool', 'widgets', 'sidepanel', 'tool-direc
 
             self.setMessage( 'Route travels ' + data.distance + ' km in ' + data.timeText, 'summary' )
 
-            var l = data.directions.length
-            self.directions = data.directions.map( function ( dir, i ) {
-                dir.instruction = dir.text.replace( /^"|"$/g, '' ).replace( /\sfor\s(\d+.?\d*\sk?m)\s[(](\d+).+?((\d+).+)?$/, function ( m, a, b, c, d ) {
-                    dir.distance = a
-                    if ( d )
-                        dir.time = ( '0' + b ).substr( -2 ) + ':' + ( '0' + d ).substr( -2 )
-                    else
-                        dir.time = '00:' + ( '0' + b ).substr( -2 )
+            // var l = data.directions.length
+            // self.directions = data.directions.map( function ( dir, i ) {
+            //     dir.instruction = dir.text.replace( /^"|"$/g, '' ).replace( /\sfor\s(\d+.?\d*\sk?m)\s[(](\d+).+?((\d+).+)?$/, function ( m, a, b, c, d ) {
+            //         dir.distance = a
+            //         if ( d )
+            //             dir.time = ( '0' + b ).substr( -2 ) + ':' + ( '0' + d ).substr( -2 )
+            //         else
+            //             dir.time = '00:' + ( '0' + b ).substr( -2 )
 
-                    return ''
-                } )
-                return dir
-            } )
+            //         return ''
+            //     } )
+            //     return dir
+            // } )
 
             self.hasRoute = true
 
-            self.directions.unshift( {
-                instruction: 'Start!',
-                point: [ points[ 0 ].longitude, points[ 0 ].latitude ]
-            } )
+            // self.directions.unshift( {
+            //     instruction: 'Start!',
+            //     point: [ points[ 0 ].longitude, points[ 0 ].latitude ]
+            // } )
+
+            self.directions = data.directions
         } )
         .catch( function ( err ) {
             console.warn( err )

@@ -1,4 +1,4 @@
-include.module( 'widgets', [ 'vue', 'widgets.tool-button-html', 'widgets.toggle-button-html' ], function ( inc ) {
+include.module( 'widgets', [ 'vue', 'widgets.tool-button-html', 'widgets.toggle-button-html', 'widgets.select-buttons-html' ], function ( inc ) {
     "use strict";
 
     var emit = {
@@ -25,6 +25,23 @@ include.module( 'widgets', [ 'vue', 'widgets.tool-button-html', 'widgets.toggle-
         methods: {
             clickToggle: function () {
                 this.$emit( 'change', !this.value )
+            }
+        }
+    } )
+
+    Vue.component( 'select-buttons', {
+        template: inc[ 'widgets.select-buttons-html' ],
+        props: { 
+            options: { type: Array, default: [] },
+            value:   {},
+        },
+        model: {
+            prop: 'value',
+            event: 'change'
+        },
+        methods: {
+            clickOption: function ( option, index ) {
+                this.$emit( 'change', option.value )
             }
         }
     } )

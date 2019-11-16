@@ -1,0 +1,114 @@
+.smk-directions-panel .smk-command-col {
+    display: inline-block;
+}
+
+.smk-directions-panel .smk-command-col label {
+    display: block;
+    padding: 0;
+}
+
+.smk-sidepanel .smk-panel.smk-directions-panel .smk-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    align-content: stretch;
+    height: 100%;
+    overflow-y: hidden;
+}
+
+.smk-directions-panel .smk-waypoints {
+    overflow-y: auto;
+}
+
+.smk-directions-panel .smk-waypoint {
+    display: flex;
+    align-items: center;
+}
+
+.smk-directions-panel .smk-description {
+    align-self: center;
+    flex-basis: 100%;
+    margin: 2px 0;
+    background-color: transparent;
+    margin-right: 5px;
+    font: 400 11px system-ui;
+}
+
+.smk-directions-panel .smk-description input {
+    height: calc( 100% - 2px );
+    border-radius: 2px;
+}
+
+.smk-directions-panel .smk-waypoint .smk-command {
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+    margin-top: 1px;
+    color: black;
+}
+
+.smk-directions-panel .smk-waypoint .smk-command.smk-disabled {
+    opacity: 0.4;
+    cursor: default;
+}
+
+.smk-directions-panel .smk-waypoint .smk-zoomto.smk-first {
+    color: green;
+}
+
+.smk-directions-panel .smk-waypoint .smk-zoomto.smk-middle {
+    color: blue;
+}
+
+.smk-directions-panel .smk-waypoint .smk-zoomto.smk-last {
+    color: red;
+}
+
+.smk-directions-panel .smk-address-search {
+    margin: 3px;
+    width: calc( 100% - 6px );
+}
+
+.smk-direction {
+    display: flex;
+    flex-direction: row;
+    justify-content: top;
+    align-items: stretch;
+    align-content: stretch;
+    border: 1px solid transparent;
+}
+
+.smk-direction .smk-instruction {
+    vertical-align: top;
+    font-size: 11px;
+    font-weight: bold;
+    font-size: 13px;
+    flex-basis: 66%;
+}
+
+.smk-direction .smk-metric {
+    vertical-align: top;
+    text-align: right;
+    white-space: nowrap;
+    font-size: 11px;
+    flex: 1 0 33%;
+    align-self: flex-end;
+}
+
+.smk-direction.smk-highlight {
+    background-color: lightblue;
+}
+
+.smk-direction.smk-pick {
+    border: 1px solid blue;
+    border-radius: 3px;
+}
+
+pre.smk-popup {
+    font-family: sans-serif;
+}
+
+.smk-directions-panel .smk-directions {
+    overflow-y: auto;
+}

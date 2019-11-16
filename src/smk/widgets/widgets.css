@@ -30,6 +30,8 @@
     margin-left: 5px;
 }
 
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
 .smk-toggle-button label.smk-command {
     display: flex;
     align-items: center;
@@ -46,4 +48,25 @@
 
 .smk-toggle-button.smk-toggle-on .smk-toggle {
     color: lightgreen
+}
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+.smk-select-buttons {
+    border: 1px solid black;
+    border-radius: 8px;
+    padding: 1px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.smk-select-buttons .smk-command {
+    flex-grow: 1;
+    text-align: center;
+}
+
+.smk-select-buttons .smk-selected-button {
+    color: white;
+    font-weight: bold;
+    background-color: black;
 }

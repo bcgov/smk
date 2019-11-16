@@ -5,7 +5,15 @@ include.module( 'check-directions', [], function ( inc ) {
         smk.tools.push( {
             type: 'directions-route',
             enabled: true,
-            position: tool.position
+            position: tool.position,
+            parentId: tool.id
+        } )
+
+        smk.tools.push( {
+            type: 'directions-options',
+            enabled: true,
+            position: tool.position,
+            parentId: tool.id
         } )
     }
     

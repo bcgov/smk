@@ -1,0 +1,53 @@
+<side-panel class="smk-directions-options-panel" 
+    v-bind:busy="busy"
+    v-bind:message="busy ? 'Calculating' : message"
+    v-bind:status="busy ? 'progress' : status"
+>
+    <template slot="header">
+        <slot></slot>
+    </template>
+
+    <template slot="commands">
+    </template>
+
+    <select-buttons class="smk-directions-truck"
+        xxv-if="command.truck !== false"
+        v-bind:value="truck"
+        v-on:change="!busy && $$emit( 'change', { truck: $event } )"
+        v-bind:options="[
+            { value: false, label: 'Car' },
+            { value: true, label: 'Truck' }
+        ]"
+    >Type of vehicle</select-buttons>
+
+    <select-buttons class="smk-directions-optimal"
+        xxv-if="command.criteria !== false"
+        v-bind:value="optimal"
+        v-on:change="!busy && $$emit( 'change', { optimal: $event } )"
+        v-bind:options="[
+            { value: false, label: 'No, leave as is' },
+            { value: true, label: 'Yes, optimize route' }
+        ]"
+    >Should route be optimized?</select-buttons>
+
+    <select-buttons class="smk-directions-round-trip"
+        xxv-if="command.criteria !== false"
+        v-bind:value="roundTrip"
+        v-on:change="!busy && $$emit( 'change', { roundTrip: $event } )"
+        v-bind:options="[
+            { value: false, label: 'No, one-way' },
+            { value: true, label: 'Yes, a round-trip' }
+        ]"
+    >Is this route a round-trip?</select-buttons>
+
+    <select-buttons class="smk-directions-criteria"
+        xxv-if="command.criteria !== false"
+        v-bind:value="criteria"
+        v-on:change="!busy && $$emit( 'change', { criteria: $event } )"
+        v-bind:options="[
+            { value: 'shortest', label: 'Shortest route' },
+            { value: 'fastest', label: 'Fastest route' }
+        ]"
+    >Which is more important?</select-buttons>
+
+</side-panel>

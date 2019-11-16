@@ -75,6 +75,8 @@ t.group( 'tool-directions' )
     .dir( 'smk/tool/directions/*' )
 t.group( 'tool-directions-route' )
     .dir( 'smk/tool/directions-route/*' )
+t.group( 'tool-directions-options' )
+    .dir( 'smk/tool/directions-options/*' )
 
 t.group( 'tool-dropdown' )
     .dir( 'smk/tool/dropdown/*' )

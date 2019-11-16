@@ -3,6 +3,10 @@
     v-bind:message="busy ? 'Calculating' : message"
     v-bind:status="busy ? 'progress' : status"
 >
+    <template slot="header">
+        <slot></slot>
+    </template>
+
     <template slot="commands">
         <div class="smk-command-row">
             <div class="smk-item" style="flex-grow: 1">
@@ -31,15 +35,20 @@
 
             <div class="smk-command-spacer"></div>
 
-            <label class="smk-command"
+            <div class="smk-command"
+                v-bind:class="{ 'smk-disabled': busy }"
+                v-on:click="!busy && $$emit( 'options' )"
+            >Options</div>
+
+            <!-- <label class="smk-command"
                 v-bind:class="{ 'smk-disabled': busy }"
             ><input type="checkbox"
                 v-model="options"
                 v-on:change="!busy && $$emit( 'config', getConfigState() )"
-            >Options</label>
+            >Options</label> -->
         </div>
 
-        <div class="smk-command-row" v-if="options">
+        <!-- <div class="smk-command-row" v-if="options">
             <label class="smk-command"
                 v-bind:class="{ 'smk-disabled': busy }"
             ><input type="checkbox"
@@ -69,7 +78,7 @@
                 v-model="criteria"
                 v-on:change="!busy && $$emit( 'config', getConfigState() )"
             >Fastest</label>
-        </div>
+        </div> -->
     </template>
 
     <draggable class="smk-waypoints"
