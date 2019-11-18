@@ -116,7 +116,7 @@ include.module( 'tool-directions', [
                     $.ajax( {
                         timeout:    10 * 1000,
                         dataType:   'jsonp',
-                        url:        'https://apps.gov.bc.ca/pub/geocoder/addresses.geojsonp',
+                        url:        'https://apps.gov.bc.ca/pub/geocoder/addresses.geojsonp', 
                         data:       query,
                     } ).then( res, rej )
                 } )
@@ -360,6 +360,7 @@ include.module( 'tool-directions', [
             }
         } )
 
+        routerApi.setApiKey( this.apiKey )
     } )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
