@@ -75,7 +75,7 @@ include.module( 'tool-directions.router-api-js', [], function ( inc ) {
 
             if ( data.directions ) {
                 data.directions = data.directions.map( function ( dir, i ) {
-                    dir.instruction = dir.text.replace( /^"|"$/g, '' ).replace( /\sfor\s(\d+.?\d*\sk?m)\s[(](\d+).+?((\d+).+)?$/, function ( m, a, b, c, d ) {
+                    dir.instruction = dir.text.replace( /^"|"$/g, '' ).replace( /\s(?:for|and travel)\s((?:\d+.?\d*\s)?k?m)\s[(](\d+).+?((\d+).+)?$/, function ( m, a, b, c, d ) {
                         dir.distance = a
 
                         if ( d )
@@ -87,11 +87,6 @@ include.module( 'tool-directions.router-api-js', [], function ( inc ) {
                     } )
 
                     return dir
-                } )
-
-                data.directions.unshift( {
-                    instruction: 'Start!',
-                    point: [ points[ 0 ].longitude, points[ 0 ].latitude ]
                 } )
             }
 

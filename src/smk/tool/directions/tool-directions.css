@@ -73,9 +73,8 @@
 .smk-direction {
     display: flex;
     flex-direction: row;
-    justify-content: top;
-    align-items: stretch;
-    align-content: stretch;
+    justify-content: start;
+    align-items: center;
     border: 1px solid transparent;
 }
 
@@ -88,12 +87,10 @@
 }
 
 .smk-direction .smk-metric {
-    vertical-align: top;
     text-align: right;
     white-space: nowrap;
     font-size: 11px;
     flex: 1 0 33%;
-    align-self: flex-end;
 }
 
 .smk-direction.smk-highlight {
@@ -111,4 +108,8 @@ pre.smk-popup {
 
 .smk-directions-panel .smk-directions {
     overflow-y: auto;
+}
+
+.smk-directions-panel .smk-reverse {
+    transform: scaleX(-1);
 }

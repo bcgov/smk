@@ -99,7 +99,8 @@ include.module( 'tool-directions-leaflet', [ 'leaflet', 'tool-directions' ], fun
                 geometry: {
                     type: "LineString",
                     coordinates: points
-                }
+                },
+                pane: 'markerPane'
             }, {
                 onEachFeature: function( feature, layer ) {
                     var color = "#0000FF";

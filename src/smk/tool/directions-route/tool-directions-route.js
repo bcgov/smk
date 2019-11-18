@@ -1,10 +1,33 @@
 include.module( 'tool-directions-route', [ 'tool', 'widgets', 'tool-directions-route.panel-route-html' ], function ( inc ) {
     "use strict";
 
+    var instructionType = {
+        START:              [ 'play_arrow' ],
+        CONTINUE:           [ 'arrow_upward' ],
+        TURN_LEFT:          [ 'arrow_back' ],
+        TURN_SLIGHT_LEFT:   [ 'undo' ],
+        TURN_SHARP_LEFT:    [ 'directions', true ],
+        TURN_RIGHT:         [ 'arrow_forward' ],
+        TURN_SLIGHT_RIGHT:  [ 'undo', true ],
+        TURN_SHARP_RIGHT:   [ 'directions' ],
+        FERRY:              [ 'directions_boat' ],
+        FINISH:             [ 'stop' ],
+    }
+
     Vue.component( 'route-panel', {
         extends: inc.widgets.toolPanel,
         template: inc[ 'tool-directions-route.panel-route-html' ],
         props: [ 'busy', 'directions', 'directionHighlight', 'directionPick', 'statusMessage' ],
+        methods: {
+            instructionTypeIcon: function ( type ) {                
+                if ( !instructionType[ type ] ) return type
+                return instructionType[ type ][ 0 ]
+            },
+            instructionTypeClass: function ( type ) {
+                if ( !instructionType[ type ] ) return ''
+                return instructionType[ type ][ 1 ] ? 'smk-reverse' : ''
+            }                
+        }
     } )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
@@ -44,7 +67,9 @@ include.module( 'tool-directions-route', [ 'tool', 'widgets', 'tool-directions-r
                 self.directionPick = directions.directionPick
             }
 
-            directions.visible = self.active
+            Vue.nextTick( function () {
+                directions.visible = self.active
+            } )
         } )
 
         smk.on( this.id, {

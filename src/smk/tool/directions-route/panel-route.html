@@ -17,6 +17,9 @@
             v-on:click="$$emit( 'pick-direction', { pick: i } )"
             v-bind:class="{ 'smk-highlight': i == directionHighlight, 'smk-pick': i == directionPick }"
         >
+            <i class="smk-instruction-type material-icons"
+                v-bind:class="[ instructionTypeClass( direction.type ) ]"
+            >{{ instructionTypeIcon( direction.type ) }}</i>
             <span class="smk-instruction">{{ direction.instruction }}</span>
             <span class="smk-metric"
                 v-if="direction.distance"
