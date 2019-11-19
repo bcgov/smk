@@ -11,6 +11,7 @@ include.module( 'tool-directions-route', [ 'tool', 'widgets', 'tool-directions-r
         TURN_SLIGHT_RIGHT:  [ 'undo', true ],
         TURN_SHARP_RIGHT:   [ 'directions' ],
         FERRY:              [ 'directions_boat' ],
+        STOPOVER:           [ 'pause' ],
         FINISH:             [ 'stop' ],
     }
 

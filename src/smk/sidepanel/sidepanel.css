@@ -27,6 +27,7 @@
 }
 
 .smk-sidepanel .smk-panel {
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -150,25 +151,37 @@
 }
 
 .smk-panel .smk-spinner {
-    position:   absolute;
-    top:        4px;
-    right:      10px;
+    /* position:   absolute; */
+    /* top:        4px; */
+    /* right:      10px; */
 }
 
+.smk-panel .smk-message-container {
+    position: relative;    
+}
 
-.smk-panel div.smk-message {
-    position: relative;
-    flex-shrink: 0;
+.smk-panel .smk-message {
+    order: 0;
+    z-index: 99999;
+    position: absolute;
+    left: 50%;
+    max-width: calc( 100% - 40px );
 
-    font-size: 14px;
-    padding: 4px 0;
-    text-align: center;
-    background-color: rgb(87.8%, 100%, 88.6%);
+    transform: translate(0,-5px) translate(-50%, -50%);
+    padding: 6px;
+    border-radius: 6px;    
 
-    display: none;
-    flex-direction: column;
-    justify-content: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
     align-items: center;
+}
+
+.smk-panel .smk-message div {
+    display: inline-block;
+    text-align: center;
+    font-size: 12px;
 }
 
 .smk-panel .smk-message.smk-error {
@@ -179,6 +192,7 @@
 
 .smk-panel .smk-message.smk-summary {
     display: flex;
+    background-color: rgb(87.8%, 100%, 88.6%);
 }
 
 .smk-panel .smk-message.smk-progress {

@@ -1,13 +1,6 @@
 include.module( 'tool-directions.router-api-js', [], function ( inc ) {
     "use strict";
 
-    function interpolate( p1, p2, t ) {
-        return [
-            p1[ 0 ] + ( p2[ 0 ] - p1[ 0 ] ) * t,
-            p1[ 1 ] + ( p2[ 1 ] - p1[ 1 ] ) * t
-        ]
-    }
-
     var baseUrl = 'https://router.api.gov.bc.ca/'
 
     var apiKey
@@ -50,19 +43,10 @@ include.module( 'tool-directions.router-api-js', [], function ( inc ) {
         var query = Object.fromEntries( Object.entries( option ).filter( function( kv ) { return !!kv[ 1 ] } ) )
         query.points = points.map( function ( w ) { return w.longitude + ',' + w.latitude } ).join( ',' )
 
-        // var query = {
-        //     points:     points.map( function ( w ) { return w.longitude + ',' + w.latitude } ).join( ',' ),
-        //     outputSRS:  4326,
-        //     criteria:   option.criteria,
-        //     roundTrip:  option.roundTrip
-        // }
-
         return SMK.UTIL.makePromise( function ( res, rej ) {
             ( request = $.ajax( {
                 timeout:    10 * 1000,
                 dataType:   'json',
-                // url:        'https://routerdlv.api.gov.bc.ca/' + ( option.optimal ? 'optimalDirections' : 'directions' ) + '.json',
-                // url:        'https://router.api.gov.bc.ca/' + ( option.optimal ? 'optimalDirections' : 'directions' ) + '.json',
                 url:        baseUrl + endPoint,
                 data:       query,
                 headers: {
@@ -120,6 +104,13 @@ include.module( 'tool-directions.router-api-js', [], function ( inc ) {
                     }, [] )
             }
         } )
+    }
+
+    function interpolate( p1, p2, t ) {
+        return [
+            p1[ 0 ] + ( p2[ 0 ] - p1[ 0 ] ) * t,
+            p1[ 1 ] + ( p2[ 1 ] - p1[ 1 ] ) * t
+        ]
     }
 
     return {

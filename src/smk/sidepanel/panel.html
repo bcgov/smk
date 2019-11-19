@@ -1,14 +1,4 @@
 <div v-bind:class="{ 'smk-busy': busy }">
-    <transition name="status-message">
-        <div class="smk-message" 
-            v-bind:class="'smk-' + ( status || 'summary' )" 
-            v-show="message"
-        >
-            <div v-html="message"></div>
-            <busy-spinner v-bind:size="16" v-bind:busy="busy"></busy-spinner>
-        </div>            
-    </transition>
-
     <div class="smk-header" 
         v-if="showHeader"
         v-on:touchstart="startSwipe"
@@ -17,6 +7,18 @@
         <div class="smk-swipe-handle" v-if="showSwipe"></div>
         
         <slot name="header"></slot>
+    </div>
+
+    <div class="smk-message-container">
+        <transition name="status-message">
+            <div class="smk-message" 
+                v-bind:class="'smk-' + ( status || 'summary' )" 
+                v-if="message"
+            >
+                <div v-html="message"></div>
+                <busy-spinner v-bind:size="16" v-bind:busy="busy"></busy-spinner>
+            </div>            
+        </transition>
     </div>
 
     <div class="smk-commands">

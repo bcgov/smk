@@ -244,7 +244,7 @@ include.module( 'sidepanel', [ 'vue', 'tool', 'sidepanel.sidepanel-html', 'sidep
 
         if ( delay === null ) return
 
-        this.clearMessage.option.delay = delay || 2000 
+        this.clearMessage.option.delay = delay || 2000
         this.clearMessage()
     }
 
