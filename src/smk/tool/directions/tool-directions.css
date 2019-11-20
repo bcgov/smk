@@ -1,29 +1,8 @@
-.smk-directions-panel .smk-command-col {
-    display: inline-block;
-}
-
-.smk-directions-panel .smk-command-col label {
-    display: block;
-    padding: 0;
-}
-
-.smk-sidepanel .smk-panel.smk-directions-panel .smk-body {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: stretch;
-    align-content: stretch;
-    height: 100%;
-    overflow-y: hidden;
-}
-
-.smk-directions-panel .smk-waypoints {
-    overflow-y: auto;
-}
-
 .smk-directions-panel .smk-waypoint {
     display: flex;
     align-items: center;
+    border-radius: 0;
+    border-top: 1px solid #999;
 }
 
 .smk-directions-panel .smk-description {
@@ -35,33 +14,15 @@
     font: 400 11px system-ui;
 }
 
-.smk-directions-panel .smk-description input {
-    height: calc( 100% - 2px );
-    border-radius: 2px;
-}
-
-.smk-directions-panel .smk-waypoint .smk-command {
-    display: inline-block;
-    padding: 0;
-    margin: 0;
-    margin-top: 1px;
-    color: black;
-}
-
-.smk-directions-panel .smk-waypoint .smk-command.smk-disabled {
-    opacity: 0.4;
-    cursor: default;
-}
-
-.smk-directions-panel .smk-waypoint .smk-zoomto.smk-first {
+.smk-directions-panel .smk-waypoint .smk-zoomto.smk-first .smk-command {
     color: green;
 }
 
-.smk-directions-panel .smk-waypoint .smk-zoomto.smk-middle {
+.smk-directions-panel .smk-waypoint .smk-zoomto.smk-middle .smk-command {
     color: blue;
 }
 
-.smk-directions-panel .smk-waypoint .smk-zoomto.smk-last {
+.smk-directions-panel .smk-waypoint .smk-zoomto.smk-last .smk-command {
     color: red;
 }
 

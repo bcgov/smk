@@ -32,6 +32,52 @@
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
+.smk-command-button {
+    display: flex;
+    justify-content: center;
+}
+
+.smk-command-button .smk-command {    
+    cursor: pointer;
+    color: blue;
+    padding: 2px;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    font-size: 12px;
+    user-select: none;
+}
+
+.smk-command-button.smk-icon .smk-command {
+    color: black;
+    padding: 0;
+    width: 26px;
+    height: 26px;
+    font-size: 24px;
+}
+
+.smk-command-button.smk-disabled .smk-command {
+    color: lightgray;
+    font-style: italic;
+}
+
+.smk-command-button .smk-command.smk-hidden {
+    visibility: hidden;
+}
+
+.smk-command-button.smk-disabled.smk-icon .smk-command{
+    font-style: normal;
+}
+
+.smk-command-button .smk-command:hover {
+    border: 1px solid black;
+}
+
+.smk-command-button.smk-disabled .smk-command:hover {
+    border: 1px solid transparent;
+}
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
 .smk-toggle-button label.smk-command {
     display: flex;
     align-items: center;

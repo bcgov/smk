@@ -8,79 +8,31 @@
     </template>
 
     <template slot="commands">
-        <!-- <div class="smk-command-row">
-            <div class="smk-item" style="flex-grow: 1">
-            </div>
-        </div>
+        <command-button class="smk-route"
+            v-bind:disabled="busy || !hasRoute"
+            v-on:click="$$emit( 'route' )"
+        >Route</command-button>
 
-        <div class="smk-command-row"> -->
-            <div class="smk-command smk-route"
-                v-bind:class="{ 'smk-disabled': busy || !hasRoute }"
-                v-on:click="!busy && $$emit( 'route' )"
-            >Route</div>
+        <command-button class="smk-reverse"
+            v-bind:disabled="busy"
+            v-on:click="$$emit( 'reverse' )"
+        >Reverse</command-button>
 
-            <div class="smk-command smk-reverse"
-                v-bind:class="{ 'smk-disabled': busy }"
-                v-on:click="!busy && $$emit( 'reverse' )"
-            >Reverse</div>
+        <command-button class="smk-reset"
+            v-bind:disabled="busy"
+            v-on:click="$$emit( 'reset' )"
+        >Reset</command-button>
 
-            <div class="smk-command smk-reset"
-                v-bind:class="{ 'smk-disabled': busy }"
-                v-on:click="!busy && $$emit( 'clear' )"
-            >Reset</div>
+        <command-button class="smk-options"
+            v-bind:disabled="busy"
+            v-on:click="$$emit( 'options' )"
+        >Options</command-button>
 
-            <!-- <div class="smk-command-spacer"></div> -->
-
-            <div class="smk-command smk-options"
-                v-bind:class="{ 'smk-disabled': busy }"
-                v-on:click="!busy && $$emit( 'options' )"
-            >Options</div>
-
-            <address-search class="smk-address"
-                placeholder="Enter address here, or click on map"
-                v-model="newAddress"
-                v-on:update="$$emit( 'new-waypoint', $event )"
-            ></address-search>
-
-            <!-- <label class="smk-command"
-                v-bind:class="{ 'smk-disabled': busy }"
-            ><input type="checkbox"
-                v-model="options"
-                v-on:change="!busy && $$emit( 'config', getConfigState() )"
-            >Options</label> -->
-        <!-- </div> -->
-
-        <!-- <div class="smk-command-row" v-if="options">
-            <label class="smk-command"
-                v-bind:class="{ 'smk-disabled': busy }"
-            ><input type="checkbox"
-                v-model="optimal"
-                v-on:change="!busy && $$emit( 'config', getConfigState() )"
-            >Optimal</label>
-
-            <label class="smk-command"
-                v-bind:class="{ 'smk-disabled': busy }"
-            ><input type="checkbox"
-                v-model="roundTrip"
-                v-on:change="!busy && $$emit( 'config', getConfigState() )"
-            >Round trip</label>
-
-            <div class="smk-command-spacer"></div>
-
-            <label class="smk-command"
-                v-bind:class="{ 'smk-disabled': busy }"
-            ><input type="radio" value="shortest"
-                v-model="criteria"
-                v-on:change="!busy && $$emit( 'config', getConfigState() )"
-            >Shortest</label>
-
-            <label class="smk-command"
-                v-bind:class="{ 'smk-disabled': busy }"
-            ><input type="radio" value="fastest"
-                v-model="criteria"
-                v-on:change="!busy && $$emit( 'config', getConfigState() )"
-            >Fastest</label>
-        </div> -->
+        <address-search class="smk-address"
+            placeholder="Enter address here, or click on map"
+            v-model="newAddress"
+            v-on:update="$$emit( 'new-waypoint', $event )"
+        ></address-search>
     </template>
 
     <draggable class="smk-waypoints"
@@ -101,19 +53,24 @@
                 <span v-if="site.current">[CURRENT]</span>
             </div>
 
-            <i class="smk-command smk-icon smk-zoomto material-icons" title="Zoom to this waypoint"
-                v-on:click="$$emit( 'zoom-waypoint', { waypoint: site, index: i } )"
+            <command-button class="smk-zoomto"
                 v-bind:class="{
                     'smk-first':    i == 0,
                     'smk-middle':   i != 0 && i != waypoints.length - 1,
                     'smk-last':     i != 0 && i == waypoints.length - 1
                 }"
-            >location_on</i>
+                v-bind:disabled="busy"
+                v-on:click="$$emit( 'zoom-waypoint', { waypoint: site, index: i } )"
+                icon="location_on"
+                title="Zoom to this waypoint"
+            ></command-button>
 
-            <i class="smk-command smk-icon smk-remove material-icons" title="Remove this waypoint"
+            <command-button class="smk-remove"
+                v-bind:disabled="waypoints.length < 2 || busy"
                 v-on:click="waypoints.length > 1 && $$emit( 'remove-waypoint', { index: i } )"
-                v-bind:class="{ 'smk-disabled': waypoints.length < 2 || busy }"
-            >delete</i>
+                icon="delete"
+                title="Remove this waypoint"
+            ></command-button>
         </div>
     </draggable>
 

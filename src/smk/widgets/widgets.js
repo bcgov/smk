@@ -1,6 +1,7 @@
 include.module( 'widgets', [ 
     'vue', 
     'widgets.tool-button-html', 
+    'widgets.command-button-html',
     'widgets.toggle-button-html', 
     'widgets.select-option-html', 
     'widgets.enter-input-html' 
@@ -14,6 +15,21 @@ include.module( 'widgets', [
             }
         }
     }
+
+    Vue.component( 'command-button', {
+        template: inc[ 'widgets.command-button-html' ],
+        props: { 
+            title:      { type: String },
+            disabled:   { type: Boolean, default: false },
+            icon:       { type: String }
+        },
+        methods: {
+            clickButton: function () {
+                if ( this.disabled ) return
+                this.$emit( 'click' )
+            }
+        }
+    } )
 
     Vue.component( 'toggle-button', {
         template: inc[ 'widgets.toggle-button-html' ],
