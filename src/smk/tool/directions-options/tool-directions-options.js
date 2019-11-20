@@ -62,6 +62,14 @@ include.module( 'tool-directions-options', [ 'tool', 'widgets', 'sidepanel', 'to
                 directions.findRoute()
             },
         } )
+
+        smk.$viewer.handlePick( 3, function ( location ) {
+            if ( !self.active ) return
+
+            directions.active = true
+
+            return false
+        } )        
     } )
 
     return DirectionsOptionsTool

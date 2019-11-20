@@ -83,6 +83,13 @@ include.module( 'tool-directions-route', [ 'tool', 'widgets', 'tool-directions-r
             },
         } )
 
+        smk.$viewer.handlePick( 3, function ( location ) {
+            if ( !self.active ) return
+
+            directions.active = true
+
+            return false
+        } )        
     } )
 
     DirectionsRouteTool.prototype.setMessage = function ( message, status, delay ) {
