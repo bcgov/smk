@@ -4,7 +4,17 @@ include.module( 'tool-directions-options', [ 'tool', 'widgets', 'sidepanel', 'to
     Vue.component( 'directions-options-panel', {
         extends: inc.widgets.toolPanel,
         template: inc[ 'tool-directions-options.panel-directions-options-html' ],
-        props: [ 'truck', 'optimal', 'roundTrip', 'criteria' ],
+        props: [ 
+            'truck', 
+            'optimal', 
+            'roundTrip', 
+            'criteria',
+            'truckRoute',
+            'truckHeight',
+            'truckWidth',
+            'truckLength',
+            'truckWeight',
+        ],
     } )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
@@ -13,6 +23,11 @@ include.module( 'tool-directions-options', [ 'tool', 'widgets', 'sidepanel', 'to
         this.makePropPanel( 'optimal', false )
         this.makePropPanel( 'roundTrip', false )
         this.makePropPanel( 'criteria', 'shortest' )
+        this.makePropPanel( 'truckRoute', 10 )
+        this.makePropPanel( 'truckHeight', null )
+        this.makePropPanel( 'truckWidth', null )
+        this.makePropPanel( 'truckLength', null )
+        this.makePropPanel( 'truckWeight', null )
 
         SMK.TYPE.PanelTool.prototype.constructor.call( this, $.extend( {
             title:          'Route Planner Options',
@@ -29,20 +44,20 @@ include.module( 'tool-directions-options', [ 'tool', 'widgets', 'sidepanel', 'to
     DirectionsOptionsTool.prototype.afterInitialize.push( function ( smk ) {
         var self = this
 
+        var directions = smk.$tool[ 'directions' ]
+
         this.changedActive( function () {
-            if ( self.active ) {
-            }
+            Vue.nextTick( function () {
+                directions.visible = self.active
+            } )
         } )
 
         smk.on( this.id, {
-            // 'activate': function () {
-            //     if ( !self.enabled ) return
-
-            //     self.active = !self.active
-            // },
-
             'change': function ( ev ) {
+                // console.log(ev)
                 Object.assign( self, ev )
+
+                directions.findRoute()
             },
         } )
     } )

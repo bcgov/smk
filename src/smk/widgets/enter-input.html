@@ -1,0 +1,14 @@
+<div class="smk-enter-input">
+    <label>
+        <slot></slot>
+        <div class="smk-input">
+            <input
+                v-model="input"
+                v-bind:type="type"
+            >
+            <i class="smk-reset smk-command smk-icon material-icons" title="Reset"
+                v-on:click="clickReset"
+            >cancel</i>
+        </div>
+    </label>
+</div>

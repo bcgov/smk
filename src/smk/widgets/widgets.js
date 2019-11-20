@@ -1,4 +1,10 @@
-include.module( 'widgets', [ 'vue', 'widgets.tool-button-html', 'widgets.toggle-button-html', 'widgets.select-option-html' ], function ( inc ) {
+include.module( 'widgets', [ 
+    'vue', 
+    'widgets.tool-button-html', 
+    'widgets.toggle-button-html', 
+    'widgets.select-option-html', 
+    'widgets.enter-input-html' 
+], function ( inc ) {
     "use strict";
 
     var emit = {
@@ -42,6 +48,33 @@ include.module( 'widgets', [ 'vue', 'widgets.tool-button-html', 'widgets.toggle-
         methods: {
             clickOption: function ( option, index ) {
                 this.$emit( 'change', option.value )
+            }
+        }
+    } )
+
+    Vue.component( 'enter-input', {
+        template: inc[ 'widgets.enter-input-html' ],
+        props: { 
+            value: { type: String, default: '' },
+            type: { type: String, default: 'text' },
+        },
+        data: function () {
+            return {
+                input: this.value
+            }
+        },
+        watch: {
+            input: function () {
+                this.$emit( 'change', this.input )
+            }
+        },
+        // model: {
+        //     prop: 'value',
+        //     event: 'change'
+        // },
+        methods: {
+            clickReset: function () {
+                this.input = this.value
             }
         }
     } )

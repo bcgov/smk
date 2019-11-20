@@ -20,6 +20,7 @@ include.module( 'tool-directions.router-api-js', [], function ( inc ) {
             weight:             null,
             distanceUnits:      'km',
             followTruckRoute:   null,
+            truckRouteMultiplier:null,
             disable:            null,
             outputSRS:          4326,            
         }, option )

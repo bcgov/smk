@@ -53,24 +53,69 @@
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 .smk-select-option {
-    padding: 3px;
+    font-size: 12px;
 }
 
 .smk-options {
-    border: 1px solid black;
     border-radius: 8px;
-    padding: 1px;
+    padding: 2px;
     display: flex;
     justify-content: space-around;
+    background-color: #bbb;
 }
 
 .smk-options .smk-command {
     flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 100%;
     text-align: center;
+    color: black;
 }
 
 .smk-options .smk-selected-option {
-    color: white;
     font-weight: bold;
-    background-color: black;
+    background-color: white;
 }
+
+.smk-options .smk-command:hover {
+    background-color: #ddd;
+    border: 1px solid transparent;
+}
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+.smk-enter-input label {
+    font-size: 12px;
+    display: block;
+    position: relative;
+}
+
+.smk-enter-input .smk-input {
+    border-radius: 8px;
+    padding: 2px;
+    display: flex;
+    justify-content: space-around;
+    background-color: #bbb;
+}
+
+.smk-enter-input input {
+    display: block;
+    flex-grow: 1;
+    flex-basis: 100%;
+    border: 0;
+    font-size: 14px;
+    padding: 3px;
+    background-color: white;
+    border-radius: 6px;
+    width: 1px;
+}
+
+.smk-enter-input input:focus {
+    outline: 0;
+}
+
+.smk-enter-input .smk-reset.smk-command.smk-icon {
+    width: 20px;
+    height: 20px;
+    font-size: 20px;
+} 
