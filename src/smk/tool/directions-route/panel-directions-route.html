@@ -1,12 +1,6 @@
-<side-panel class="smk-directions-panel" v-bind:class="{ 'smk-busy': busy }">
+<side-panel class="smk-directions-route-panel" v-bind:class="{ 'smk-busy': busy }">
     <template slot="header">
         <slot></slot>
-    </template>
-
-    <template slot="status" v-if="statusMessage || busy">
-        <status-message v-bind="statusMessage" v-if="!busy"></status-message>
-        <status-message message="Calculating" status="progress" v-if="busy"></status-message>        
-        <busy-spinner v-bind:busy="busy"></busy-spinner> 
     </template>
 
     <div class="smk-directions">
@@ -19,6 +13,7 @@
         >
             <i class="smk-instruction-type material-icons"
                 v-bind:class="[ instructionTypeClass( direction.type ) ]"
+                v-bind:title="direction.type"
             >{{ instructionTypeIcon( direction.type ) }}</i>
             <span class="smk-instruction">{{ direction.instruction }}</span>
             <span class="smk-metric"

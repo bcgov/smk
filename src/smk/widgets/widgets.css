@@ -56,7 +56,7 @@
     font-size: 12px;
 }
 
-.smk-options {
+.smk-select-option .smk-options {
     border-radius: 8px;
     padding: 2px;
     display: flex;
@@ -64,7 +64,7 @@
     background-color: #bbb;
 }
 
-.smk-options .smk-command {
+.smk-select-option .smk-options .smk-command {
     flex-grow: 1;
     flex-shrink: 1;
     flex-basis: 100%;
@@ -72,12 +72,12 @@
     color: black;
 }
 
-.smk-options .smk-selected-option {
+.smk-select-option .smk-options .smk-selected-option {
     font-weight: bold;
     background-color: white;
 }
 
-.smk-options .smk-command:hover {
+.smk-select-option .smk-options .smk-command:hover {
     background-color: #ddd;
     border: 1px solid transparent;
 }

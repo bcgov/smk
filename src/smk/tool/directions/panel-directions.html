@@ -8,37 +8,39 @@
     </template>
 
     <template slot="commands">
-        <div class="smk-command-row">
+        <!-- <div class="smk-command-row">
             <div class="smk-item" style="flex-grow: 1">
-                <address-search placeholder="Enter address here, or click on map"
-                    v-model="newAddress"
-                    v-on:update="$$emit( 'new-waypoint', $event )"
-                ></address-search>
             </div>
         </div>
 
-        <div class="smk-command-row">
-            <div class="smk-command"
+        <div class="smk-command-row"> -->
+            <div class="smk-command smk-route"
                 v-bind:class="{ 'smk-disabled': busy || !hasRoute }"
                 v-on:click="!busy && $$emit( 'route' )"
             >Route</div>
 
-            <div class="smk-command"
+            <div class="smk-command smk-reverse"
                 v-bind:class="{ 'smk-disabled': busy }"
                 v-on:click="!busy && $$emit( 'reverse' )"
             >Reverse</div>
 
-            <div class="smk-command"
+            <div class="smk-command smk-reset"
                 v-bind:class="{ 'smk-disabled': busy }"
                 v-on:click="!busy && $$emit( 'clear' )"
             >Reset</div>
 
-            <div class="smk-command-spacer"></div>
+            <!-- <div class="smk-command-spacer"></div> -->
 
-            <div class="smk-command"
+            <div class="smk-command smk-options"
                 v-bind:class="{ 'smk-disabled': busy }"
                 v-on:click="!busy && $$emit( 'options' )"
             >Options</div>
+
+            <address-search class="smk-address"
+                placeholder="Enter address here, or click on map"
+                v-model="newAddress"
+                v-on:update="$$emit( 'new-waypoint', $event )"
+            ></address-search>
 
             <!-- <label class="smk-command"
                 v-bind:class="{ 'smk-disabled': busy }"
@@ -46,7 +48,7 @@
                 v-model="options"
                 v-on:change="!busy && $$emit( 'config', getConfigState() )"
             >Options</label> -->
-        </div>
+        <!-- </div> -->
 
         <!-- <div class="smk-command-row" v-if="options">
             <label class="smk-command"

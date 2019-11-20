@@ -1,4 +1,4 @@
-include.module( 'tool-directions-route', [ 'tool', 'widgets', 'tool-directions-route.panel-route-html' ], function ( inc ) {
+include.module( 'tool-directions-route', [ 'tool', 'widgets', 'tool-directions-route.panel-directions-route-html' ], function ( inc ) {
     "use strict";
 
     var instructionType = {
@@ -17,7 +17,7 @@ include.module( 'tool-directions-route', [ 'tool', 'widgets', 'tool-directions-r
 
     Vue.component( 'route-panel', {
         extends: inc.widgets.toolPanel,
-        template: inc[ 'tool-directions-route.panel-route-html' ],
+        template: inc[ 'tool-directions-route.panel-directions-route-html' ],
         props: [ 'busy', 'directions', 'directionHighlight', 'directionPick', 'statusMessage' ],
         methods: {
             instructionTypeIcon: function ( type ) {                
