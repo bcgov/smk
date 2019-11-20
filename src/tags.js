@@ -51,7 +51,10 @@ t.group( 'feature-list' )
     .dir( 'smk/feature-list/**/*' )
 
 t.group( 'widgets' )
-    .dir( 'smk/widgets/**/*' )
+    .dir( 'smk/widgets/*' )
+
+t.group( 'widget-address-search' )
+    .dir( 'smk/widgets/address-search/*' )
 
 // ==================================================================================
 // smk tools
