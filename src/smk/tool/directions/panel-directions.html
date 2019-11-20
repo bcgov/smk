@@ -43,10 +43,11 @@
         <div class="smk-waypoint smk-item"
             v-for="( site, i ) in waypoints"
         >
-            <i class="smk-command smk-icon smk-handle material-icons"
-                v-bind:class="{ 'smk-disabled': optimal || busy }"
-                v-bind:title="optimal ? 'Optimal order' : 'Drag to reorder'"
-            >drag_handle</i>
+            <command-button class="smk-handle"
+                v-bind:disabled="optimal || busy"
+                v-bind:title="optimal ? 'In optimal order' : 'Drag to reorder'"
+                icon="drag_handle"
+            ></command-button>
 
             <div class="smk-description">
                 {{ site.fullAddress }}

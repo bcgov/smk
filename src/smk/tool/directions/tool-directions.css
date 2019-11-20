@@ -1,3 +1,13 @@
+.smk-directions-panel .smk-commands .smk-route .smk-command {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.smk-directions-panel .smk-commands .smk-options {
+    flex-grow: 1;
+    justify-content: flex-end;
+}
+
 .smk-directions-panel .smk-waypoint {
     display: flex;
     align-items: center;
@@ -27,6 +37,6 @@
 }
 
 .smk-directions-panel .smk-address-search {
-    margin: 3px;
-    width: calc( 100% - 6px );
+    margin: 4px;
+    width: calc( 100% - 8px );
 }

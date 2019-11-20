@@ -59,6 +59,10 @@
     align-content: flex-start;
 }
 
+.smk-panel .smk-commands > * {
+    margin: 0px 4px;
+}
+
 .smk-panel .smk-panel-go-back {
     order: 10;
 }
