@@ -14,20 +14,22 @@ include.module( 'tool-directions-options', [ 'tool', 'widgets', 'sidepanel', 'to
             'truckWidth',
             'truckLength',
             'truckWeight',
+            'command'
         ],
     } )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
     function DirectionsOptionsTool( option ) {
-        this.makePropPanel( 'truck', false )
-        this.makePropPanel( 'optimal', false )
-        this.makePropPanel( 'roundTrip', false )
-        this.makePropPanel( 'criteria', 'shortest' )
-        this.makePropPanel( 'truckRoute', 10 )
-        this.makePropPanel( 'truckHeight', null )
-        this.makePropPanel( 'truckWidth', null )
-        this.makePropPanel( 'truckLength', null )
-        this.makePropPanel( 'truckWeight', null )
+        this.makePropPanel( 'truck',        false )
+        this.makePropPanel( 'optimal',      false )
+        this.makePropPanel( 'roundTrip',    false )
+        this.makePropPanel( 'criteria',     'shortest' )
+        this.makePropPanel( 'truckRoute',   10 )
+        this.makePropPanel( 'truckHeight',  null )
+        this.makePropPanel( 'truckWidth',   null )
+        this.makePropPanel( 'truckLength',  null )
+        this.makePropPanel( 'truckWeight',  null )
+        this.makePropPanel( 'command',      {} )
 
         SMK.TYPE.PanelTool.prototype.constructor.call( this, $.extend( {
             title:          'Route Planner Options',

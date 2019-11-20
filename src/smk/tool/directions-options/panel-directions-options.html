@@ -11,7 +11,7 @@
     </template>
 
     <select-option class="smk-directions-optimal"
-        xxv-if="command.criteria !== false"
+        v-if="command.optimal !== false"
         v-bind:value="optimal"
         v-on:change="!busy && $$emit( 'change', { optimal: $event } )"
         v-bind:options="[
@@ -21,7 +21,7 @@
     >Should route be optimized?</select-option>
 
     <select-option class="smk-directions-round-trip"
-        xxv-if="command.criteria !== false"
+        v-if="command.roundTrip !== false"
         v-bind:value="roundTrip"
         v-on:change="!busy && $$emit( 'change', { roundTrip: $event } )"
         v-bind:options="[
@@ -31,7 +31,7 @@
     >Is this route a round-trip?</select-option>
 
     <select-option class="smk-directions-criteria"
-        xxv-if="command.criteria !== false"
+        v-if="command.criteria !== false"
         v-bind:value="criteria"
         v-on:change="!busy && $$emit( 'change', { criteria: $event } )"
         v-bind:options="[
@@ -41,7 +41,7 @@
     >Which is more important?</select-option>
 
     <select-option class="smk-directions-truck"
-        xxv-if="command.truck !== false"
+        v-if="command.truck !== false"
         v-bind:value="truck"
         v-on:change="!busy && $$emit( 'change', { truck: $event } )"
         v-bind:options="[
@@ -54,7 +54,7 @@
         v-if="truck"
     >
         <select-option class="smk-directions-truck-route"
-            xxv-if="command.truck !== false"
+            v-if="command.truckRoute !== false"
             v-bind:value="truckRoute"
             v-on:change="!busy && $$emit( 'change', { truckRoute: $event } )"
             v-bind:options="[
@@ -66,24 +66,28 @@
 
         <enter-input class="smk-directions-truck-height"
             type="number"
+            v-if="command.truckHeight !== false"
             v-bind:value="truckHeight"
             v-on:change="!busy && $$emit( 'change', { truckHeight: $event } )"
         >Height OAH (m)</enter-input>
 
         <enter-input class="smk-directions-truck-width"
             type="number"
+            v-if="command.truckWidth !== false"
             v-bind:value="truckWidth"
             v-on:change="!busy && $$emit( 'change', { truckWidth: $event } )"
         >Width OAW (m)</enter-input>
 
         <enter-input class="smk-directions-truck-length"
             type="number"
+            v-if="command.truckLength !== false"
             v-bind:value="truckLength"
             v-on:change="!busy && $$emit( 'change', { truckLength: $event } )"
         >Length OAL (m)</enter-input>
 
         <enter-input class="smk-directions-truck-weight"
             type="number"
+            v-if="command.truckWeight !== false"
             v-bind:value="truckWeight"
             v-on:change="!busy && $$emit( 'change', { truckWeight: $event } )"
         >Weight GVW (kg)</enter-input>
