@@ -69,6 +69,8 @@ include.module( 'tool-directions', [
                         return self.findRoute()
                     } )
                 }
+
+                self.optimal = self.routeOptions.optimal
             }
         } )
 
@@ -159,9 +161,9 @@ include.module( 'tool-directions', [
 
         if ( !site || !site.fullAddress )
             return this.setMessage( 'Unable to find address', 'error', 1000 )
-                .then( function () {
-                    self.findRoute()
-                } )
+                // .then( function () {
+                    // self.findRoute()
+                // } )
 
         this.waypoints.push( site )
 

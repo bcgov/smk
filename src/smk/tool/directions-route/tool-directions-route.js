@@ -67,10 +67,6 @@ include.module( 'tool-directions-route', [ 'tool', 'widgets', 'tool-directions-r
                 self.directionHighlight = directions.directionHighlight
                 self.directionPick = directions.directionPick
             }
-
-            Vue.nextTick( function () {
-                directions.visible = self.active
-            } )
         } )
 
         smk.on( this.id, {

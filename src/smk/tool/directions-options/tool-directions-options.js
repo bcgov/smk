@@ -48,11 +48,8 @@ include.module( 'tool-directions-options', [ 'tool', 'widgets', 'sidepanel', 'to
 
         var directions = smk.$tool[ 'directions' ]
 
-        this.changedActive( function () {
-            Vue.nextTick( function () {
-                directions.visible = self.active
-            } )
-        } )
+        // this.changedActive( function () {
+        // } )
 
         smk.on( this.id, {
             'change': function ( ev ) {

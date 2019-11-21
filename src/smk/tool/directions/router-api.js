@@ -44,7 +44,7 @@ include.module( 'tool-directions.router-api-js', [], function ( inc ) {
         var query = Object.fromEntries( Object.entries( option ).filter( function( kv ) { return !!kv[ 1 ] } ) )
         query.points = points.map( function ( w ) { return w.longitude + ',' + w.latitude } ).join( ',' )
 
-        return SMK.UTIL.makePromise( function ( res, rej ) {
+        var result = SMK.UTIL.makePromise( function ( res, rej ) {
             ( request = $.ajax( {
                 timeout:    10 * 1000,
                 dataType:   'json',
@@ -77,8 +77,10 @@ include.module( 'tool-directions.router-api-js', [], function ( inc ) {
 
             return data
         } )
-        // uncomment to inject dummy results
-        .catch( function () {
+
+        if ( !apiKey ) return result
+
+        return result.catch( function () {
             return {
                 distance: '10',
                 timeText: '10 mins',
