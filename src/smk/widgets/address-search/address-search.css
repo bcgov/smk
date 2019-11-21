@@ -3,30 +3,17 @@
     display: inline-block;
 }
 
-.smk-address-search input {
-    width: 100%;
-    border: none;
-    vertical-align: top;
-    background-color: transparent;
-    font: 400 11px system-ui;
-    border-radius: 2px;
-    height: 15px;
-}
-
-.smk-address-search input:focus {
-    outline: none;
-    background-color: white;
-}
-
 .smk-popup-list {
     z-index: 5;
     position: absolute;
-    top: 20px;
+    top: 26px;
+    left: 6px;
     border: 1px solid gray;
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65);
     background-color: white;
     font-size: 12px;
     max-width: 200px;
+    padding: 1px;
 }
 
 .smk-popup-item {

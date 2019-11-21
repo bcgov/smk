@@ -29,9 +29,9 @@
         >Options</command-button>
 
         <address-search class="smk-address"
+            ref="address"
             placeholder="Enter address here, or click on map"
-            v-model="newAddress"
-            v-on:update="$$emit( 'new-waypoint', $event )"
+            v-on:update="$$emit( 'new-waypoint', $event ); $refs.address.clear()"
         ></address-search>
     </template>
 

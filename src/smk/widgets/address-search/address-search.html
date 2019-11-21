@@ -1,15 +1,12 @@
-<div class="smk-address-search"
-    v-bind:title="search"
->
-    <input type="text"
+<div class="smk-address-search">
+    <enter-input
         v-bind:placeholder="placeholder"
-        v-model="search"
-        v-on:input="onChange"
-        v-on:click="$event.target.select()"
-        v-on:keyup.down="onArrowDown"
-        v-on:keyup.up="onArrowUp"
-        v-on:keyup.enter="onEnter"
-    >
+        v-bind:value="search"
+        v-on:change="onChange( $event )"
+        v-on:key-down-arrow="onArrowDown"
+        v-on:key-up-arrow="onArrowUp"
+        v-on:key-enter="onEnter"
+    ></enter-input>
 
     <div class="smk-popup-list" v-if="expanded">
         <div class="smk-popup-item"
@@ -18,8 +15,6 @@
             v-on:mouseenter="selectedIndex = i"
             v-on:mouseleave="selectedIndex = null"
             v-on:click="onEnter"
-        >
-            {{ item.fullAddress }}
-        </div>
+        >{{ item.fullAddress }}</div>
     </div>
 </div>

@@ -20,45 +20,16 @@ include.module( 'tool-directions', [
     Vue.component( 'directions-panel', {
         extends: inc.widgets.toolPanel,
         template: inc[ 'tool-directions.panel-directions-html' ],
-        props: [ 'waypoints', 'config', 'hasRoute' ],
-        data: function () {
-            return Object.assign( {}, this.config )
-        },
-        watch: {
-            config: function ( val ) {
-                var self = this
-
-                Object.keys( val ).forEach( function ( k ) {
-                    self[ k ] = val[ k ]
-                } )
-            }
-        },
-        methods: {
-            getConfigState: function () {
-                var self = this
-
-                var state = {}
-                Object.keys( this.config ).forEach( function ( k ) {
-                    state[ k ] = self[ k ]
-                } )
-                return state
-            }
-        },
+        props: [ 'waypoints', 'hasRoute', 'optimal' ],
     } )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
     function DirectionsTool( option ) {
-        this.makePropWidget( 'icon', null ) //'directions_car' )
+        this.makePropWidget( 'icon', null ) 
 
         this.makePropPanel( 'waypoints', [] )
         this.makePropPanel( 'hasRoute', false )
-        this.makePropPanel( 'config', {
-            optimal:    false,
-            roundTrip:  false,
-            criteria:   'shortest',
-            newAddress: null,
-            options:    false
-        } )
+        this.makePropPanel( 'optimal', false )
 
         SMK.TYPE.PanelTool.prototype.constructor.call( this, $.extend( {
             // order:          4,
@@ -137,12 +108,6 @@ include.module( 'tool-directions', [
                 self.active = !self.active
             },
 
-            'config': function ( ev ) {
-                Object.assign( self.config, ev )
-
-                self.findRoute()
-            },
-
             'reverse': function ( ev ) {
                 self.waypoints.reverse()
                 self.findRoute()
@@ -173,21 +138,15 @@ include.module( 'tool-directions', [
             'new-waypoint': function ( ev ) {
                 if ( ev.latitude ) {
                     self.addWaypoint( ev )
-
-                    Vue.nextTick( function () {
-                        self.panel.config = Object.assign( {}, self.panel.config, { newAddress: null } )
-                    } )
                 }
             },
 
             'route': function ( ev ) {
                 self.routePanel.active = true
-                // smk.$tool[ 'directions-route' ].active = true 
             },
 
             'options': function ( ev ) {
                 self.routeOptions.active = true
-                // smk.$tool[ 'directions-options' ].active = true 
             }
         } )
 

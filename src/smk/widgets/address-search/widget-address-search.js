@@ -6,34 +6,30 @@ include.module( 'widget-address-search', [
     
     Vue.component( 'address-search', {
         template: inc[ 'widget-address-search.address-search-html' ],
-        props: [ 'value', 'placeholder' ],
+        props: [ 'placeholder' ],
         data: function () {
             return {
-                search: this.value,
+                search: '', 
                 list: null,
                 selectedIndex: null,
                 expanded: false
             }
         },
-        watch: {
-            value: function ( val ) {
-                this.search = this.value
-            }
-        },
         methods: {
-            onChange: function () {
+            clear: function () {
+                this.search = ''
+            },
+            onChange: function ( val ) {
                 var self = this
 
-                this.$emit( 'input', this.search )
-                this.$emit( 'update', { fullAddress: this.search } )
-
+                this.search = val
                 this.list = null
 
                 var query = {
                     ver:            1.2,
                     maxResults:     20,
                     outputSRS:      4326,
-                    addressString:  this.search,
+                    addressString:  val,
                     autoComplete:   true
                 }
 
@@ -86,7 +82,6 @@ include.module( 'widget-address-search', [
 
             onEnter: function () {
                 if ( !this.expanded ) return
-                this.search = this.list[ this.selectedIndex ].fullAddress
                 this.expanded = false
                 this.$emit( 'update', this.list[ this.selectedIndex ] )
             },

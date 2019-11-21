@@ -71,27 +71,9 @@ include.module( 'widgets', [
     Vue.component( 'enter-input', {
         template: inc[ 'widgets.enter-input-html' ],
         props: { 
-            value: { type: String, default: '' },
-            type: { type: String, default: 'text' },
-        },
-        data: function () {
-            return {
-                input: this.value
-            }
-        },
-        watch: {
-            input: function () {
-                this.$emit( 'change', this.input )
-            }
-        },
-        // model: {
-        //     prop: 'value',
-        //     event: 'change'
-        // },
-        methods: {
-            clickReset: function () {
-                this.input = this.value
-            }
+            value:      { type: String, default: '' },
+            type:       { type: String, default: 'text' },
+            placeholder:{ type: String },
         }
     } )
 

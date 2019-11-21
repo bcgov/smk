@@ -3,11 +3,18 @@
         <slot></slot>
         <div class="smk-input">
             <input
-                v-model="input"
                 v-bind:type="type"
+                v-bind:value="value"
+                v-bind:placeholder="placeholder"
+                v-on:input="$emit( 'change', $event.target.value )"
+                v-on:keyup.down="$emit( 'key-down-arrow' )"
+                v-on:keyup.up="$emit( 'key-up-arrow' )"
+                v-on:keyup.enter="$emit( 'key-enter' )"
             >
-            <i class="smk-reset smk-command smk-icon material-icons" title="Reset"
-                v-on:click="clickReset"
+            <i class="smk-reset smk-command smk-icon material-icons" 
+                v-bind:class="{ 'smk-disabled': !value }"
+                title="Reset"
+                v-on:click="$emit( 'change', '' )"
             >cancel</i>
         </div>
     </label>
