@@ -218,4 +218,10 @@ include.module( 'vue-config', [ 'vue' ], function ( inc ) {
         }
     } )
 
+    Vue.directive( 'content', {
+        bind: function ( el, binding ) {
+            binding.value.create( el )
+        }
+    } )
+
 } )

@@ -73,6 +73,10 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
             order: 8,
             title: 'Gray'
         },
+        StamenTonerLight: {
+            order: 9,
+            title: 'Stamen Toner Light'
+        },
         // Terrain: {
         //     order: 9,
         //     title: 'Terrain'
