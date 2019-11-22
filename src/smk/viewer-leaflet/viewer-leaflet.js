@@ -154,12 +154,48 @@ include.module( 'viewer-leaflet', [ 'viewer', 'leaflet', 'layer-leaflet', 'featu
     }
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
-    ViewerLeaflet.prototype.basemap.ShadedRelief.labels = [ 'ShadedReliefLabels' ]
-    ViewerLeaflet.prototype.basemap.Gray.labels = [ 'GrayLabels' ]
-    ViewerLeaflet.prototype.basemap.DarkGray.labels = [ 'DarkGrayLabels' ]
+    ViewerLeaflet.prototype.basemap.Topographic.create = createBasemapEsri
+
+    ViewerLeaflet.prototype.basemap.Streets.create = createBasemapEsri
+
+    ViewerLeaflet.prototype.basemap.Imagery.create = createBasemapEsri
     ViewerLeaflet.prototype.basemap.Imagery.labels = [ 'ImageryTransportation', 'ImageryLabels' ]
+
+    ViewerLeaflet.prototype.basemap.Oceans.create = createBasemapEsri
     ViewerLeaflet.prototype.basemap.Oceans.labels = [ 'OceansLabels' ]
-    // ViewerLeaflet.prototype.basemap.Terrain.labels = [ 'TerrainLabels' ]
+
+    ViewerLeaflet.prototype.basemap.NationalGeographic.create = createBasemapEsri
+
+    ViewerLeaflet.prototype.basemap.ShadedRelief.create = createBasemapEsri
+    ViewerLeaflet.prototype.basemap.ShadedRelief.labels = [ 'ShadedReliefLabels' ]
+
+    ViewerLeaflet.prototype.basemap.DarkGray.create = createBasemapEsri
+    ViewerLeaflet.prototype.basemap.DarkGray.labels = [ 'DarkGrayLabels' ]
+
+    ViewerLeaflet.prototype.basemap.Gray.create = createBasemapEsri    
+    ViewerLeaflet.prototype.basemap.Gray.labels = [ 'GrayLabels' ]
+
+    ViewerLeaflet.prototype.basemap.StamenTonerLight.create = createBasemapTiled 
+    ViewerLeaflet.prototype.basemap.StamenTonerLight.url = 'https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}.png'    
+    ViewerLeaflet.prototype.basemap.StamenTonerLight.attribution = "Map tiles by <a href='http://stamen.com'>Stamen Design</a>, under <a href='http://creativecommons.org/licenses/by/3.0'>CC BY 3.0</a>. Data by <a href='http://openstreetmap.org'>OpenStreetMap</a>, under <a href='http://www.openstreetmap.org/copyright'>ODbL</a>."
+
+    function createBasemapEsri( id ) {
+        /* jshint -W040 */
+        var lys = []
+        lys.push( L.esri.basemapLayer( id, { detectRetina: true } ) )
+
+        if ( this.labels )
+            this.labels.forEach( function ( lid ) {
+                lys.push( L.esri.basemapLayer( lid, { detectRetina: true } ) )
+            } )
+
+        return lys
+    }
+
+    function createBasemapTiled( id ) {
+        /* jshint -W040 */
+        return [ L.tileLayer( this.url ) ]
+    }
 
     ViewerLeaflet.prototype.setBasemap = function ( basemapId ) {
         var self = this
@@ -182,15 +218,16 @@ include.module( 'viewer-leaflet', [ 'viewer', 'leaflet', 'layer-leaflet', 'featu
     }
 
     ViewerLeaflet.prototype.createBasemapLayer = function ( basemapId ) {
-        var lys = []
-        lys.push( L.esri.basemapLayer( basemapId, { detectRetina: true } ) )
+        return this.basemap[ basemapId ].create( basemapId )
+        // var lys = []
+        // lys.push( L.esri.basemapLayer( basemapId, { detectRetina: true } ) )
 
-        if ( this.basemap[ basemapId ].labels )
-            this.basemap[ basemapId ].labels.forEach( function ( id ) {
-                lys.push( L.esri.basemapLayer( id, { detectRetina: true } ) )
-            } )
+        // if ( this.basemap[ basemapId ].labels )
+        //     this.basemap[ basemapId ].labels.forEach( function ( id ) {
+        //         lys.push( L.esri.basemapLayer( id, { detectRetina: true } ) )
+        //     } )
 
-        return lys
+        // return lys
     }
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //

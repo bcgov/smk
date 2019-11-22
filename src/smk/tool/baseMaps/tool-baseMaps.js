@@ -89,6 +89,8 @@ include.module( 'tool-baseMaps', [ 'tool', 'widgets', 'viewer', 'leaflet', 'tool
     BaseMapsTool.prototype.afterInitialize.push( function ( smk ) {
         var self = this
 
+        this.map = {}
+
         this.basemaps = Object.keys( smk.$viewer.basemap )
             .map( function ( id ) {
                 return Object.assign( { id: id }, smk.$viewer.basemap[ id ] )
@@ -101,14 +103,66 @@ include.module( 'tool-baseMaps', [ 'tool', 'widgets', 'viewer', 'leaflet', 'tool
                 return false
             } )
             .sort( function ( a, b ) { return a.order - b.order } )
+            .map( function ( bm ) {
+                bm.el = L.DomUtil.create( 'div' )
+                var m = self.map[ bm.id ] = L.map( bm.el, {
+                    attributionControl: false,
+                    zoomControl: false,
+                    dragging: false,
+                    keyboard: false,
+                    scrollWheelZoom: false,
+                    zoom: 10
+                } );
+
+            // binding.value.basemap.map = map
+                
+                var bmLayers = smk.$viewer.createBasemapLayer( bm.id )
+                m.addLayer( bmLayers[ 0 ] )
+
+                // if ( binding.value.center ) {
+                // bm.map.setView( smkPointLatLng( binding.value.center ), binding.value.zoom )
+                // }
+
+                // bm.map.invalidateSize()
+
+                return bm
+            } ) 
+
+        // this.basemaps.forEach( function ( bm ) {
+        //     var bmLayers = smk.$viewer.createBasemapLayer( bm.id )
+        //     bm.map.addLayer( bmLayers[ 0 ] )
+        // } )
 
         this.current = smk.viewer.baseMap
+
+        this.changedActive( function () {
+            if ( !self.active ) return
+
+            Vue.nextTick( function () {
+                self.basemaps.forEach( function ( bm ) {
+                    // var bmLayers = smk.$viewer.createBasemapLayer( bm.id )
+                    // bm.map.addLayer( bmLayers[ 0 ] )
+
+                    var v = smk.$viewer.getView()
+                    self.map[ bm.id ].setView( smkPointLatLng( v.center ), v.zoom )
+                    self.map[ bm.id ].invalidateSize()
+                } )
+            } )
+        } )
 
         smk.on( this.id, {
             'activate': function () {
                 if ( !self.enabled ) return
 
                 self.active = !self.active
+                // if ( !self.active ) return
+
+                // self.basemaps.forEach( function ( bm ) {
+                // //     var bmLayers = smk.$viewer.createBasemapLayer( bm.id )
+                // //     bm.map.addLayer( bmLayers[ 0 ] )
+                //     bm.map.invalidateSize()
+                // } )
+
             },
 
             'set-base-map': function ( ev ) {

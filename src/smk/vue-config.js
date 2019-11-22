@@ -218,4 +218,22 @@ include.module( 'vue-config', [ 'vue' ], function ( inc ) {
         }
     } )
 
+    Vue.directive( 'content', {
+        unbind: function ( el, binding ) {
+            // console.log( 'unbind', binding )
+        },
+
+        inserted: function ( el, binding ) {
+            console.log( 'inserted', binding )
+            el.appendChild( binding.value.content )
+            // $( el ).append( binding.value.content )
+        },
+
+        update: function ( el, binding ) {
+            console.log( 'update', binding )
+            el.innerHTML = ''
+            el.appendChild( binding.value.content )
+        }
+    } )
+
 } )
