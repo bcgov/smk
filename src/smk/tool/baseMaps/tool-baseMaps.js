@@ -107,6 +107,8 @@ include.module( 'tool-baseMaps', [ 'tool', 'widgets', 'viewer', 'leaflet', 'tool
         } )
 
         smk.$viewer.changedView( function ( ev ) {
+            if ( !self.active ) return
+            
             self.basemaps.forEach( function ( bm ) {
                 bm.update()
             } )
