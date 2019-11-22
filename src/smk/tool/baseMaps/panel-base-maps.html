@@ -1,4 +1,4 @@
-<side-panel class="smk-base-maps-panel" v-bind:showHeader="true">
+<side-panel class="smk-base-maps-panel">
     <template slot="header">
         <slot></slot>
     </template>
@@ -8,13 +8,10 @@
         v-on:click="$$emit( 'set-base-map', basemap )" 
         v-bind:class="{ 'smk-active': basemap.id == current }"
     >
-        <!-- <h2>{{ basemap.title }}</h2> -->
         <div class="smk-base-map-sample" 
             v-bind:title="basemap.title"
             v-bind:style="mapStyle"
-            v-content="{ content: basemap.el }"
+            v-content="basemap"
         ></div>
-            <!-- v-map="{ basemap: basemap, center: center, zoom: zoom }" -->
     </div>
-
 </side-panel>
