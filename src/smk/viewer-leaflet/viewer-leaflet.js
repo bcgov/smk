@@ -194,7 +194,7 @@ include.module( 'viewer-leaflet', [ 'viewer', 'leaflet', 'layer-leaflet', 'featu
 
     function createBasemapTiled( id ) {
         /* jshint -W040 */
-        return [ L.tileLayer( this.url ) ]
+        return [ L.tileLayer( this.url, { attribution: this.attribution } ) ]
     }
 
     ViewerLeaflet.prototype.setBasemap = function ( basemapId ) {
