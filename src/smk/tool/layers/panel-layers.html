@@ -18,16 +18,17 @@
             v-on:click="$$emit( 'set-all-layers-visible', { visible: !allVisible, deep: $event.shiftKey } )"
         >{{ allVisible ? glyph.visible || 'visibility' : glyph.hidden || 'visibility_off' }}</i>
 
-        <input class="smk-filter" placeholder="Filter layers" 
-            v-show="command.filter !== false"
-            v-model="filter" 
-            v-on:input="$$emit( 'config', getConfigState() )"
-        >
+        <enter-input class="smk-filter"
+            placeholder="Filter layers" 
+            v-if="command.filter !== false"
+            v-bind:value="filter"
+            v-on:change="$$emit( 'change', { filter: $event } )"
+        ></enter-input>
 
         <toggle-button class="smk-legend-toggle"
             v-if="command.legend !== false"
-            v-model="legend"
-            v-on:change="!busy && $$emit( 'config', getConfigState() )"
+            v-bind:value="legend"
+            v-on:change="$$emit( 'change', { legend: $event } )"
         >Legend</toggle-button>
 
     </template>

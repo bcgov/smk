@@ -219,15 +219,6 @@ include.module( 'viewer-leaflet', [ 'viewer', 'leaflet', 'layer-leaflet', 'featu
 
     ViewerLeaflet.prototype.createBasemapLayer = function ( basemapId ) {
         return this.basemap[ basemapId ].create( basemapId )
-        // var lys = []
-        // lys.push( L.esri.basemapLayer( basemapId, { detectRetina: true } ) )
-
-        // if ( this.basemap[ basemapId ].labels )
-        //     this.basemap[ basemapId ].labels.forEach( function ( id ) {
-        //         lys.push( L.esri.basemapLayer( id, { detectRetina: true } ) )
-        //     } )
-
-        // return lys
     }
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //

@@ -14,31 +14,8 @@ include.module( 'tool-layers', [ 'tool', 'widgets', 'tool-layers.panel-layers-ht
     Vue.component( 'layers-panel', {
         extends: inc.widgets.toolPanel,
         template: inc[ 'tool-layers.panel-layers-html' ],
-        props: [ 'items', 'config', 'allVisible', 'glyph', 'command' ],
-        data: function () {
-            return Object.assign( {}, this.config )
-        },
-        watch: {
-            config: function ( val ) {
-                Object.keys( val ).forEach( function ( k ) {
-                    this[ k ] = val[ k ]
-                } )
-            }
-        },
-        methods: {
-            getConfigState: function () {
-                var self = this
-
-                var state = {}
-                Object.keys( this.config ).forEach( function ( k ) {
-                    state[ k ] = self[ k ]
-                } )
-                return state
-            },
-        }
+        props: [ 'items', 'allVisible', 'glyph', 'command', 'filter', 'legend' ],
     } )
-
-    function isLayerVisible( ly ) { return ly.visible }
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
     function LayersTool( option ) {
@@ -47,12 +24,10 @@ include.module( 'tool-layers', [ 'tool', 'widgets', 'tool-layers.panel-layers-ht
         this.makePropPanel( 'busy', false )
         this.makePropPanel( 'items', [] )
         this.makePropPanel( 'allVisible', true )
-        this.makePropPanel( 'config', {
-            legend: false,
-            filter: null
-        } )
         this.makePropPanel( 'glyph', {} )
         this.makePropPanel( 'command', {} )
+        this.makePropPanel( 'filter', null )
+        this.makePropPanel( 'legend', false )
 
         SMK.TYPE.Tool.prototype.constructor.call( this, $.extend( {
             // order:          3,
@@ -83,17 +58,17 @@ include.module( 'tool-layers', [ 'tool', 'widgets', 'tool-layers.panel-layers-ht
                 self.items = smk.$viewer.getLayerDisplayItems()
             },
 
-            'config': function ( ev ) {
-                // console.log( ev )
-                Object.assign( self.config, ev )
+            'change': function ( ev ) {
+                // console.log(ev)
+                Object.assign( self, ev )
 
-                smk.$viewer.layerDisplayContext.setLegendsVisible( ev.legend, smk.$viewer.layerId, smk.$viewer )
+                smk.$viewer.layerDisplayContext.setLegendsVisible( self.legend, smk.$viewer.layerId, smk.$viewer )
 
                 var re 
-                if ( !ev.filter || !ev.filter.trim() ) 
+                if ( !self.filter || !self.filter.trim() ) 
                     re = /.*/;
                 else {
-                    var f = ev.filter.trim()
+                    var f = self.filter.trim()
                     re = new RegExp( f.toLowerCase().split( /\s+/ ).map( function ( part ) { return '(?=.*' + part + ')' } ).join( '' ), 'i' )
                 }
                 smk.$viewer.layerDisplayContext.setFilter( re )
