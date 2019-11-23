@@ -8,34 +8,29 @@
     </template>
 
     <template slot="commands">
-
-        <!-- <div class="smk-separator"></div> -->
-
         <span class="smk-navigator" v-if="resultCount > 1 && command.navigator !== false">
-            <i class="material-icons smk-move smk-command smk-icon"
+            <command-button class="smk-move"
                 v-on:click="$$emit( 'move-previous', { instance: instance } )"
-            >navigate_before</i>
+                icon="navigate_before"
+            ></command-button>
 
-            <span class="smk-position">{{ resultPosition + 1 }}</span>
-            of
-            <span class="smk-position">{{ resultCount }}</span>
+            <span class="smk-position">{{ resultPosition + 1 }}</span> of <span class="smk-position">{{ resultCount }}</span>
 
-            <i class="material-icons smk-move smk-command smk-icon"
+            <command-button class="smk-move"
                 v-on:click="$$emit( 'move-next', { instance: instance } )"
-            >navigate_next</i>
+                icon="navigate_next"
+            ></command-button>
         </span>
 
-        <!-- <div class="smk-separator"></div> -->
-
-        <span class="smk-command smk-zoom"
+        <command-button class="smk-zoom"
             v-if="tool.zoom && command.zoom !== false"
             v-on:click="$$emit( 'zoom', { instance: instance } )"
-        >Zoom to</span>
+        >Zoom to</command-button>
 
-        <span class="smk-command smk-select"
+        <command-button class="smk-select"
             v-if="tool.select && command.select !== false"
             v-on:click="$$emit( 'select', { instance: instance } )"
-        >Add to selection</span>
+        >Add to selection</command-button>
 
         <select class="smk-command smk-attribute-mode" 
             v-if="layer && command.attributeMode !== false"
@@ -52,7 +47,6 @@
             <option value="feature-properties">Properties View</option>        
             <option value="feature-formatted">Formatted View</option>        
         </select>
-
     </template>
 
     <component class="smk-feature"
