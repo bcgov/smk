@@ -12,7 +12,8 @@ include.module( 'layer-display', [ 'jquery', 'util', 'event' ], function () {
             isEnabled:  true,
             inFilter:   true,
             showLegend: false,
-            legends:    null
+            legends:    null,
+            serial:     0
         }, option )
 
         if ( forceVisible )
@@ -70,10 +71,18 @@ include.module( 'layer-display', [ 'jquery', 'util', 'event' ], function () {
             callback( this, parents )
     }
 
-    LayerDisplay.layer.prototype.getLegends = function ( layerCatalog, viewer ) {
+    LayerDisplay.layer.prototype.getLegends = function ( layerCatalog, viewer, displayContext ) {
+        var self = this
+
         if ( !this.isEnabled ) return SMK.UTIL.resolved()
 
         return layerCatalog[ this.id ].getLegends( viewer )
+            .then( function ( lgs ) {
+                return lgs.map( function ( lg ) {
+                    lg.isVisible = function () { return displayContext.isItemVisible( self.id ) }
+                    return lg
+                } )
+            } )
     }
 
     LayerDisplay.layer.prototype.getVisible = function ( viewScale ) {
@@ -128,11 +137,11 @@ include.module( 'layer-display', [ 'jquery', 'util', 'event' ], function () {
 
     $.extend( LayerDisplay.group.prototype, LayerDisplay.folder.prototype )
 
-    LayerDisplay.group.prototype.getLegends = function ( layerCatalog, viewer ) {
+    LayerDisplay.group.prototype.getLegends = function ( layerCatalog, viewer, displayContext ) {
         if ( !this.isEnabled ) return
 
         return SMK.UTIL.waitAll( this.items.map( function ( item ) {
-            return item.getLegends( layerCatalog, viewer )
+            return item.getLegends( layerCatalog, viewer, displayContext )
         } ) )
         .then ( function ( legends ) {
             return legends.reduce( function ( accum, v ) { return accum.concat( v ) }, [] )
@@ -202,9 +211,12 @@ include.module( 'layer-display', [ 'jquery', 'util', 'event' ], function () {
             }
         } )
 
+        var s = 1
         this.changedVisibility( function () {
             self.root.each( function ( item ) {
                 item.isActuallyVisible = self.isItemVisible( item.id )
+                item.serial = s
+                s += 1
             } )
         } )
 
@@ -280,6 +292,8 @@ include.module( 'layer-display', [ 'jquery', 'util', 'event' ], function () {
     }
 
     LayerDisplayContext.prototype.setLegendsVisible = function ( visible, layerCatalog, viewer ) {
+        var self = this
+
         this.root.each( function ( item ) {
             if ( visible ) {
                 if ( item.legends === false ) return
@@ -290,7 +304,7 @@ include.module( 'layer-display', [ 'jquery', 'util', 'event' ], function () {
                 }
 
                 item.showLegend = 'waiting'
-                item.getLegends( layerCatalog, viewer )
+                item.getLegends( layerCatalog, viewer, self )
                     .then( function ( ls ) {
                         item.legends = ls
                         if ( item.showLegend == 'waiting' )
