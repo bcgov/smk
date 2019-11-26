@@ -30,8 +30,12 @@ include.module( 'layer-leaflet.layer-esri-feature-leaflet-js', [ 'layer.layer-es
         if ( layers[ 0 ].config.where )
             cfg.where = layers[ 0 ].config.where
 
-        if ( layers[ 0 ].config.drawingInfo )
+        if ( layers[ 0 ].config.drawingInfo ) {
             cfg.drawingInfo = layers[ 0 ].config.drawingInfo
+            if ( cfg.drawingInfo.renderer && cfg.drawingInfo.renderer.symbol && cfg.drawingInfo.renderer.symbol.url )
+                // cfg.drawingInfo.renderer.symbol.url = this.resolveUrl( cfg.drawingInfo.renderer.symbol.url )
+                cfg.drawingInfo.renderer.symbol.url = ( new URL( cfg.drawingInfo.renderer.symbol.url, document.location ) ).toString()
+        }
         
         var layer = L.esri.featureLayer( cfg )
         
