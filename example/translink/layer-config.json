@@ -495,7 +495,7 @@
             "xoffset": 0,
             "yoffset": 0,
             "type": "esriPMS",
-            "url": "https://cvrp.translink.ca/images/icons/parking.png",
+            "url": "./images/parking.png",
             "width": 22.5,
             "height": 22.5
           }
@@ -509,7 +509,21 @@
       "isVisible": true,
       "serviceUrl": "https://services7.arcgis.com/WpS8F3vcmrEQUG8m/arcgis/rest/services/PMV_Facilities_FL_DEV_1/FeatureServer/0",
       "scaleMin": 207900,
-      "drawingInfo": null
+      "drawingInfo": {
+        "renderer": {
+          "type": "simple",
+          "symbol": {
+            "angle": 0,
+            "xoffset": 0,
+            "yoffset": 0,
+            "type": "esriPMS",
+            "url": "./images/port.svg",
+            "width": 22.5,
+            "height": 22.5
+          }
+        },
+        "transparency": 0
+      }
     },
     {
       "type": "esri-feature",
@@ -527,7 +541,7 @@
             "xoffset": 0,
             "yoffset": 0,
             "type": "esriPMS",
-            "url": "https://cvrp.translink.ca/images/icons/directions.svg",
+            "url": "./images/directions.svg",
             "width": 22.5,
             "height": 22.5
           }
@@ -550,7 +564,7 @@
             "xoffset": 0,
             "yoffset": 0,
             "type": "esriPMS",
-            "url": "https://cvrp.translink.ca/images/icons/overhead_1.svg",
+            "url": "./images/overhead_1.svg",
             "width": 22.5,
             "height": 22.5
           }
@@ -573,7 +587,7 @@
             "xoffset": 0,
             "yoffset": 0,
             "type": "esriPMS",
-            "url": "https://cvrp.translink.ca/images/icons/overhead_2.svg",
+            "url": "./images/overhead_2.svg",
             "width": 22.5,
             "height": 22.5
           }
@@ -596,7 +610,7 @@
             "xoffset": 0,
             "yoffset": 0,
             "type": "esriPMS",
-            "url": "https://cvrp.translink.ca/images/icons/gas.png",
+            "url": "./images/gas.png",
             "width": 22.5,
             "height": 22.5
           }
@@ -619,7 +633,7 @@
             "xoffset": 0,
             "yoffset": 0,
             "type": "esriPMS",
-            "url": "https://cvrp.translink.ca/images/icons/inspection_2.png",
+            "url": "./images/inspection_2.png",
             "width": 22.5,
             "height": 22.5
           }
@@ -677,7 +691,7 @@
             "xoffset": 0,
             "yoffset": 0,
             "type": "esriPMS",
-            "url": "https://cvrp.translink.ca/images/icons/alert_major.svg",
+            "url": "./images/alert_major.svg",
             "width": 22.5,
             "height": 22.5
           }

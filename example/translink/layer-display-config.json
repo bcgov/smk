@@ -6,7 +6,7 @@
                 { 
                     "type": "folder",
                     "title": "Truck Routes",
-                    "isVisible": true,
+                    "isVisible": false,
                     "isExpanded": true,
                     "items": [                
                         {
