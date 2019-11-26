@@ -272,6 +272,11 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
         this.getSidepanelPosition = function () {
             return smk.getSidepanelPosition()
         }
+
+        this.changedLayerVisibility( function () {
+            // console.log('changedLayerVisibility')
+            self.updateLayersVisible()
+        } )
     }
 
     Viewer.prototype.initializeLayers = function ( smk ) {
@@ -311,22 +316,22 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
     }
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
-    Viewer.prototype.setLayersVisible = function ( layerIds, visible ) {
-        var self = this
+    // Viewer.prototype.setLayersVisible = function ( layerIds, visible ) {
+    //     var self = this
 
-        var layerCount = this.layerIds.length
-        if ( layerCount == 0 ) return SMK.UTIL.resolved()
+    //     var layerCount = this.layerIds.length
+    //     if ( layerCount == 0 ) return SMK.UTIL.resolved()
 
-        var madeChange = false
-        layerIds.forEach( function ( id ) {
-            if ( self.layerDisplayContext.setItemVisible( id, visible ) != null )
-                madeChange = true
-        } )
+    //     var madeChange = false
+    //     layerIds.forEach( function ( id ) {
+    //         if ( self.layerDisplayContext.setItemVisible( id, visible ) != null )
+    //             madeChange = true
+    //     } )
 
-        if ( !madeChange ) return SMK.UTIL.resolved()
+    //     if ( !madeChange ) return SMK.UTIL.resolved()
         
-        return this.updateLayersVisible()
-    }
+    //     return this.updateLayersVisible()
+    // }
 
     Viewer.prototype.updateLayersVisible = function () {
         var self = this
@@ -345,6 +350,7 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
         var merged
         this.layerDisplayContext.getLayerIds().forEach( function ( id, i ) {
             if ( !self.layerDisplayContext.isItemVisible( id )  ) return
+                console.log( 'visible',id )
 
             var ly = self.layerId[ id ]
             if ( !merged ) {

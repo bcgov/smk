@@ -12,6 +12,7 @@
                         {
                             "type": "group",
                             "title": "Truck Routes",
+                            "isVisible": false,
                             "items": [
                                 { "id": "truck-routes-high-zoom" },
                                 { "id": "truck-routes" }
@@ -20,6 +21,7 @@
                         {
                             "type": "group",
                             "title": "Designated Municipal Truck Route",
+                            "isVisible": false,
                             "items": [
                                 { "id": "designated-municipal-truck-routes-with-restrictions-high-zoom" },
                                 { "id": "designated-municipal-truck-route-with-restrictions" }
@@ -36,6 +38,7 @@
                         {
                             "type": "group",
                             "title": "Restrictions & Warnings",
+                            "isVisible": false,
                             "items": [
                                 { "id": "truck-advisories-restrictions-high-zoom" },
                                 { "id": "truck-advisories-restrictions" }
@@ -44,6 +47,7 @@
                         {
                             "type": "group",
                             "title": "Temporary Road Closures",
+                            "isVisible": false,
                             "items": [
                                 { "id": "temporary-road-closure-extent" },
                                 { "id": "temporary-road-closure" }
@@ -57,9 +61,9 @@
                     "isVisible": false,
                     "isExpanded": true,
                     "items": [                
-                        { "id": "overhead-directional-signs" },
-                        { "id": "overhead-structure-without-height-marker" },
-                        { "id": "overhead-structure-with-height-marker" }
+                        { "id": "overhead-directional-signs", "isVisible": false },
+                        { "id": "overhead-structure-without-height-marker", "isVisible": false },
+                        { "id": "overhead-structure-with-height-marker", "isVisible": false }
                     ]
                 },
                 { 
@@ -69,15 +73,16 @@
                     "isExpanded": true,
                     "items": [                
 
-                        { "id": "inspection-station" },
-                        { "id": "cardlock" },
-                        { "id": "truck-parking" },
-                        { "id": "port-of-vancouver-facilities-terminals" },
-                        { "id": "industrial-area" },
-                        { "id": "downtown-vancouver" },
+                        { "id": "inspection-station", "isVisible": false },
+                        { "id": "cardlock", "isVisible": false },
+                        { "id": "truck-parking", "isVisible": false },
+                        { "id": "port-of-vancouver-facilities-terminals", "isVisible": false },
+                        { "id": "industrial-area", "isVisible": false },
+                        { "id": "downtown-vancouver", "isVisible": false },
                         {
                             "type": "group",
                             "title": "Major Road Network",
+                            "isVisible": false,
                             "items": [
                                 { "id": "major-road-network-high-zoom" },
                                 { "id": "major-road-network" }
@@ -86,12 +91,13 @@
                         {
                             "type": "group",
                             "title": "Provincial Highway",
+                            "isVisible": false,
                             "items": [
                                 { "id": "provincial-highway-high-zoom" },
                                 { "id": "provincial-highway" }
                             ]
                         },
-                        { "id": "metro-vancouver-boundary" }
+                        { "id": "metro-vancouver-boundary", "isVisible": false }
                     ]
                 }
             ]

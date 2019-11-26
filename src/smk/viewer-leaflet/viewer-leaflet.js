@@ -48,17 +48,16 @@ include.module( 'viewer-leaflet', [ 'viewer', 'leaflet', 'layer-leaflet', 'featu
             self.setBasemap( smk.viewer.baseMap )
         }
 
-        function changedView( ev) {
-            return function () {
-                self.changedView( ev )
-            }
-        }
+        this.changedViewDebounced = SMK.UTIL.makeDelayedCall( function () {
+            // console.log('changedView')
+            self.changedView()
+        }, { delay: 1000 } )
 
-        self.map.on( 'zoomstart', changedView( { operation: 'zoom', after: 'start' } ) )
-        self.map.on( 'movestart', changedView( { operation: 'move', after: 'start' } ) )
-        self.map.on( 'zoomend', changedView( { operation: 'zoom', after: 'end' } ) )
-        self.map.on( 'moveend', changedView( { operation: 'move', after: 'end' } ) )
-        changedView()()
+        self.map.on( 'zoomstart', this.changedViewDebounced ) 
+        self.map.on( 'movestart', this.changedViewDebounced )
+        self.map.on( 'zoomend', this.changedViewDebounced )
+        self.map.on( 'moveend', this.changedViewDebounced )
+        this.changedViewDebounced()
 
         self.finishedLoading( function () {
             self.map.eachLayer( function ( ly ) {

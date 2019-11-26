@@ -41,6 +41,7 @@ include.module( 'layer-leaflet.layer-esri-feature-leaflet-js', [ 'layer.layer-es
         
         if ( layers[ 0 ].legendCacheResolve ) {
             layer.legend( function ( err, leg ) {
+                console.log(err,leg)
                 layers[ 0 ].legendCacheResolve( err ? null : leg.layers[ 0 ].legend )
                 layers[ 0 ].legendCacheResolve = null
             } )
