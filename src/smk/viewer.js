@@ -306,7 +306,7 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
 
         this.layerDisplayContext.setView( this.getView() )        
 
-        return this.layerDisplayContext.root.items
+        return this.layerDisplayContext.root
     }
 
     Viewer.prototype.handlePick = function ( priority, handler ) {

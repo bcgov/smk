@@ -7,14 +7,19 @@ include.module( 'tool-layers', [ 'tool', 'widgets', 'tool-layers.panel-layers-ht
 
     Vue.component( 'layer-display', {
         template: inc[ 'tool-layers.layer-display-html' ],
-        props: [ 'id', 'items', 'glyph', 'type' ],
+        props: {
+            id:      { type: String },
+            display: { type: Object },
+            glyph:   { type: Object },
+            inGroup: { type: Boolean, default: false }
+        },
         mixins: [ inc.widgets.emit ],
     } )
 
     Vue.component( 'layers-panel', {
         extends: inc.widgets.toolPanel,
         template: inc[ 'tool-layers.panel-layers-html' ],
-        props: [ 'items', 'allVisible', 'glyph', 'command', 'filter', 'legend' ],
+        props: [ 'display', 'allVisible', 'glyph', 'command', 'filter', 'legend' ],
     } )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
@@ -22,7 +27,7 @@ include.module( 'tool-layers', [ 'tool', 'widgets', 'tool-layers.panel-layers-ht
         this.makePropWidget( 'icon' ) //, 'layers' )
 
         this.makePropPanel( 'busy', false )
-        this.makePropPanel( 'items', [] )
+        this.makePropPanel( 'display', {} )
         this.makePropPanel( 'allVisible', true )
         this.makePropPanel( 'glyph', {} )
         this.makePropPanel( 'command', {} )
@@ -55,7 +60,7 @@ include.module( 'tool-layers', [ 'tool', 'widgets', 'tool-layers.panel-layers-ht
                 self.active = !self.active
                 if ( !self.active ) return
 
-                self.items = smk.$viewer.getLayerDisplayItems()
+                self.display = smk.$viewer.getLayerDisplayItems()
             },
 
             'change': function ( ev ) {
