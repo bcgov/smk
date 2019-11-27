@@ -4,15 +4,16 @@
         v-if="item.inFilter"
     >
         <div class="smk-item"
-            v-bind:class="{ 
-                'smk-visible': item.isVisible,
-                'smk-expanded': item.isExpanded, 
+            v-bind:class="[ 'smk-display-' + item.type, { 
+                'smk-visible':   item.isVisible,
+                'smk-expanded':  item.isExpanded, 
                 'smk-disabled': !item.isEnabled,
-                'smk-obscured': !item.isActuallyVisible
-            }"
+                'smk-obscured': !item.isActuallyVisible,
+            } ]"
+            v-if="type != 'group'"
         >
             <i class="smk-folder-expand material-icons smk-command smk-icon"
-                v-if="item.isExpanded != null"
+                v-if="item.type == 'folder'"
                 v-bind:title="'Expand ' + item.title"
                 v-on:click="$$emit( 'set-folder-expanded', { id: item.id, expanded: !item.isExpanded } )"
             >{{ item.isExpanded ? 'arrow_drop_down' : 'arrow_right' }}</i>
@@ -29,13 +30,11 @@
 
         <div class="smk-legend" 
             v-if="item.showLegend && item.legends && item.isActuallyVisible"
-            v-bind:key="item.serial"
         >
             <span v-if="item.showLegend == 'waiting'">Requesting</span>
 
             <div class="smk-legend-item" 
                 v-for="legend, i in item.legends"
-                v-if="legend.isVisible()"
             >
                 <img v-bind:src="legend.url" v-bind:style="{ width: legend.width + 'px', height: legend.height + 'px' }">
                 <span class="smk-legend-title">{{ legend.title }}</span>
@@ -43,10 +42,10 @@
         </div>
 
         <layer-display
-            v-if="item.isExpanded"
-            v-bind:items="item.items"
             v-bind:id="id"
+            v-bind:items="item.items"
             v-bind:glyph="glyph"
+            v-bind:type="item.type"
         ></layer-display>
     </template>
 </div>

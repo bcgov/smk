@@ -7,7 +7,7 @@ include.module( 'tool-layers', [ 'tool', 'widgets', 'tool-layers.panel-layers-ht
 
     Vue.component( 'layer-display', {
         template: inc[ 'tool-layers.layer-display-html' ],
-        props: [ 'id', 'items', 'glyph' ],
+        props: [ 'id', 'items', 'glyph', 'type' ],
         mixins: [ inc.widgets.emit ],
     } )
 
