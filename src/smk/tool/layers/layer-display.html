@@ -1,43 +1,49 @@
-<div v-bind:class="[ 'smk-display', 'smk-display-' + display.type ]">
+<div v-bind:class="[ 
+    'smk-display', 
+    'smk-display-' + display.type, 
+    display.class, 
+    { 
+        'smk-visible':   display.isVisible,
+        'smk-expanded':  display.isExpanded, 
+        'smk-disabled': !display.isEnabled,
+        'smk-obscured': !display.isActuallyVisible,
+    } 
+]">
     <div class="smk-item"
-        v-if="!inGroup && display.id != 'root'"
-        v-bind:class="{ 
-            'smk-visible':   display.isVisible,
-            'smk-expanded':  display.isExpanded, 
-            'smk-disabled': !display.isEnabled,
-            'smk-obscured': !display.isActuallyVisible,
-        }"
+        v-if="display.id != 'root'"
     >
         <i class="smk-folder-expand material-icons smk-command smk-icon"
-            v-if="display.type == 'folder'"
+            v-if="display.type == 'folder' && !inGroup"
             v-bind:title="'Expand ' + display.title"
             v-on:click="$$emit( 'set-folder-expanded', { id: display.id, expanded: !display.isExpanded } )"
         >{{ display.isExpanded ? 'arrow_drop_down' : 'arrow_right' }}</i>
 
         <i class="smk-visibility material-icons smk-command smk-icon"
+            v-if="!inGroup"
             v-bind:title="'Toggle visibility of \'' + display.title + '\'' + ( display.type == 'folder' ? '\nSHIFT-click to toggle visibility on internal layers.' : '' ) "
             v-on:click="$$emit( 'set-item-visible', { id: display.id, visible: !display.isVisible, deep: $event.shiftKey } )"
         >{{ display.isVisible && display.isEnabled ? glyph.visible || 'visibility' : glyph.hidden || 'visibility_off' }}</i>
 
         <span class="smk-layer-title"
+            v-if="!inGroup"
             v-bind:title="'ID: ' + ( display.id )"
         >{{ display.title }}</span>
-    </div>
 
-    <div class="smk-legend" 
-        v-if="display.showLegend && display.legends && display.isActuallyVisible"
-    >
-        <div class="smk-legend-item" 
-            v-for="legend in display.legends"
+        <div class="smk-legend" 
+            v-if="display.showLegend && display.legends && display.isActuallyVisible"
         >
-            <img v-bind:src="legend.url" v-bind:style="{ width: legend.width + 'px', height: legend.height + 'px' }">
-            <span class="smk-legend-title">{{ legend.title }}</span>
+            <div class="smk-legend-item" 
+                v-for="legend in display.legends"
+            >
+                <img v-bind:src="legend.url" v-bind:style="{ width: legend.width + 'px', height: legend.height + 'px' }">
+                <span class="smk-legend-title">{{ legend.title }}</span>
+            </div>
         </div>
     </div>
     
     <layer-display
         v-for="item in display.items"
-        v-if="item.inFilter"
+        v-if="item.inFilter && display.isExpanded"
         v-bind:key="item.id"
         v-bind:id="id"
         v-bind:display="item"

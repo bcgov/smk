@@ -13,7 +13,7 @@ include.module( 'layer-display', [ 'jquery', 'util', 'event' ], function () {
             inFilter:   true,
             showLegend: false,
             legends:    null,
-            serial:     0
+            class:      null,
         }, option )
 
         if ( forceVisible )
@@ -128,7 +128,7 @@ include.module( 'layer-display', [ 'jquery', 'util', 'event' ], function () {
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
     LayerDisplay.group = function ( option, layerCatalog, forceVisible ) {
-        LayerDisplay.prototype.constructor.call( this, Object.assign( option, { isExpanded: null } ), forceVisible )
+        LayerDisplay.prototype.constructor.call( this, Object.assign( option, { isExpanded: true } ), forceVisible )
 
         this.items = option.items.map( function ( item ) {
             return createLayerDisplay( item, layerCatalog, true )
@@ -200,13 +200,10 @@ include.module( 'layer-display', [ 'jquery', 'util', 'event' ], function () {
             }
         } )
 
-        var s = 1
         this.changedVisibility( function () {
             self.root.each( function ( item ) {
                 item.isActuallyVisible = self.isItemVisible( item.id )
                 // if ( item.isActuallyVisible ) console.log( 'visible',item.id,item.serial )
-                item.serial = s
-                s += 1
             } )            
         } )
 
