@@ -34,8 +34,9 @@
     </template>
     
     <layer-display 
+        v-bind:id="id"
         v-bind:items="items"
         v-bind:glyph="glyph"
-        id="layers"
+        type="folder"
     ></layer-display>
 </side-panel>

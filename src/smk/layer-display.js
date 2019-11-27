@@ -136,17 +136,6 @@ include.module( 'layer-display', [ 'jquery', 'util', 'event' ], function () {
     }
 
     $.extend( LayerDisplay.group.prototype, LayerDisplay.folder.prototype )
-
-    LayerDisplay.group.prototype.getLegends = function ( layerCatalog, viewer, displayContext ) {
-        if ( !this.isEnabled ) return
-
-        return SMK.UTIL.waitAll( this.items.map( function ( item ) {
-            return item.getLegends( layerCatalog, viewer, displayContext )
-        } ) )
-        .then ( function ( legends ) {
-            return legends.reduce( function ( accum, v ) { return accum.concat( v ) }, [] )
-        } )
-    }
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
     function createLayerDisplay( option, layerCatalog, forceVisible ) {
@@ -215,7 +204,7 @@ include.module( 'layer-display', [ 'jquery', 'util', 'event' ], function () {
         this.changedVisibility( function () {
             self.root.each( function ( item ) {
                 item.isActuallyVisible = self.isItemVisible( item.id )
-                if ( item.isActuallyVisible ) console.log( 'visible',item.id,item.serial )
+                // if ( item.isActuallyVisible ) console.log( 'visible',item.id,item.serial )
                 item.serial = s
                 s += 1
             } )            
@@ -318,8 +307,6 @@ include.module( 'layer-display', [ 'jquery', 'util', 'event' ], function () {
             else {
                 item.showLegend = false
             }
-
-            if ( item.type == 'group' ) return false 
         } )
     }
 
@@ -338,7 +325,6 @@ include.module( 'layer-display', [ 'jquery', 'util', 'event' ], function () {
     }
 
     LayerDisplayContext.prototype.setView = function ( view ) {
-        console.warn('set view')
         this.view = view
         this.changedVisibility()        
     }
