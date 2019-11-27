@@ -61,9 +61,9 @@
                     "isVisible": false,
                     "isExpanded": true,
                     "items": [                
-                        { "id": "overhead-structure-with-height-marker", "isVisible": true },
-                        { "id": "overhead-structure-without-height-marker", "isVisible": false },
-                        { "id": "overhead-directional-signs", "isVisible": false }
+                        { "id": "overhead-structure-with-height-marker", "isVisible": true, "class": "smk-inline-legend" },
+                        { "id": "overhead-structure-without-height-marker", "isVisible": false, "class": "smk-inline-legend" },
+                        { "id": "overhead-directional-signs", "isVisible": false, "class": "smk-inline-legend" }
                     ]
                 },
                 { 
@@ -73,12 +73,12 @@
                     "isExpanded": true,
                     "items": [                
 
-                        { "id": "inspection-station", "isVisible": true },
-                        { "id": "cardlock", "isVisible": true },
-                        { "id": "truck-parking", "isVisible": true },
-                        { "id": "port-of-vancouver-facilities-terminals", "isVisible": true },
-                        { "id": "industrial-area", "isVisible": true },
-                        { "id": "downtown-vancouver", "isVisible": true },
+                        { "id": "inspection-station", "isVisible": true, "class": "smk-inline-legend" },
+                        { "id": "cardlock", "isVisible": true, "class": "smk-inline-legend" },
+                        { "id": "truck-parking", "isVisible": true, "class": "smk-inline-legend" },
+                        { "id": "port-of-vancouver-facilities-terminals", "isVisible": true, "class": "smk-inline-legend" },
+                        { "id": "industrial-area", "isVisible": true, "class": "smk-inline-legend" },
+                        { "id": "downtown-vancouver", "isVisible": true, "class": "smk-inline-legend" },
                         {
                             "type": "group",
                             "title": "Major Road Network",
@@ -97,7 +97,7 @@
                                 { "id": "provincial-highway" }
                             ]
                         },
-                        { "id": "metro-vancouver-boundary", "isVisible": true }
+                        { "id": "metro-vancouver-boundary", "isVisible": true, "class": "smk-inline-legend" }
                     ]
                 }
             ]

@@ -22,6 +22,8 @@
         }
       }
     },
+
+
     {
       "type": "esri-feature",
       "id": "industrial-area",
@@ -49,6 +51,8 @@
         }
       }
     },
+
+
     {
       "type": "esri-feature",
       "id": "downtown-vancouver",
@@ -76,6 +80,8 @@
         }
       }
     },
+
+
     {
       "type": "esri-feature",
       "id": "major-road-network-high-zoom",
@@ -96,10 +102,13 @@
             "width": 7.5,
             "type": "esriSLS",
             "style": "esriSLSSolid"
-          }
+          },
+          "label": "Major Road Network"
         }
       }
     },
+
+
     {
       "type": "esri-feature",
       "id": "major-road-network",
@@ -122,10 +131,13 @@
             "width": 5.25,
             "type": "esriSLS",
             "style": "esriSLSSolid"
-          }
+          },
+          "label": "Major Road Network"
         }
       }
     },
+
+
     {
       "type": "esri-feature",
       "id": "provincial-highway-high-zoom",
@@ -147,10 +159,13 @@
             "width": 3,
             "type": "esriSLS",
             "style": "esriSLSSolid"
-          }
+          },
+          "label": "Provincial Highway"
         }
       }
     },
+
+
     {
       "type": "esri-feature",
       "id": "provincial-highway",
@@ -172,10 +187,13 @@
             "width": 1.5,
             "type": "esriSLS",
             "style": "esriSLSSolid"
-          }
+          },
+          "label": "Provincial Highway"
         }
       }
     },
+
+
     {
       "type": "esri-feature",
       "id": "truck-advisories-restrictions-high-zoom",
@@ -222,6 +240,8 @@
         }
       }
     },
+
+
     {
       "type": "esri-feature",
       "id": "truck-advisories-restrictions",
@@ -268,6 +288,8 @@
         }
       }
     },
+
+
     {
       "type": "esri-feature",
       "id": "designated-municipal-truck-routes-with-restrictions-high-zoom",
@@ -288,10 +310,13 @@
             "width": 3,
             "type": "esriSLS",
             "style": "esriSLSSolid"
-          }
+          },
+          "label": "Designated Municipal Truck Route"
         }
       }
     },
+
+
     {
       "type": "esri-feature",
       "id": "designated-municipal-truck-route-with-restrictions",
@@ -312,10 +337,13 @@
             "width": 1.5,
             "type": "esriSLS",
             "style": "esriSLSSolid"
-          }
+          },
+          "label": "Designated Municipal Truck Route"
         }
       }
     },
+
+
     {
       "type": "esri-feature",
       "id": "truck-routes-high-zoom",
@@ -393,6 +421,8 @@
         }
       }
     },
+
+
     {
       "type": "esri-feature",
       "id": "truck-routes",
@@ -471,6 +501,8 @@
         }
       }
     },
+
+
     {
       "type": "esri-feature",
       "id": "truck-parking",
@@ -492,6 +524,8 @@
         }
       }
     },
+
+
     {
       "type": "esri-feature",
       "id": "port-of-vancouver-facilities-terminals",
@@ -514,6 +548,8 @@
         "transparency": 0
       }
     },
+
+
     {
       "type": "esri-feature",
       "id": "overhead-directional-signs",
@@ -537,6 +573,8 @@
         }
       }
     },
+
+
     {
       "type": "esri-feature",
       "id": "overhead-structure-without-height-marker",
@@ -560,6 +598,8 @@
         }
       }
     },
+
+
     {
       "type": "esri-feature",
       "id": "overhead-structure-with-height-marker",
@@ -582,6 +622,8 @@
         }
       }
     },
+
+
     {
       "type": "esri-feature",
       "id": "cardlock",
@@ -604,6 +646,8 @@
         }
       }
     },
+
+
     {
       "type": "esri-feature",
       "id": "inspection-station",
@@ -626,6 +670,8 @@
         }
       }
     },
+
+
     {
       "type": "esri-feature",
       "id": "temporary-road-closure-extent",
@@ -656,10 +702,13 @@
             },
             "type": "esriSFS",
             "style": "esriSFSSolid"
-          }
+          },
+          "label": "Temporary Road Closure Extent"
         }
       }
     },
+
+
     {
       "type": "esri-feature",
       "id": "temporary-road-closure",
@@ -678,7 +727,8 @@
             "url": "./images/alert_major.svg",
             "width": 22.5,
             "height": 22.5
-          }
+          },
+          "label": "Temporary Road Closure"
         }
       }
     }
