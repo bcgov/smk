@@ -6,13 +6,13 @@
                 { 
                     "type": "folder",
                     "title": "Truck Routes",
-                    "isVisible": false,
+                    "isVisible": true,
                     "isExpanded": true,
                     "items": [                
                         {
                             "type": "group",
                             "title": "Truck Routes",
-                            "isVisible": false,
+                            "isVisible": true,
                             "items": [
                                 { "id": "truck-routes-high-zoom" },
                                 { "id": "truck-routes" }
@@ -21,7 +21,7 @@
                         {
                             "type": "group",
                             "title": "Designated Municipal Truck Route",
-                            "isVisible": false,
+                            "isVisible": true,
                             "items": [
                                 { "id": "designated-municipal-truck-routes-with-restrictions-high-zoom" },
                                 { "id": "designated-municipal-truck-route-with-restrictions" }
@@ -32,13 +32,13 @@
                 { 
                     "type": "folder",
                     "title": "Truck Advisories & Restrictions",
-                    "isVisible": false,
+                    "isVisible": true,
                     "isExpanded": true,
                     "items": [                
                         {
                             "type": "group",
                             "title": "Restrictions & Warnings",
-                            "isVisible": false,
+                            "isVisible": true,
                             "items": [
                                 { "id": "truck-advisories-restrictions-high-zoom" },
                                 { "id": "truck-advisories-restrictions" }
@@ -47,7 +47,7 @@
                         {
                             "type": "group",
                             "title": "Temporary Road Closures",
-                            "isVisible": false,
+                            "isVisible": true,
                             "items": [
                                 { "id": "temporary-road-closure-extent" },
                                 { "id": "temporary-road-closure" }
@@ -61,9 +61,9 @@
                     "isVisible": false,
                     "isExpanded": true,
                     "items": [                
-                        { "id": "overhead-directional-signs", "isVisible": false },
+                        { "id": "overhead-structure-with-height-marker", "isVisible": true },
                         { "id": "overhead-structure-without-height-marker", "isVisible": false },
-                        { "id": "overhead-structure-with-height-marker", "isVisible": false }
+                        { "id": "overhead-directional-signs", "isVisible": false }
                     ]
                 },
                 { 
@@ -73,12 +73,12 @@
                     "isExpanded": true,
                     "items": [                
 
-                        { "id": "inspection-station", "isVisible": false },
-                        { "id": "cardlock", "isVisible": false },
-                        { "id": "truck-parking", "isVisible": false },
-                        { "id": "port-of-vancouver-facilities-terminals", "isVisible": false },
-                        { "id": "industrial-area", "isVisible": false },
-                        { "id": "downtown-vancouver", "isVisible": false },
+                        { "id": "inspection-station", "isVisible": true },
+                        { "id": "cardlock", "isVisible": true },
+                        { "id": "truck-parking", "isVisible": true },
+                        { "id": "port-of-vancouver-facilities-terminals", "isVisible": true },
+                        { "id": "industrial-area", "isVisible": true },
+                        { "id": "downtown-vancouver", "isVisible": true },
                         {
                             "type": "group",
                             "title": "Major Road Network",
@@ -97,7 +97,7 @@
                                 { "id": "provincial-highway" }
                             ]
                         },
-                        { "id": "metro-vancouver-boundary", "isVisible": false }
+                        { "id": "metro-vancouver-boundary", "isVisible": true }
                     ]
                 }
             ]
