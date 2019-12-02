@@ -1,4 +1,4 @@
-include.module( 'tool-bespoke', [ 'tool', 'widgets', 'tool-bespoke.panel-bespoke-html' ], function ( inc ) {
+include.module( 'tool-bespoke', [ 'tool', 'widgets', 'tool-bespoke.panel-bespoke-html', 'vue-config' ], function ( inc ) {
     "use strict";
 
     Vue.component( 'bespoke-widget', {
@@ -10,36 +10,18 @@ include.module( 'tool-bespoke', [ 'tool', 'widgets', 'tool-bespoke.panel-bespoke
         template: inc[ 'tool-bespoke.panel-bespoke-html' ],
         props: [ 'content', 'showSwipe' ]
     } )
-
-    Vue.directive( 'content', {
-        unbind: function ( el, binding ) {
-            // console.log( 'unbind', binding )
-        },
-
-        inserted: function ( el, binding ) {
-            // console.log( 'inserted', binding )
-
-            $( el ).append( binding.value.content )
-        },
-
-        update: function ( el, binding ) {
-            // console.log( 'update', binding )
-        }
-    } )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
     function BespokeTool( option ) {
         this.makePropWidget( 'icon', 'extension' ) 
 
-        this.makePropPanel( 'content', null )
+        this.makePropPanel( 'content', {} )
         this.makePropPanel( 'showSwipe', false )
 
         SMK.TYPE.Tool.prototype.constructor.call( this, $.extend( {
             widgetComponent:'bespoke-widget',
-            panelComponent: 'bespoke-panel',
-            content:        null
+            panelComponent: 'bespoke-panel'
         }, option ) )
-
     }
 
     SMK.TYPE.BespokeTool = BespokeTool
@@ -67,10 +49,12 @@ include.module( 'tool-bespoke', [ 'tool', 'widgets', 'tool-bespoke.panel-bespoke
             }
         } )
 
+        this.content.create = function ( el ) {
+            SMK.HANDLER.get( self.id, 'activated' )( smk, self, el )
+        }
+
         this.changedActive( function () {
-            if ( self.active )
-                SMK.HANDLER.get( self.id, 'activated' )( smk, self )
-            else
+            if ( !self.active )
                 SMK.HANDLER.get( self.id, 'deactivated' )( smk, self )
         } )
 
