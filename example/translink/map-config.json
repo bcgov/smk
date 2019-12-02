@@ -15,7 +15,8 @@
         ]
     },
     "baseMap": "StamenTonerLight",
-    "minZoom": 10
+    "minZoom": 10,
+    "activeTool": "directions"
   },
   "tools": [
     {
@@ -40,7 +41,8 @@
       "command": {
         "allVisibility": true,
         "filter": true
-      }
+      },
+      "order": 3
     },
     {
       "type": "identify",
@@ -52,7 +54,8 @@
       "command": {
         "attributeMode": false,
         "clear": false
-      }
+      },
+      "order": 2
     },
     {
       "type": "pan",
@@ -82,7 +85,8 @@
       "mapStyle": {
         "width": "120px",
         "height": "120px"
-      }
+      },
+      "order": 4
     },
     {
       "type": "search",
@@ -94,7 +98,17 @@
     },
     {
       "type": "directions",
-      "enabled": true
+      "enabled": true,
+      "position": "toolbar",
+      "order": 1
+    },
+    {
+      "type": "bespoke",
+      "enabled": true,
+      "position": "toolbar",
+      "title": "Feedback",
+      "icon": "feedback",
+      "order": 5
     }
   ]
 }
