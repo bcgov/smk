@@ -6,14 +6,16 @@ include.module( 'check-directions', [], function ( inc ) {
             type: 'directions-route',
             enabled: true,
             position: tool.position,
-            parentId: tool.id
+            parentId: tool.id,
+            command: tool.command
         } )
 
         smk.tools.push( {
             type: 'directions-options',
             enabled: true,
             position: tool.position,
-            parentId: tool.id
+            parentId: tool.id,
+            command: tool.command
         } )
     }
     

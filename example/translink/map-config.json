@@ -100,7 +100,10 @@
       "type": "directions",
       "enabled": true,
       "position": "toolbar",
-      "order": 1
+      "order": 1,
+      "command": {
+          "criteria": false
+      }
     },
     {
       "type": "bespoke",
