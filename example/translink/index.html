@@ -3,7 +3,7 @@
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Translink - SMK</title>
+        <title>BETA - CVRP - Translink</title>
         <!-- SMK BOOTSTRAP - - - - - - - -->
         <script src="../../smk.js"></script>
             <!-- smk-container-sel="#smk-map-frame" -->
@@ -26,6 +26,17 @@
                 display:            flex;
                 justify-content:    flex-start;
                 align-items:        center;
+            }
+
+            #build-info {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-end;
+
+                flex-grow: 1;
+                font-size: 12px;
+                color: #ccc;
+                padding-right: 10px;
             }
 
             img.siteLogo {
@@ -186,6 +197,7 @@
             <!-- <img src="bc-gov-logo-transparent.png"> -->
             <img src="https://tlweblibs.translink.ca/TransLink-logo-white.svg" alt="TransLink Logo" class="siteLogo">
             <div id="header-title">Commercial Vehicle Route Planner Beta</div>
+            <div id="build-info"></div>
         </div>
         <div id="smk-map-frame"></div>
 
@@ -229,6 +241,11 @@
                 enctype="text/plain"
                 action="mailto:bjubb@vividsolutions.com?subject=Translink app feedback"
             >
+                <label>You can submit feedback here:
+                    <a target="_blank" href="https://translink.checkbox.ca/CVRP-Feedback.aspx">CVRP-Feedback</a>
+                    Or you use this form:
+                </label>
+
                 <label class="name">Your name
                     <input name="name">
                 </label>
@@ -245,6 +262,7 @@
                     <button type="submit">Send Feedback</button>
                     <button type="reset">Reset</button>
                 </div>
+
             </form>
         </template>
     </body>
@@ -261,8 +279,21 @@
             SMK.HANDLER.set( 'bespoke', 'initialized', function ( smk ) {} )
 
             SMK.HANDLER.set( 'bespoke', 'activated', function ( smk, tool, el ) {
-                el.appendChild( document.importNode( document.getElementById( 'feedback' ).content, true ) )
+                var fm = document.importNode( document.getElementById( 'feedback' ).content, true )
+                $( fm ).find( 'form' )
+                    .append( $( '<input type="hidden">' ).prop( 'name', 'version' ).val( SMK.BUILD.version ) )
+                    .append( $( '<input type="hidden">' ).prop( 'name', 'lastCommit' ).val( SMK.BUILD.lastCommit ) )
+                    .append( $( '<input type="hidden">' ).prop( 'name', 'commit' ).val( SMK.BUILD.commit ) )
+                    .append( $( '<input type="hidden">' ).prop( 'name', 'branch' ).val( SMK.BUILD.branch ) )
+
+                el.appendChild( fm )               
             } )
+
+            $( '#build-info' ).empty()
+                .append( '<div>Version: ' + SMK.BUILD.version +'</div>' )
+                .append( '<div>Last commit: ' + SMK.BUILD.lastCommit +'</div>' )
+                .append( '<div>Commit ID: ' + SMK.BUILD.commit +'</div>' )
+                .append( '<div>Branch: ' + SMK.BUILD.branch +'</div>' )
         } )
     </script>
 
