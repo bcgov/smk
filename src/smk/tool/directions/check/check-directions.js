@@ -7,7 +7,8 @@ include.module( 'check-directions', [], function ( inc ) {
             enabled: true,
             position: tool.position,
             parentId: tool.id,
-            command: tool.command
+            command: tool.command,
+            truck: tool.truck
         } )
 
         smk.tools.push( {
@@ -15,7 +16,8 @@ include.module( 'check-directions', [], function ( inc ) {
             enabled: true,
             position: tool.position,
             parentId: tool.id,
-            command: tool.command
+            command: tool.command,
+            truck: tool.truck
         } )
     }
     

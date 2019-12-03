@@ -102,9 +102,11 @@
       "position": "toolbar",
       "order": 1,
       "command": {
-          "criteria": false
+          "criteria": false,
+          "optimal": false
       },
-      "apiKey": "11dd756f680c47b5aef5093d95543738"
+      "apiKey": "11dd756f680c47b5aef5093d95543738",
+      "truck": true
     },
     {
       "type": "bespoke",
