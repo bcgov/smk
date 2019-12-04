@@ -290,7 +290,7 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
     Viewer.prototype.setLayerDisplayItems = function ( layerItems ) {
         var self = this
         
-        this.layerDisplayContext = new SMK.TYPE.LayerDisplayContext( layerItems, this.layerId )
+        this.layerDisplayContext = new SMK.TYPE.LayerDisplayContext( layerItems || [], this.layerId )
 
         this.layerDisplayContext.changedVisibility( function () {
             self.changedLayerVisibility()

@@ -60,6 +60,9 @@
         }
     }
 
+    if ( bootstrapScriptEl && bootstrapScriptEl.attributes && bootstrapScriptEl.attributes[ 'smk-container-sel' ] ) 
+        SMK.INIT()
+
 // = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 
     function parseScriptElement() {
