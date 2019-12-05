@@ -314,6 +314,7 @@ include.module( 'smk-map', [ 'jquery', 'util', 'theme-base', 'sidepanel' ], func
 
             return SMK.UTIL.waitAll( enabledTools.map( function ( t ) {
                 t.id = t.type + ( t.instance ? '--' + t.instance : '' )
+
                 var tag = 'check-' + t.type
                 return include( tag )
                     .then( function ( inc ) {
@@ -351,7 +352,7 @@ include.module( 'smk-map', [ 'jquery', 'util', 'theme-base', 'sidepanel' ], func
                     .then( function ( inc ) {
                         return include( tag + '-' + self.viewer.type )
                             .catch( function () {
-                                console.log( 'tool "' + t.type + '" has no ' + self.viewer.type + ' subclass' )
+                                console.debug( 'tool "' + t.type + '" has no ' + self.viewer.type + ' subclass' )
                             } )
                             .then( function () {
                                 return inc
@@ -359,8 +360,14 @@ include.module( 'smk-map', [ 'jquery', 'util', 'theme-base', 'sidepanel' ], func
                     } )
                     .then( function ( inc ) {
                         var id = t.type + ( t.instance ? '--' + t.instance : '' )
-                        self.$tool[ id ] = new inc[ tag ]( t )
-                        self.$tool[ id ].id = id
+
+                        if ( !( id in self.$tool ) ) {
+                            self.$tool[ id ] = new inc[ tag ]( t )
+                            self.$tool[ id ].id = id
+                        }
+                        else {
+                            console.warn( 'tool "' + id + '" is defined more than once' )
+                        }
                     } )
                     .catch( function ( e ) {
                         console.warn( 'tool "' + t.type + '" failed to create:', e )
@@ -583,7 +590,27 @@ include.module( 'smk-map', [ 'jquery', 'util', 'theme-base', 'sidepanel' ], func
     SmkMap.prototype.setToolGroup = function ( rootId, ids ) {
         this.$group[ rootId ] = ids
     }
-    
+
+    SmkMap.prototype.getConfig = function () {
+        var self = this
+
+        var ks = [ 'name', 'viewer', 'tools', 'layers' ]
+
+        var cfg = ks.reduce( function ( acc, k ) {
+            acc[ k ] = JSON.parse( JSON.stringify( self[ k ] ) )
+            return acc
+        }, {} )
+
+        cfg.viewer.location = SMK.UTIL.projection( 'center', 'zoom', 'extent' )( this.$viewer.getView() )
+        cfg.viewer.location.center = [ cfg.viewer.location.center.longitude, cfg.viewer.location.center.latitude ]
+
+        var lt = cfg.tools.find( function ( t ) { return t.type == 'layers' } )
+        if ( lt )
+            lt.display = this.$viewer.layerDisplayContext.getConfig()
+
+        return cfg
+    }
+
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     function findProperty( obj, collectionName, propName, cb ) {

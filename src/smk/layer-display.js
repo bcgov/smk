@@ -26,6 +26,16 @@ include.module( 'layer-display', [ 'jquery', 'util', 'event' ], function () {
         return this.isVisible
     }
 
+    LayerDisplay.prototype.getConfig = function () {
+        return {
+            id:         this.id,
+            type:       this.type,
+            title:      this.title,
+            isVisible:  this.isVisible,
+            isEnabled:  this.isEnabled,
+            class:      this.class,
+        }
+    }
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
     LayerDisplay.layer = function ( option, layerCatalog, forceVisible ) {
@@ -124,6 +134,12 @@ include.module( 'layer-display', [ 'jquery', 'util', 'event' ], function () {
 
     LayerDisplay.folder.prototype.getLegends = function ( layerCatalog, viewer ) {
         return SMK.UTIL.resolved()
+    }
+
+    LayerDisplay.folder.prototype.getConfig = function () {
+        var cfg = LayerDisplay.prototype.getConfig.call( this )
+        cfg.items = this.items.map( function ( ld ) { return ld.getConfig() } )
+        return cfg
     }
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
@@ -325,4 +341,11 @@ include.module( 'layer-display', [ 'jquery', 'util', 'event' ], function () {
         this.view = view
         this.changedVisibility()        
     }
+
+    LayerDisplayContext.prototype.getConfig = function () {
+        return this.root.items.map( function ( ld ) {
+            return ld.getConfig()
+        } )
+    }
+
 } )
