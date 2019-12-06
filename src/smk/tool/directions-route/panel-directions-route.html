@@ -3,6 +3,12 @@
         <slot></slot>
     </template>
 
+    <template slot="commands">
+        <command-button class="smk-print-route"
+            v-on:click="$$emit( 'print' )"
+        >Print</command-button>
+    </template>
+
     <div class="smk-directions">
         <div class="smk-direction"
             v-for="( direction, i ) in directions"

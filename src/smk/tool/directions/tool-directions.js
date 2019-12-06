@@ -247,6 +247,9 @@ include.module( 'tool-directions', [
             self.hasRoute = true
 
             self.directions = data.directions
+            
+            self.directionsRaw = data
+            self.directionsRaw.waypoints = JSON.parse( JSON.stringify( self.waypoints ) )
         } )
         .catch( function ( err ) {
             console.warn( err )

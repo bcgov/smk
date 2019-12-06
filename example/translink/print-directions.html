@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>BETA - CVRP - Translink</title>
+        <!-- SMK BOOTSTRAP - - - - - - - -->
+        <script src="../../smk.js"></script>
+            <!-- smk-container-sel="#smk-map-frame" -->
+            <!-- smk-title-sel="#header-title, head title" -->
+            <!-- smk-config="./map-config.json|./layer-config.json|theme=wf|?" -->
+        <!-- - - - - - - - - - - - - - - -->
+        <%= reload %>
+        <style>
+            header {
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 70px;
+
+                border-bottom:      2px solid #fcba19;
+                background-color: #036;
+                font-family:        Helvetica,Arial,sans-serif;
+
+                display:            flex;
+                justify-content:    flex-start;
+                align-items:        center;
+            }
+
+            #build-info {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-end;
+
+                flex-grow: 1;
+                font-size: 12px;
+                color: #ccc;
+                padding-right: 10px;
+            }
+
+            img.siteLogo {
+                margin-left:    10px;
+                margin-bottom:  10px;
+                height: 40px;
+            }
+
+            #header-title {
+                color:          white;
+                margin-left:    20px;
+
+                display:        flex;
+                flex-direction: column;
+                justify-content:center;
+                align-items:    flex-start;
+                font-size:      18px;
+            }
+
+            article {
+                position: absolute;
+                top: 72px;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                margin: 0;
+                padding: 0;
+
+                display: flex;
+                justify-content: space-between;
+            }
+
+            section {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+            }
+
+            #left-side {
+                flex-basis: 75%;
+            }
+
+            #right-side {
+                flex-basis: 25%;
+            }
+
+            #smk-map-frame {
+                flex-grow: 1;
+                border: 2px solid black;
+                border-radius: 3px;
+                /* padding: 2px; */
+            }
+
+            #waypoints {
+                min-height: 4em;
+                /* background-color: orange; */
+            }
+
+            #directions {
+                /* background-color: yellow; */
+                height: 100%;
+            }
+        </style>
+
+    </head>
+
+    <body>
+        <header>
+            <!-- <img src="bc-gov-logo-transparent.png"> -->
+            <img src="https://tlweblibs.translink.ca/TransLink-logo-white.svg" alt="TransLink Logo" class="siteLogo">
+            <div id="header-title">Vehicle Route - Commercial Vehicle Route Planner Beta</div>
+            <div id="build-info"></div>
+        </header>
+
+        <article>
+            <section id="left-side">
+                <div id="waypoints-mount"></div>
+                <div id="smk-map-frame"></div>
+            </section>
+
+            <section id="right-side">
+                <div id="directions-mount"></div>
+            </section>
+        </article>
+
+        <template id="waypoints-template">
+            <div id="waypoints">
+                <div class="waypoint"
+                    v-for="w in waypoints"
+                >
+                    {{ w.fullAddress }}
+                </div>
+            </div>
+        </template>
+
+        <template id="directions-template">
+            <div id="directions">
+                <div class="direction"
+                    v-for="d in directions"
+                >
+                    <span class="instruction">{{ d.instruction }}</span>
+                    <span class="metric"
+                        v-if="d.distance"
+                    >for {{ d.distance }} ({{ d.time }})</span>
+                </div>
+            </div>
+        </template>
+    </body>
+
+    <script>
+        SMK.INIT( {
+            'smk-container-sel': "#smk-map-frame",
+            'smk-config': "?|hide-tool=all",
+        } ).then( function () {
+            $( '#build-info' ).empty()
+                .append( '<div>Version: ' + SMK.BUILD.version +'</div>' )
+                .append( '<div>Last commit: ' + SMK.BUILD.lastCommit +'</div>' )
+                .append( '<div>Commit ID: ' + SMK.BUILD.commit +'</div>' )
+                .append( '<div>Branch: ' + SMK.BUILD.branch +'</div>' )
+
+            new Vue( {
+                el: '#waypoints-mount',
+                template: '#waypoints-template',
+                data: SMK.MAP[1].etc.directions
+            } )
+
+            new Vue( {
+                el: '#directions-mount',
+                template: '#directions-template',
+                data: SMK.MAP[1].etc.directions
+            } )
+        } )
+    </script>
+</html>

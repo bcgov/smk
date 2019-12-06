@@ -77,6 +77,18 @@ include.module( 'tool-directions-route', [ 'tool', 'widgets', 'tool-directions-r
             'pick-direction': function ( ev ) {
                 self.directionPick = ev.pick
             },
+
+            'print': function ( ev ) {
+                var cfg = smk.getConfig()
+                cfg.etc = { 
+                    directions: directions.directionsRaw
+                }
+
+                var key = SMK.UTIL.makeUUID()
+                window.sessionStorage.setItem( key, JSON.stringify( cfg ) )
+
+                SMK.HANDLER.get( self.id, 'print' )( smk, self, key )
+            },
         } )
 
         smk.$viewer.handlePick( 3, function ( location ) {

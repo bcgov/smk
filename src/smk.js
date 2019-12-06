@@ -455,6 +455,15 @@
             }
         },
 
+        'storage': function ( arg ) {
+            var args = arg.split( ',' )
+            if ( args.length < 1 ) throw new Error( '-storage needs at least 1 argument' )
+
+            return args.map( function ( key ) {
+                return JSON.parse( window.sessionStorage.getItem( key ) )
+            } )
+        },
+
         // Options below are for backward compatibility with DMF
 
         'll': function ( arg ) {

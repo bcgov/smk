@@ -289,11 +289,23 @@
                 el.appendChild( fm )               
             } )
 
+            SMK.HANDLER.set( 'directions-route', 'print', function ( smk, tool, key ) {
+                var printWindow = window.open( 'print-directions.html?storage=' + key, '', [
+                    "location=no",
+                    "menubar=no",
+                    "titlebar=no",
+                    "status=no",
+                    "toolbar=no",
+                    "scrollbars=yes",
+                ].join( ',' ) );
+            } )
+
             $( '#build-info' ).empty()
                 .append( '<div>Version: ' + SMK.BUILD.version +'</div>' )
                 .append( '<div>Last commit: ' + SMK.BUILD.lastCommit +'</div>' )
                 .append( '<div>Commit ID: ' + SMK.BUILD.commit +'</div>' )
                 .append( '<div>Branch: ' + SMK.BUILD.branch +'</div>' )
+
         } )
     </script>
 

@@ -44,16 +44,18 @@ include.module( 'tool-directions.router-api-js', [], function ( inc ) {
         var query = Object.fromEntries( Object.entries( option ).filter( function( kv ) { return !!kv[ 1 ] } ) )
         query.points = points.map( function ( w ) { return w.longitude + ',' + w.latitude } ).join( ',' )
 
+        var ajaxOpt = {
+            timeout:    10 * 1000,
+            dataType:   'json',
+            url:        baseUrl + endPoint,
+            data:       query,
+            headers: {
+                apikey: apiKey
+            }
+        }
+
         var result = SMK.UTIL.makePromise( function ( res, rej ) {
-            ( request = $.ajax( {
-                timeout:    10 * 1000,
-                dataType:   'json',
-                url:        baseUrl + endPoint,
-                data:       query,
-                headers: {
-                    apikey: apiKey
-                }
-            } ) ).then( res, rej )
+            ( request = $.ajax( ajaxOpt ) ).then( res, rej )
         } )
         .then( function ( data ) {
             if ( !data.routeFound ) throw new Error( 'failed to find route' )
@@ -74,6 +76,8 @@ include.module( 'tool-directions.router-api-js', [], function ( inc ) {
                     return dir
                 } )
             }
+
+            data.request = ajaxOpt
 
             return data
         } )
