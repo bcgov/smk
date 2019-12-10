@@ -30,7 +30,8 @@ include.module( 'widget-address-search', [
                     maxResults:     20,
                     outputSRS:      4326,
                     addressString:  val,
-                    autoComplete:   true
+                    autoComplete:   true,
+                    locationDescriptor: 'accessPoint'
                 }
 
                 return SMK.UTIL.makePromise( function ( res, rej ) {
