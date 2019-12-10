@@ -4,14 +4,26 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <title>BETA - CVRP - Translink</title>
+        
         <!-- SMK BOOTSTRAP - - - - - - - -->
         <script src="../../smk.js"></script>
-            <!-- smk-container-sel="#smk-map-frame" -->
-            <!-- smk-title-sel="#header-title, head title" -->
-            <!-- smk-config="./map-config.json|./layer-config.json|theme=wf|?" -->
         <!-- - - - - - - - - - - - - - - -->
-        <%= reload %>
+
         <style>
+            @page {
+                margin: 1em;
+                size: letter portrait;
+                /* background-color: yellow; */
+            }
+
+            @media print {
+                /* margin: 1em; */
+                /* size: portrait; */
+                body {
+                    background-color: yellow;
+                }
+            }
+
             header {
                 position: absolute;
                 top: 0;
@@ -84,7 +96,7 @@
             }
 
             #smk-map-frame {
-                flex-grow: 1;
+                flex: 1 1;
                 border: 2px solid black;
                 border-radius: 3px;
                 /* padding: 2px; */
@@ -168,6 +180,29 @@
                 template: '#directions-template',
                 data: SMK.MAP[1].etc.directions
             } )
+
+        // console.log('window size',$(window).width(),$(window).height());
+                // SMK.MAP[1].$viewer.map.invalidateSize() 
+                SMK.MAP[1].$viewer.resizeToExtent() 
+
         } )
+
+        var mediaQueryList = window.matchMedia('print');
+        mediaQueryList.addListener(function(mql) {
+            if(mql.matches) {
+                console.log('webkit equivalent of onbeforeprint',$('#smk-map-frame').width(),$('#smk-map-frame').height());
+                console.log('window size',$(window).width(),$(window).height());
+                // SMK.MAP[1].$viewer.map.invalidateSize() 
+                SMK.MAP[1].$viewer.resizeToExtent() 
+
+            }
+        });
+
+
+        // window.addEventListener( 'resize', function () {
+            
+        //     console.log('resize event',$('#smk-map-frame').width(),$('#smk-map-frame').height())
+        //         console.log('window size',$(window).width(),$(window).height());
+        // } )
     </script>
 </html>
