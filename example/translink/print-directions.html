@@ -25,10 +25,10 @@
             }
 
             header {
-                position: absolute;
+                /* position: absolute;
                 top: 0;
                 left: 0;
-                right: 0;
+                right: 0; */
                 height: 70px;
 
                 border-bottom:      2px solid #fcba19;
@@ -68,17 +68,36 @@
                 font-size:      18px;
             }
 
+/* #frame {
+    border: 2px solid black;
+    position: relative;
+    width: 10in;
+    height: 7.5in;
+    margin: auto;
+} */
+
             article {
-                position: absolute;
+                border: 2px solid black;
+                position: relative;
+                height: 10in;
+                width: 7.5in;
+                margin: auto;
+
+                /* position: absolute;
                 top: 72px;
                 left: 0;
                 right: 0;
                 bottom: 0;
                 margin: 0;
-                padding: 0;
+                padding: 0; */
 
                 display: flex;
+                flex-direction: column;
                 justify-content: space-between;
+            }
+
+            #content {
+                display: flex;                
             }
 
             section {
@@ -116,22 +135,25 @@
     </head>
 
     <body>
-        <header>
-            <!-- <img src="bc-gov-logo-transparent.png"> -->
-            <img src="https://tlweblibs.translink.ca/TransLink-logo-white.svg" alt="TransLink Logo" class="siteLogo">
-            <div id="header-title">Vehicle Route - Commercial Vehicle Route Planner Beta</div>
-            <div id="build-info"></div>
-        </header>
 
         <article>
-            <section id="left-side">
-                <div id="waypoints-mount"></div>
-                <div id="smk-map-frame"></div>
-            </section>
+            <header>
+                <!-- <img src="bc-gov-logo-transparent.png"> -->
+                <img src="https://tlweblibs.translink.ca/TransLink-logo-white.svg" alt="TransLink Logo" class="siteLogo">
+                <div id="header-title">Vehicle Route - Commercial Vehicle Route Planner Beta</div>
+                <div id="build-info"></div>
+            </header>
 
-            <section id="right-side">
-                <div id="directions-mount"></div>
-            </section>
+            <div id="content">
+                <section id="left-side">
+                    <div id="waypoints-mount"></div>
+                    <div id="smk-map-frame"></div>
+                </section>
+
+                <section id="right-side">
+                    <div id="directions-mount"></div>
+                </section>
+            </div>
         </article>
 
         <template id="waypoints-template">
@@ -182,21 +204,21 @@
             } )
 
         // console.log('window size',$(window).width(),$(window).height());
-                // SMK.MAP[1].$viewer.map.invalidateSize() 
+                SMK.MAP[1].$viewer.map.invalidateSize() 
                 SMK.MAP[1].$viewer.resizeToExtent() 
 
         } )
 
-        var mediaQueryList = window.matchMedia('print');
-        mediaQueryList.addListener(function(mql) {
-            if(mql.matches) {
-                console.log('webkit equivalent of onbeforeprint',$('#smk-map-frame').width(),$('#smk-map-frame').height());
-                console.log('window size',$(window).width(),$(window).height());
-                // SMK.MAP[1].$viewer.map.invalidateSize() 
-                SMK.MAP[1].$viewer.resizeToExtent() 
+        // var mediaQueryList = window.matchMedia('print');
+        // mediaQueryList.addListener(function(mql) {
+        //     if(mql.matches) {
+        //         console.log('webkit equivalent of onbeforeprint',$('#smk-map-frame').width(),$('#smk-map-frame').height());
+        //         console.log('window size',$(window).width(),$(window).height());
+        //         // SMK.MAP[1].$viewer.map.invalidateSize() 
+        //         SMK.MAP[1].$viewer.resizeToExtent() 
 
-            }
-        });
+        //     }
+        // });
 
 
         // window.addEventListener( 'resize', function () {
