@@ -94,19 +94,22 @@ include.module( 'tool-directions-leaflet', [ 'leaflet', 'tool-directions' ], fun
 
             if ( !points ) return
 
-            self.routeLayer = L.geoJson( {
-                type: "Feature",
-                geometry: {
-                    type: "LineString",
-                    coordinates: points
-                },
-                pane: 'markerPane'
-            }, {
-                onEachFeature: function( feature, layer ) {
-                    var color = "#0000FF";
-                    layer.setStyle( { color:color, weight:7, opacity: 0.5 } );
-                }
-            } )
+            self.routeLayer = L.geoJson( 
+                {
+                    type: "Feature",
+                    geometry: {
+                        type: "LineString",
+                        coordinates: points
+                    }
+                }, 
+                {
+                    pane: 'markerPane',
+                    onEachFeature: function( feature, layer ) {
+                        var color = "#0000FF";
+                        layer.setStyle( { color:color, weight:7, opacity: 0.5 } );
+                    }
+                } 
+            )
 
             smk.$viewer.map.addLayer( self.routeLayer )
 

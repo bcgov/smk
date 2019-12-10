@@ -2,8 +2,8 @@ include.module( 'tool-directions-route', [ 'tool', 'widgets', 'tool-directions-r
     "use strict";
 
     var instructionType = {
-        START:              [ 'play_arrow' ],
-        CONTINUE:           [ 'arrow_upward' ],
+        START:              [ 'trip_origin' ],
+        CONTINUE:           [ 'expand_more' ],
         TURN_LEFT:          [ 'arrow_back' ],
         TURN_SLIGHT_LEFT:   [ 'undo' ],
         TURN_SHARP_LEFT:    [ 'directions', true ],
@@ -21,11 +21,11 @@ include.module( 'tool-directions-route', [ 'tool', 'widgets', 'tool-directions-r
         props: [ 'busy', 'directions', 'directionHighlight', 'directionPick', 'statusMessage' ],
         methods: {
             instructionTypeIcon: function ( type ) {                
-                if ( !instructionType[ type ] ) return type
+                if ( !instructionType[ type ] ) return 'report'
                 return instructionType[ type ][ 0 ]
             },
             instructionTypeClass: function ( type ) {
-                if ( !instructionType[ type ] ) return ''
+                if ( !instructionType[ type ] ) return 'smk-hidden'
                 return instructionType[ type ][ 1 ] ? 'smk-reverse' : ''
             }                
         }
@@ -82,10 +82,12 @@ include.module( 'tool-directions-route', [ 'tool', 'widgets', 'tool-directions-r
                 var route = directions.routeLayer.toGeoJSON()
                 var wps = directions.waypointLayers.map( function ( wp ) { 
                     var j = wp.toGeoJSON() 
+                    var icon = wp.options.icon.options
                     j.style = {
-                        markerUrl: makeDataUrl( wp._icon ),
-                        markerSize: [ 21, 25 ],
-                        markerOffset: [ 10, 25 ]
+                        // markerUrl: makeDataUrl( wp._icon ),
+                        markerUrl: icon.iconUrl,
+                        markerSize: icon.iconSize,
+                        markerOffset: icon.iconAnchor
                     }
                     return j
                 } )

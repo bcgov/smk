@@ -86,9 +86,9 @@
     margin-right: -6px;
 }
 
-.smk-feature-popup .smk-navigator.smk-hidden {
+/* .smk-feature-popup .smk-navigator.smk-hidden {
     visibility: hidden;
-}
+} */
 
 .smk-feature-popup .smk-navigator .smk-position {
     white-space: nowrap;

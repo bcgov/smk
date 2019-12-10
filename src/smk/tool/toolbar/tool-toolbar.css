@@ -17,9 +17,9 @@
     align-items: stretch;
 }
 
-.smk-toolbar.smk-hidden  {
+/* .smk-toolbar.smk-hidden  {
     display: none;
-}
+} */
 
 .smk-tool {
     display: inline-block;

@@ -3,7 +3,7 @@
     position: relative;
 }
 
-.smk-map-frame.smk-hidden {
+.smk-map-frame.smk-hidden, .smk-map-frame .smk-hidden {
     visibility: hidden;
 }
 
