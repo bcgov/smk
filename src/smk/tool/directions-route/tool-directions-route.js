@@ -79,24 +79,75 @@ include.module( 'tool-directions-route', [ 'tool', 'widgets', 'tool-directions-r
             },
 
             'print': function ( ev ) {
+                var route = directions.routeLayer.toGeoJSON()
+                var wps = directions.waypointLayers.map( function ( wp ) { 
+                    var j = wp.toGeoJSON() 
+                    j.style = {
+                        markerUrl: makeDataUrl( wp._icon ),
+                        markerSize: [ 21, 25 ],
+                        markerOffset: [ 10, 25 ]
+                    }
+                    return j
+                } )
+
                 var cfg = smk.getConfig()
                 cfg.etc = { 
                     directions: directions.directionsRaw
                 }
 
-                cfg.layers.push( {
-                    type: 'vector',
-                    id: 'extent',
-                    isVisible: true,
-                    dataUrl: 'data:application/json,' + JSON.stringify( turf.bboxPolygon( cfg.viewer.location.extent ) ),
-                    style: {
-                        strokeColor: "green",
-                        strokeWidth: 8,
-                        strokeOpacity: 0.8,
-                        fillOpacity: 0.6,
-                        fillColor: "blue"
+                cfg.viewer.location = {
+                    extent: turf.bbox( turf.buffer( route, 10 ) )
+                }
+
+                cfg.layers.push( 
+                    // {
+                    //     type: 'vector',
+                    //     id: 'extent',
+                    //     isVisible: true,
+                    //     dataUrl: 'data:application/json,' + JSON.stringify( turf.bboxPolygon( cfg.viewer.location.extent ) ),
+                    //     style: {
+                    //         strokeColor: "green",
+                    //         strokeWidth: 8,
+                    //         strokeOpacity: 0.8,
+                    //         fillOpacity: 0.6,
+                    //         fillColor: "blue"
+                    //     }
+                    // },
+                    {
+                        type: 'vector',
+                        id: 'route',
+                        isVisible: true,
+                        dataUrl: 'data:application/json,' + JSON.stringify( route ),
+                        style: {
+                            strokeColor: "green",
+                            strokeWidth: 8,
+                            strokeOpacity: 0.8,
+                            fillOpacity: 0.6,
+                            fillColor: "blue"
+                        }
                     }
-                } )
+                )
+
+                cfg.layers = cfg.layers.concat( wps.map( function ( wp, i ) {
+                    var st = wp.style
+                    delete wp.style
+                    return {
+                        type: 'vector',
+                        id: 'wp-' + i,
+                        isVisible: true,
+                        dataUrl: 'data:application/json,' + JSON.stringify( wp ),
+                        style: st
+                        //     strokeColor: "green",
+                        //     strokeWidth: 8,
+                        //     strokeOpacity: 0.8,
+                        //     fillOpacity: 0.6,
+                        //     fillColor: "blue",
+                        //     "markerUrl": 'data:application/json,' + JSON.stringify( wp ),
+                        //     "markerSize": [ 21, 25 ],
+                        //     "markerOffset": [ 10, 25 ]
+                        // }
+                    }
+                } ) )
 
                 var key = SMK.UTIL.makeUUID()
                 window.sessionStorage.setItem( key, JSON.stringify( cfg ) )
@@ -130,5 +181,29 @@ include.module( 'tool-directions-route', [ 'tool', 'widgets', 'tool-directions-r
     }
 
     return DirectionsRouteTool
+
+    function makeDataUrl( img ) {
+        // Create an empty canvas element
+        var canvas = document.createElement("canvas");
+        canvas.width = img.width;
+        canvas.height = img.height;
+    
+        // Copy the image contents to the canvas
+        var ctx = canvas.getContext("2d");
+        try {
+            ctx.drawImage(img, 0, 0);
+        }
+        catch ( e ) {
+            ctx.drawImage(img.children[0], 0, 0);
+        }
+    
+        // Get the data-URL formatted image
+        // Firefox supports PNG and JPEG. You could check img.src to
+        // guess the original format, but be aware the using "image/jpg"
+        // will re-encode the image.
+        var dataURL = canvas.toDataURL("image/png");
+    
+        return dataURL //.replace(/^data:image\/(png|jpg);base64,/, "");
+    }    
 } )
 
