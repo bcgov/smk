@@ -1,4 +1,4 @@
-include.module( 'tool-directions-route', [ 'tool', 'widgets', 'tool-directions-route.panel-directions-route-html' ], function ( inc ) {
+include.module( 'tool-directions-route', [ 'tool', 'widgets', 'tool-directions-route.panel-directions-route-html', 'turf' ], function ( inc ) {
     "use strict";
 
     var instructionType = {
@@ -83,6 +83,20 @@ include.module( 'tool-directions-route', [ 'tool', 'widgets', 'tool-directions-r
                 cfg.etc = { 
                     directions: directions.directionsRaw
                 }
+
+                cfg.layers.push( {
+                    type: 'vector',
+                    id: 'extent',
+                    isVisible: true,
+                    dataUrl: 'data:application/json,' + JSON.stringify( turf.bboxPolygon( cfg.viewer.location.extent ) ),
+                    style: {
+                        strokeColor: "green",
+                        strokeWidth: 8,
+                        strokeOpacity: 0.8,
+                        fillOpacity: 0.6,
+                        fillColor: "blue"
+                    }
+                } )
 
                 var key = SMK.UTIL.makeUUID()
                 window.sessionStorage.setItem( key, JSON.stringify( cfg ) )
