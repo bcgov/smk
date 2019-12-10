@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>BETA - CVRP - Translink</title>
+        
+        <!-- SMK BOOTSTRAP - - - - - - - -->
+        <script src="../../smk.js"></script>
+        <!-- - - - - - - - - - - - - - - -->
+
+        <style>
+            @page {
+                margin: 1em;
+                size: letter portrait;
+                /* background-color: yellow; */
+            }
+
+            body {
+                font-family: Helvetica,Arial,sans-serif;
+            }
+
+            @media print {
+                /* margin: 1em; */
+                /* size: portrait; */
+                body {
+                    background-color: yellow;
+                }
+            }
+
+            header {
+                /* position: absolute;
+                top: 0;
+                left: 0;
+                right: 0; */
+                height: 70px;
+
+                border-bottom:      2px solid #fcba19;
+                background-color: #036;
+
+                display:            flex;
+                justify-content:    flex-start;
+                align-items:        center;
+            }
+
+            #build-info {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-end;
+
+                flex-grow: 1;
+                font-size: 12px;
+                color: #ccc;
+                padding-right: 10px;
+            }
+
+            img.siteLogo {
+                margin-left:    10px;
+                margin-bottom:  10px;
+                height: 40px;
+            }
+
+            #header-title {
+                color:          white;
+                margin-left:    20px;
+
+                display:        flex;
+                flex-direction: column;
+                justify-content:center;
+                align-items:    flex-start;
+                font-size:      18px;
+            }
+
+/* #frame {
+    border: 2px solid black;
+    position: relative;
+    width: 10in;
+    height: 7.5in;
+    margin: auto;
+} */
+
+            article {
+                border: 2px solid black;
+                position: relative;
+                height: 10in;
+                width: 7.5in;
+                margin: auto;
+
+                /* position: absolute;
+                top: 72px;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                margin: 0;
+                padding: 0; */
+
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+            }
+
+            #content {
+                display: flex;               
+                flex-grow: 1; 
+            }
+
+            section {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+            }
+
+            #left-side {
+                flex-basis: 75%;
+            }
+
+            #right-side {
+                flex-basis: 25%;
+            }
+
+            #smk-map-frame {
+                flex: 1 1;
+                border: 2px solid black;
+                border-radius: 3px;
+                /* padding: 2px; */
+            }
+
+            #waypoints {
+                min-height: 4em;
+                /* background-color: orange; */
+            }
+
+            #directions {
+                /* background-color: yellow; */
+                height: 100%;
+            }
+        </style>
+
+    </head>
+
+    <body>
+
+        <article>
+            <header>
+                <!-- <img src="bc-gov-logo-transparent.png"> -->
+                <img src="https://tlweblibs.translink.ca/TransLink-logo-white.svg" alt="TransLink Logo" class="siteLogo">
+                <div id="header-title">Vehicle Route - Commercial Vehicle Route Planner Beta</div>
+                <div id="build-info"></div>
+            </header>
+
+            <div id="content">
+                <section id="left-side">
+                    <div id="waypoints-mount"></div>
+                    <div id="smk-map-frame"></div>
+                </section>
+
+                <section id="right-side">
+                    <div id="directions-mount"></div>
+                </section>
+            </div>
+        </article>
+
+        <template id="waypoints-template">
+            <div id="waypoints">
+                <div class="waypoint"
+                    v-for="w in waypoints"
+                >
+                    {{ w.fullAddress }}
+                </div>
+            </div>
+        </template>
+
+        <template id="directions-template">
+            <div id="directions">
+                <div class="direction"
+                    v-for="d in directions"
+                >
+                    <span class="instruction">{{ d.instruction }}</span>
+                    <span class="metric"
+                        v-if="d.distance"
+                    >for {{ d.distance }} ({{ d.time }})</span>
+                </div>
+            </div>
+        </template>
+    </body>
+
+    <script>
+        function close( p1, p2, min ) { 
+            var d0 = p1[0] - p2[0]
+            var d1 = p1[1] - p2[1]
+            return ( d0 * d0 + d1 * d1 ) <= ( min * min )
+        }
+
+        // try {
+            var key = location.search.substr( 1 )
+            var cfg = JSON.parse( window.sessionStorage.getItem( key ) )
+
+            var dirs = cfg.etc.directions
+
+            var spi = 0, pi = 0, prevRoute
+            dirs.directions.forEach( function ( d ) {
+                if ( !prevRoute ) {
+                    prevRoute = d
+                    return
+                }
+
+                while ( !close( dirs.route[ pi ], d.point, 0.0001 ) ) {
+                    pi += 1
+                }
+                
+                prevRoute.route = {
+                    start: spi,
+                    end: pi
+                }
+
+                spi = pi
+                prevRoute = d
+            } )
+
+        // SMK.INIT( {
+        //     'smk-container-sel': "#smk-map-frame",
+        //     'smk-config': "?|hide-tool=all",
+        // } ).then( function () {
+        //     $( '#build-info' ).empty()
+        //         .append( '<div>Version: ' + SMK.BUILD.version +'</div>' )
+        //         .append( '<div>Last commit: ' + SMK.BUILD.lastCommit +'</div>' )
+        //         .append( '<div>Commit ID: ' + SMK.BUILD.commit +'</div>' )
+        //         .append( '<div>Branch: ' + SMK.BUILD.branch +'</div>' )
+
+        //     new Vue( {
+        //         el: '#waypoints-mount',
+        //         template: '#waypoints-template',
+        //         data: SMK.MAP[1].etc.directions
+        //     } )
+
+        //     new Vue( {
+        //         el: '#directions-mount',
+        //         template: '#directions-template',
+        //         data: SMK.MAP[1].etc.directions
+        //     } )
+
+        // // console.log('window size',$(window).width(),$(window).height());
+        //         SMK.MAP[1].$viewer.map.invalidateSize() 
+        //         SMK.MAP[1].$viewer.resizeToExtent() 
+
+        // } )
+
+    </script>
+</html>
