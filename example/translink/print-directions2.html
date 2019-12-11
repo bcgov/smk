@@ -140,46 +140,45 @@
 
     <body>
 
-        <article>
-            <header>
-                <!-- <img src="bc-gov-logo-transparent.png"> -->
-                <img src="https://tlweblibs.translink.ca/TransLink-logo-white.svg" alt="TransLink Logo" class="siteLogo">
-                <div id="header-title">Vehicle Route - Commercial Vehicle Route Planner Beta</div>
-                <div id="build-info"></div>
-            </header>
+        <div id="vue-root"></div>
 
-            <div id="content">
-                <section id="left-side">
-                    <div id="waypoints-mount"></div>
-                    <div id="smk-map-frame"></div>
-                </section>
+        <template id="template">
+            <div>
+            <article
+                v-for="page in pages"
+            >
+                <header>
+                    <!-- <img src="bc-gov-logo-transparent.png"> -->
+                    <img src="https://tlweblibs.translink.ca/TransLink-logo-white.svg" alt="TransLink Logo" class="siteLogo">
+                    <div id="header-title">Vehicle Route - Commercial Vehicle Route Planner Beta</div>
+                    <div id="build-info"></div>
+                </header>
+                    
+                <div id="content">
+                    <section id="left-side">
+                        <div class="waypoint"
+                            v-for="w in waypoints"
+                        >
+                            {{ w.fullAddress }}
+                        </div>
 
-                <section id="right-side">
-                    <div id="directions-mount"></div>
-                </section>
-            </div>
-        </article>
-
-        <template id="waypoints-template">
-            <div id="waypoints">
-                <div class="waypoint"
-                    v-for="w in waypoints"
-                >
-                    {{ w.fullAddress }}
+                        <div class="smk-map-frame"
+                            v-content="page.map"
+                        ></div>
+                    </section>
+    
+                    <section id="right-side">
+                        <div class="direction"
+                            v-for="d in directions"
+                        >
+                            <span class="instruction">{{ d.instruction }}</span>
+                            <span class="metric"
+                                v-if="d.distance"
+                            >for {{ d.distance }} ({{ d.time }})</span>
+                        </div>
+                    </section>
                 </div>
-            </div>
-        </template>
-
-        <template id="directions-template">
-            <div id="directions">
-                <div class="direction"
-                    v-for="d in directions"
-                >
-                    <span class="instruction">{{ d.instruction }}</span>
-                    <span class="metric"
-                        v-if="d.distance"
-                    >for {{ d.distance }} ({{ d.time }})</span>
-                </div>
+            </article>            
             </div>
         </template>
     </body>
@@ -194,7 +193,6 @@
         // try {
             var key = location.search.substr( 1 )
             var cfg = JSON.parse( window.sessionStorage.getItem( key ) )
-
             var dirs = cfg.etc.directions
 
             var spi = 0, pi = 0, prevRoute
@@ -216,7 +214,53 @@
                 spi = pi
                 prevRoute = d
             } )
+            prevRoute.route = {
+                start: pi,
+                end: pi
+            }
 
+            var maxDirs = 10
+
+            var len = dirs.directions.length 
+            var pages = Math.trunc( len / maxDirs + 0.5 ) 
+            var perPage = Math.trunc( len / pages + 0.5 )
+
+            var model = {
+                waypoints: dirs.waypoints,
+                pages: []
+            }
+            for ( var p = 0; p < pages; p += 1 ) {
+                var pm = model.pages[ p ] = {
+                    route: [],
+                    directions: [],
+                    map: {
+                        create: function ( el ) {
+                            return SMK.INIT( {
+                                'smk-container-sel': el
+                            } )
+                        }
+                    }
+                }
+                for ( var d = 0; d < perPage; d += 1 ) {
+                    var dr = dirs.directions[ p * perPage + d ]
+                    pm.directions.push( dr )
+                    for ( var r = dr.route.start; r <= dr.route.end; r += 1 ) {
+                        pm.route.push( dirs.route[ r ] )
+                    } 
+                }
+            }
+
+            include.option( { baseUrl: ( new URL( '../..', document.location ) ).toString() } )
+            
+            include( 'vue', 'vue-config' ).then( function () {
+                console.log('hi')
+
+                new Vue( {
+                    el: '#vue-root',
+                    template: '#template',
+                    data: model
+                } )
+            } )
         // SMK.INIT( {
         //     'smk-container-sel': "#smk-map-frame",
         //     'smk-config': "?|hide-tool=all",

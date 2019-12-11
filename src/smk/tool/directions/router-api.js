@@ -88,7 +88,23 @@ include.module( 'tool-directions.router-api-js', [], function ( inc ) {
             return {
                 distance: '10',
                 timeText: '10 mins',
-                route: points.map( function ( p ) { return [ p.longitude, p.latitude ] } ),
+                route: points.map( function ( p ) { return [ p.longitude, p.latitude ] } )
+                    .reduce( function ( accum, v ) {
+                        if ( accum.length == 0 ) {
+                            accum.push( v )
+                            return accum
+                        }
+
+                        var prev = accum[ accum.length - 1 ]
+
+                        accum.push( interpolate( prev, v, 0.2 ) )
+                        accum.push( interpolate( prev, v, 0.4 ) )
+                        accum.push( interpolate( prev, v, 0.6 ) )
+                        accum.push( interpolate( prev, v, 0.8 ) )
+                        accum.push( v )
+
+                        return accum 
+                    }, [] ),
                 directions: points
                     .map( function ( p ) {
                         return { instruction: 'waypoint: ' + p.longitude + ', ' + p.latitude, point: [ p.longitude, p.latitude ] }
@@ -102,9 +118,9 @@ include.module( 'tool-directions.router-api-js', [], function ( inc ) {
                         var prev = accum[ accum.length - 1 ]
 
                         accum.push( { instruction: 'turn left for 1km (1:00)', point: interpolate( prev.point, v.point, 0.2 ) } )
-                        accum.push( { instruction: 'go straight for 2km (2:00)', point: interpolate( prev.point, v.point, 0.4 ) } )
+                        // accum.push( { instruction: 'go straight for 2km (2:00)', point: interpolate( prev.point, v.point, 0.4 ) } )
                         accum.push( { instruction: 'turn right for 3km (3:00)', point: interpolate( prev.point, v.point, 0.6 ) } )
-                        accum.push( { instruction: 'go backwards for 4km (4:00)', point: interpolate( prev.point, v.point, 0.8 ) } )
+                        // accum.push( { instruction: 'go backwards for 4km (4:00)', point: interpolate( prev.point, v.point, 0.8 ) } )
                         accum.push( v )
 
                         return accum 
