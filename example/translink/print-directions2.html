@@ -264,55 +264,101 @@
 
                     p.directions.forEach( function ( d, i ) {
                         pos.push( { 
+                            dir: d,
                             bearing: turf.bearing( cent, d.point ),
-                            dir: d
+                            quant: Math.trunc( ( turf.bearing( cent, d.point ) + 360 - 180 / slots ) * slots / 360 ) % slots,
+                            quantBearing: function ( off ) {
+                                return this.move( off ) * 360 / slots + 180 / slots
+                            },
+                            error: function ( off ) {
+                                var er = Math.abs( this.quantBearing( off ), this.bearing )
+                                if ( er < 180 ) return er
+                                return 360 - er 
+                            },
+                            move: function ( off ) {
+                                if ( !off ) return this.quant
+                                return ( this.quant + slots + Math.ceil( off / 2 ) * ( 2 * ( off % 2 ) - 1 ) ) % slots 
+                            }
                         } )
                     } )
 
                     pos.sort( function ( a, b ) {
                         return a.bearing - b.bearing
                     } )
+                    
+                    function smallestErr( off ) {
+                        var mini, min = 9999
 
-                    pos.forEach( function ( d, i ) {
-                        var bearing = turf.bearing( cent, d.point )
-                        var b = Math.trunc( ( turf.bearing( cent, d.point ) + 360 ) * slots / 360 ) % slots
-                        while ( pos[ b ] ) {
-                            b = ( b + 1 ) % slots
-                        }
-                        pos[ b ] = true
-                        // var edge = turf.rhumbDestination( cent, diag / 2, b * 360 / slots )
-                        var edge = turf.rhumbDestination( cent, diag / 2, bearing )
+                        pos.forEach( function ( p, i ) {
+                            if ( p.done ) return
 
-                        c.layers.push( {
-                            type: 'vector',
-                            id: 'edge-' + i,
-                            isVisible: true,
-                            dataUrl: 'data:application/json,' + JSON.stringify( turf.lineString( [ d.point, edge.geometry.coordinates ] ) ),
-                            style: {
-                                strokeColor: "blue",
-                                strokeWidth: 8,
-                                strokeOpacity: 0.8
-                            }
+                            if ( p.error( off ) > min ) return
+
+                            min = p.error( off )
+                            mini = i
                         } )
+                        
+                        if ( mini == null ) return
+                        return pos[ mini ]
+                    }
 
-                        // c.layers.push( {
-                        //     type: 'vector',
-                        //     id: 'dir-' + i,
-                        //     isVisible: true,
-                        //     dataUrl: 'data:application/json,' + JSON.stringify( turf.point( d.point ) ),
-                        //     tooltip: {
-                        //         title: '#' + ( i + 1 ),
-                        //         option: {
-                        //             direction: bearingToDir( )
-                        //         }
-                        //     },
-                        //     style: {
-                        //         strokeColor: "red",
-                        //         strokeWidth: 8,
-                        //         strokeOpacity: 0.8
-                        //     }
-                        // } )
-                    } )
+                    var quant = [], offset = 0 
+
+                    Array( p.directions.length ).fill().forEach( function ( xxx, pi ) {
+
+                        var p 
+                        while ( p == null ) {
+                            p = smallestErr( offset )
+                            if ( p && !quant[ p.move( offset ) ] ) break
+                            offset += 1 
+                        } 
+
+                        p.done = true
+                        quant[ p.move( offset ) ] = true
+                        // pos.forEach( function ( d, i ) {
+                            // if ( pos.done ) return 
+
+                            // var bearing = turf.bearing( cent, d.point )
+                            // var b = Math.trunc( ( turf.bearing( cent, d.point ) + 360 ) * slots / 360 ) % slots
+                            // while ( pos[ b ] ) {
+                                // b = ( b + 1 ) % slots
+                            // }
+                            // pos[ b ] = true
+                            // var edge = turf.rhumbDestination( cent, diag / 2, b * 360 / slots + 180 / slots )
+                            var edge = turf.rhumbDestination( cent, diag / 3 * 2, p.quantBearing( offset ) )
+
+                            c.layers.push( {
+                                type: 'vector',
+                                id: 'edge-' + pi,
+                                isVisible: true,
+                                dataUrl: 'data:application/json,' + JSON.stringify( turf.lineString( [ p.dir.point, edge.geometry.coordinates ] ) ),
+                                style: {
+                                    strokeColor: "blue",
+                                    strokeWidth: 8,
+                                    strokeOpacity: 0.8
+                                }
+                            } )
+
+                            // c.layers.push( {
+                            //     type: 'vector',
+                            //     id: 'dir-' + i,
+                            //     isVisible: true,
+                            //     dataUrl: 'data:application/json,' + JSON.stringify( turf.point( d.point ) ),
+                            //     tooltip: {
+                            //         title: '#' + ( i + 1 ),
+                            //         option: {
+                            //             direction: bearingToDir( )
+                            //         }
+                            //     },
+                            //     style: {
+                            //         strokeColor: "red",
+                            //         strokeWidth: 8,
+                            //         strokeOpacity: 0.8
+                            //     }
+                            // } )
+                        } )
+        
+                    // } )
 
                     c.viewer.location = {
                         // extent: turf.bbox( turf.buffer( turf.bboxPolygon( bb ), diag * 0.1 ) )
