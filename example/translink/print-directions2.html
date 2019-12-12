@@ -43,7 +43,7 @@
                 align-items:        center;
             }
 
-            #build-info {
+            .build-info {
                 display: flex;
                 flex-direction: column;
                 align-items: flex-end;
@@ -60,7 +60,7 @@
                 height: 40px;
             }
 
-            #header-title {
+            .header-title {
                 color:          white;
                 margin-left:    20px;
 
@@ -71,35 +71,20 @@
                 font-size:      18px;
             }
 
-/* #frame {
-    border: 2px solid black;
-    position: relative;
-    width: 10in;
-    height: 7.5in;
-    margin: auto;
-} */
-
             article {
-                border: 2px solid black;
+                /* border: 2px solid black; */
                 position: relative;
                 height: 10in;
                 width: 7.5in;
                 margin: auto;
 
-                /* position: absolute;
-                top: 72px;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                margin: 0;
-                padding: 0; */
-
                 display: flex;
                 flex-direction: column;
                 justify-content: space-between;
+                page-break-after: always;
             }
 
-            #content {
+            .page {
                 display: flex;               
                 flex-grow: 1; 
             }
@@ -110,27 +95,26 @@
                 justify-content: space-between;
             }
 
-            #left-side {
+            section.left-side {
                 flex-basis: 75%;
             }
 
-            #right-side {
+            section.right-side {
                 flex-basis: 25%;
             }
 
-            #smk-map-frame {
+            .smk-map-frame {
                 flex: 1 1;
                 border: 2px solid black;
                 border-radius: 3px;
-                /* padding: 2px; */
             }
 
-            #waypoints {
+            .waypoints {
                 min-height: 4em;
                 /* background-color: orange; */
             }
 
-            #directions {
+            .directions {
                 /* background-color: yellow; */
                 height: 100%;
             }
@@ -139,46 +123,49 @@
     </head>
 
     <body>
-
         <div id="vue-root"></div>
 
         <template id="template">
-            <div>
-            <article
-                v-for="page in pages"
-            >
-                <header>
-                    <!-- <img src="bc-gov-logo-transparent.png"> -->
-                    <img src="https://tlweblibs.translink.ca/TransLink-logo-white.svg" alt="TransLink Logo" class="siteLogo">
-                    <div id="header-title">Vehicle Route - Commercial Vehicle Route Planner Beta</div>
-                    <div id="build-info"></div>
-                </header>
-                    
-                <div id="content">
-                    <section id="left-side">
-                        <div class="waypoint"
-                            v-for="w in waypoints"
-                        >
-                            {{ w.fullAddress }}
-                        </div>
+            <div id="route-pages">
+                <article
+                    v-for="page in pages"
+                >
+                    <header>
+                        <!-- <img src="bc-gov-logo-transparent.png"> -->
+                        <img src="https://tlweblibs.translink.ca/TransLink-logo-white.svg" alt="TransLink Logo" class="siteLogo">
+                        <div class="header-title">Vehicle Route - Commercial Vehicle Route Planner Beta</div>
+                        <div class="build-info"></div>
+                    </header>
+                        
+                    <div class="page">
+                        <section class="left-side">
+                            <div class="waypoints">
+                                <div class="waypoint"
+                                    v-for="w in waypoints"
+                                >{{ 
+                                    w.fullAddress 
+                                }}</div>
+                            </div>
 
-                        <div class="smk-map-frame"
-                            v-content="page.map"
-                        ></div>
-                    </section>
-    
-                    <section id="right-side">
-                        <div class="direction"
-                            v-for="d in directions"
-                        >
-                            <span class="instruction">{{ d.instruction }}</span>
-                            <span class="metric"
-                                v-if="d.distance"
-                            >for {{ d.distance }} ({{ d.time }})</span>
-                        </div>
-                    </section>
-                </div>
-            </article>            
+                            <div class="smk-map-frame"
+                                v-content="page.map"
+                            ></div>
+                        </section>
+        
+                        <section class="right-side">
+                            <div class="directions">
+                                <div class="direction"
+                                    v-for="d in page.directions"
+                                >
+                                    <span class="instruction">{{ d.instruction }}</span>
+                                    <span class="metric"
+                                        v-if="d.distance"
+                                    >for {{ d.distance }} ({{ d.time }})</span>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </article>            
             </div>
         </template>
     </body>
@@ -190,10 +177,19 @@
             return ( d0 * d0 + d1 * d1 ) <= ( min * min )
         }
 
+        include.option( { baseUrl: ( new URL( '../..', document.location ) ).toString() } )
+
+        include( 'vue', 'vue-config', 'turf' ).then( function () {
+
+            console.log('hi')
         // try {
             var key = location.search.substr( 1 )
             var cfg = JSON.parse( window.sessionStorage.getItem( key ) )
+
             var dirs = cfg.etc.directions
+            delete cfg.etc
+            delete cfg.tools
+            var mapCfg = JSON.stringify( cfg )
 
             var spi = 0, pi = 0, prevRoute
             dirs.directions.forEach( function ( d ) {
@@ -222,45 +218,122 @@
             var maxDirs = 10
 
             var len = dirs.directions.length 
-            var pages = Math.trunc( len / maxDirs + 0.5 ) 
-            var perPage = Math.trunc( len / pages + 0.5 )
+            var pages = Math.round( len / maxDirs ) 
+            var perPage = Math.round( len / pages )
 
             var model = {
                 waypoints: dirs.waypoints,
-                pages: []
+                pages: Array( pages ).fill().map( function () { return { 
+                    route: [], 
+                    directions: [], 
+                    map: {} 
+                } } )
             }
-            for ( var p = 0; p < pages; p += 1 ) {
-                var pm = model.pages[ p ] = {
-                    route: [],
-                    directions: [],
-                    map: {
-                        create: function ( el ) {
-                            return SMK.INIT( {
-                                'smk-container-sel': el
-                            } )
+
+            function bearingToDir( b ) {
+                if ( b > -45  && b < 45 ) return 'top'
+                if ( b > 45   && b < 135 ) return 'right'
+                if ( b > -135 && b < -45 ) return 'left'
+                return 'bottom'
+            }
+
+            model.pages.forEach( function ( p, pi ) {
+                p.map.create = function ( el ) {
+                    var ls = turf.lineString( p.route )
+                    var bb = turf.bbox( ls )
+                    var diag = turf.distance( [ bb[0], bb[1] ], [ bb[2], bb[3] ] )
+                    var cent = turf.center( turf.bboxPolygon( bb ) )
+                    
+                    var c = JSON.parse( mapCfg )
+                    c.layers.push( {
+                        type: 'vector',
+                        id: 'route',
+                        isVisible: true,
+                        dataUrl: 'data:application/json,' + JSON.stringify( turf.lineString( p.route ) ),
+                        style: {
+                            strokeColor: "green",
+                            strokeWidth: 8,
+                            strokeOpacity: 0.8,
+                            fillOpacity: 0.6,
+                            fillColor: "blue"
                         }
+                    } )
+
+                    var slots = perPage * 3
+                    var pos = Array( slots ).fill() 
+
+                    p.directions.forEach( function ( d, i ) {
+                        var bearing = turf.bearing( cent, d.point )
+                        var b = Math.trunc( ( turf.bearing( cent, d.point ) + 360 ) * slots / 360 ) % slots
+                        while ( pos[ b ] ) {
+                            b = ( b + 1 ) % slots
+                        }
+                        pos[ b ] = true
+                        // var edge = turf.rhumbDestination( cent, diag / 2, b * 360 / slots )
+                        var edge = turf.rhumbDestination( cent, diag / 2, bearing )
+
+                        c.layers.push( {
+                            type: 'vector',
+                            id: 'edge-' + i,
+                            isVisible: true,
+                            dataUrl: 'data:application/json,' + JSON.stringify( turf.lineString( [ d.point, edge.geometry.coordinates ] ) ),
+                            style: {
+                                strokeColor: "blue",
+                                strokeWidth: 8,
+                                strokeOpacity: 0.8
+                            }
+                        } )
+
+                        // c.layers.push( {
+                        //     type: 'vector',
+                        //     id: 'dir-' + i,
+                        //     isVisible: true,
+                        //     dataUrl: 'data:application/json,' + JSON.stringify( turf.point( d.point ) ),
+                        //     tooltip: {
+                        //         title: '#' + ( i + 1 ),
+                        //         option: {
+                        //             direction: bearingToDir( )
+                        //         }
+                        //     },
+                        //     style: {
+                        //         strokeColor: "red",
+                        //         strokeWidth: 8,
+                        //         strokeOpacity: 0.8
+                        //     }
+                        // } )
+                    } )
+
+                    c.viewer.location = {
+                        // extent: turf.bbox( turf.buffer( turf.bboxPolygon( bb ), diag * 0.1 ) )
+                        extent: turf.bbox( turf.circle( cent, diag  ) )
                     }
+
+                    return SMK.INIT( {
+                        'smk-id':           'print-' + pi,
+                        'smk-container-sel': el,
+                        'smk-config':       [ c, 'hide-tool=all' ]
+                    } )
                 }
+
                 for ( var d = 0; d < perPage; d += 1 ) {
-                    var dr = dirs.directions[ p * perPage + d ]
-                    pm.directions.push( dr )
+                    if ( pi * perPage + d >= dirs.directions.length ) break
+
+                    var dr = dirs.directions[ pi * perPage + d ]
+                    p.directions.push( dr )
+
                     for ( var r = dr.route.start; r <= dr.route.end; r += 1 ) {
-                        pm.route.push( dirs.route[ r ] )
+                        p.route.push( dirs.route[ r ] )
                     } 
                 }
-            }
-
-            include.option( { baseUrl: ( new URL( '../..', document.location ) ).toString() } )
-            
-            include( 'vue', 'vue-config' ).then( function () {
-                console.log('hi')
-
-                new Vue( {
-                    el: '#vue-root',
-                    template: '#template',
-                    data: model
-                } )
             } )
+
+            
+            new Vue( {
+                el: '#vue-root',
+                template: '#template',
+                data: model
+            } )
+        } )
         // SMK.INIT( {
         //     'smk-container-sel': "#smk-map-frame",
         //     'smk-config': "?|hide-tool=all",

@@ -79,77 +79,77 @@ include.module( 'tool-directions-route', [ 'tool', 'widgets', 'tool-directions-r
             },
 
             'print': function ( ev ) {
-                var route = directions.routeLayer.toGeoJSON()
-                var wps = directions.waypointLayers.map( function ( wp ) { 
-                    var j = wp.toGeoJSON() 
-                    var icon = wp.options.icon.options
-                    j.style = {
-                        // markerUrl: makeDataUrl( wp._icon ),
-                        markerUrl: icon.iconUrl,
-                        markerSize: icon.iconSize,
-                        markerOffset: icon.iconAnchor
-                    }
-                    return j
-                } )
+                // var route = directions.routeLayer.toGeoJSON()
+                // var wps = directions.waypointLayers.map( function ( wp ) { 
+                //     var j = wp.toGeoJSON() 
+                //     var icon = wp.options.icon.options
+                //     j.style = {
+                //         // markerUrl: makeDataUrl( wp._icon ),
+                //         markerUrl: icon.iconUrl,
+                //         markerSize: icon.iconSize,
+                //         markerOffset: icon.iconAnchor
+                //     }
+                //     return j
+                // } )
 
                 var cfg = smk.getConfig()
                 cfg.etc = { 
                     directions: directions.directionsRaw
                 }
 
-                cfg.viewer.location = {
-                    extent: turf.bbox( turf.buffer( route, 10 ) )
-                }
+                // cfg.viewer.location = {
+                    // extent: turf.bbox( turf.buffer( route, 10 ) )
+                // }
 
-                cfg.layers.push( 
-                    // {
-                    //     type: 'vector',
-                    //     id: 'extent',
-                    //     isVisible: true,
-                    //     dataUrl: 'data:application/json,' + JSON.stringify( turf.bboxPolygon( cfg.viewer.location.extent ) ),
-                    //     style: {
-                    //         strokeColor: "green",
-                    //         strokeWidth: 8,
-                    //         strokeOpacity: 0.8,
-                    //         fillOpacity: 0.6,
-                    //         fillColor: "blue"
-                    //     }
-                    // },
-                    {
-                        type: 'vector',
-                        id: 'route',
-                        isVisible: true,
-                        dataUrl: 'data:application/json,' + JSON.stringify( route ),
-                        style: {
-                            strokeColor: "green",
-                            strokeWidth: 8,
-                            strokeOpacity: 0.8,
-                            fillOpacity: 0.6,
-                            fillColor: "blue"
-                        }
-                    }
-                )
+                // cfg.layers.push( 
+                //     // {
+                //     //     type: 'vector',
+                //     //     id: 'extent',
+                //     //     isVisible: true,
+                //     //     dataUrl: 'data:application/json,' + JSON.stringify( turf.bboxPolygon( cfg.viewer.location.extent ) ),
+                //     //     style: {
+                //     //         strokeColor: "green",
+                //     //         strokeWidth: 8,
+                //     //         strokeOpacity: 0.8,
+                //     //         fillOpacity: 0.6,
+                //     //         fillColor: "blue"
+                //     //     }
+                //     // },
+                //     {
+                //         type: 'vector',
+                //         id: 'route',
+                //         isVisible: true,
+                //         dataUrl: 'data:application/json,' + JSON.stringify( route ),
+                //         style: {
+                //             strokeColor: "green",
+                //             strokeWidth: 8,
+                //             strokeOpacity: 0.8,
+                //             fillOpacity: 0.6,
+                //             fillColor: "blue"
+                //         }
+                //     }
+                // )
 
-                cfg.layers = cfg.layers.concat( wps.map( function ( wp, i ) {
-                    var st = wp.style
-                    delete wp.style
-                    return {
-                        type: 'vector',
-                        id: 'wp-' + i,
-                        isVisible: true,
-                        dataUrl: 'data:application/json,' + JSON.stringify( wp ),
-                        style: st
-                        //     strokeColor: "green",
-                        //     strokeWidth: 8,
-                        //     strokeOpacity: 0.8,
-                        //     fillOpacity: 0.6,
-                        //     fillColor: "blue",
-                        //     "markerUrl": 'data:application/json,' + JSON.stringify( wp ),
-                        //     "markerSize": [ 21, 25 ],
-                        //     "markerOffset": [ 10, 25 ]
-                        // }
-                    }
-                } ) )
+                // cfg.layers = cfg.layers.concat( wps.map( function ( wp, i ) {
+                //     var st = wp.style
+                //     delete wp.style
+                //     return {
+                //         type: 'vector',
+                //         id: 'wp-' + i,
+                //         isVisible: true,
+                //         dataUrl: 'data:application/json,' + JSON.stringify( wp ),
+                //         style: st
+                //         //     strokeColor: "green",
+                //         //     strokeWidth: 8,
+                //         //     strokeOpacity: 0.8,
+                //         //     fillOpacity: 0.6,
+                //         //     fillColor: "blue",
+                //         //     "markerUrl": 'data:application/json,' + JSON.stringify( wp ),
+                //         //     "markerSize": [ 21, 25 ],
+                //         //     "markerOffset": [ 10, 25 ]
+                //         // }
+                //     }
+                // } ) )
 
                 var key = SMK.UTIL.makeUUID()
                 window.sessionStorage.setItem( key, JSON.stringify( cfg ) )
