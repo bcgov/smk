@@ -260,9 +260,20 @@
                     } )
 
                     var slots = perPage * 3
-                    var pos = Array( slots ).fill() 
+                    var pos = []
 
                     p.directions.forEach( function ( d, i ) {
+                        pos.push( { 
+                            bearing: turf.bearing( cent, d.point ),
+                            dir: d
+                        } )
+                    } )
+
+                    pos.sort( function ( a, b ) {
+                        return a.bearing - b.bearing
+                    } )
+
+                    pos.forEach( function ( d, i ) {
                         var bearing = turf.bearing( cent, d.point )
                         var b = Math.trunc( ( turf.bearing( cent, d.point ) + 360 ) * slots / 360 ) % slots
                         while ( pos[ b ] ) {
