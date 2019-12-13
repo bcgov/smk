@@ -13,7 +13,6 @@
             @page {
                 margin: 1em;
                 size: letter portrait;
-                /* background-color: yellow; */
             }
 
             body {
@@ -21,18 +20,32 @@
             }
 
             @media print {
-                /* margin: 1em; */
-                /* size: portrait; */
-                body {
-                    background-color: yellow;
+                header {
+                    background-color: white;
+                }
+
+                header .header-title {
+                    color: black;                    
+                }
+
+                header img {
+                    filter: invert(1);                    
                 }
             }
 
+            article {
+                position: relative;
+                height: 10in;
+                width: 7.5in;
+                margin: auto;
+
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                page-break-after: always;
+            }
+
             header {
-                /* position: absolute;
-                top: 0;
-                left: 0;
-                right: 0; */
                 height: 70px;
 
                 border-bottom:      2px solid #fcba19;
@@ -71,19 +84,6 @@
                 font-size:      18px;
             }
 
-            article {
-                /* border: 2px solid black; */
-                position: relative;
-                height: 10in;
-                width: 7.5in;
-                margin: auto;
-
-                display: flex;
-                flex-direction: column;
-                justify-content: space-between;
-                page-break-after: always;
-            }
-
             .page {
                 display: flex;               
                 flex-grow: 1; 
@@ -110,24 +110,77 @@
             }
 
             .waypoints {
-                min-height: 4em;
-                /* background-color: orange; */
+                padding: 0 0.5em;
+            }
+
+            .waypoint {
+                margin: 0.5em 0;
+                padding: 2px;
+                border-radius: 4px;
+            }
+
+            .start {
+                background-color: palegreen !important;
+                border-color: palegreen !important;
+            }
+
+            .finish {
+                background-color: #e99 !important;
+                border-color: #e99 !important;
+            }
+
+            .address {
+                font-size: 20px;
+                font-weight: bold;
             }
 
             .directions {
-                /* background-color: yellow; */
                 height: 100%;
+                padding: 0 0.5em;
+            }
+
+            .direction {
+                margin: 0.5em 0;
+                padding: 2px;
+                border-radius: 4px;
+                padding-left: 30px;
+
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between;
+            }
+
+            .direction .index {
+                margin-left: -30px;
+                font-size: 12px;
+                font-weight: bold;
+                padding: 0px;
+                border-radius: 8px;
+                background-color: #fff;
+                border: 1px solid #fff;
+                box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+                flex-basis: 1%;
+                height: 1%;
+            }
+
+            .direction .instruction {
+                flex-basis: 100%;
+            }
+
+            .direction .metric {
+                font-size: 12px;
             }
 
             #route-pages .smk-map-frame .smk-route-tooltip {
                 font-size: 12px;
                 font-weight: bold;
                 padding: 0px;
-                /* margin-top: 6px; */
-                /* margin-left: 6px; */
                 border-radius: 8px;
             }
 
+            .page-number {
+                text-align: right;
+            }
         </style>
 
     </head>
@@ -141,7 +194,6 @@
                     v-for="page in pages"
                 >
                     <header>
-                        <!-- <img src="bc-gov-logo-transparent.png"> -->
                         <img src="https://tlweblibs.translink.ca/TransLink-logo-white.svg" alt="TransLink Logo" class="siteLogo">
                         <div class="header-title">Vehicle Route - Commercial Vehicle Route Planner Beta</div>
                         <div class="build-info"></div>
@@ -150,10 +202,10 @@
                     <div class="page">
                         <section class="left-side">
                             <div class="waypoints">
-                                <div 
+                                <div class="waypoint"
                                     v-for="w in waypoints"
-                                    v-bind:class="[ w.style ]"
-                                >{{ w.label }} at {{ w.fullAddress }}</div>
+                                    v-bind:class="[ w.style || '' ]"
+                                >{{ w.label }} at <span class="address">{{ w.fullAddress }}</span></div>
                             </div>
 
                             <div class="smk-map-frame"
@@ -174,6 +226,8 @@
                                     >for {{ d.distance }} ({{ d.time }})</span>
                                 </div>
                             </div>
+
+                            <div class="page-number">Page {{ page.index }} of {{ pages.length }}</div>
                         </section>
                     </div>
                 </article>            
@@ -182,18 +236,10 @@
     </body>
 
     <script>
-        function close( p1, p2, min ) { 
-            var d0 = p1[0] - p2[0]
-            var d1 = p1[1] - p2[1]
-            return ( d0 * d0 + d1 * d1 ) <= ( min * min )
-        }
+        var maxDirs = 10, thresholdFactor = 6, smallThresholdFactor = 10
 
         include.option( { baseUrl: ( new URL( '../..', document.location ) ).toString() } )
-
         include( 'vue', 'vue-config', 'turf' ).then( function () {
-
-            console.log('hi')
-        // try {
             var key = location.search.substr( 1 )
             var cfg = JSON.parse( window.sessionStorage.getItem( key ) )
 
@@ -204,20 +250,24 @@
 
             var wl = dirs.waypoints.length
             dirs.waypoints[ 0 ].label = 'Start'
-            dirs.waypoints[ 0 ].style = 'smk-waypoint-start'
+            dirs.waypoints[ 0 ].style = 'start'
             for ( var i = 1; i < ( wl - 1 ); i += 1 ) {
                 dirs.waypoints[ i ].label = 'Waypoint #' + i
-                dirs.waypoints[ i ].style = 'smk-waypoint'
             }
             dirs.waypoints[ wl - 1 ].label = 'Finish'
-            dirs.waypoints[ wl - 1 ].style = 'smk-waypoint-finish'
+            dirs.waypoints[ wl - 1 ].style = 'finish'
+
+            function close( p1, p2, min ) { 
+                var d0 = p1[0] - p2[0]
+                var d1 = p1[1] - p2[1]
+                return ( d0 * d0 + d1 * d1 ) <= ( min * min )
+            }
 
             function getWaypoint( pt ) {
                 return dirs.waypoints.find( function ( wp ) {
                     return close( pt, [ wp.longitude, wp.latitude ], 0.0001 )
                 } ) || {}
             }
-
 
             var spi = 0, pi = 0, prevDir
             dirs.directions.forEach( function ( d, i ) {
@@ -248,17 +298,9 @@
                 dist: 0
             }
 
-            var maxDirs = 10
-
             var dirPages = [], dirPage
-            // prevDir = null
             var targetDist
             dirs.directions.forEach( function ( d ) {
-                // if ( !prevDir ) {
-                //     prevDir = d
-                //     return
-                // }
-
                 if ( !d.route.dist ) {
                     dirPage.push( d )
                     return
@@ -271,18 +313,16 @@
                     return
                 }
 
-
                 var r = d.route.dist / targetDist
                 if ( r < 1 ) r = 1 / r
 
-                // if ( ( dirPage.length == 1 && r < 20 && d.route.dist < targetDist ) || r < 3 ) {
-                if ( r < 6 ) {
+                if ( r < thresholdFactor ) {
                     dirPage.push( d )
                     targetDist = Math.sqrt( targetDist * d.route.dist )
                     return
                 }
 
-                if ( r > 10 && d.route.dist < targetDist ) {
+                if ( r > smallThresholdFactor && d.route.dist < targetDist ) {
                     dirPage.push( d )
                     targetDist = null 
                     return
@@ -303,14 +343,11 @@
                 targetDist = d.route.dist
             } )
 
-            // var len = dirs.directions.length 
-            // var pages = Math.round( len / maxDirs ) 
-            // var perPage = Math.round( len / pages )
-
             var model = {
                 waypoints: dirs.waypoints,
-                pages: dirPages.map( function ( dp ) {
+                pages: dirPages.map( function ( dp, i ) {
                     return {
+                        index: i + 1,
                         route: [],
                         directions: dp,
                         map: {}
@@ -318,49 +355,46 @@
                 } )
             }
 
-            // function bearingToDir( b ) {
-                // if ( b > -45  && b < 45 ) return 'top'
-                // if ( b > 45   && b < 135 ) return 'right'
-                // if ( b > -135 && b < -45 ) return 'left'
-                // return 'bottom'
-            // }
-
-
             model.pages.forEach( function ( p, pi ) {
                 for ( var d = 0; d < p.directions.length; d += 1 ) {
-                    // if ( pi * perPage + d >= dirs.directions.length ) break
-
                     var dr = p.directions[ d ]
-                    // p.directions.push( dr )
 
                     for ( var r = dr.route.start; r <= dr.route.end; r += 1 ) {
                         p.route.push( dirs.route[ r ] )
                     } 
                 }
 
-
                 p.map.create = function ( el ) {
                     var ls = turf.lineString( p.route )
                     var bb = turf.bbox( ls )
                     var diag = turf.distance( [ bb[0], bb[1] ], [ bb[2], bb[3] ] )
-                    var cent = turf.center( turf.bboxPolygon( bb ) )
                     
                     var c = JSON.parse( mapCfg )
                     c.layers.unshift( {
                         type: 'vector',
-                        id: 'route',
+                        id: 'route-base',
+                        isVisible: true,
+                        dataUrl: 'data:application/json,' + JSON.stringify( turf.lineString( dirs.route ) ),
+                        style: {
+                            strokeColor: "gray",
+                            strokeWidth: 12,
+                            strokeOpacity: 0.6
+                        }
+                    } )
+
+                    c.layers.unshift( {
+                        type: 'vector',
+                        id: 'route-segment',
                         isVisible: true,
                         dataUrl: 'data:application/json,' + JSON.stringify( turf.lineString( p.route ) ),
                         style: {
                             strokeColor: "green",
                             strokeWidth: 8,
-                            strokeOpacity: 0.8,
-                            fillOpacity: 0.6,
-                            fillColor: "blue"
+                            strokeOpacity: 0.8
                         }
                     } )
 
-                    p.directions.forEach( function ( d, i ) {
+                    p.directions.reverse().forEach( function ( d, i ) {
                         c.layers.unshift( {
                             type: 'vector',
                             id: 'dir-' + i,
@@ -379,94 +413,10 @@
                             }
                         } )
                     } )
-
-                    // var slots = perPage * 3
-                    // var pos = []
-
-                    // p.directions.forEach( function ( d, i ) {
-                    //     pos.push( { 
-                    //         dir: d,
-                    //         bearing: turf.bearing( cent, d.point ),
-                    //         quant: Math.trunc( ( turf.bearing( cent, d.point ) + 360 - 180 / slots ) * slots / 360 ) % slots,
-                    //         quantBearing: function ( off ) {
-                    //             return this.move( off ) * 360 / slots + 180 / slots
-                    //         },
-                    //         error: function ( off ) {
-                    //             var er = Math.abs( this.quantBearing( off ), this.bearing )
-                    //             if ( er < 180 ) return er
-                    //             return 360 - er 
-                    //         },
-                    //         move: function ( off ) {
-                    //             if ( !off ) return this.quant
-                    //             return ( this.quant + slots + Math.ceil( off / 2 ) * ( 2 * ( off % 2 ) - 1 ) ) % slots 
-                    //         }
-                    //     } )
-                    // } )
-
-                    // pos.sort( function ( a, b ) {
-                    //     return a.bearing - b.bearing
-                    // } )
-                    
-                    // function smallestErr( off ) {
-                    //     var mini, min = 9999
-
-                    //     pos.forEach( function ( p, i ) {
-                    //         if ( p.done ) return
-
-                    //         if ( p.error( off ) > min ) return
-
-                    //         min = p.error( off )
-                    //         mini = i
-                    //     } )
-                        
-                    //     if ( mini == null ) return
-                    //     return pos[ mini ]
-                    // }
-
-                    // var quant = [], offset = 0 
-
-                    // Array( p.directions.length ).fill().forEach( function ( xxx, pi ) {
-
-                    //     var p 
-                    //     while ( p == null ) {
-                    //         p = smallestErr( offset )
-                    //         if ( p && !quant[ p.move( offset ) ] ) break
-                    //         offset += 1 
-                    //     } 
-
-                    //     p.done = true
-                    //     quant[ p.move( offset ) ] = true
-                    //     // pos.forEach( function ( d, i ) {
-                    //         // if ( pos.done ) return 
-
-                    //         // var bearing = turf.bearing( cent, d.point )
-                    //         // var b = Math.trunc( ( turf.bearing( cent, d.point ) + 360 ) * slots / 360 ) % slots
-                    //         // while ( pos[ b ] ) {
-                    //             // b = ( b + 1 ) % slots
-                    //         // }
-                    //         // pos[ b ] = true
-                    //         // var edge = turf.rhumbDestination( cent, diag / 2, b * 360 / slots + 180 / slots )
-                    //         var edge = turf.rhumbDestination( cent, diag / 3 * 2, p.quantBearing( offset ) )
-
-                    //         c.layers.push( {
-                    //             type: 'vector',
-                    //             id: 'edge-' + pi,
-                    //             isVisible: true,
-                    //             dataUrl: 'data:application/json,' + JSON.stringify( turf.lineString( [ p.dir.point, edge.geometry.coordinates ] ) ),
-                    //             style: {
-                    //                 strokeColor: "blue",
-                    //                 strokeWidth: 8,
-                    //                 strokeOpacity: 0.8
-                    //             }
-                    //         } )
-
-                        // } )
-        
-                    // } )
+                    p.directions.reverse()
 
                     c.viewer.location = {
                         extent: turf.bbox( turf.buffer( turf.bboxPolygon( bb ), diag * 0.1 ) )
-                        // extent: turf.bbox( turf.circle( cent, diag  ) )
                     }
 
                     return SMK.INIT( {
@@ -477,41 +427,18 @@
                 }
 
             } )
-
             
             new Vue( {
                 el: '#vue-root',
                 template: '#template',
-                data: model
+                data: model,
+                mounted: function () {
+                    SMK.BOOT.then( function () {
+                        window.print()
+                        window.parent.postMessage( 'printed', '*' )
+                    } )
+                }
             } )
         } )
-        // SMK.INIT( {
-        //     'smk-container-sel': "#smk-map-frame",
-        //     'smk-config': "?|hide-tool=all",
-        // } ).then( function () {
-        //     $( '#build-info' ).empty()
-        //         .append( '<div>Version: ' + SMK.BUILD.version +'</div>' )
-        //         .append( '<div>Last commit: ' + SMK.BUILD.lastCommit +'</div>' )
-        //         .append( '<div>Commit ID: ' + SMK.BUILD.commit +'</div>' )
-        //         .append( '<div>Branch: ' + SMK.BUILD.branch +'</div>' )
-
-        //     new Vue( {
-        //         el: '#waypoints-mount',
-        //         template: '#waypoints-template',
-        //         data: SMK.MAP[1].etc.directions
-        //     } )
-
-        //     new Vue( {
-        //         el: '#directions-mount',
-        //         template: '#directions-template',
-        //         data: SMK.MAP[1].etc.directions
-        //     } )
-
-        // // console.log('window size',$(window).width(),$(window).height());
-        //         SMK.MAP[1].$viewer.map.invalidateSize() 
-        //         SMK.MAP[1].$viewer.resizeToExtent() 
-
-        // } )
-
     </script>
 </html>

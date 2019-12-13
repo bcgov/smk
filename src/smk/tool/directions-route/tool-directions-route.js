@@ -18,7 +18,7 @@ include.module( 'tool-directions-route', [ 'tool', 'widgets', 'tool-directions-r
     Vue.component( 'route-panel', {
         extends: inc.widgets.toolPanel,
         template: inc[ 'tool-directions-route.panel-directions-route-html' ],
-        props: [ 'busy', 'directions', 'directionHighlight', 'directionPick', 'statusMessage' ],
+        props: [ 'busy', 'directions', 'directionHighlight', 'directionPick', 'status', 'message' ],
         methods: {
             instructionTypeIcon: function ( type ) {                
                 if ( !instructionType[ type ] ) return 'report'
@@ -37,7 +37,8 @@ include.module( 'tool-directions-route', [ 'tool', 'widgets', 'tool-directions-r
         this.makePropPanel( 'directions', [] )
         this.makePropPanel( 'directionHighlight', null )
         this.makePropPanel( 'directionPick', null )
-        this.makePropPanel( 'statusMessage', null )
+        this.makePropPanel( 'status', null )
+        this.makePropPanel( 'message', null )
 
         SMK.TYPE.Tool.prototype.constructor.call( this, $.extend( {
             order:          4,
@@ -79,82 +80,25 @@ include.module( 'tool-directions-route', [ 'tool', 'widgets', 'tool-directions-r
             },
 
             'print': function ( ev ) {
-                // var route = directions.routeLayer.toGeoJSON()
-                // var wps = directions.waypointLayers.map( function ( wp ) { 
-                //     var j = wp.toGeoJSON() 
-                //     var icon = wp.options.icon.options
-                //     j.style = {
-                //         // markerUrl: makeDataUrl( wp._icon ),
-                //         markerUrl: icon.iconUrl,
-                //         markerSize: icon.iconSize,
-                //         markerOffset: icon.iconAnchor
-                //     }
-                //     return j
-                // } )
-
                 var cfg = smk.getConfig()
                 cfg.etc = { 
                     directions: directions.directionsRaw
                 }
 
-                // cfg.viewer.location = {
-                    // extent: turf.bbox( turf.buffer( route, 10 ) )
-                // }
-
-                // cfg.layers.push( 
-                //     // {
-                //     //     type: 'vector',
-                //     //     id: 'extent',
-                //     //     isVisible: true,
-                //     //     dataUrl: 'data:application/json,' + JSON.stringify( turf.bboxPolygon( cfg.viewer.location.extent ) ),
-                //     //     style: {
-                //     //         strokeColor: "green",
-                //     //         strokeWidth: 8,
-                //     //         strokeOpacity: 0.8,
-                //     //         fillOpacity: 0.6,
-                //     //         fillColor: "blue"
-                //     //     }
-                //     // },
-                //     {
-                //         type: 'vector',
-                //         id: 'route',
-                //         isVisible: true,
-                //         dataUrl: 'data:application/json,' + JSON.stringify( route ),
-                //         style: {
-                //             strokeColor: "green",
-                //             strokeWidth: 8,
-                //             strokeOpacity: 0.8,
-                //             fillOpacity: 0.6,
-                //             fillColor: "blue"
-                //         }
-                //     }
-                // )
-
-                // cfg.layers = cfg.layers.concat( wps.map( function ( wp, i ) {
-                //     var st = wp.style
-                //     delete wp.style
-                //     return {
-                //         type: 'vector',
-                //         id: 'wp-' + i,
-                //         isVisible: true,
-                //         dataUrl: 'data:application/json,' + JSON.stringify( wp ),
-                //         style: st
-                //         //     strokeColor: "green",
-                //         //     strokeWidth: 8,
-                //         //     strokeOpacity: 0.8,
-                //         //     fillOpacity: 0.6,
-                //         //     fillColor: "blue",
-                //         //     "markerUrl": 'data:application/json,' + JSON.stringify( wp ),
-                //         //     "markerSize": [ 21, 25 ],
-                //         //     "markerOffset": [ 10, 25 ]
-                //         // }
-                //     }
-                // } ) )
-
                 var key = SMK.UTIL.makeUUID()
                 window.sessionStorage.setItem( key, JSON.stringify( cfg ) )
 
+                self.setMessage( 'Preparing print...', 'progress', null )
+                self.busy = true
                 SMK.HANDLER.get( self.id, 'print' )( smk, self, key )
+                    .then( function () {
+                        self.busy = false
+                        return self.setMessage( 'Printing...', 'progress', 2000 )
+                    } )
+                    .catch( function () {
+                        self.busy = false
+                        return self.setMessage( 'Print failed', 'error', 2000 )
+                    } )
             },
         } )
 
@@ -169,18 +113,24 @@ include.module( 'tool-directions-route', [ 'tool', 'widgets', 'tool-directions-r
 
     DirectionsRouteTool.prototype.setMessage = function ( message, status, delay ) {
         if ( !message ) {
-            this.statusMessage = null
+            this.status = null
+            this.message = null
             return
         }
 
-        this.statusMessage = {
-            message: message,
-            status: status
-        }
+        this.status = status
+        this.message = message
 
-        if ( delay )
-            return SMK.UTIL.makePromise( function ( res ) { setTimeout( res, delay ) } )
+        if ( delay === null ) return
+
+        this.clearMessage.option.delay = delay || 2000
+        this.clearMessage()
     }
+
+    DirectionsRouteTool.prototype.clearMessage = SMK.UTIL.makeDelayedCall( function () {
+        this.status = null
+        this.message = null        
+    }, { delay: 2000 } )
 
     return DirectionsRouteTool
 

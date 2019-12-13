@@ -1,10 +1,15 @@
-<side-panel class="smk-directions-route-panel" v-bind:class="{ 'smk-busy': busy }">
+<side-panel class="smk-directions-route-panel" 
+    v-bind:busy="busy"
+    v-bind:message="message"
+    v-bind:status="status"
+>
     <template slot="header">
         <slot></slot>
     </template>
 
     <template slot="commands">
         <command-button class="smk-print-route"
+            v-bind:disabled="busy"
             v-on:click="$$emit( 'print' )"
         >Print</command-button>
     </template>
