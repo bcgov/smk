@@ -1,8 +1,9 @@
 .smk-map-frame {
     font-family: Helvetica,Arial,sans-serif;
+    position: relative;
 }
 
-.smk-map-frame.smk-hidden {
+.smk-map-frame.smk-hidden, .smk-map-frame .smk-hidden {
     visibility: hidden;
 }
 
@@ -82,3 +83,17 @@
     font-size: 10px;
 }
 
+
+.smk-map-frame .smk-overlay .smk-debug {
+    display: none;
+    position: absolute;
+    bottom: 50px;
+    left: 0;
+    background-color: white;
+    border: 1px solid black;
+    font-size: 10px;
+    padding: 2px;
+    margin: 1px;
+    white-space: pre;
+    z-index: 99999;
+}
