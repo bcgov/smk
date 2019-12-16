@@ -2,7 +2,6 @@
     --overlay-padding: 7px;
     --panel-width: 300px;
     --panel-bottom: 0;
-    --toolbar-height: 30px;
 }
 
 @media screen and (orientation: landscape) {
