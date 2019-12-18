@@ -1,7 +1,22 @@
 include.module( 'tool-directions.router-api-js', [], function ( inc ) {
     "use strict";
 
-    var baseUrl = 'https://router.api.gov.bc.ca/'
+    // var baseUrl = 'https://router.api.gov.bc.ca/'
+    var baseUrl = 'https://ssl.refractions.net/ols/router/'
+
+    var directionType = {
+        START:              [ 'trip_origin' ],
+        CONTINUE:           [ 'expand_more' ],
+        TURN_LEFT:          [ 'arrow_back' ],
+        TURN_SLIGHT_LEFT:   [ 'undo' ],
+        TURN_SHARP_LEFT:    [ 'directions', true ],
+        TURN_RIGHT:         [ 'arrow_forward' ],
+        TURN_SLIGHT_RIGHT:  [ 'undo', true ],
+        TURN_SHARP_RIGHT:   [ 'directions' ],
+        FERRY:              [ 'directions_boat' ],
+        STOPOVER:           [ 'pause' ],
+        FINISH:             [ 'stop' ],
+    }
 
     var apiKey
     function setApiKey( key ) {
@@ -22,7 +37,8 @@ include.module( 'tool-directions.router-api-js', [], function ( inc ) {
             followTruckRoute:   null,
             truckRouteMultiplier:null,
             disable:            null,
-            outputSRS:          4326,            
+            outputSRS:          4326,       
+            partition:          'isFerry,isTruckRoute'
         }, option )
 
         if ( request )
@@ -62,13 +78,20 @@ include.module( 'tool-directions.router-api-js', [], function ( inc ) {
 
             if ( data.directions ) {
                 data.directions = data.directions.map( function ( dir, i ) {
+                    if ( dir.distance != null ) {
+                        dir.distanceUnit = appropriateUnit( dir.distance * 1000 )
+                        return dir
+                    }
+                        
+                    // TODO remove
                     dir.instruction = dir.text.replace( /^"|"$/g, '' ).replace( /\s(?:for|and travel)\s((?:\d+.?\d*\s)?k?m)\s[(](\d+).+?((\d+).+)?$/, function ( m, a, b, c, d ) {
-                        dir.distance = a
+                        // dir.distance = a
+                        dir.distanceUnit = { value: dir.distance, unit: '' }
 
                         if ( d )
-                            dir.time = ( '0' + b ).substr( -2 ) + ':' + ( '0' + d ).substr( -2 )
+                            dir.time = parseInt( b ) * 60 + parseInt( d ) // ( '0' + b ).substr( -2 ) + ':' + ( '0' + d ).substr( -2 )
                         else
-                            dir.time = '00:' + ( '0' + b ).substr( -2 )
+                            dir.time = parseInt( b ) //'00:' + ( '0' + b ).substr( -2 )
 
                         return ''
                     } )
@@ -134,6 +157,11 @@ include.module( 'tool-directions.router-api-js', [], function ( inc ) {
             p1[ 0 ] + ( p2[ 0 ] - p1[ 0 ] ) * t,
             p1[ 1 ] + ( p2[ 1 ] - p1[ 1 ] ) * t
         ]
+    }
+
+    function appropriateUnit( m ) {
+        if ( m <= 500 ) return { value: m, unit: 'meters' }
+        return { value: m, unit: 'kilometers' }
     }
 
     return {

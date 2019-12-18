@@ -26,10 +26,13 @@
                 v-bind:class="[ instructionTypeClass( direction.type ) ]"
                 v-bind:title="direction.type"
             >{{ instructionTypeIcon( direction.type ) }}</i>
-            <span class="smk-instruction">{{ direction.instruction }}</span>
+            <span class="smk-instruction" 
+                v-if="!direction.instruction"
+            >{{ instructionTypePrefix( direction.type, direction.heading ) }} {{ direction.name }}</span>
+            <span class="smk-instruction" v-else>{{ direction.instruction }}</span><!-- TODO remove -->
             <span class="smk-metric"
                 v-if="direction.distance"
-            >for {{ direction.distance }} ({{ direction.time }})</span>
+            >for {{ direction.distanceUnit.value | dimensionalNumber( 1, direction.distanceUnit.unit, 3 ) }} ({{ direction.time | formatTime }})</span>
         </div>
     </div>
 

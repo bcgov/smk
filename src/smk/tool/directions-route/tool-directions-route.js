@@ -2,17 +2,21 @@ include.module( 'tool-directions-route', [ 'tool', 'widgets', 'tool-directions-r
     "use strict";
 
     var instructionType = {
-        START:              [ 'trip_origin' ],
-        CONTINUE:           [ 'expand_more' ],
-        TURN_LEFT:          [ 'arrow_back' ],
-        TURN_SLIGHT_LEFT:   [ 'undo' ],
-        TURN_SHARP_LEFT:    [ 'directions', true ],
-        TURN_RIGHT:         [ 'arrow_forward' ],
-        TURN_SLIGHT_RIGHT:  [ 'undo', true ],
-        TURN_SHARP_RIGHT:   [ 'directions' ],
-        FERRY:              [ 'directions_boat' ],
-        STOPOVER:           [ 'pause' ],
-        FINISH:             [ 'stop' ],
+        START:              [ 'trip_origin', null,      'Go on' ],
+        START_NORTH:        [ 'trip_origin', null,      'Head north on' ],
+        START_SOUTH:        [ 'trip_origin', null,      'Head south on' ],
+        START_EAST:         [ 'trip_origin', null,      'Head east on' ],
+        START_WEST:         [ 'trip_origin', null,      'Head west on' ],
+        CONTINUE:           [ 'expand_more', null,      'Continue onto'  ],
+        TURN_LEFT:          [ 'arrow_back', null,       'Turn left onto' ],
+        TURN_SLIGHT_LEFT:   [ 'undo', null,             'Slight turn left onto' ],
+        TURN_SHARP_LEFT:    [ 'directions', true,       'Sharp turn left onto' ],
+        TURN_RIGHT:         [ 'arrow_forward', null,    'Turn right onto' ],
+        TURN_SLIGHT_RIGHT:  [ 'undo', true,             'Slight turn right onto' ],
+        TURN_SHARP_RIGHT:   [ 'directions', null,       'Sharp turn right onto' ],
+        FERRY:              [ 'directions_boat', null,  'Board' ],
+        STOPOVER:           [ 'pause', null,            '' ],
+        FINISH:             [ 'stop', null,             '' ],
     }
 
     Vue.component( 'route-panel', {
@@ -27,7 +31,12 @@ include.module( 'tool-directions-route', [ 'tool', 'widgets', 'tool-directions-r
             instructionTypeClass: function ( type ) {
                 if ( !instructionType[ type ] ) return 'smk-hidden'
                 return instructionType[ type ][ 1 ] ? 'smk-reverse' : ''
-            }                
+            },
+            instructionTypePrefix: function ( type, heading ) {
+                if ( heading ) type = type + '_' + heading
+                if ( !instructionType[ type ] ) return ''
+                return instructionType[ type ][ 2 ] || ''
+            },
         }
     } )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
