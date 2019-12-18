@@ -228,7 +228,8 @@ include.module( 'tool-directions', [
         }
 
         return SMK.UTIL.promiseFinally( routerApi.fetchDirections( points, opt ).then( function ( data ) {
-            self.displayRoute( data.route )
+            // self.displayRoute( data.route )
+            self.displaySegments( data.segments )
 
             if ( data.visitOrder && data.visitOrder.findIndex( function ( v, i ) { return points[ v ].index != i } ) != -1 ) {
                 // console.log( data.visitOrder )

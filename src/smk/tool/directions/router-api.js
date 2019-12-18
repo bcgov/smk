@@ -85,19 +85,35 @@ include.module( 'tool-directions.router-api-js', [], function ( inc ) {
                         
                     // TODO remove
                     dir.instruction = dir.text.replace( /^"|"$/g, '' ).replace( /\s(?:for|and travel)\s((?:\d+.?\d*\s)?k?m)\s[(](\d+).+?((\d+).+)?$/, function ( m, a, b, c, d ) {
-                        // dir.distance = a
                         dir.distanceUnit = { value: dir.distance, unit: '' }
 
                         if ( d )
-                            dir.time = parseInt( b ) * 60 + parseInt( d ) // ( '0' + b ).substr( -2 ) + ':' + ( '0' + d ).substr( -2 )
+                            dir.time = parseInt( b ) * 60 + parseInt( d ) 
                         else
-                            dir.time = parseInt( b ) //'00:' + ( '0' + b ).substr( -2 )
+                            dir.time = parseInt( b ) 
 
                         return ''
                     } )
 
                     return dir
                 } )
+            }
+
+            if ( data.route ) {
+                var ls = turf.lineString( data.route )
+                data.segments = turf.lineSegment( ls )
+
+                if ( data.partitions ) {
+                    data.partitions.forEach( function ( p ) {
+                        var start = p.index
+                        var prop = JSON.parse( JSON.stringify( p ) )
+                        delete prop.index
+
+                        for ( var i = start; i < data.segments.features.length; i += 1 ) {
+                            data.segments.features[ i ].properties = Object.assign( {}, prop )
+                        }
+                    } )
+                }
             }
 
             data.request = ajaxOpt

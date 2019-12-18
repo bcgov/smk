@@ -122,6 +122,43 @@ include.module( 'tool-directions-leaflet', [ 'leaflet', 'tool-directions' ], fun
             } )
         }
 
+        this.displaySegments = function ( segments ) {
+            reset()
+
+            self.routeLayer = L.geoJson( segments,
+                {
+                    pane: 'markerPane',
+                    onEachFeature: function( feature, layer ) {
+                        var st = { 
+                            color:"#0000FF", 
+                            weight:7, 
+                            opacity: 0.5 
+                        }
+
+                        if ( feature.properties.isFerry ) {
+                            st.dashArray = '10,10'
+                            st.lineCap =   'butt'
+                        }
+                        
+                        if ( feature.properties.isTruckRoute )
+                            st.color = '#FF0000'
+
+                        layer.setStyle( st );
+                    }
+                } 
+            )
+
+            smk.$viewer.map.addLayer( self.routeLayer )
+
+            var bounds = self.routeLayer.getBounds()
+            var padding = smk.$viewer.getPanelPadding( true )
+
+            smk.$viewer.map.fitBounds( bounds.pad( 0.25 ), {
+                paddingTopLeft: padding.topLeft,
+                paddingBottomRight: padding.bottomRight
+            } )
+        }
+
         this.displayWaypoints = function () {
             if ( self.waypointLayers && self.waypointLayers.length > 0 ) {
                 self.waypointLayers.forEach( function ( l ) {
