@@ -4,18 +4,18 @@ include.module( 'tool-directions-options', [ 'tool', 'widgets', 'sidepanel', 'to
     Vue.component( 'directions-options-panel', {
         extends: inc.widgets.toolPanel,
         template: inc[ 'tool-directions-options.panel-directions-options-html' ],
-        props: [ 
-            'truck', 
-            'optimal', 
-            'roundTrip', 
-            'criteria',
-            'truckRoute',
-            'truckHeight',
-            'truckWidth',
-            'truckLength',
-            'truckWeight',
-            'command'
-        ],
+        props: {
+            'truck' : Boolean, 
+            'optimal' : Boolean, 
+            'roundTrip' : Boolean, 
+            'criteria': String,
+            'truckRoute': Number,
+            'truckHeight': Number,
+            'truckWidth': Number,
+            'truckLength': Number,
+            'truckWeight': Number,
+            'command': Object
+        },
     } )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
@@ -25,16 +25,23 @@ include.module( 'tool-directions-options', [ 'tool', 'widgets', 'sidepanel', 'to
         this.makePropPanel( 'roundTrip',    false )
         this.makePropPanel( 'criteria',     'shortest' )
         this.makePropPanel( 'truckRoute',   10 )
-        this.makePropPanel( 'truckHeight',  null )
-        this.makePropPanel( 'truckWidth',   null )
-        this.makePropPanel( 'truckLength',  null )
-        this.makePropPanel( 'truckWeight',  null )
+        this.makePropPanel( 'truckHeight',  null, null, positiveInt )
+        this.makePropPanel( 'truckWidth',   null, null, positiveInt )
+        this.makePropPanel( 'truckLength',  null, null, positiveInt )
+        this.makePropPanel( 'truckWeight',  null, null, positiveInt )
         this.makePropPanel( 'command',      {} )
 
         SMK.TYPE.PanelTool.prototype.constructor.call( this, $.extend( {
             title:          'Route Planner Options',
             panelComponent: 'directions-options-panel',
         }, option ) )
+    }
+
+    function positiveInt( newVal, oldVal, propName ) {
+        var i = parseInt( newVal )
+        if ( !newVal || !i ) return null
+        if ( i < 0 ) return oldVal
+        return i
     }
 
     SMK.TYPE.DirectionsOptionsTool = DirectionsOptionsTool
@@ -48,14 +55,11 @@ include.module( 'tool-directions-options', [ 'tool', 'widgets', 'sidepanel', 'to
 
         var directions = smk.$tool[ 'directions' ]
 
-        // this.changedActive( function () {
-        // } )
-
         smk.on( this.id, {
-            'change': function ( ev ) {
-                // console.log(ev)
+            'change': function ( ev, comp ) {
                 Object.assign( self, ev )
 
+                comp.$forceUpdate()
                 directions.findRoute()
             },
         } )

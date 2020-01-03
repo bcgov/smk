@@ -110,8 +110,8 @@ include.module( 'sidepanel', [ 'vue', 'tool', 'sidepanel.sidepanel-html', 'sidep
             el: smk.addToOverlay( inc[ 'sidepanel.sidepanel-html' ] ),
             data: this.model,
             methods: {
-                'trigger': function ( toolId, event, arg ) {
-                    smk.emit( toolId, event, arg )
+                'trigger': function ( toolId, event, arg, comp ) {
+                    smk.emit( toolId, event, arg, comp )
                 },
 
                 'previousPanel': function ( id ) {     

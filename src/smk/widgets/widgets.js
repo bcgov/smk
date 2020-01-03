@@ -11,7 +11,7 @@ include.module( 'widgets', [
     var emit = {
         methods: {
             $$emit: function ( event, arg ) {
-                this.$root.trigger( this.id, event, arg )
+                this.$root.trigger( this.id, event, arg, this )
             }
         }
     }
@@ -74,6 +74,31 @@ include.module( 'widgets', [
             value:      { type: String, default: '' },
             type:       { type: String, default: 'text' },
             placeholder:{ type: String },
+            option:     { type: Object, default: function () { return {} } },
+        },
+        methods: {
+            onChange: function ( val ) {
+                this.$emit( 'change', val )
+            }
+        }
+    } )
+
+    Vue.component( 'enter-number', {
+        template: inc[ 'widgets.enter-input-html' ],
+        data: function () {
+            return {
+                type: 'number'
+            }
+        },
+        props: { 
+            value:      { type: Number, default: 0 },
+            placeholder:{ type: String },
+            option:     { type: Object, default: function () { return {} } },
+        },
+        methods: {
+            onChange: function ( val ) {
+                this.$emit( 'change', parseFloat( val ) )
+            }
         }
     } )
 

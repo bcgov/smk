@@ -81,18 +81,27 @@ include.module( 'tool', [ 'jquery', 'event' ], function () {
         } )
     }
 
-    Tool.prototype.makePropPanel = function ( name, initial, event ) {
+    Tool.prototype.makePropPanel = function ( name, initial, event, validate ) {
         var self = this
 
         if ( !this.panel ) this.panel = {}
+
+        if ( typeof validate != 'function' )
+            validate = function ( newVal ) { return newVal } 
+
+        var callback = self[ event ] || function () {}
 
         self.panel[ name ] = initial
         Object.defineProperty( self, name, {
             get: function () { return self.panel[ name ] },
             set: function ( v ) {
-                if ( v == self.panel[ name ] ) return
-                self.panel[ name ] = v
-                if ( event ) self[ event ].call( self )
+                var oldVal = self.panel[ name ]
+                var newVal = validate( v, oldVal, name )
+                
+                self.panel[ name ] = newVal
+
+                if ( newVal == oldVal ) return
+                callback.call( self )
                 return self
             }
         } )

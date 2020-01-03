@@ -64,33 +64,33 @@
             ]"
         >Adherence to designated truck route</select-option>
 
-        <enter-input class="smk-directions-truck-height"
-            type="number"
+        <enter-number class="smk-directions-truck-height"
             v-if="command.truckHeight !== false"
             v-bind:value="truckHeight"
+            v-bind:option="{ min: 0 }"
             v-on:change="!busy && $$emit( 'change', { truckHeight: $event } )"
-        >Height OAH (m)</enter-input>
+        >Height OAH (m)</enter-number>
 
-        <enter-input class="smk-directions-truck-width"
-            type="number"
+        <enter-number class="smk-directions-truck-width"
             v-if="command.truckWidth !== false"
             v-bind:value="truckWidth"
+            v-bind:option="{ min: 0 }"
             v-on:change="!busy && $$emit( 'change', { truckWidth: $event } )"
-        >Width OAW (m)</enter-input>
+        >Width OAW (m)</enter-number>
 
-        <enter-input class="smk-directions-truck-length"
-            type="number"
+        <enter-number class="smk-directions-truck-length"
             v-if="command.truckLength !== false"
             v-bind:value="truckLength"
+            v-bind:option="{ min: 0 }"
             v-on:change="!busy && $$emit( 'change', { truckLength: $event } )"
-        >Length OAL (m)</enter-input>
+        >Length OAL (m)</enter-number>
 
-        <enter-input class="smk-directions-truck-weight"
-            type="number"
+        <enter-number class="smk-directions-truck-weight"
             v-if="command.truckWeight !== false"
             v-bind:value="truckWeight"
+            v-bind:option="{ min: 0 }"
             v-on:change="!busy && $$emit( 'change', { truckWeight: $event } )"
-        >Weight GVW (kg)</enter-input>
+        >Weight GVW (kg)</enter-number>
     </div>
 
 </side-panel>
