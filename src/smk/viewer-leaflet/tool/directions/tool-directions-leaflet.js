@@ -94,19 +94,59 @@ include.module( 'tool-directions-leaflet', [ 'leaflet', 'tool-directions' ], fun
 
             if ( !points ) return
 
-            self.routeLayer = L.geoJson( {
-                type: "Feature",
-                geometry: {
-                    type: "LineString",
-                    coordinates: points
-                },
-                pane: 'markerPane'
-            }, {
-                onEachFeature: function( feature, layer ) {
-                    var color = "#0000FF";
-                    layer.setStyle( { color:color, weight:7, opacity: 0.5 } );
-                }
+            self.routeLayer = L.geoJson( 
+                {
+                    type: "Feature",
+                    geometry: {
+                        type: "LineString",
+                        coordinates: points
+                    }
+                }, 
+                {
+                    pane: 'markerPane',
+                    onEachFeature: function( feature, layer ) {
+                        var color = "#0000FF";
+                        layer.setStyle( { color:color, weight:7, opacity: 0.5 } );
+                    }
+                } 
+            )
+
+            smk.$viewer.map.addLayer( self.routeLayer )
+
+            var bounds = self.routeLayer.getBounds()
+            var padding = smk.$viewer.getPanelPadding( true )
+
+            smk.$viewer.map.fitBounds( bounds.pad( 0.25 ), {
+                paddingTopLeft: padding.topLeft,
+                paddingBottomRight: padding.bottomRight
             } )
+        }
+
+        this.displaySegments = function ( segments ) {
+            reset()
+
+            self.routeLayer = L.geoJson( segments,
+                {
+                    pane: 'markerPane',
+                    onEachFeature: function( feature, layer ) {
+                        var st = { 
+                            color:"#0000FF", 
+                            weight:7, 
+                            opacity: 0.5 
+                        }
+
+                        if ( feature.properties.isFerry ) {
+                            st.dashArray = '10,10'
+                            st.lineCap =   'butt'
+                        }
+                        
+                        if ( feature.properties.isTruckRoute )
+                            st.color = '#FF0000'
+
+                        layer.setStyle( st );
+                    }
+                } 
+            )
 
             smk.$viewer.map.addLayer( self.routeLayer )
 

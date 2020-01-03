@@ -200,6 +200,7 @@
             <div id="build-info"></div>
         </div>
         <div id="smk-map-frame"></div>
+        <iframe id="print-holder"></iframe>
 
         <style>
             .feedback-form  {
@@ -289,11 +290,30 @@
                 el.appendChild( fm )               
             } )
 
+            SMK.HANDLER.set( 'directions-route', 'print', function ( smk, tool, key ) {
+                document.getElementById( 'print-holder' ).src = 'print-directions-portrait.html?' + key
+
+                return new Promise( function ( res, rej ) {
+                    var handler = function ( ev ) {
+                        console.log( ev )
+                        if ( ev.data == 'printed' ) {
+                            res()
+                            window.removeEventListener( 'message', handler )
+                        }
+                    }
+
+                    window.addEventListener( 'message', handler, false )
+
+                    setTimeout( function () { rej( new Error( 'timeout' ) ) }, 10 * 1000 )
+                } )
+            } )
+
             $( '#build-info' ).empty()
                 .append( '<div>Version: ' + SMK.BUILD.version +'</div>' )
                 .append( '<div>Last commit: ' + SMK.BUILD.lastCommit +'</div>' )
                 .append( '<div>Commit ID: ' + SMK.BUILD.commit +'</div>' )
                 .append( '<div>Branch: ' + SMK.BUILD.branch +'</div>' )
+
         } )
     </script>
 

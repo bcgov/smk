@@ -608,6 +608,10 @@ include.module( 'smk-map', [ 'jquery', 'util', 'theme-base', 'sidepanel' ], func
         if ( lt )
             lt.display = this.$viewer.layerDisplayContext.getConfig()
 
+        cfg.layers.forEach( function ( ly ) {
+            ly.isVisible = self.$viewer.layerDisplayContext.isItemVisible( ly.id )
+        } )
+        
         return cfg
     }
 

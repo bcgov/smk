@@ -1,8 +1,9 @@
 .smk-map-frame {
     font-family: Helvetica,Arial,sans-serif;
+    position: relative;
 }
 
-.smk-map-frame.smk-hidden {
+.smk-map-frame.smk-hidden, .smk-map-frame .smk-hidden {
     visibility: hidden;
 }
 

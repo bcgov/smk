@@ -6,7 +6,6 @@
     }
 
     var documentReadyPromise
-
     var bootstrapScriptEl = document.currentScript
 
     try {
@@ -24,9 +23,11 @@
     }
 
     SMK.INIT = function ( option ) {
+        var scriptEl = bootstrapScriptEl
+
         if ( option ) {
-            bootstrapScriptEl = {
-                src: bootstrapScriptEl.src,
+            scriptEl = {
+                src: scriptEl.src,
                 attributes: Object.keys( option ).reduce( function ( acc, key ) {
                     acc[ key ] = { value: option[ key ] }
                     return acc
@@ -37,6 +38,7 @@
         try {
             var timer
             SMK.BOOT = SMK.BOOT
+                .then( function () { return scriptEl } )
                 .then( parseScriptElement )
                 .then( function ( attr ) {
                     timer = 'SMK initialize ' + attr.id
@@ -65,19 +67,19 @@
 
 // = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 
-    function parseScriptElement() {
+    function parseScriptElement( scriptEl ) {
 
         var smkAttr = {
             'id':           attrString( '1' ),
             'container-sel':attrString( '#smk-map-frame' ),
             // 'title-sel':    attrString( 'head title' ),
             'config':       attrList( '?smk-' ),
-            'base-url':     attrString( ( new URL( bootstrapScriptEl.src.replace( 'smk.js', '' ), document.location ) ).toString() ),
+            'base-url':     attrString( ( new URL( scriptEl.src.replace( 'smk.js', '' ), document.location ) ).toString() ),
             'service-url':  attrString( null, null ),
         }
 
         Object.keys( smkAttr ).forEach( function ( k ) {
-            smkAttr[ k ] = smkAttr[ k ]( 'smk-' + k, bootstrapScriptEl )
+            smkAttr[ k ] = smkAttr[ k ]( 'smk-' + k, scriptEl )
         } )
 
         console.log( 'SMK attributes', JSON.parse( JSON.stringify( smkAttr ) ) )
@@ -101,6 +103,7 @@
         function attrList( Default ) {
             return function( key, el ) {
                 var val = attrString( Default )( key, el )
+                if ( Array.isArray( val ) ) return val 
                 return val.split( /\s*[|]\s*/ ).filter( function ( i ) { return !!i } )
             }
         }
@@ -121,12 +124,19 @@
         var configs = []
         attr.config.forEach( function ( c, i ) {
             var source = 'attr[' + i + ']'
-            configs = configs.concat( parseDocumentArguments( c, source ) || parseLiteralJson( c, source ) || parseOption( c, source ) || parseUrl( c, source ) )
+            configs = configs.concat( parseObject( c, source ) || parseDocumentArguments( c, source ) || parseLiteralJson( c, source ) || parseOption( c, source ) || parseUrl( c, source ) )
         } )
 
         attr.config = configs
 
         return attr
+    }
+
+    function parseObject( config, source ) {
+        if ( typeof config != 'object' || Array.isArray( config ) || config === null ) return
+
+        config.$sources = [ source + ' -> obj' ]
+        return config
     }
 
     function parseDocumentArguments( config, source ) {
@@ -453,6 +463,15 @@
                     }
                 } )
             }
+        },
+
+        'storage': function ( arg ) {
+            var args = arg.split( ',' )
+            if ( args.length < 1 ) throw new Error( '-storage needs at least 1 argument' )
+
+            return args.map( function ( key ) {
+                return JSON.parse( window.sessionStorage.getItem( key ) )
+            } )
         },
 
         // Options below are for backward compatibility with DMF

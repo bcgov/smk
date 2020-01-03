@@ -7,14 +7,14 @@ include.module( 'check-directions', [], function ( inc ) {
             type: 'directions-route',
             enabled: true,
             parentId: tool.id
-        } )
+        } ) )
 
         smk.tools.push( Object.assign( {}, tool, {
             id: 'directions-options',
             type: 'directions-options',
             enabled: true,
             parentId: tool.id
-        } )
+        } ) )
     }
     
 } )

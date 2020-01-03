@@ -121,6 +121,10 @@ include.module( 'layer-leaflet.layer-vector-leaflet-js', [ 'layer.layer-vector-j
             interactive: false
         } )
 
+        if ( layers[ 0 ].config.tooltip ) {
+            layer.bindTooltip( layers[ 0 ].config.tooltip.title, Object.assign( { permanent: true }, layers[ 0 ].config.tooltip.option ) )
+        }
+
         layer.on( {
             add: function () {
                 if ( layer.options.renderer._container )
