@@ -63,7 +63,8 @@ include.module( 'tool-baseMaps', [ 'tool', 'widgets', 'viewer', 'leaflet', 'tool
                         dragging: false,
                         keyboard: false,
                         scrollWheelZoom: false,
-                        zoom: 10
+                        zoom: 10,
+                        zoomSnap: 0
                     } );
 
                     var bmLayers = smk.$viewer.createBasemapLayer( bm.id )
