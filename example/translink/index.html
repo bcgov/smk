@@ -266,7 +266,51 @@
 
             </form>
         </template>
+
+        <style>
+            .smk-directions-bespoke {
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+
+            #truck-image {
+                background-position: center;
+                background-repeat: no-repeat;
+                height: 50px;
+                margin-top: 10px;
+                flex-basis: 100%;
+            }
+
+            .smk-directions-bespoke .smk-enter-input.truck-type {
+                flex-basis: 75%;
+            }
+
+            .smk-directions-bespoke .smk-enter-input.truck-axles {
+                flex-basis: unset;
+            }
+        </style>
+
+        <template id="truck-selection">
+            <div id="truck-image"></div>
+            <div class="smk-enter-input truck-type">
+                <label id="truck-type">Vehicle Type
+                    <div class="smk-input">
+                        <select name="truck-type"><select>
+                    </div>
+                </label>
+            </div>
+            <div class="smk-enter-input truck-axles">
+                <label id="truck-axles">Axles
+                    <div class="smk-input">
+                        <select name="truck-axles"><select>
+                    </div>
+                </label>
+            </div>
+        </template>
     </body>
+
+    <script src="vehicle-types.js"></script>
 
     <script>
         var dialog = document.getElementById( 'disclaimer' )
@@ -307,6 +351,53 @@
                     setTimeout( function () { rej( new Error( 'timeout' ) ) }, 10 * 1000 )
                 } )
             } )
+
+            SMK.HANDLER.set( 'directions-options', 'activated', function ( smk, tool, el ) {
+                var fm = document.importNode( document.getElementById( 'truck-selection' ).content, true )
+                
+                var vehicle = {}
+                var axle = {}
+                var typeSel = $( fm ).find( '#truck-type select' ).empty()
+                    .append( window.vehicleTypes.map( function ( v ) {
+                        vehicle[ v.id ] = v
+                        return $( '<option>' )
+                            .val( v.id )
+                            .text( v.name )
+                    } ) )
+                    .change( function ( ev ) {
+                        var v = vehicle[ ev.target.value ]
+
+                        $( el ).find( '#truck-image' ).css( 'background-image', 'url( "images/trucks/truck-' + v.id + '.svg" )' )
+
+                        $( el ).find( '#truck-axles select' ).empty()
+                            .off( 'change' )
+                            .append( v.axles.map( function ( a ) {
+                                axle[ a.value ] = a
+                                return $( '<option>' )
+                                    .val( a.value )
+                                    .text( a.value )
+                                    .attr( 'selected', a.default )
+                            } ) )
+                            .change( function ( ev ) {
+                                setVehicle( tool, v, axle[ ev.target.value ] )
+                            } )
+                            .change()
+                    } )
+
+                Vue.nextTick( function () {
+                    typeSel.val( 'bus' ).change()
+                } )
+                
+                el.appendChild( fm )               
+            } )
+
+            function setVehicle( tool, vehicle, axle ) {
+                tool.truckHeight = axle.height
+                tool.truckWidth = axle.width
+                tool.truckLength = axle.length
+                tool.truckWeight = axle.weight
+                // console.log( vehicle, axle )
+            }
 
             $( '#build-info' ).empty()
                 .append( '<div>Version: ' + SMK.BUILD.version +'</div>' )
