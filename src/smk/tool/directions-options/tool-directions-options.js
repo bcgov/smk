@@ -14,7 +14,8 @@ include.module( 'tool-directions-options', [ 'tool', 'widgets', 'sidepanel', 'to
             'truckWidth': Number,
             'truckLength': Number,
             'truckWeight': Number,
-            'command': Object
+            'command': Object,
+            'bespoke': Object
         },
     } )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
@@ -30,6 +31,7 @@ include.module( 'tool-directions-options', [ 'tool', 'widgets', 'sidepanel', 'to
         this.makePropPanel( 'truckLength',  null, null, positiveInt )
         this.makePropPanel( 'truckWeight',  null, null, positiveInt )
         this.makePropPanel( 'command',      {} )
+        this.makePropPanel( 'bespoke',      {} )
 
         SMK.TYPE.PanelTool.prototype.constructor.call( this, $.extend( {
             title:          'Route Planner Options',
@@ -71,6 +73,10 @@ include.module( 'tool-directions-options', [ 'tool', 'widgets', 'sidepanel', 'to
 
             return false
         } )        
+
+        this.bespoke.create = function ( el ) {
+            SMK.HANDLER.get( self.id, 'activated' )( smk, self, el )
+        }
     } )
 
     return DirectionsOptionsTool

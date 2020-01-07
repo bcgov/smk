@@ -266,7 +266,78 @@
 
             </form>
         </template>
+
+        <style>
+            .truck-options {
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+                flex-grow: 1;
+            }
+
+            .truck-options .truck-image {
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: contain;
+                height: 50px;
+                margin-top: 10px;
+                flex-basis: 100%;
+            }
+
+            .truck-options .smk-enter-input.truck-type {
+                flex-grow: 1;
+            }
+
+            .truck-options .smk-enter-input.truck-axles {
+                flex-basis: unset;
+            }
+
+            .truck-options .smk-enter-input .smk-input select {
+                flex-grow: 1;
+                border-radius: 6px;
+            }
+
+        </style>
+
+        <template id="truck-selection">
+            <div class="truck-options">
+                <div class="truck-image" v-bind:style="vehicleStyle"></div>
+                <div class="smk-enter-input truck-type">
+                    <label id="truck-type">Vehicle Type
+                        <div class="smk-input">
+                            <select
+                                v-on:change="selectVehicle( $event.target.value )"
+                            >
+                                <option
+                                    v-for="vehicle, i in vehicleTypes"
+                                    v-bind:value="i"
+                                    v-bind:selected="vehicleIndex == i"
+                                >{{ vehicle.title }}</option>
+                            </select>
+                        </div>
+                    </label>
+                </div>
+                <div class="smk-enter-input truck-axles">
+                    <label id="truck-axles">Axles
+                        <div class="smk-input">
+                            <select
+                                v-if="vehicleIndex != null"
+                                v-on:change="selectConfig( $event.target.value )"
+                            >
+                                <option
+                                    v-for="config, i in vehicleTypes[ vehicleIndex ].configs"
+                                    v-bind:value="i"
+                                    v-bind:selected="configIndex == i"
+                                >{{ config.axles }}</option>
+                            </select>
+                        </div>
+                    </label>
+                </div>
+            </div>
+        </template>
     </body>
+
+    <script src="vehicle-types.js"></script>
 
     <script>
         var dialog = document.getElementById( 'disclaimer' )
@@ -307,6 +378,85 @@
                     setTimeout( function () { rej( new Error( 'timeout' ) ) }, 10 * 1000 )
                 } )
             } )
+
+            var customVehicle = {
+                id: 'custom',
+                title: 'Custom',
+                image: '',
+                configs: []
+            }
+
+            SMK.HANDLER.set( 'directions-options', 'activated', function ( smk, tool, el ) {
+                Vue.nextTick( function () {
+                    var vm = new Vue( {
+                        template: '#truck-selection',
+                        el: el,
+                        data: {
+                            vehicleTypes: JSON.parse( JSON.stringify( window.vehicleTypes.concat( customVehicle ) ) ),
+                            vehicleIndex: null,
+                            configIndex: null,
+                        },
+                        computed: {
+                            vehicleStyle: function () {
+                                if ( this.vehicleIndex == null ) return
+                                return { 
+                                    'background-image': 'url( "' + this.vehicleTypes[ this.vehicleIndex ].image + '" )' 
+                                }
+                            }
+                        },
+                        methods: {               
+                            selectVehicle: function ( vehicleIndex ) {
+                                var self = this
+
+                                this.vehicleIndex = vehicleIndex
+
+                                Vue.nextTick( function () {
+                                    var defaultIndex = self.vehicleTypes[ self.vehicleIndex ].configs.findIndex( function ( a ) {
+                                        return a.default
+                                    } )
+
+                                    if ( defaultIndex == -1 ) return 
+
+                                    self.selectConfig( defaultIndex )
+                                } )
+                            },
+
+                            selectConfig: function ( configIndex ) {
+                                this.configIndex = configIndex
+
+                                setVehicleConfig( tool, this.vehicleTypes[ this.vehicleIndex ].configs[ this.configIndex ] )
+                            },
+                        }
+                    } )
+
+                    vm.selectVehicle( 0 )
+
+                    var customVehicleIndex = vm.$data.vehicleTypes.length - 1
+
+                    smk.on( tool.id, {
+                        'change': function ( ev ) {
+                            if ( vm.$data.vehicleIndex == customVehicleIndex ) return
+
+                            var config = vm.$data.vehicleTypes[ vm.$data.vehicleIndex ].configs[ vm.$data.configIndex ]
+
+                            if ( config.height == tool.truckHeight
+                                && config.width == tool.truckWidth
+                                && config.length == tool.truckLength
+                                && config.weight == tool.truckWeight ) return
+
+                            vm.selectVehicle( customVehicleIndex )
+                        }
+                    } )
+                } )
+            } )
+
+            function setVehicleConfig( tool, config ) {
+                tool.truckHeight = config.height
+                tool.truckWidth = config.width
+                tool.truckLength = config.length
+                tool.truckWeight = config.weight
+                // console.log( vehicle, axle )
+            }
 
             $( '#build-info' ).empty()
                 .append( '<div>Version: ' + SMK.BUILD.version +'</div>' )

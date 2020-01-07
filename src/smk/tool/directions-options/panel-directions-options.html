@@ -64,6 +64,11 @@
             ]"
         >Adherence to designated truck route</select-option>
 
+        <div class="smk-directions-bespoke"
+            v-if="command.bespoke !== false"
+            v-content="bespoke"
+        ></div>
+
         <enter-number class="smk-directions-truck-height"
             v-if="command.truckHeight !== false"
             v-bind:value="truckHeight"
