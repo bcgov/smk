@@ -2,24 +2,25 @@ window.vehicleTypes = []
 
 window.vehicleTypes.push( {
     id: 'straight',
-    name: 'Straight Truck',
-    axles: [
+    image: 'images/trucks/truck-straight.svg',
+    title: 'Straight Truck',
+    configs: [
         {
-            value: 2,
+            axles: 2,
             height: 4.15,
             width: 2.6,
             length: 12.5,
             weight: 18200
         },
         {
-            value: 3,
+            axles: 3,
             height: 4.15,
             width: 2.6,
             length: 12.5,
             weight: 26100
         },
         {
-            value: 4,
+            axles: 4,
             height: 4.15,
             width: 2.6,
             length: 12.5,
@@ -27,7 +28,7 @@ window.vehicleTypes.push( {
         },
         {
             default: true,
-            value: 5,
+            axles: 5,
             height: 4.15,
             width: 2.6,
             length: 12.5,
@@ -38,17 +39,18 @@ window.vehicleTypes.push( {
 
 window.vehicleTypes.push( {
     id: 'straight-pony-trailer',
-    name: 'Straight Truck and Pony Trailer',
-    axles: [
+    image: 'images/trucks/truck-straight-pony-trailer.svg',
+    title: 'Straight Truck and Pony Trailer',
+    configs: [
         {
-            value: 3,
+            axles: 3,
             height: 4.15,
             width: 2.6,
             length: 23,
             weight: 27300
         },
         {
-            value: 4,
+            axles: 4,
             height: 4.15,
             width: 2.6,
             length: 23,
@@ -56,28 +58,28 @@ window.vehicleTypes.push( {
         },
         {
             default: true,
-            value: 5,
+            axles: 5,
             height: 4.15,
             width: 2.6,
             length: 23,
             weight: 43100
         },
         {
-            value: 6,
+            axles: 6,
             height: 4.15,
             width: 2.6,
             length: 23,
             weight: 50100
         },
         {
-            value: 7,
+            axles: 7,
             height: 4.15,
             width: 2.6,
             length: 23,
             weight: 56200
         },
         {
-            value: 8,
+            axles: 8,
             height: 4.15,
             width: 2.6,
             length: 23,
@@ -88,24 +90,25 @@ window.vehicleTypes.push( {
 
 window.vehicleTypes.push( {
     id: 'straight-full-trailer',
-    name: 'Straight Truck and Full Trailer',
-    axles: [
+    image: 'images/trucks/truck-straight-full-trailer.svg',
+    title: 'Straight Truck and Full Trailer',
+    configs: [
         {
-            value: 4,
+            axles: 4,
             height: 4.15,
             width: 2.6,
             length: 25,
             weight: 36400
         },
         {
-            value: 5,
+            axles: 5,
             height: 4.15,
             width: 2.6,
             length: 25,
             weight: 44300
         },
         {
-            value: 6,
+            axles: 6,
             height: 4.15,
             width: 2.6,
             length: 25,
@@ -113,28 +116,28 @@ window.vehicleTypes.push( {
         },
         {
             default: true,
-            value: 7,
+            axles: 7,
             height: 4.15,
             width: 2.6,
             length: 25,
             weight: 60100
         },
         {
-            value: 8,
+            axles: 8,
             height: 4.15,
             width: 2.6,
             length: 25,
             weight: 63500
         },
         {
-            value: 9,
+            axles: 9,
             height: 4.15,
             width: 2.6,
             length: 25,
             weight: 63500
         },
         {
-            value: 10,
+            axles: 10,
             height: 4.15,
             width: 2.6,
             length: 25,
@@ -145,17 +148,18 @@ window.vehicleTypes.push( {
 
 window.vehicleTypes.push( {
     id: 'tractor-semi-trailer',
-    name: 'Tractor Semi-Trailer',
-    axles: [
+    image: 'images/trucks/truck-tractor-semi-trailer.png',
+    title: 'Tractor Semi-Trailer',
+    configs: [
         {
-            value: 3,
+            axles: 3,
             height: 4.15,
             width: 2.6,
             length: 23,
             weight: 24200
         },
         {
-            value: 4,
+            axles: 4,
             height: 4.15,
             width: 2.6,
             length: 23,
@@ -163,28 +167,28 @@ window.vehicleTypes.push( {
         },
         {
             default: true,
-            value: 5,
+            axles: 5,
             height: 4.15,
             width: 2.6,
             length: 23,
             weight: 40000
         },
         {
-            value: 6,
+            axles: 6,
             height: 4.15,
             width: 2.6,
             length: 23.5,
             weight: 47000
         },
         {
-            value: 7,
+            axles: 7,
             height: 4.15,
             width: 2.6,
             length: 23,
             weight: 55300
         },
         {
-            value: 8,
+            axles: 8,
             height: 4.15,
             width: 2.6,
             length: 23.5,
@@ -195,24 +199,25 @@ window.vehicleTypes.push( {
 
 window.vehicleTypes.push( {
     id: 'a-train',
-    name: 'A Train (Double Trailer)',
-    axles: [
+    image: 'images/trucks/truck-a-train.svg',
+    title: 'A Train (Double Trailer)',
+    configs: [
         {
-            value: 5,
+            axles: 5,
             height: 4.15,
             width: 2.6,
             length: 26,
             weight: 38000
         },
         {
-            value: 6,
+            axles: 6,
             height: 4.15,
             width: 2.6,
             length: 26,
             weight: 50300
         },
         {
-            value: 7,
+            axles: 7,
             height: 4.15,
             width: 2.6,
             length: 26,
@@ -220,28 +225,28 @@ window.vehicleTypes.push( {
         },
         {
             default: true,
-            value: 8,
+            axles: 8,
             height: 4.15,
             width: 2.6,
             length: 26,
             weight: 53500
         },
         {
-            value: 9,
+            axles: 9,
             height: 4.15,
             width: 2.6,
             length: 26,
             weight: 53500
         },
         {
-            value: 10,
+            axles: 10,
             height: 4.15,
             width: 2.6,
             length: 26,
             weight: 53500
         },
         {
-            value: 11,
+            axles: 11,
             height: 4.15,
             width: 2.6,
             length: 26,
@@ -252,31 +257,32 @@ window.vehicleTypes.push( {
 
 window.vehicleTypes.push( {
     id: 'b-train',
-    name: 'B Train (Double Trailer)',
-    axles: [
+    image: 'images/trucks/truck-b-train.svg',
+    title: 'B Train (Double Trailer)',
+    configs: [
         {
-            value: 4,
+            axles: 4,
             height: 4.15,
             width: 2.6,
             length: 27.5,
             weight: 38000
         },
         {
-            value: 5,
+            axles: 5,
             height: 4.15,
             width: 2.6,
             length: 27.5,
             weight: 41200
         },
         {
-            value: 6,
+            axles: 6,
             height: 4.15,
             width: 2.6,
             length: 27.5,
             weight: 49100
         },
         {
-            value: 7,
+            axles: 7,
             height: 4.15,
             width: 2.6,
             length: 27.5,
@@ -284,21 +290,21 @@ window.vehicleTypes.push( {
         },
         {
             default: true,
-            value: 8,
+            axles: 8,
             height: 4.15,
             width: 2.6,
             length: 27.5,
             weight: 63500
         },
         {
-            value: 9,
+            axles: 9,
             height: 4.15,
             width: 2.6,
             length: 27.5,
             weight: 63500
         },
         {
-            value: 10,
+            axles: 10,
             height: 4.15,
             width: 2.6,
             length: 27.5,
@@ -309,24 +315,25 @@ window.vehicleTypes.push( {
 
 window.vehicleTypes.push( {
     id: 'c-train',
-    name: 'C Train (Double Trailer)',
-    axles: [
+    image: 'images/trucks/truck-c-train.svg',
+    title: 'C Train (Double Trailer)',
+    configs: [
         {
-            value: 5,
+            axles: 5,
             height: 4.15,
             width: 2.6,
             length: 26,
             weight: 38000
         },
         {
-            value: 6,
+            axles: 6,
             height: 4.15,
             width: 2.6,
             length: 26,
             weight: 49100
         },
         {
-            value: 7,
+            axles: 7,
             height: 4.15,
             width: 2.6,
             length: 26,
@@ -334,28 +341,28 @@ window.vehicleTypes.push( {
         },
         {
             default: true,
-            value: 8,
+            axles: 8,
             height: 4.15,
             width: 2.6,
             length: 26,
             weight: 60500
         },
         {
-            value: 9,
+            axles: 9,
             height: 4.15,
             width: 2.6,
             length: 26,
             weight: 60500
         },
         {
-            value: 10,
+            axles: 10,
             height: 4.15,
             width: 2.6,
             length: 26,
             weight: 60500
         },
         {
-            value: 11,
+            axles: 11,
             height: 4.15,
             width: 2.6,
             length: 26,
@@ -366,10 +373,11 @@ window.vehicleTypes.push( {
 
 window.vehicleTypes.push( {
     id: 'bus',
-    name: 'Bus',
-    axles: [
+    image: 'images/trucks/truck-bus.svg',
+    title: 'Bus',
+    configs: [
         {
-            value: 2,
+            axles: 2,
             height: 4.15,
             width: 2.6,
             length: 12.5,
@@ -377,7 +385,7 @@ window.vehicleTypes.push( {
         },
         {
             default: true,
-            value: 3,
+            axles: 3,
             height: 4.15,
             width: 2.6,
             length: 14,
@@ -388,11 +396,12 @@ window.vehicleTypes.push( {
 
 window.vehicleTypes.push( {
     id: 'other',
-    name: 'Other',
-    axles: [
+    image: 'images/trucks/truck-other.svg',
+    title: 'Other',
+    configs: [
         {
             default: true,
-            value: 6,
+            axles: 6,
             height: 4.15,
             width: 2.6,
             length: 23,
