@@ -11,7 +11,7 @@ module.exports = function( grunt ) {
                     base:       '.',
                     keepalive:  true,
                     debug:      true,
-                    open:       true
+                    // open:       true
                 }
             }
         },
