@@ -201,7 +201,7 @@ include.module( 'tool-directions', [
         this.directionHighlight = null
         this.directionPick = null
         this.setMessage()
-        this.displayRoute()
+        this.displaySegments()
 
         var points = this.waypoints
             .map( function ( w, i ) { return { index: i, latitude: w.latitude, longitude: w.longitude } } )
@@ -228,7 +228,6 @@ include.module( 'tool-directions', [
         }
 
         return SMK.UTIL.promiseFinally( routerApi.fetchDirections( points, opt ).then( function ( data ) {
-            // self.displayRoute( data.route )
             self.displaySegments( data.segments )
 
             if ( data.visitOrder && data.visitOrder.findIndex( function ( v, i ) { return points[ v ].index != i } ) != -1 ) {

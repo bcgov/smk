@@ -89,51 +89,51 @@ include.module( 'tool-directions-leaflet', [ 'leaflet', 'tool-directions' ], fun
         } )
 
 
-        this.displayRoute = function ( points ) {
-            reset()
+        // TODO remove
+        // this.displayRoute = function ( points ) {
+        //     reset()
 
-            if ( !points ) return
+        //     if ( !points ) return
 
-            self.routeLayer = L.geoJson( 
-                {
-                    type: "Feature",
-                    geometry: {
-                        type: "LineString",
-                        coordinates: points
-                    }
-                }, 
-                {
-                    pane: 'markerPane',
-                    onEachFeature: function( feature, layer ) {
-                        var color = "#0000FF";
-                        layer.setStyle( { color:color, weight:7, opacity: 0.5 } );
-                    }
-                } 
-            )
+        //     self.routeLayer = L.geoJson( 
+        //         {
+        //             type: "Feature",
+        //             geometry: {
+        //                 type: "LineString",
+        //                 coordinates: points
+        //             }
+        //         }, 
+        //         {
+        //             pane: 'markerPane',
+        //             onEachFeature: function( feature, layer ) {
+        //                 var color = "#0000FF";
+        //                 layer.setStyle( { color:color, weight:7, opacity: 0.5 } );
+        //             }
+        //         } 
+        //     )
 
-            smk.$viewer.map.addLayer( self.routeLayer )
+        //     smk.$viewer.map.addLayer( self.routeLayer )
 
-            var bounds = self.routeLayer.getBounds()
-            var padding = smk.$viewer.getPanelPadding( true )
+        //     var bounds = self.routeLayer.getBounds()
+        //     var padding = smk.$viewer.getPanelPadding( true )
 
-            smk.$viewer.map.fitBounds( bounds.pad( 0.25 ), {
-                paddingTopLeft: padding.topLeft,
-                paddingBottomRight: padding.bottomRight
-            } )
-        }
+        //     smk.$viewer.map.fitBounds( bounds.pad( 0.25 ), {
+        //         paddingTopLeft: padding.topLeft,
+        //         paddingBottomRight: padding.bottomRight
+        //     } )
+        // }
 
         this.displaySegments = function ( segments ) {
             reset()
 
-            self.routeLayer = L.geoJson( segments,
-                {
-                    pane: 'markerPane',
-                    onEachFeature: function( feature, layer ) {
-                        // console.log(feature)
-                        layer.setStyle( feature.style )
-                    }
-                } 
-            )
+            if ( !segments || segments.length == 0 ) return
+
+            self.routeLayer = L.geoJson( segments, {
+                pane: 'markerPane',
+                onEachFeature: function( feature, layer ) {
+                    layer.setStyle( feature.style )
+                }
+            } )
 
             smk.$viewer.map.addLayer( self.routeLayer )
 

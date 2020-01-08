@@ -460,21 +460,20 @@
 
             SMK.HANDLER.set( 'directions', 'style-route', function ( segments ) {
                 segments.forEach( function ( s ) {
-                    var st = { 
-                        color:"#0000FF", 
-                        weight:7, 
-                        opacity: 0.5 
+                    s.style = { 
+                        color:  '#FF0000',
+                        weight: 7, 
+                        opacity:0.5,
+                        lineCap:'butt'
                     }
 
                     if ( s.properties.isFerry ) {
-                        st.dashArray = '10,10'
-                        st.lineCap =   'butt'
+                        s.style.dashArray = '10,10'
                     }
                     
-                    if ( s.properties.isTruckRoute )
-                        st.color = '#FF0000'
-
-                    s.style = st
+                    if ( s.properties.isTruckRoute ) {
+                        s.style.color = "#0000FF"
+                    }
                 } )
             } )
 
