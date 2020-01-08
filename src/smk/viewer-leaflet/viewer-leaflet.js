@@ -36,11 +36,12 @@ include.module( 'viewer-leaflet', [ 'viewer', 'leaflet', 'layer-leaflet', 'featu
             self.map.fitBounds( [ [ bx[ 1 ], bx[ 0 ] ], [ bx[ 3 ], bx[ 2 ] ] ], { animate: false, duration: 0 } )
         }
 
-        self.resizeToExtent = function () {
-            var bx = smk.viewer.location.extent
-            self.map.fitBounds( [ [ bx[ 1 ], bx[ 0 ] ], [ bx[ 3 ], bx[ 2 ] ] ],  { animate: false, duration: 0 } )
-            console.log('resizeToExtent')
-        }
+        // NOT SURE PURPOSE
+        // self.resizeToExtent = function () {
+        //     var bx = smk.viewer.location.extent
+        //     self.map.fitBounds( [ [ bx[ 1 ], bx[ 0 ] ], [ bx[ 3 ], bx[ 2 ] ] ],  { animate: false, duration: 0 } )
+        //     console.log('resizeToExtent')
+        // }
 
         if ( smk.viewer.location.zoom ) {
             self.map.setZoom( smk.viewer.location.zoom, { animate: false } )
@@ -268,11 +269,13 @@ include.module( 'viewer-leaflet', [ 'viewer', 'leaflet', 'layer-leaflet', 'featu
     }
 
     // ViewerLeaflet.prototype.mapResized = SMK.UTIL.makeDelayedCall( function () { 
-    ViewerLeaflet.prototype.mapResized = function () { 
-        this.resizeToExtent()
-        // this.map.invalidateSize() 
-        console.log('resized')
-    } //, { delay: 1000 } )
+
+    // QUESTIONABLE
+    // ViewerLeaflet.prototype.mapResized = function () { 
+    //     this.resizeToExtent()
+    //     // this.map.invalidateSize() 
+    //     console.log('resized')
+    // } //, { delay: 1000 } )
 
     ViewerLeaflet.prototype.temporaryFeature = function ( acetate, geometry, opt ) {
         if ( !this.acetate ) this.acetate = {}

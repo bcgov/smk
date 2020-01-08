@@ -457,7 +457,7 @@ include.module( 'smk-map', [ 'jquery', 'util', 'theme-base', 'sidepanel' ], func
         this.$sidepanel.changedVisible( function () {
             $( self.$container ).toggleClass( 'smk-sidepanel-active', self.$sidepanel.isPanelVisible() )
 
-            self.$viewer.mapResized()
+            // self.$viewer.mapResized()
         } )
 
         this.$sidepanel.changedSize( function () {
