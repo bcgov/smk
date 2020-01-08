@@ -458,6 +458,26 @@
                 // console.log( vehicle, axle )
             }
 
+            SMK.HANDLER.set( 'directions', 'style-route', function ( segments ) {
+                segments.forEach( function ( s ) {
+                    var st = { 
+                        color:"#0000FF", 
+                        weight:7, 
+                        opacity: 0.5 
+                    }
+
+                    if ( s.properties.isFerry ) {
+                        st.dashArray = '10,10'
+                        st.lineCap =   'butt'
+                    }
+                    
+                    if ( s.properties.isTruckRoute )
+                        st.color = '#FF0000'
+
+                    s.style = st
+                } )
+            } )
+
             $( '#build-info' ).empty()
                 .append( '<div>Version: ' + SMK.BUILD.version +'</div>' )
                 .append( '<div>Last commit: ' + SMK.BUILD.lastCommit +'</div>' )

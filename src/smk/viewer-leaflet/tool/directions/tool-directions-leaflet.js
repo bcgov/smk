@@ -129,21 +129,8 @@ include.module( 'tool-directions-leaflet', [ 'leaflet', 'tool-directions' ], fun
                 {
                     pane: 'markerPane',
                     onEachFeature: function( feature, layer ) {
-                        var st = { 
-                            color:"#0000FF", 
-                            weight:7, 
-                            opacity: 0.5 
-                        }
-
-                        if ( feature.properties.isFerry ) {
-                            st.dashArray = '10,10'
-                            st.lineCap =   'butt'
-                        }
-                        
-                        if ( feature.properties.isTruckRoute )
-                            st.color = '#FF0000'
-
-                        layer.setStyle( st );
+                        // console.log(feature)
+                        layer.setStyle( feature.style )
                     }
                 } 
             )

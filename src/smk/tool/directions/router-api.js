@@ -99,21 +99,46 @@ include.module( 'tool-directions.router-api-js', [], function ( inc ) {
                 } )
             }
 
+            // SMK.HANDLER.get( self.id, 'activated' )( smk, self, el )
+
             if ( data.route ) {
-                var ls = turf.lineString( data.route )
-                data.segments = turf.lineSegment( ls )
+                // var ls = turf.lineString( data.route )
 
                 if ( data.partitions ) {
-                    data.partitions.forEach( function ( p ) {
-                        var start = p.index
-                        var prop = JSON.parse( JSON.stringify( p ) )
-                        delete prop.index
+                    var routeLen = data.route.length
+                    var len = data.partitions.length
 
-                        for ( var i = start; i < data.segments.features.length; i += 1 ) {
-                            data.segments.features[ i ].properties = Object.assign( {}, prop )
-                        }
-                    } )
+                    if ( data.partitions[ len - 1 ].index < ( routeLen - 1 ) ) {
+                        data.partitions.push( { index: routeLen - 1 } )
+                        len += 1
+                    }
+
+                    data.segments = []
+                    for ( var pi = 1; pi < len; pi += 1 ) {
+                        data.segments.push( turf.lineString( data.route.slice( data.partitions[ pi - 1 ].index, data.partitions[ pi ].index + 1 ), data.partitions[ pi - 1 ] ) )
+                    }
+
+
+                    // data.segments = turf.lineSegment( ls ).features                   
+
+                    // data.partitions.forEach( function ( p ) {
+                    //     var start = p.index
+                    //     var prop = JSON.parse( JSON.stringify( p ) )
+                    //     delete prop.index
+
+                    //     for ( var i = start; i < data.segments.features.length; i += 1 ) {
+                    //         data.segments.features[ i ].properties = Object.assign( {}, prop )
+                    //     }
+                    // } )
                 }
+                else {
+                    data.segments = [ turf.lineString( data.route ) ]
+                }
+
+                if ( SMK.HANDLER.has( 'directions', 'style-route' ) )
+                    SMK.HANDLER.get( 'directions', 'style-route' )( data.segments )
+
+                data.segments = turf.featureCollection( data.segments )
             }
 
             data.request = ajaxOpt
