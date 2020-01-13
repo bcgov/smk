@@ -461,18 +461,18 @@
             SMK.HANDLER.set( 'directions', 'style-route', function ( segments ) {
                 segments.forEach( function ( s ) {
                     s.style = { 
-                        color:  '#FF0000',
-                        weight: 7, 
-                        opacity:0.5,
-                        lineCap:'butt'
+                        strokeColor:  '#FF0000',
+                        strokeWidth: 7, 
+                        strokeOpacity:0.5,
+                        strokeCap:'butt'
                     }
 
                     if ( s.properties.isFerry ) {
-                        s.style.dashArray = '10,10'
+                        s.style.strokeDashes = '10,10'
                     }
                     
                     if ( s.properties.isTruckRoute ) {
-                        s.style.color = "#0000FF"
+                        s.style.strokeColor = "#0000FF"
                     }
                 } )
             } )

@@ -131,7 +131,7 @@ include.module( 'tool-directions-leaflet', [ 'leaflet', 'tool-directions' ], fun
             self.routeLayer = L.geoJson( segments, {
                 pane: 'markerPane',
                 onEachFeature: function( feature, layer ) {
-                    layer.setStyle( feature.style )
+                    layer.setStyle( convertStyle( feature.style ) )
                 }
             } )
 
@@ -260,5 +260,31 @@ include.module( 'tool-directions-leaflet', [ 'leaflet', 'tool-directions' ], fun
         } )
     } )
 
+    function convertStyle( styleConfig, type ) {
+        if ( type == 'Point' || type == 'MultiPoint' )
+            return {
+                radius:      styleConfig.strokeWidth / 2,
+                color:       styleConfig.strokeColor,
+                weight:      2,
+                opacity:     styleConfig.strokeOpacity,
+                fillColor:   styleConfig.fillColor,
+                fillOpacity: styleConfig.fillOpacity,
+            }
+        else
+            return {
+                // stroke:      true,
+                color:       styleConfig.strokeColor,
+                weight:      styleConfig.strokeWidth,
+                opacity:     styleConfig.strokeOpacity,
+                lineCap:     styleConfig.strokeCap,
+                // lineJoin:    styleConfig.,
+                dashArray:   styleConfig.strokeDashes,
+                // dashOffset:  styleConfig.,
+                // fill:        styleConfig.,
+                fillColor:   styleConfig.fillColor,
+                fillOpacity: styleConfig.fillOpacity,
+                // fillRule:    styleConfig.,
+            }
+    }
 
 } )
