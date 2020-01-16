@@ -72,28 +72,28 @@
         <enter-number class="smk-directions-truck-height"
             v-if="command.truckHeight !== false"
             v-bind:value="truckHeight"
-            v-bind:option="{ min: 0 }"
+            v-bind:option="{ min: 0, step: 0.01 }"
             v-on:change="!busy && $$emit( 'change', { truckHeight: $event } )"
         >Height OAH (m)</enter-number>
 
         <enter-number class="smk-directions-truck-width"
             v-if="command.truckWidth !== false"
             v-bind:value="truckWidth"
-            v-bind:option="{ min: 0 }"
+            v-bind:option="{ min: 0, step: 0.01 }"
             v-on:change="!busy && $$emit( 'change', { truckWidth: $event } )"
         >Width OAW (m)</enter-number>
 
         <enter-number class="smk-directions-truck-length"
             v-if="command.truckLength !== false"
             v-bind:value="truckLength"
-            v-bind:option="{ min: 0 }"
+            v-bind:option="{ min: 0, step: 0.01 }"
             v-on:change="!busy && $$emit( 'change', { truckLength: $event } )"
         >Length OAL (m)</enter-number>
 
         <enter-number class="smk-directions-truck-weight"
             v-if="command.truckWeight !== false"
             v-bind:value="truckWeight"
-            v-bind:option="{ min: 0 }"
+            v-bind:option="{ min: 0, step: 1 }"
             v-on:change="!busy && $$emit( 'change', { truckWeight: $event } )"
         >Weight GVW (kg)</enter-number>
     </div>

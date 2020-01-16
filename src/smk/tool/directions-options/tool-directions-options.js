@@ -26,10 +26,10 @@ include.module( 'tool-directions-options', [ 'tool', 'widgets', 'sidepanel', 'to
         this.makePropPanel( 'roundTrip',    false )
         this.makePropPanel( 'criteria',     'shortest' )
         this.makePropPanel( 'truckRoute',   10 )
-        this.makePropPanel( 'truckHeight',  null, null, positiveInt )
-        this.makePropPanel( 'truckWidth',   null, null, positiveInt )
-        this.makePropPanel( 'truckLength',  null, null, positiveInt )
-        this.makePropPanel( 'truckWeight',  null, null, positiveInt )
+        this.makePropPanel( 'truckHeight',  null, null, positiveFloat )
+        this.makePropPanel( 'truckWidth',   null, null, positiveFloat )
+        this.makePropPanel( 'truckLength',  null, null, positiveFloat )
+        this.makePropPanel( 'truckWeight',  null, null, positiveFloat )
         this.makePropPanel( 'command',      {} )
         this.makePropPanel( 'bespoke',      {} )
 
@@ -39,8 +39,8 @@ include.module( 'tool-directions-options', [ 'tool', 'widgets', 'sidepanel', 'to
         }, option ) )
     }
 
-    function positiveInt( newVal, oldVal, propName ) {
-        var i = parseInt( newVal )
+    function positiveFloat( newVal, oldVal, propName ) {
+        var i = parseFloat( newVal )
         if ( !newVal || !i ) return null
         if ( i < 0 ) return oldVal
         return i
