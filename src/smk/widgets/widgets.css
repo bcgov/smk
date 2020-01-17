@@ -167,6 +167,10 @@
     width: 1px;
 }
 
+.smk-enter-input input[type="number"] {
+    text-align: right;
+}
+
 .smk-enter-input input:focus {
     outline: 0;
 }

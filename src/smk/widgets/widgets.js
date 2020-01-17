@@ -74,6 +74,7 @@ include.module( 'widgets', [
             value:      { type: String, default: '' },
             type:       { type: String, default: 'text' },
             placeholder:{ type: String },
+            clear:      { type: Boolean, default: true },
             option:     { type: Object, default: function () { return {} } },
         },
         methods: {
@@ -91,8 +92,9 @@ include.module( 'widgets', [
             }
         },
         props: { 
-            value:      { type: Number, default: 0 },
+            value:      { type: [ Number, String ], default: 0 },
             placeholder:{ type: String },
+            clear:      { type: Boolean, default: false },
             option:     { type: Object, default: function () { return {} } },
         },
         methods: {

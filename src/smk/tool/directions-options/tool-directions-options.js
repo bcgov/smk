@@ -14,10 +14,30 @@ include.module( 'tool-directions-options', [ 'tool', 'widgets', 'sidepanel', 'to
             'truckWidth': Number,
             'truckLength': Number,
             'truckWeight': Number,
+            'truckHeightUnit': Number,
+            'truckWidthUnit': Number,
+            'truckLengthUnit': Number,
+            'truckWeightUnit': Number,
             'command': Object,
             'bespoke': Object
         },
+        methods: {
+            fromUnit: function ( val, unit ) {
+                return ( val * unit )
+            },
+            toUnit: function ( val, unit ) {
+                return ( val / unit )
+            },
+
+            formatNumber: function ( value, fractionPlaces ) {
+                var i = Math.floor( value ),
+                    f = value - i
+
+                return i.toString() + f.toFixed( fractionPlaces ).substr( 1 )
+            }
+        }
     } )
+
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
     function DirectionsOptionsTool( option ) {
@@ -30,6 +50,10 @@ include.module( 'tool-directions-options', [ 'tool', 'widgets', 'sidepanel', 'to
         this.makePropPanel( 'truckWidth',   null, null, positiveFloat )
         this.makePropPanel( 'truckLength',  null, null, positiveFloat )
         this.makePropPanel( 'truckWeight',  null, null, positiveFloat )
+        this.makePropPanel( 'truckHeightUnit',  1 )
+        this.makePropPanel( 'truckWidthUnit',   1 )
+        this.makePropPanel( 'truckLengthUnit',  1 )
+        this.makePropPanel( 'truckWeightUnit',  1 )
         this.makePropPanel( 'command',      {} )
         this.makePropPanel( 'bespoke',      {} )
 
