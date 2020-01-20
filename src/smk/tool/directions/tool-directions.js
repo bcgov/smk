@@ -225,6 +225,7 @@ include.module( 'tool-directions', [
             truckRouteMultiplier:this.routeOptions.truckRoute,  
             height:             this.routeOptions.truckHeight,  
             weight:             this.routeOptions.truckWeight,  
+            oversize:           this.routeOptions.oversize,  
         }
 
         return SMK.UTIL.promiseFinally( routerApi.fetchDirections( points, opt ).then( function ( data ) {

@@ -38,7 +38,8 @@ include.module( 'tool-directions.router-api-js', [], function ( inc ) {
             truckRouteMultiplier:null,
             disable:            null,
             outputSRS:          4326,       
-            partition:          'isFerry,isTruckRoute'
+            partition:          'isFerry,isTruckRoute',
+            oversize:           false,
         }, option )
 
         if ( request )
@@ -49,6 +50,9 @@ include.module( 'tool-directions.router-api-js', [], function ( inc ) {
 
         var truck = !!option.truck
         delete option.truck
+
+        var oversize = !!option.oversize
+        delete option.oversize
 
         var endPoint = [
             'directions',
@@ -115,7 +119,10 @@ include.module( 'tool-directions.router-api-js', [], function ( inc ) {
 
                     data.segments = []
                     for ( var pi = 1; pi < len; pi += 1 ) {
-                        data.segments.push( turf.lineString( data.route.slice( data.partitions[ pi - 1 ].index, data.partitions[ pi ].index + 1 ), data.partitions[ pi - 1 ] ) )
+                        var prop = data.partitions[ pi - 1 ]
+                        prop.isOversize = oversize
+                        
+                        data.segments.push( turf.lineString( data.route.slice( data.partitions[ pi - 1 ].index, data.partitions[ pi ].index + 1 ), prop ) )
                     }
 
 

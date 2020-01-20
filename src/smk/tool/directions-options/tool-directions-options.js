@@ -18,6 +18,7 @@ include.module( 'tool-directions-options', [ 'tool', 'widgets', 'sidepanel', 'to
             'truckWidthUnit': Number,
             'truckLengthUnit': Number,
             'truckWeightUnit': Number,
+            'oversize' : Boolean, 
             'command': Object,
             'bespoke': Object
         },
@@ -54,6 +55,7 @@ include.module( 'tool-directions-options', [ 'tool', 'widgets', 'sidepanel', 'to
         this.makePropPanel( 'truckWidthUnit',   1 )
         this.makePropPanel( 'truckLengthUnit',  1 )
         this.makePropPanel( 'truckWeightUnit',  1 )
+        this.makePropPanel( 'oversize',    false )
         this.makePropPanel( 'command',      {} )
         this.makePropPanel( 'bespoke',      {} )
 
