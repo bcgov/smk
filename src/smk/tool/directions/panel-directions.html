@@ -11,22 +11,28 @@
         <command-button class="smk-route"
             v-bind:disabled="busy || !hasRoute"
             v-on:click="$$emit( 'route' )"
-        >Route</command-button>
+        >See Route Details</command-button>
 
         <command-button class="smk-reverse"
-            v-bind:disabled="busy"
+            title="Reverse route"
+            v-bind:disabled="busy || !hasRoute"
             v-on:click="$$emit( 'reverse' )"
-        >Reverse</command-button>
+            icon="autorenew"
+        ></command-button>
 
         <command-button class="smk-reset"
-            v-bind:disabled="busy"
+            title="Clear route"
+            v-bind:disabled="busy || !hasRoute"
             v-on:click="$$emit( 'clear' )"
-        >Reset</command-button>
+            icon="highlight_off"
+        ></command-button>
 
         <command-button class="smk-options"
+            title="Route options"
             v-bind:disabled="busy"
             v-on:click="$$emit( 'options' )"
-        >Options</command-button>
+            icon="settings_applications"
+        ></command-button>
 
         <address-search class="smk-address"
             ref="address"
