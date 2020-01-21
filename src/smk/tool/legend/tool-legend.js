@@ -4,18 +4,16 @@ include.module( 'tool-legend', [ 'tool', 'tool-legend.legend-html', 'tool-legend
     Vue.component( 'legend-display', {
         template: inc[ 'tool-legend.legend-display-html' ],
         props: {
-            id:      { type: String },
+            // id:      { type: String },
             display: { type: Object },
-            glyph:   { type: Object },
+            // glyph:   { type: Object },
             inGroup: { type: Boolean, default: false }
         },
-        // mixins: [ inc.widgets.emit ],
     } )
 
     Vue.component( 'legend-panel', {
-        // extends: inc.widgets.toolPanel,
         template: inc[ 'tool-legend.legend-html' ],
-        props: [ 'display' ], //, 'allVisible', 'glyph', 'command', 'filter', 'legend' ],
+        props: [ 'display' ], 
     } )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
@@ -34,12 +32,8 @@ include.module( 'tool-legend', [ 'tool', 'tool-legend.legend-html', 'tool-legend
     SMK.TYPE.LegendTool.prototype.afterInitialize.push( function ( smk ) {
         var self = this
 
-        // if ( smk.$device == 'mobile' ) return
-
         this.model = {
             display: {}
-            // latitude: null,
-            // longitude: null,
         }
 
         this.vm = new Vue( {
@@ -50,16 +44,6 @@ include.module( 'tool-legend', [ 'tool', 'tool-legend.legend-html', 'tool-legend
         SMK.BOOT.then( function () {
             self.model.display = smk.$viewer.getLayerDisplayItems()
         } )
-        // smk.$viewer.changedLocation( function ( ev ) {
-        //     if ( ev.map && ev.map.latitude ) {
-        //         self.model.latitude = ev.map.latitude
-        //         self.model.longitude = ev.map.longitude
-        //     }
-        //     else {
-        //         self.model.latitude = null
-        //         self.model.longitude = null
-        //     }
-        // } )
     } )
 
     return LegendTool

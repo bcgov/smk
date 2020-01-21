@@ -1,18 +1,34 @@
-.smk-status .smk-coordinate {
-    font-weight: bold;
-    text-shadow: 1px 0 0 #fff, 0 -1px 0 #fff, 0 1px 0 #fff, -1px 0 0 #fff;
-    text-align: right;
-    background-color: transparent;
-    cursor: default;
-
-    margin-top: 5px;
+.smk-legend-status .smk-legend {
+    padding-left: 12px;
 }
 
-.smk-status .smk-coordinate .smk-ordinate label {
-    margin-left: 10px;
-    margin-right: 0;
+.smk-legend-status .smk-legend .smk-legend-item {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
 }
 
-.smk-status .smk-coordinate .smk-ordinate div {
+.smk-legend-status .smk-legend .smk-legend-item img {
+    margin: 2px;
 }
 
+.smk-legend-status .smk-legend .smk-legend-title {
+    font-size: 11px;
+}
+
+.smk-legend-status .smk-display .smk-folder-expand:hover {
+    border: 1px solid transparent;
+}
+
+.smk-legend-status .smk-display.smk-inline-legend .smk-visibility {
+    order: 0;
+}
+
+.smk-legend-status .smk-display.smk-inline-legend .smk-legend {
+    order: 1;
+    padding-left: 0;
+}
+
+.smk-legend-status .smk-display.smk-inline-legend .smk-layer-title {
+    order: 2;
+}
