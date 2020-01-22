@@ -115,6 +115,10 @@
       "title": "Feedback",
       "icon": "feedback",
       "order": 5
+    },
+    {
+      "type": "legend",
+      "enabled": true
     }
   ]
 }

@@ -302,7 +302,7 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
     }
 
     Viewer.prototype.getLayerDisplayItems = function () {
-        if ( !this.layerDisplayContext ) return []
+        if ( !this.layerDisplayContext ) return {}
 
         this.layerDisplayContext.setView( this.getView() )        
 

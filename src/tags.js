@@ -98,6 +98,9 @@ t.group( 'check-layers' )
 t.group( 'tool-layers' )
     .dir( 'smk/tool/layers/*' )
 
+t.group( 'tool-legend' )
+    .dir( 'smk/tool/legend/*' )
+
 t.group( 'tool-list-menu' )
     .dir( 'smk/tool/list-menu/*' )
 
@@ -197,6 +200,9 @@ t.group( 'tool-directions-leaflet' )
 
 t.group( 'tool-identify-leaflet' )
     .dir( 'smk/viewer-leaflet/tool/identify/**/*' )
+
+t.group( 'tool-legend-leaflet' )
+    .dir( 'smk/viewer-leaflet/tool/legend/**/*' )
 
 t.group( 'tool-location-leaflet' )
     .dir( 'smk/viewer-leaflet/tool/location/**/*' )
