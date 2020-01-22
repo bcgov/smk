@@ -1,19 +1,30 @@
-.smk-legend-status .smk-legend {
-    padding-left: 12px;
+.smk-legend-status {
+    background-color: white;
+    border-radius: 3px;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65);
+    max-width: 200px;
+    padding: 5px;
 }
 
-.smk-legend-status .smk-legend .smk-legend-item {
+.smk-legend-status .smk-display .smk-legend-item {
     display: flex;
     justify-content: flex-start;
     align-items: center;
 }
 
-.smk-legend-status .smk-legend .smk-legend-item img {
+.smk-legend-status .smk-display .smk-legend-item img {
     margin: 2px;
 }
 
-.smk-legend-status .smk-legend .smk-legend-title {
+.smk-legend-status .smk-display .smk-legend-title {
     font-size: 11px;
+}
+
+.smk-legend-status .smk-display .smk-item {
+    display: flex;
+    align-items: center;
+    position: relative;
+    margin: 0;
 }
 
 .smk-legend-status .smk-display .smk-folder-expand:hover {
@@ -29,6 +40,6 @@
     padding-left: 0;
 }
 
-.smk-legend-status .smk-display.smk-inline-legend .smk-layer-title {
+.smk-legend-status .smk-display.smk-inline-legend .smk-legend-title {
     order: 2;
 }

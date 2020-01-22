@@ -4,16 +4,9 @@ include.module( 'tool-legend', [ 'tool', 'tool-legend.legend-html', 'tool-legend
     Vue.component( 'legend-display', {
         template: inc[ 'tool-legend.legend-display-html' ],
         props: {
-            // id:      { type: String },
             display: { type: Object },
-            // glyph:   { type: Object },
             inGroup: { type: Boolean, default: false }
         },
-    } )
-
-    Vue.component( 'legend-panel', {
-        template: inc[ 'tool-legend.legend-html' ],
-        props: [ 'display' ], 
     } )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
@@ -43,6 +36,10 @@ include.module( 'tool-legend', [ 'tool', 'tool-legend.legend-html', 'tool-legend
 
         SMK.BOOT.then( function () {
             self.model.display = smk.$viewer.getLayerDisplayItems()
+            smk.$viewer.layerDisplayContext.setLegendsVisible( true, smk.$viewer.layerId, smk.$viewer )
+            Vue.nextTick( function () {
+                smk.$viewer.layerDisplayContext.setLegendsVisible( false, smk.$viewer.layerId, smk.$viewer )
+            } )        
         } )
     } )
 

@@ -12,10 +12,9 @@
     <div class="smk-item"
         v-if="display.id != 'root'"
     >
-        <!-- <span class="smk-layer-title"
-            v-if="!inGroup"
-            v-bind:title="'ID: ' + ( display.id )"
-        >{{ display.title }}</span> -->
+        <span class="smk-legend-title"
+            v-if="!inGroup && display.class && display.legends && display.isActuallyVisible"
+        >{{ display.title }}</span>
 
         <div class="smk-legend" 
             v-if="display.legends && display.isActuallyVisible"
