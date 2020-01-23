@@ -610,6 +610,7 @@ include.module( 'smk-map', [ 'jquery', 'util', 'theme-base', 'sidepanel' ], func
 
         cfg.layers.forEach( function ( ly ) {
             ly.isVisible = self.$viewer.layerDisplayContext.isItemVisible( ly.id )
+            ly.class = self.$viewer.layerDisplayContext.getItem( ly.id ).class
         } )
         
         return cfg

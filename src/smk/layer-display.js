@@ -67,6 +67,11 @@ include.module( 'layer-display', [ 'jquery', 'util', 'event' ], function () {
                 min: ly.config.scaleMin, 
                 max: ly.config.scaleMax 
             }
+
+            if ( !( 'class' in option ) )
+                option.class = ly.config.class 
+
+            option.legends = ly.config.legends 
         }
 
         LayerDisplay.prototype.constructor.call( this, option, forceVisible )
@@ -231,6 +236,12 @@ include.module( 'layer-display', [ 'jquery', 'util', 'event' ], function () {
     $.extend( LayerDisplayContext.prototype, LayerDisplayContextEvent.prototype )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
+    LayerDisplayContext.prototype.getItem = function ( id ) {
+        if ( !( id in this.itemId ) ) return 
+
+        return this.itemId[ id ][ 0 ]
+    }
+
     LayerDisplayContext.prototype.getLayerIds = function () {
         return this.layerIds
     }
