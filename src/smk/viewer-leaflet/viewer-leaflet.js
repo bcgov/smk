@@ -33,7 +33,12 @@ include.module( 'viewer-leaflet', [ 'viewer', 'leaflet', 'layer-leaflet', 'featu
 
         if ( smk.viewer.location.extent ) {
             var bx = smk.viewer.location.extent
-            self.map.fitBounds( [ [ bx[ 1 ], bx[ 0 ] ], [ bx[ 3 ], bx[ 2 ] ] ], { animate: false, duration: 0 } )
+            self.map.fitBounds( [ [ bx[ 1 ], bx[ 0 ] ], [ bx[ 3 ], bx[ 2 ] ] ], { 
+                animate: false, 
+                duration: 0,
+                paddingTopLeft: bx[ 4 ],
+                paddingBottomRight	: bx[ 5 ],
+            } )
         }
 
         // NOT SURE PURPOSE
