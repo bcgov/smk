@@ -10,6 +10,7 @@ include.module( 'layer-display', [ 'jquery', 'util', 'event' ], function () {
             isVisible:  true,
             isActuallyVisible: null,
             isEnabled:  true,
+            isInternal: false,
             inFilter:   true,
             showLegend: false,
             legends:    null,
@@ -72,6 +73,10 @@ include.module( 'layer-display', [ 'jquery', 'util', 'event' ], function () {
                 option.class = ly.config.class 
 
             option.legends = ly.config.legends 
+            option.isInternal = ly.config.isInternal 
+
+            if ( ly.config.isInternal )
+                option.load = function ( data ) { return ly.load( data ) }
         }
 
         LayerDisplay.prototype.constructor.call( this, option, forceVisible )
@@ -113,14 +118,27 @@ include.module( 'layer-display', [ 'jquery', 'util', 'event' ], function () {
      // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
     LayerDisplay.folder = function ( option, layerCatalog, forceVisible ) {
+        var self = this
+        
         LayerDisplay.prototype.constructor.call( this, Object.assign( { isExpanded: false }, option ), forceVisible )
 
-        this.items = option.items.map( function ( item ) {
-            return createLayerDisplay( item, layerCatalog, forceVisible )
+        this.items = []
+        option.items.forEach( function ( item ) {
+            self.addItem( item, layerCatalog, forceVisible )
         } )
+
+        // this.items = option.items.map( function ( item ) {
+        //     return createLayerDisplay( item, layerCatalog, forceVisible )
+        // } )
     }
 
     $.extend( LayerDisplay.folder.prototype, LayerDisplay.prototype )
+
+    LayerDisplay.folder.prototype.addItem = function ( item, layerCatalog, forceVisible ) {
+        var ld = createLayerDisplay( item, layerCatalog, forceVisible )
+        this.items.push( ld )
+        return ld
+    }
 
     LayerDisplay.folder.prototype.each = function ( callback, parents ) {
         if ( !parents ) parents = []
@@ -236,6 +254,17 @@ include.module( 'layer-display', [ 'jquery', 'util', 'event' ], function () {
     $.extend( LayerDisplayContext.prototype, LayerDisplayContextEvent.prototype )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
+    LayerDisplayContext.prototype.addItem = function ( itemConfig, layerCatalog ) {
+        var ld = this.root.addItem( itemConfig, layerCatalog )
+
+        this.itemId[ ld.id ] = [ ld ].concat( this.root )
+
+        if ( ld.type == 'layer' && ld.isEnabled ) {
+            ld.index = this.layerIds.length
+            this.layerIds.push( ld.id )
+        }
+    }
+
     LayerDisplayContext.prototype.getItem = function ( id ) {
         if ( !( id in this.itemId ) ) return 
 

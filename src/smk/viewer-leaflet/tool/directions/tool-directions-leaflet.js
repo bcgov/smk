@@ -123,66 +123,68 @@ include.module( 'tool-directions-leaflet', [ 'leaflet', 'tool-directions' ], fun
         //     } )
         // }
 
-        this.displaySegments = function ( segments ) {
-            reset()
+//         this.displaySegments = function ( segments ) {
+//             SMK.TYPE.DirectionsTool.prototype.displaySegments.call( this, segments )
 
-            if ( !segments || segments.length == 0 ) return
+//             reset()
+// return
+//             if ( !segments || segments.length == 0 ) return
 
-            self.routeLayer = L.geoJson( segments, {
-                pane: 'markerPane',
-                onEachFeature: function( feature, layer ) {
-                    layer.setStyle( convertStyle( feature.style ) )
-                }
-            } )
+//             self.routeLayer = L.geoJson( segments, {
+//                 pane: 'markerPane',
+//                 onEachFeature: function( feature, layer ) {
+//                     layer.setStyle( convertStyle( feature.style ) )
+//                 }
+//             } )
 
-            smk.$viewer.map.addLayer( self.routeLayer )
+//             smk.$viewer.map.addLayer( self.routeLayer )
 
-            var bounds = self.routeLayer.getBounds()
-            var padding = smk.$viewer.getPanelPadding( true )
+//             var bounds = self.routeLayer.getBounds()
+//             var padding = smk.$viewer.getPanelPadding( true )
 
-            smk.$viewer.map.fitBounds( bounds.pad( 0.25 ), {
-                paddingTopLeft: padding.topLeft,
-                paddingBottomRight: padding.bottomRight
-            } )
-        }
+//             smk.$viewer.map.fitBounds( bounds.pad( 0.25 ), {
+//                 paddingTopLeft: padding.topLeft,
+//                 paddingBottomRight: padding.bottomRight
+//             } )
+//         }
 
-        this.displayWaypoints = function () {
-            if ( self.waypointLayers && self.waypointLayers.length > 0 ) {
-                self.waypointLayers.forEach( function ( l ) {
-                    smk.$viewer.map.removeLayer( l )
-                } )
-            }
+//         this.displayWaypoints = function () {
+//             if ( self.waypointLayers && self.waypointLayers.length > 0 ) {
+//                 self.waypointLayers.forEach( function ( l ) {
+//                     smk.$viewer.map.removeLayer( l )
+//                 } )
+//             }
 
-            var last = self.waypoints.length - 1
-            self.waypointLayers = self.waypoints
-                .map( function ( w, i ) {
-                    var icon
-                    var popup = Object.assign( {
-                        index: i
-                    }, w )
+//             var last = self.waypoints.length - 1
+//             self.waypointLayers = self.waypoints
+//                 .map( function ( w, i ) {
+//                     var icon
+//                     var popup = Object.assign( {
+//                         index: i
+//                     }, w )
 
-                    switch ( i ) {
-                    case 0:
-                        icon = greenIcon
-                        popup.first = true
-                        break;
+//                     switch ( i ) {
+//                     case 0:
+//                         icon = greenIcon
+//                         popup.first = true
+//                         break;
 
-                    case last:
-                        icon = redIcon
-                        popup.last = true
-                        break;
+//                     case last:
+//                         icon = redIcon
+//                         popup.last = true
+//                         break;
 
-                    default:
-                        icon = new L.NumberedIcon( { number: i } )
-                        break;
-                    }
+//                     default:
+//                         icon = new L.NumberedIcon( { number: i } )
+//                         break;
+//                     }
 
-                    return L.marker( [ w.latitude, w.longitude ], {
-                            icon: icon
-                        } )
-                        .addTo( smk.$viewer.map )
-                } )
-        }
+//                     return L.marker( [ w.latitude, w.longitude ], {
+//                             icon: icon
+//                         } )
+//                         .addTo( smk.$viewer.map )
+//                 } )
+//         }
 
         function reset() {
             if ( self.routeLayer )

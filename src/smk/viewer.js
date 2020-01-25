@@ -148,73 +148,19 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
 
         this.screenpixelsToMeters = self.pixelsToMillimeters( 100 ) / 1000
 
-        function createLayer( config ) {
-            try {
-                if ( !( config.type in SMK.TYPE.Layer ) )
-                    throw new Error( 'layer type "' + config.type + '" not defined' )
-
-                if ( !( smk.viewer.type in SMK.TYPE.Layer[ config.type ] ) )
-                    throw new Error( 'layer type "' + config.type + '" not defined for viewer "' + smk.viewer.type + '"' )
-
-                var ly = new SMK.TYPE.Layer[ config.type ][ smk.viewer.type ]( config )
-                ly.initialize()
-
-                return ly
-            }
-            catch ( e ) {
-                e.message += ', when creating layer id "' + config.id + '"'
-                throw e
-            }
-        }
-
-        function registerLayer( ly ) {
-            self.layerIds.push( ly.id )
-            self.layerId[ ly.id ] = ly
-
-            ly.startedLoading( function () {
-                self.loading = true
-            } )
-
-            ly.finishedLoading( function () {   
-                self.loading = self.anyLayersLoading()
-            } )
-        }
-
         if ( Array.isArray( smk.layers ) ) {
-            var items = smk.layers.map( function ( layerConfig, i ) {
-                var ly = createLayer( layerConfig )
-    
+            var items = smk.layers.map( function ( layerConfig ) {
+                var ld = self.addLayer( layerConfig )
+
                 if ( layerConfig.queries )
                     layerConfig.queries.forEach( function ( q ) {
-                        var query = new SMK.TYPE.Query[ layerConfig.type ]( ly.id, q )
+                        var query = new SMK.TYPE.Query[ layerConfig.type ]( ld.id, q )
 
                         self.query[ query.id ] = query
                         self.queried[ query.id ] = new SMK.TYPE.FeatureSet()
                     } )
 
-                if ( ly.hasChildren() ) {
-                    var list = ly.childLayerConfigs().map( function ( childConfig ) {
-                        var cly = createLayer( childConfig )
-                        registerLayer( cly )
-                        return { id: cly.id }
-                    } )
-
-                    return {
-                        id: ly.id,
-                        type: 'folder',
-                        title: ly.config.title,
-                        isVisible: ly.config.isVisible,
-                        isExpanded: false,
-                        items: list
-                    }
-                }
-                else {
-                    registerLayer( ly )
-
-                    return {
-                        id: ly.id
-                    }
-                }
+                return ld
             } )
 
             if ( !smk.$layerItems )
@@ -277,6 +223,69 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
             // console.log('changedLayerVisibility')
             self.updateLayersVisible()
         } )
+    }
+
+    Viewer.prototype.addLayer = function ( layerConfig ) {
+        var self = this
+
+        var ly = createLayer( layerConfig )
+
+        if ( !ly.hasChildren() ) {
+            registerLayer( ly )
+
+            return {
+                id: ly.id,
+                // load: ly.load
+            }
+        }
+
+        return {
+            id: ly.id,
+            type: 'folder',
+            title: ly.config.title,
+            isVisible: ly.config.isVisible,
+            isExpanded: false,
+            items: ly.childLayerConfigs().map( function ( childConfig ) {
+                var cly = createLayer( childConfig )
+                registerLayer( cly )
+                return { 
+                    id: cly.id,
+                    // load: ly.load
+                }
+            } )
+        }
+
+        function createLayer( config ) {
+            try {
+                if ( !( config.type in SMK.TYPE.Layer ) )
+                    throw new Error( 'layer type "' + config.type + '" not defined' )
+
+                if ( !( self.type in SMK.TYPE.Layer[ config.type ] ) )
+                    throw new Error( 'layer type "' + config.type + '" not defined for viewer "' + self.type + '"' )
+
+                var ly = new SMK.TYPE.Layer[ config.type ][ self.type ]( config )
+                ly.initialize()
+
+                return ly
+            }
+            catch ( e ) {
+                e.message += ', when creating layer id "' + config.id + '"'
+                throw e
+            }
+        }
+
+        function registerLayer( ly ) {
+            self.layerIds.push( ly.id )
+            self.layerId[ ly.id ] = ly
+
+            ly.startedLoading( function () {
+                self.loading = true
+            } )
+
+            ly.finishedLoading( function () {   
+                self.loading = self.anyLayersLoading()
+            } )
+        }
     }
 
     Viewer.prototype.initializeLayers = function ( smk ) {

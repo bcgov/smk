@@ -115,7 +115,7 @@ include.module( 'layer-leaflet.layer-vector-leaflet-js', [ 'layer.layer-vector-j
             },
             onEachFeature: function ( feature, layer ) {
                 if ( layer.setStyle )
-                    layer.setStyle( convertStyle( layers[ 0 ].config.style, feature.geometry.type ) )
+                    layer.setStyle( convertStyle( feature.style || layers[ 0 ].config.style, feature.geometry.type ) )
             },
             renderer: L.svg(),
             interactive: false
@@ -136,6 +136,15 @@ include.module( 'layer-leaflet.layer-vector-leaflet-js', [ 'layer.layer-vector-j
 
         if ( !layers[ 0 ].config.CRS )
             layers[ 0 ].config.CRS = 'EPSG4326'
+
+        layers[ 0 ].loadLayer = function ( data ) {
+            layer.clearLayers()
+            if ( data )
+                layer.addData( data )            
+        }
+
+        if ( layers[ 0 ].config.isInternal ) 
+            return layer 
 
         return SMK.UTIL.makePromise( function ( res, rej ) {
                 $.get( url, null, null, 'json' ).then( res, function ( xhr, status, err ) { 
@@ -206,8 +215,11 @@ include.module( 'layer-leaflet.layer-vector-leaflet-js', [ 'layer.layer-vector-j
             return L.marker( latlng, {
                 icon: styleConfig.marker || ( styleConfig.marker = L.icon( {
                     iconUrl: viewer.resolveAttachmentUrl( styleConfig.markerUrl, null, 'png' ),
+                    shadowUrl: viewer.resolveAttachmentUrl( styleConfig.shadowUrl, null, 'png' ),
                     iconSize: styleConfig.markerSize,
                     iconAnchor: styleConfig.markerOffset,
+                    popupAnchor: styleConfig.popupOffset,
+                    shadowSize: styleConfig.shadowSize,
                 } ) ),
                 interactive: false
             } )

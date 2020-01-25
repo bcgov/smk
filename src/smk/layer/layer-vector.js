@@ -99,4 +99,8 @@ include.module( 'layer.layer-vector-js', [ 'layer.layer-js' ], function () {
         return configs
     }
 
+    VectorLayer.prototype.load = function ( data ) {
+        if ( this.loadLayer )
+            return this.loadLayer( data )
+    }
 } )

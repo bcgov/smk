@@ -461,18 +461,28 @@
             SMK.HANDLER.set( 'directions', 'style-route', function ( segments ) {
                 segments.forEach( function ( s ) {
                     s.style = { 
-                        strokeColor:  '#FF0000',
-                        strokeWidth: 7, 
-                        strokeOpacity:0.5,
-                        strokeCap:'butt'
+                        strokeWidth:    7, 
+                        strokeOpacity:  0.7,
+                        strokeCap:      'butt',
                     }
 
-                    if ( s.properties.isFerry ) {
-                        s.style.strokeDashes = '10,10'
+                    if ( ( !s.properties.isTruckRoute && !s.properties.isFerry ) || ( s.properties.isTruckRoute && s.properties.isOversize ) ) {
+                        s.style.strokeColor     = "#FF0000"
+                        s.style.strokeDashes    = '30,10'
                     }
-                    
-                    if ( s.properties.isTruckRoute ) {
-                        s.style.strokeColor = "#0000FF"
+                    else if ( ( !s.properties.isTruckRoute && s.properties.isFerry ) || ( s.properties.isTruckRoute && s.properties.isFerry && s.properties.isOversize ) ) {
+                        s.style.strokeColor     = "#FF0000"
+                        s.style.strokeDashes    = '10,10'
+                    }
+                    else if ( ( s.properties.isTruckRoute && !s.properties.isFerry && !s.properties.isOversize ) ) {
+                        s.style.strokeColor     = "#0000FF"
+                    }
+                    else if ( ( s.properties.isTruckRoute && s.properties.isFerry && !s.properties.isOversize ) ) {
+                        s.style.strokeColor     = "#0000FF"
+                        s.style.strokeDashes    = '10,10'
+                    }
+                    else {
+                        debugger
                     }
                 } )
             } )
