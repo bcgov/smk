@@ -48,6 +48,9 @@ include.module( 'tool-directions', [
                         strokeColor: "blue",
                         strokeWidth: 8,
                         strokeOpacity: 0.8
+                    },
+                    legend: {
+                        line: true
                     }
                 },
                 {
@@ -60,6 +63,9 @@ include.module( 'tool-directions', [
                         shadowUrl:      base + '/marker-shadow.png',
                         shadowSize:     [ 41, 41 ],
                         popupOffset:    [ 1, -34 ],
+                    },
+                    legend: {
+                        point: true
                     }
                 },
                 {
@@ -72,6 +78,9 @@ include.module( 'tool-directions', [
                         shadowUrl:      base + '/marker-shadow.png',
                         shadowSize:     [ 41, 41 ],
                         popupOffset:    [ 1, -34 ],
+                    },
+                    legend: {
+                        point: true
                     }
                 },
                 {
@@ -84,6 +93,9 @@ include.module( 'tool-directions', [
                         shadowUrl:      base + '/marker-shadow.png',
                         shadowSize:     [ 41, 41 ],
                         popupOffset:    [ 1, -34 ],
+                    },
+                    legend: {
+                        point: true
                     }
                 }
             ]
@@ -209,8 +221,10 @@ include.module( 'tool-directions', [
             ly.isVisible = true
             ly.isInternal = true
 
-            ly.display = smk.$viewer.addLayer( ly )
-            smk.$layerItems.push( ly.display )
+            var display = smk.$viewer.addLayer( ly )
+            display.class = "smk-inline-legend"            
+
+            smk.$layerItems.push( display )
 
             self.layer[ ly.id ] = smk.$viewer.layerId[ ly.id ]
         } )
