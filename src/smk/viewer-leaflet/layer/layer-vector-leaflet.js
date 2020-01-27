@@ -213,14 +213,14 @@ include.module( 'layer-leaflet.layer-vector-leaflet-js', [ 'layer.layer-vector-j
     function markerForStyle( viewer, latlng, styleConfig ) {
         if ( styleConfig.markerUrl ) {
             return L.marker( latlng, {
-                icon: styleConfig.marker || ( styleConfig.marker = L.icon( {
+                icon: L.icon( {
                     iconUrl: viewer.resolveAttachmentUrl( styleConfig.markerUrl, null, 'png' ),
                     shadowUrl: viewer.resolveAttachmentUrl( styleConfig.shadowUrl, null, 'png' ),
                     iconSize: styleConfig.markerSize,
                     iconAnchor: styleConfig.markerOffset,
                     popupAnchor: styleConfig.popupOffset,
                     shadowSize: styleConfig.shadowSize,
-                } ) ),
+                } ),
                 interactive: false
             } )
         }

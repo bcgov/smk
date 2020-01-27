@@ -235,7 +235,6 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
 
             return {
                 id: ly.id,
-                // load: ly.load
             }
         }
 
@@ -250,7 +249,6 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
                 registerLayer( cly )
                 return { 
                     id: cly.id,
-                    // load: ly.load
                 }
             } )
         }
