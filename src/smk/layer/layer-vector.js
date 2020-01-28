@@ -123,7 +123,12 @@ include.module( 'layer.layer-vector-js', [ 'layer.layer-js' ], function () {
     }
 
     VectorLayer.prototype.load = function ( data ) {
-        if ( this.loadLayer )
+        if ( this.loadLayer && data )
             return this.loadLayer( data )
+    }
+
+    VectorLayer.prototype.clear = function () {
+        if ( this.clearLayer )
+            return this.clearLayer()
     }
 } )

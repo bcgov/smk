@@ -40,7 +40,7 @@ include.module( 'tool-directions', [
             widgetComponent:'directions-widget',
             panelComponent: 'directions-panel',
             apiKey:         null,
-            layers:         [
+            segmentLayers: [
                 {
                     id: "@segments",
                     title: "Segments",
@@ -53,6 +53,8 @@ include.module( 'tool-directions', [
                         line: true
                     }
                 },
+            ],
+            waypointLayers: [
                 {
                     id: "@waypoint-start",
                     title: "Starting Location",
@@ -216,7 +218,7 @@ include.module( 'tool-directions', [
         routerApi.setApiKey( this.apiKey )
 
         this.layer = {}
-        this.layers.forEach( function ( ly ) {
+        this.segmentLayers.concat( this.waypointLayers ).forEach( function ( ly ) {
             ly.type = 'vector'
             ly.isVisible = true
             ly.isInternal = true
@@ -276,7 +278,8 @@ include.module( 'tool-directions', [
         this.directionHighlight = null
         this.directionPick = null
         this.setMessage()
-        this.displaySegments()
+        this.clearLayers()
+        // this.displaySegments()
 
         var points = this.waypoints
             .map( function ( w, i ) { return { index: i, latitude: w.latitude, longitude: w.longitude } } )
@@ -336,8 +339,31 @@ include.module( 'tool-directions', [
         } )
     }
 
+    DirectionsTool.prototype.clearLayers = function () {
+        var self = this
+
+        Object.keys( this.layer ).forEach( function ( id ) {
+            self.layer[ id ].clear()
+        } ) 
+    }
+
     DirectionsTool.prototype.displaySegments = function ( segments ) {
-        this.layer[ '@segments' ].load( segments )
+        var self = this
+
+        var fc = {}
+        segments.features.forEach( function( sg ) {
+            var ly = sg.properties[ '@layer' ] || '@segments'
+            if ( !fc[ ly ] ) fc[ ly ] = []
+            fc[ ly ].push( sg )
+        } )
+
+        Object.keys( fc ).forEach( function ( ly ) {
+            if ( !self.layer[ ly ] ) {
+                console.warn( 'no layer defined for ' + ly )
+                return
+            }
+            self.layer[ ly ].load( turf.featureCollection( fc[ ly ] ) )
+        } )
     }
 
     DirectionsTool.prototype.displayWaypoints = function () {
@@ -345,9 +371,9 @@ include.module( 'tool-directions', [
 
         var wl = this.waypoints.length
 
-        this.layer[ '@waypoint-start' ].load()
-        this.layer[ '@waypoint-end' ].load()
-        this.layer[ '@waypoint-middle' ].load()
+        // this.layer[ '@waypoint-start' ].load()
+        // this.layer[ '@waypoint-end' ].load()
+        // this.layer[ '@waypoint-middle' ].load()
 
         if ( wl > 0 )
             this.layer[ '@waypoint-start' ].load( waypointGeom( this.waypoints[ 0 ] ) )

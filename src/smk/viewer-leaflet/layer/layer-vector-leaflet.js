@@ -138,9 +138,11 @@ include.module( 'layer-leaflet.layer-vector-leaflet-js', [ 'layer.layer-vector-j
             layers[ 0 ].config.CRS = 'EPSG4326'
 
         layers[ 0 ].loadLayer = function ( data ) {
+            layer.addData( data )            
+        }
+
+        layers[ 0 ].clearLayer = function () {
             layer.clearLayers()
-            if ( data )
-                layer.addData( data )            
         }
 
         if ( layers[ 0 ].config.isInternal ) 
