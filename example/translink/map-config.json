@@ -109,39 +109,11 @@
       "truck": true,
       "segmentLayers": [
         {
-            "id": "@oversize",
-            "title": "Oversize vehicle",
-            "style": {
-                "strokeColor": "red",
-                "strokeWidth": 7,
-                "strokeOpacity": 0.7,
-                "strokeCap": "butt",
-                "strokeDashes": "30,10"
-            },
-            "legend": {
-                "line": true
-            }
-        },
-        {
-            "id": "@ferry",
-            "title": "Ferry",
-            "style": {
-                "strokeColor": "red",
-                "strokeWidth": 7,
-                "strokeOpacity": 0.7,
-                "strokeCap": "butt",
-                "strokeDashes": "10,10"
-            },
-            "legend": {
-                "line": true
-            }
-        },
-        {
-            "id": "@truck",
-            "title": "Truck route",
+            "id": "@potential",
+            "title": "Potential Route",
             "style": {
                 "strokeColor": "blue",
-                "strokeWidth": 7,
+                "strokeWidth": 6,
                 "strokeOpacity": 0.7,
                 "strokeCap": "butt"
             },
@@ -150,14 +122,14 @@
             }
         },
         {
-            "id": "@truck-ferry",
-            "title": "Truck ferry",
+            "id": "@unverified",
+            "title": "Unverified Route",
             "style": {
-                "strokeColor": "blue",
-                "strokeWidth": 7,
+                "strokeColor": "red",
+                "strokeWidth": 6,
                 "strokeOpacity": 0.7,
                 "strokeCap": "butt",
-                "strokeDashes": "10,10"
+                "strokeDashes": "5,5"
             },
             "legend": {
                 "line": true

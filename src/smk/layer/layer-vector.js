@@ -16,7 +16,7 @@ include.module( 'layer.layer-vector-js', [ 'layer.layer-js' ], function () {
         if ( width == null ) width = 20
         if ( height == null ) height = 20
 
-        var mult = ( !!this.config.legend.point + !!this.config.legend.line + !!this.config.legend.fill )
+        var mult = ( !!this.config.legend.point + 2 * !!this.config.legend.line + !!this.config.legend.fill )
 
         var cv = $( '<canvas width="' + width * mult + '" height="' + height + '">' ).get( 0 )
         var ctx = cv.getContext( '2d' )
@@ -54,11 +54,15 @@ include.module( 'layer.layer-vector-js', [ 'layer.layer-js' ], function () {
         
             ctx.lineWidth = self.config.style.strokeWidth
             ctx.strokeStyle = self.config.style.strokeColor
-            ctx.moveTo( offset, 0 )
-            ctx.lineTo( offset + width, height )
+            ctx.lineCap = self.config.style.strokeCap
+            if ( self.config.style.strokeDashes )
+                ctx.setLineDash( self.config.style.strokeDashes.split( ',' ) )
+
+            ctx.moveTo( offset, height / 2 )
+            ctx.lineTo( offset + 2 * width, height / 2 )
             ctx.stroke()
 
-            return offset + width
+            return offset + 2 * width
         }
 
         function drawFill( offset ) {
@@ -68,6 +72,7 @@ include.module( 'layer.layer-vector-js', [ 'layer.layer-js' ], function () {
             ctx.lineWidth = w
             ctx.strokeStyle = self.config.style.strokeColor
             ctx.fillStyle = self.config.style.fillColor
+
             ctx.fillRect( 0, 0, width, height )
             ctx.strokeRect( w / 2, w / 2, width - w , height - w )
 
