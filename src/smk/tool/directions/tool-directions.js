@@ -375,6 +375,9 @@ include.module( 'tool-directions', [
                 return
             }
             self.layer[ ly ].load( turf.featureCollection( fc[ ly ] ) )
+            fc[ ly ].forEach( function ( sg ) {
+                sg.style = self.layer[ ly ].config.style
+            } )
         } )
     }
 
