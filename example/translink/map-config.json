@@ -118,6 +118,7 @@
                 "strokeCap": "butt"
             },
             "legend": {
+                "title": "Potential Route",
                 "line": true
             }
         },
@@ -132,6 +133,7 @@
                 "strokeDashes": "5,5"
             },
             "legend": {
+                "title": "Unverified Route",
                 "line": true
             }
         }

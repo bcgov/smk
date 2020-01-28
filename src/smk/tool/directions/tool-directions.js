@@ -57,7 +57,7 @@ include.module( 'tool-directions', [
             waypointLayers: [
                 {
                     id: "@waypoint-start",
-                    title: "Starting Location",
+                    title: "Starting Route Location",
                     style: {
                         markerUrl:      base + '/marker-icon-green.png',
                         markerSize:     [ 25, 41 ],
@@ -67,12 +67,13 @@ include.module( 'tool-directions', [
                         popupOffset:    [ 1, -34 ],
                     },
                     legend: {
+                        title: "Starting Route Location",
                         point: true
                     }
                 },
                 {
                     id: "@waypoint-end",
-                    title: "Ending Location",
+                    title: "Ending Route Location",
                     style: {
                         markerUrl:      base + '/marker-icon-red.png',
                         markerSize:     [ 25, 41 ],
@@ -82,12 +83,13 @@ include.module( 'tool-directions', [
                         popupOffset:    [ 1, -34 ],
                     },
                     legend: {
+                        title: "Ending Route Location",
                         point: true
                     }
                 },
                 {
                     id: "@waypoint-middle",
-                    title: "Waypoint",
+                    title: "Waypoint on Route",
                     style: {
                         markerUrl:      base + '/marker-icon-blue.png',
                         markerSize:     [ 25, 41 ],
@@ -97,6 +99,7 @@ include.module( 'tool-directions', [
                         popupOffset:    [ 1, -34 ],
                     },
                     legend: {
+                        title: "Waypoint on Route",
                         point: true
                     }
                 }
@@ -218,6 +221,7 @@ include.module( 'tool-directions', [
         routerApi.setApiKey( this.apiKey )
 
         this.layer = {}
+        var groupItems = []
         this.segmentLayers.concat( this.waypointLayers ).forEach( function ( ly ) {
             ly.type = 'vector'
             ly.isVisible = true
@@ -226,9 +230,17 @@ include.module( 'tool-directions', [
             var display = smk.$viewer.addLayer( ly )
             display.class = "smk-inline-legend"            
 
-            smk.$layerItems.push( display )
+            groupItems.push( { id: display.id } )
+            // smk.$layerItems.push( display )
 
             self.layer[ ly.id ] = smk.$viewer.layerId[ ly.id ]
+        } )
+        smk.$layerItems.push( {
+            type: 'group',
+            title: this.title,
+            isVisible: true,
+            isInternal: true,
+            items: groupItems
         } )
     } )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
