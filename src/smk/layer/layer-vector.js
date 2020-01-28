@@ -16,40 +16,69 @@ include.module( 'layer.layer-vector-js', [ 'layer.layer-js' ], function () {
         if ( width == null ) width = 20
         if ( height == null ) height = 20
 
-        var cv = $( '<canvas width="' + width * 3 + '" height="' + height + '">' ).get( 0 )
+        var mult = ( !!this.config.legend.point + 2 * !!this.config.legend.line + !!this.config.legend.fill )
+
+        var cv = $( '<canvas width="' + width * mult + '" height="' + height + '">' ).get( 0 )
         var ctx = cv.getContext( '2d' )
 
-        ctx.fillStyle = this.config.style.fillColor
-        ctx.fillRect( 0, 0, width, height )
-
-        ctx.lineWidth = 4
-        ctx.strokeStyle = this.config.style.strokeColor
-        ctx.strokeRect( 2, 2, width - 4 , height - 4 )
-
-        var p = SMK.UTIL.resolved()
-
-        if ( this.config.style.markerUrl ) {
-            p = p.then( function () {
-                return SMK.UTIL.makePromise( function ( res, rej ) {
-                    var img = $( '<img>' )
-                        .on( 'load', function () {
-                            var r = img.width / img.height
-                            if ( r > 1 ) r = 1 / r
-                            ctx.drawImage( img, width + 5, 0, height * r, height )
-                            res()
-                        } )
-                        .on( 'error', res )
-                        .attr( 'src', viewer.resolveAttachmentUrl( self.config.style.markerUrl, null, 'png' ) )
-                        .get( 0 )
-                } )
+        return SMK.UTIL.resolved( 0 )
+            .then( drawPoint )
+            .then( drawLine )
+            .then( drawFill )
+            .then( function () {
+                return [ {
+                    url: cv.toDataURL( 'image/png' ),
+                    title: self.config.legend.title
+                } ]
             } )
+
+        function drawPoint( offset ) {
+            if ( !self.config.legend.point ) return offset 
+
+            return SMK.UTIL.makePromise( function ( res, rej ) {
+                var img = $( '<img>' )
+                    .on( 'load', function () {
+                        var r = img.width / img.height
+                        if ( r > 1 ) r = 1 / r
+                        ctx.drawImage( img, offset, 0, height * r, height )
+                        res( offset + width )
+                    } )
+                    .on( 'error', res )
+                    .attr( 'src', viewer.resolveAttachmentUrl( self.config.style.markerUrl, null, 'png' ) )
+                    .get( 0 )
+            } )
+
         }
 
-        return p.then( function () {
-            return [ {
-                url: cv.toDataURL( 'image/png' ),
-            } ]
-        } )
+        function drawLine( offset ) {
+            if ( !self.config.legend.line ) return offset 
+        
+            ctx.lineWidth = self.config.style.strokeWidth
+            ctx.strokeStyle = self.config.style.strokeColor
+            ctx.lineCap = self.config.style.strokeCap
+            if ( self.config.style.strokeDashes )
+                ctx.setLineDash( self.config.style.strokeDashes.split( ',' ) )
+
+            ctx.moveTo( offset, height / 2 )
+            ctx.lineTo( offset + 2 * width, height / 2 )
+            ctx.stroke()
+
+            return offset + 2 * width
+        }
+
+        function drawFill( offset ) {
+            if ( !self.config.legend.fill ) return offset 
+
+            var w = self.config.style.strokeWidth
+            ctx.lineWidth = w
+            ctx.strokeStyle = self.config.style.strokeColor
+            ctx.fillStyle = self.config.style.fillColor
+
+            ctx.fillRect( 0, 0, width, height )
+            ctx.strokeRect( w / 2, w / 2, width - w , height - w )
+
+            return offset + width
+        }
     }
 
     VectorLayer.prototype.initialize = function () {
@@ -99,4 +128,13 @@ include.module( 'layer.layer-vector-js', [ 'layer.layer-js' ], function () {
         return configs
     }
 
+    VectorLayer.prototype.load = function ( data ) {
+        if ( this.loadLayer && data )
+            return this.loadLayer( data )
+    }
+
+    VectorLayer.prototype.clear = function () {
+        if ( this.clearLayer )
+            return this.clearLayer()
+    }
 } )

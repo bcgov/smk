@@ -7,6 +7,7 @@
         'smk-expanded':  display.isExpanded, 
         'smk-disabled': !display.isEnabled,
         'smk-obscured': !display.isActuallyVisible,
+        'smk-internal': !display.isInternal,
     } 
 ]">
     <div class="smk-item"
@@ -21,7 +22,8 @@
         <i class="smk-visibility material-icons smk-command smk-icon"
             v-if="!inGroup"
             v-bind:title="'Toggle visibility of \'' + display.title + '\'' + ( display.type == 'folder' ? '\nSHIFT-click to toggle visibility on internal layers.' : '' ) "
-            v-on:click="$$emit( 'set-item-visible', { id: display.id, visible: !display.isVisible, deep: $event.shiftKey } )"
+            v-on:click="!display.isInternal && $$emit( 'set-item-visible', { id: display.id, visible: !display.isVisible, deep: $event.shiftKey } )"
+            v-bind:class="{ 'smk-disabled': display.isInternal }"
         >{{ display.isVisible && display.isEnabled ? glyph.visible || 'visibility' : glyph.hidden || 'visibility_off' }}</i>
 
         <span class="smk-layer-title"

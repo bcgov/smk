@@ -71,12 +71,12 @@ include.module( 'layer.layer-js', [ 'jquery', 'util', 'event' ], function () {
         return SMK.UTIL.resolved()
     }
 
-    Layer.prototype.getLegends = function () {
+    Layer.prototype.getLegends = function ( viewer ) {
         var self = this
         
         if ( !this.legendPromise ) {
             this.legendPromise = SMK.UTIL.makePromise( function ( res, rej ) {
-                res( self.initLegends() )
+                res( self.initLegends( viewer ) )
             } )        
         }
 

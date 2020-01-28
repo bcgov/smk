@@ -37,7 +37,7 @@ include.module( 'viewer-leaflet', [ 'viewer', 'leaflet', 'layer-leaflet', 'featu
                 animate: false, 
                 duration: 0,
                 paddingTopLeft: bx[ 4 ],
-                paddingBottomRight	: bx[ 5 ],
+                paddingBottomRight: bx[ 5 ],
             } )
         }
 
