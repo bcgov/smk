@@ -25,11 +25,18 @@ include.module( 'tool-directions.router-api-js', [], function ( inc ) {
 
     var request
     function fetchDirections( points, option ) {
+        if ( request )
+            request.abort()
+
+        var mode = Object.assign( {
+            optimal:    false,
+            truck:      false,  
+            oversize:   false,
+        }, option )
+
         option = Object.assign( {
             criteria:           'shortest',
             roundTrip:          false,
-            optimal:            false,
-            truck:              false,  
             correctSide:        null,
             height:             null,
             weight:             null,
@@ -38,20 +45,10 @@ include.module( 'tool-directions.router-api-js', [], function ( inc ) {
             truckRouteMultiplier:null,
             disable:            null,
             outputSRS:          4326,       
-            partition:          'isFerry,isTruckRoute',
-            oversize:           false,
+            partition:          mode.truck ? 'isFerry,isTruckRoute,locality' : '',
         }, option )
-
-        if ( request )
-            request.abort()
-
-        var optimal = !!option.optimal
         delete option.optimal
-
-        var truck = !!option.truck
         delete option.truck
-
-        var oversize = !!option.oversize
         delete option.oversize
 
         var endPoint = [
@@ -59,7 +56,7 @@ include.module( 'tool-directions.router-api-js', [], function ( inc ) {
             'optimalDirections',
             'truck/directions',
             'truck/optimalDirections',
-        ][ optimal + 2 * truck ] + '.json'
+        ][ !!mode.optimal + 2 * !!mode.truck ] + '.json'
 
         var query = Object.fromEntries( Object.entries( option ).filter( function( kv ) { return !!kv[ 1 ] } ) )
         query.points = points.map( function ( w ) { return w.longitude + ',' + w.latitude } ).join( ',' )
@@ -103,11 +100,7 @@ include.module( 'tool-directions.router-api-js', [], function ( inc ) {
                 } )
             }
 
-            // SMK.HANDLER.get( self.id, 'activated' )( smk, self, el )
-
             if ( data.route ) {
-                // var ls = turf.lineString( data.route )
-
                 if ( data.partitions ) {
                     var routeLen = data.route.length
                     var len = data.partitions.length
@@ -120,23 +113,10 @@ include.module( 'tool-directions.router-api-js', [], function ( inc ) {
                     data.segments = []
                     for ( var pi = 1; pi < len; pi += 1 ) {
                         var prop = data.partitions[ pi - 1 ]
-                        prop.isOversize = oversize
+                        prop.isOversize = !!mode.oversize
                         
-                        data.segments.push( turf.lineString( data.route.slice( data.partitions[ pi - 1 ].index, data.partitions[ pi ].index + 1 ), prop ) )
+                        data.segments.push( turf.lineString( data.route.slice( prop.index, data.partitions[ pi ].index + 1 ), prop ) )
                     }
-
-
-                    // data.segments = turf.lineSegment( ls ).features                   
-
-                    // data.partitions.forEach( function ( p ) {
-                    //     var start = p.index
-                    //     var prop = JSON.parse( JSON.stringify( p ) )
-                    //     delete prop.index
-
-                    //     for ( var i = start; i < data.segments.features.length; i += 1 ) {
-                    //         data.segments.features[ i ].properties = Object.assign( {}, prop )
-                    //     }
-                    // } )
                 }
                 else {
                     data.segments = [ turf.lineString( data.route ) ]

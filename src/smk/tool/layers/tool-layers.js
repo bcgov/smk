@@ -61,6 +61,7 @@ include.module( 'tool-layers', [ 'tool', 'widgets', 'tool-layers.panel-layers-ht
                 if ( !self.active ) return
 
                 self.display = smk.$viewer.getLayerDisplayItems()
+                smk.$viewer.layerDisplayContext.setLegendsVisible( self.legend, smk.$viewer.layerId, smk.$viewer )
             },
 
             'change': function ( ev ) {
