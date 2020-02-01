@@ -83,12 +83,17 @@ include.module( 'tool-directions-options', [ 'tool', 'widgets', 'sidepanel', 'to
 
         var directions = smk.$tool[ 'directions' ]
 
+        var findRouteDelayed = SMK.UTIL.makeDelayedCall( function () {
+            directions.findRoute()
+        } )
+
         smk.on( this.id, {
             'change': function ( ev, comp ) {
                 Object.assign( self, ev )
 
                 comp.$forceUpdate()
-                directions.findRoute()
+                findRouteDelayed()
+                // directions.findRoute()
             },
         } )
 

@@ -128,7 +128,7 @@
 
         <enter-number class="smk-directions-truck-weight"
             v-if="command.truckWeight !== false"
-            v-bind:value="formatNumber( toUnit( truckWeight, truckWeightUnit ), 1 )"
+            v-bind:value="formatNumber( toUnit( truckWeight, truckWeightUnit ), 0 )"
             v-bind:option="{ min: 0, step: 1 }"
             v-on:change="!busy && $$emit( 'change', { truckWeight: fromUnit( $event, truckWeightUnit ) } )"
         >Weight GVW
