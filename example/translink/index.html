@@ -435,16 +435,24 @@
 
                     smk.on( tool.id, {
                         'change': function ( ev ) {
-                            if ( vm.$data.vehicleIndex == customVehicleIndex ) return
+                            // if ( vm.$data.vehicleIndex == customVehicleIndex ) return
 
+                            // var config = vm.$data.vehicleTypes[ vm.$data.vehicleIndex ].configs[ vm.$data.configIndex ]
+
+                            // if ( config.height == tool.truckHeight
+                            //     && config.width == tool.truckWidth
+                            //     && config.length == tool.truckLength
+                            //     && config.weight == tool.truckWeight ) return
+
+                            // vm.selectVehicle( customVehicleIndex )
                             var config = vm.$data.vehicleTypes[ vm.$data.vehicleIndex ].configs[ vm.$data.configIndex ]
 
-                            if ( config.height == tool.truckHeight
-                                && config.width == tool.truckWidth
-                                && config.length == tool.truckLength
-                                && config.weight == tool.truckWeight ) return
-
-                            vm.selectVehicle( customVehicleIndex )
+                            tool.oversize = config.oversize 
+                                        || config.height < tool.truckHeight
+                                        || config.width < tool.truckWidth
+                                        || config.length < tool.truckLength
+                                        || config.weight < tool.truckWeight
+console.log('oversize',tool.oversize)
                         }
                     } )
                 } )

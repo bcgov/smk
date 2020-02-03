@@ -42,7 +42,8 @@
         "allVisibility": true,
         "filter": true
       },
-      "order": 3
+      "order": 3,
+      "legend": true
     },
     {
       "type": "identify",

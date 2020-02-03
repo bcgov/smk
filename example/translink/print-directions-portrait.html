@@ -379,7 +379,8 @@
                             strokeColor: "gray",
                             strokeWidth: 12,
                             strokeOpacity: 0.6
-                        }
+                        },
+                        legends: false
                     } )
 
                     c.layers.unshift( {
@@ -391,7 +392,8 @@
                             strokeColor: "green",
                             strokeWidth: 8,
                             strokeOpacity: 0.8
-                        }
+                        },
+                        legends: false
                     } )
 
                     p.directions.reverse().forEach( function ( d, i ) {
@@ -410,7 +412,8 @@
                                 strokeColor: "red",
                                 strokeWidth: 8,
                                 strokeOpacity: 0.8
-                            }
+                            },
+                            legends: false
                         } )
                     } )
                     p.directions.reverse()
@@ -422,7 +425,7 @@
                     return SMK.INIT( {
                         'smk-id':           'print-' + pi,
                         'smk-container-sel': el,
-                        'smk-config':       [ c, 'hide-tool=all', 'show-tool=scale' ]
+                        'smk-config':       [ c, 'hide-tool=all', 'show-tool=scale,legend' ]
                     } )
                 }
 
