@@ -142,15 +142,15 @@ include.module( 'feature-list-clustering-leaflet', [ 'leaflet', 'feature-list-le
 
             if ( !bounds ) return
 
-            var old = self.featureSet.pick( null )
+            // var old = self.featureSet.pick( null )
 
             var padding = smk.$viewer.getPanelPadding( true )
 
             smk.$viewer.map
-                .once( 'zoomend moveend', function () {
-                    if ( old )
-                        self.featureSet.pick( old )
-                } )
+                // .once( 'zoomend moveend', function () {
+                //     if ( old )
+                //         self.featureSet.pick( old )
+                // } )
                 .fitBounds( bounds, {
                     paddingTopLeft: padding.topLeft,
                     paddingBottomRight: padding.bottomRight,
