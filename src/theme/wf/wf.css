@@ -93,6 +93,12 @@
     height: 13px;
 }
 
+.smk-theme-wf .smk-toggle-button .smk-command {
+    color: black;
+    background-color: white;
+    white-space: nowrap;
+}
+
 /* toolbar.css */
 
 .smk-device-mobile.smk-theme-wf .smk-toolbar {
@@ -304,13 +310,36 @@
 
 /* tool-query.css */
 
+.smk-theme-wf .smk-sidepanel .smk-query-panel.smk-panel {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
 .smk-theme-wf .smk-query-panel .smk-commands {
     order: 1;
     flex-direction: row-reverse;   
     justify-content: flex-start;
+
+    order: 3;
+    flex-basis: 1%;
+    align-content: flex-end;
+}
+
+.smk-theme-wf .smk-query-panel .smk-commands .smk-toggle-button {
+    order: 1;
+}
+
+.smk-theme-wf .smk-query-panel .smk-commands .smk-search {
+    flex-basis: 100%;
+    text-align: center;
+    align-self: flex-end;
 }
 
 .smk-theme-wf .smk-query-panel .smk-body {
     order: 2;
+    flex-basis: 99%;
 }
 
+/* .smk-theme-wf .smk-query-panel .smk-body .smk-parameter label {
+} */
