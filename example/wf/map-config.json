@@ -112,7 +112,8 @@
       "position": "menu",
       "command": {
         "attributeMode": false,
-        "clear": false
+        "clear": false,
+        "zoom": false
       },
       "order": 200
     },
