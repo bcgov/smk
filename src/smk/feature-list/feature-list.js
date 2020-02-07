@@ -42,7 +42,21 @@ include.module( 'feature-list', [ 'tool', 'widgets', 'sidepanel',
                 if ( !m )
                     return formatter[ attr.format ]( attr, this.feature, this.layer )()
 
-                return formatter[ m[ 1 ] ]( attr, this.feature, this.layer )( eval( m[ 2 ] ) )
+                return formatter[ m[ 1 ] ]( attr, this.feature, this.layer ).apply( this, eval( '[' + m[ 2 ] + ']' ) )
+            },
+            formatTitle: function ( attr ) {
+                /* jshint evil: true */
+                var self = this
+
+                var title = SMK.UTIL.templateReplace( attr.title, function ( token ) {                    
+                    return ( function () {
+                        var e = eval( token )
+                        // console.log( 'replace', token, e, this )
+                        return e                        
+                    } ).call( self )
+                } )
+                
+                return this.insertWordBreaks( title )
             }
         }
     } )
@@ -225,8 +239,8 @@ include.module( 'feature-list', [ 'tool', 'widgets', 'sidepanel',
         asUnit: makeFormatter( '<span class="smk-value" v-if="attribute.value">{{ attribute.value }} <span class="smk-unit">{{ unit }}</span></span>', function ( unit ) { 
             return { unit: unit } 
         } ),
-        asLink: makeFormatter( inc[ 'feature-list.format-link-html' ], function ( url ) {
-            return { url: url }
+        asLink: makeFormatter( inc[ 'feature-list.format-link-html' ], function ( url, label ) {
+            return { url: url, label: label }
         } )
     }
 

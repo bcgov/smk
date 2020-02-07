@@ -11,8 +11,9 @@
     >
         <div class="smk-attribute"
             v-for="attr in attributes"
+            v-if="formatTitle( attr )"
         >
-            <span class="smk-attribute-title" v-html="insertWordBreaks( attr.title )"></span>
+            <span class="smk-attribute-title" v-html="formatTitle( attr )"></span>
             <span class="smk-value" v-html="formatAttribute( attr )"></span>
         </div>
     </div>
