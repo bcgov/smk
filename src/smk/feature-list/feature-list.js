@@ -37,10 +37,19 @@ include.module( 'feature-list', [ 'tool', 'widgets', 'sidepanel',
             },
             formatAttribute: function ( attr ) {
                 /* jshint evil: true */
+                var self = this
 
                 var m = attr.format.match( /^(.+)[(](.+)[)]$/)
-                if ( !m )
-                    return formatter[ attr.format ]( attr, this.feature, this.layer )()
+                if ( !m ) {
+                    var value = SMK.UTIL.templateReplace( attr.value, function ( token ) {                    
+                        return ( function () {
+                            var e = eval( token )
+                            // console.log( 'replace', token, e, this )
+                            return e                        
+                        } ).call( self )
+                    } )
+                    return formatter[ attr.format ]( Object.assign( {}, attr, { value: value } ), this.feature, this.layer )()
+                }
 
                 return formatter[ m[ 1 ] ]( attr, this.feature, this.layer ).apply( this, eval( '[' + m[ 2 ] + ']' ) )
             },

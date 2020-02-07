@@ -28,9 +28,10 @@ include.module( 'util', null, function ( inc ) {
 
         templatePattern: /<%=\s*(.*?)\s*%>/g,
         templateReplace: function ( template, replacer ) {
+            if ( !template ) return template
             if ( !replacer ) return template
 
-            var m = template.match( this.templatePattern );
+            var m = String( template ).match( this.templatePattern );
             if ( !m ) return template;
 
             replacer = ( function ( inner ) {
@@ -45,7 +46,7 @@ include.module( 'util', null, function ( inc ) {
                 return replacer( x[ 1 ], template )
             }
 
-            return template.replace( this.templatePattern, function ( match, parameterName ) {
+            return String( template ).replace( this.templatePattern, function ( match, parameterName ) {
                 return replacer( parameterName, match )
             } )
         },
