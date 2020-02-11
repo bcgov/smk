@@ -70,6 +70,11 @@ include.module( 'widgets', [
 
     Vue.component( 'enter-input', {
         template: inc[ 'widgets.enter-input-html' ],
+        data: function () {
+            return {
+                position: null
+            }
+        },
         props: { 
             value:      { type: String, default: '' },
             type:       { type: String, default: 'text' },
@@ -81,6 +86,9 @@ include.module( 'widgets', [
             onChange: function ( val ) {
                 this.$emit( 'change', val )
             }
+        },
+        directives: {
+            position: function () {}
         }
     } )
 
@@ -88,18 +96,29 @@ include.module( 'widgets', [
         template: inc[ 'widgets.enter-input-html' ],
         data: function () {
             return {
-                type: 'number'
+                type: 'tel',
+                position: null
             }
         },
         props: { 
             value:      { type: [ Number, String ], default: 0 },
             placeholder:{ type: String },
             clear:      { type: Boolean, default: false },
-            option:     { type: Object, default: function () { return {} } },
+            option:     { type: Object, default: function () { return {} } }
         },
         methods: {
-            onChange: function ( val ) {
+            onChange: function ( val, pos ) {
+                this.position = pos; 
                 this.$emit( 'change', parseFloat( val ) )
+            }
+        },
+        directives: {
+            position: function ( el, binding, vnode ) {
+                var pos = el.dataset.position
+                if ( pos == null ) return 
+
+                el.selectionStart = pos
+                el.selectionEnd = pos 
             }
         }
     } )

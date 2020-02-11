@@ -8,10 +8,12 @@
                 v-bind:value="value"
                 v-bind:placeholder="placeholder"
                 v-bind="option"
-                v-on:input="onChange( $event.target.value )"
+                v-on:input="onChange( $event.target.value, $event.target.selectionStart )"
                 v-on:keyup.down="$emit( 'key-down-arrow' )"
                 v-on:keyup.up="$emit( 'key-up-arrow' )"
                 v-on:keyup.enter="$emit( 'key-enter' )"
+                v-bind:data-position="position"
+                v-position
             >
             <i class="smk-reset smk-command smk-icon material-icons" 
                 v-if="clear"
