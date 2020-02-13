@@ -43,3 +43,7 @@
 .smk-legend-status .smk-display.smk-inline-legend .smk-legend-title {
     order: 2;
 }
+
+.smk-legend-status .smk-display.smk-inline-legend .smk-legend .smk-legend-title {
+    display: none;
+}

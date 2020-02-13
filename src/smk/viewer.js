@@ -481,12 +481,14 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
 
             var option = {
                 tolerance: ly.config.tolerance || tolerance,
-                layer: ly 
+                layer: self.visibleLayer[ id ] 
             }
 
             var layerSearchArea = searchArea 
             if ( option.tolerance != tolerance )
                 layerSearchArea = self.circleInMap( location.screen, option.tolerance, 12 )
+
+            // self.temporaryFeature( 'identify', layerSearchArea )
 
             var p = ly.getFeaturesInArea( layerSearchArea, view, option )
             if ( !p ) return
@@ -549,7 +551,7 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
     }
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
-    Viewer.prototype.resolveAttachmentUrl = function ( url, id, type ) {
+    Viewer.prototype.resolveAttachmentUrl = function ( url, id, type, required ) {
         if ( url && url.startsWith( '@' ) ) {
             id = url.substr( 1 )
             url = null
@@ -558,8 +560,11 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
         if ( url )
             return url
 
-        if ( !id )
-            throw new Error( 'attachment without URL or Id' )
+        if ( !id ) {
+            if ( required !== false )
+                throw new Error( 'attachment without URL or Id' )
+            return
+        }
 
         if ( !this.serviceUrl )
             return this.resolveUrl( 'attachments/' + id + ( type ? '.' + type : '' ) )

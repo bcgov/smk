@@ -205,7 +205,7 @@ include.module( 'layer-leaflet.layer-vector-leaflet-js', [ 'layer.layer-vector-j
                 dashArray:   styleConfig.strokeDashes,
                 // lineJoin:    styleConfig.,
                 // dashOffset:  styleConfig.,
-                // fill:        styleConfig.,
+                fill:        styleConfig.fill,
                 fillColor:   styleConfig.fillColor,
                 fillOpacity: styleConfig.fillOpacity,
                 // fillRule:    styleConfig.,
@@ -217,7 +217,7 @@ include.module( 'layer-leaflet.layer-vector-leaflet-js', [ 'layer.layer-vector-j
             return L.marker( latlng, {
                 icon: L.icon( {
                     iconUrl: viewer.resolveAttachmentUrl( styleConfig.markerUrl, null, 'png' ),
-                    shadowUrl: viewer.resolveAttachmentUrl( styleConfig.shadowUrl, null, 'png' ),
+                    shadowUrl: viewer.resolveAttachmentUrl( styleConfig.shadowUrl, null, 'png', false ),
                     iconSize: styleConfig.markerSize,
                     iconAnchor: styleConfig.markerOffset,
                     popupAnchor: styleConfig.popupOffset,

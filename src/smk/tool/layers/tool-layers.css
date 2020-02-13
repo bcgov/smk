@@ -104,3 +104,7 @@
 .smk-layers-panel .smk-display.smk-inline-legend .smk-layer-title {
     order: 2;
 }
+
+.smk-layers-panel .smk-display.smk-inline-legend .smk-legend-title {
+    display: none;
+}
