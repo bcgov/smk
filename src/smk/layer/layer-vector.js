@@ -69,16 +69,20 @@ include.module( 'layer.layer-vector-js', [ 'layer.layer-js' ], function () {
         function drawFill( offset ) {
             if ( !self.config.legend.fill ) return offset 
 
-            var w = self.config.style.strokeWidth
-            ctx.lineWidth = w
-            ctx.strokeStyle = self.config.style.strokeColor
-            ctx.fillStyle = self.config.style.fillColor
+            // var w = self.config.style.strokeWidth
+            // ctx.lineWidth = w
+            // ctx.strokeStyle = self.config.style.strokeColor + alpha( self.config.style.strokeOpacity )
+            ctx.fillStyle = self.config.style.fillColor + alpha( self.config.style.fillOpacity )
 
             ctx.fillRect( 0, 0, width, height )
-            ctx.strokeRect( w / 2, w / 2, width - w , height - w )
+            // ctx.strokeRect( w / 2, w / 2, width - w , height - w )
 
             return offset + width
         }
+
+        function alpha( op ) {
+            return Number( Math.round( ( op || 1 ) * 255 ) ).toString( 16 )
+        } 
     }
 
     VectorLayer.prototype.initialize = function () {
