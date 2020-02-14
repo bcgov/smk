@@ -311,10 +311,10 @@ include.module( 'tool-directions', [
             roundTrip:          this.routeOptions.roundTrip,
             optimal:            this.routeOptions.optimal,
             truck:              this.routeOptions.truck,  
-            followTruckRoute:   this.routeOptions.truckRoute > 1,
-            truckRouteMultiplier:this.routeOptions.truckRoute,  
-            height:             this.routeOptions.truckHeight,  
-            weight:             this.routeOptions.truckWeight,  
+            followTruckRoute:   !!this.routeOptions.truck,
+            truckRouteMultiplier:this.routeOptions.truck && this.routeOptions.truckRoute,  
+            height:             this.routeOptions.truck && this.routeOptions.truckHeight,  
+            weight:             this.routeOptions.truck && this.routeOptions.truckWeight,  
             oversize:           this.routeOptions.oversize,  
         }
 

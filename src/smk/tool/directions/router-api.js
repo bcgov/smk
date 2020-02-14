@@ -122,13 +122,13 @@ include.module( 'tool-directions.router-api-js', [], function ( inc ) {
                     data.segments = [ turf.lineString( data.route ) ]
                 }
 
-                if ( SMK.HANDLER.has( 'directions', 'style-route' ) )
-                    SMK.HANDLER.get( 'directions', 'style-route' )( data.segments )
-
                 data.segments = turf.featureCollection( data.segments )
             }
 
             data.request = ajaxOpt
+
+            if ( SMK.HANDLER.has( 'directions', 'route' ) )
+                SMK.HANDLER.get( 'directions', 'route' )( data )
 
             return data
         } )
