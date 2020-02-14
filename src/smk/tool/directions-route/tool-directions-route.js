@@ -99,7 +99,7 @@ include.module( 'tool-directions-route', [ 'tool', 'widgets', 'tool-directions-r
 
                 self.setMessage( 'Preparing print...', 'progress', null )
                 self.busy = true
-                SMK.HANDLER.get( self.id, 'print' )( smk, self, key )
+                SMK.HANDLER.get( self.id, 'print' )( smk, self, key, ev )
                     .then( function () {
                         self.busy = false
                         return self.setMessage( 'Printing...', 'progress', 2000 )

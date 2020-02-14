@@ -24,9 +24,9 @@ include.module( 'widgets', [
             icon:       { type: String }
         },
         methods: {
-            clickButton: function () {
+            clickButton: function ( ev ) {
                 if ( this.disabled ) return
-                this.$emit( 'click' )
+                this.$emit( 'click', ev )
             }
         }
     } )

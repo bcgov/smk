@@ -10,7 +10,7 @@
     <template slot="commands">
         <command-button class="smk-print-route"
             v-bind:disabled="busy"
-            v-on:click="$$emit( 'print' )"
+            v-on:click="$$emit( 'print', { debug: $event.shiftKey } )"
         >Print</command-button>
     </template>
 

@@ -5,7 +5,7 @@
     }"
 >
     <div class="smk-command"
-        v-on:click="clickButton"
+        v-on:click="clickButton( $event )"
         v-bind:title="title"
     >
         <i class="material-icons" v-if="icon">{{ icon }}</i>
