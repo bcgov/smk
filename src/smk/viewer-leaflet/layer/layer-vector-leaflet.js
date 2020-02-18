@@ -109,13 +109,16 @@ include.module( 'layer-leaflet.layer-vector-leaflet-js', [ 'layer.layer-vector-j
         if ( layers.length != 1 ) throw new Error( 'only 1 config allowed' )
         if ( ( layers[0].useClustering + layers[0].useHeatmap + layers[0].useRaw ) > 1 ) throw new Error( 'raw or heatmap or clustering' )
 
+        var styles = [].concat( layers[ 0 ].config.style )
+
         var layer = new L.geoJson( null, {
             pointToLayer: function ( geojson, latlng ) {
-                return markerForStyle( self, latlng, layers[ 0 ].config.style )
+                // return markerForStyle( self, latlng, layers[ 0 ].config.style )
+                return markerForStyle( self, latlng, styles[ 0 ] )
             },
             onEachFeature: function ( feature, layer ) {
                 if ( layer.setStyle )
-                    layer.setStyle( convertStyle( feature.style || layers[ 0 ].config.style, feature.geometry.type ) )
+                    layer.setStyle( convertStyle( feature.style /* || layers[ 0 ].config.style */, feature.geometry.type ) )
             },
             renderer: L.svg(),
             interactive: false
@@ -155,7 +158,18 @@ include.module( 'layer-leaflet.layer-vector-leaflet-js', [ 'layer.layer-vector-j
             } )
             .then( function ( data ) {
                 console.log( 'loaded', url )
-                layer.addData( data )
+                
+                var feats = []
+                turf.featureEach( data, function ( ft ) {                    
+                    styles.forEach( function ( st ) {                        
+                        ft.style = st
+                        feats.push( ft )
+                        ft = turf.clone( ft )
+                    } )
+                } )
+
+                layer.addData( turf.featureCollection( feats ) )
+
                 return layer
             } )
             .then( function ( layer ) {
@@ -204,7 +218,7 @@ include.module( 'layer-leaflet.layer-vector-leaflet-js', [ 'layer.layer-vector-j
                 lineCap:     styleConfig.strokeCap,
                 dashArray:   styleConfig.strokeDashes,
                 // lineJoin:    styleConfig.,
-                // dashOffset:  styleConfig.,
+                dashOffset:  styleConfig.strokeDashOffset,
                 fill:        styleConfig.fill,
                 fillColor:   styleConfig.fillColor,
                 fillOpacity: styleConfig.fillOpacity,

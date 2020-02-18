@@ -21,6 +21,8 @@ include.module( 'layer.layer-vector-js', [ 'layer.layer-js' ], function () {
         var cv = $( '<canvas width="' + width * mult + '" height="' + height + '">' ).get( 0 )
         var ctx = cv.getContext( '2d' )
 
+        var styles = [].concat( self.config.style )
+
         return SMK.UTIL.resolved( 0 )
             .then( drawPoint )
             .then( drawLine )
@@ -44,7 +46,7 @@ include.module( 'layer.layer-vector-js', [ 'layer.layer-js' ], function () {
                         res( offset + width )
                     } )
                     .on( 'error', res )
-                    .attr( 'src', viewer.resolveAttachmentUrl( self.config.style.markerUrl, null, 'png' ) )
+                    .attr( 'src', viewer.resolveAttachmentUrl( styles[ 0 ].markerUrl, null, 'png' ) )
                     .get( 0 )
             } )
 
@@ -53,15 +55,20 @@ include.module( 'layer.layer-vector-js', [ 'layer.layer-js' ], function () {
         function drawLine( offset ) {
             if ( !self.config.legend.line ) return offset 
         
-            ctx.lineWidth = self.config.style.strokeWidth
-            ctx.strokeStyle = self.config.style.strokeColor
-            ctx.lineCap = self.config.style.strokeCap
-            if ( self.config.style.strokeDashes )
-                ctx.setLineDash( self.config.style.strokeDashes.split( ',' ) )
+            styles.forEach( function ( st ) {
+                ctx.lineWidth = st.strokeWidth
+                ctx.strokeStyle = st.strokeColor
+                ctx.lineCap = st.strokeCap
+                if ( st.strokeDashes ) {
+                    ctx.setLineDash( st.strokeDashes.split( ',' ) )
+                    if ( parseFloat( st.strokeDashOffset ) )
+                        ctx.lineDashOffset = parseFloat( st.strokeDashOffset )
+                }
 
-            ctx.moveTo( offset, height / 2 )
-            ctx.lineTo( offset + 2 * width, height / 2 )
-            ctx.stroke()
+                ctx.moveTo( offset, height / 2 )
+                ctx.lineTo( offset + 2 * width, height / 2 )
+                ctx.stroke()
+            } )
 
             return offset + 2 * width
         }
@@ -69,13 +76,15 @@ include.module( 'layer.layer-vector-js', [ 'layer.layer-js' ], function () {
         function drawFill( offset ) {
             if ( !self.config.legend.fill ) return offset 
 
-            // var w = self.config.style.strokeWidth
-            // ctx.lineWidth = w
-            // ctx.strokeStyle = self.config.style.strokeColor + alpha( self.config.style.strokeOpacity )
-            ctx.fillStyle = self.config.style.fillColor + alpha( self.config.style.fillOpacity )
+            styles.forEach( function ( st ) {
+                // var w = self.config.style.strokeWidth
+                // ctx.lineWidth = w
+                // ctx.strokeStyle = self.config.style.strokeColor + alpha( self.config.style.strokeOpacity )
+                ctx.fillStyle = st.fillColor + alpha( st.fillOpacity )
 
-            ctx.fillRect( 0, 0, width, height )
-            // ctx.strokeRect( w / 2, w / 2, width - w , height - w )
+                ctx.fillRect( 0, 0, width, height )
+                // ctx.strokeRect( w / 2, w / 2, width - w , height - w )
+            } )
 
             return offset + width
         }
