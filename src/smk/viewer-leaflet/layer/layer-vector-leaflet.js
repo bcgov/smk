@@ -141,7 +141,18 @@ include.module( 'layer-leaflet.layer-vector-leaflet-js', [ 'layer.layer-vector-j
             layers[ 0 ].config.CRS = 'EPSG4326'
 
         layers[ 0 ].loadLayer = function ( data ) {
-            layer.addData( data )            
+            var feats = []
+            turf.featureEach( data, function ( ft ) {                    
+                styles.forEach( function ( st, i ) {                        
+                    if ( i > 0 )
+                        ft = turf.clone( ft )
+
+                    ft.style = st
+                    feats.push( ft )
+                } )
+            } )
+
+            layer.addData( turf.featureCollection( feats ) )
         }
 
         layers[ 0 ].clearLayer = function () {
@@ -158,13 +169,15 @@ include.module( 'layer-leaflet.layer-vector-leaflet-js', [ 'layer.layer-vector-j
             } )
             .then( function ( data ) {
                 console.log( 'loaded', url )
-                
+
                 var feats = []
                 turf.featureEach( data, function ( ft ) {                    
-                    styles.forEach( function ( st ) {                        
+                    styles.forEach( function ( st, i ) {                        
+                        if ( i > 0 )
+                            ft = turf.clone( ft )
+                            
                         ft.style = st
                         feats.push( ft )
-                        ft = turf.clone( ft )
                     } )
                 } )
 
