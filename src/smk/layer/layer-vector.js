@@ -38,16 +38,29 @@ include.module( 'layer.layer-vector-js', [ 'layer.layer-js' ], function () {
             if ( !self.config.legend.point ) return offset 
 
             return SMK.UTIL.makePromise( function ( res, rej ) {
-                var img = $( '<img>' )
-                    .on( 'load', function () {
-                        var r = img.width / img.height
-                        if ( r > 1 ) r = 1 / r
-                        ctx.drawImage( img, offset, 0, height * r, height )
-                        res( offset + width )
-                    } )
-                    .on( 'error', res )
-                    .attr( 'src', viewer.resolveAttachmentUrl( styles[ 0 ].markerUrl, null, 'png' ) )
-                    .get( 0 )
+                if ( styles[ 0 ].markerUrl ) {
+                    var img = $( '<img>' )
+                        .on( 'load', function () {
+                            var r = img.width / img.height
+                            if ( r > 1 ) r = 1 / r
+                            ctx.drawImage( img, offset, 0, height * r, height )
+                            res( offset + width )
+                        } )
+                        .on( 'error', res )
+                        .attr( 'src', viewer.resolveAttachmentUrl( styles[ 0 ].markerUrl, null, 'png' ) )
+                        .get( 0 )
+                }
+                else {
+                    ctx.beginPath()
+                    ctx.arc( offset + width / 2, height / 2, styles[ 0 ].strokeWidth / 2, 0, 2 * Math.PI )
+                    ctx.lineWidth = 2
+                    ctx.strokeStyle = styles[ 0 ].strokeColor + alpha( styles[ 0 ].strokeOpacity )
+                    ctx.fillStyle = styles[ 0 ].fillColor + alpha( styles[ 0 ].fillOpacity )
+                    ctx.fill()
+                    ctx.stroke()
+
+                    res( offset + width )
+                }
             } )
 
         }
