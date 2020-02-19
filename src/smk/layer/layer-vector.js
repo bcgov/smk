@@ -16,7 +16,7 @@ include.module( 'layer.layer-vector-js', [ 'layer.layer-js' ], function () {
         if ( width == null ) width = 20
         if ( height == null ) height = 20
 
-        var mult = ( !!this.config.legend.point + 2 * !!this.config.legend.line + !!this.config.legend.fill )
+        var mult = ( !!this.config.legend.point + !!this.config.legend.line + !!this.config.legend.fill )
 
         var cv = $( '<canvas width="' + width * mult + '" height="' + height + '">' ).get( 0 )
         var ctx = cv.getContext( '2d' )
@@ -78,12 +78,13 @@ include.module( 'layer.layer-vector-js', [ 'layer.layer-js' ], function () {
                         ctx.lineDashOffset = parseFloat( st.strokeDashOffset )
                 }
 
+                var hw = st.strokeWidth / 2
                 ctx.moveTo( offset, height / 2 )
-                ctx.lineTo( offset + 2 * width, height / 2 )
+                ctx.quadraticCurveTo( offset + width - hw, 0, offset + width - hw, height )
                 ctx.stroke()
             } )
 
-            return offset + 2 * width
+            return offset + width
         }
 
         function drawFill( offset ) {
@@ -96,6 +97,7 @@ include.module( 'layer.layer-vector-js', [ 'layer.layer-js' ], function () {
                 ctx.fillStyle = st.fillColor + alpha( st.fillOpacity )
 
                 ctx.fillRect( 0, 0, width, height )
+
                 // ctx.strokeRect( w / 2, w / 2, width - w , height - w )
             } )
 
