@@ -178,11 +178,38 @@ include.module( 'tool', [ 'jquery', 'event' ], function () {
             ids.forEach( function ( id ) {
                 smk.$tool[ id ].group = g
             } )
+
+            if ( self.active ) {
+                ids.forEach( function ( id ) {
+                    smk.$tool[ id ].active = self.isToolInGroupActive( id )
+                } )
+            }
+            else {
+            }
         } )
+
+        if ( this.id == this.rootId )
+            this.changedGroup( function () {
+                if ( self.group ) {
+                    smk.getToolRootIds().forEach( function ( rootId ) {
+                        if ( rootId == self.id ) return
+
+                        smk.getToolGroup( rootId ).forEach( function ( id ) {
+                            smk.$tool[ id ].active = false
+                        } )
+                    } )
+                }
+                else {
+                }
+            } )
 
         return this.afterInitialize.forEach( function ( init ) {
             init.call( self, smk )
         } )
+    }
+
+    Tool.prototype.isToolInGroupActive = function ( toolId ) {
+        return toolId == this.id
     }
 
     return Tool

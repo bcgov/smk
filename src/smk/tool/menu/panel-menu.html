@@ -15,7 +15,7 @@
                 v-bind:key="'w' + w.id"
                 v-bind:is="w.widgetComponent"
                 v-bind="w.widget"
-                v-bind:active="w.widget.group"
+                v-bind:active="isActivePanel( w.id )"
             ></component>
         </div>
     </template>

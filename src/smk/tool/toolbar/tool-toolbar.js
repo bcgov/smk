@@ -50,23 +50,6 @@ include.module( 'tool-toolbar', [ 'tool', 'tool-toolbar.toolbar-html' ], functio
 
         smk.getSidepanel().addTool( tool, smk )
 
-        if ( tool.id == tool.rootId ) 
-            smk.getToolGroup( tool.id ).forEach( function ( id ) {
-                smk.$tool[ id ].changedActive( function () {
-                    if ( smk.$tool[ id ].active ) {
-                        self.model.tools.forEach( function ( t ) {
-                            if ( t.id != smk.$tool[ t.id ].rootId ) return
-
-                            smk.getToolGroup( t.id ).forEach( function ( id1 ) {
-                                smk.$tool[ id1 ].active = id == id1
-                            } )
-                        } )
-                    }
-                    else {
-                    }
-                } )
-            } )
-
         return true
     }
 

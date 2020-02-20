@@ -591,6 +591,10 @@ include.module( 'smk-map', [ 'jquery', 'util', 'theme-base', 'sidepanel' ], func
         this.$group[ rootId ] = ids
     }
 
+    SmkMap.prototype.getToolRootIds = function () {
+        return Object.keys( this.$group )
+    }
+
     SmkMap.prototype.getConfig = function () {
         var self = this
 
