@@ -139,7 +139,7 @@ include.module( 'widgets', [
                         'smk-tool-enabled': this.enabled,
                         'smk-tool-title': this.showTitle
                     }
-                    c[ 'smk-' + this.type + '-tool' ] = true
+                    c[ 'smk-' + this.id + '-tool' ] = true
                     return c
                 }
             },

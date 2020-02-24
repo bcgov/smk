@@ -3,6 +3,25 @@ include.module( 'tool-bespoke', [ 'tool', 'widgets', 'tool-bespoke.panel-bespoke
 
     Vue.component( 'bespoke-widget', {
         extends: inc.widgets.toolButton,
+        props: [ 'status' ],
+        computed: {
+            classes: function () {
+                var c = {
+                    'smk-tool': true,
+                    'smk-tool-active': this.active,
+                    'smk-tool-visible': this.visible,
+                    'smk-tool-enabled': this.enabled,
+                    'smk-tool-title': this.showTitle
+                }
+                c[ 'smk-' + this.id + '-tool' ] = true
+
+                if ( this.status )
+                    c[ 'smk-' + this.status ] = true
+                
+                return c
+            }
+        },
+
     } )
 
     Vue.component( 'bespoke-panel', {
@@ -14,6 +33,7 @@ include.module( 'tool-bespoke', [ 'tool', 'widgets', 'tool-bespoke.panel-bespoke
     //
     function BespokeTool( option ) {
         this.makePropWidget( 'icon', 'extension' ) 
+        this.makePropWidget( 'status', null ) 
 
         this.makePropPanel( 'content', {} )
         this.makePropPanel( 'showSwipe', false )
