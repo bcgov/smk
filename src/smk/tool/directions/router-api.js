@@ -77,6 +77,12 @@ include.module( 'tool-directions.router-api-js', [], function ( inc ) {
         .then( function ( data ) {
             if ( !data.routeFound ) throw new Error( 'failed to find route' )
 
+            function getDirections( pt ) {
+                return data.directions.filter( function ( dr ) {
+                    return close( dr.point, pt, 0.00001 )
+                } )
+            }
+
             if ( data.directions ) {
                 data.directions = data.directions.map( function ( dir, i ) {
                     if ( dir.distance != null ) {
@@ -123,12 +129,46 @@ include.module( 'tool-directions.router-api-js', [], function ( inc ) {
                 }
 
                 data.segments = turf.featureCollection( data.segments )
+
+                var routeAttrs = data.route.map( function () { return { segs: {} } } )
+
+                data.segments.features.forEach( function ( sg, i ) {
+                    for ( var j = 0; j < sg.geometry.coordinates.length; j += 1 ) {
+                        var ri = j + sg.properties.index
+
+                        routeAttrs[ ri ].segs[ i ] = true
+                        routeAttrs[ ri ].dirs = getDirections( data.route[ ri ] )
+                        routeAttrs[ ri ].index = ri
+
+                        for ( var k = 0; k < routeAttrs[ ri ].dirs.length; k += 1 )  
+                            routeAttrs[ ri ].dirs[ k ].segmentIndex = i
+                    }
+                } )
+
+                // segments that start/end on a node without a direction are a problem
+                var problems = routeAttrs.filter( function ( ra ) {
+                    return Object.keys( ra.segs ).length > 1 && ra.dirs.length == 0
+                } )
+
+                if ( problems.length > 0 ) {
+                    problems.forEach( function ( p ) {
+                        p.dirs = [ {
+                            type: 'CONTINUE',
+                            point: JSON.parse( JSON.stringify( data.route[ p.index ] ) ),
+                            segmentIndex: Math.max.apply( Math, Object.keys( p.segs ) )
+                        } ]
+                    } )
+
+                    data.directions = routeAttrs
+                        .map( function ( ra ) { return ra.dirs } )
+                        .filter( function ( d ) { return !!d } )
+                        .reduce( function ( acc, v ) { return acc.concat( v ) }, [] )
+
+                    // debugger
+                }
             }
 
             data.request = ajaxOpt
-
-            if ( SMK.HANDLER.has( 'directions', 'route' ) )
-                SMK.HANDLER.get( 'directions', 'route' )( data )
 
             return data
         } )
@@ -190,6 +230,12 @@ include.module( 'tool-directions.router-api-js', [], function ( inc ) {
     function appropriateUnit( m ) {
         if ( m <= 500 ) return { value: m, unit: 'meters' }
         return { value: m, unit: 'kilometers' }
+    }
+
+    function close( p1, p2, min ) { 
+        var d0 = p1[0] - p2[0]
+        var d1 = p1[1] - p2[1]
+        return ( d0 * d0 + d1 * d1 ) <= ( min * min )
     }
 
     return {

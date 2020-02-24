@@ -242,6 +242,11 @@ include.module( 'tool-directions', [
             isInternal: true,
             items: groupItems
         } )
+
+        this.handleRouteData = function ( data ) {
+            if ( SMK.HANDLER.has( self.id, 'route' ) )
+                SMK.HANDLER.get( self.id, 'route' )( smk, data )
+        }        
     } )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
@@ -297,6 +302,7 @@ include.module( 'tool-directions', [
             .map( function ( w, i ) { return { index: i, latitude: w.latitude, longitude: w.longitude } } )
 
         if ( points.length < 2 ) {
+            self.handleRouteData()
             self.displayWaypoints()
             this.setMessage( 'Add a waypoint' )
             return SMK.UTIL.resolved()
@@ -319,6 +325,8 @@ include.module( 'tool-directions', [
         }
 
         return SMK.UTIL.promiseFinally( routerApi.fetchDirections( points, opt ).then( function ( data ) {
+            self.handleRouteData( data )
+
             self.displaySegments( data.segments )
 
             if ( data.visitOrder && data.visitOrder.findIndex( function ( v, i ) { return points[ v ].index != i } ) != -1 ) {
