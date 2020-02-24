@@ -21,6 +21,10 @@
     flex: 1 0 33%;
 }
 
+.smk-directions-route-panel .smk-direction .smk-instruction-notification {
+    color: red;
+}
+
 .smk-directions-route-panel .smk-direction.smk-highlight {
     background-color: lightblue;
 }

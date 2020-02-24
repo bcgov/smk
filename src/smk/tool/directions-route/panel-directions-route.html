@@ -17,6 +17,7 @@
     <div class="smk-directions">
         <div class="smk-direction"
             v-for="( direction, i ) in directions"
+            v-if="direction.name"
             v-on:mouseenter="$$emit( 'hover-direction', { highlight: i } )"
             v-on:mouseleave="$$emit( 'hover-direction', { highlight: null } )"
             v-on:click="$$emit( 'pick-direction', { pick: i } )"
@@ -26,13 +27,15 @@
                 v-bind:class="[ instructionTypeClass( direction.type ) ]"
                 v-bind:title="direction.type"
             >{{ instructionTypeIcon( direction.type ) }}</i>
-            <span class="smk-instruction" 
-                v-if="!direction.instruction"
-            >{{ instructionTypePrefix( direction.type, direction.heading ) }} {{ direction.name }}</span>
-            <span class="smk-instruction" v-else>{{ direction.instruction }}</span><!-- TODO remove -->
+            <span class="smk-instruction">{{ instructionTypePrefix( direction.type, direction.heading ) }} {{ direction.name }}</span>
+            <!-- <span class="smk-instruction" v-else>{{ direction.instruction }}</span> TODO remove -->
             <span class="smk-metric"
                 v-if="direction.distance"
             >for {{ direction.distanceUnit.value | dimensionalNumber( 1, direction.distanceUnit.unit, 3 ) }} ({{ direction.time | formatTime }})</span>
+            <i class="material-icons smk-instruction-notification"
+                v-if="direction.notifications && direction.notifications.length > 0"
+                v-bind:title="direction.notifications[0].message"
+            >warning</i>
         </div>
     </div>
 
