@@ -125,23 +125,23 @@ include.module( 'tool-directions', [
 
         this.changedActive( function () {
             if ( self.active ) {
-                if ( self.waypoints.length == 0 ) {
-                    self.activating = self.activating.then( function () {
-                        return self.startAtCurrentLocation()
-                    } )
-                }
-                else {
-                    self.activating = self.activating.then( function () {
-                        return self.findRoute()
-                    } )
-                }
+                // if ( self.waypoints.length == 0 ) {
+                    // self.activating = self.activating.then( function () {
+                        // return self.startAtCurrentLocation()
+                    // } )
+                // }
+                // else {
+                    // self.activating = self.activating.then( function () {
+                        // return self.findRoute()
+                    // } )
+                // }
 
                 self.optimal = self.routeOptions.optimal
             }
         } )
 
         this.getCurrentLocation = function () {
-            self.setMessage( 'Finding current location', 'progress' )
+            self.setMessage( 'Finding current location...', 'progress', null )
             self.busy = true
 
             return SMK.UTIL.promiseFinally( smk.$viewer.getCurrentLocation(), function () {
@@ -176,13 +176,19 @@ include.module( 'tool-directions', [
                 self.active = !self.active
             },
 
+            'current-location': function ( ev ) {
+                self.addCurrentLocation().then( function () {
+                    self.findRoute()
+                } )
+            },
+
             'reverse': function ( ev ) {
                 self.waypoints.reverse()
                 self.findRoute()
             },
 
             'clear': function ( ev ) {
-                self.startAtCurrentLocation()
+                self.resetWaypoints()
             },
 
             'hover-direction': function ( ev ) {
@@ -200,6 +206,7 @@ include.module( 'tool-directions', [
             'remove-waypoint': function ( ev ) {
                 self.waypoints.splice( ev.index, 1 )
 
+                self.hasRoute = self.waypoints.length > 1
                 self.findRoute()
             },
 
@@ -250,34 +257,56 @@ include.module( 'tool-directions', [
     } )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
+    function close( waypoint1, waypoint2 ) {
+        if ( Math.abs( waypoint1.latitude - waypoint2.latitude ) > 1e-5 ) return false 
+        if ( Math.abs( waypoint1.longitude - waypoint2.longitude ) > 1e-5 ) return false 
+        return true
+    }
+
     DirectionsTool.prototype.addWaypoint = function ( site ) {
         var self = this
 
-        if ( !site || !site.fullAddress )
-            return this.setMessage( 'Unable to find address', 'error', 1000 )
-                // .then( function () {
-                    // self.findRoute()
-                // } )
+        if ( !site ) 
+            return this.setMessage( 'Unable to get location', 'error', 1000 )
+
+        var top = this.waypoints[ this.waypoints.length - 1 ]
+        if ( top && close( top, site ) ) 
+            return this.setMessage( 'Location too close to previous one', 'error', 1000 )
+
+        if ( !site.fullAddress )
+            this.setMessage( 'Unable to find address for location', 'error', 1000 )
 
         this.waypoints.push( site )
 
         return this.findRoute()
     }
 
-    DirectionsTool.prototype.startAtCurrentLocation = function () {
+    DirectionsTool.prototype.addCurrentLocation = function () {
         var self = this
 
-        return self.resetWaypoints()
-            .then( function () {
-                return self.getCurrentLocation()
-                    .then( function ( res ) {
-                        return self.addWaypoint( res )
-                    } )
-                    .catch( function () {
-                        return self.setMessage( 'Unable to get current location', 'error', 1000 )
-                    } )
+        return self.getCurrentLocation()
+            .then( function ( res ) {
+                return self.addWaypoint( res )
+            } )
+            .catch( function () {
+                return self.setMessage( 'Unable to get current location', 'error', 1000 )
             } )
     }
+
+    // DirectionsTool.prototype.startAtCurrentLocation = function () {
+    //     var self = this
+
+    //     return self.resetWaypoints()
+    //         .then( function () {
+    //             return self.getCurrentLocation()
+    //                 .then( function ( res ) {
+    //                     return self.addWaypoint( res )
+    //                 } )
+    //                 .catch( function () {
+    //                     return self.setMessage( 'Unable to get current location', 'error', 1000 )
+    //                 } )
+    //         } )
+    // }
 
     DirectionsTool.prototype.resetWaypoints = function ( ) {
         var self = this
@@ -296,7 +325,6 @@ include.module( 'tool-directions', [
         this.directionPick = null
         this.setMessage()
         this.clearLayers()
-        // this.displaySegments()
 
         var points = this.waypoints
             .map( function ( w, i ) { return { index: i, latitude: w.latitude, longitude: w.longitude } } )
@@ -308,7 +336,7 @@ include.module( 'tool-directions', [
             return SMK.UTIL.resolved()
         }
 
-        this.setMessage( 'Calculating...', 'progress' )
+        this.setMessage( 'Constructing route...', 'progress', null )
         this.busy = true
         this.hasRoute = false
       
@@ -393,10 +421,6 @@ include.module( 'tool-directions', [
         var self = this
 
         var wl = this.waypoints.length
-
-        // this.layer[ '@waypoint-start' ].load()
-        // this.layer[ '@waypoint-end' ].load()
-        // this.layer[ '@waypoint-middle' ].load()
 
         if ( wl > 0 )
             this.layer[ '@waypoint-start' ].load( waypointGeom( this.waypoints[ 0 ] ) )

@@ -296,6 +296,10 @@ include.module( 'util', null, function ( inc ) {
                     // unitNumberSuffix
                 }
             } )
+            .catch( function ( err ) {
+                console.warn( err.responseText )
+                return location 
+            } )
         },
 
         wrapFunction: function ( obj, fName, outer ) {

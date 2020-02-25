@@ -233,6 +233,8 @@ include.module( 'sidepanel', [ 'vue', 'tool', 'sidepanel.sidepanel-html', 'sidep
     PanelTool.prototype.afterInitialize = []
 
     PanelTool.prototype.setMessage = function ( message, status, delay ) {
+        var self = this
+
         if ( !message ) {
             this.status = null
             this.message = null
@@ -244,14 +246,17 @@ include.module( 'sidepanel', [ 'vue', 'tool', 'sidepanel.sidepanel-html', 'sidep
 
         if ( delay === null ) return
 
-        this.clearMessage.option.delay = delay || 2000
-        this.clearMessage()
-    }
+        if ( this.messageClear )
+            this.messageClear.cancel()
 
-    PanelTool.prototype.clearMessage = SMK.UTIL.makeDelayedCall( function () {
-        this.status = null
-        this.message = null        
-    }, { delay: 2000 } )
+        return SMK.UTIL.makePromise( function ( res, rej ) {
+            self.messageClear = SMK.UTIL.makeDelayedCall( function () {
+                self.status = null
+                self.message = null        
+                res()
+            }, { delay: delay || 2000 } )()
+        } )
+    }
 
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //

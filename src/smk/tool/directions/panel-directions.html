@@ -1,7 +1,9 @@
 <side-panel class="smk-directions-panel" 
     v-bind:busy="busy"
-    v-bind:message="busy ? 'Calculating' : message"
-    v-bind:status="busy ? 'progress' : status"
+    xxv-bind:message="busy ? 'Calculating' : message"
+    xxv-bind:status="busy ? 'progress' : status"
+    v-bind:message="message"
+    v-bind:status="status"
 >
     <template slot="header">
         <slot></slot>
@@ -15,14 +17,14 @@
 
         <command-button class="smk-reverse"
             title="Reverse route"
-            v-bind:disabled="busy || !hasRoute"
+            v-bind:disabled="busy || waypoints.length < 2"
             v-on:click="$$emit( 'reverse' )"
             icon="autorenew"
         ></command-button>
 
         <command-button class="smk-reset"
             title="Clear route"
-            v-bind:disabled="busy || !hasRoute"
+            v-bind:disabled="busy || waypoints.length == 0"
             v-on:click="$$emit( 'clear' )"
             icon="highlight_off"
         ></command-button>
@@ -39,6 +41,13 @@
             placeholder="Enter address here, or click on map"
             v-on:update="$$emit( 'new-waypoint', $event ); $refs.address.clear()"
         ></address-search>
+
+        <command-button class="smk-current"
+            title="Add current location"
+            v-bind:disabled="busy"
+            v-on:click="$$emit( 'current-location' )"
+            icon="add_location"
+        ></command-button>
     </template>
 
     <draggable class="smk-waypoints"
@@ -56,8 +65,30 @@
             ></command-button>
 
             <div class="smk-description">
-                {{ site.fullAddress }}
-                <span v-if="site.current">[CURRENT]</span>
+                <div class="smk-address"
+                    v-if="site.fullAddress"
+                >
+                    <div class="smk-street">
+                        <span class="smk-civic-number">{{ site.civicNumber }}{{ site.civicNumberSuffix || '' }}</span>
+                        <span class="smk-street-name">{{ site.streetName }}</span>
+                        <span class="smk-street-type">{{ site.streetType }}</span>
+                    </div>
+                    <div class="smk-locality">
+                        <span class="smk-locality-name">{{ site.localityName || '&nbsp;' }}</span>
+                        <!-- <span class="smk-locality-type" v-if="site.localityType && site.localityType != 'Unknown'">({{ site.localityType }})</span> -->
+                    </div>
+                </div>
+
+                <div class="smk-coordinate"
+                    v-else
+                >
+                    <span class="smk-ordinate">
+                        <label>latitude<div>{{ site.latitude | formatNumber( 6, 3 ) }}</div></label>
+                    </span>
+                    <span class="smk-ordinate">
+                        <label>longitude<div>{{ site.longitude | formatNumber( 6, 3 ) }}</div></label>
+                    </span>
+                </div>
             </div>
 
             <command-button class="smk-zoomto"
@@ -73,8 +104,8 @@
             ></command-button>
 
             <command-button class="smk-remove"
-                v-bind:disabled="waypoints.length < 2 || busy"
-                v-on:click="waypoints.length > 1 && $$emit( 'remove-waypoint', { index: i } )"
+                v-bind:disabled="waypoints.length == 0 || busy"
+                v-on:click="waypoints.length > 0 && $$emit( 'remove-waypoint', { index: i } )"
                 icon="delete"
                 title="Remove this waypoint"
             ></command-button>

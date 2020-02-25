@@ -36,7 +36,11 @@
     color: red;
 }
 
+.smk-directions-panel .smk-options {
+    width: 40px;
+}
+
 .smk-directions-panel .smk-address-search {
     margin: 4px;
-    width: calc( 100% - 8px );
+    width: calc( 100% - 46px );
 }
