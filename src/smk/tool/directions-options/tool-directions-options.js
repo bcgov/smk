@@ -46,7 +46,7 @@ include.module( 'tool-directions-options', [ 'tool', 'widgets', 'sidepanel', 'to
         this.makePropPanel( 'optimal',      false )
         this.makePropPanel( 'roundTrip',    false )
         this.makePropPanel( 'criteria',     'shortest' )
-        this.makePropPanel( 'truckRoute',   10 )
+        this.makePropPanel( 'truckRoute',   null )
         this.makePropPanel( 'truckHeight',  null, null, positiveFloat )
         this.makePropPanel( 'truckWidth',   null, null, positiveFloat )
         this.makePropPanel( 'truckLength',  null, null, positiveFloat )
