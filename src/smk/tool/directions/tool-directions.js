@@ -69,7 +69,8 @@ include.module( 'tool-directions', [
                     legend: {
                         title: "Starting Route Location",
                         point: true
-                    }
+                    },
+                    isDraggable: true
                 },
                 {
                     id: "@waypoint-end",
@@ -85,7 +86,8 @@ include.module( 'tool-directions', [
                     legend: {
                         title: "Ending Route Location",
                         point: true
-                    }
+                    },
+                    isDraggable: true
                 },
                 {
                     id: "@waypoint-middle",
@@ -101,7 +103,8 @@ include.module( 'tool-directions', [
                     legend: {
                         title: "Waypoint on Route",
                         point: true
-                    }
+                    },
+                    isDraggable: true
                 }
             ]
         }, option ) )
@@ -241,6 +244,11 @@ include.module( 'tool-directions', [
             // smk.$layerItems.push( display )
 
             self.layer[ ly.id ] = smk.$viewer.layerId[ ly.id ]
+
+            if ( ly.isDraggable )
+                self.layer[ ly.id ].changedFeature( function ( ev ) {
+                    self.updateWaypoint( ev.geojson.properties.index, ev.newPt )
+                } )
         } )
         smk.$layerItems.push( {
             type: 'group',
@@ -293,6 +301,15 @@ include.module( 'tool-directions', [
             } )
     }
 
+    DirectionsTool.prototype.updateWaypoint = function ( index, newPt ) {
+        var self = this
+
+        return SMK.UTIL.findNearestSite( newPt ).then( function ( site ) {
+            self.waypoints[ index ] = site
+
+            return self.findRoute()
+        } )
+    }
     // DirectionsTool.prototype.startAtCurrentLocation = function () {
     //     var self = this
 
@@ -423,17 +440,21 @@ include.module( 'tool-directions', [
         var wl = this.waypoints.length
 
         if ( wl > 0 )
-            this.layer[ '@waypoint-start' ].load( waypointGeom( this.waypoints[ 0 ] ) )
+            this.layer[ '@waypoint-start' ].load( waypointGeom( this.waypoints[ 0 ], 0 ) )
 
         if ( wl > 1 )
-            this.layer[ '@waypoint-end' ].load( waypointGeom( this.waypoints[ wl - 1 ] ) )
+            this.layer[ '@waypoint-end' ].load( waypointGeom( this.waypoints[ wl - 1 ], wl - 1 ) )
 
         if ( wl > 2 ) {
-            self.layer[ '@waypoint-middle' ].load( turf.multiPoint( this.waypoints.slice( 1, wl - 1 ).map( function ( wp ) { return [ wp.longitude, wp.latitude ] } ) ) )
+            self.layer[ '@waypoint-middle' ].load( turf.featureCollection( 
+                this.waypoints.slice( 1, wl - 1 ).map( function ( wp, i ) { 
+                    return waypointGeom( wp, 1 + i )
+                } ) 
+            ) )
         }
 
-        function waypointGeom( wp ) {
-            return turf.point( [ wp.longitude, wp.latitude ] )
+        function waypointGeom( wp, index ) {
+            return turf.point( [ wp.longitude, wp.latitude ], { index: index } )
         }
     }
 

@@ -114,7 +114,11 @@ include.module( 'layer-leaflet.layer-vector-leaflet-js', [ 'layer.layer-vector-j
         var layer = new L.geoJson( null, {
             pointToLayer: function ( geojson, latlng ) {
                 // return markerForStyle( self, latlng, layers[ 0 ].config.style )
-                return markerForStyle( self, latlng, styles[ 0 ] )
+                return markerForStyle( self, latlng, styles[ 0 ], layers[ 0 ].config )
+                    .on( 'moveend', function ( ev ) {
+                        var ll = ev.target.getLatLng()
+                        layers[ 0 ].changedFeature( { newPt: { latitude: ll.lat, longitude: ll.lng }, geojson: geojson } )
+                    } )
             },
             onEachFeature: function ( feature, layer ) {
                 if ( layer.setStyle )
@@ -239,7 +243,7 @@ include.module( 'layer-leaflet.layer-vector-leaflet-js', [ 'layer.layer-vector-j
             }
     }
 
-    function markerForStyle( viewer, latlng, styleConfig ) {
+    function markerForStyle( viewer, latlng, styleConfig, layerConfig ) {
         if ( styleConfig.markerUrl ) {
             return L.marker( latlng, {
                 icon: L.icon( {
@@ -250,7 +254,8 @@ include.module( 'layer-leaflet.layer-vector-leaflet-js', [ 'layer.layer-vector-j
                     popupAnchor: styleConfig.popupOffset,
                     shadowSize: styleConfig.shadowSize,
                 } ),
-                interactive: false
+                interactive: !!layerConfig.isDraggable,
+                draggable: !!layerConfig.isDraggable
             } )
         }
         else {

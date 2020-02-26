@@ -4,6 +4,7 @@ include.module( 'layer.layer-js', [ 'jquery', 'util', 'event' ], function () {
     var LayerEvent = SMK.TYPE.Event.define( [
         'startedLoading',
         'finishedLoading',
+        'changedFeature',
     ] )
 
     function Layer( config ) {
