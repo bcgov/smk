@@ -60,8 +60,7 @@ include.module( 'widget-address-search', [
                             streetName:          feature.properties.streetName,
                             streetType:          feature.properties.streetType,
                         }
-                    } )
-                    self.list = self.list.slice( 0, 5 )
+                    } ).slice( 0, 5 )
 
                     self.expanded = self.list.length > 0
                     self.selectedIndex = self.list.length > 0 ? 0 : null
