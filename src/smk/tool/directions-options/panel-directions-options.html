@@ -41,7 +41,7 @@
     >Which is more important?</select-option>
 
     <select-option class="smk-directions-truck"
-        v-if="command.truck !== false"
+        v-if="command.vehicleType !== false"
         v-bind:value="truck"
         v-on:change="!busy && $$emit( 'change', { truck: $event } )"
         v-bind:options="[

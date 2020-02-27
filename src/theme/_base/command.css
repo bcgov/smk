@@ -7,6 +7,9 @@
     /* margin-left: -2px; */
     font-size: 12px;
     user-select: none;
+    -ms-user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
 }
 
 .smk-map-frame .smk-command.smk-icon {

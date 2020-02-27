@@ -21,7 +21,7 @@
     margin: 2px 0;
     background-color: transparent;
     margin-right: 5px;
-    font: 400 11px system-ui;
+    font-size: 11px;
 }
 
 .smk-directions-panel .smk-waypoint .smk-zoomto.smk-first .smk-command {

@@ -62,6 +62,9 @@
     border-top: 1px solid gray;
     padding-top: 5px;
     user-select: none;
+    -ms-user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
 
     display: flex;
     flex-direction: row;

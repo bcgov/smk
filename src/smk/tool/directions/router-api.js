@@ -58,7 +58,10 @@ include.module( 'tool-directions.router-api-js', [], function ( inc ) {
             'truck/optimalDirections',
         ][ !!mode.optimal + 2 * !!mode.truck ] + '.json'
 
-        var query = Object.fromEntries( Object.entries( option ).filter( function( kv ) { return !!kv[ 1 ] } ) )
+        var query = Object.keys( option ).reduce( function ( accum, key ) {
+            if ( option[ key ] ) accum[ key ] = option[ key ]
+            return accum
+        }, {} )
         query.points = points.map( function ( w ) { return w.longitude + ',' + w.latitude } ).join( ',' )
 
         var ajaxOpt = {
