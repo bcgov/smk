@@ -70,7 +70,8 @@ include.module( 'tool-directions', [
                         title: "Starting Route Location",
                         point: true
                     },
-                    isDraggable: true
+                    isDraggable: true,
+                    isQueryable: false
                 },
                 {
                     id: "@waypoint-end",
@@ -87,7 +88,8 @@ include.module( 'tool-directions', [
                         title: "Ending Route Location",
                         point: true
                     },
-                    isDraggable: true
+                    isDraggable: true,
+                    isQueryable: false
                 },
                 {
                     id: "@waypoint-middle",
@@ -104,7 +106,8 @@ include.module( 'tool-directions', [
                         title: "Waypoint on Route",
                         point: true
                     },
-                    isDraggable: true
+                    isDraggable: true,
+                    isQueryable: false
                 }
             ]
         }, option ) )

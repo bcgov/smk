@@ -303,8 +303,10 @@ include.module( 'layer-display', [ 'jquery', 'util', 'event' ], function () {
 
         if ( !( id in this.itemId ) ) return false
 
+        var hasInternal = false
         return this.itemId[ id ].reduce( function ( accum, ld ) {
-            return accum && ld.getVisible( scale ) 
+            if ( ld.isInternal ) hasInternal = true
+            return hasInternal || accum && ld.getVisible( scale ) 
         }, true )
     }
 
@@ -324,6 +326,7 @@ include.module( 'layer-display', [ 'jquery', 'util', 'event' ], function () {
 
         if ( deep ) {
             lds[ 0 ].each( function ( item ) {
+                if ( item.isInternal ) return false
                 item.isVisible = visible
                 if ( item.type == 'group' ) return false 
             } )
