@@ -141,7 +141,9 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
         this.layerIdPromise = {}
         this.deadViewerLayer = {}
 
-        this.layerDisplayContext = null
+        this.displayContext = {
+            layers: null
+        }
 
         this.pickHandlers = []
         this.query = {}
@@ -163,8 +165,7 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
                 return ld
             } )
 
-            if ( !smk.$layerItems )
-                smk.$layerItems = items
+            self.defaultLayerDisplay = items
         }
 
         this.pickedLocation( function ( ev ) {
@@ -287,35 +288,102 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
     }
 
     Viewer.prototype.initializeLayers = function ( smk ) {
-        // var self = this;
-
-        // if ( !smk.layers || smk.layers.length == 0 ) return SMK.UTIL.resolved()
-
-        // return self.updateLayersVisible()
+    }
+    // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+    //
+    Viewer.prototype.isDisplayContext = function ( context ) {
+        return ( context in this.displayContext ) && this.displayContext[ context ]
     }
 
-    Viewer.prototype.setLayerDisplayItems = function ( layerItems ) {
+    Viewer.prototype.setDisplayContextItems = function ( context, items ) {
         var self = this
         
-        this.layerDisplayContext = new SMK.TYPE.LayerDisplayContext( layerItems || [], this.layerId )
+        if ( this.isDisplayContext( context ) ) {
+            console.warn( 'displayContext ' + context + ' is already defined' )
+            return
+        }
 
-        this.layerDisplayContext.changedVisibility( function () {
+        var dc = this.displayContext[ context ] = new SMK.TYPE.LayerDisplayContext( items || [], this.layerId )
+
+        dc.changedVisibility( function () {
             self.changedLayerVisibility()
         } ) 
 
         this.changedView( function () {
-            self.layerDisplayContext.setView( self.getView() )
+            dc.setView( self.getView() )
         } )
     }
 
-    Viewer.prototype.getLayerDisplayItems = function () {
-        if ( !this.layerDisplayContext ) return {}
+    Viewer.prototype.getDisplayContexts = function () {
+        var dcs = []
+        var vw = this.getView()
+        this.eachDisplayContext( function ( dc, c ) {
+            dc.setView( vw )
+            dcs.push( dc.root )
+        } )
 
-        this.layerDisplayContext.setView( this.getView() )        
-
-        return this.layerDisplayContext.root
+        return dcs
     }
 
+    Viewer.prototype.eachDisplayContext = function ( cb ) {
+        var self = this 
+
+        Object.keys( this.displayContext ).forEach( function ( context ) {
+            cb.call( self, self.displayContext[ context ], context )
+        } )
+    }
+
+    Viewer.prototype.getDisplayContextConfig = function () {
+        var config = {}
+        this.eachDisplayContext( function ( dc, c ) {
+            config[ c ] = dc.getConfig()
+        } )
+        return config
+    }
+
+    Viewer.prototype.isDisplayContextItemVisible = function ( layerId ) {
+        var vis = null
+        this.eachDisplayContext( function ( dc ) {
+            vis = vis || dc.isItemVisible( layerId )
+        } )
+        return vis
+    }
+
+    Viewer.prototype.getDisplayContextItem = function ( layerId ) {
+        var item = null
+        this.eachDisplayContext( function ( dc ) {
+            item = item || dc.getItem( layerId )
+        } )
+        return item
+    }
+
+    Viewer.prototype.getDisplayContextLayerIds = function () {
+        var ids = []
+        this.eachDisplayContext( function ( dc ) {
+            ids = ids.concat( dc.getLayerIds() )
+        } )
+        return ids
+    }
+
+    Viewer.prototype.setDisplayContextItemEnabled = function ( layerId, enabled ) {
+        this.eachDisplayContext( function ( dc ) {
+            dc.setItemEnabled( layerId, enabled )
+        } )
+    }
+
+    Viewer.prototype.setDisplayContextLegendsVisible = function ( vis ) {        
+        this.eachDisplayContext( function ( dc ) {
+            dc.setLegendsVisible( vis, this.layerId, this )
+        } )
+    }
+
+    Viewer.prototype.setDisplayContextFolderExpanded = function ( layerId, expanded ) {        
+        this.eachDisplayContext( function ( dc ) {
+            dc.setFolderExpanded( layerId, expanded )
+        } )
+    }
+    // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+    //
     Viewer.prototype.handlePick = function ( priority, handler ) {
         if ( !this.pickHandlers[ priority ] ) this.pickHandlers[ priority ] = []
 
@@ -326,10 +394,10 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
     Viewer.prototype.updateLayersVisible = function () {
         var self = this
 
-        if ( !self.layerDisplayContext ) return
+        // if ( !self.layerDisplayContext ) return
         
         var pending = {}
-        self.layerDisplayContext.getLayerIds().forEach( function ( id ) {
+        self.getDisplayContextLayerIds().forEach( function ( id ) {
             pending[ id ] = true
         } )
         Object.keys( self.visibleLayer ).forEach( function ( id ) {
@@ -338,8 +406,8 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
 
         var visibleLayers = []
         var merged
-        this.layerDisplayContext.getLayerIds().forEach( function ( id, i ) {
-            if ( !self.layerDisplayContext.isItemVisible( id )  ) return
+        this.getDisplayContextLayerIds().forEach( function ( id, i ) {
+            if ( !self.isDisplayContextItemVisible( id )  ) return
                 // console.log( 'visible',id )
 
             var ly = self.layerId[ id ]
@@ -380,7 +448,7 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
                 .catch( function ( e ) {
                     console.warn( 'Failed to create layer ' + cid + ':', e )
                     lys.forEach( function ( ly ) {
-                        self.layerDisplayContext.setItemEnabled( ly.id, false ) 
+                        self.setDisplayContextItemEnabled( ly.id, false ) 
                     } )
                 } )
 
@@ -475,7 +543,8 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
         this.layerIds.forEach( function ( id, i ) {
             var ly = self.layerId[ id ]
 
-            if ( !self.layerDisplayContext.isItemVisible( id ) ) return
+            if ( !self.isDisplayContextItemVisible( id ) ) return
+            // if ( !self.layerDisplayContext.isItemVisible( id ) ) return
             if ( ly.config.isQueryable === false ) return
             if ( !ly.inScaleRange( view ) ) return
 

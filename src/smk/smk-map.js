@@ -415,7 +415,8 @@ include.module( 'smk-map', [ 'jquery', 'util', 'theme-base', 'sidepanel' ], func
                 .removeClass( 'smk-hidden' )
                 .fadeIn( 1000 )
 
-            self.$viewer.setLayerDisplayItems( self.$layerItems )
+            if ( !self.$viewer.isDisplayContext( 'layers' ) )
+                self.$viewer.setDisplayContextItems( 'layers', self.$viewer.defaultLayerDisplay )
 
             if ( self.viewer.activeTool in self.$tool )
                 self.$tool[ self.viewer.activeTool ].active = true
@@ -611,6 +612,7 @@ include.module( 'smk-map', [ 'jquery', 'util', 'theme-base', 'sidepanel' ], func
         var lt = cfg.tools.find( function ( t ) { return t.type == 'layers' } )
         if ( lt )
             lt.display = this.$viewer.layerDisplayContext.getConfig()
+            // lt.display = this.$viewer.layerDisplayContext.getConfig()
 
         cfg.layers.forEach( function ( ly ) {
             ly.isVisible = self.$viewer.layerDisplayContext.isItemVisible( ly.id )

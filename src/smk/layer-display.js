@@ -73,9 +73,9 @@ include.module( 'layer-display', [ 'jquery', 'util', 'event' ], function () {
                 option.class = ly.config.class 
 
             option.legends = ly.config.legends 
-            option.isInternal = ly.config.isInternal 
+            // option.isInternal = ly.config.isInternal 
 
-            if ( ly.config.isInternal )
+            // if ( ly.config.isInternal )
                 option.load = function ( data ) { return ly.load( data ) }
         }
 
@@ -303,10 +303,8 @@ include.module( 'layer-display', [ 'jquery', 'util', 'event' ], function () {
 
         if ( !( id in this.itemId ) ) return false
 
-        var hasInternal = false
         return this.itemId[ id ].reduce( function ( accum, ld ) {
-            if ( ld.isInternal ) hasInternal = true
-            return hasInternal || accum && ld.getVisible( scale ) 
+            return accum && ld.getVisible( scale ) 
         }, true )
     }
 
@@ -326,7 +324,6 @@ include.module( 'layer-display', [ 'jquery', 'util', 'event' ], function () {
 
         if ( deep ) {
             lds[ 0 ].each( function ( item ) {
-                if ( item.isInternal ) return false
                 item.isVisible = visible
                 if ( item.type == 'group' ) return false 
             } )

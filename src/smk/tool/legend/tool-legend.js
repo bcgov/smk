@@ -26,7 +26,7 @@ include.module( 'tool-legend', [ 'tool', 'tool-legend.legend-html', 'tool-legend
         var self = this
 
         this.model = {
-            display: {}
+            contexts: []
         }
 
         this.vm = new Vue( {
@@ -35,10 +35,10 @@ include.module( 'tool-legend', [ 'tool', 'tool-legend.legend-html', 'tool-legend
         } )
 
         SMK.BOOT.then( function () {
-            self.model.display = smk.$viewer.getLayerDisplayItems()
-            smk.$viewer.layerDisplayContext.setLegendsVisible( true, smk.$viewer.layerId, smk.$viewer )
+            self.model.contexts = smk.$viewer.getDisplayContexts()
+            smk.$viewer.setDisplayContextLegendsVisible( true )
             Vue.nextTick( function () {
-                smk.$viewer.layerDisplayContext.setLegendsVisible( false, smk.$viewer.layerId, smk.$viewer )
+                smk.$viewer.setDisplayContextLegendsVisible( false )
             } )        
         } )
     } )
