@@ -32,7 +32,7 @@ include.module( 'smk-map', [ 'jquery', 'util', 'theme-base', 'sidepanel' ], func
             .appendTo( this.$container )
 
         var status = $( '<div class="smk-startup smk-status">' )
-            .text( 'Reticulating splines...' )
+            // .text( 'Reticulating splines...' )
             .appendTo( this.$container )
 
         return SMK.UTIL.promiseFinally(
@@ -60,7 +60,7 @@ include.module( 'smk-map', [ 'jquery', 'util', 'theme-base', 'sidepanel' ], func
                     )
                     spinner.remove()
 
-                    return Promise.reject()
+                    return Promise.reject( e )
                 } ),
             function () {
                 console.groupEnd()
@@ -599,24 +599,23 @@ include.module( 'smk-map', [ 'jquery', 'util', 'theme-base', 'sidepanel' ], func
     SmkMap.prototype.getConfig = function () {
         var self = this
 
-        var ks = [ 'name', 'viewer', 'tools', 'layers' ]
+        var ks = [ 'name', 'viewer', 'tools' ]
 
         var cfg = ks.reduce( function ( acc, k ) {
             acc[ k ] = JSON.parse( JSON.stringify( self[ k ] ) )
             return acc
         }, {} )
 
+        cfg.layers = this.$viewer.getLayerConfig()
+
         cfg.viewer.location = SMK.UTIL.projection( 'center', 'zoom', 'extent' )( this.$viewer.getView() )
         cfg.viewer.location.center = [ cfg.viewer.location.center.longitude, cfg.viewer.location.center.latitude ]
 
-        var lt = cfg.tools.find( function ( t ) { return t.type == 'layers' } )
-        if ( lt )
-            lt.display = this.$viewer.layerDisplayContext.getConfig()
-            // lt.display = this.$viewer.layerDisplayContext.getConfig()
+        cfg.viewer.displayContext = this.$viewer.getDisplayContextConfig()
 
         cfg.layers.forEach( function ( ly ) {
-            ly.isVisible = self.$viewer.layerDisplayContext.isItemVisible( ly.id )
-            ly.class = self.$viewer.layerDisplayContext.getItem( ly.id ).class
+            ly.isVisible = self.$viewer.isDisplayContextItemVisible( ly.id )
+            ly.class = self.$viewer.getDisplayContextItem( ly.id ).class
         } )
         
         return cfg

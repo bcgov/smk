@@ -101,6 +101,21 @@ include.module( 'layer-leaflet.layer-vector-leaflet-js', [ 'layer.layer-vector-j
 
         return features
     }
+
+    VectorLeafletLayer.prototype.getConfig = function ( leafLayer ) {
+        var cfg = SMK.TYPE.Layer[ 'vector' ].prototype.getConfig.call( this )
+
+        if ( cfg.isInternal ) {
+            var geojson = leafLayer.toGeoJSON()
+            if ( geojson ) {
+                cfg.dataUrl = 'data:application/json,' + JSON.stringify( geojson )
+                cfg.isInternal = false
+            }
+        }
+
+        return cfg
+    }
+
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
     SMK.TYPE.Layer[ 'vector' ][ 'leaflet' ].create = function ( layers, zIndex ) {

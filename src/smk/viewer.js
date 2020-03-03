@@ -168,6 +168,12 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
             self.defaultLayerDisplay = items
         }
 
+        if ( smk.viewer.displayContext ) {
+            Object.keys( smk.viewer.displayContext ).forEach( function ( k ) {
+                self.setDisplayContextItems( k, smk.viewer.displayContext[ k ] )
+            } )
+        }
+
         this.pickedLocation( function ( ev ) {
             var chain = SMK.UTIL.resolved()
 
@@ -287,12 +293,20 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
         }
     }
 
+    Viewer.prototype.getLayerConfig = function () {
+        var self = this
+
+        return this.layerIds.map( function( id ) {
+            return self.layerId[ id ].getConfig( self.visibleLayer[ id ] )
+        } )
+    }
+
     Viewer.prototype.initializeLayers = function ( smk ) {
     }
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
     Viewer.prototype.isDisplayContext = function ( context ) {
-        return ( context in this.displayContext ) && this.displayContext[ context ]
+        return !!this.displayContext[ context ]
     }
 
     Viewer.prototype.setDisplayContextItems = function ( context, items ) {
@@ -314,6 +328,14 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
         } )
     }
 
+    Viewer.prototype.eachDisplayContext = function ( cb ) {
+        var self = this 
+
+        Object.keys( this.displayContext ).forEach( function ( context ) {
+            cb.call( self, self.displayContext[ context ], context )
+        } )
+    }
+
     Viewer.prototype.getDisplayContexts = function () {
         var dcs = []
         var vw = this.getView()
@@ -323,14 +345,6 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
         } )
 
         return dcs
-    }
-
-    Viewer.prototype.eachDisplayContext = function ( cb ) {
-        var self = this 
-
-        Object.keys( this.displayContext ).forEach( function ( context ) {
-            cb.call( self, self.displayContext[ context ], context )
-        } )
     }
 
     Viewer.prototype.getDisplayContextConfig = function () {
@@ -362,7 +376,7 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
         this.eachDisplayContext( function ( dc ) {
             ids = ids.concat( dc.getLayerIds() )
         } )
-        return ids
+        return ids.reverse()
     }
 
     Viewer.prototype.setDisplayContextItemEnabled = function ( layerId, enabled ) {
