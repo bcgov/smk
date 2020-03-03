@@ -241,7 +241,6 @@ include.module( 'layer-display', [ 'jquery', 'util', 'event' ], function () {
         this.changedVisibility( function () {
             self.root.each( function ( item ) {
                 item.isActuallyVisible = self.isItemVisible( item.id )
-                // if ( item.isActuallyVisible ) console.log( 'visible',item.id,item.serial )
             } )            
         } )
 

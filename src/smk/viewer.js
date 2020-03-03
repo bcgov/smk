@@ -226,9 +226,13 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
             return smk.getSidepanelPosition()
         }
 
+        this.delayedUpdateLayersVisible = SMK.UTIL.makeDelayedCall( function () {
+            self.updateLayersVisible().then( function () {
+            } )
+        } )
+
         this.changedLayerVisibility( function () {
-            // console.log('changedLayerVisibility')
-            self.updateLayersVisible()
+            self.delayedUpdateLayersVisible()
         } )
     }
 

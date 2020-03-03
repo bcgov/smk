@@ -452,8 +452,6 @@ include.module( 'tool-directions', [
 
         var wl = this.waypoints.length
 
-        this.setInternalLayerVisible( wl > 0 )
-
         if ( wl > 0 )
             this.layer[ '@waypoint-start' ].load( waypointGeom( this.waypoints[ 0 ], 0 ) )
 
@@ -467,6 +465,8 @@ include.module( 'tool-directions', [
                 } ) 
             ) )
         }
+
+        this.setInternalLayerVisible( wl > 0 )
 
         function waypointGeom( wp, index ) {
             return turf.point( [ wp.longitude, wp.latitude ], { index: index } )

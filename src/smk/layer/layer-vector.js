@@ -157,8 +157,12 @@ include.module( 'layer.layer-vector-js', [ 'layer.layer-js' ], function () {
     }
 
     VectorLayer.prototype.load = function ( data ) {
-        if ( this.loadLayer && data )
+        if ( !data ) return
+
+        if ( this.loadLayer )
             return this.loadLayer( data )
+
+        this.loadCache = data
     }
 
     VectorLayer.prototype.clear = function () {
