@@ -244,7 +244,6 @@ include.module( 'tool-directions', [
             display.class = "smk-inline-legend"            
 
             groupItems.push( { id: display.id } )
-            // smk.$layerItems.push( display )
 
             self.layer[ ly.id ] = smk.$viewer.layerId[ ly.id ]
 
@@ -253,13 +252,20 @@ include.module( 'tool-directions', [
                     self.updateWaypoint( ev.geojson.properties.index, ev.newPt )
                 } )
         } )
-        smk.$layerItems.push( {
+
+        smk.$viewer.setDisplayContextItems( this.id, [ {
+            id: 'tool-' + this.id,
             type: 'group',
             title: this.title,
-            isVisible: true,
+            isVisible: false,
             isInternal: true,
             items: groupItems
-        } )
+        } ] )
+
+
+        this.setInternalLayerVisible = function ( visible ) {
+            smk.$viewer.displayContext[ self.id ].setItemVisible( 'tool-' + self.id, visible )
+        }
 
         this.handleRouteData = function ( data ) {
             if ( SMK.HANDLER.has( self.id, 'route' ) )
@@ -410,6 +416,8 @@ include.module( 'tool-directions', [
     DirectionsTool.prototype.clearLayers = function () {
         var self = this
 
+        this.setInternalLayerVisible( false )
+
         Object.keys( this.layer ).forEach( function ( id ) {
             self.layer[ id ].clear()
         } ) 
@@ -417,6 +425,8 @@ include.module( 'tool-directions', [
 
     DirectionsTool.prototype.displaySegments = function ( segments ) {
         var self = this
+
+        this.setInternalLayerVisible( true )
 
         var fc = {}
         segments.features.forEach( function( sg ) {
@@ -455,6 +465,8 @@ include.module( 'tool-directions', [
                 } ) 
             ) )
         }
+
+        this.setInternalLayerVisible( wl > 0 )
 
         function waypointGeom( wp, index ) {
             return turf.point( [ wp.longitude, wp.latitude ], { index: index } )

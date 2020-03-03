@@ -151,7 +151,8 @@ include.module( 'feature-list', [ 'tool', 'widgets', 'sidepanel',
             self.active = true
 
             var ly = smk.$viewer.layerId[ ev.layerId ]
-            var index = smk.$viewer.layerDisplayContext.getLayerIndex( ev.layerId ) || 0
+            // var index = smk.$viewer.layerDisplayContext.getLayerIndex( ev.layerId ) || 0
+            var index = smk.$viewer.displayContext.layer.getLayerIndex( ev.layerId ) || 0
 
             if ( !self.layers[ index ] )
                 Vue.set( self.layers, index, {
@@ -178,7 +179,8 @@ include.module( 'feature-list', [ 'tool', 'widgets', 'sidepanel',
 
         self.featureSet.removedFeatures( function ( ev ) {
             var ly = smk.$viewer.layerId[ ev.features[ 0 ].layerId ]
-            var index = smk.$viewer.layerDisplayContext.getLayerIndex( ev.features[ 0 ].layerId ) || 0
+            // var index = smk.$viewer.layerDisplayContext.getLayerIndex( ev.features[ 0 ].layerId ) || 0
+            var index = smk.$viewer.displayContext.layers.getLayerIndex( ev.features[ 0 ].layerId ) || 0
 
             self.layers[ index ].features = self.layers[ index ].features.filter( function ( ft ) {
                 return ft.id != ev.features[ 0 ].id

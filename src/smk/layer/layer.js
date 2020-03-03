@@ -100,4 +100,8 @@ include.module( 'layer.layer-js', [ 'jquery', 'util', 'event' ], function () {
         return true
     }
 
+    Layer.prototype.getConfig = function () {
+        return this.config
+    }
+    
 } )

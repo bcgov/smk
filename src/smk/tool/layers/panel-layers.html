@@ -1,7 +1,7 @@
 <side-panel class="smk-layers-panel" 
     v-bind:busy="busy"
-    v-bind:message="busy ? 'Loading data' : ( !display.items || display.items.length == 0 ) ? 'No layers are configured' : ''"
-    v-bind:status="busy ? 'progress' : ( !display.items || display.items.length == 0 ) ? 'warning' : ''"
+    v-bind:message="busy ? 'Loading data' : ( !contexts[ 0 ].items || contexts[ 0 ].items.length == 0 ) ? 'No layers are configured' : ''"
+    v-bind:status="busy ? 'progress' : ( !contexts[ 0 ].items || contexts[ 0 ].items.length == 0 ) ? 'warning' : ''"
     v-bind:showSwipe="true"
     v-on:swipe-up="$$emit('swipe-up')"
     v-on:swipe-down="$$emit('swipe-down')"    
@@ -32,10 +32,13 @@
         >Legend</toggle-button>
 
     </template>
-    
+
     <layer-display 
+        v-for="c, i in contexts"
+        v-bind:key="'ctx-' + i"
         v-bind:id="id"
-        v-bind:display="display"
+        v-bind:display="c"
         v-bind:glyph="glyph"
     ></layer-display>
+
 </side-panel>

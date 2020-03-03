@@ -101,6 +101,21 @@ include.module( 'layer-leaflet.layer-vector-leaflet-js', [ 'layer.layer-vector-j
 
         return features
     }
+
+    VectorLeafletLayer.prototype.getConfig = function ( leafLayer ) {
+        var cfg = SMK.TYPE.Layer[ 'vector' ].prototype.getConfig.call( this )
+
+        if ( cfg.isInternal ) {
+            var geojson = leafLayer.toGeoJSON()
+            if ( geojson ) {
+                cfg.dataUrl = 'data:application/json,' + JSON.stringify( geojson )
+                cfg.isInternal = false
+            }
+        }
+
+        return cfg
+    }
+
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
     SMK.TYPE.Layer[ 'vector' ][ 'leaflet' ].create = function ( layers, zIndex ) {
@@ -146,8 +161,8 @@ include.module( 'layer-leaflet.layer-vector-leaflet-js', [ 'layer.layer-vector-j
 
         layers[ 0 ].loadLayer = function ( data ) {
             var feats = []
-            turf.featureEach( data, function ( ft ) {                    
-                styles.forEach( function ( st, i ) {                        
+            turf.featureEach( data, function ( ft ) {
+                styles.forEach( function ( st, i ) {
                     if ( i > 0 )
                         ft = turf.clone( ft )
 
@@ -157,6 +172,11 @@ include.module( 'layer-leaflet.layer-vector-leaflet-js', [ 'layer.layer-vector-j
             } )
 
             layer.addData( turf.featureCollection( feats ) )
+        }
+
+        if ( layers[ 0 ].loadCache ) {
+            layers[ 0 ].loadLayer( layers[ 0 ].loadCache )
+            layers[ 0 ].loadCache = null
         }
 
         layers[ 0 ].clearLayer = function () {

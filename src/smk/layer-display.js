@@ -40,46 +40,56 @@ include.module( 'layer-display', [ 'jquery', 'util', 'event' ], function () {
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
     LayerDisplay.layer = function ( option, layerCatalog, forceVisible ) {
+        var self = this
+
         if ( !option.id )
             throw new Error( 'display layer needs id' )
 
-        if ( !( option.id in layerCatalog ) ) {
-            console.warn( 'layer id "' + option.id + '" isn\'t defined' )
-            option.isEnabled = false
+        function defLayerProperty( prop, def ) {
+            var propVal, gotProp = false
+            Object.defineProperty( self, prop, {
+                get: function () {
+                    if ( gotProp ) return propVal
 
-            if ( !option.title )
-                option.title = option.id
+                    if ( !layerCatalog[ option.id ] ) {
+                        console.warn( 'layer id "' + option.id + '" isn\'t defined' )
+                        self.isEnabled = false
+                        self.isVisible = false
+                        gotProp = true
+                        return def
+                    }
 
-            option.isVisible = false
-        }
-        else {
-            var ly = layerCatalog[ option.id ]
-
-            // if ( !option.opacity )
-            //     option.opacity = ly.config.opacity 
-
-            if ( !option.title )
-                option.title = ly.config.title 
-
-            if ( !( 'isVisible' in option ) )
-                option.isVisible = ly.config.isVisible 
-
-            option.scale = { 
-                min: ly.config.scaleMin, 
-                max: ly.config.scaleMax 
-            }
-
-            if ( !( 'class' in option ) )
-                option.class = ly.config.class 
-
-            option.legends = ly.config.legends 
-            option.isInternal = ly.config.isInternal 
-
-            if ( ly.config.isInternal )
-                option.load = function ( data ) { return ly.load( data ) }
+                    gotProp = true
+                    propVal = layerCatalog[ option.id ].config[ prop ] 
+                    if ( propVal == null ) propVal = def 
+                    return propVal
+                },
+                set: function ( val ) {
+                    gotProp = true
+                    propVal = val
+                    return propVal
+                }
+            } )
         }
 
         LayerDisplay.prototype.constructor.call( this, option, forceVisible )
+
+        if ( !option.title )
+            defLayerProperty( 'title', option.id )
+
+        if ( !( 'isVisible' in option ) )
+            defLayerProperty( 'isVisible', true )
+
+        if ( forceVisible )
+            this.isVisible = true
+
+        defLayerProperty( 'scaleMin' )
+        defLayerProperty( 'scaleMax' )
+
+        if ( !( 'class' in option ) )
+            defLayerProperty( 'class' )
+
+        defLayerProperty( 'legends' )
     }
 
     $.extend( LayerDisplay.layer.prototype, LayerDisplay.prototype )
@@ -110,8 +120,8 @@ include.module( 'layer-display', [ 'jquery', 'util', 'event' ], function () {
         if ( !this.isEnabled ) return false
 
         // console.log( this.id, this.scale.min, viewScale, this.scale.max )
-        if ( this.scale.min && this.scale.min < viewScale ) return false
-        if ( this.scale.max && this.scale.max > viewScale ) return false
+        if ( this.scaleMin && this.scaleMin < viewScale ) return false
+        if ( this.scaleMax && this.scaleMax > viewScale ) return false
         return true
     }
 
@@ -122,23 +132,12 @@ include.module( 'layer-display', [ 'jquery', 'util', 'event' ], function () {
         
         LayerDisplay.prototype.constructor.call( this, Object.assign( { isExpanded: false }, option ), forceVisible )
 
-        this.items = []
-        option.items.forEach( function ( item ) {
-            self.addItem( item, layerCatalog, forceVisible )
+        this.items = option.items.map( function ( item ) {
+            return createLayerDisplay( item, layerCatalog, forceVisible )
         } )
-
-        // this.items = option.items.map( function ( item ) {
-        //     return createLayerDisplay( item, layerCatalog, forceVisible )
-        // } )
     }
 
     $.extend( LayerDisplay.folder.prototype, LayerDisplay.prototype )
-
-    LayerDisplay.folder.prototype.addItem = function ( item, layerCatalog, forceVisible ) {
-        var ld = createLayerDisplay( item, layerCatalog, forceVisible )
-        this.items.push( ld )
-        return ld
-    }
 
     LayerDisplay.folder.prototype.each = function ( callback, parents ) {
         if ( !parents ) parents = []
@@ -242,7 +241,6 @@ include.module( 'layer-display', [ 'jquery', 'util', 'event' ], function () {
         this.changedVisibility( function () {
             self.root.each( function ( item ) {
                 item.isActuallyVisible = self.isItemVisible( item.id )
-                // if ( item.isActuallyVisible ) console.log( 'visible',item.id,item.serial )
             } )            
         } )
 
@@ -254,17 +252,6 @@ include.module( 'layer-display', [ 'jquery', 'util', 'event' ], function () {
     $.extend( LayerDisplayContext.prototype, LayerDisplayContextEvent.prototype )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
-    LayerDisplayContext.prototype.addItem = function ( itemConfig, layerCatalog ) {
-        var ld = this.root.addItem( itemConfig, layerCatalog )
-
-        this.itemId[ ld.id ] = [ ld ].concat( this.root )
-
-        if ( ld.type == 'layer' && ld.isEnabled ) {
-            ld.index = this.layerIds.length
-            this.layerIds.push( ld.id )
-        }
-    }
-
     LayerDisplayContext.prototype.getItem = function ( id ) {
         if ( !( id in this.itemId ) ) return 
 
@@ -303,10 +290,8 @@ include.module( 'layer-display', [ 'jquery', 'util', 'event' ], function () {
 
         if ( !( id in this.itemId ) ) return false
 
-        var hasInternal = false
         return this.itemId[ id ].reduce( function ( accum, ld ) {
-            if ( ld.isInternal ) hasInternal = true
-            return hasInternal || accum && ld.getVisible( scale ) 
+            return accum && ld.getVisible( scale ) 
         }, true )
     }
 
@@ -326,7 +311,6 @@ include.module( 'layer-display', [ 'jquery', 'util', 'event' ], function () {
 
         if ( deep ) {
             lds[ 0 ].each( function ( item ) {
-                if ( item.isInternal ) return false
                 item.isVisible = visible
                 if ( item.type == 'group' ) return false 
             } )
