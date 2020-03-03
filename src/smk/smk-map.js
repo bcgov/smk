@@ -60,7 +60,7 @@ include.module( 'smk-map', [ 'jquery', 'util', 'theme-base', 'sidepanel' ], func
                     )
                     spinner.remove()
 
-                    return Promise.reject( e )
+                    return Promise.reject( )
                 } ),
             function () {
                 console.groupEnd()
