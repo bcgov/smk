@@ -40,7 +40,7 @@ module.exports = function( grunt ) {
                     // }
                 },
                 src: [
-                    '<%= srcPath %>/lib/include.js',
+                    '<%= tempPath %>/lib/include.js',
                     '<%= tempPath %>/smk-tags.js',
                     '<%= tempPath %>/smk.js'
                 ],

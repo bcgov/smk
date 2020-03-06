@@ -3,7 +3,8 @@ module.exports = function( grunt ) {
     grunt.registerTask( 'build-lib', [
         'jshint:lib',
         'copy:minified-lib',
-        'uglify:lib'
+        'uglify:lib',
+        'cssmin:smk'
     ] )
 
     grunt.config.merge( {
@@ -28,7 +29,7 @@ module.exports = function( grunt ) {
                     {
                         expand: true,
                         cwd: '<%= srcPath %>/smk',
-                        src: [ '**/*', '!**/*.js' ],
+                        src: [ '**/*', '!**/*.js', '!**/*.css' ],
                         dest: '<%= tempPath %>/smk'
                     },
                     {
@@ -40,7 +41,7 @@ module.exports = function( grunt ) {
                     {
                         expand: true,
                         cwd: '<%= srcPath %>/lib',
-                        src: [ '**/*', '!**/*.js' ],
+                        src: [ '**/*', '!**/*.js', '!**/*.css' ],
                         dest: '<%= tempPath %>/lib'
                     },
                 ]
@@ -52,25 +53,24 @@ module.exports = function( grunt ) {
                 files: [
                     {
                         expand: true,
-                        cwd: '<%= srcPath %>/smk',
+                        cwd: '<%= srcPath %>',
                         src: [ '**/*.js', '!**/*.min.js' ],
-                        dest: '<%= tempPath %>/smk'
-                    },
-                    {
-                        expand: true,
-                        cwd: '<%= srcPath %>/lib',
-                        src: [ '**/*.js', '!**/*.min.js' ],
-                        dest: '<%= tempPath %>/lib'
-                    },
-                    {
-                        expand: true,
-                        cwd: '<%= srcPath %>/lib',
-                        src: 'include.js',
-                        dest: '<%= tempPath %>/lib'
+                        dest: '<%= tempPath %>'
                     }
                 ]
             }
         },
+
+        cssmin: {
+            smk: {
+                files: [ {
+                    expand: true,
+                    cwd: '<%= srcPath %>',
+                    src: '**/*.css',
+                    dest: '<%= tempPath %>'
+                } ]
+            }
+        }
 
     } )
 
