@@ -9,6 +9,7 @@ module.exports = function( grunt ) {
                 port: 8888,
                 base: '.',
                 livereload: true,
+                keepalive:  true,
                 // debug: true
             }
         },
@@ -18,7 +19,7 @@ module.exports = function( grunt ) {
                 hostname: '*',
                 port: 8443,
                 base: '.',
-                // livereload: true,
+                livereload: true,
                 keepalive:  true,
                 // debug: true
             }
