@@ -277,8 +277,8 @@ include.module( 'smk-map', [ 'jquery', 'util', 'theme-base', 'sidepanel' ], func
             $( self.$container )
                 .addClass( 'smk-viewer-' + self.viewer.type )
 
-            if ( self.$option[ 'title-sel' ] )
-                $( self.$option[ 'title-sel' ] ).text( self.name )
+            // if ( self.$option[ 'title-sel' ] )
+            //     $( self.$option[ 'title-sel' ] ).text( self.name )
 
             var themes = [ 'base' ].concat( self.viewer.themes ).map( function ( th ) { return 'theme-' + th } )
             
