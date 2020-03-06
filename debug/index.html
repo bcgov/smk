@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>SMK v<%= package.version %> Examples</title>
+    </head>
+
+    <body>
+        <h1>SMK - Simple Map Kit v<%= package.version %></h1>
+        <p>commit <%= gitinfo.local.branch.current.SHA %></p>
+        <p>branch <%= gitinfo.local.branch.current.name %></p>
+        <p>last commit on <%= gitinfo.local.branch.current.lastCommitTime %></p>
+        <p>origin <%= gitinfo.remote.origin.url %></p>
+        <h2><a href="example/fullframe"  target="fullframe"  >Full frame</a></h2>
+        <h2><a href="example/header"     target="header"     >Full frame with header</a></h2>
+        <h2><a href="example/sidebar"    target="sidebar"    >Full frame with header and sidebar</a></h2>
+        <h2><a href="example/inline"     target="inline"     >Inline in document</a></h2>
+        <h2><a href="example/multiple"   target="multiple"   >Multiple maps inline in document</a></h2>
+        <h2><a href="example/mobile"     target="mobile"     >Optimized for mobile</a></h2>
+    </body>
+</html>
+
