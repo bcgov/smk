@@ -8,6 +8,14 @@ module.exports = function( grunt ) {
 
     grunt.config.merge( {
 
+        jshint: {
+            lib: [ 
+                '<%= srcPath %>/smk/**/*js', 
+                '!<%= srcPath %>/smk/**/lib/**', 
+                '!<%= srcPath %>/smk/**/*.min.js' 
+            ]
+        },
+
         copy: {
             'minified-lib': {
                 files: [
@@ -15,25 +23,25 @@ module.exports = function( grunt ) {
                         expand: true,
                         cwd: '<%= srcPath %>/smk',
                         src: [ '**/*.min.js' ],
-                        dest: '<%= buildPath %>/smk'
+                        dest: '<%= tempPath %>/smk'
                     },
                     {
                         expand: true,
                         cwd: '<%= srcPath %>/smk',
                         src: [ '**/*', '!**/*.js' ],
-                        dest: '<%= buildPath %>/smk'
+                        dest: '<%= tempPath %>/smk'
                     },
                     {
                         expand: true,
                         cwd: '<%= srcPath %>/lib',
                         src: [ '**/*.min.js' ],
-                        dest: '<%= buildPath %>/lib'
+                        dest: '<%= tempPath %>/lib'
                     },
                     {
                         expand: true,
                         cwd: '<%= srcPath %>/lib',
                         src: [ '**/*', '!**/*.js' ],
-                        dest: '<%= buildPath %>/lib'
+                        dest: '<%= tempPath %>/lib'
                     },
                 ]
             },
@@ -46,19 +54,19 @@ module.exports = function( grunt ) {
                         expand: true,
                         cwd: '<%= srcPath %>/smk',
                         src: [ '**/*.js', '!**/*.min.js' ],
-                        dest: '<%= buildPath %>/smk'
+                        dest: '<%= tempPath %>/smk'
                     },
                     {
                         expand: true,
                         cwd: '<%= srcPath %>/lib',
                         src: [ '**/*.js', '!**/*.min.js' ],
-                        dest: '<%= buildPath %>/lib'
+                        dest: '<%= tempPath %>/lib'
                     },
                     {
                         expand: true,
                         cwd: '<%= srcPath %>/lib',
                         src: 'include.js',
-                        dest: '<%= buildPath %>/lib'
+                        dest: '<%= tempPath %>/lib'
                     }
                 ]
             }

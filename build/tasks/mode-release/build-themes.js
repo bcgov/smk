@@ -11,7 +11,7 @@ module.exports = function( grunt ) {
                 expand: true,
                 cwd: '<%= srcPath %>/theme',
                 src: [ '**' ],
-                dest: '<%= buildPath %>/theme'
+                dest: '<%= tempPath %>/theme'
             },
         },
 

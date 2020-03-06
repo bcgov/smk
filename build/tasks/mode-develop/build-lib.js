@@ -7,6 +7,14 @@ module.exports = function( grunt ) {
 
     grunt.config.merge( {
 
+        jshint: {
+            lib: [ 
+                '<%= srcPath %>/smk/**/*js', 
+                '!<%= srcPath %>/smk/**/lib/**', 
+                '!<%= srcPath %>/smk/**/*.min.js' 
+            ]
+        },
+
         copy: {
             'lib': {
                 files: [

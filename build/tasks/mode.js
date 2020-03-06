@@ -1,7 +1,7 @@
 module.exports = function( grunt ) {
 
     grunt.registerTask( 'mode', 'build mode', function ( mode ) {
-        grunt.loadTasks( 'tasks/mode-' + mode )
+        grunt.loadTasks( 'build/tasks/mode-' + mode )
         
         if ( grunt.config( 'mode' ) != mode )
             grunt.fail.fatal( 'Build mode ' + mode + ' not found' )

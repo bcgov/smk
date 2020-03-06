@@ -13,7 +13,7 @@ module.exports = function( grunt ) {
 
         srcPath: 'src',
 
-        buildPath: 'build',
+        tempPath: 'temp',
 
         distPath: 'dist',
 
@@ -26,8 +26,8 @@ module.exports = function( grunt ) {
                 force: true
             },
 
-            build: {
-                src: [ '<%= buildPath %>/**' ]
+            temp: {
+                src: [ '<%= tempPath %>/**' ]
             },
 
             dist: {
@@ -46,54 +46,56 @@ module.exports = function( grunt ) {
                 // latedef: true,
                 // curly: true,
                 // eqeqeq: true,
-                bitwise: true,
-                strict: true,
-                undef: true,
-                asi: true,
-                plusplus: true,
-                eqnull: true,
-                multistr: true,
-                sub: true,
-                browser: true,
-                devel: true,
+                bitwise:    true,
+                strict:     true,
+                undef:      true,
+                asi:        true,
+                plusplus:   true,
+                eqnull:     true,
+                multistr:   true,
+                sub:        true,
+                browser:    true,
+                devel:      true,
 
                 '-W018': true, // confusing use of !
 
                 globals: {
-                    SMK: true,
-                    $: true,
-                    Vue: true,
-                    console: true,
-                    Promise: true,
-                    include: true,
-                    require: true,
-                    turf: true,
-                    Terraformer: true,
-                    proj4: true,
-                    L: true,
+                    SMK:        true,
+                    $:          true,
+                    Vue:        true,
+                    console:    true,
+                    Promise:    true,
+                    include:    true,
+                    require:    true,
+                    turf:       true,
+                    Terraformer:true,
+                    proj4:      true,
+                    L:          true,
                 },
             },
-            lib: [ '<%= srcPath %>/smk/**/*js', '!<%= srcPath %>/smk/**/lib/**', '!<%= srcPath %>/smk/**/*.min.js' ],
-            smk: [ '<%= buildPath %>/smk.js' ],
         },
 
         // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
         watch: {
             options: {
-                debounceDelay: 2000,
+                debounceDelay:  2000,
+                spawn:          false,
                 livereload: {
                     host:   '<%= serverHost %>',
                     key:    grunt.file.read( 'node_modules/grunt-contrib-connect/tasks/certs/server.key' ),
                     cert:   grunt.file.read( 'node_modules/grunt-contrib-connect/tasks/certs/server.crt' )
                 },
                 // livereloadOnError: false,
-                spawn: false
                 // interrupt: true,
             },
 
             src: {
-                files: [ '<%= srcPath %>/smk/**', '<%= srcPath %>/theme/**', '<%= srcPath %>/index.html', '<%= srcPath %>/smk.js', '<%= srcPath %>/tags.js' ],
+                files: [ 
+                    '<%= srcPath %>/*.js', 
+                    '<%= srcPath %>/smk/**', 
+                    '<%= srcPath %>/theme/**', 
+                ],
                 tasks: [ 'build' ]
             },
         },
@@ -123,20 +125,20 @@ module.exports = function( grunt ) {
         requireResolution: true 
     } )
 
-    grunt.loadTasks( 'tasks' )
+    grunt.loadTasks( 'build/tasks' )
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     grunt.registerTask( 'build', [
         'clean:dist',
-        'clean:build',
+        'clean:temp',
         'build-info',
         'build-lib',
         'build-images',
         'build-themes',
         'build-smk',
         // 'build-pom',
-        'clean:build',
+        'clean:temp',
     ] )
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
