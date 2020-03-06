@@ -8,7 +8,6 @@ module.exports = function( grunt ) {
         }
     } )( jshintStylish.reporter )
 
-
     grunt.initConfig( {
         package: grunt.file.readJSON( 'package.json' ),
 
@@ -19,35 +18,6 @@ module.exports = function( grunt ) {
         distPath: 'dist',
 
         serverHost: 'localhost',
-
-        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-        copy: {
-            'index': {
-                expand: true,
-                cwd: '<%= srcPath %>',
-                src: [ 'index.html' ],
-                dest: '<%= distPath %>',
-                options: {
-                    process: '<%= processTemplate %>',
-                },
-            },
-
-            'images': {
-                expand: true,
-                cwd: '<%= srcPath %>/smk',
-                src: [ '**/*.{gif,png,jpg,jpeg}' ],
-                dest: '<%= distPath %>/images'
-            },
-
-            // 'pom': {
-            //     src: 'pom-template.xml',
-            //     dest: '<%= buildPath %>/pom.xml',
-            //     options: {
-            //         process: '<%= processTemplate %>',
-            //     },
-            // },
-        },
 
         // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -112,11 +82,11 @@ module.exports = function( grunt ) {
         watch: {
             options: {
                 debounceDelay: 2000,
-                // livereload: {
-                //     host:   '<%= serverHost %>',
-                //     key:    grunt.file.read( '../node_modules/grunt-contrib-connect/tasks/certs/server.key' ),
-                //     cert:   grunt.file.read( '../node_modules/grunt-contrib-connect/tasks/certs/server.crt' )
-                // },
+                livereload: {
+                    host:   '<%= serverHost %>',
+                    key:    grunt.file.read( 'node_modules/grunt-contrib-connect/tasks/certs/server.key' ),
+                    cert:   grunt.file.read( 'node_modules/grunt-contrib-connect/tasks/certs/server.crt' )
+                },
                 // livereloadOnError: false,
                 spawn: false
                 // interrupt: true,
@@ -126,6 +96,22 @@ module.exports = function( grunt ) {
                 files: [ '<%= srcPath %>/smk/**', '<%= srcPath %>/theme/**', '<%= srcPath %>/index.html', '<%= srcPath %>/smk.js', '<%= srcPath %>/tags.js' ],
                 tasks: [ 'build' ]
             },
+        },
+
+        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+        connect: {
+            https: {
+                options: {
+                    protocol:   'https',
+                    hostname:   '*',
+                    port:       8443,
+                    base:       '.',
+                    livereload: true,
+                    keepalive:  true,
+                    // debug: true
+                }
+            }    
         }
 
     } )
@@ -149,38 +135,9 @@ module.exports = function( grunt ) {
         'build-images',
         'build-themes',
         'build-smk',
-        'build-index',
         // 'build-pom',
         'clean:build',
     ] )
-
-    grunt.registerTask( 'build-themes', function () {
-        grunt.fail.fatal( 'Build mode isn\'t set' )
-    } )
-
-    grunt.registerTask( 'build-smk', function () {
-        grunt.fail.fatal( 'Build mode isn\'t set' )
-    } )
-
-    grunt.registerTask( 'build-lib', function () {
-        grunt.fail.fatal( 'Build mode isn\'t set' )
-    } )
-
-    grunt.registerTask( 'build-images', [
-        'copy:images',
-    ] )
-
-    grunt.registerTask( 'build-themes', [
-        'copy:themes',
-    ] )
-
-    grunt.registerTask( 'build-index', [
-        'copy:index',
-    ] )
-
-    // grunt.registerTask( 'build-pom', [
-    //     'copy:pom',
-    // ] )
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
