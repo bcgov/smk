@@ -1,0 +1,539 @@
+{
+    "tools": [
+        { "type": "query", "instance": "746--query1", "position": "list-menu", "icon": "account_balance" },
+        { "type": "query", "instance": "746--query2", "position": "list-menu", "icon": "account_box" },
+        { "type": "query", "instance": "746--query4", "position": "list-menu", "icon": "account_box" },
+        { "type": "query", "instance": "746--query5", "position": "list-menu", "icon": "account_box" },
+        { "type": "query", "instance": "746--query6", "position": "list-menu", "icon": "account_box" },
+        { "type": "query", "instance": "746--query3", "position": "list-menu", "icon": "bug_report" }
+    ],
+     "layers": [
+        {
+            "id": "746",
+            "queries": [
+                {
+                    "id": "query4",
+                    "title": "contains",
+                    "description": "Find features that contain text in Agency, Source or Source Reference",
+                    "parameters": [
+                        {
+                            "id": "param1",
+                            "type": "input",
+                            "title": "Matching text",
+                            "value": "kamloops"
+                        }
+                    ],
+                    "predicate": {
+                        "operator": "or",
+                        "arguments": [
+                            {
+                                "operator": "contains",
+                                "arguments": [
+                                    {
+                                        "operand": "attribute",
+                                        "name": "AGENCY_NAME"
+                                    },
+                                    {
+                                        "operand": "parameter",
+                                        "id": "param1"
+                                    }
+                                ]
+                            },
+                            {
+                                "operator": "contains",
+                                "arguments": [
+                                    {
+                                        "operand": "attribute",
+                                        "name": "SOURCE"
+                                    },
+                                    {
+                                        "operand": "parameter",
+                                        "id": "param1"
+                                    }
+                                ]
+                            },
+                            {
+                                "operator": "contains",
+                                "arguments": [
+                                    {
+                                        "operand": "attribute",
+                                        "name": "SOURCE_REF"
+                                    },
+                                    {
+                                        "operand": "parameter",
+                                        "id": "param1"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                },
+
+                {
+                    "id": "query1",
+                    "title": "less than",
+                    "description": "Query FISH_OBSERVATION_POINT_ID",
+                    "parameters": [
+                        {
+                            "id": "param2",
+                            "type": "input",
+                            "title": "Fish Observation Point ID",
+                            "value": "100"
+                        }
+                    ],
+                    "predicate": {
+                        "operator": "and",
+                        "arguments": [
+                            {
+                                "operator": "less-than",
+                                "arguments": [
+                                    {
+                                        "operand": "attribute",
+                                        "name": "FISH_OBSERVATION_POINT_ID"
+                                    },
+                                    {
+                                        "operand": "parameter",
+                                        "id": "param2"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                },
+
+                {
+                    "id": "query2",
+                    "title": "contains and equals",
+                    "description": "species & type",
+                    "parameters": [
+                        {
+                            "id": "param1",
+                            "type": "input",
+                            "title": "Species contains",
+                            "value": "salmon"
+                        },
+                        {
+                            "id": "param2",
+                            "type": "input",
+                            "title": "type code equals",
+                            "value": "Observation"
+                        }
+                    ],
+                    "predicate": {
+                        "operator": "and",
+                        "arguments": [
+                            {
+                                "operator": "contains",
+                                "arguments": [
+                                    {
+                                        "operand": "attribute",
+                                        "name": "SPECIES_NAME"
+                                    },
+                                    {
+                                        "operand": "parameter",
+                                        "id": "param1"
+                                    }
+                                ]
+                            },
+                            {
+                                "operator": "equals",
+                                "arguments": [
+                                    {
+                                        "operand": "attribute",
+                                        "name": "POINT_TYPE_CODE"
+                                    },
+                                    {
+                                        "operand": "parameter",
+                                        "id": "param2"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                },
+
+                {
+                    "id": "query3",
+                    "title": "Test query 3",
+                    "description": "contains or equals",
+                    "parameters": [
+                        {
+                            "id": "param1",
+                            "type": "input",
+                            "title": "Species contains",
+                            "value": "salmon"
+                        },
+                        {
+                            "id": "param2",
+                            "type": "input",
+                            "title": "type code equals",
+                            "value": "Observation"
+                        }
+                    ],
+                    "predicate": {
+                        "operator": "or",
+                        "arguments": [
+                            {
+                                "operator": "contains",
+                                "arguments": [
+                                    {
+                                        "operand": "attribute",
+                                        "name": "SPECIES_NAME"
+                                    },
+                                    {
+                                        "operand": "parameter",
+                                        "id": "param1"
+                                    }
+                                ]
+                            },
+                            {
+                                "operator": "equals",
+                                "arguments": [
+                                    {
+                                        "operand": "attribute",
+                                        "name": "POINT_TYPE_CODE"
+                                    },
+                                    {
+                                        "operand": "parameter",
+                                        "id": "param2"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                },
+
+                {
+                    "id": "query5",
+                    "title": "select species",
+                    "description": "Find features by Species",
+                    "parameters": [
+                        {
+                            "id": "param21",
+                            "type": "select-unique",
+                            "title": "Species code1",
+                            "value": null,
+                            "uniqueAttribute": "SPECIES_CODE"
+                        },
+                        {
+                            "id": "param22",
+                            "type": "select-unique",
+                            "title": "Species code2",
+                            "value": null,
+                            "uniqueAttribute": "SPECIES_CODE"
+                        },
+                        {
+                            "id": "param23",
+                            "type": "select-unique",
+                            "title": "Species code3",
+                            "value": null,
+                            "uniqueAttribute": "SPECIES_CODE"
+                        },
+                        {
+                            "id": "param2",
+                            "type": "select-unique",
+                            "title": "Species code",
+                            "value": null,
+                            "uniqueAttribute": "SPECIES_CODE"
+                        },
+                        {
+                            "id": "param3",
+                            "type": "select-unique",
+                            "title": "Species name",
+                            "value": null,
+                            "uniqueAttribute": "SPECIES_NAME"
+                        },
+                        {
+                            "id": "param1",
+                            "type": "select",
+                            "title": "Species",
+                            "value": null,
+                            "choices": [
+                                { "value":"ABT", "title":"Anadromous Bull Trout" },
+                                { "value":"ACT", "title":"Cutthroat Trout (Anadromous)" },
+                                { "value":"BB",  "title":"Burbot" },
+                                { "value":"BCB", "title":"Black Crappie" },
+                                { "value":"BH",  "title":"Bullhead (General)" },
+                                { "value":"BL",  "title":"Western Brook Lamprey" },
+                                { "value":"BNH", "title":"Brown Catfish (formerly Brown Bullhead)" },
+                                { "value":"BSU", "title":"Bridgelip Sucker" },
+                                { "value":"BT",  "title":"Bull Trout" },
+                                { "value":"C",   "title":"Minnow (General)" },
+                                { "value":"CAL", "title":"Coastrange Sculpin (formerly Aleutian Sculpin)" },
+                                { "value":"CAS", "title":"Prickly Sculpin" },
+                                { "value":"CBA", "title":"Mottled Sculpin" },
+                                { "value":"CBC", "title":"Chub (General)" },
+                                { "value":"CC",  "title":"Sculpin (General)" },
+                                { "value":"CCA", "title":"Sharpnose Sculpin" },
+                                { "value":"CCG", "title":"Slimy Sculpin" },
+                                { "value":"CCL", "title":"Cultus Lake Sculpin" },
+                                { "value":"CCT", "title":"Coastal Cutthroat Trout" },
+                                { "value":"CH",  "title":"Chinook Salmon" },
+                                { "value":"CLA", "title":"Staghorn Sculpin" },
+                                { "value":"CM",  "title":"Chum Salmon" },
+                                { "value":"CO",  "title":"Coho Salmon" },
+                                { "value":"CRH", "title":"Torrent Sculpin" },
+                                { "value":"CSU", "title":"Largescale Sucker" },
+                                { "value":"CT",  "title":"Cutthroat Trout" },
+                                { "value":"DV",  "title":"Dolly Varden" },
+                                { "value":"EB",  "title":"Brook Trout" },
+                                { "value":"GB",  "title":"Brown Trout" },
+                                { "value":"IN",  "title":"Inconnu" },
+                                { "value":"KO",  "title":"Kokanee" },
+                                { "value":"LKC", "title":"Lake Chub" },
+                                { "value":"LMB", "title":"Largemouth Bass" },
+                                { "value":"LSU", "title":"Longnose Sucker" },
+                                { "value":"LT",  "title":"Lake Trout" },
+                                { "value":"LW",  "title":"Lake Whitefish" },
+                                { "value":"MW",  "title":"Mountain Whitefish" },
+                                { "value":"NP",  "title":"Northern Pike" },
+                                { "value":"NSB", "title":"Ninespine Stickleback" },
+                                { "value":"NSC", "title":"Northern Pikeminnow" },
+                                { "value":"PCC", "title":"Peamouth Chub" },
+                                { "value":"PK",  "title":"Pink Salmon" },
+                                { "value":"PL",  "title":"Pacific Lamprey" },
+                                { "value":"PMB", "title":"Pumpkinseed" },
+                                { "value":"PW",  "title":"Pygmy Whitefish" },
+                                { "value":"RB",  "title":"Rainbow Trout" },
+                                { "value":"RSC", "title":"Redside Shiner" },
+                                { "value":"RSM", "title":"Rainbow Smelt" },
+                                { "value":"SA",  "title":"Salmon (General)" },
+                                { "value":"SB",  "title":"Stickleback (General)" },
+                                { "value":"SFL", "title":"Starry Flounder" },
+                                { "value":"SG",  "title":"Sturgeon (General)" },
+                                { "value":"SK",  "title":"Sockeye Salmon" },
+                                { "value":"SMB", "title":"Smallmouth Bass" },
+                                { "value":"SP",  "title":"Fish Unidentified Species" },
+                                { "value":"ST",  "title":"Steelhead" },
+                                { "value":"SU",  "title":"Sucker (General)" },
+                                { "value":"TR",  "title":"Unidentifiable Trout - only fry <70mm in length " },
+                                { "value":"TSB", "title":"Threespine Stickleback" },
+                                { "value":"WCT", "title":"Westslope (Yellowstone) Cutthroat Trout" },
+                                { "value":"WF",  "title":"Whitefish (General)" },
+                                { "value":"WSU", "title":"White Sucker" }
+                            ]
+                        },
+                        {
+                            "id": "param4",
+                            "type": "select",
+                            "title": "Species (no title)",
+                            "value": null,
+                            "choices": [
+                                { "value":"ABT", "title":"" },
+                                { "value":"ACT", "title":"" },
+                                { "value":"BB",  "title":"" },
+                                { "value":"BCB", "title":"" },
+                                { "value":"BH",  "title":"" },
+                                { "value":"BL",  "title":"" },
+                                { "value":"BNH", "title":"" },
+                                { "value":"BSU", "title":"" },
+                                { "value":"BT",  "title":"" },
+                                { "value":"C",   "title":"" },
+                                { "value":"CAL", "title":"" },
+                                { "value":"CAS", "title":"" },
+                                { "value":"CBA", "title":"" },
+                                { "value":"CBC", "title":"" },
+                                { "value":"CC",  "title":"" },
+                                { "value":"CCA", "title":"" },
+                                { "value":"CCG", "title":"" },
+                                { "value":"CCL", "title":"" },
+                                { "value":"CCT", "title":"" },
+                                { "value":"CH",  "title":null },
+                                { "value":"CLA", "title":null },
+                                { "value":"CM",  "title":null },
+                                { "value":"CO",  "title":null },
+                                { "value":"CRH", "title":null },
+                                { "value":"CSU", "title":null },
+                                { "value":"CT",  "title":null },
+                                { "value":"DV",  "title":null },
+                                { "value":"EB",  "title":null },
+                                { "value":"GB",  "title":null },
+                                { "value":"IN",  "title":null },
+                                { "value":"KO",  "title":null },
+                                { "value":"LKC", "title":null },
+                                { "value":"LMB", "title":null },
+                                { "value":"LSU", "title":null },
+                                { "value":"LT",  "title":null },
+                                { "value":"LW",  "title":null },
+                                { "value":"MW"},
+                                { "value":"NP"},
+                                { "value":"NSB"},
+                                { "value":"NSC"},
+                                { "value":"PCC"},
+                                { "value":"PK"},
+                                { "value":"PL"},
+                                { "value":"PMB"},
+                                { "value":"PW"},
+                                { "value":"RB"},
+                                { "value":"RSC"},
+                                { "value":"RSM"},
+                                { "value":"SA"},
+                                { "value":"SB"},
+                                { "value":"SFL"},
+                                { "value":"SG"},
+                                { "value":"SK"},
+                                { "value":"SMB"},
+                                { "value":"SP"},
+                                { "value":"ST"},
+                                { "value":"SU"},
+                                { "value":"TR"},
+                                { "value":"TSB"},
+                                { "value":"WCT"},
+                                { "value":"WF"},
+                                { "value":"WSU" }
+                            ]
+                        }
+                    ],
+                    "predicate": {
+                        "operator": "or",
+                        "arguments": [
+                            {
+                                "operator": "equals",
+                                "arguments": [
+                                    {
+                                        "operand": "attribute",
+                                        "name": "SPECIES_CODE"
+                                    },
+                                    {
+                                        "operand": "parameter",
+                                        "id": "param1"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                },
+
+                {
+                    "id": "query6",
+                    "title": "complex",
+                    "description": "complex query ",
+                    "parameters": [
+                        {
+                            "id": "param2",
+                            "type": "input",
+                            "title": "name contains",
+                            "value": null
+                        },
+                        {
+                            "id": "param1",
+                            "type": "input",
+                            "title": "waterbody id less than",
+                            "value": 400000
+                        },
+                        {
+                            "id": "param3",
+                            "type": "constant",
+                            "title": "waterbody id greater than",
+                            "value": 100000
+                        },
+                        {
+                            "id": "param4",
+                            "type": "input",
+                            "title": "point type code is not",
+                            "value": "foo"
+                        }
+                    ],
+                    "predicate": {
+                        "operator": "and",
+                        "arguments": [
+                            {
+                                "operator": "or",
+                                "arguments": [
+                                    {
+                                        "operator": "contains",
+                                        "arguments": [
+                                            {
+                                                "operand": "attribute",
+                                                "name": "SPECIES_NAME"
+                                            },
+                                            {
+                                                "operand": "parameter",
+                                                "id": "param2"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "operator": "starts-with",
+                                        "arguments": [
+                                            {
+                                                "operand": "attribute",
+                                                "name": "GAZETTED_NAME"
+                                            },
+                                            {
+                                                "operand": "parameter",
+                                                "id": "param2"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "operator": "ends-with",
+                                        "arguments": [
+                                            {
+                                                "operand": "attribute",
+                                                "name": "AGENCY_NAME"
+                                            },
+                                            {
+                                                "operand": "parameter",
+                                                "id": "param2"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "operator": "and",
+                                        "arguments": [
+                                            {
+                                                "operator": "less-than",
+                                                "arguments": [
+                                                    {
+                                                        "operand": "attribute",
+                                                        "name": "WBODY_ID"
+                                                    },
+                                                    {
+                                                        "operand": "parameter",
+                                                        "id": "param1"
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "operator": "greater-than",
+                                                "arguments": [
+                                                    {
+                                                        "operand": "attribute",
+                                                        "name": "WBODY_ID"
+                                                    },
+                                                    {
+                                                        "operand": "parameter",
+                                                        "id": "param3"
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "operator": "not",
+                                "arguments": [
+                                    {
+                                        "operator": "equals",
+                                        "arguments": [
+                                            {
+                                                "operand": "attribute",
+                                                "name": "POINT_TYPE_CODE"
+                                            },
+                                            {
+                                                "operand": "parameter",
+                                                "id": "param4"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}

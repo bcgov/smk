@@ -1,0 +1,399 @@
+{
+  "_id": "36e625dfc49065e5ab58ebfdaa02eee9",
+  "_rev": "1-70b144cebc7e4f76a640329bcc145e16",
+  "lmfId": "alrc-draft-5",
+  "lmfRevision": 15,
+  "version": "",
+  "name": "ALRC draft 5",
+  "createdBy": "",
+  "published": false,
+  "surround": {
+    "type": "default",
+    "title": ""
+  },
+  "viewer": {
+    "type": "leaflet",
+    "location": {
+      "extent": [
+        -125.45837402343751,
+        49.96535590991311,
+        -121.65161132812501,
+        48.3160811030533
+      ],
+      "center": [
+        -139.1782,
+        47.6039
+      ],
+      "zoom": 5
+    },
+    "baseMap": "Streets",
+    "clusterOption": false
+  },
+  "tools": [
+    {
+      "type": "coordinate",
+      "enabled": false,
+      "title": "Coordinate",
+      "showPanel": true
+    },
+    {
+      "type": "attribution",
+      "enabled": true,
+      "title": "Attribution",
+      "showPanel": true
+    },
+    {
+      "type": "layers",
+      "enabled": false,
+      "title": "Layers Panel",
+      "showPanel": true
+    },
+    {
+      "type": "pan",
+      "enabled": true,
+      "title": "Panning",
+      "showPanel": true
+    },
+    {
+      "type": "zoom",
+      "enabled": true,
+      "title": "Zooming",
+      "showPanel": true,
+      "mouseWheel": true,
+      "doubleClick": true,
+      "box": true,
+      "control": true
+    },
+    {
+      "type": "measure",
+      "enabled": false,
+      "title": "Measurement",
+      "showPanel": true
+    },
+    {
+      "type": "markup",
+      "enabled": false,
+      "title": "Markup",
+      "showPanel": true
+    },
+    {
+      "type": "scale",
+      "enabled": false,
+      "title": "Scale",
+      "showPanel": true,
+      "showFactor": true,
+      "showBar": true
+    },
+    {
+      "type": "minimap",
+      "enabled": false,
+      "title": "Mini Map",
+      "showPanel": true,
+      "baseMap": "Topographic"
+    },
+    {
+      "type": "directions",
+      "enabled": false,
+      "title": "Directions",
+      "showPanel": true
+    },
+    {
+      "type": "about",
+      "enabled": true,
+      "title": "About Panel",
+      "showPanel": true,
+      "content": "<p style=\"background-position: initial; background-color: white;\">Use the Search function to find a residential care facility or an assisted living residence within the province. The search function gives you several options to select the type of services that best meets your needs.&nbsp;</p><br><p style=\"background-position: initial; background-color: white;\">When search results are returned you can click on the facility or residence name or on the map icon to find out more information about that facility or residence.</p><br><p style=\"background-position: initial; background-color: white;\">If the facility or residence you are looking for is not on the map, it may be due to one of the following:</p><p style=\"background-position: initial; background-color: white;\"><ul><li>The facility or residence has an exemption from posting its address under CCALA sections 15.1(2) or 25.4 (2)<br></li><li>The facility or residence is not required to be licensed or registered (only 1 or 2 people receiving services)<br></li><li>The facility or residence is newly licensed or registered&nbsp; and information has not been uploaded to the map yet<br></li><li>The facility or residence may be recently closed.<br></li><li>The facility or residence may be operating in contravention of legislation without a licence or registration.&nbsp;&nbsp;<br></li></ul></p><br>"
+    },
+    {
+      "type": "location",
+      "enabled": false,
+      "title": "Location",
+      "showPanel": true
+    },
+    {
+      "type": "baseMaps",
+      "enabled": false,
+      "title": "Base Maps Panel",
+      "showPanel": true,
+      "choices": [
+        "Topographic",
+        "Streets",
+        "Imagery",
+        "Oceans",
+        "NationalGeographic",
+        "DarkGray",
+        "Gray"
+      ]
+    },
+    {
+      "type": "select",
+      "enabled": false,
+      "title": "Selection Panel",
+      "showPanel": true,
+      "style": {
+        "strokeStyle": "",
+        "strokeColor": "#000000",
+        "fillColor": "#000000",
+        "markerSize": [
+          20,
+          20
+        ],
+        "markerOffset": [
+          10,
+          10
+        ]
+      }
+    },
+    {
+      "type": "identify",
+      "enabled": false,
+      "title": "Identify Panel",
+      "showPanel": false,
+      "style": {
+        "strokeStyle": "",
+        "strokeColor": "#000000",
+        "fillColor": "#000000",
+        "markerSize": [
+          20,
+          20
+        ],
+        "markerOffset": [
+          10,
+          0
+        ]
+      },
+      "tolerance": 5
+    },
+    {
+      "type": "search",
+      "enabled": false,
+      "title": "Search Panel",
+      "showPanel": true
+    },
+    {
+      "type": "menu",
+      "enabled": false,
+      "title": "Menu",
+      "showPanel": true
+    },
+    {
+      "type": "dropdown",
+      "enabled": false,
+      "title": "Dropdown",
+      "showPanel": true
+    },
+    {
+      "type": "query",
+      "enabled": true,
+      "title": "Query",
+      "icon": "search",
+      "instance": "assisted-living-and-residential-care--location-search",
+      "position": "toolbar",
+      "showPanel": true
+    }
+  ],
+  "layers": [
+    {
+      "type": "vector",
+      "id": "assisted-living-and-residential-care",
+      "title": "Assisted Living and Residential Care",
+      "isVisible": true,
+      "opacity": 0.65,
+      "isQueryable": true,
+      "popupTemplate": "",
+      "attributes": [
+        {
+          "id": "OPERATOR_NAME",
+          "name": "OPERATOR_NAME",
+          "title": "Operator Name",
+          "visible": true
+        },
+        {
+          "id": "BUSINESS_NAME",
+          "name": "BUSINESS_NAME",
+          "title": "Business Name",
+          "visible": true
+        },
+        {
+          "id": "STREET_ADDRESS",
+          "name": "STREET_ADDRESS",
+          "title": "Street Address",
+          "visible": false
+        },
+        {
+          "id": "CITY",
+          "name": "CITY",
+          "title": "City",
+          "visible": false
+        },
+        {
+          "id": "addressString",
+          "name": "addressString",
+          "title": "Address",
+          "visible": true
+        },
+        {
+          "id": "POSTAL_CODE",
+          "name": "POSTAL_CODE",
+          "title": "Postal Code",
+          "visible": true
+        },
+        {
+          "id": "HEALTH_AUTHORITY",
+          "name": "HEALTH_AUTHORITY",
+          "title": "Health Authority",
+          "visible": false
+        },
+        {
+          "id": "TYPE",
+          "name": "TYPE",
+          "title": "Type",
+          "visible": false
+        },
+        {
+          "id": "LATITUDE",
+          "name": "LATITUDE",
+          "title": "Latitude",
+          "visible": false
+        },
+        {
+          "id": "LONGITUDE",
+          "name": "LONGITUDE",
+          "title": "Longitude",
+          "visible": false
+        }
+      ],
+      "titleAttribute": "BUSINESS_NAME",
+      "queries": [
+        {
+          "predicate": {
+            "operator": "and",
+            "arguments": [
+              {
+                "operator": "equals",
+                "arguments": [
+                  {
+                    "operand": "attribute",
+                    "name": "HEALTH_AUTHORITY"
+                  },
+                  {
+                    "operand": "parameter",
+                    "id": "param1"
+                  }
+                ]
+              },
+              {
+                "operator": "equals",
+                "arguments": [
+                  {
+                    "operand": "attribute",
+                    "name": "TYPE"
+                  },
+                  {
+                    "operand": "parameter",
+                    "id": "param2"
+                  }
+                ]
+              },
+              {
+                "operator": "equals",
+                "arguments": [
+                  {
+                    "operand": "attribute",
+                    "name": "CITY"
+                  },
+                  {
+                    "operand": "parameter",
+                    "id": "param3"
+                  }
+                ]
+              },
+              {
+                  "operator": "not",
+                  "arguments": [
+                    {
+                        "operator": "contains",
+                        "arguments": [
+                        {
+                            "operand": "attribute",
+                            "name": "BUSINESS_NAME"
+                        },
+                        {
+                            "operand": "parameter",
+                            "id": "param4"
+                        }
+                        ]
+                    }
+                  ]
+              }
+            ]
+          },
+          "id": "location-search",
+          "title": "Location Search",
+          "description": "Find locations based on one or more criteria:",
+          "parameters": [
+            {
+              "id": "param1",
+              "type": "select-unique",
+              "title": "Health Authority equals",
+              "value": "Fraser",
+              "choices": [],
+              "uniqueAttribute": "HEALTH_AUTHORITY"
+            },
+            {
+              "id": "param2",
+              "type": "select-unique",
+              "title": "Type equals",
+              "value": "",
+              "choices": [],
+              "uniqueAttribute": "TYPE"
+            },
+            {
+              "id": "param3",
+              "type": "select-unique",
+              "title": "City equals",
+              "value": "",
+              "choices": [],
+              "uniqueAttribute": "CITY"
+            },
+            {
+              "id": "param4",
+              "type": "input",
+              "title": "Business Name contains",
+              "value": "a"
+            }
+          ]
+        }
+      ],
+      "dataUrl": "",
+      "useRaw": false,
+      "useClustering": true,
+      "useHeatmap": false,
+      "style": {
+        "strokeWidth": 25,
+        "strokeStyle": "25",
+        "strokeColor": "#000000",
+        "strokeOpacity": 1,
+        "fillColor": "#fe1d44",
+        "fillOpacity": 0.65,
+        "markerSize": [
+          10,
+          10
+        ],
+        "markerOffset": [
+          30,
+          30
+        ]
+      }
+    }
+  ],
+  "_attachments": {
+    "assisted-living-and-residential-care": {
+      "content_type": "application/octet-stream",
+      "revpos": 1,
+      "digest": "md5-0f+7AiSCuHzRCqNvP+/n2A==",
+      "length": 5609,
+      "stub": true
+    }
+  }
+}

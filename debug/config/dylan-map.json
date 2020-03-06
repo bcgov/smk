@@ -1,0 +1,649 @@
+{
+    "lmfId": "dylans-map",
+    "lmfRevision": 2,
+    "name": "dylans map",
+    "createdBy": "",
+    "published": true,
+    "surround": {
+        "type": "default",
+        "title": "Dylans Map Tester"
+    },
+    "viewer": {
+        "type": "leaflet",
+        "baseMap": "NationalGeographic"
+    },
+    "tools": [
+        {
+            "type": "coordinate",
+            "enabled": true,
+            "title": "Coordinate"
+        },
+        {
+            "type": "attribution",
+            "enabled": true,
+            "title": "Attribution"
+        },
+        {
+            "type": "sidebar",
+            "enabled": true,
+            "title": "Sidebar"
+        },
+        {
+            "type": "layers",
+            "enabled": true,
+            "title": "Layers Panel"
+        },
+        {
+            "type": "pan",
+            "enabled": true,
+            "title": "Panning"
+        },
+        {
+            "type": "zoom",
+            "enabled": true,
+            "title": "Zooming",
+            "mouseWheel": true,
+            "doubleClick": true,
+            "box": true,
+            "control": true
+        },
+        {
+            "type": "measure",
+            "enabled": true,
+            "title": "Measurement"
+        },
+        {
+            "type": "markup",
+            "enabled": true,
+            "title": "Markup"
+        },
+        {
+            "type": "scale",
+            "enabled": true,
+            "title": "Scale",
+            "showFactor": true,
+            "showBar": true
+        },
+        {
+            "type": "minimap",
+            "enabled": true,
+            "title": "Mini Map"
+        },
+        {
+            "type": "directions",
+            "enabled": true,
+            "title": "Directions"
+        },
+        {
+            "type": "about",
+            "enabled": true,
+            "title": "About Panel",
+            "content": ""
+        },
+        {
+            "type": "baseMaps",
+            "enabled": true,
+            "title": "Base Maps Panel",
+            "choices": [
+                "Topographic",
+                "Streets",
+                "Imagery",
+                "Oceans",
+                "NationalGeographic",
+                "DarkGray",
+                "Gray"
+            ]
+        },
+        {
+            "type": "select",
+            "enabled": true,
+            "title": "Selection Panel",
+            "style": {
+                "markerSize": [
+                    20,
+                    20
+                ],
+                "markerOffset": [
+                    10,
+                    0
+                ]
+            }
+        },
+        {
+            "type": "identify",
+            "enabled": true,
+            "title": "Identify Panel",
+            "style": {
+                "markerSize": [
+                    20,
+                    20
+                ],
+                "markerOffset": [
+                    10,
+                    0
+                ]
+            }
+        },
+        {
+            "type": "search",
+            "enabled": true,
+            "title": "Search Panel"
+        },
+        {
+            "type": "menu",
+            "enabled": true,
+            "title": "Menu"
+        },
+        {
+            "type": "dropdown",
+            "enabled": true,
+            "title": ""
+        },
+        {
+            "type": "query",
+            "instance": "bc-pods--pod-query",
+            "position": "dropdown",
+            "enabled": true,
+            "title": "Query"
+        }
+    ],
+    "layers": [
+        {
+            "type": "esri-dynamic",
+            "id": "4054",
+            "title": "School Districts - Colour Filled",
+            "isVisible": true,
+            "attribution": "Copyright 2018 DataBC, Government of British Columbia",
+            "metadataUrl": "http://catalogue.data.gov.bc.ca/dataset/school-districts-of-bc",
+            "opacity": 0.65,
+            "minScale": 6000000.0,
+            "maxScale": 0.0,
+            "isQueryable": false,
+            "attributes": [
+                {
+                    "id": "admin-area-sid",
+                    "name": "ADMIN_AREA_SID",
+                    "title": "Admin Area ID",
+                    "visible": true
+                },
+                {
+                    "id": "school-district-name",
+                    "name": "SCHOOL_DISTRICT_NAME",
+                    "title": "School District Name",
+                    "visible": true
+                },
+                {
+                    "id": "feature-code",
+                    "name": "FEATURE_CODE",
+                    "title": "Feature Code",
+                    "visible": true
+                },
+                {
+                    "id": "shape",
+                    "name": "SHAPE",
+                    "title": "Shape",
+                    "visible": true
+                },
+                {
+                    "id": "objectid",
+                    "name": "OBJECTID",
+                    "title": "ObjectID",
+                    "visible": true
+                },
+                {
+                    "id": "school-district-number",
+                    "name": "SCHOOL_DISTRICT_NUMBER",
+                    "title": "School District Number",
+                    "visible": true
+                },
+                {
+                    "id": "feature-area-sqm",
+                    "name": "FEATURE_AREA_SQM",
+                    "title": "Area Square Meters",
+                    "visible": true
+                },
+                {
+                    "id": "feature-length-m",
+                    "name": "FEATURE_LENGTH_M",
+                    "title": "Length Meters",
+                    "visible": true
+                }
+            ],
+            "mpcmId": 4054,
+            "mpcmWorkspace": "MPCM_ALL_PUB",
+            "serviceUrl": "https://maps.gov.bc.ca/arcgis/rest/services/mpcm/bcgw/MapServer",
+            "dynamicLayers": [
+                "{\"id\":4054,\"source\":{\"type\":\"dataLayer\",\"dataSource\":{\"type\":\"table\",\"workspaceId\":\"MPCM_ALL_PUB\",\"dataSourceName\":\"WHSE_TANTALIS.TA_SCHOOL_DISTRICTS_SVW\",\"gdbVersion\":\"\"}},\"drawingInfo\":{\"renderer\":{\"type\":\"simple\",\"symbol\":{\"type\":\"esriSFS\",\"style\":\"esriSFSSolid\",\"color\":[115,178,255,255],\"outline\":{\"type\":\"esriSLS\",\"style\":\"esriSLSSolid\",\"color\":[104,104,104,255],\"width\":0.4}},\"label\":\"School District\",\"description\":\"\"},\"transparency\":50,\"labelingInfo\":null}}"
+            ]
+        },
+        {
+            "type": "esri-dynamic",
+            "id": "4053",
+            "title": "School Districts - Outlined",
+            "isVisible": true,
+            "attribution": "Copyright 2018 DataBC, Government of British Columbia",
+            "metadataUrl": "http://catalogue.data.gov.bc.ca/dataset/school-districts-of-bc",
+            "opacity": 0.65,
+            "minScale": 6000000.0,
+            "maxScale": 0.0,
+            "isQueryable": false,
+            "attributes": [
+                {
+                    "id": "feature-length-m",
+                    "name": "FEATURE_LENGTH_M",
+                    "title": "Length Meters",
+                    "visible": true
+                },
+                {
+                    "id": "feature-area-sqm",
+                    "name": "FEATURE_AREA_SQM",
+                    "title": "Area Square Meters",
+                    "visible": true
+                },
+                {
+                    "id": "school-district-number",
+                    "name": "SCHOOL_DISTRICT_NUMBER",
+                    "title": "School District Number",
+                    "visible": true
+                },
+                {
+                    "id": "objectid",
+                    "name": "OBJECTID",
+                    "title": "ObjectID",
+                    "visible": true
+                },
+                {
+                    "id": "shape",
+                    "name": "SHAPE",
+                    "title": "Shape",
+                    "visible": true
+                },
+                {
+                    "id": "feature-code",
+                    "name": "FEATURE_CODE",
+                    "title": "Feature Code",
+                    "visible": true
+                },
+                {
+                    "id": "school-district-name",
+                    "name": "SCHOOL_DISTRICT_NAME",
+                    "title": "School District Name",
+                    "visible": true
+                },
+                {
+                    "id": "admin-area-sid",
+                    "name": "ADMIN_AREA_SID",
+                    "title": "Admin Area ID",
+                    "visible": true
+                }
+            ],
+            "mpcmId": 4053,
+            "mpcmWorkspace": "MPCM_ALL_PUB",
+            "serviceUrl": "https://maps.gov.bc.ca/arcgis/rest/services/mpcm/bcgw/MapServer",
+            "dynamicLayers": [
+                "{\"id\":4053,\"source\":{\"type\":\"dataLayer\",\"dataSource\":{\"type\":\"table\",\"workspaceId\":\"MPCM_ALL_PUB\",\"dataSourceName\":\"WHSE_TANTALIS.TA_SCHOOL_DISTRICTS_SVW\",\"gdbVersion\":\"\"}},\"drawingInfo\":{\"renderer\":{\"type\":\"simple\",\"symbol\":{\"type\":\"esriSFS\",\"style\":\"esriSFSSolid\",\"color\":[0,0,0,0],\"outline\":{\"type\":\"esriSLS\",\"style\":\"esriSLSSolid\",\"color\":[78,78,78,255],\"width\":1.2}},\"label\":\"School District\",\"description\":\"\"},\"transparency\":0,\"labelingInfo\":null}}"
+            ]
+        },
+        {
+            "type": "esri-dynamic",
+            "id": "3601",
+            "title": "Schools (K12)",
+            "isVisible": true,
+            "attribution": "Copyright 2018 DataBC, Government of British Columbia",
+            "metadataUrl": "http://catalogue.data.gov.bc.ca/dataset/schools-k-12-with-francophone-indicators",
+            "opacity": 0.65,
+            "minScale": 2000000.0,
+            "maxScale": 0.0,
+            "isQueryable": false,
+            "attributes": [
+                {
+                    "id": "shape",
+                    "name": "SHAPE",
+                    "title": "SHAPE",
+                    "visible": true
+                },
+                {
+                    "id": "date-updated",
+                    "name": "DATE_UPDATED",
+                    "title": "Date Updated",
+                    "visible": true
+                },
+                {
+                    "id": "business-category-description",
+                    "name": "BUSINESS_CATEGORY_DESCRIPTION",
+                    "title": "Business Category",
+                    "visible": true
+                },
+                {
+                    "id": "keywords",
+                    "name": "KEYWORDS",
+                    "title": "Keywords",
+                    "visible": true
+                },
+                {
+                    "id": "school-education-level",
+                    "name": "SCHOOL_EDUCATION_LEVEL",
+                    "title": "Education Level",
+                    "visible": true
+                },
+                {
+                    "id": "facility-type",
+                    "name": "FACILITY_TYPE",
+                    "title": "Facility Type",
+                    "visible": true
+                },
+                {
+                    "id": "francophone-program-offered",
+                    "name": "FRANCOPHONE_PROGRAM_OFFERED",
+                    "title": "Francophone Program Offered",
+                    "visible": true
+                },
+                {
+                    "id": "late-french-immersion-offered",
+                    "name": "LATE_FRENCH_IMMERSION_OFFERED",
+                    "title": "Late French Immersion Offered",
+                    "visible": true
+                },
+                {
+                    "id": "early-french-immersion-offered",
+                    "name": "EARLY_FRENCH_IMMERSION_OFFERED",
+                    "title": "Early French Immersion Offered",
+                    "visible": true
+                },
+                {
+                    "id": "core-french-offered",
+                    "name": "CORE_FRENCH_OFFERED",
+                    "title": "Core French Offered",
+                    "visible": true
+                },
+                {
+                    "id": "district-name",
+                    "name": "DISTRICT_NAME",
+                    "title": "District Name",
+                    "visible": true
+                },
+                {
+                    "id": "district-number",
+                    "name": "DISTRICT_NUMBER",
+                    "title": "District Number",
+                    "visible": true
+                },
+                {
+                    "id": "school-year",
+                    "name": "SCHOOL_YEAR",
+                    "title": "School Year",
+                    "visible": true
+                },
+                {
+                    "id": "physical-address",
+                    "name": "PHYSICAL_ADDRESS",
+                    "title": "Address",
+                    "visible": true
+                },
+                {
+                    "id": "locality",
+                    "name": "LOCALITY",
+                    "title": "Locality",
+                    "visible": true
+                },
+                {
+                    "id": "school-category",
+                    "name": "SCHOOL_CATEGORY",
+                    "title": "School Type",
+                    "visible": true
+                },
+                {
+                    "id": "occupant-name",
+                    "name": "OCCUPANT_NAME",
+                    "title": "Name",
+                    "visible": true
+                }
+            ],
+            "mpcmId": 3601,
+            "mpcmWorkspace": "MPCM_ALL_PUB",
+            "serviceUrl": "https://maps.gov.bc.ca/arcgis/rest/services/mpcm/bcgw/MapServer",
+            "dynamicLayers": [
+                "{\"id\":3601,\"source\":{\"type\":\"dataLayer\",\"dataSource\":{\"type\":\"table\",\"workspaceId\":\"MPCM_ALL_PUB\",\"dataSourceName\":\"WHSE_IMAGERY_AND_BASE_MAPS.GSR_SCHOOLS_K_TO_12_SVW\",\"gdbVersion\":\"\"}},\"drawingInfo\":{\"renderer\":{\"type\":\"simple\",\"symbol\":{\"type\":\"esriPMS\",\"url\":\"ce89aa8a627b0145e4210c522877c62d\",\"imageData\":\"iVBORw0KGgoAAAANSUhEUgAAAA4AAAAWCAYAAADwza0nAAAAAXNSR0IB2cksfwAAAAlwSFlzAAAOxAAADsQBlSsOGwAAASJJREFUOI3lzz1LA0EUheFXXJhKlAUJo4IRo4IQLPwHBkHMljbWMbCFINgGa1OI4g+w9yNKBEtFsBAEa0FRGwMXDSyC1UjMWq1mI7smsfQUU8y5D3PHosNYUYXaUnf2mL0mjuy1BU3VjEiP7LLOpk7rFXGk1BKkD58cUGVAynJAkYpO62XJynE8DNIP5IEXhqQoZTZ4ZIrp3yHAE1DCV0l1a1Imxyyv8bACHOIrX92bCbNksuYiqKLhNd1YPDBO3jjmvLmOhpN4rJKKqlv743+G+kQvyLO4oeaSXnY4Dd1pCsxz9QXlTeZIkmG0YSjTcAKcgf1uH3l43xCAQWA4ZrcEUGtatZP8GdbYp04iZvKGLmb4CMNFXMCNMkG8be/Hi23nE2hJU7kgEvesAAAAAElFTkSuQmCC\",\"contentType\":\"image/png\",\"width\":10,\"height\":16,\"angle\":0,\"xoffset\":0,\"yoffset\":0},\"label\":\"\",\"description\":\"\"},\"transparency\":0,\"labelingInfo\":null}}"
+            ]
+        },
+        {
+            "type": "vector",
+            "id": "bc-pods",
+            "title": "BC Pods",
+            "isVisible": false,
+            "opacity": 0.8,
+            "isQueryable": false,
+            "attributes": [
+                {
+                    "id": "TPOD_TAG",
+                    "name": "TPOD_TAG",
+                    "title": "TPOD_TAG",
+                    "visible": true
+                },
+                {
+                    "id": "FCODE",
+                    "name": "FCODE",
+                    "title": "FCODE",
+                    "visible": true
+                },
+                {
+                    "id": "OBJECTID",
+                    "name": "OBJECTID",
+                    "title": "OBJECTID",
+                    "visible": true
+                },
+                {
+                    "id": "STRM_NAME",
+                    "name": "STRM_NAME",
+                    "title": "STRM_NAME",
+                    "visible": true
+                },
+                {
+                    "id": "STATUS",
+                    "name": "STATUS",
+                    "title": "STATUS",
+                    "visible": true
+                }
+            ],
+            "queries": [
+                {
+                    "predicate": {
+                        "operator": "and",
+                        "arguments": [
+                            {
+                                "operator": "contains",
+                                "arguments": [
+                                    {
+                                        "operand": "attribute",
+                                        "name": "STRM_NAME"
+                                    },
+                                    {
+                                        "operand": "parameter",
+                                        "id": "param1"
+                                    }
+                                ]
+                            },
+                            {
+                                "operator": "equals",
+                                "arguments": [
+                                    {
+                                        "operand": "attribute",
+                                        "name": "STATUS"
+                                    },
+                                    {
+                                        "operand": "parameter",
+                                        "id": "param2"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    "id": "pod-query",
+                    "title": "Pod Query",
+                    "description": "Pod Query Description",
+                    "parameters": [
+                        {
+                            "id": "param1",
+                            "type": "input",
+                            "title": "STRM_NAME contains",
+                            "value": null
+                        },
+                        {
+                            "id": "param2",
+                            "type": "input",
+                            "title": "STATUS equals",
+                            "value": null
+                        }
+                    ]
+                }
+            ],
+            "dataUrl": "",
+            "useRaw": false,
+            "useClustering": true,
+            "useHeatmap": false,
+            "style": {
+                "strokeWidth": 10.0,
+                "strokeStyle": "1",
+                "strokeColor": "#ff8040",
+                "strokeOpacity": 0.9,
+                "fillColor": "#00ffff",
+                "fillOpacity": 0.7,
+                "markerSize": [
+                    20,
+                    20
+                ],
+                "markerOffset": [
+                    10,
+                    0
+                ]
+            }
+        },
+        {
+            "type": "esri-dynamic",
+            "id": "6610",
+            "title": "BC Research Centres",
+            "isVisible": true,
+            "attribution": "Copyright 2018 DataBC, Government of British Columbia",
+            "metadataUrl": "https://catalogue.data.gov.bc.ca/dataset/7859ae46-2aa1-47ee-a05b-7d0daa472678",
+            "opacity": 0.65,
+            "minScale": 1.3E7,
+            "maxScale": 0.0,
+            "isQueryable": false,
+            "attributes": [
+                {
+                    "id": "research-centre-name",
+                    "name": "RESEARCH_CENTRE_NAME",
+                    "title": "Research Centre Name",
+                    "visible": true
+                },
+                {
+                    "id": "description",
+                    "name": "DESCRIPTION",
+                    "title": "Description",
+                    "visible": true
+                },
+                {
+                    "id": "street-address",
+                    "name": "STREET_ADDRESS",
+                    "title": "Street Address",
+                    "visible": true
+                },
+                {
+                    "id": "postal-code",
+                    "name": "POSTAL_CODE",
+                    "title": "Postal Code",
+                    "visible": true
+                },
+                {
+                    "id": "locality",
+                    "name": "LOCALITY",
+                    "title": "Locality",
+                    "visible": true
+                },
+                {
+                    "id": "website-url",
+                    "name": "WEBSITE_URL",
+                    "title": "Website Link",
+                    "visible": true
+                },
+                {
+                    "id": "centre-type",
+                    "name": "CENTRE_TYPE",
+                    "title": "Centre Type",
+                    "visible": true
+                },
+                {
+                    "id": "data-source",
+                    "name": "DATA_SOURCE",
+                    "title": "Data Source",
+                    "visible": true
+                },
+                {
+                    "id": "research-centre-affiliation",
+                    "name": "RESEARCH_CENTRE_AFFILIATION",
+                    "title": "Research Centre Affliation",
+                    "visible": true
+                },
+                {
+                    "id": "research-sector",
+                    "name": "RESEARCH_SECTOR",
+                    "title": "Research Sector",
+                    "visible": true
+                },
+                {
+                    "id": "shape",
+                    "name": "SHAPE",
+                    "title": "SHAPE",
+                    "visible": true
+                },
+                {
+                    "id": "sequence-id",
+                    "name": "SEQUENCE_ID",
+                    "title": "SEQUENCE_ID",
+                    "visible": true
+                },
+                {
+                    "id": "data-updated-year",
+                    "name": "DATA_UPDATED_YEAR",
+                    "title": "Data Updated Year",
+                    "visible": true
+                },
+                {
+                    "id": "research-centre-id",
+                    "name": "RESEARCH_CENTRE_ID",
+                    "title": "Research Centre ID",
+                    "visible": true
+                },
+                {
+                    "id": "latitude",
+                    "name": "LATITUDE",
+                    "title": "Latitude",
+                    "visible": true
+                },
+                {
+                    "id": "longitude",
+                    "name": "LONGITUDE",
+                    "title": "Longitude",
+                    "visible": true
+                }
+            ],
+            "queries": [],
+            "mpcmId": 6610,
+            "mpcmWorkspace": "MPCM_ALL_PUB",
+            "serviceUrl": "https://maps.gov.bc.ca/arcgis/rest/services/mpcm/bcgw/MapServer",
+            "dynamicLayers": [
+                "{\"id\":6610,\"source\":{\"type\":\"dataLayer\",\"dataSource\":{\"type\":\"table\",\"workspaceId\":\"MPCM_ALL_PUB\",\"dataSourceName\":\"WHSE_IMAGERY_AND_BASE_MAPS.GSR_RESEARCH_CENTRES_SVW\",\"gdbVersion\":\"\"}},\"drawingInfo\":{\"renderer\":{\"type\":\"simple\",\"symbol\":{\"type\":\"esriPMS\",\"url\":\"74bc9c5ce5b9a47b07ee3a52ac9c5343\",\"imageData\":\"iVBORw0KGgoAAAANSUhEUgAAACMAAAAjCAYAAAAe2bNZAAAAAXNSR0IB2cksfwAAAAlwSFlzAAAOxAAADsQBlSsOGwAAAx5JREFUWIXNmD9IW1EUxr/z8lCjVaP4JxarIlLwz/CeU8QlmcROOqh0a6DFRTCCu7o6WAMu0sGxWAfjJHZJFqmLJEOqpYiIVbRaaNRqbAnvdGiSJk3Me+Y+q9947nnn/jjfue++RMYDknzfAKnKC4aZC2KxWK0sy48AFKcsXcVisR+yLH8lol//BQbAY4vFMgrACUBJiYcsFksAgBfA3p3CMLONmSfOrzXPYvAES8FThI+jyfUOu1UZUKuVIbXGo2narCRJY3cCw8w2AP73n86UEd8OLqNaRk74OIrw6j6mAweY62vxMLMTgIuIIqbBaJr2em074nG//WwI/DKqIZ6rLDx/+t1ol3RhmLnp/FrzjPh2DIH8qxHfDjbHOj3M7CWiPVGY0cXgSVZbSqwShh116G4uxfruBeY3jjLyLqMaFoMneOmoHQWQszu6METkXAqeZgXxudvQbv9zsrsay9DbWoG+ha0MoKXgKV512Z16exmZGSX1xCQ07KhLgiTUbi/GsKMOM/7DtHj8eQU6ygnDzLbz60x7AKC7ufTG+Ixfb9s8YMzUl7Ofujk5YYgowsxZ19Z3L9DVWJY1nk1PygvFYOIKdditGXMzv3GE3taKtLn5eHyF+Y2jjAIddisAhIRhmDkwoFYr4dX9tPhlVEPfwpbu0QaAAbUazBwQhiEi75Ba45kOHGR9h8z4D3MObIlVwpBaAyLymgGzB4CYOfgu+E3xLO/qPZLUbH8zBtWqEBGpRvJvc5pcg2qVv7xIvvGiTKjEKmGurwU9rbYQAJfRDQzDxG9eVdO0yc2xzonR5R2sbWdexj2tNnj7W1BaSFNENGm0/q1gEpIkaZKZQ+Ou+uVsMOOuepQVSf1E5Ltt7bxeekTkY+ZIQ3mBbf/s79dlQ3kB2u3FkXxA8oYBAGb29bRVvnjz4TgZ62mrBDPnBSIEQ0Qrg2pVGsygWgUiWrkPmDSrRC0SggHSrRK1SBgm1SpRi8yASVolapEwTFzuqWdNywDcooWEYRLdEe2KKTAAhAc3IVNgRAc3IbO+gQNmFDGrM4Z+S+vpQf1Z9BvGC1UZjt+cHQAAAABJRU5ErkJggg==\",\"contentType\":\"image/png\",\"width\":26,\"height\":26,\"angle\":0,\"xoffset\":0,\"yoffset\":0},\"label\":\"Research Centre Location\",\"description\":\"\"},\"transparency\":0,\"labelingInfo\":[{\"labelPlacement\":\"esriServerPointLabelPlacementAboveRight\",\"where\":null,\"labelExpression\":\"[RESEARCH_CENTRE_NAME]\",\"useCodedValues\":true,\"symbol\":{\"type\":\"esriTS\",\"color\":[0,77,168,255],\"backgroundColor\":null,\"borderLineColor\":null,\"borderLineSize\":null,\"verticalAlignment\":\"bottom\",\"horizontalAlignment\":\"center\",\"rightToLeft\":false,\"angle\":0,\"xoffset\":0,\"yoffset\":0,\"kerning\":true,\"haloColor\":[225,225,225,255],\"haloSize\":0.75,\"font\":{\"family\":\"Arial\",\"size\":8.5,\"style\":\"normal\",\"weight\":\"normal\",\"decoration\":\"none\"}},\"minScale\":2000,\"maxScale\":0}]},\"definitionExpression\":\"\"}"
+            ]
+        }
+    ],
+    "_id": "ad593c1e44230b8894a465a049052419",
+    "_rev": "2-909f35af934971b2339fc5965729ada4",
+    "_attachments": {
+        "bc-pods": {
+            "stub": true,
+            "revpos": 1,
+            "digest": "md5-dfeASb7l5Y2ArUOHwa/OPw==",
+            "content_type": "application/octet-stream"
+        }
+    }
+}

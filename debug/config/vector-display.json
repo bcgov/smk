@@ -1,0 +1,71 @@
+{
+    "tools": [
+        {
+            "type": "layers",
+            "display": [
+                { "id": "foo" },
+                { 
+                    "id": "1-multipolygon-hole",
+                    "title": "Multi-polygon Hole",
+                    "opacity": 0.3,
+                    "isVisible": true
+                },
+                { 
+                    "id": "folder1",
+                    "type": "folder",
+                    "title": "folder 1",
+                    "opacity": 0.7,
+                    "isVisible": true,
+                    "isExpanded": true,
+                    "items": [                
+                        { "id": "1-multipolygon" },
+                        { "id": "3-linestrings" }
+                    ]
+                },
+                { 
+                    "id": "group1",
+                    "type": "group",
+                    "title": "group 1",
+                    "opacity": 0.7,
+                    "isVisible": true,
+                    "items": [                
+                        { "id": "3-polygons" },
+                        { "id": "4-points-marker" }
+                    ]
+                },
+                { 
+                    "type": "folder",
+                    "title": "folder 2",
+                    "isVisible": false,
+                    "isExpanded": false,
+                    "items": [                
+                        { "id": "4-points" },
+                        { 
+                            "type": "group",
+                            "title": "group 2",
+                            "isVisible": true,
+                            "items": [                
+                                { "id": "multipoint" },
+                                { "id": "point-polygon" }
+                            ]
+                        },
+                        { 
+                            "id": "folder1",
+                            "type": "folder",
+                            "title": "folder 1",
+                            "isVisible": true,
+                            "isExpanded": true,
+                            "items": [                
+                                { "id": "polygon-polyline-point" },
+                                { "id": "polyline-polygon" },
+                                { "id": "polyline" }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
+
+
