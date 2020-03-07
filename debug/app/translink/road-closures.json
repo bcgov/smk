@@ -1,0 +1,81 @@
+{
+  "layers": [
+    {
+      "type": "esri-feature",
+      "id": "temporary-road-closure-extent",
+      "title": "Temporary Road Closure Extent",
+      "serviceUrl": "https://services7.arcgis.com/WpS8F3vcmrEQUG8m/arcgis/rest/services/Temporary_Road_Closure_Extent_FL_DEV/FeatureServer/0",
+      "scaleMin": 258006,
+      "where": "Status = 'Active'",
+      "drawingInfo": {
+        "renderer": {
+          "type": "simple",
+          "symbol": {
+            "color": [
+              255,
+              170,
+              0,
+              175
+            ],
+            "outline": {
+              "color": [
+                0,
+                0,
+                0,
+                255
+              ],
+              "width": 0,
+              "type": "esriSLS",
+              "style": "esriSLSSolid"
+            },
+            "type": "esriSFS",
+            "style": "esriSFSSolid"
+          },
+          "label": "Temporary Road Closure Extent"
+        }
+      }
+    },
+
+
+    {
+      "type": "esri-feature",
+      "id": "temporary-road-closure",
+      "title": "Temporary Road Closure",
+      "serviceUrl": "https://services7.arcgis.com/WpS8F3vcmrEQUG8m/arcgis/rest/services/Temporary_Road_Closures_FL_DEV/FeatureServer/0",
+      "scaleMin": 152384,
+      "where": "Status = 'Active'",
+      "drawingInfo": {
+        "renderer": {
+          "type": "simple",
+          "symbol": {
+            "angle": 0,
+            "xoffset": 0,
+            "yoffset": 0,
+            "type": "esriPMS",
+            "url": "./images/alert_major.svg",
+            "width": 22.5,
+            "height": 22.5
+          },
+          "label": "Temporary Road Closure"
+        }
+      }
+    }
+  ],
+    "tools": [
+        {
+            "type": "layers",
+            "display": [
+                { 
+                    "type": "folder",
+                    "title": "Temporary Road Closures",
+                    "isVisible": true,
+                    "items": [
+                        { "id": "temporary-road-closure-extent" },
+                        { "id": "temporary-road-closure" }
+                    ]
+                }
+            ]
+        }
+    ]
+
+}

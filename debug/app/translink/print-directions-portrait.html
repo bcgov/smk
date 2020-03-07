@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>BETA - CVRP - Translink</title>
+        
+        <!-- SMK BOOTSTRAP - - - - - - - -->
+        <script src="../../smk.js"></script>
+        <!-- - - - - - - - - - - - - - - -->
+
+        <style>
+            @page {
+                margin: 1em;
+                size: letter portrait;
+            }
+
+            body {
+                font-family: Helvetica,Arial,sans-serif;
+            }
+
+            @media print {
+                header {
+                    background-color: white;
+                }
+
+                header .header-title {
+                    color: black;                    
+                }
+
+                header img {
+                    filter: invert(1);                    
+                }
+            }
+
+            article {
+                position: relative;
+                height: 10in;
+                width: 7.5in;
+                margin: auto;
+
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                page-break-after: always;
+            }
+
+            header {
+                height: 70px;
+
+                border-bottom:      2px solid #fcba19;
+                background-color: #036;
+
+                display:            flex;
+                justify-content:    flex-start;
+                align-items:        center;
+            }
+
+            .build-info {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-end;
+
+                flex-grow: 1;
+                font-size: 12px;
+                color: #ccc;
+                padding-right: 10px;
+            }
+
+            img.siteLogo {
+                margin-left:    10px;
+                margin-bottom:  10px;
+                height: 40px;
+            }
+
+            .header-title {
+                color:          white;
+                margin-left:    20px;
+
+                display:        flex;
+                flex-direction: column;
+                justify-content:center;
+                align-items:    flex-start;
+                font-size:      18px;
+            }
+
+            .page {
+                display: flex;               
+                flex-grow: 1; 
+            }
+
+            section {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+            }
+
+            section.left-side {
+                flex-basis: 75%;
+            }
+
+            section.right-side {
+                flex-basis: 25%;
+            }
+
+            .smk-map-frame {
+                flex: 1 1;
+                border: 2px solid black;
+                border-radius: 3px;
+            }
+
+            .waypoints {
+                padding: 0 0.5em;
+            }
+
+            .waypoint {
+                margin: 0.5em 0;
+                padding: 2px;
+                border-radius: 4px;
+            }
+
+            .start {
+                background-color: palegreen !important;
+                border-color: palegreen !important;
+            }
+
+            .finish {
+                background-color: #e99 !important;
+                border-color: #e99 !important;
+            }
+
+            .address {
+                font-size: 20px;
+                font-weight: bold;
+            }
+
+            .directions {
+                height: 100%;
+                padding: 0 0.5em;
+            }
+
+            .direction {
+                margin: 0.5em 0;
+                padding: 2px;
+                border-radius: 4px;
+                padding-left: 30px;
+
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between;
+            }
+
+            .direction .index {
+                margin-left: -30px;
+                font-size: 12px;
+                font-weight: bold;
+                padding: 0px;
+                border-radius: 8px;
+                background-color: #fff;
+                border: 1px solid #fff;
+                box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+                flex-basis: 1%;
+                height: 1%;
+            }
+
+            .direction .instruction {
+                flex-basis: 100%;
+            }
+
+            .direction .metric {
+                font-size: 12px;
+            }
+
+            #route-pages .smk-map-frame .smk-route-tooltip {
+                font-size: 12px;
+                font-weight: bold;
+                padding: 0px;
+                border-radius: 8px;
+            }
+
+            .page-number {
+                text-align: right;
+            }
+        </style>
+
+    </head>
+
+    <body>
+        <div id="vue-root"></div>
+
+        <template id="template">
+            <div id="route-pages">
+                <article
+                    v-for="page in pages"
+                >
+                    <header>
+                        <img src="https://tlweblibs.translink.ca/TransLink-logo-white.svg" alt="TransLink Logo" class="siteLogo">
+                        <div class="header-title">Vehicle Route - Commercial Vehicle Route Planner Beta</div>
+                        <div class="build-info"></div>
+                    </header>
+                        
+                    <div class="page">
+                        <section class="left-side">
+                            <div class="waypoints">
+                                <div class="waypoint"
+                                    v-for="w in waypoints"
+                                    v-bind:class="[ w.style || '' ]"
+                                >{{ w.label }} at <span class="address">{{ w.fullAddress }}</span></div>
+                            </div>
+
+                            <div class="smk-map-frame"
+                                v-content="page.map"
+                            ></div>
+                        </section>
+        
+                        <section class="right-side">
+                            <div class="directions">
+                                <div class="direction"
+                                    v-for="d in page.directions"
+                                    v-bind:class="[ d.waypointStyle || '' ]"
+                                >
+                                    <span class="index">#{{ d.index }}</span>
+                                    <span class="instruction">{{ d.instruction }}</span>
+                                    <span class="metric"
+                                        v-if="d.distance"
+                                    >for {{ d.distance }} ({{ d.time }})</span>
+                                </div>
+                            </div>
+
+                            <div class="page-number">Page {{ page.index }} of {{ pages.length }}</div>
+                        </section>
+                    </div>
+                </article>            
+            </div>
+        </template>
+    </body>
+
+    <script>
+        var maxDirs = 10, thresholdFactor = 6, smallThresholdFactor = 10
+
+        include.option( { baseUrl: ( new URL( '../..', document.location ) ).toString() } )
+        include( 'vue', 'vue-config', 'turf' ).then( function () {
+            var key = location.search.substr( 1 )
+            var cfg = JSON.parse( window.sessionStorage.getItem( key ) )
+
+            var dirs = cfg.etc.directions
+            delete cfg.etc
+            delete cfg.tools
+            var mapCfg = JSON.stringify( cfg )
+
+            var wl = dirs.waypoints.length
+            dirs.waypoints[ 0 ].label = 'Start'
+            dirs.waypoints[ 0 ].style = 'start'
+            for ( var i = 1; i < ( wl - 1 ); i += 1 ) {
+                dirs.waypoints[ i ].label = 'Waypoint #' + i
+            }
+            dirs.waypoints[ wl - 1 ].label = 'Finish'
+            dirs.waypoints[ wl - 1 ].style = 'finish'
+
+            function close( p1, p2, min ) { 
+                var d0 = p1[0] - p2[0]
+                var d1 = p1[1] - p2[1]
+                return ( d0 * d0 + d1 * d1 ) <= ( min * min )
+            }
+
+            function getWaypoint( pt ) {
+                return dirs.waypoints.find( function ( wp ) {
+                    return close( pt, [ wp.longitude, wp.latitude ], 0.0001 )
+                } ) || {}
+            }
+
+            var spi = 0, pi = 0, prevDir
+            dirs.directions.forEach( function ( d, i ) {
+                d.index = i + 1
+                d.waypointStyle = getWaypoint( d.point ).style
+
+                if ( !prevDir ) {
+                    prevDir = d
+                    return
+                }
+
+                while ( !close( dirs.route[ pi ], d.point, 0.0001 ) ) {
+                    pi += 1
+                }
+                
+                prevDir.route = {
+                    start: spi,
+                    end: pi,
+                    dist: turf.distance( d.point, prevDir.point )
+                }
+
+                spi = pi
+                prevDir = d
+            } )
+            prevDir.route = {
+                start: pi,
+                end: pi,
+                dist: 0
+            }
+
+            var dirPages = [], dirPage
+            var targetDist
+            dirs.directions.forEach( function ( d ) {
+                if ( !d.route.dist ) {
+                    dirPage.push( d )
+                    return
+                }
+
+                if ( !targetDist ) {
+                    targetDist = d.route.dist
+                    dirPage = [ d ]
+                    dirPages.push( dirPage )
+                    return
+                }
+
+                var r = d.route.dist / targetDist
+                if ( r < 1 ) r = 1 / r
+
+                if ( r < thresholdFactor ) {
+                    dirPage.push( d )
+                    targetDist = Math.sqrt( targetDist * d.route.dist )
+                    return
+                }
+
+                if ( r > smallThresholdFactor && d.route.dist < targetDist ) {
+                    dirPage.push( d )
+                    targetDist = null 
+                    return
+                }
+
+                if ( dirPage.length > maxDirs ) {
+                    var pgs = Math.ceil( dirPage.length / maxDirs ) 
+                    var perPg = Math.round( dirPage.length / pgs )
+
+                    while ( dirPage.length > perPg ) {
+                        var s = dirPage.splice( perPg, perPg )
+                        dirPages.push( s )
+                    }
+                }
+
+                dirPage = [ d ]
+                dirPages.push( dirPage )
+                targetDist = d.route.dist
+            } )
+
+            var model = {
+                waypoints: dirs.waypoints,
+                pages: dirPages.map( function ( dp, i ) {
+                    return {
+                        index: i + 1,
+                        route: [],
+                        directions: dp,
+                        map: {}
+                    }
+                } )
+            }
+
+            model.pages.forEach( function ( p, pi ) {
+                for ( var d = 0; d < p.directions.length; d += 1 ) {
+                    var dr = p.directions[ d ]
+
+                    for ( var r = dr.route.start; r <= dr.route.end; r += 1 ) {
+                        p.route.push( dirs.route[ r ] )
+                    } 
+                }
+
+                p.map.create = function ( el ) {
+                    var ls = turf.lineString( p.route )
+                    var bb = turf.bbox( ls )
+                    var diag = turf.distance( [ bb[0], bb[1] ], [ bb[2], bb[3] ] )
+                    
+                    var c = JSON.parse( mapCfg )
+                    c.layers.unshift( {
+                        type: 'vector',
+                        id: 'route-base',
+                        isVisible: true,
+                        dataUrl: 'data:application/json,' + JSON.stringify( turf.lineString( dirs.route ) ),
+                        style: {
+                            strokeColor: "gray",
+                            strokeWidth: 12,
+                            strokeOpacity: 0.6
+                        },
+                        legends: false
+                    } )
+
+                    c.layers.unshift( {
+                        type: 'vector',
+                        id: 'route-segment',
+                        isVisible: true,
+                        dataUrl: 'data:application/json,' + JSON.stringify( turf.lineString( p.route ) ),
+                        style: {
+                            strokeColor: "green",
+                            strokeWidth: 8,
+                            strokeOpacity: 0.8
+                        },
+                        legends: false
+                    } )
+
+                    p.directions.reverse().forEach( function ( d, i ) {
+                        c.layers.unshift( {
+                            type: 'vector',
+                            id: 'dir-' + i,
+                            isVisible: true,
+                            dataUrl: 'data:application/json,' + JSON.stringify( turf.point( d.point ) ),
+                            tooltip: {
+                                title: '#' + d.index,
+                                option: {
+                                    className: 'smk-route-tooltip ' + ( d.waypointStyle || '' )
+                                }
+                            },
+                            style: {
+                                strokeColor: "red",
+                                strokeWidth: 8,
+                                strokeOpacity: 0.8
+                            },
+                            legends: false
+                        } )
+                    } )
+                    p.directions.reverse()
+
+                    c.viewer.location = {
+                        extent: turf.bbox( turf.buffer( turf.bboxPolygon( bb ), diag * 0.1 ) )
+                    }
+
+                    return SMK.INIT( {
+                        'smk-id':           'print-' + pi,
+                        'smk-container-sel': el,
+                        'smk-config':       [ c, 'hide-tool=all', 'show-tool=scale,legend' ]
+                    } )
+                }
+
+            } )
+            
+            new Vue( {
+                el: '#vue-root',
+                template: '#template',
+                data: model,
+                mounted: function () {
+                    SMK.BOOT.then( function () {
+                        window.print()
+                        window.parent.postMessage( 'printed', '*' )
+                    } )
+                }
+            } )
+        } )
+    </script>
+</html>

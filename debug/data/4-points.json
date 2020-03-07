@@ -1,0 +1,6 @@
+{"type":"FeatureCollection","features":[
+{"type":"Feature","properties":{"sequenceNum":0},"geometry":{"type":"Point","coordinates":[-123.63999130872467,48.64003562335534]}},
+{"type":"Feature","properties":{"sequenceNum":1},"geometry":{"type":"Point","coordinates":[-123.69045975354027,48.56625112501057]}},
+{"type":"Feature","properties":{"sequenceNum":2},"geometry":{"type":"Point","coordinates":[-123.7625575318521,48.619386828705395]}},
+{"type":"Feature","properties":{"sequenceNum":3},"geometry":{"type":"Point","coordinates":[-123.77251389171415,48.5851047997846]}}],
+"$description":"CWM Test data"}

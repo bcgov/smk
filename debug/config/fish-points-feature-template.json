@@ -1,0 +1,15 @@
+{
+    "layers": [
+        {
+            "id": "746",
+            "xpopupTemplate": "@feature-attributes",
+            "xpopupTemplate": "@feature-properties",
+            "xpopupTemplate": "<div><div class=\"smk-header\"><h3>**{{ layer.title }}</h3><h2>**{{ feature.title }}</h2></div><div class=\"smk-attributes\"><div class=\"smk-attribute\"v-for=\"attr in layer.attributes\"v-if=\"attr.visible !==== false\"><span class=\"smk-title\" v-html=\"insertWordBreaks( attr.title )\"></span><span class=\"smk-value\">{{ feature.properties[ attr.name ] }}</span></div></div></div>",
+            "popupTemplate": "<div><div class=\"smk-header\"><h3>**{{ layer.title }}</h3><h2>**{{ feature.title }}</h2></div><div class=\"smk-attributes\"><div class=\"smk-attribute\"v-for=\"attr in layer.attributes\"v-if=\"attr.visible !== false\"><span class=\"smk-title\" v-html=\"insertWordBreaks( attr.title )\"></span><span class=\"smk-value\">{{ feature.properties[ attr.name ] }}</span></div></div></div>"
+        }
+    ]
+}
+
+
+
+

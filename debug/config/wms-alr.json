@@ -1,0 +1,76 @@
+{
+    "tools": [
+        {
+            "type": "query",
+            "instance": "whse-legal-admin-boundaries-oats-alr-polys--query1",
+            "onActivate": "executexxxxx"
+        }
+    ],
+    "layers": [
+        {
+            "type": "wms",
+            "id": "whse-legal-admin-boundaries-oats-alr-polys",
+            "title": "ALC ALR Polygons",
+            "layerName": "WHSE_LEGAL_ADMIN_BOUNDARIES.OATS_ALR_POLYS",
+            "styleName": "ALR_Polygons",
+            "serviceUrl": "https://openmaps.gov.bc.ca/geo/pub/wms",
+            "isVisible": true,
+            "titleAttribute": "ALR_POLY_ID",
+            "attributes": [
+                {
+                    "name": "ALR_POLY_ID",
+                    "title": "Alr Poly Id"
+                },
+                {
+                    "name": "STATUS",
+                    "title": "Status"
+                },
+                {
+                    "name": "FEATURE_CODE",
+                    "visible": false
+                },
+                {
+                    "name": "FEATURE_AREA_SQM",
+                    "visible": false
+                },
+                {
+                    "name": "FEATURE_LENGTH_M",
+                    "visible": false
+                }
+            ],
+            "queries": [
+                {
+                    "id": "query1",
+                    "title": "Find by Status",
+                    "description": "Find ALR polygons by status",
+                    "parameters": [
+                        {
+                            "id": "param1",
+                            "type": "input",
+                            "title": "ALR status",
+                            "value": ""
+                        }
+                    ],
+                    "predicate": {
+                        "operator": "or",
+                        "arguments": [
+                            {
+                                "operator": "contains",
+                                "arguments": [
+                                    {
+                                        "operand": "attribute",
+                                        "name": "STATUS"
+                                    },
+                                    {
+                                        "operand": "parameter",
+                                        "id": "param1"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    ]
+}

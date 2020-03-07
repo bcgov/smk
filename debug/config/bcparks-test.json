@@ -1,0 +1,768 @@
+
+{
+    "_id": "63ffe6dea2819af75a734b95be02e073",
+    "_rev": "24-4ee83b25ec4860b7edac4f35cdbcf683",
+    "lmfId": "dylans-bcparks-test",
+    "lmfRevision": 2,
+    "name": "dylans-bcparks-test",
+    "createdBy": "",
+    "published": true,
+    "surround": {
+        "type": "default",
+        "title": "Dylans BC Parks Test"
+    },
+    "viewer": {
+        "type": "leaflet",
+        "baseMap": "NationalGeographic"
+    },
+    "tools": [
+        {
+            "type": "coordinate",
+            "enabled": true,
+            "title": "Coordinate",
+            "showPanel": true
+        },
+        {
+            "type": "attribution",
+            "enabled": false,
+            "title": "Attribution",
+            "showPanel": true
+        },
+        {
+            "type": "layers",
+            "enabled": true,
+            "title": "Layers Panel",
+            "showPanel": true
+        },
+        {
+            "type": "pan",
+            "enabled": true,
+            "title": "Panning",
+            "showPanel": true
+        },
+        {
+            "type": "zoom",
+            "enabled": true,
+            "title": "Zooming",
+            "showPanel": true,
+            "mouseWheel": true,
+            "doubleClick": true,
+            "box": true,
+            "control": true
+        },
+        {
+            "type": "measure",
+            "enabled": false,
+            "title": "Measurement",
+            "showPanel": true
+        },
+        {
+            "type": "markup",
+            "enabled": false,
+            "title": "Markup",
+            "showPanel": true
+        },
+        {
+            "type": "scale",
+            "enabled": false,
+            "title": "Scale",
+            "showPanel": true,
+            "showFactor": true,
+            "showBar": true
+        },
+        {
+            "type": "minimap",
+            "enabled": true,
+            "title": "Mini Map",
+            "showPanel": true
+        },
+        {
+            "type": "directions",
+            "enabled": true,
+            "title": "Directions",
+            "showPanel": true
+        },
+        {
+            "type": "about",
+            "enabled": true,
+            "title": "About Panel",
+            "showPanel": true,
+            "content": "<h2>Browse for a park</h2><h2><img class=\"task-icon\" src=\"http://www.env.gov.bc.ca/bcparks/_shared/mapImages/mapIcons/cluster.png\" style=\"background-color: initial; color: rgb(85, 85, 85); font-size: 14px; font-style: italic; font-weight: normal;\">&nbsp;&nbsp;<span style=\"background-color: initial; color: inherit; font-size: 14px; font-style: italic; font-weight: normal;\">Shows a cluster of Parks (click or zoom to view)</span></h2><span style=\"background-color: initial; color: inherit; font-size: 14px; font-style: italic; font-weight: normal;\"><br></span><h2><img class=\"task-icon\" src=\"http://www.env.gov.bc.ca/bcparks/_shared/mapImages/mapIcons/BCParkMapIcon1.png\" style=\"background-color: initial; color: rgb(85, 85, 85); font-size: 14px; font-style: italic; font-weight: normal;\">&nbsp;&nbsp;<span style=\"background-color: initial; color: inherit; font-size: 14px; font-style: italic; font-weight: normal;\">Parks, Protected Areas, Conservancies, Recreation Areas</span></h2><span style=\"background-color: initial; color: inherit; font-size: 14px; font-style: italic; font-weight: normal;\"><br></span><h2><img class=\"task-icon\" src=\"http://www.env.gov.bc.ca/bcparks/_shared/mapImages/mapIcons/BCParkMapIcon2.png\" style=\"background-color: initial; color: rgb(85, 85, 85); font-size: 14px; font-style: italic; font-weight: normal;\">&nbsp;&nbsp;<span style=\"background-color: initial; color: inherit; font-size: 14px; font-style: italic; font-weight: normal;\">Ecological Reserves, Wildlife Management Areas (WMAs), Conservation Study Areas</span></h2><p class=\"note\">&nbsp;Note: Map data is representational only and should  <br>&nbsp;not be used for navigational purposes.&nbsp;</p>"
+        },
+        {
+            "type": "location",
+            "enabled": false,
+            "title": "Location",
+            "showPanel": false
+        },
+        {
+            "type": "baseMaps",
+            "enabled": true,
+            "title": "Base Maps Panel",
+            "showPanel": true,
+            "choices": [
+                "Topographic",
+                "Streets",
+                "NationalGeographic"
+            ]
+        },
+        {
+            "type": "select",
+            "enabled": false,
+            "title": "Selection Panel",
+            "showPanel": true,
+            "style": {
+                "strokeStyle": "1",
+                "strokeColor": "#4295f4",
+                "fillColor": "#4295f4",
+                "fillOpacity": 0.5,
+                "strokeOpacity": 0.8,
+                "strokeWidth": 1,
+                "markerSize": [
+                    20,
+                    20
+                ],
+                "markerOffset": [
+                    10,
+                    10
+                ]
+            }
+        },
+        {
+            "type": "identify",
+            "enabled": true,
+            "title": "Identify Panel",
+            "showPanel": false,
+            "style": {
+                "strokeStyle": "1",
+                "strokeColor": "#f9ee4d",
+                "fillColor": "#f9ee4d",
+                "fillOpacity": 0.5,
+                "strokeOpacity": 0.8,
+                "strokeWidth": 1,
+                "markerSize": [
+                    20,
+                    20
+                ],
+                "markerOffset": [
+                    10,
+                    10
+                ]
+            }
+        },
+        {
+            "type": "search",
+            "enabled": true,
+            "title": "Search Panel",
+            "showPanel": true
+        },
+        {
+            "type": "menu",
+            "enabled": false,
+            "title": "Menu",
+            "showPanel": true
+        },
+        {
+            "type": "dropdown",
+            "enabled": false,
+            "title": "",
+            "showPanel": true
+        },
+        {
+            "type": "query",
+            "enabled": true,
+            "title": "Query",
+            "icon": "not_listed_location",
+            "instance": "provincial-parks--search-by-name",
+            "position": "dropdown",
+            "showPanel": true
+        },
+        {
+            "type": "query",
+            "enabled": true,
+            "title": "Query",
+            "icon": "image_search",
+            "instance": "provincial-parks--bc-parks-search",
+            "position": "dropdown",
+            "showPanel": true
+        }
+    ],
+    "layers": [
+        {
+            "type": "esri-dynamic",
+            "id": "6213",
+            "title": "BC Parks & Eco Reserves Poly",
+            "isVisible": true,
+            "attribution": "Copyright 2018 DataBC, Government of British Columbia",
+            "metadataUrl": "https://catalogue.data.gov.bc.ca/dataset/1130248f-f1a3-4956-8b2e-38d29d3e4af7",
+            "opacity": 0.65,
+            "minScale": 12000000,
+            "maxScale": 0,
+            "isQueryable": false,
+            "attributes": [
+                {
+                    "id": "protected-lands-name",
+                    "name": "PROTECTED_LANDS_NAME",
+                    "title": "Protected Lands Name",
+                    "visible": true
+                },
+                {
+                    "id": "protected-lands-code",
+                    "name": "PROTECTED_LANDS_CODE",
+                    "title": "Protected Lands Code",
+                    "visible": true
+                },
+                {
+                    "id": "protected-lands-designation",
+                    "name": "PROTECTED_LANDS_DESIGNATION",
+                    "title": "Protected Lands Designation",
+                    "visible": true
+                },
+                {
+                    "id": "park-class",
+                    "name": "PARK_CLASS",
+                    "title": "Park Class",
+                    "visible": true
+                },
+                {
+                    "id": "surveyor-general-plan-no",
+                    "name": "SURVEYOR_GENERAL_PLAN_NO",
+                    "title": "Surveyor General Plan Numbers",
+                    "visible": true
+                },
+                {
+                    "id": "orcs-primary",
+                    "name": "ORCS_PRIMARY",
+                    "title": "Orcs Primary",
+                    "visible": true
+                },
+                {
+                    "id": "orcs-secondary",
+                    "name": "ORCS_SECONDARY",
+                    "title": "Orcs Secondary",
+                    "visible": true
+                },
+                {
+                    "id": "feature-code",
+                    "name": "FEATURE_CODE",
+                    "title": "Feature Code",
+                    "visible": true
+                },
+                {
+                    "id": "shape",
+                    "name": "SHAPE",
+                    "title": "Shape",
+                    "visible": true
+                },
+                {
+                    "id": "objectid",
+                    "name": "OBJECTID",
+                    "title": "ObjectID",
+                    "visible": true
+                },
+                {
+                    "id": "shape-area",
+                    "name": "SHAPE.AREA",
+                    "title": "Shape Area ",
+                    "visible": true
+                },
+                {
+                    "id": "feature-area-sqm",
+                    "name": "FEATURE_AREA_SQM",
+                    "title": "FEATURE_AREA_SQM",
+                    "visible": true
+                },
+                {
+                    "id": "feature-length-m",
+                    "name": "FEATURE_LENGTH_M",
+                    "title": "FEATURE_LENGTH_M",
+                    "visible": true
+                },
+                {
+                    "id": "admin-area-sid",
+                    "name": "ADMIN_AREA_SID",
+                    "title": "Administrative Area ID",
+                    "visible": true
+                }
+            ],
+            "queries": [],
+            "mpcmId": 6213,
+            "mpcmWorkspace": "MPCM_ALL_PUB",
+            "serviceUrl": "https://maps.gov.bc.ca/arcgis/rest/services/mpcm/bcgw/MapServer",
+            "dynamicLayers": [
+                "{\"id\":6213,\"source\":{\"type\":\"dataLayer\",\"dataSource\":{\"type\":\"table\",\"workspaceId\":\"MPCM_ALL_PUB\",\"dataSourceName\":\"WHSE_TANTALIS.TA_PARK_ECORES_PA_SVW\",\"gdbVersion\":\"\"}},\"drawingInfo\":{\"renderer\":{\"type\":\"simple\",\"symbol\":{\"type\":\"esriSFS\",\"style\":\"esriSFSSolid\",\"color\":[137,205,102,255],\"outline\":{\"type\":\"esriSLS\",\"style\":\"esriSLSSolid\",\"color\":[38,115,0,255],\"width\":0.4}},\"label\":\"Provincial Parks, Eco Reserves and Protected Areas - All\",\"description\":\"\"},\"transparency\":30,\"labelingInfo\":[{\"labelPlacement\":\"esriServerPolygonPlacementAlwaysHorizontal\",\"where\":\"FEATURE_AREA_SQM <= 100000000\",\"labelExpression\":\"[PROTECTED_LANDS_NAME]\",\"useCodedValues\":true,\"symbol\":{\"type\":\"esriTS\",\"color\":[0,0,0,255],\"backgroundColor\":null,\"borderLineColor\":null,\"borderLineSize\":null,\"verticalAlignment\":\"baseline\",\"horizontalAlignment\":\"left\",\"rightToLeft\":false,\"angle\":0,\"xoffset\":0,\"yoffset\":0,\"kerning\":true,\"haloColor\":[211,255,190,255],\"haloSize\":1,\"font\":{\"family\":\"Arial\",\"size\":8,\"style\":\"normal\",\"weight\":\"bold\",\"decoration\":\"none\"}},\"minScale\":250000,\"maxScale\":0},{\"labelPlacement\":\"esriServerPolygonPlacementAlwaysHorizontal\",\"where\":\"FEATURE_AREA_SQM > 90000000\",\"labelExpression\":\"[PROTECTED_LANDS_NAME]\",\"useCodedValues\":true,\"symbol\":{\"type\":\"esriTS\",\"color\":[0,0,0,255],\"backgroundColor\":null,\"borderLineColor\":null,\"borderLineSize\":null,\"verticalAlignment\":\"baseline\",\"horizontalAlignment\":\"left\",\"rightToLeft\":false,\"angle\":0,\"xoffset\":0,\"yoffset\":0,\"kerning\":true,\"haloColor\":[211,255,190,255],\"haloSize\":1,\"font\":{\"family\":\"Arial\",\"size\":8,\"style\":\"normal\",\"weight\":\"bold\",\"decoration\":\"none\"}},\"minScale\":3000000,\"maxScale\":0},{\"labelPlacement\":\"esriServerPolygonPlacementAlwaysHorizontal\",\"where\":\"FEATURE_AREA_SQM > 10000000 AND FEATURE_AREA_SQM < 90000000\",\"labelExpression\":\"[PROTECTED_LANDS_NAME]\",\"useCodedValues\":true,\"symbol\":{\"type\":\"esriTS\",\"color\":[0,0,0,255],\"backgroundColor\":null,\"borderLineColor\":null,\"borderLineSize\":null,\"verticalAlignment\":\"baseline\",\"horizontalAlignment\":\"left\",\"rightToLeft\":false,\"angle\":0,\"xoffset\":0,\"yoffset\":0,\"kerning\":true,\"haloColor\":[211,255,190,255],\"haloSize\":1,\"font\":{\"family\":\"Arial\",\"size\":8,\"style\":\"normal\",\"weight\":\"bold\",\"decoration\":\"none\"}},\"minScale\":1000000,\"maxScale\":250001}]},\"definitionExpression\":\"\"}"
+            ]
+        },
+        {
+            "type": "esri-dynamic",
+            "id": "436",
+            "title": "Conservancy Areas",
+            "isVisible": true,
+            "attribution": "Copyright 2018 DataBC, Government of British Columbia",
+            "metadataUrl": "https://catalogue.data.gov.bc.ca/dataset/550b3133-2004-468f-ba1f-b95d0e281e78",
+            "opacity": 0.65,
+            "minScale": 12000000,
+            "maxScale": 0,
+            "isQueryable": true,
+            "attributes": [
+                {
+                    "id": "admin-area-sid",
+                    "name": "ADMIN_AREA_SID",
+                    "title": "Administrative Area ID",
+                    "visible": false
+                },
+                {
+                    "id": "conservancy-area-name",
+                    "name": "CONSERVANCY_AREA_NAME",
+                    "title": "Conservancy Area Name",
+                    "visible": true
+                },
+                {
+                    "id": "orcs-primary",
+                    "name": "ORCS_PRIMARY",
+                    "title": "Orcs Primary",
+                    "visible": true
+                },
+                {
+                    "id": "orcs-secondary",
+                    "name": "ORCS_SECONDARY",
+                    "title": "Orcs Secondary",
+                    "visible": true
+                },
+                {
+                    "id": "feature-code",
+                    "name": "FEATURE_CODE",
+                    "title": "Feature Code",
+                    "visible": false
+                },
+                {
+                    "id": "shape",
+                    "name": "SHAPE",
+                    "title": "Shape",
+                    "visible": false
+                },
+                {
+                    "id": "objectid",
+                    "name": "OBJECTID",
+                    "title": "ObjectID",
+                    "visible": false
+                },
+                {
+                    "id": "shape-area",
+                    "name": "SHAPE.AREA",
+                    "title": "Shape Area",
+                    "visible": false
+                },
+                {
+                    "id": "feature-area-sqm",
+                    "name": "FEATURE_AREA_SQM",
+                    "title": "FEATURE_AREA_SQM",
+                    "visible": false
+                },
+                {
+                    "id": "feature-length-m",
+                    "name": "FEATURE_LENGTH_M",
+                    "title": "FEATURE_LENGTH_M",
+                    "visible": false
+                }
+            ],
+            "queries": [],
+            "mpcmId": 436,
+            "mpcmWorkspace": "MPCM_ALL_PUB",
+            "serviceUrl": "https://maps.gov.bc.ca/arcgis/rest/services/mpcm/bcgw/MapServer",
+            "dynamicLayers": [
+                "{\"id\":436,\"source\":{\"type\":\"dataLayer\",\"dataSource\":{\"type\":\"table\",\"workspaceId\":\"MPCM_ALL_PUB\",\"dataSourceName\":\"WHSE_TANTALIS.TA_CONSERVANCY_AREAS_SVW\",\"gdbVersion\":\"\"}},\"drawingInfo\":{\"renderer\":{\"type\":\"simple\",\"symbol\":{\"type\":\"esriSFS\",\"style\":\"esriSFSSolid\",\"color\":[171,237,140,255],\"outline\":{\"type\":\"esriSLS\",\"style\":\"esriSLSSolid\",\"color\":[76,115,0,255],\"width\":0.4}},\"label\":\"Conservancy Areas\",\"description\":\"\"},\"transparency\":30,\"labelingInfo\":[{\"labelPlacement\":\"esriServerPolygonPlacementAlwaysHorizontal\",\"where\":null,\"labelExpression\":\"[CONSERVANCY_AREA_NAME]\",\"useCodedValues\":true,\"symbol\":{\"type\":\"esriTS\",\"color\":[0,0,0,255],\"backgroundColor\":null,\"borderLineColor\":null,\"borderLineSize\":null,\"verticalAlignment\":\"baseline\",\"horizontalAlignment\":\"left\",\"rightToLeft\":false,\"angle\":0,\"xoffset\":0,\"yoffset\":0,\"kerning\":true,\"haloColor\":[211,255,190,255],\"haloSize\":1,\"font\":{\"family\":\"Arial\",\"size\":8,\"style\":\"normal\",\"weight\":\"bold\",\"decoration\":\"none\"}},\"minScale\":750000,\"maxScale\":0},{\"labelPlacement\":\"esriServerPolygonPlacementAlwaysHorizontal\",\"where\":\"FEATURE_AREA_SQM >  4000000\",\"labelExpression\":\"[CONSERVANCY_AREA_NAME]\",\"useCodedValues\":true,\"symbol\":{\"type\":\"esriTS\",\"color\":[0,0,0,255],\"backgroundColor\":null,\"borderLineColor\":null,\"borderLineSize\":null,\"verticalAlignment\":\"baseline\",\"horizontalAlignment\":\"left\",\"rightToLeft\":false,\"angle\":0,\"xoffset\":0,\"yoffset\":0,\"kerning\":true,\"haloColor\":[211,255,190,255],\"haloSize\":1,\"font\":{\"family\":\"Arial\",\"size\":8,\"style\":\"normal\",\"weight\":\"bold\",\"decoration\":\"none\"}},\"minScale\":2000000,\"maxScale\":750001}]},\"definitionExpression\":\"\"}"
+            ]
+        },
+        {
+            "type": "esri-dynamic",
+            "id": "437",
+            "title": "Wildlife Management Areas",
+            "isVisible": true,
+            "attribution": "Copyright 2018 DataBC, Government of British Columbia",
+            "metadataUrl": "https://catalogue.data.gov.bc.ca/dataset/f3ece977-aa7f-4cb2-b7d0-de64155f6c83",
+            "opacity": 0.65,
+            "minScale": 12000000,
+            "maxScale": 0,
+            "isQueryable": true,
+            "attributes": [
+                {
+                    "id": "admin-area-sid",
+                    "name": "ADMIN_AREA_SID",
+                    "title": "Administrative Areas ID",
+                    "visible": false
+                },
+                {
+                    "id": "wildlife-management-area-name",
+                    "name": "WILDLIFE_MANAGEMENT_AREA_NAME",
+                    "title": "Wildlife Management Area Name",
+                    "visible": true
+                },
+                {
+                    "id": "orcs-primary",
+                    "name": "ORCS_PRIMARY",
+                    "title": "Orcs Primary",
+                    "visible": true
+                },
+                {
+                    "id": "orcs-secondary",
+                    "name": "ORCS_SECONDARY",
+                    "title": "OrcsSecondary",
+                    "visible": true
+                },
+                {
+                    "id": "feature-code",
+                    "name": "FEATURE_CODE",
+                    "title": "Feature Code",
+                    "visible": false
+                },
+                {
+                    "id": "shape",
+                    "name": "SHAPE",
+                    "title": "Shape",
+                    "visible": false
+                },
+                {
+                    "id": "objectid",
+                    "name": "OBJECTID",
+                    "title": "ObjectID",
+                    "visible": false
+                },
+                {
+                    "id": "shape-area",
+                    "name": "SHAPE.AREA",
+                    "title": "Shape Area",
+                    "visible": false
+                },
+                {
+                    "id": "feature-area-sqm",
+                    "name": "FEATURE_AREA_SQM",
+                    "title": "FEATURE_AREA_SQM",
+                    "visible": false
+                },
+                {
+                    "id": "feature-length-m",
+                    "name": "FEATURE_LENGTH_M",
+                    "title": "FEATURE_LENGTH_M",
+                    "visible": false
+                }
+            ],
+            "queries": [],
+            "mpcmId": 437,
+            "mpcmWorkspace": "MPCM_ALL_PUB",
+            "serviceUrl": "https://maps.gov.bc.ca/arcgis/rest/services/mpcm/bcgw/MapServer",
+            "dynamicLayers": [
+                "{\"id\":437,\"source\":{\"type\":\"dataLayer\",\"dataSource\":{\"type\":\"table\",\"workspaceId\":\"MPCM_ALL_PUB\",\"dataSourceName\":\"WHSE_TANTALIS.TA_WILDLIFE_MGMT_AREAS_SVW\",\"gdbVersion\":\"\"}},\"drawingInfo\":{\"renderer\":{\"type\":\"simple\",\"symbol\":{\"type\":\"esriSFS\",\"style\":\"esriSFSSolid\",\"color\":[255,190,190,255],\"outline\":{\"type\":\"esriSLS\",\"style\":\"esriSLSSolid\",\"color\":[104,104,104,255],\"width\":0.4}},\"label\":\"Wildlife Management Areas\",\"description\":\"\"},\"transparency\":30,\"labelingInfo\":[{\"labelPlacement\":\"esriServerPolygonPlacementAlwaysHorizontal\",\"where\":null,\"labelExpression\":\"[WILDLIFE_MANAGEMENT_AREA_NAME]\",\"useCodedValues\":true,\"symbol\":{\"type\":\"esriTS\",\"color\":[0,0,0,255],\"backgroundColor\":null,\"borderLineColor\":null,\"borderLineSize\":null,\"verticalAlignment\":\"baseline\",\"horizontalAlignment\":\"left\",\"rightToLeft\":false,\"angle\":0,\"xoffset\":0,\"yoffset\":0,\"kerning\":true,\"haloColor\":[255,237,237,255],\"haloSize\":1,\"font\":{\"family\":\"Arial\",\"size\":8,\"style\":\"normal\",\"weight\":\"bold\",\"decoration\":\"none\"}},\"minScale\":2000000,\"maxScale\":0}]},\"definitionExpression\":\"\"}"
+            ]
+        },
+        {
+            "type": "vector",
+            "id": "ecological-reserves",
+            "title": "Ecological Reserves",
+            "isVisible": true,
+            "opacity": 1,
+            "isQueryable": true,
+            "attributes": [
+                {
+                    "id": "Picnic",
+                    "name": "Picnic",
+                    "title": "Picnic",
+                    "visible": true
+                },
+                {
+                    "id": "Date-Established",
+                    "name": "Date-Established",
+                    "title": "Date Established",
+                    "visible": true
+                },
+                {
+                    "id": "Wilderness-Camping",
+                    "name": "Wilderness-Camping",
+                    "title": "Wilderness Camping",
+                    "visible": true
+                },
+                {
+                    "id": "Vehicle-Access",
+                    "name": "Vehicle-Access",
+                    "title": "Vehicle Access",
+                    "visible": true
+                },
+                {
+                    "id": "Class",
+                    "name": "Class",
+                    "title": "Class",
+                    "visible": true
+                },
+                {
+                    "id": "Boat-Launch",
+                    "name": "Boat-Launch",
+                    "title": "Boat Launch",
+                    "visible": true
+                },
+                {
+                    "id": "Name",
+                    "name": "Name",
+                    "title": "Name",
+                    "visible": true
+                }
+            ],
+            "queries": [],
+            "dataUrl": "",
+            "useRaw": false,
+            "useClustering": true,
+            "useHeatmap": false,
+            "style": {
+                "strokeWidth": 4,
+                "strokeStyle": "1",
+                "strokeColor": "#ff8000",
+                "strokeOpacity": 1,
+                "fillColor": "#ff8000",
+                "fillOpacity": 0.8,
+                "markerUrl": "@ecological-reserves-marker",
+                "markerSize": [
+                    30,
+                    30
+                ],
+                "markerOffset": [
+                    15,
+                    15
+                ]
+            }
+        },
+        {
+            "type": "vector",
+            "id": "provincial-parks",
+            "title": "Provincial Parks",
+            "isVisible": true,
+            "opacity": 1,
+            "isQueryable": true,
+            "attributes": [
+                {
+                    "id": "Picnic",
+                    "name": "Picnic",
+                    "title": "Picnic",
+                    "visible": true
+                },
+                {
+                    "id": "Date-Established",
+                    "name": "Date-Established",
+                    "title": "Date Established",
+                    "visible": true
+                },
+                {
+                    "id": "Wilderness-Camping",
+                    "name": "Wilderness-Camping",
+                    "title": "Wilderness Camping",
+                    "visible": true
+                },
+                {
+                    "id": "Vehicle-Access",
+                    "name": "Vehicle-Access",
+                    "title": "Vehicle Access",
+                    "visible": true
+                },
+                {
+                    "id": "Class",
+                    "name": "Class",
+                    "title": "Class",
+                    "visible": true
+                },
+                {
+                    "id": "Boat-Launch",
+                    "name": "Boat-Launch",
+                    "title": "Boat Launch",
+                    "visible": true
+                },
+                {
+                    "id": "Name",
+                    "name": "Name",
+                    "title": "Name",
+                    "visible": true
+                }
+            ],
+            "titleAttribute": "Name",
+            "queries": [
+                {
+                    "predicate": {
+                        "operator": "and",
+                        "arguments": [
+                            {
+                                "operator": "contains",
+                                "arguments": [
+                                    {
+                                        "operand": "attribute",
+                                        "name": "Name"
+                                    },
+                                    {
+                                        "operand": "parameter",
+                                        "id": "param1"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    "id": "search-by-name",
+                    "title": "Search By Name",
+                    "description": "Search for a protected area by Name",
+                    "parameters": [
+                        {
+                            "id": "param1",
+                            "type": "input",
+                            "title": "Name contains",
+                            "value": null
+                        }
+                    ]
+                },
+                {
+                    "predicate": {
+                        "operator": "or",
+                        "arguments": [
+                            {
+                                "operator": "equals",
+                                "arguments": [
+                                    {
+                                        "operand": "attribute",
+                                        "name": "Picnic"
+                                    },
+                                    {
+                                        "operand": "parameter",
+                                        "id": "param1"
+                                    }
+                                ]
+                            },
+                            {
+                                "operator": "equals",
+                                "arguments": [
+                                    {
+                                        "operand": "attribute",
+                                        "name": "Wilderness-Camping"
+                                    },
+                                    {
+                                        "operand": "parameter",
+                                        "id": "param2"
+                                    }
+                                ]
+                            },
+                            {
+                                "operator": "equals",
+                                "arguments": [
+                                    {
+                                        "operand": "attribute",
+                                        "name": "Boat-Launch"
+                                    },
+                                    {
+                                        "operand": "parameter",
+                                        "id": "param3"
+                                    }
+                                ]
+                            },
+                            {
+                                "operator": "equals",
+                                "arguments": [
+                                    {
+                                        "operand": "attribute",
+                                        "name": "Vehicle-Access"
+                                    },
+                                    {
+                                        "operand": "parameter",
+                                        "id": "param4"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    "id": "bc-parks-search",
+                    "title": "BC Parks Search",
+                    "description": "Search for a protected area",
+                    "parameters": [
+                        {
+                            "id": "param1",
+                            "type": "select",
+                            "title": "Picnic Areas?",
+                            "value": "yes",
+                            "choices": [
+                                {
+                                    "value": "yes",
+                                    "title": "Yes"
+                                },
+                                {
+                                    "value": "no",
+                                    "title": "No"
+                                }
+                            ]
+                        },
+                        {
+                            "id": "param2",
+                            "type": "select",
+                            "title": "Wilderness Camping?",
+                            "value": "yes",
+                            "choices": [
+                                {
+                                    "value": "yes",
+                                    "title": "Yes"
+                                },
+                                {
+                                    "value": "no",
+                                    "title": "No"
+                                }
+                            ]
+                        },
+                        {
+                            "id": "param3",
+                            "type": "select",
+                            "title": "Boat Launch?",
+                            "value": "yes",
+                            "choices": [
+                                {
+                                    "value": "yes",
+                                    "title": "Yes"
+                                },
+                                {
+                                    "value": "no",
+                                    "title": "No"
+                                }
+                            ]
+                        },
+                        {
+                            "id": "param4",
+                            "type": "select",
+                            "title": "Vehicle Access?",
+                            "value": "yes",
+                            "choices": [
+                                {
+                                    "value": "yes",
+                                    "title": "Yes"
+                                },
+                                {
+                                    "value": "no",
+                                    "title": "No"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "dataUrl": "",
+            "useRaw": false,
+            "useClustering": true,
+            "useHeatmap": false,
+            "style": {
+                "strokeWidth": 4,
+                "strokeStyle": "1",
+                "strokeColor": "#105df2",
+                "strokeOpacity": 1,
+                "fillColor": "#105df2",
+                "fillOpacity": 0.65,
+                "markerUrl": "@provincial-parks-marker",
+                "markerSize": [
+                    30,
+                    30
+                ],
+                "markerOffset": [
+                    15,
+                    15
+                ]
+            }
+        }
+    ]
+}
