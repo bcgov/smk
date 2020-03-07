@@ -1,10 +1,19 @@
 {
-  "version": "0.8.1",
+  "version": "0.9.0",
   "name": "smk-client",
   "title": "smk-client",
   "license": "APSL-2.0",
   "homepage": "https://bcgov.github.io/smk-client/",
   "repository": "github:bcgov/smk-client",
+  "main": "dist/smk.js",
+  "files": [
+      "dist"
+  ],
+  "scripts": {
+      "build": "grunt release",
+      "debug": "grunt develop watch",
+      "serve": "grunt connect"
+  },
   "dependencies": {
     "grunt": "^1.0.3",
     "grunt-cli": "^1.2.0",
