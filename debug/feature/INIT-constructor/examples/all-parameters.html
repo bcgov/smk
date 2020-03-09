@@ -1,0 +1,32 @@
+<!--
+    This example shows all the parameters that can be passed to SMK.INIT.
+
+    Notice that the smk-config parameter receives a JS array, 
+    instead of URLs separated by '|'.
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="/dist/smk.js"></script>
+        <link rel="stylesheet" type="text/css" href="style.css"/>
+    </head>
+
+    <body id="smk-map-frame"></body>
+
+    <script>
+        SMK.INIT( {
+            'smk-id':               'map',
+            'smk-container-sel':    '#smk-map-frame',
+            'smk-base-url':         '/dist',
+            'smk-config': [ 
+                './map-config.json', 
+                './layer-config.json', 
+                './layer-display-config.json', 
+                '?' 
+            ],
+        } ).then( function ( smk ) {
+            alert( 'SMK initilized' )
+        } )
+    </script>
+</html>
+
