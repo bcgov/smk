@@ -98,6 +98,12 @@ module.exports = function( grunt ) {
                 ],
                 tasks: [ 'build' ]
             },
+
+            debug: {
+                files: [ 
+                    'debug/**', 
+                ]
+            }
         },
 
         // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
