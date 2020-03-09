@@ -1,0 +1,29 @@
+.smk-address-search {
+    position: relative;
+    display: inline-block;
+}
+
+.smk-popup-list {
+    z-index: 5;
+    position: absolute;
+    top: 26px;
+    left: 6px;
+    border: 1px solid gray;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65);
+    background-color: white;
+    font-size: 12px;
+    max-width: 200px;
+    padding: 1px;
+}
+
+.smk-popup-item {
+    overflow-x: hidden;
+    white-space: nowrap;
+}
+
+.smk-popup-item.smk-active-item {
+    background-color: lightskyblue;
+    font-weight: bold;
+}
+
+

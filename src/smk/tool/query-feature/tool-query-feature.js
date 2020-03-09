@@ -7,7 +7,7 @@ include.module( 'tool-query-feature', [ 'feature-list' ], function ( inc ) {
             order:              4,
             title:              'query Results1',
             panelComponent:     'feature-panel',
-            subPanel:           2
+            // subPanel:           2
         }, option ) )
     }
 
@@ -34,8 +34,12 @@ include.module( 'tool-query-feature', [ 'feature-list' ], function ( inc ) {
         self.changedActive( function () {
             if ( self.active ) {
                 self.featureSet.highlight()
+                Vue.nextTick( function () {
+                    smk.$tool[ self.parentId ].visible = true
+                } )
             }
             else {
+                self.featureSet.pick()
             }
         } )
 
@@ -76,7 +80,9 @@ include.module( 'tool-query-feature', [ 'feature-list' ], function ( inc ) {
                     return {
                         visible:at.visible,
                         title:  at.title,
-                        name:   at.name
+                        name:   at.name,
+                        format: at.format,
+                        value:  at.value
                     }
                 } )
             }
@@ -91,6 +97,8 @@ include.module( 'tool-query-feature', [ 'feature-list' ], function ( inc ) {
 
             self.resultCount = self.featureSet.getStats().featureCount 
             self.resultPosition = featureIds.indexOf( ev.feature.id )
+
+            smk.$viewer.panToFeature( ev.feature )
         } )
 
         self.featureSet.addedFeatures( function ( ev ) {

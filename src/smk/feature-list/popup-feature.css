@@ -62,6 +62,9 @@
     border-top: 1px solid gray;
     padding-top: 5px;
     user-select: none;
+    -ms-user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
 
     display: flex;
     flex-direction: row;
@@ -86,9 +89,9 @@
     margin-right: -6px;
 }
 
-.smk-feature-popup .smk-navigator.smk-hidden {
+/* .smk-feature-popup .smk-navigator.smk-hidden {
     visibility: hidden;
-}
+} */
 
 .smk-feature-popup .smk-navigator .smk-position {
     white-space: nowrap;

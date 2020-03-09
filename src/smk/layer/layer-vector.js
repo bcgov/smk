@@ -10,46 +10,103 @@ include.module( 'layer.layer-vector-js', [ 'layer.layer-js' ], function () {
     SMK.TYPE.Layer[ 'vector' ] = VectorLayer
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
-    VectorLayer.prototype.getLegends = function ( viewer, width, height ) {
+    VectorLayer.prototype.initLegends = function ( viewer, width, height ) {
         var self = this
 
         if ( width == null ) width = 20
         if ( height == null ) height = 20
 
-        var cv = $( '<canvas width="' + width * 3 + '" height="' + height + '">' ).get( 0 )
+        var mult = ( !!this.config.legend.point + !!this.config.legend.line + !!this.config.legend.fill )
+
+        var cv = $( '<canvas width="' + width * mult + '" height="' + height + '">' ).get( 0 )
         var ctx = cv.getContext( '2d' )
 
-        ctx.fillStyle = this.config.style.fillColor
-        ctx.fillRect( 0, 0, width, height )
+        var styles = [].concat( self.config.style )
 
-        ctx.lineWidth = 4
-        ctx.strokeStyle = this.config.style.strokeColor
-        ctx.strokeRect( 2, 2, width - 4 , height - 4 )
+        return SMK.UTIL.resolved( 0 )
+            .then( drawPoint )
+            .then( drawLine )
+            .then( drawFill )
+            .then( function () {
+                return [ {
+                    url: cv.toDataURL( 'image/png' ),
+                    title: self.config.legend.title || self.config.title
+                } ]
+            } )
 
-        var p = SMK.UTIL.resolved()
+        function drawPoint( offset ) {
+            if ( !self.config.legend.point ) return offset 
 
-        if ( this.config.style.markerUrl ) {
-            p = p.then( function () {
-                return SMK.UTIL.makePromise( function ( res, rej ) {
+            return SMK.UTIL.makePromise( function ( res, rej ) {
+                if ( styles[ 0 ].markerUrl ) {
                     var img = $( '<img>' )
                         .on( 'load', function () {
                             var r = img.width / img.height
                             if ( r > 1 ) r = 1 / r
-                            ctx.drawImage( img, width + 5, 0, height * r, height )
-                            res()
+                            ctx.drawImage( img, offset, 0, height * r, height )
+                            res( offset + width )
                         } )
                         .on( 'error', res )
-                        .attr( 'src', viewer.resolveAttachmentUrl( self.config.style.markerUrl, null, 'png' ) )
+                        .attr( 'src', viewer.resolveAttachmentUrl( styles[ 0 ].markerUrl, null, 'png' ) )
                         .get( 0 )
-                } )
+                }
+                else {
+                    ctx.beginPath()
+                    ctx.arc( offset + width / 2, height / 2, styles[ 0 ].strokeWidth / 2, 0, 2 * Math.PI )
+                    ctx.lineWidth = 2
+                    ctx.strokeStyle = styles[ 0 ].strokeColor + alpha( styles[ 0 ].strokeOpacity )
+                    ctx.fillStyle = styles[ 0 ].fillColor + alpha( styles[ 0 ].fillOpacity )
+                    ctx.fill()
+                    ctx.stroke()
+
+                    res( offset + width )
+                }
             } )
+
         }
 
-        return p.then( function () {
-            return [ {
-                url: cv.toDataURL( 'image/png' ),
-            } ]
-        } )
+        function drawLine( offset ) {
+            if ( !self.config.legend.line ) return offset 
+        
+            styles.forEach( function ( st ) {
+                ctx.lineWidth = st.strokeWidth
+                ctx.strokeStyle = st.strokeColor
+                ctx.lineCap = st.strokeCap
+                if ( st.strokeDashes ) {
+                    ctx.setLineDash( st.strokeDashes.split( ',' ) )
+                    if ( parseFloat( st.strokeDashOffset ) )
+                        ctx.lineDashOffset = parseFloat( st.strokeDashOffset )
+                }
+
+                var hw = st.strokeWidth / 2
+                ctx.moveTo( offset, height / 2 )
+                ctx.quadraticCurveTo( offset + width - hw, 0, offset + width - hw, height )
+                ctx.stroke()
+            } )
+
+            return offset + width
+        }
+
+        function drawFill( offset ) {
+            if ( !self.config.legend.fill ) return offset 
+
+            styles.forEach( function ( st ) {
+                // var w = self.config.style.strokeWidth
+                // ctx.lineWidth = w
+                // ctx.strokeStyle = self.config.style.strokeColor + alpha( self.config.style.strokeOpacity )
+                ctx.fillStyle = st.fillColor + alpha( st.fillOpacity )
+
+                ctx.fillRect( 0, 0, width, height )
+
+                // ctx.strokeRect( w / 2, w / 2, width - w , height - w )
+            } )
+
+            return offset + width
+        }
+
+        function alpha( op ) {
+            return Number( Math.round( ( op || 1 ) * 255 ) ).toString( 16 )
+        } 
     }
 
     VectorLayer.prototype.initialize = function () {
@@ -99,4 +156,17 @@ include.module( 'layer.layer-vector-js', [ 'layer.layer-js' ], function () {
         return configs
     }
 
+    VectorLayer.prototype.load = function ( data ) {
+        if ( !data ) return
+
+        if ( this.loadLayer )
+            return this.loadLayer( data )
+
+        this.loadCache = data
+    }
+
+    VectorLayer.prototype.clear = function () {
+        if ( this.clearLayer )
+            return this.clearLayer()
+    }
 } )

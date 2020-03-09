@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <!-- SMK BOOTSTRAP - - - - - - - -->
+        <script src="/dist/smk.js" smk-container-sel="#smk-map-frame"></script>
+        <!-- - - - - - - - - - - - - - - -->
+        <style>
+            #header {
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 70px;
+
+                border-bottom:      2px solid #fcba19;
+                background-color: #036;
+                font-family:        Helvetica,Arial,sans-serif;
+
+                display:            flex;
+                justify-content:    flex-start;
+                align-items:        center;
+            }
+
+            #header img {
+                margin-left:    10px;
+                margin-bottom:  10px;
+            }
+
+            #header-title {
+                color:          white;
+                margin-left:    20px;
+
+                display:        flex;
+                flex-direction: column;
+                justify-content:center;
+                align-items:    flex-start;
+                font-size:      30px;
+            }
+
+            #smk-map-frame {
+                position: absolute;
+                top: 72px;
+                left: 0;
+                right: 320px;
+                bottom: 0;
+                margin: 0;
+                padding: 0;
+            }
+
+            #sidebar {
+                position: absolute;
+                top: 72px;
+                width: 300px;
+                right: 0;
+                bottom: 0;
+                padding: 0 10px;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div id="header">
+            <img src="../bc-gov-logo-transparent.png">
+            <div id="header-title"></div>
+        </div>
+        <div id="smk-map-frame"></div>
+        <div id="sidebar">
+            <h1>Sidebar Content</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vel sapien auctor, blandit mi eget, iaculis erat. Nam rutrum luctus est, sed accumsan sapien rhoncus ac. Curabitur in suscipit sem. Integer mollis risus cursus tempor ullamcorper. Nullam mollis urna at ante consequat, eget rhoncus velit varius. Sed posuere tortor nec eleifend feugiat. Cras vestibulum dolor ut elit aliquet, nec auctor magna lacinia. Pellentesque eget quam quis mi iaculis venenatis. Vestibulum vel enim risus.</p>
+            <p>Suspendisse luctus pulvinar porta. Maecenas bibendum, erat nec sollicitudin luctus, massa tortor efficitur neque, a posuere libero est sit amet orci. Duis dui erat, convallis sed eros sit amet, sodales aliquam turpis. Mauris lobortis lacinia iaculis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; In condimentum, eros et aliquam laoreet, mauris justo accumsan metus, ut consectetur erat mauris vel arcu. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nulla orci lorem, sodales nec hendrerit tempus, pretium nec diam.</p>
+        </div>
+    </body>
+</html>

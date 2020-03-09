@@ -1,0 +1,149 @@
+<side-panel class="smk-directions-options-panel" 
+    v-bind:busy="busy"
+    v-bind:message="busy ? 'Calculating' : message"
+    v-bind:status="busy ? 'progress' : status"
+>
+    <template slot="header">
+        <slot></slot>
+    </template>
+
+    <template slot="commands">
+    </template>
+
+    <select-option class="smk-directions-optimal"
+        v-if="command.optimal !== false"
+        v-bind:value="optimal"
+        v-on:change="!busy && $$emit( 'change', { optimal: $event } )"
+        v-bind:options="[
+            { value: false, label: 'No, leave as is' },
+            { value: true, label: 'Yes, optimize route' }
+        ]"
+    >Should route be optimized?</select-option>
+
+    <select-option class="smk-directions-round-trip"
+        v-if="command.roundTrip !== false"
+        v-bind:value="roundTrip"
+        v-on:change="!busy && $$emit( 'change', { roundTrip: $event } )"
+        v-bind:options="[
+            { value: false, label: 'No, one-way' },
+            { value: true, label: 'Yes, a round-trip' }
+        ]"
+    >Is this route a round-trip?</select-option>
+
+    <select-option class="smk-directions-criteria"
+        v-if="command.criteria !== false"
+        v-bind:value="criteria"
+        v-on:change="!busy && $$emit( 'change', { criteria: $event } )"
+        v-bind:options="[
+            { value: 'shortest', label: 'Shortest route' },
+            { value: 'fastest', label: 'Fastest route' }
+        ]"
+    >Which is more important?</select-option>
+
+    <select-option class="smk-directions-truck"
+        v-if="command.vehicleType !== false"
+        v-bind:value="truck"
+        v-on:change="!busy && $$emit( 'change', { truck: $event } )"
+        v-bind:options="[
+            { value: false, label: 'Car' },
+            { value: true, label: 'Truck' }
+        ]"
+    >Type of vehicle</select-option>
+
+    <div class="smk-truck-parameters"
+        v-if="truck"
+    >
+        <select-option class="smk-directions-truck-route"
+            v-if="command.truckRoute !== false"
+            v-bind:value="truckRoute"
+            v-on:change="!busy && $$emit( 'change', { truckRoute: $event } )"
+            v-bind:options="[
+                { value: 1, label: 'Loose' },
+                { value: 10, label: 'Normal' },
+                { value: 100, label: 'Tight' }
+            ]"
+        >Adherence to designated truck route</select-option>
+
+        <div class="smk-directions-bespoke"
+            v-if="command.bespoke !== false"
+            v-content="bespoke"
+        ></div>
+
+        <enter-number class="smk-directions-truck-height"
+            v-if="command.truckHeight !== false"
+            v-bind:value="formatNumber( toUnit( truckHeight, truckHeightUnit ), 2 )"
+            v-bind:option="{ min: 0, step: 1 }"
+            v-on:change="!busy && $$emit( 'change', { truckHeight: fromUnit( $event, truckHeightUnit ) } )"
+        >Height OAH
+            <template slot="after-input">
+                <div class="smk-input">
+                    <select
+                        v-bind:value="truckHeightUnit"
+                        v-on:change="$$emit( 'change', { truckHeightUnit: parseFloat( $event.target.value ) } )"
+                    >
+                        <option value="0.3048006096012192">ft</option>
+                        <option value="1">m</option>
+                    </select>
+                </div>
+            </template>            
+        </enter-number>
+
+        <enter-number class="smk-directions-truck-width"
+            v-if="command.truckWidth !== false"
+            v-bind:value="formatNumber( toUnit( truckWidth, truckWidthUnit ), 2 )"
+            v-bind:option="{ min: 0, step: 0.01 }"
+            v-on:change="!busy && $$emit( 'change', { truckWidth: fromUnit( $event, truckWidthUnit ) } )"
+        >Width OAW
+            <template slot="after-input">
+                <div class="smk-input">
+                    <select
+                        v-bind:value="truckWidthUnit"
+                        v-on:change="$$emit( 'change', { truckWidthUnit: parseFloat( $event.target.value ) } )"
+                    >
+                        <option value="0.3048006096012192">ft</option>
+                        <option value="1">m</option>
+                    </select>
+                </div>
+            </template>            
+        </enter-number>
+
+        <enter-number class="smk-directions-truck-length"
+            v-if="command.truckLength !== false"
+            v-bind:value="formatNumber( toUnit( truckLength, truckLengthUnit ), 2 )"
+            v-bind:option="{ min: 0, step: 0.01 }"
+            v-on:change="!busy && $$emit( 'change', { truckLength: fromUnit( $event, truckLengthUnit ) } )"
+        >Length OAL
+            <template slot="after-input">
+                <div class="smk-input">
+                    <select
+                        v-bind:value="truckLengthUnit"
+                        v-on:change="$$emit( 'change', { truckLengthUnit: parseFloat( $event.target.value ) } )"
+                    >
+                        <option value="0.3048006096012192">ft</option>
+                        <option value="1">m</option>
+                    </select>
+                </div>
+            </template>            
+        </enter-number>
+
+        <enter-number class="smk-directions-truck-weight"
+            v-if="command.truckWeight !== false"
+            v-bind:value="formatNumber( toUnit( truckWeight, truckWeightUnit ), 0 )"
+            v-bind:option="{ min: 0, step: 1 }"
+            v-on:change="!busy && $$emit( 'change', { truckWeight: fromUnit( $event, truckWeightUnit ) } )"
+        >Weight GVW
+            <template slot="after-input">
+                <div class="smk-input">
+                    <select
+                        v-bind:value="truckWeightUnit"
+                        v-on:change="$$emit( 'change', { truckWeightUnit: parseFloat( $event.target.value ) } )"
+                    >
+                        <option value="2.20462262185">lb</option>
+                        <option value="1">kg</option>
+                    </select>
+                </div>
+            </template>            
+        </enter-number>
+    </div>
+
+</side-panel>

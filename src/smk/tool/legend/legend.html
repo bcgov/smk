@@ -1,0 +1,14 @@
+<div class="smk-legend-status">
+    <legend-display 
+        v-for="c, i in contexts"
+        v-bind:key="'ctx-' + i"
+        v-bind:display="c"
+    ></legend-display>
+
+    <!-- <legend-display 
+        v-bind:display="display"
+    ></legend-display>
+    <legend-display 
+        v-bind:display="internal"
+    ></legend-display> -->
+</div>

@@ -10,7 +10,7 @@ include.module( 'layer.layer-esri-dynamic-js', [ 'layer.layer-js', 'terraformer'
     SMK.TYPE.Layer[ 'esri-dynamic' ] = EsriDynamicLayer
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
-    EsriDynamicLayer.prototype.getLegends = function () {
+    EsriDynamicLayer.prototype.initLegends = function () {
         var self = this
 
         var serviceUrl = this.config.serviceUrl + '/legend'

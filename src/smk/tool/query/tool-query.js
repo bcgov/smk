@@ -3,7 +3,7 @@ include.module( 'tool-query', [ 'feature-list', 'widgets', 'sidepanel', 'tool-qu
 
     Vue.component( 'parameter-constant', {
         template: inc[ 'tool-query.parameter-constant-html' ],
-        props: [ 'id', 'title', 'value', 'type' ],
+        props: [ 'id', 'title', 'value', 'type', 'focus' ],
         mounted: function () {
             this.$emit( 'mounted' )
         }
@@ -11,7 +11,7 @@ include.module( 'tool-query', [ 'feature-list', 'widgets', 'sidepanel', 'tool-qu
 
     Vue.component( 'parameter-input', {
         template: inc[ 'tool-query.parameter-input-html' ],
-        props: [ 'id', 'title', 'value', 'type' ],
+        props: [ 'id', 'title', 'value', 'type', 'focus' ],
         data: function () {
             return {
                 input: this.value || ''
@@ -20,6 +20,9 @@ include.module( 'tool-query', [ 'feature-list', 'widgets', 'sidepanel', 'tool-qu
         watch: {
             value: function ( val ) {
                 this.input = val || ''
+            },
+            focus: function () {
+                this.$refs.in.focus()
             }
         },
         mounted: function () {
@@ -29,7 +32,7 @@ include.module( 'tool-query', [ 'feature-list', 'widgets', 'sidepanel', 'tool-qu
 
     Vue.component( 'parameter-select', {
         template: inc[ 'tool-query.parameter-select-html' ],
-        props: [ 'id', 'title', 'choices', 'value', 'type', 'useFallback' ],
+        props: [ 'id', 'title', 'choices', 'value', 'type', 'focus', 'useFallback' ],
         data: function () {
             // console.log( 'data', this.value )
             return {
@@ -66,8 +69,9 @@ include.module( 'tool-query', [ 'feature-list', 'widgets', 'sidepanel', 'tool-qu
         },
         watch: {
             config: function ( val ) {
+                var self = this
                 Object.keys( val ).forEach( function ( k ) {
-                    this[ k ] = val[ k ]
+                    self[ k ] = val[ k ]
                 } )
             }
         },
@@ -152,6 +156,12 @@ include.module( 'tool-query', [ 'feature-list', 'widgets', 'sidepanel', 'tool-qu
 
         self.changedActive( function () {
             if ( self.active ) {
+                
+                self.focusFirstParameter()
+                SMK.UTIL.makeDelayedCall( function () {
+                    self.focusFirstParameter()
+                }, { delay: 100 } )()
+
                 if ( self.onActivate ) {
                     switch ( self.onActivate ) {
                     case 'execute':
@@ -159,15 +169,20 @@ include.module( 'tool-query', [ 'feature-list', 'widgets', 'sidepanel', 'tool-qu
                         break
                     }
                 }
-                else {
-                    if ( !self.featureSet.isEmpty() )
-                        smk.$tool[ 'query-results--' + self.instance ].active = true
-                }
+            }
+        } )
+
+        self.changedGroup( function () {
+            if ( !self.group ) {
+                // console.log('clear')
+                self.featureSet.clear()
+                self.featureSet.pick()
             }
         } )
 
         smk.on( this.id, {
             'activate': function () {
+                // console.log('tq activate',self.active)
                 if ( !self.enabled ) return
 
                 self.active = !self.active
@@ -182,6 +197,13 @@ include.module( 'tool-query', [ 'feature-list', 'widgets', 'sidepanel', 'tool-qu
                 self.parameters[ ev.index ].mounted()
             },
 
+            'parameter-reset': function ( ev ) {
+                self.parameters[ ev.index ].prop.value = self.query.parameters[ ev.index ].value
+            },
+
+            'parameter-change': function ( ev ) {
+                smk.setEditFocus( ev.active )
+            },
             // 'active', function ( ev ) {
             //     smk.$viewer[ self.featureSetProperty ].pick( ev.featureId )
             // } )
@@ -249,6 +271,10 @@ include.module( 'tool-query', [ 'feature-list', 'widgets', 'sidepanel', 'tool-qu
         } )
 
     } )
+
+    QueryTool.prototype.focusFirstParameter = function () {
+        this.parameters[ 0 ].focus()
+    }
 
     function asyncIterator( test, body, delay ) {
         return SMK.UTIL.makePromise( function ( res, rej ) {

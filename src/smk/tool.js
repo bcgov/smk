@@ -5,6 +5,7 @@ include.module( 'tool', [ 'jquery', 'event' ], function () {
         'changedVisible',
         'changedEnabled',
         'changedActive',
+        'changedGroup'
     ] )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
@@ -16,7 +17,10 @@ include.module( 'tool', [ 'jquery', 'event' ], function () {
         this.makeProp( 'visible', false, 'changedVisible' )
         this.makeProp( 'enabled', true, 'changedEnabled' )
         this.makeProp( 'active', false, 'changedActive' )
-        this.makeProp( 'class', null )
+        this.makeProp( 'group', false, 'changedGroup' )
+
+        this.makePropPanel( 'expand', 0 )
+        this.makePropPanel( 'hasPrevious', false )
 
         this.makePropWidget( 'type', 'unknown' )
         this.makePropWidget( 'showTitle', false )
@@ -24,11 +28,11 @@ include.module( 'tool', [ 'jquery', 'event' ], function () {
         $.extend( this, option )
     }
 
-    // Tool.prototype.type = 'unknown'
     Tool.prototype.order = 1
     // Tool.prototype.position = 'toolbar'
     Tool.prototype.showPanel = true
-    Tool.prototype.subPanel = 0
+    // Tool.prototype.subPanel = 0
+    Tool.prototype.parentId = null
 
     SMK.TYPE.Tool = Tool
 
@@ -45,10 +49,13 @@ include.module( 'tool', [ 'jquery', 'event' ], function () {
         self.widget[ name ] = initial
         self.panel[ name ] = initial
         Object.defineProperty( self, name, {
-            get: function () { return self.widget[ name ] },
+            get: function () { 
+                return self.widget[ name ] 
+            },
             set: function ( v ) {
-                if ( v == self.widget[ name ] ) return
-                // console.warn( self.id, name, v )                
+                // if ( name == 'active')
+                    // console.warn('SET', self.widget.id,name,self.widget[ name ],self.panel[ name ],v )
+                if ( v == self.widget[ name ] && v == self.panel[ name ] ) return
                 self.widget[ name ] = v
                 self.panel[ name ] = v
                 if ( event ) self[ event ].call( self )
@@ -74,18 +81,27 @@ include.module( 'tool', [ 'jquery', 'event' ], function () {
         } )
     }
 
-    Tool.prototype.makePropPanel = function ( name, initial, event ) {
+    Tool.prototype.makePropPanel = function ( name, initial, event, validate ) {
         var self = this
 
         if ( !this.panel ) this.panel = {}
+
+        if ( typeof validate != 'function' )
+            validate = function ( newVal ) { return newVal } 
+
+        var callback = self[ event ] || function () {}
 
         self.panel[ name ] = initial
         Object.defineProperty( self, name, {
             get: function () { return self.panel[ name ] },
             set: function ( v ) {
-                if ( v == self.panel[ name ] ) return
-                self.panel[ name ] = v
-                if ( event ) self[ event ].call( self )
+                var oldVal = self.panel[ name ]
+                var newVal = validate( v, oldVal, name )
+                
+                self.panel[ name ] = newVal
+
+                if ( newVal == oldVal ) return
+                callback.call( self )
                 return self
             }
         } )
@@ -95,39 +111,105 @@ include.module( 'tool', [ 'jquery', 'event' ], function () {
         return false
     }
 
+    Tool.prototype.setParentId = function ( toolId, smk ) {
+        var self = this
+
+        this.parentId = toolId
+        this.hasPrevious = !!toolId
+        
+        if ( !this.parentId ) {
+            this.rootId = this.id
+        }
+
+        var group = {}
+        Object.keys( smk.$tool ).forEach( function ( id ) {
+            var r = smk.$tool[ id ].rootId = findRoot( id, smk )
+            if ( !group[ r ] ) 
+                group[ r ] = [] 
+            
+            group[ r ].push( id )
+        } )
+
+        smk.$group = group
+    }
+
+    function findRoot( toolId, smk ) {
+        var rootId = toolId
+        while ( smk.$tool[ rootId ] && smk.$tool[ rootId ].parentId ) {
+            rootId = smk.$tool[ rootId ].parentId
+        }
+        return rootId
+    }
+
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
     Tool.prototype.initialize = function ( smk ) {
         var self = this
 
-        var positions
-        if ( Array.isArray( this.position ) )
-            positions = this.position
-        else if ( this.position )
-            positions = [ this.position ]
-        else
-            positions = []
-        positions.push( 'toolbar' )
+        this.setParentId( this.parentId, smk )
 
-        var found = positions.some( function ( p ) { 
-            if ( !( p in smk.$tool ) ) {
-                console.warn( 'position ' + p + ' not available for tool ' + self.id )
-                return false
+        var positions = [].concat( this.position || [] )
+
+        if ( positions.length ) {
+            positions.push( 'toolbar' )
+
+            var found = positions.some( function ( p ) { 
+                if ( !( p in smk.$tool ) ) {
+                    console.warn( 'position ' + p + ' not available for tool ' + self.id )
+                    return false
+                }
+
+                if ( p == self.id )
+                    return false 
+
+                return smk.$tool[ p ].addTool( self, smk )
+            } )
+
+            if ( !found ) {
+                console.warn( 'no position found for tool ' + self.id )
             }
+        }
 
-            if ( p == self.id )
-                return false 
+        this.changedActive( function () {
+            var ids = smk.getToolGroup( self.rootId )
+            var g = ids.some( function ( id ) {
+                return smk.$tool[ id ].active
+            } )
+            ids.forEach( function ( id ) {
+                smk.$tool[ id ].group = g
+            } )
 
-            return smk.$tool[ p ].addTool( self, smk )
+            if ( self.active ) {
+                ids.forEach( function ( id ) {
+                    smk.$tool[ id ].active = self.isToolInGroupActive( id )
+                } )
+            }
+            else {
+            }
         } )
 
-        if ( !found ) {
-            console.warn( 'no position found for tool ' + self.id )
-        }
+        if ( this.id == this.rootId )
+            this.changedGroup( function () {
+                if ( self.group ) {
+                    smk.getToolRootIds().forEach( function ( rootId ) {
+                        if ( rootId == self.id ) return
+
+                        smk.getToolGroup( rootId ).forEach( function ( id ) {
+                            smk.$tool[ id ].active = false
+                        } )
+                    } )
+                }
+                else {
+                }
+            } )
 
         return this.afterInitialize.forEach( function ( init ) {
             init.call( self, smk )
         } )
+    }
+
+    Tool.prototype.isToolInGroupActive = function ( toolId ) {
+        return toolId == this.id
     }
 
     return Tool

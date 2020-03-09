@@ -49,6 +49,23 @@ include.module( 'vue-config', [ 'vue' ], function ( inc ) {
         return d.toLocaleString()
     }
 
+
+    Vue.filter( 'formatTime', function ( seconds ) {
+        return formatTime( seconds )
+    } )
+
+    function formatTime( seconds ) {
+        var s = seconds % 60
+        var m = Math.trunc( ( seconds - s ) / 60 ) % 60
+        var h = Math.trunc( ( seconds - s - 60 * m ) / 60 / 60 )
+
+        if ( h ) 
+            return ( '0' + h ).substr( -2 ) + ':' + ( '0' + m ).substr( -2 ) + ':' + ( '0' + s ).substr( -2 ) 
+
+        return ( '0' + m ).substr( -2 ) + ':' + ( '0' + s ).substr( -2 ) 
+    }
+
+
     Vue.filter( 'dimensionalNumber', function ( value, dim, unit, decimalPlaces ) {
         if ( dim == 1 )
             switch ( unit ) {
@@ -215,6 +232,12 @@ include.module( 'vue-config', [ 'vue' ], function ( inc ) {
                 type: String,
                 default: ''
             }
+        }
+    } )
+
+    Vue.directive( 'content', {
+        bind: function ( el, binding ) {
+            binding.value.create( el )
         }
     } )
 

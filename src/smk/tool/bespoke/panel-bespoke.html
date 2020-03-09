@@ -1,0 +1,13 @@
+<side-panel class="smk-bespoke-panel" 
+    v-bind:showSwipe="showSwipe"
+    v-on:swipe-up="showSwipe && $$emit('swipe-up')"
+    v-on:swipe-down="showSwipe && $$emit('swipe-down')"    
+>
+    <template slot="header">
+        <slot></slot>
+    </template>
+
+    <div class="smk-bespoke-content" 
+        v-content="content"
+    ></div>
+</side-panel>

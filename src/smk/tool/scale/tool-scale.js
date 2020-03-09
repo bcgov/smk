@@ -23,6 +23,7 @@ include.module( 'tool-scale', [ 'tool', 'tool-scale.scale-html' ], function ( in
             rulerSectionWidth: null,
             rulerLength: null,
             rulerUnit: null,
+            zoomLevel: null
         }
 
         this.vm = new Vue( {
@@ -44,6 +45,7 @@ include.module( 'tool-scale', [ 'tool', 'tool-scale.scale-html' ], function ( in
 
             if ( this.showFactor !== false && view.scale ) {
                 this.model.scaleDenom = view.scale
+                this.model.zoomLevel = view.zoom
             }
 
             if ( this.showBar !== false && view.metersPerPixel ) {

@@ -1,0 +1,10 @@
+{
+    "tools": [
+        {
+            "type": "layers",
+            "display": [
+                        { "id": "truck-parking", "isVisible": true }
+                    ]
+                }
+            ]
+        }

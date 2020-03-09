@@ -1,3 +1,6 @@
+.smk-tool-search .smk-toolbar {
+    min-width: var( --panel-width );
+}
 
 .smk-search-panel .smk-search-result {
     font-size: 12px;

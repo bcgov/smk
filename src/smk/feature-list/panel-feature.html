@@ -1,54 +1,52 @@
-<side-panel class="smk-feature-panel">
+<side-panel class="smk-feature-panel"
+    v-bind:showSwipe="true"
+    v-on:swipe-up="$$emit('swipe-up')"
+    v-on:swipe-down="$$emit('swipe-down')"
+>
+    <template slot="header">
+        <slot></slot>
+    </template>
+
     <template slot="commands">
-        <div class="smk-command-row" v-if="resultCount > 1">
-            <div class="smk-command-spacer"></div>
+        <span class="smk-navigator" v-if="resultCount > 1 && command.navigator !== false">
+            <command-button class="smk-move"
+                v-on:click="$$emit( 'move-previous', { instance: instance } )"
+                icon="navigate_before"
+            ></command-button>
 
-            <span class="smk-navigator">
-                <i class="material-icons smk-move smk-command smk-icon"
-                    v-on:click="$$emit( 'move-previous', { instance: instance } )"
-                >navigate_before</i>
+            <span class="smk-position">{{ resultPosition + 1 }}</span> of <span class="smk-position">{{ resultCount }}</span>
 
-                <span class="smk-position">{{ resultPosition + 1 }}</span>
-                of
-                <span class="smk-position">{{ resultCount }}</span>
+            <command-button class="smk-move"
+                v-on:click="$$emit( 'move-next', { instance: instance } )"
+                icon="navigate_next"
+            ></command-button>
+        </span>
 
-                <i class="material-icons smk-move smk-command smk-icon"
-                    v-on:click="$$emit( 'move-next', { instance: instance } )"
-                >navigate_next</i>
-            </span>
+        <command-button class="smk-zoom"
+            v-if="tool.zoom && command.zoom !== false"
+            v-on:click="$$emit( 'zoom', { instance: instance } )"
+        >Zoom to</command-button>
 
-            <div class="smk-command-spacer"></div>
-        </div>
+        <command-button class="smk-select"
+            v-if="tool.select && command.select !== false"
+            v-on:click="$$emit( 'select', { instance: instance } )"
+        >Add to selection</command-button>
 
-        <div class="smk-command-row">
-            <span class="smk-command"
-                v-if="tool.zoom"
-                v-on:click="$$emit( 'zoom', { instance: instance } )"
-            >Zoom to</span>
-
-            <span class="smk-command"
-                v-if="tool.select"
-                v-on:click="$$emit( 'select', { instance: instance } )"
-            >Add to selection</span>
-
-            <div class="smk-command-spacer"></div>
-
-            <select class="smk-command" 
-                v-if="layer"
-                v-model="attributeView"
-            >
-                <option value="default">Default View</option>        
-                <option v-bind:value="'feature-template-' + layer.id"
-                    v-if="attributeComponent == 'feature-template-' + layer.id"
-                >Template View</option>        
-                <option value="feature-description"
-                    v-if="attributeComponent == 'feature-description'"
-                >Description View</option>        
-                <option value="feature-attributes">Attributes View</option>        
-                <option value="feature-properties">Properties View</option>        
-            </select>
-        </div>
-
+        <select class="smk-command smk-attribute-mode" 
+            v-if="layer && command.attributeMode !== false"
+            v-model="attributeView"
+        >
+            <option value="default">Default View</option>        
+            <option v-bind:value="'feature-template-' + layer.id"
+                v-if="attributeComponent == 'feature-template-' + layer.id"
+            >Template View</option>        
+            <option value="feature-description"
+                v-if="attributeComponent == 'feature-description'"
+            >Description View</option>        
+            <option value="feature-attributes">Attributes View</option>        
+            <option value="feature-properties">Properties View</option>        
+            <option value="feature-formatted">Formatted View</option>        
+        </select>
     </template>
 
     <component class="smk-feature"
@@ -56,8 +54,9 @@
         v-bind:key="layer.id"
         v-bind:is="attributeView == 'default' ? attributeComponent : attributeView"
         v-bind="{
-            layer:   layer,
-            feature: feature,
+            layer:      layer,
+            feature:    feature,
+            attributes: attributes,
         }"
     ></component>
 </side-panel>

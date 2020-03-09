@@ -2,6 +2,7 @@
 
     <div class="smk-denom"
         v-if="scaleDenom"
+        v-bind:title="'Zoom: ' + zoomLevel.toFixed( 3 )"
     >1 : {{ scaleDenom | formatNumber( 3 ) }}</div>
 
     <div class="smk-ruler">

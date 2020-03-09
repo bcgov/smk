@@ -30,17 +30,19 @@ include.module( 'tool-identify-feature', [ 'feature-list' ], function ( inc ) {
 
         self.changedActive( function () {
             if ( self.active ) {
-                smk.$tool[ 'identify' ].visible = true
                 self.featureSet.highlight()
+                Vue.nextTick( function () {
+                    smk.$tool[ self.parentId ].visible = true
+                } )
             }
             else {
-                smk.$tool[ 'identify' ].visible = false
+                self.featureSet.pick()
             }
         } )
 
         smk.$viewer.startedIdentify( function () {
             self.active = false
-            smk.$sidepanel.popTool( self )
+            // smk.$sidepanel.popTool( self )
         } )
 
         smk.on( this.id, {
@@ -87,7 +89,9 @@ include.module( 'tool-identify-feature', [ 'feature-list' ], function ( inc ) {
                     return {
                         visible:at.visible,
                         title:  at.title,
-                        name:   at.name
+                        name:   at.name,
+                        format: at.format,
+                        value:  at.value
                     }
                 } )
             }
@@ -101,6 +105,8 @@ include.module( 'tool-identify-feature', [ 'feature-list' ], function ( inc ) {
             self.setAttributeComponent( ly, ev.feature )
 
             self.resultPosition = featureIds.indexOf( ev.feature.id )
+
+            smk.$viewer.panToFeature( ev.feature )
         } )
 
     } )

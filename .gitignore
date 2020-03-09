@@ -33,8 +33,7 @@
 # Generated dirs
 **/node_modules/**
 **/target/**
-**/build/**
 **/node/**
 **/bin/**
-/lib/
-/smk
+dist/**
+temp/**

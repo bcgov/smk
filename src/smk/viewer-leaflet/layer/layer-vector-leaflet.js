@@ -101,6 +101,21 @@ include.module( 'layer-leaflet.layer-vector-leaflet-js', [ 'layer.layer-vector-j
 
         return features
     }
+
+    VectorLeafletLayer.prototype.getConfig = function ( leafLayer ) {
+        var cfg = SMK.TYPE.Layer[ 'vector' ].prototype.getConfig.call( this )
+
+        if ( cfg.isInternal ) {
+            var geojson = leafLayer.toGeoJSON()
+            if ( geojson ) {
+                cfg.dataUrl = 'data:application/json,' + JSON.stringify( geojson )
+                cfg.isInternal = false
+            }
+        }
+
+        return cfg
+    }
+
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
     SMK.TYPE.Layer[ 'vector' ][ 'leaflet' ].create = function ( layers, zIndex ) {
@@ -109,17 +124,28 @@ include.module( 'layer-leaflet.layer-vector-leaflet-js', [ 'layer.layer-vector-j
         if ( layers.length != 1 ) throw new Error( 'only 1 config allowed' )
         if ( ( layers[0].useClustering + layers[0].useHeatmap + layers[0].useRaw ) > 1 ) throw new Error( 'raw or heatmap or clustering' )
 
+        var styles = [].concat( layers[ 0 ].config.style )
+
         var layer = new L.geoJson( null, {
             pointToLayer: function ( geojson, latlng ) {
-                return markerForStyle( self, latlng, layers[ 0 ].config.style )
+                // return markerForStyle( self, latlng, layers[ 0 ].config.style )
+                return markerForStyle( self, latlng, styles[ 0 ], layers[ 0 ].config )
+                    .on( 'moveend', function ( ev ) {
+                        var ll = ev.target.getLatLng()
+                        layers[ 0 ].changedFeature( { newPt: { latitude: ll.lat, longitude: ll.lng }, geojson: geojson } )
+                    } )
             },
             onEachFeature: function ( feature, layer ) {
                 if ( layer.setStyle )
-                    layer.setStyle( convertStyle( layers[ 0 ].config.style, feature.geometry.type ) )
+                    layer.setStyle( convertStyle( feature.style /* || layers[ 0 ].config.style */, feature.geometry.type ) )
             },
             renderer: L.svg(),
             interactive: false
         } )
+
+        if ( layers[ 0 ].config.tooltip ) {
+            layer.bindTooltip( layers[ 0 ].config.tooltip.title, Object.assign( { permanent: true }, layers[ 0 ].config.tooltip.option ) )
+        }
 
         layer.on( {
             add: function () {
@@ -133,6 +159,33 @@ include.module( 'layer-leaflet.layer-vector-leaflet-js', [ 'layer.layer-vector-j
         if ( !layers[ 0 ].config.CRS )
             layers[ 0 ].config.CRS = 'EPSG4326'
 
+        layers[ 0 ].loadLayer = function ( data ) {
+            var feats = []
+            turf.featureEach( data, function ( ft ) {
+                styles.forEach( function ( st, i ) {
+                    if ( i > 0 )
+                        ft = turf.clone( ft )
+
+                    ft.style = st
+                    feats.push( ft )
+                } )
+            } )
+
+            layer.addData( turf.featureCollection( feats ) )
+        }
+
+        if ( layers[ 0 ].loadCache ) {
+            layers[ 0 ].loadLayer( layers[ 0 ].loadCache )
+            layers[ 0 ].loadCache = null
+        }
+
+        layers[ 0 ].clearLayer = function () {
+            layer.clearLayers()
+        }
+
+        if ( layers[ 0 ].config.isInternal ) 
+            return layer 
+
         return SMK.UTIL.makePromise( function ( res, rej ) {
                 $.get( url, null, null, 'json' ).then( res, function ( xhr, status, err ) { 
                     rej( 'Failed requesting ' + url + ': ' + xhr.status + ',' + err ) 
@@ -140,7 +193,20 @@ include.module( 'layer-leaflet.layer-vector-leaflet-js', [ 'layer.layer-vector-j
             } )
             .then( function ( data ) {
                 console.log( 'loaded', url )
-                layer.addData( data )
+
+                var feats = []
+                turf.featureEach( data, function ( ft ) {                    
+                    styles.forEach( function ( st, i ) {                        
+                        if ( i > 0 )
+                            ft = turf.clone( ft )
+                            
+                        ft.style = st
+                        feats.push( ft )
+                    } )
+                } )
+
+                layer.addData( turf.featureCollection( feats ) )
+
                 return layer
             } )
             .then( function ( layer ) {
@@ -186,26 +252,30 @@ include.module( 'layer-leaflet.layer-vector-leaflet-js', [ 'layer.layer-vector-j
                 color:       styleConfig.strokeColor,
                 weight:      styleConfig.strokeWidth,
                 opacity:     styleConfig.strokeOpacity,
-                // lineCap:     styleConfig.,
+                lineCap:     styleConfig.strokeCap,
+                dashArray:   styleConfig.strokeDashes,
                 // lineJoin:    styleConfig.,
-                // dashArray:   styleConfig.,
-                // dashOffset:  styleConfig.,
-                // fill:        styleConfig.,
+                dashOffset:  styleConfig.strokeDashOffset,
+                fill:        styleConfig.fill,
                 fillColor:   styleConfig.fillColor,
                 fillOpacity: styleConfig.fillOpacity,
                 // fillRule:    styleConfig.,
             }
     }
 
-    function markerForStyle( viewer, latlng, styleConfig ) {
+    function markerForStyle( viewer, latlng, styleConfig, layerConfig ) {
         if ( styleConfig.markerUrl ) {
             return L.marker( latlng, {
-                icon: styleConfig.marker || ( styleConfig.marker = L.icon( {
+                icon: L.icon( {
                     iconUrl: viewer.resolveAttachmentUrl( styleConfig.markerUrl, null, 'png' ),
+                    shadowUrl: viewer.resolveAttachmentUrl( styleConfig.shadowUrl, null, 'png', false ),
                     iconSize: styleConfig.markerSize,
                     iconAnchor: styleConfig.markerOffset,
-                } ) ),
-                interactive: false
+                    popupAnchor: styleConfig.popupOffset,
+                    shadowSize: styleConfig.shadowSize,
+                } ),
+                interactive: !!layerConfig.isDraggable,
+                draggable: !!layerConfig.isDraggable
             } )
         }
         else {

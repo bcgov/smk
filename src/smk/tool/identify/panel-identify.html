@@ -1,12 +1,22 @@
 <feature-list-panel class="smk-identify-panel"
     v-bind="$props"
     canClear="true"
+    v-bind:showSwipe="true"
 >
-    <template slot="command-row" slot-scope="list">
-        <span class="smk-command"
-            v-bind:class="{ 'smk-disabled': busy }"
-            v-if="tool.select && list.featureCount > 1"
-            v-on:click="$$emit( 'add-all' )"
-        >Add all to selection</span>
+    <template slot="header">
+        <slot></slot>
     </template>
+
+    <template slot="commands">
+        <command-button class="smk-select"
+            v-bind:disabled="busy"
+            v-if="tool.select && list.featureCount > 1 && command.select !== false"
+            v-on:click="$$emit( 'add-all' )"
+        >Add all to selection</command-button>
+    </template>
+
+    <div v-if="layers.length == 0">
+        Click on the map to identify features under the clicked point.
+    </div>
+
 </feature-list-panel>

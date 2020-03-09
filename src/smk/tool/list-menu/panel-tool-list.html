@@ -1,4 +1,12 @@
-<side-panel class="smk-tool-list-panel" v-bind:showHeader="false">
+<side-panel class="smk-tool-list-panel" 
+    v-bind:showHeader="true"
+    v-bind:showSwipe="true"
+    v-on:swipe-up="$$emit('swipe-up')"
+    v-on:swipe-down="$$emit('swipe-down')"    
+>
+    <template slot="header">
+        <slot></slot>
+    </template>
 
     <component class="smk-tool"
         v-for="tool in subWidgets"
