@@ -1,4 +1,4 @@
-include.module( 'tool-list-menu', [ 'tool', 'widgets', 'tool-list-menu.panel-list-menu-html', 'tool-list-menu.panel-tool-list-html' ], function ( inc ) {
+include.module( 'tool-list-menu', [ 'tool', 'widgets', 'tool-list-menu.panel-tool-list-html' ], function ( inc ) {
     "use strict";
 
     Vue.component( 'list-menu-widget', {
@@ -8,7 +8,7 @@ include.module( 'tool-list-menu', [ 'tool', 'widgets', 'tool-list-menu.panel-lis
     Vue.component( 'tool-list-panel', {
         extends: inc.widgets.toolPanel,
         template: inc[ 'tool-list-menu.panel-tool-list-html' ],
-        props: [ 'visible', 'enabled', 'active', 'subWidgets' ]
+        props: [ 'subWidgets' ]
     } )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
@@ -40,6 +40,14 @@ include.module( 'tool-list-menu', [ 'tool', 'widgets', 'tool-list-menu.panel-lis
 
                 self.active = !self.active
             },
+
+            'swipe-up': function ( ev ) {                
+                smk.$sidepanel.setExpand( 2 )
+            },
+
+            'swipe-down': function ( ev ) {
+                smk.$sidepanel.incrExpand( -1 )
+            }
         } )
     } )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
@@ -47,26 +55,21 @@ include.module( 'tool-list-menu', [ 'tool', 'widgets', 'tool-list-menu.panel-lis
     ListMenuTool.prototype.addTool = function ( tool, smk ) {
         var self = this
 
-        tool.subPanel = tool.subPanel + 1
-        smk.$sidepanel.addTool( tool )
+        if ( !tool.parentId ) {
+            tool.setParentId( this.id, smk )
+        }
+
+        smk.getSidepanel().addTool( tool, smk )
 
         tool.showTitle = true
 
-        this.subWidgets.push( {
-            id: tool.id,
-            type: tool.type,
-            widgetComponent: tool.widgetComponent,
-            widget: tool.widget
-        } )
-
-        tool.changedActive( function () {
-            if ( tool.active ) {              
-                if ( !self.active ) {
-                    self.active = true
-                    tool.active = true // if list-menu isn't active, this is needed
-                }
-            }
-        } )
+        if ( tool.widgetComponent )
+            this.subWidgets.push( {
+                id: tool.id,
+                type: tool.type,
+                widgetComponent: tool.widgetComponent,
+                widget: tool.widget
+            } )
 
         return true
     }

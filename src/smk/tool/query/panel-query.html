@@ -3,9 +3,9 @@
     v-bind:message="message"
     v-bind:status="status"
 >
-    <template slot="header">
-        <div class="smk-description">{{ description }}</div>
-    </template>
+    <!-- <template slot="header"> -->
+        <!-- <div class="smk-description">{{ description }}</div> -->
+    <!-- </template> -->
 
     <div class="smk-parameters">
         <component class="smk-parameter"
@@ -13,38 +13,34 @@
             v-bind:key="parameter.id"
             v-bind:is="parameter.component"
             v-bind="parameter.prop"
-            v-on:input="$$emit( 'parameter-input', { index: i, value: $event.value } )"
-            v-on:mounted="$$emit( 'parameter-mounted', { index: i } )"
+            v-on:input="$$emit( 'parameter-input',      { index: i, value: $event.value } )"
+            v-on:mounted="$$emit( 'parameter-mounted',  { index: i } )"
+            v-on:reset="$$emit( 'parameter-reset',      { index: i } )"
+            v-on:change="$$emit( 'parameter-change',    { index: i, active: $event.active } )"
             v-on:pickDown="$emit( 'pickDown' )"
             v-on:pickUp="$emit( 'pickUp' )"
             v-on:execute="$$emit( 'execute' )"
         ></component>
     </div>
 
+    <template slot="header">
+        <slot></slot>
+    </template>
+
     <template slot="commands">
-        <div class="smk-command-row" style="align-items: flex-end">
-            <span class="smk-command"
-                v-bind:class="{ 'smk-disabled': busy }"
-                v-on:click="!busy && $$emit( 'execute' )"
-                style="font-size: 15px"
-            >Search</span>
+        <!-- <div class="smk-separator"></div> -->
 
-            <span class="smk-command"
-                v-bind:class="{ 'smk-disabled': !isModified || busy}"
-                v-on:click="isModified && !busy && $$emit( 'reset' )"
-            >Reset</span>
+        <span class="smk-search smk-command"
+            v-bind:class="{ 'smk-disabled': busy }"
+            v-on:click="!busy && $$emit( 'execute' )"
+            style="font-size: 15px"
+        >Search</span>
 
-            <div class="smk-command-spacer"></div>
-
-            <label class="smk-command smk-larger"
-                v-bind:class="{ 'smk-disabled': busy }"
-                v-if="within != null"
-            ><input type="checkbox"
-                v-bind:disabled="busy"
-                v-model="within"
-                v-on:change="$$emit( 'config', getConfigState() )"
-            >Within current extent</label><br/>
-        </div>
+        <toggle-button class="smk-within-extent"
+            v-if="within != null"
+            v-model="within"
+            v-on:change="$$emit( 'config', getConfigState() )"
+        >Within current extent</toggle-button>
     </template>
 
 </side-panel>

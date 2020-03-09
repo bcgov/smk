@@ -1,47 +1,55 @@
-<div class="smk-folder">
-    <template
-        v-for="item in items"
-        v-if="item.inFilter"
+<div v-bind:class="[ 
+    'smk-display', 
+    'smk-display-' + display.type, 
+    display.class, 
+    { 
+        'smk-visible':   display.isVisible,
+        'smk-expanded':  display.isExpanded, 
+        'smk-disabled': !display.isEnabled,
+        'smk-obscured': !display.isActuallyVisible,
+        /*'smk-internal': !display.isInternal,*/
+    } 
+]">
+    <div class="smk-item"
+        v-if="display.id != 'root'"
     >
-        <div class="smk-item"
-            v-bind:class="{ 
-                'smk-visible': item.isVisible,
-                'smk-expanded': item.isExpanded, 
-                'smk-disabled': !item.isEnabled,
-                'smk-obscured': !item.isActuallyVisible
-            }"
-        >
-            <i class="smk-folder-expand material-icons smk-command smk-icon"
-                v-if="item.isExpanded != null"
-                v-bind:title="'Expand ' + item.title"
-                v-on:click="$$emit( 'set-folder-expanded', { id: item.id, expanded: !item.isExpanded } )"
-            >{{ item.isExpanded ? 'arrow_drop_down' : 'arrow_right' }}</i>
+        <i class="smk-folder-expand material-icons smk-command smk-icon"
+            v-if="display.type == 'folder' && !inGroup"
+            v-bind:title="'Expand ' + display.title"
+            v-on:click="$$emit( 'set-folder-expanded', { id: display.id, expanded: !display.isExpanded } )"
+        >{{ display.isExpanded ? 'arrow_drop_down' : 'arrow_right' }}</i>
 
-            <i class="smk-visibility material-icons smk-command smk-icon"
-                v-bind:title="'Toggle visibility of \'' + item.title + '\'' + ( item.type == 'folder' ? '\nSHIFT-click to toggle visibility on internal layers.' : '' ) "
-                v-on:click="$$emit( 'set-item-visible', { id: item.id, visible: !item.isVisible, deep: $event.shiftKey } )"
-            >{{ item.isVisible && item.isEnabled ? 'visibility' : 'visibility_off' }}</i>
+        <i class="smk-visibility material-icons smk-command smk-icon"
+            v-if="!inGroup"
+            v-bind:title="'Toggle visibility of \'' + display.title + '\'' + ( display.type == 'folder' ? '\nSHIFT-click to toggle visibility on internal layers.' : '' ) "
+            v-on:click="!display.isInternal && $$emit( 'set-item-visible', { id: display.id, visible: !display.isVisible, deep: $event.shiftKey } )"
+            v-bind:class="{ 'smk-disabled': display.isInternal }"
+        >{{ display.isVisible && display.isEnabled ? glyph.visible || 'visibility' : glyph.hidden || 'visibility_off' }}</i>
 
-            <span class="smk-layer-title"
-                v-bind:title="'ID: ' + ( item.id )"
-            >{{ item.title }}</span>
-        </div>
+        <span class="smk-layer-title"
+            v-if="!inGroup"
+            v-bind:title="'ID: ' + ( display.id )"
+        >{{ display.title }}</span>
 
         <div class="smk-legend" 
-            v-if="item.showLegend && item.legends && item.isActuallyVisible"
+            v-if="display.showLegend && display.legends && display.isActuallyVisible"
         >
-            <span v-if="item.showLegend == 'waiting'">Requesting</span>
-
-            <div v-for="legend in item.legends">
-                <img v-bind:src="legend.url">
-                <span>{{ legend.title }}</span>
+            <div class="smk-legend-item" 
+                v-for="legend in display.legends"
+            >
+                <img v-bind:src="legend.url" v-bind:style="{ width: legend.width + 'px', height: legend.height + 'px' }">
+                <span class="smk-legend-title">{{ legend.title }}</span>
             </div>
         </div>
-
-        <layer-display
-            v-if="item.isExpanded"
-            v-bind:items="item.items"
-            v-bind:id="id"
-        ></layer-display>
-    </template>
+    </div>
+    
+    <layer-display
+        v-for="item in display.items"
+        v-if="item.inFilter && display.isExpanded"
+        v-bind:key="item.id"
+        v-bind:id="id"
+        v-bind:display="item"
+        v-bind:glyph="glyph"
+        v-bind:inGroup="inGroup || display.type == 'group'"
+    ></layer-display>
 </div>

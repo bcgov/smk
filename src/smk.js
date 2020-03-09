@@ -5,6 +5,9 @@
         return navigator.userAgent.indexOf( "MSIE " ) > -1 || navigator.userAgent.indexOf( "Trident/" ) > -1;
     }
 
+    var documentReadyPromise
+    var bootstrapScriptEl = document.currentScript
+
     try {
         if ( isIE() )
             throw new Error( 'SMK will not function in Internet Explorer 11. Use Google Chrome, or Microsoft Edge, or Firefox, or Safari.' )
@@ -12,47 +15,70 @@
         var util = {}
         installPolyfills( util )
         setupGlobalSMK( util )
-
-        var documentReadyPromise
-
-        var bootstrapScriptEl = document.currentScript
-
-        var timer
-        SMK.BOOT = SMK.BOOT
-            .then( parseScriptElement )
-            .then( function ( attr ) {
-                timer = 'SMK initialize ' + attr.id
-                console.time( timer )
-                return attr
-            } )
-            .then( resolveConfig )
-            .then( initializeSmkMap )
-            .catch( SMK.ON_FAILURE )
-
-        util.promiseFinally( SMK.BOOT, function () {
-            console.timeEnd( timer )
-        } )
     }
     catch ( e ) {
         setTimeout( function () {
             document.querySelector( 'body' ).appendChild( failureMessage( e ) )
         }, 1000 )
     }
+
+    SMK.INIT = function ( option ) {
+        var scriptEl = bootstrapScriptEl
+
+        if ( option ) {
+            scriptEl = {
+                src: scriptEl.src,
+                attributes: Object.keys( option ).reduce( function ( acc, key ) {
+                    acc[ key ] = { value: option[ key ] }
+                    return acc
+                }, {} )
+            }
+        }
+
+        try {
+            var timer
+            SMK.BOOT = SMK.BOOT
+                .then( function () { return scriptEl } )
+                .then( parseScriptElement )
+                .then( function ( attr ) {
+                    timer = 'SMK initialize ' + attr.id
+                    console.time( timer )
+                    return attr
+                } )
+                .then( resolveConfig )
+                .then( initializeSmkMap )
+                .catch( SMK.ON_FAILURE )
+
+            util.promiseFinally( SMK.BOOT, function () {
+                console.timeEnd( timer )
+            } )
+
+            return SMK.BOOT
+        }
+        catch ( e ) {
+            setTimeout( function () {
+                document.querySelector( 'body' ).appendChild( failureMessage( e ) )
+            }, 1000 )
+        }
+    }
+
+    if ( bootstrapScriptEl && bootstrapScriptEl.attributes && bootstrapScriptEl.attributes[ 'smk-container-sel' ] ) 
+        SMK.INIT()
+
 // = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 
-    function parseScriptElement() {
+    function parseScriptElement( scriptEl ) {
 
         var smkAttr = {
             'id':           attrString( '1' ),
-            'container-sel':attrString( '#smk-map-frame' ),
-            'title-sel':    attrString( 'head title' ),
+            'container-sel':attrString(),
             'config':       attrList( '?smk-' ),
-            'base-url':     attrString( ( new URL( bootstrapScriptEl.src.replace( 'smk.js', '' ), document.location ) ).toString() ),
+            'base-url':     attrString( ( new URL( scriptEl.src.replace( 'smk.js', '' ), document.location ) ).toString() ),
             'service-url':  attrString( null, null ),
         }
 
         Object.keys( smkAttr ).forEach( function ( k ) {
-            smkAttr[ k ] = smkAttr[ k ]( 'smk-' + k, bootstrapScriptEl )
+            smkAttr[ k ] = smkAttr[ k ]( 'smk-' + k, scriptEl )
         } )
 
         console.log( 'SMK attributes', JSON.parse( JSON.stringify( smkAttr ) ) )
@@ -76,6 +102,7 @@
         function attrList( Default ) {
             return function( key, el ) {
                 var val = attrString( Default )( key, el )
+                if ( Array.isArray( val ) ) return val 
                 return val.split( /\s*[|]\s*/ ).filter( function ( i ) { return !!i } )
             }
         }
@@ -96,12 +123,19 @@
         var configs = []
         attr.config.forEach( function ( c, i ) {
             var source = 'attr[' + i + ']'
-            configs = configs.concat( parseDocumentArguments( c, source ) || parseLiteralJson( c, source ) || parseOption( c, source ) || parseUrl( c, source ) )
+            configs = configs.concat( parseObject( c, source ) || parseDocumentArguments( c, source ) || parseLiteralJson( c, source ) || parseOption( c, source ) || parseUrl( c, source ) )
         } )
 
         attr.config = configs
 
         return attr
+    }
+
+    function parseObject( config, source ) {
+        if ( typeof config != 'object' || Array.isArray( config ) || config === null ) return
+
+        config.$sources = [ source + ' -> obj' ]
+        return config
     }
 
     function parseDocumentArguments( config, source ) {
@@ -430,6 +464,15 @@
             }
         },
 
+        'storage': function ( arg ) {
+            var args = arg.split( ',' )
+            if ( args.length < 1 ) throw new Error( '-storage needs at least 1 argument' )
+
+            return args.map( function ( key ) {
+                return JSON.parse( window.sessionStorage.getItem( key ) )
+            } )
+        },
+
         // Options below are for backward compatibility with DMF
 
         'll': function ( arg ) {
@@ -662,6 +705,24 @@
                 lastCommit: '<%= gitinfo.local.branch.current.lastCommitTime %>'.replace( /^"|"$/g, '' ),
                 origin:     '<%= gitinfo.remote.origin.url %>',
                 version:    '<%= package.version %>',
+            },
+
+            HANDLER: {
+                handler: {},
+                set: function ( id, method, handler ) {
+                    if ( !this.handler[ id ] ) this.handler[ id ] = {}
+                    this.handler[ id ][ method ] = handler 
+                },
+                get: function ( id, method ) {
+                    if ( this.handler[ id ] && this.handler[ id ][ method ] ) return this.handler[ id ][ method ]
+
+                    return function () {
+                        console.warn( 'handler ' + id + '.' + method + ' invoked' )
+                    }
+                },
+                has: function ( id, method ) {
+                    return !!( this.handler[ id ] && this.handler[ id ][ method ] ) 
+                }
             }
 
         }, window.SMK ) )

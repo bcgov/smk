@@ -1,0 +1,28 @@
+.smk-directions-options-panel .smk-select-option,
+.smk-directions-options-panel .smk-enter-input {
+    padding: 3px;
+}
+
+.smk-directions-options-panel .smk-truck-parameters {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.smk-directions-options-panel .smk-truck-parameters .smk-select-option {
+    flex-grow: 1;
+    flex-basis: 100%;
+}
+
+.smk-directions-options-panel .smk-truck-parameters .smk-enter-input {
+    flex-basis: calc( 50% - 6px );
+}
+
+.smk-directions-options-panel .smk-truck-parameters .smk-enter-input .smk-input .smk-input {
+    padding: 0;
+}
+
+.smk-directions-options-panel .smk-truck-parameters .smk-enter-input .smk-input .smk-input select {
+    border: none;
+    border-radius: 6px;
+}

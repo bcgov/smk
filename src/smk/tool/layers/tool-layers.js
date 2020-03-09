@@ -7,50 +7,32 @@ include.module( 'tool-layers', [ 'tool', 'widgets', 'tool-layers.panel-layers-ht
 
     Vue.component( 'layer-display', {
         template: inc[ 'tool-layers.layer-display-html' ],
-        props: [ 'id', 'items' ],
+        props: {
+            id:      { type: String },
+            display: { type: Object },
+            glyph:   { type: Object },
+            inGroup: { type: Boolean, default: false }
+        },
         mixins: [ inc.widgets.emit ],
     } )
 
     Vue.component( 'layers-panel', {
         extends: inc.widgets.toolPanel,
         template: inc[ 'tool-layers.panel-layers-html' ],
-        props: [ 'items', 'config', 'allVisible' ],
-        data: function () {
-            return Object.assign( {}, this.config )
-        },
-        watch: {
-            config: function ( val ) {
-                Object.keys( val ).forEach( function ( k ) {
-                    this[ k ] = val[ k ]
-                } )
-            }
-        },
-        methods: {
-            getConfigState: function () {
-                var self = this
-
-                var state = {}
-                Object.keys( this.config ).forEach( function ( k ) {
-                    state[ k ] = self[ k ]
-                } )
-                return state
-            },
-        }
+        props: [ 'contexts', 'allVisible', 'glyph', 'command', 'filter', 'legend' ],
     } )
-
-    function isLayerVisible( ly ) { return ly.visible }
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
     function LayersTool( option ) {
         this.makePropWidget( 'icon' ) //, 'layers' )
 
         this.makePropPanel( 'busy', false )
-        this.makePropPanel( 'items', [] )
+        this.makePropPanel( 'contexts', [] )
         this.makePropPanel( 'allVisible', true )
-        this.makePropPanel( 'config', {
-            legend: false,
-            filter: null
-        } )
+        this.makePropPanel( 'glyph', {} )
+        this.makePropPanel( 'command', {} )
+        this.makePropPanel( 'filter', null )
+        this.makePropPanel( 'legend', false )
 
         SMK.TYPE.Tool.prototype.constructor.call( this, $.extend( {
             // order:          3,
@@ -71,47 +53,62 @@ include.module( 'tool-layers', [ 'tool', 'widgets', 'tool-layers.panel-layers-ht
     LayersTool.prototype.afterInitialize.push( function ( smk ) {
         var self = this
 
+        smk.$viewer.setDisplayContextItems( this.id, this.display )
+
         smk.on( this.id, {
             'activate': function () {
                 if ( !self.enabled ) return
 
                 self.active = !self.active
+                if ( !self.active ) return
+
+                self.contexts = smk.$viewer.getDisplayContexts()
+
+                smk.$viewer.setDisplayContextLegendsVisible( self.legend )
             },
 
-            'config': function ( ev ) {
-                // console.log( ev )
-                Object.assign( self.config, ev )
+            'change': function ( ev ) {
+                // console.log(ev)
+                Object.assign( self, ev )
 
-                smk.$viewer.layerDisplayContext.setLegendsVisible( ev.legend, smk.$viewer.layerId, smk.$viewer )
+                smk.$viewer.setDisplayContextLegendsVisible( self.legend )
 
                 var re 
-                if ( !ev.filter || !ev.filter.trim() ) 
+                if ( !self.filter || !self.filter.trim() ) 
                     re = /.*/;
                 else {
-                    var f = ev.filter.trim()
+                    var f = self.filter.trim()
                     re = new RegExp( f.toLowerCase().split( /\s+/ ).map( function ( part ) { return '(?=.*' + part + ')' } ).join( '' ), 'i' )
                 }
-                smk.$viewer.layerDisplayContext.setFilter( re )
+                smk.$viewer.displayContext.layers.setFilter( re )
             },
 
             'set-all-layers-visible': function ( ev ) {
-                smk.$viewer.layerDisplayContext.setItemVisible( smk.$viewer.layerDisplayContext.root.id, ev.visible, ev.deep )
+                smk.$viewer.displayContext.layers.setItemVisible( smk.$viewer.displayContext.layers.root.id, ev.visible, ev.deep )
                 smk.$viewer.updateLayersVisible()
             },
 
             'set-folder-expanded': function ( ev ) {
-                smk.$viewer.layerDisplayContext.setFolderExpanded( ev.id, ev.expanded )
+                smk.$viewer.setDisplayContextFolderExpanded( ev.id, ev.expanded )
             },
 
             'set-item-visible': function ( ev ) {
-                smk.$viewer.layerDisplayContext.setItemVisible( ev.id, ev.visible, ev.deep )
+                smk.$viewer.displayContext.layers.setItemVisible( ev.id, ev.visible, ev.deep )
                 smk.$viewer.updateLayersVisible()
             },
+
+            'swipe-up': function ( ev ) {                
+                smk.$sidepanel.setExpand( 2 )
+            },
+
+            'swipe-down': function ( ev ) {
+                smk.$sidepanel.incrExpand( -1 )
+            }
         } )
 
 
         smk.$viewer.changedLayerVisibility( function () {
-            self.allVisible = smk.$viewer.layerDisplayContext.isItemVisible( smk.$viewer.layerDisplayContext.root.id )
+            self.allVisible = smk.$viewer.displayContext.layers.isItemVisible( smk.$viewer.displayContext.layers.root.id )
         } )
 
         smk.$viewer.startedLoading( function ( ev ) {
@@ -121,15 +118,6 @@ include.module( 'tool-layers', [ 'tool', 'widgets', 'tool-layers.panel-layers-ht
         smk.$viewer.finishedLoading( function ( ev ) {
             self.busy = false
         } )
-
-
-        if ( this.display )
-            smk.$viewer.setLayerDisplay( this.display )
-
-        if ( smk.$viewer.layerDisplayContext )
-            this.items = smk.$viewer.layerDisplayContext.root.items
-
-        return smk.$viewer.updateLayersVisible()
     } )
 
     return LayersTool

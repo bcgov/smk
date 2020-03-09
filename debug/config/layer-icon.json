@@ -1,0 +1,12 @@
+{
+  "tools": [
+    {
+      "type": "layers",
+      "enabled": true,
+      "glyph": {
+          "visible": "check_box",
+          "hidden": "check_box_outline_blank"
+      }
+    }
+  ]
+}

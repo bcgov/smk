@@ -50,11 +50,13 @@ include.module( 'query.query-js', [ 'jquery', 'util', 'event' ], function () {
         this.component = 'parameter-' + config.type
         this.prop = $.extend( true, {
             value: null,
+            focus: 0
         }, config )
         this.initial = config.value
     }
 
     QueryParameter.prototype.mounted = function () {}
+    QueryParameter.prototype.focus = function () {}
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
     QueryParameter[ 'constant' ] = function () {
@@ -69,6 +71,10 @@ include.module( 'query.query-js', [ 'jquery', 'util', 'event' ], function () {
     }
 
     Object.assign( QueryParameter[ 'input' ].prototype, QueryParameter.prototype )
+
+    QueryParameter[ 'input' ].prototype.focus = function () {
+        this.prop.focus += 1
+    }
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
     QueryParameter[ 'select' ] = function () {

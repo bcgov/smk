@@ -14,7 +14,7 @@ include.module( 'tool-search-location', [ 'tool', 'widgets', 'tool-search-locati
         SMK.TYPE.Tool.prototype.constructor.call( this, $.extend( {
             title: 'Search Location',
             panelComponent: 'search-location-panel',
-            subPanel:       1,
+            // subPanel:       1,
         }, option ) )
     }
 
