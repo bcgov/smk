@@ -20,7 +20,7 @@ include.module( 'tool-directions', [
     Vue.component( 'directions-panel', {
         extends: inc.widgets.toolPanel,
         template: inc[ 'tool-directions.panel-directions-html' ],
-        props: [ 'waypoints', 'hasRoute', 'optimal' ],
+        props: [ 'waypoints', 'hasRoute', 'optimal', 'geocoderService' ],
     } )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
@@ -30,6 +30,7 @@ include.module( 'tool-directions', [
         this.makePropPanel( 'waypoints', [] )
         this.makePropPanel( 'hasRoute', false )
         this.makePropPanel( 'optimal', false )
+        this.makePropPanel( 'geocoderService', {} )
 
         SMK.TYPE.PanelTool.prototype.constructor.call( this, $.extend( {
             // order:          4,
@@ -128,6 +129,7 @@ include.module( 'tool-directions', [
         this.routeOptions = smk.$tool[ 'directions-options' ]
 
         this.routePlanner = new SMK.TYPE.RoutePlanner( this.routePlannerService )
+        this.geocoder = new SMK.TYPE.Geocoder( this.geocoderService )
 
         this.changedActive( function () {
             if ( self.active ) {
@@ -159,7 +161,7 @@ include.module( 'tool-directions', [
         smk.$viewer.handlePick( 2, function ( location ) {
             if ( !self.active ) return
 
-            return SMK.UTIL.findNearestSite( location.map ).then( function ( site ) {
+            return self.geocoder.fetchSites( location.map ).then( function ( site ) {
                 self.active = true
 
                 return self.activating.then( function () {
@@ -311,7 +313,7 @@ include.module( 'tool-directions', [
     DirectionsTool.prototype.updateWaypoint = function ( index, newPt ) {
         var self = this
 
-        return SMK.UTIL.findNearestSite( newPt ).then( function ( site ) {
+        return this.geocoder.fetchSites( newPt ).then( function ( site ) {
             self.waypoints[ index ] = site
 
             return self.findRoute()

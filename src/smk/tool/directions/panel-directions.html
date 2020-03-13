@@ -39,6 +39,7 @@
         <address-search class="smk-address"
             ref="address"
             placeholder="Enter address here, or click on map"
+            v-bind:geocoderService="geocoderService"
             v-on:update="$$emit( 'new-waypoint', $event ); $refs.address.clear()"
         ></address-search>
 
