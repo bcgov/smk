@@ -3,16 +3,14 @@ include.module( 'tool-directions', [
     'widgets', 
     'sidepanel', 
     'tool-directions.panel-directions-html', 
-    'tool-directions.router-api-js', 
     'tool-directions-route', 
     'tool-directions-options',
-    'widget-address-search'
+    'widget-address-search',
+    'api'
 ], function ( inc ) {
     "use strict";
 
     var base = include.option( 'baseUrl' ) + '/images/tool/directions'
-
-    var routerApi = inc[ 'tool-directions.router-api-js' ]
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
     Vue.component( 'directions-widget', {
@@ -39,7 +37,6 @@ include.module( 'tool-directions', [
             // title:          'Route Planner',
             widgetComponent:'directions-widget',
             panelComponent: 'directions-panel',
-            apiKey:         null,
             segmentLayers: [
                 {
                     id: "@segments",
@@ -109,7 +106,8 @@ include.module( 'tool-directions', [
                     isDraggable: true,
                     isQueryable: false
                 }
-            ]
+            ],
+            routePlannerService: {}
         }, option ) )
 
         this.activating = SMK.UTIL.resolved()
@@ -128,6 +126,8 @@ include.module( 'tool-directions', [
 
         this.routePanel = smk.$tool[ 'directions-route' ]
         this.routeOptions = smk.$tool[ 'directions-options' ]
+
+        this.routePlanner = new SMK.TYPE.RoutePlanner( this.routePlannerService )
 
         this.changedActive( function () {
             if ( self.active ) {
@@ -230,8 +230,6 @@ include.module( 'tool-directions', [
                 self.routeOptions.active = true
             }
         } )
-
-        routerApi.setApiKey( this.apiKey )
 
         this.layer = {}
         var groupItems = []
@@ -378,7 +376,7 @@ include.module( 'tool-directions', [
             oversize:           this.routeOptions.oversize,  
         }
 
-        return SMK.UTIL.promiseFinally( routerApi.fetchDirections( points, opt ).then( function ( data ) {
+        return SMK.UTIL.promiseFinally( this.routePlanner.fetchDirections( points, opt ).then( function ( data ) {
             self.handleRouteData( data )
 
             self.displaySegments( data.segments )
