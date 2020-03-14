@@ -1,32 +1,21 @@
-include.module( 'tool-directions.router-api-js', [], function ( inc ) {
+include.module( 'api.route-planner-js', [ 'jquery', 'util' ], function () {
     "use strict";
 
-    // var baseUrl = 'https://router.api.gov.bc.ca/'
-    var baseUrl = 'https://ssl.refractions.net/ols/router/'
-
-    var directionType = {
-        START:              [ 'trip_origin' ],
-        CONTINUE:           [ 'expand_more' ],
-        TURN_LEFT:          [ 'arrow_back' ],
-        TURN_SLIGHT_LEFT:   [ 'undo' ],
-        TURN_SHARP_LEFT:    [ 'directions', true ],
-        TURN_RIGHT:         [ 'arrow_forward' ],
-        TURN_SLIGHT_RIGHT:  [ 'undo', true ],
-        TURN_SHARP_RIGHT:   [ 'directions' ],
-        FERRY:              [ 'directions_boat' ],
-        STOPOVER:           [ 'pause' ],
-        FINISH:             [ 'stop' ],
+    function RoutePlanner( config ) {
+        Object.assign( this, {
+            url:   'https://router.api.gov.bc.ca/',
+            apiKey: null
+        }, config )
     }
 
-    var apiKey
-    function setApiKey( key ) {
-        apiKey = key
-    }
+    SMK.TYPE.RoutePlanner = RoutePlanner
+    // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+    //
+    RoutePlanner.prototype.fetchDirections = function ( points, option ) {
+        var self = this
 
-    var request
-    function fetchDirections( points, option ) {
-        if ( request )
-            request.abort()
+        if ( this.request )
+            this.request.abort()
 
         var mode = Object.assign( {
             optimal:    false,
@@ -67,15 +56,15 @@ include.module( 'tool-directions.router-api-js', [], function ( inc ) {
         var ajaxOpt = {
             timeout:    10 * 1000,
             dataType:   'json',
-            url:        baseUrl + endPoint,
+            url:        this.url + endPoint,
             data:       query,
             headers: {
-                apikey: apiKey
+                apikey: this.apiKey
             }
         }
 
         var result = SMK.UTIL.makePromise( function ( res, rej ) {
-            ( request = $.ajax( ajaxOpt ) ).then( res, rej )
+            ( self.request = $.ajax( ajaxOpt ) ).then( res, rej )
         } )
         .then( function ( data ) {
             if ( !data.routeFound ) throw new Error( 'failed to find route' )
@@ -176,7 +165,7 @@ include.module( 'tool-directions.router-api-js', [], function ( inc ) {
             return data
         } )
 
-        if ( !apiKey ) return result
+        if ( !this.apiKey ) return result
 
         return result.catch( function () {
             return {
@@ -239,11 +228,6 @@ include.module( 'tool-directions.router-api-js', [], function ( inc ) {
         var d0 = p1[0] - p2[0]
         var d1 = p1[1] - p2[1]
         return ( d0 * d0 + d1 * d1 ) <= ( min * min )
-    }
-
-    return {
-        setApiKey: setApiKey,
-        fetchDirections: fetchDirections
     }
 } )
 
