@@ -123,6 +123,15 @@ include.module( 'widgets', [
         }
     } )
 
+    Vue.component( 'activate-tool', {
+        extends: emit,
+        template: inc[ 'widgets.activate-tool-html' ],
+        props: { 
+            toolId: { type: String },
+            title:  { type: String }
+        }
+    } )
+
     return {
         emit: emit,
 
