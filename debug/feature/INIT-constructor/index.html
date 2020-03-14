@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <title>INIT Constructor</title>
         <style>
             #app {
                 position: absolute;
@@ -18,21 +19,30 @@
 
             header {
                 border-bottom: 2px solid black;
+                /* padding: 5px; */
+            }
+
+            header h1 {
+                display: inline-block;
                 padding: 5px;
+                margin: 0;
+                font-size: 20px;
             }
 
             header ul {
                 display: inline-block;
                 margin: 0;
                 padding: 0;
+                border-left: 2px solid black;
             }
 
             header ul li {
                 display: inline-block;
-                border-radius: 10px;
-                border: 2px solid black;
-                margin: 0 5px;
+                /* border-radius: 10px; */
+                /* border: 2px solid black; */
+                margin: 0;
                 padding: 5px;
+                border-right: 2px solid black;
             }
 
             header ul li.selected {
@@ -91,7 +101,7 @@
     <template id="site">
         <div id="app">
             <header>
-                Examples:
+                <h1>INIT Constructor</h1>
                 <ul>
                     <li v-for="ex in examples"
                         v-bind:key="ex.id"

@@ -11,22 +11,39 @@
         <link rel="stylesheet" type="text/css" href="style.css"/>
     </head>
 
-    <body id="smk-map-frame"></body>
+    <body id="smk-map-frame">
+    </body>
+
+    <dialog id="ready" onclick="this.close()">
+        <p>Map is ready.</p>
+        <p id="ready-detail"></p>
+    </dialog>
+
+    <dialog id="failed" onclick="this.close()">
+        <p>Map failed to initialize</p>
+        <p id="failed-detail"></p>
+    </dialog>
 
     <script>
         SMK.INIT( {
-            'smk-id':               'map',
-            'smk-container-sel':    '#smk-map-frame',
-            'smk-base-url':         '/dist',
-            'smk-config': [ 
-                './map-config.json', 
-                './layer-config.json', 
-                './layer-display-config.json', 
-                '?' 
-            ],
-        } ).then( function ( smk ) {
-            alert( 'SMK initilized' )
-        } )
+                'smk-id':               'map',
+                'smk-container-sel':    '#smk-map-frame',
+                // 'smk-base-url':         '/dist',
+                'smk-config': [ 
+                    // './map-config.json', 
+                    // './layer-config.json', 
+                    // './layer-display-config.json', 
+                    '?' 
+                ],
+            } )
+            .then( function ( smk ) {
+                document.getElementById( 'ready' ).showModal()
+                document.getElementById( 'ready-detail' ).innerText = JSON.stringify( smk, null, '  ' )
+            } )
+            .catch( function ( e ) {
+                document.getElementById( 'failed' ).showModal()
+                document.getElementById( 'failed-detail' ).innerText = e
+            } )
     </script>
 </html>
 
