@@ -27,7 +27,7 @@ include.module( 'tool-bespoke', [ 'tool', 'widgets', 'tool-bespoke.panel-bespoke
     Vue.component( 'bespoke-panel', {
         extends: inc.widgets.toolPanel,
         template: inc[ 'tool-bespoke.panel-bespoke-html' ],
-        props: [ 'content', 'showSwipe' ]
+        props: [ 'content', 'showSwipe', 'component' ]
     } )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
@@ -35,7 +35,8 @@ include.module( 'tool-bespoke', [ 'tool', 'widgets', 'tool-bespoke.panel-bespoke
         this.makePropWidget( 'icon', 'extension' ) 
         this.makePropWidget( 'status', null ) 
 
-        this.makePropPanel( 'content', {} )
+        this.makePropPanel( 'content', null )
+        this.makePropPanel( 'component', null )
         this.makePropPanel( 'showSwipe', false )
 
         SMK.TYPE.Tool.prototype.constructor.call( this, $.extend( {
@@ -69,13 +70,21 @@ include.module( 'tool-bespoke', [ 'tool', 'widgets', 'tool-bespoke.panel-bespoke
             }
         } )
 
-        this.content.create = function ( el ) {
-            SMK.HANDLER.get( self.id, 'activated' )( smk, self, el )
-        }
+        if ( !this.useComponent )
+            this.content = { 
+                create: function ( el ) {
+                    SMK.HANDLER.get( self.id, 'activated' )( smk, self, el )
+                }
+            }
 
         this.changedActive( function () {
-            if ( !self.active )
+            if ( self.active ) {
+                if ( self.useComponent )
+                    SMK.HANDLER.get( self.id, 'activated' )( smk, self )
+            }
+            else {
                 SMK.HANDLER.get( self.id, 'deactivated' )( smk, self )
+            }
         } )
 
         SMK.HANDLER.get( self.id, 'initialized' )( smk, self )

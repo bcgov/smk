@@ -4,7 +4,8 @@ include.module( 'widgets', [
     'widgets.command-button-html',
     'widgets.toggle-button-html', 
     'widgets.select-option-html', 
-    'widgets.enter-input-html' 
+    'widgets.enter-input-html',
+    'widgets.activate-tool-html' 
 ], function ( inc ) {
     "use strict";
 
@@ -120,6 +121,15 @@ include.module( 'widgets', [
                 el.selectionStart = pos
                 el.selectionEnd = pos 
             }
+        }
+    } )
+
+    Vue.component( 'activate-tool', {
+        extends: emit,
+        template: inc[ 'widgets.activate-tool-html' ],
+        props: { 
+            id:     { type: String },
+            title:  { type: String }
         }
     } )
 
