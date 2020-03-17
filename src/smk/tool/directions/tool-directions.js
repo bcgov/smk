@@ -169,8 +169,7 @@ include.module( 'tool-directions', [
                 } )
             } )
             .catch( function ( err ) {
-                console.warn( err )
-                return self.addWaypoint()
+                console.debug( err )
             } )
             .then( function () {
                 return true
@@ -405,7 +404,7 @@ include.module( 'tool-directions', [
             self.directionsRaw.waypoints = JSON.parse( JSON.stringify( self.waypoints ) )
         } )
         .catch( function ( err ) {
-            console.warn( err )
+            console.debug( err )
             self.setMessage( 'Unable to find route', 'error' )
             self.displayWaypoints()
         } ), function () {
