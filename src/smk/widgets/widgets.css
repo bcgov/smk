@@ -183,3 +183,14 @@
     height: 20px;
     font-size: 20px;
 } 
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+.smk-activate-tool {
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.smk-activate-tool:hover {
+    text-decoration: underline;
+}

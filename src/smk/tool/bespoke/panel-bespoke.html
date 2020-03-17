@@ -8,6 +8,12 @@
     </template>
 
     <div class="smk-bespoke-content" 
+        v-if="content"
         v-content="content"
+    ></div>
+
+    <div class="smk-bespoke-content" 
+        v-if="component"
+        v-bind:is="component"
     ></div>
 </side-panel>
