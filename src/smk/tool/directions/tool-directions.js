@@ -161,7 +161,7 @@ include.module( 'tool-directions', [
         smk.$viewer.handlePick( 2, function ( location ) {
             if ( !self.active ) return
 
-            return self.geocoder.fetchSites( location.map ).then( function ( site ) {
+            return self.geocoder.fetchNearestSite( location.map ).then( function ( site ) {
                 self.active = true
 
                 return self.activating.then( function () {
@@ -313,7 +313,7 @@ include.module( 'tool-directions', [
     DirectionsTool.prototype.updateWaypoint = function ( index, newPt ) {
         var self = this
 
-        return this.geocoder.fetchSites( newPt ).then( function ( site ) {
+        return this.geocoder.fetchNearestSite( newPt ).then( function ( site ) {
             self.waypoints[ index ] = site
 
             return self.findRoute()

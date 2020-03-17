@@ -5,6 +5,7 @@ include.module( 'api.geocoder-js', [ 'jquery', 'util' ], function () {
         Object.assign( this, {
             timeout:    10 * 1000,
             url:        'https://geocoder.api.gov.bc.ca/',
+            parameter:  {}
         }, config )
     }
 
@@ -18,7 +19,7 @@ include.module( 'api.geocoder-js', [ 'jquery', 'util' ], function () {
             addressString:      address,
             autoComplete:       true,
             locationDescriptor: 'accessPoint'
-        }, option )
+        }, this.parameter, option )
 
         return this.fetchGeocoder( 'addresses', option )
             .then( function ( data ) {
@@ -45,23 +46,21 @@ include.module( 'api.geocoder-js', [ 'jquery', 'util' ], function () {
 
     }
     
-    Geocoder.prototype.fetchSites = function ( location, option ) {
+    Geocoder.prototype.fetchNearestSite = function ( location, option ) {
         option = Object.assign( {
-            criteria:           'nearest',
+            locationOut:        'geocoder',
             point:              [ location.longitude, location.latitude ].join( ',' ),
             outputSRS:          4326,
             locationDescriptor: 'routingPoint',
             maxDistance:        1000,
-        }, option )
+        }, this.parameter, option )
 
-        var criteria = option.criteria
-        delete option.criteria
+        var locationMode = option.locationMode
+        delete option.locationMode
 
-        return this.fetchGeocoder( 'sites/' + criteria, option )
+        return this.fetchGeocoder( 'sites/nearest', option )
             .then( function ( data ) {
-                return {
-                    longitude:           data.geometry.coordinates[ 0 ],
-                    latitude:            data.geometry.coordinates[ 1 ],
+                var site = {
                     civicNumber:         data.properties.civicNumber,
                     civicNumberSuffix:   data.properties.civicNumberSuffix,
                     fullAddress:         data.properties.fullAddress,
@@ -70,9 +69,19 @@ include.module( 'api.geocoder-js', [ 'jquery', 'util' ], function () {
                     streetName:          data.properties.streetName,
                     streetType:          data.properties.streetType,
                 }
+
+                if ( locationMode == 'geocoder' ) {
+                    site.longitude  = data.geometry.coordinates[ 0 ]
+                    site.latitude   = data.geometry.coordinates[ 1 ]
+                }
+                else if ( locationMode == 'input' ) { 
+                    site = Object.assign( site, location )
+                }
+
+                return site
             } )
             .catch( function ( err ) {
-                console.warn( err.responseText )
+                console.debug( err.responseText )
                 return location 
             } )
     }
