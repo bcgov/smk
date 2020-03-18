@@ -312,6 +312,8 @@ include.module( 'tool-directions', [
     DirectionsTool.prototype.updateWaypoint = function ( index, newPt ) {
         var self = this
 
+        this.active = true
+        
         return this.geocoder.fetchNearestSite( newPt ).then( function ( site ) {
             self.waypoints[ index ] = site
 
