@@ -614,8 +614,14 @@ include.module( 'smk-map', [ 'jquery', 'util', 'theme-base', 'sidepanel' ], func
         cfg.viewer.displayContext = this.$viewer.getDisplayContextConfig()
 
         cfg.layers.forEach( function ( ly ) {
-            ly.isVisible = self.$viewer.isDisplayContextItemVisible( ly.id )
-            ly.class = self.$viewer.getDisplayContextItem( ly.id ).class
+            var item = self.$viewer.getDisplayContextItem( ly.id )
+            if ( item ) {
+                ly.isVisible = self.$viewer.isDisplayContextItemVisible( ly.id )
+                ly.class = item.class
+            }
+            else {
+                ly.isVisible = false
+            }
         } )
         
         return cfg
