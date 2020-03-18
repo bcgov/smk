@@ -9,12 +9,11 @@
     <div class="smk-attributes"
         v-if="attributes && attributes.length > 0"
     >
-        <div class="smk-attribute"
-            v-for="attr in attributes"
-            v-if="formatTitle( attr )"
-        >
-            <span class="smk-attribute-title" v-html="formatTitle( attr )"></span>
-            <span class="smk-value" v-html="formatAttribute( attr )"></span>
-        </div>
+        <feature-attribute 
+            v-for="attr, i in attributes"
+            v-bind:key="'attr' + i"
+            v-bind:title="formatTitle( attr )"
+            v-bind:value="formatAttribute( attr )"
+        ></feature-attribute>        
     </div>
 </div>

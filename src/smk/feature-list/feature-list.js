@@ -8,6 +8,14 @@ include.module( 'feature-list', [ 'tool', 'widgets', 'sidepanel',
 ], function ( inc ) {
     "use strict";
 
+    Vue.component( 'feature-attribute', {
+        template: '<div class="smk-attribute" v-if="title && value && value.trim()"><span class="smk-attribute-title" v-html="title"></span><span v-html="value"></span></div>',
+        props: {
+            title: { type: String },
+            value: { type: String },
+        }        
+    } )
+
     Vue.component( 'feature-list-panel', {
         extends: inc.widgets.toolPanel,
         template: inc[ 'feature-list.panel-feature-list-html' ],
@@ -151,8 +159,7 @@ include.module( 'feature-list', [ 'tool', 'widgets', 'sidepanel',
             self.active = true
 
             var ly = smk.$viewer.layerId[ ev.layerId ]
-            // var index = smk.$viewer.layerDisplayContext.getLayerIndex( ev.layerId ) || 0
-            var index = smk.$viewer.displayContext.layer.getLayerIndex( ev.layerId ) || 0
+            var index = smk.$viewer.displayContext.layers.getLayerIndex( ev.layerId ) || 0
 
             if ( !self.layers[ index ] )
                 Vue.set( self.layers, index, {
@@ -179,7 +186,6 @@ include.module( 'feature-list', [ 'tool', 'widgets', 'sidepanel',
 
         self.featureSet.removedFeatures( function ( ev ) {
             var ly = smk.$viewer.layerId[ ev.features[ 0 ].layerId ]
-            // var index = smk.$viewer.layerDisplayContext.getLayerIndex( ev.features[ 0 ].layerId ) || 0
             var index = smk.$viewer.displayContext.layers.getLayerIndex( ev.features[ 0 ].layerId ) || 0
 
             self.layers[ index ].features = self.layers[ index ].features.filter( function ( ft ) {
@@ -243,7 +249,7 @@ include.module( 'feature-list', [ 'tool', 'widgets', 'sidepanel',
     }
 
     var formatter = {
-        simple: makeFormatter( '<span class="smk-value">{{ attribute.value }}</span>' ),
+        simple: makeFormatter( '<span class="smk-value" v-if="attribute.value">{{ attribute.value }}</span>' ),
         asLocalTimestamp: makeFormatter( '<span class="smk-value" v-if="attribute.value">{{ ( new Date( attribute.value ) ).toLocaleString() }}</span>' ),
         asLocalDate: makeFormatter( '<span class="smk-value" v-if="attribute.value">{{ ( new Date( attribute.value ) ).toLocaleDateString() }}</span>' ),
         asLocalTime: makeFormatter( '<span class="smk-value" v-if="attribute.value">{{ ( new Date( attribute.value ) ).toLocaleTimeString() }}</span>' ),
