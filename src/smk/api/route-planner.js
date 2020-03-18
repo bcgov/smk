@@ -121,6 +121,9 @@ include.module( 'api.route-planner-js', [ 'jquery', 'util' ], function () {
                 }
 
                 data.segments = turf.featureCollection( data.segments )
+                data.segments.properties = {
+                    isOversize: !!mode.oversize
+                }
 
                 var routeAttrs = data.route.map( function () { return { segs: {} } } )
 
