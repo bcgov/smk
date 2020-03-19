@@ -113,8 +113,12 @@
         "apiKey": "11dd756f680c47b5aef5093d95543738"
       },
       "geocoderService": {
-        "# url": "https://geocoder.api.gov.bc.ca/",
-        "url": "https://geocodertst.api.gov.bc.ca/"
+        "url": "https://geocodertst.api.gov.bc.ca/",
+        "#url": "https://geocoder.api.gov.bc.ca/",
+        "parameter": {
+          "maxDistance": 50,
+          "locationMode": "input"
+        }
       },
       "truck": true,
       "segmentLayers": [
