@@ -4,16 +4,26 @@
             "type": "layers",
             "display": [
                 { "id": "active-wildfires" },
+                { "id": "active-wildfires-esri", "isVisible": false },
                 { "id": "bcws-activefires-publicview-inactive" },
+                { "id": "bcws-activefires-publicview-inactive-esri", "isVisible": false },
                 { "id": "danger-rating" },
+                { "id": "danger-rating-esri", "isVisible": false },
                 { "id": "evacuation-orders-and-alerts" },
+                { "id": "evacuation-orders-and-alerts-esri", "isVisible": false },
                 { "id": "fire-perimeters" },
+                { "id": "fire-perimeters-esri", "isVisible": false },
                 { "id": "bc-fire-centres" },
+                { "id": "bc-fire-centres-esri", "isVisible": false },
                 { "id": "bans-and-prohibitions" },
+                { "id": "bans-and-prohibitions-esri", "isVisible": false },
                 { "id": "area-restrictions" },
+                { "id": "area-restrictions-esri", "isVisible": false },
                 { "id": "whse-land-and-natural-resource-prot-current-fire-polys-sp" },
                 { "id": "prescribed-fire" },
+                { "id": "prescribed-fire-esri", "isVisible": false },
                 { "id": "closed-recreation-sites" },
+                { "id": "closed-recreation-sites-esri", "isVisible": false },
                 { "id": "drive-bc-active-events" }
             ]
         }
