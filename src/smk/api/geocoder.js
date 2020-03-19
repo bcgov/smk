@@ -21,6 +21,8 @@ include.module( 'api.geocoder-js', [ 'jquery', 'util' ], function () {
             locationDescriptor: 'accessPoint'
         }, this.parameter, option )
 
+        delete option.maxDistance
+
         return this.fetchGeocoder( 'addresses', option )
             .then( function ( data ) {
                 return data.features
