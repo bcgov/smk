@@ -1,0 +1,18 @@
+{
+  "layers": [
+    {
+      "type": "wms",
+      "id": "drive-bc-active-events",
+      "title": "Drive BC Active Events",
+      "isVisible": false,
+      "isQueryable": false,
+      "attributes": [],
+      "serviceUrl": "https://maps.th.gov.bc.ca/geoV05/ows",
+      "layerName": "op5:OP5_EVENT511_ACTIVE_V",
+      "metadataUrl": "https://catalogue.data.gov.bc.ca/dataset/diagnostic-facilities",
+      "scaleMin": 500000,
+      "scaleMax": 0,
+      "popupTemplate": "@wf-feature"
+    }
+  ]
+}

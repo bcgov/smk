@@ -69,7 +69,23 @@
         SMK.INIT( {
             'smk-container-sel': "#smk-map-frame",
             'smk-title-sel': "#header-title, head title",
-            'smk-config': [ './map-config.json', './layer-config.json', 'theme=wf', '?' ],
+            'smk-config': [ 
+                './map-config.json', 
+                './layers/active-wildfires.json',
+                './layers/area-restrictions.json',
+                './layers/bans-and-prohibitions.json',
+                './layers/bc-fire-centres.json',
+                './layers/bcws-activefires-publicview-inactive.json',
+                './layers/closed-recreation-sites.json',
+                './layers/danger-rating.json',
+                './layers/drive-bc-active-events.json',
+                './layers/evacuation-orders-and-alerts.json',
+                './layers/fire-perimeters.json',
+                './layers/prescribed-fire.json',
+                './layers/whse-land-and-natural-resource-prot-current-fire-polys-sp.json',
+                './layer-display-config.json', 
+                'theme=wf', '?' 
+            ],
         } ).then( function () {
             SMK.HANDLER.set( 'bespoke', 'initialized', function ( smk ) {
                 // console.log( 'init!' )

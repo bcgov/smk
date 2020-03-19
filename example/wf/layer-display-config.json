@@ -1,0 +1,21 @@
+{
+    "tools": [
+        {
+            "type": "layers",
+            "display": [
+                { "id": "active-wildfires" },
+                { "id": "bcws-activefires-publicview-inactive" },
+                { "id": "danger-rating" },
+                { "id": "evacuation-orders-and-alerts" },
+                { "id": "fire-perimeters" },
+                { "id": "bc-fire-centres" },
+                { "id": "bans-and-prohibitions" },
+                { "id": "area-restrictions" },
+                { "id": "whse-land-and-natural-resource-prot-current-fire-polys-sp" },
+                { "id": "prescribed-fire" },
+                { "id": "closed-recreation-sites" },
+                { "id": "drive-bc-active-events" }
+            ]
+        }
+    ]
+}

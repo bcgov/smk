@@ -1,0 +1,18 @@
+{
+  "layers": [
+    {
+      "type": "esri-tiled",
+      "id": "bc-fire-centres",
+      "title": "BC Fire Centres",
+      "isVisible": true,
+      "isQueryable": false,
+      "attribution": "Copyright 117 DataBC, Government of British Columbia",
+      "serviceUrl": "https://tiles.arcgis.com/tiles/ubm4tcTYICKBpist/arcgis/rest/services/BCWS_FireCenterBdys2/MapServer",
+      "metadataUrl": "https://catalogue.data.gov.bc.ca/dataset/diagnostic-facilities",
+      "opacity": 1,
+      "scaleMin": 500000,
+      "scaleMax": 0,
+      "popupTemplate": "@wf-feature"
+    }
+  ]
+}
