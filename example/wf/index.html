@@ -69,7 +69,7 @@
         SMK.INIT( {
             'smk-container-sel': "#smk-map-frame",
             'smk-title-sel': "#header-title, head title",
-            'smk-config': "./map-config.json|./layer-config.json|theme=wf|?",
+            'smk-config': [ './map-config.json', './layer-config.json', 'theme=wf', '?' ],
         } ).then( function () {
             SMK.HANDLER.set( 'bespoke', 'initialized', function ( smk ) {
                 // console.log( 'init!' )

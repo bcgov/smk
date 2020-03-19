@@ -98,6 +98,7 @@
         function attrList( Default ) {
             return function( key, el ) {
                 var val = attrString( Default )( key, el )
+                if ( Array.isArray( val ) ) return val 
                 return val.split( /\s*[|]\s*/ ).filter( function ( i ) { return !!i } )
             }
         }
