@@ -132,11 +132,11 @@ module.exports = function( grunt ) {
         watch: {
             options: {
                 debounceDelay: 2000,
-                // livereload: {
-                //     host:   '<%= serverHost %>',
-                //     key:    grunt.file.read( '../node_modules/grunt-contrib-connect/tasks/certs/server.key' ),
-                //     cert:   grunt.file.read( '../node_modules/grunt-contrib-connect/tasks/certs/server.crt' )
-                // },
+                livereload: {
+                    host:   '<%= serverHost %>',
+                    key:    grunt.file.read( '../node_modules/grunt-contrib-connect/tasks/certs/server.key' ),
+                    cert:   grunt.file.read( '../node_modules/grunt-contrib-connect/tasks/certs/server.crt' )
+                },
                 // livereloadOnError: false,
                 spawn: false
                 // interrupt: true,
@@ -146,6 +146,10 @@ module.exports = function( grunt ) {
                 files: [ '<%= srcPath %>/smk/**', '<%= srcPath %>/theme/**', '<%= srcPath %>/index.html', '<%= srcPath %>/smk.js', '<%= srcPath %>/tags.js' ],
                 tasks: [ 'build' ]
             },
+
+            example: {
+                files: [ '../example/**' ]
+            }
         }
 
     } )

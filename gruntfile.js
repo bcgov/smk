@@ -10,8 +10,9 @@ module.exports = function( grunt ) {
                     port:       8443,
                     base:       '.',
                     keepalive:  true,
-                    debug:      true,
-                    open:       true
+                    livereload: true,
+                    debug:      true
+                    // open:       true
                 }
             }
         },
