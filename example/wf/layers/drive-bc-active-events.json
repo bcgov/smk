@@ -4,7 +4,6 @@
       "type": "wms",
       "id": "drive-bc-active-events",
       "title": "Drive BC Active Events",
-      "isVisible": false,
       "isQueryable": false,
       "attributes": [],
       "serviceUrl": "https://maps.th.gov.bc.ca/geoV05/ows",

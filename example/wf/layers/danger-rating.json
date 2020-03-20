@@ -26,7 +26,6 @@
       "type": "esri-feature",
       "id": "danger-rating-esri",
       "title": "Danger Rating (ESRI)",
-      "isVisible": false,
       "isQueryable": true,
       "attribution": "Copyright 117 DataBC, Government of British Columbia",
       "serviceUrl": "https://services6.arcgis.com/ubm4tcTYICKBpist/arcgis/rest/services/British_Columbia_Danger_Rating/FeatureServer/0",

@@ -43,7 +43,6 @@
       "type": "esri-feature",
       "id": "bans-and-prohibitions-esri",
       "title": "Bans and Prohibitions (ESRI)",
-      "isVisible": false,
       "attribution": "Copyright 117 DataBC, Government of British Columbia",
       "attributes": [
         {
