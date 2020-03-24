@@ -1,0 +1,37 @@
+{
+    "layers": [
+        {
+            "type": "vector",
+            "id": "oversize-overweight-truck-routes-gvw-up-to-125000-kg",
+            "title": "GVW up to 125,000 kg",
+            "dataUrl": "./layers/oversize-overweight-truck-routes-gvw-up-to-125000-kg/oversize-overweight-truck-routes-gvw-up-to-125000-kg.geojson",
+            "xxxscaleMin": 28505,
+            "attributes": [
+                {
+                    "name": "RouteType",
+                    "title": "Route Type"
+                },
+                {
+                    "title": "Link",
+                    "format": "asLink(this.feature.properties.Link, 'Link')"
+                },
+                {
+                    "name": "Note",
+                    "title": "Notes"
+                }
+            ],
+            "titleAttribute": "RouteType",
+            "style": [
+                {
+                    "strokeWidth": 4,
+                    "strokeColor": "#8503A8",
+                    "strokeOpacity": 0.5,
+                    "strokeCap": "butt"
+                }
+            ],
+            "legend": {
+                "line": true
+            }
+        }
+    ]
+}

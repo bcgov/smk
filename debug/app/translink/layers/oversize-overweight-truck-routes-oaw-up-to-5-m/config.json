@@ -1,0 +1,37 @@
+{
+    "layers": [
+        {
+            "type": "vector",
+            "id": "oversize-overweight-truck-routes-oaw-up-to-5-m",
+            "title": "Overall Width up to 5.00 m",
+            "dataUrl": "./layers/oversize-overweight-truck-routes-oaw-up-to-5-m/oversize-overweight-truck-routes-oaw-up-to-5-m.geojson",
+            "xxxscaleMin": 28505,
+            "attributes": [
+                {
+                    "name": "RouteType",
+                    "title": "Route Type"
+                },
+                {
+                    "title": "Link",
+                    "format": "asLink(this.feature.properties.Link, 'Link')"
+                },
+                {
+                    "name": "Note",
+                    "title": "Notes"
+                }
+            ],
+            "titleAttribute": "RouteType",
+            "style": [
+                {
+                    "strokeWidth": 4,
+                    "strokeColor": "#29E6A8",
+                    "strokeOpacity": 0.5,
+                    "strokeCap": "butt"
+                }
+            ],
+            "legend": {
+                "line": true
+            }
+        }
+    ]
+}

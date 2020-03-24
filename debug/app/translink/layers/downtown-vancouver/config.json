@@ -1,0 +1,20 @@
+{
+    "layers": [
+        {
+            "type": "vector",
+            "id": "downtown-vancouver",
+            "title": "Downtown Vancouver",
+            "dataUrl": "./layers/downtown-vancouver/downtown-vancouver.geojson",
+            "isQueryable": false,
+            "style": {
+                "strokeWidth": 0,
+                "fill": true,
+                "fillColor": "#1A1A1A",
+                "fillOpacity": 0.2
+            },
+            "legend": {
+                "fill": true
+            }
+        }
+    ]
+}

@@ -1,0 +1,43 @@
+{
+    "layers": [
+        {
+            "type": "vector",
+            "id": "cardlock",
+            "title": "Cardlock",
+            "dataUrl": "./layers/cardlock/cardlock.geojson",
+            "metadataUrl": "https://catalogue.data.gov.bc.ca/dataset/66398912-7103-4557-a17e-6a5d68577fba",
+            "scaleMin": 198647,
+            "attributes": [
+                {
+                    "name": "Alias",
+                    "title": "Cardlock Name"
+                },
+                {
+                    "name": "Company",
+                    "title": "Company"
+                },
+                {
+                    "title": "Street View",
+                    "format": "asLink( this.feature.properties.Streetview_Link, 'Link' )"
+                },
+                {
+                    "value": "<%= this.feature.properties.Street_Number %> <%= this.feature.properties.Street_Name %> <%= this.feature.properties.City %>",
+                    "title": "Address"
+                },
+                {
+                    "name": "Notes",
+                    "title": "Notes"
+                }
+            ],
+            "titleAttribute": "Alias",
+            "style": {
+                "markerUrl": "./layers/cardlock/images/gas.png",
+                "markerSize": [ 22, 22 ],
+                "markerOffset": [ 11, 11 ]
+            },
+            "legend": {
+                "point": true
+            }
+        }
+    ]
+}

@@ -1,0 +1,48 @@
+{
+    "layers": [
+        {
+            "type": "vector",
+            "id": "overhead-structure-without-height-marker",
+            "title": "Overhead Structure without Height Marker",
+            "dataUrl": "./layers/overhead-structure-without-height-marker/overhead-structure-without-height-marker.geojson",
+            "scaleMin": 198647,
+            "attributes": [
+                {
+                    "name": "Route",
+                    "title": "Route"
+                },
+                {
+                    "name": "Structure_Name",
+                    "title": "Structure Name"
+                },
+                {
+                    "name": "Structure_Type",
+                    "title": "Structure Type"
+                },
+                {
+                    "title": "Street View",
+                    "format": "asLink( this.feature.properties.Streetview_Link, 'Link' )"
+                },
+                {
+                    "name": "Comments",
+                    "title": "Notes"
+                }
+            ],
+            "titleAttribute": "Route",
+            "style": {
+                "markerUrl": "./layers/overhead-structure-without-height-marker/images/overhead_1.svg",
+                "markerSize": [
+                    22,
+                    22
+                ],
+                "markerOffset": [
+                    11,
+                    11
+                ]
+            },
+            "legend": {
+                "point": true
+            }
+        }
+    ]
+}

@@ -1,0 +1,20 @@
+{
+    "layers": [
+        {
+            "type": "vector",
+            "id": "industrial-area",
+            "title": "Industrial Area",
+            "dataUrl": "./layers/industrial-area/industrial-area.geojson",
+            "isQueryable": false,
+            "style": {
+                "strokeWidth": 0,
+                "fill": true,
+                "fillColor": "#CE8CC7",
+                "fillOpacity": 0.5
+            },
+            "legend": {
+                "fill": true
+            }
+        }
+    ]
+}

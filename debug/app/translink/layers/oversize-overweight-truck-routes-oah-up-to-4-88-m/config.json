@@ -1,0 +1,46 @@
+{
+    "layers": [
+        {
+            "type": "vector",
+            "id": "oversize-overweight-truck-routes-oah-up-to-4-88-m",
+            "title": "Overall Height up to 4.88 m",
+            "dataUrl": "./layers/oversize-overweight-truck-routes-oah-up-to-4-88-m/oversize-overweight-truck-routes-oah-up-to-4-88-m.geojson",
+            "xxxscaleMin": 28505,
+            "attributes": [
+                {
+                    "name": "RouteType",
+                    "title": "Route Type"
+                },
+                {
+                    "title": "Link",
+                    "format": "asLink(this.feature.properties.Link, 'Link')"
+                },
+                {
+                    "name": "Note",
+                    "title": "Notes"
+                }
+            ],
+            "titleAttribute": "RouteType",
+            "style": [
+                {
+                    "strokeWidth": 4,
+                    "strokeColor": "#FFFF00",
+                    "strokeOpacity": 0.5,
+                    "strokeCap": "butt",
+                    "strokeDashes": "7,7"
+                },
+                {
+                    "strokeWidth": 4,
+                    "strokeColor": "#FF0000",
+                    "strokeOpacity": 0.5,
+                    "strokeCap": "butt",
+                    "strokeDashes": "7,7",
+                    "strokeDashOffset": 7
+                }
+            ],
+            "legend": {
+                "line": true
+            }
+        }
+    ]
+}
