@@ -53,6 +53,7 @@
 .smk-layers-panel .smk-display .smk-item .smk-metadata {
     display: none;
     font-size: 18px;
+    cursor: pointer;
 }
 
 .smk-layers-panel .smk-display .smk-item:hover .smk-metadata {
@@ -109,6 +110,7 @@
 .smk-layers-panel .smk-display.smk-inline-legend .smk-legend {
     order: 1;
     padding-left: 0;
+    flex-grow: 0;
 }
 
 .smk-layers-panel .smk-display.smk-inline-legend .smk-layer-title {
