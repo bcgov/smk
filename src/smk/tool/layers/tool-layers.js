@@ -88,13 +88,22 @@ include.module( 'tool-layers', [ 'tool', 'widgets', 'tool-layers.panel-layers-ht
                 smk.$viewer.updateLayersVisible()
             },
 
-            'set-folder-expanded': function ( ev ) {
-                smk.$viewer.setDisplayContextFolderExpanded( ev.id, ev.expanded )
-            },
-
             'set-item-visible': function ( ev ) {
                 smk.$viewer.displayContext.layers.setItemVisible( ev.id, ev.visible, ev.deep )
                 smk.$viewer.updateLayersVisible()
+            },
+
+            'layer-click': function ( ev ) {
+                if ( ev.metadataUrl )
+                    window.open( ev.metadataUrl, '_blank' )
+            },
+
+            'folder-click': function ( ev ) {
+                smk.$viewer.setDisplayContextFolderExpanded( ev.id, !ev.isExpanded )
+            },
+
+            'group-click': function ( ev ) {
+                // console.log( 'group item-click', ev )
             },
 
             'swipe-up': function ( ev ) {                

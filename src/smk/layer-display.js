@@ -15,6 +15,7 @@ include.module( 'layer-display', [ 'jquery', 'util', 'event' ], function () {
             showLegend: false,
             legends:    null,
             class:      null,
+            metadataUrl: null
         }, option )
 
         if ( forceVisible )
@@ -90,6 +91,8 @@ include.module( 'layer-display', [ 'jquery', 'util', 'event' ], function () {
             defLayerProperty( 'class' )
 
         defLayerProperty( 'legends' )
+
+        defLayerProperty( 'metadataUrl' )
     }
 
     $.extend( LayerDisplay.layer.prototype, LayerDisplay.prototype )

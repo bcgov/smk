@@ -7,28 +7,28 @@
         'smk-expanded':  display.isExpanded, 
         'smk-disabled': !display.isEnabled,
         'smk-obscured': !display.isActuallyVisible,
-        /*'smk-internal': !display.isInternal,*/
+        'smk-metadata': !!display.metadataUrl
     } 
 ]">
     <div class="smk-item"
         v-if="display.id != 'root'"
+        v-bind:title="'id: ' + display.id"
+        v-on:click="$$emit( display.type + '-click', display )"
     >
         <i class="smk-folder-expand material-icons smk-command smk-icon"
             v-if="display.type == 'folder' && !inGroup"
             v-bind:title="'Expand ' + display.title"
-            v-on:click="$$emit( 'set-folder-expanded', { id: display.id, expanded: !display.isExpanded } )"
         >{{ display.isExpanded ? 'arrow_drop_down' : 'arrow_right' }}</i>
 
         <i class="smk-visibility material-icons smk-command smk-icon"
             v-if="!inGroup"
             v-bind:title="'Toggle visibility of \'' + display.title + '\'' + ( display.type == 'folder' ? '\nSHIFT-click to toggle visibility on internal layers.' : '' ) "
-            v-on:click="!display.isInternal && $$emit( 'set-item-visible', { id: display.id, visible: !display.isVisible, deep: $event.shiftKey } )"
+            v-on:click.stop="!display.isInternal && $$emit( 'set-item-visible', { id: display.id, visible: !display.isVisible, deep: $event.shiftKey } )"
             v-bind:class="{ 'smk-disabled': display.isInternal }"
         >{{ display.isVisible && display.isEnabled ? glyph.visible || 'visibility' : glyph.hidden || 'visibility_off' }}</i>
 
         <span class="smk-layer-title"
             v-if="!inGroup"
-            v-bind:title="'ID: ' + ( display.id )"
         >{{ display.title }}</span>
 
         <div class="smk-legend" 
@@ -41,6 +41,11 @@
                 <span class="smk-legend-title">{{ legend.title }}</span>
             </div>
         </div>
+
+        <i class="material-icons smk-metadata"
+            v-if="display.metadataUrl && ( !inGroup || ( display.showLegend && display.legends && display.isActuallyVisible ) )"
+            v-bind:title="'Link to metadata for \'' + display.title + '\' layer'"
+        >open_in_new</i>
     </div>
     
     <layer-display
