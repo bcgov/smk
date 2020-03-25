@@ -23,8 +23,8 @@ include.module( 'tool-search-leaflet', [ 'leaflet', 'tool-search' ], function ( 
     var yellowStar = new L.Icon( {
         iconUrl:        base + '/star-icon-yellow.png',
         shadowUrl:      base + '/marker-shadow.png',
-        iconSize:       [ 30, 28 ],
-        iconAnchor:     [ 15, 14 ],
+        iconSize:       [ 20, 19 ],
+        iconAnchor:     [ 10, 9 ],
         popupAnchor:    [ 1, -24 ],
         shadowSize:     [ 21, 21 ]
     } )
@@ -45,8 +45,8 @@ include.module( 'tool-search-leaflet', [ 'leaflet', 'tool-search' ], function ( 
 
         var searchMarkers = L.featureGroup( { pane: 'markerPane' } )
 
-        self.changedActive( function () {
-            self.visible = self.active
+        self.changedGroup( function () {
+            self.visible = self.group
         } )
 
         self.changedVisible( function () {

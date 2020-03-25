@@ -23,8 +23,7 @@
 
                 <component class="smk-panel-title"
                     v-if="tool.titleComponent"
-                    v-bind:is="tool.titleComponent"
-                    v-bind="tool.titleProps"
+                    v-bind:is="tool.titleComponent()"
                 ></component>
                 <span class="smk-panel-title"
                     v-else

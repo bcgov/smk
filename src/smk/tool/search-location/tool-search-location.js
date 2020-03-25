@@ -1,23 +1,32 @@
-include.module( 'tool-search-location', [ 'tool', 'widgets', 'tool-search-location.panel-search-location-html' ], function ( inc ) {
+include.module( 'tool-search-location', [ 'tool', 'widgets', 
+    'tool-search-location.panel-search-location-html', 
+    'tool-search-location.location-title-html', 
+    'tool-search-location.location-address-html' 
+], function ( inc ) {
     "use strict";
 
     Vue.component( 'search-location-panel', {
         extends: inc.widgets.toolPanel,
         template: inc[ 'tool-search-location.panel-search-location-html' ],
-        props: [ 'feature', 'tool' ]
+        props: [ 'feature', 'tool', 'locationComponent' ]
     } )
 
     function SearchLocationTool( option ) {
+        var self = this 
+
         this.makeProp( 'feature', {} )
         this.makeProp( 'tool', {} )
+
+        this.makePropPanel( 'locationComponent', {} )
 
         SMK.TYPE.Tool.prototype.constructor.call( this, $.extend( {
             title: 'Search Location',
             panelComponent: 'search-location-panel',
-            // subPanel:       1,
+            titleComponent: function () {
+                return self.titleComp
+            }
         }, option ) )
     }
-
 
     SMK.TYPE.SearchLocationTool = SearchLocationTool
 
@@ -30,11 +39,9 @@ include.module( 'tool-search-location', [ 'tool', 'widgets', 'tool-search-locati
 
         self.changedActive( function () {
             if ( self.active ) {
-                smk.$tool[ 'search' ].visible = true
                 smk.$viewer.searched.highlight()
             }
             else {
-                smk.$tool[ 'search' ].visible = false
                 smk.$viewer.searched.pick()
             }
         } )
@@ -64,7 +71,21 @@ include.module( 'tool-search-location', [ 'tool', 'widgets', 'tool-search-locati
         } )
 
         smk.$viewer.searched.pickedFeature( function ( ev ) {
-            self.feature = ev.feature
+            self.locationComponent = {
+                template: inc[ 'tool-search-location.location-address-html' ],
+                data: function () { 
+                    return {
+                        feature: ev.feature
+                    }
+                }
+            }
+
+            self.titleComp = {
+                template: inc[ 'tool-search-location.location-title-html' ],
+                data: function () { 
+                    return ev.feature.properties
+                }
+            }
 
             if ( ev.feature ) {
                 self.active = true

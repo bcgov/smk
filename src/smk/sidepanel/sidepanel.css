@@ -37,7 +37,7 @@
 
 .smk-panel .smk-header {
     display: flex;
-    flex-wrap: wrap;
+    /* flex-wrap: wrap; */
     justify-content: space-between;
     align-items: center;
     align-content: flex-start;
@@ -69,6 +69,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    text-align: center;
+    padding: 3px 0;
 }
 
 .smk-panel .smk-panel-close {

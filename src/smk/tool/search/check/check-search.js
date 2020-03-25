@@ -2,11 +2,12 @@ include.module( 'check-search', [], function ( inc ) {
     "use strict";
 
     return function ( smk, tool ) {
-        smk.tools.push( {
+        smk.tools.push( Object.assign( {}, tool, {
+            id: 'search-location',
             type: 'search-location',
             enabled: true,
-            position: tool.position
-        } )
+            parentId: tool.id,
+        } ) )
     }
     
 } )

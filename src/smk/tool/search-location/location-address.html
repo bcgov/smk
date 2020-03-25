@@ -1,0 +1,29 @@
+<div>
+    <div class="smk-address" v-if="feature.properties">
+        <div class="smk-intersection" v-if="feature.properties.intersectionName">
+            <!-- <div>Intersection:</div> -->
+            <span class="smk-intersection-name">{{ feature.properties.intersectionName }}</span>
+        </div>
+        <div class="smk-street" v-if="feature.properties.streetName">
+            <!-- <div>Street:</div> -->
+            <span class="smk-civic-number">{{ feature.properties.civicNumber }}</span>
+            <span class="smk-street-name">{{ feature.properties.streetName }}</span>
+            <span class="smk-street-qualifier">{{ feature.properties.streetQualifier }}</span>
+            <span class="smk-street-type">{{ feature.properties.streetType }}</span>
+        </div>
+        <div class="smk-locality" v-if="feature.properties.localityName">
+            <span class="smk-locality-name">{{ feature.properties.localityName }}</span>
+            <span class="smk-locality-type" v-if="feature.properties.localityType != 'Unknown'">({{ feature.properties.localityType }})</span>
+        </div>
+    </div>
+
+    <div class="smk-coordinate" v-if="feature.geometry">
+        <!-- <div >Location:</div> -->
+        <span class="smk-ordinate">
+            <label>latitude<div>{{ feature.geometry.coordinates[ 1 ] | formatNumber( 6, 3 ) }}</div></label>
+        </span>
+        <span class="smk-ordinate">
+            <label>longitude<div>{{ feature.geometry.coordinates[ 0 ] | formatNumber( 6, 3 ) }}</div></label>
+        </span>
+    </div>
+</div>

@@ -3,11 +3,13 @@
         v-model.trim="search"
         v-on:keyup="$$emit( 'input-change', { text: search } )"
         v-on:click="$$emit( 'activate', {} )"
+        v-on:focus="focus()"
     >
 
-    <button
+    <div 
         v-on:click="$$emit( 'activate', { toggle: true } ); focus()"
         v-bind:title="title"
-    ><i class="material-icons">{{ icon }}</i>
-    </button>
+    >
+        <i class="material-icons">{{ icon }}</i>
+    </div>
 </div>

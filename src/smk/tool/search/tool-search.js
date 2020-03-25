@@ -64,8 +64,11 @@ include.module( 'tool-search', [ 'tool', 'sidepanel', 'widgets', 'tool-search.wi
         },
         methods: {
             focus: function () {
+                var inp = this.$refs[ 'search-input' ]
                 if ( !this.active )
-                    this.$refs[ 'search-input' ].focus()
+                    inp.focus()
+                    inp.setSelectionRange( 0, 0 )
+                    inp.setSelectionRange( 0, inp.value.length )
             }
         }
     } )
@@ -128,6 +131,7 @@ include.module( 'tool-search', [ 'tool', 'sidepanel', 'widgets', 'tool-search.wi
                 smk.$viewer.searched.clear()
 
                 self.busy = true
+                self.title = 'Locations matching <wbr>"' + ev.text + '"'
                 doAddressSearch( ev.text )
                     .then( function ( features ) {
                         self.active = true
@@ -165,9 +169,6 @@ include.module( 'tool-search', [ 'tool', 'sidepanel', 'widgets', 'tool-search.wi
 
         smk.$viewer.searched.pickedFeature( function ( ev ) {
             self.highlightId = ev.feature && ev.feature.id
-
-            if ( self.showFeatures == 'search-popup' )
-                self.popupModel.feature = ev.feature
         } )
 
         // // smk.$viewer.selected.highlightedFeatures( function ( ev ) {
