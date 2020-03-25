@@ -72,6 +72,7 @@ include.module( 'tool-search-location', [ 'tool', 'widgets',
 
         smk.$viewer.searched.pickedFeature( function ( ev ) {
             self.locationComponent = {
+                name: 'location',
                 template: inc[ 'tool-search-location.location-address-html' ],
                 data: function () { 
                     return {
@@ -81,9 +82,10 @@ include.module( 'tool-search-location', [ 'tool', 'widgets',
             }
 
             self.titleComp = {
+                name: 'location-title',
                 template: inc[ 'tool-search-location.location-title-html' ],
                 data: function () { 
-                    return ev.feature.properties
+                    return Object.assign( { intersectionName: null }, ev.feature.properties )
                 }
             }
 
