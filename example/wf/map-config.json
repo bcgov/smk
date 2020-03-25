@@ -95,19 +95,19 @@
       "icon": "search",
       "title": "Search",
       "position": "toolbar",
-      "enabled": true,
+      "enabled": false,
       "showTitle": "mobile",
       "order": 80
     },
     {
       "type": "search",
-      "enabled": false,
+      "enabled": true,
       "position": "toolbar"
     },
     {
       "type": "query-place",
       "icon": "search",
-      "enabled": true,
+      "enabled": false,
       "showTitle": true,
       "position": "menu",
       "command": {
@@ -121,7 +121,7 @@
       "type": "query",
       "icon": "search",
       "instance": "31071--fire",
-      "enabled": true,
+      "enabled": false,
       "showTitle": true,
       "position": "menu",
       "command": {
@@ -136,7 +136,7 @@
       "title": "More",
       "position": "toolbar",
       "enabled": "mobile",
-      "showTitle": true,
+      "showTitle": false,
       "order": 99
     },
     {
