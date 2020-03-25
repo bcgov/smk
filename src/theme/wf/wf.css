@@ -1,14 +1,13 @@
 /* variables.css */
 
-.smk-device-mobile.smk-theme-wf.smk-map-frame {
-    --overlay-padding: 0px;
-    --toolbar-height: 45px;
+.smk-device-mobile.smk-theme-wf.smk-map-frame .smk-overlay {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
 }
 
-/* map-frame.css */
-
-.smk-device-mobile.smk-theme-wf.smk-map-frame .smk-viewer {
-    bottom: var( --toolbar-height );
+.smk-device-mobile.smk-theme-wf.smk-map-frame .smk-overlay .smk-status {
+    position: static;
 }
 
 .smk-theme-wf .smk-command {
@@ -102,13 +101,7 @@
 /* toolbar.css */
 
 .smk-device-mobile.smk-theme-wf .smk-toolbar {
-    box-shadow: none;
-    bottom: 0;
-    top: initial;
     right: 0;
-    justify-content: space-around;
-    border-top: 1px solid #ccc;
-    border-radius: 0;
 }
 
 /* widgets.css */
@@ -118,11 +111,6 @@
     flex-grow: 1;
     display: flex;
     justify-content: center;
-}
-
-.smk-device-mobile.smk-theme-wf .smk-toolbar .smk-tool.smk-tool-active {
-    background-color: #003366;
-    color: white;
 }
 
 .smk-device-mobile.smk-theme-wf .smk-toolbar .smk-tool.smk-tool-title {
@@ -140,7 +128,7 @@
 .smk-device-mobile.smk-theme-wf .smk-sidepanel {
     left: 0;
     right: 0;
-    bottom: var( --toolbar-height );
+    bottom: 0;
 
     width: initial;
 
@@ -149,6 +137,9 @@
     opacity: 1;
 
     top: initial;
+    order: 1;
+    position: static;
+    margin-top: 5px;
 }
 
 .smk-device-mobile.smk-theme-wf .smk-sidepanel.sidepanel-slide-enter-active, 
@@ -178,7 +169,6 @@
 }
 
 .smk-device-mobile.smk-theme-wf .smk-sidepanel .smk-elastic-panel {
-    box-shadow: none;
     max-height: calc( 50vh - var( --toolbar-height ) );
 }
 
@@ -341,5 +331,27 @@
     flex-basis: 99%;
 }
 
-/* .smk-theme-wf .smk-query-panel .smk-body .smk-parameter label {
-} */
+/* shortcut-menu.css */
+
+.smk-theme-wf .smk-overlay .smk-shortcut-menu {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.smk-theme-wf .smk-overlay .smk-shortcut-menu .smk-tool {
+    margin: 4px 0;
+}
+
+.smk-theme-wf .smk-overlay .smk-shortcut-menu .smk-bespoke-tool {
+    width: 40px;
+    height: 40px;
+    border-radius: 40px;
+    background-color: #0000cc;
+    color: white;
+}
+
+.smk-theme-wf .smk-overlay .smk-shortcut-menu .smk-bespoke-tool i {
+    margin-left: 7px;
+    margin-top: 7px;
+}

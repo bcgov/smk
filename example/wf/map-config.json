@@ -20,9 +20,9 @@
       "type": "bespoke",
       "title": "Near Me",
       "instance": "nearme",
-      "position": "toolbar",
+      "position": "shortcut-menu",
       "enabled": true,
-      "showTitle": "mobile",
+      "showTitle": false,
       "icon": "my_location",
       "order": 80,
       "showSwipe": true
@@ -36,8 +36,8 @@
     {
       "type": "layers",
       "enabled": true,
-      "showTitle": "mobile",
-      "position": "toolbar",
+      "showTitle": false,
+      "position": "shortcut-menu",
       "glyph": {
         "visible": "check_box",
         "hidden": "check_box_outline_blank"
@@ -51,8 +51,8 @@
       "type": "identify",
       "title": "Identify",
       "enabled": true,
-      "showTitle": "mobile",
-      "position": "list-menu",
+      "showTitle": false,
+      "position": "shortcut-menu",
       "tolerance": 10,
       "command": {
         "attributeMode": false,
@@ -74,7 +74,7 @@
     {
       "type": "baseMaps",
       "enabled": true,
-      "showTitle": "mobile",
+      "showTitle": false,
       "choices": [
         "Topographic",
         "Streets",
@@ -84,7 +84,7 @@
         "DarkGray",
         "Gray"
       ],
-      "position": "list-menu",
+      "position": "shortcut-menu",
       "mapStyle": {
         "width": "60px",
         "height": "100px"
@@ -135,13 +135,17 @@
       "icon": "more_horiz",
       "title": "More",
       "position": "toolbar",
-      "enabled": "mobile",
+      "enabled": false,
       "showTitle": false,
       "order": 99
     },
     {
       "type": "markup",
       "enabled": false
+    },
+    {
+      "type": "shortcut-menu",
+      "enabled": "mobile"
     }
-  ]
+ ]
 }
