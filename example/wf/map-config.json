@@ -106,6 +106,10 @@
       "position": "toolbar"
     },
     {
+      "type": "search-location",
+      "enabled": false
+    },
+    {
       "type": "query-place",
       "icon": "search",
       "enabled": false,
