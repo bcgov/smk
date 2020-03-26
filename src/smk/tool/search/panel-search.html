@@ -2,7 +2,7 @@
     v-bind:busy="busy"
     v-bind:message="busy ? 'Searching' : isEmpty() ? 'Enter name of location.' : ''"
     v-bind:status="busy ? 'progress' : ''"
-    v-if="results && results.length > 0"
+    v-if="results && results.length > 0 && !showDropdown"
 >
     <template slot="header">
         <slot></slot>

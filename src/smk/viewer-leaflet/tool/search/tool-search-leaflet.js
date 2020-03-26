@@ -44,6 +44,7 @@ include.module( 'tool-search-leaflet', [ 'leaflet', 'tool-search' ], function ( 
         var vw = smk.$viewer
 
         var searchMarkers = L.featureGroup( { pane: 'markerPane' } )
+        var pickedMarker = L.featureGroup( { pane: 'markerPane' } )
 
         self.changedGroup( function () {
             self.visible = self.group
@@ -52,9 +53,11 @@ include.module( 'tool-search-leaflet', [ 'leaflet', 'tool-search' ], function ( 
         self.changedVisible( function () {
             if ( self.visible ) {
                 vw.map.addLayer( searchMarkers )
+                vw.map.removeLayer( pickedMarker )
             }
             else {
                 vw.map.removeLayer( searchMarkers )
+                vw.map.addLayer( pickedMarker )
             }
         } )
 
@@ -80,6 +83,12 @@ include.module( 'tool-search-leaflet', [ 'leaflet', 'tool-search' ], function ( 
                 searchMarkers.addLayer( marker )
                 f.highlightLayer = marker
 
+                f.pickMarker = L.marker( { lat: f.geometry.coordinates[ 1 ], lng: f.geometry.coordinates[ 0 ] }, {
+                    title: f.properties.fullAddress,
+                    riseOnHover: true,
+                    icon: yellowMarker
+                } )
+
                 marker.on( {
                     click: function ( e ) {
                         vw.searched.pick( f.id, { popupopen: true } )
@@ -97,6 +106,9 @@ include.module( 'tool-search-leaflet', [ 'leaflet', 'tool-search' ], function ( 
 
             if ( ev.feature ) {
                 brightHighlight( ev.feature.highlightLayer, true, true, ev.feature )
+
+                pickedMarker.clearLayers()
+                pickedMarker.addLayer( ev.feature.pickMarker )
             }
         } )
 
@@ -114,6 +126,7 @@ include.module( 'tool-search-leaflet', [ 'leaflet', 'tool-search' ], function ( 
 
         vw.searched.clearedFeatures( function ( ev ) {
             searchMarkers.clearLayers()
+            pickedMarker.clearLayers()
         } )
 
         function brightHighlight( highlightLayer, highlighted, picked, feature ) {

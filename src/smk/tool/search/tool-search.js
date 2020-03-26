@@ -9,7 +9,7 @@ include.module( 'tool-search', [ 'tool', 'sidepanel', 'widgets', 'tool-search.wi
 
         var query = {
             ver:            1.2,
-            maxResults:     20,
+            maxResults:     10,
             outputSRS:      4326,
             addressString:  text,
             autoComplete:   true
@@ -31,6 +31,21 @@ include.module( 'tool-search', [ 'tool', 'sidepanel', 'widgets', 'tool-search.wi
                     // exclude whole province match
                     if ( feature.properties.fullAddress == 'BC' ) return;
 
+                    if ( feature.properties.intersectionName ) {
+                        feature.title = feature.properties.intersectionName
+                    }
+                    else if ( feature.properties.streetName ) {
+                        feature.title = [
+                            feature.properties.civicNumber,
+                            feature.properties.streetName,
+                            feature.properties.streetQualifier,
+                            feature.properties.streetType
+                        ].filter( function ( x ) { return !!x } ).join( ' ' )
+                    }
+                    else if ( feature.properties.localityName ) {
+                        feature.title = feature.properties.localityName                        
+                    }
+
                     return feature
                 } )
             } )
@@ -40,15 +55,15 @@ include.module( 'tool-search', [ 'tool', 'sidepanel', 'widgets', 'tool-search.wi
     Vue.component( 'search-widget', {
         mixins: [ inc.widgets.emit ],
         template: inc[ 'tool-search.widget-search-html' ],
-        props: [ 'id', 'type', 'title', 'visible', 'enabled', 'active', 'icon', 'type', 'initialSearch' ],
+        props: [ 'id', 'type', 'title', 'visible', 'enabled', 'active', 'icon', 'type', 'initialSearch', 'results', 'highlightId', 'showDropdown' ],
         data: function () {
             return {
                 search: null
             }
         },
         watch: {
-            initialSearch: function () {
-                this.search = null
+            initialSearch: function ( val ) {
+                this.search = val
             }
         },
         computed: {
@@ -69,6 +84,9 @@ include.module( 'tool-search', [ 'tool', 'sidepanel', 'widgets', 'tool-search.wi
                     inp.focus()
                     inp.setSelectionRange( 0, 0 )
                     inp.setSelectionRange( 0, inp.value.length )
+            },
+            isEmpty: function () {
+                return !this.results || this.results.length == 0
             }
         }
     } )
@@ -76,7 +94,7 @@ include.module( 'tool-search', [ 'tool', 'sidepanel', 'widgets', 'tool-search.wi
     Vue.component( 'search-panel', {
         extends: inc.widgets.toolPanel,
         template: inc[ 'tool-search.panel-search-html' ],
-        props: [ 'results', 'highlightId' ],
+        props: [ 'results', 'highlightId', 'showDropdown' ],
         methods: {
             isEmpty: function () {
                 return !this.results || this.results.length == 0
@@ -91,11 +109,15 @@ include.module( 'tool-search', [ 'tool', 'sidepanel', 'widgets', 'tool-search.wi
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
     function SearchTool( option ) {
-        this.makePropWidget( 'icon' ) //, 'search' )
-        this.makePropWidget( 'initialSearch', 0 )
+        this.makeProp( 'showDropdown', false )
+        this.makeProp( 'results', [] )
+        this.makeProp( 'highlightId', null )
 
-        this.makePropPanel( 'results', [] )
-        this.makePropPanel( 'highlightId', null )
+        this.makePropWidget( 'icon' ) //, 'search' )
+        this.makePropWidget( 'initialSearch', null )
+
+        // this.makePropPanel( 'results', [] )
+        // this.makePropPanel( 'highlightId', null )
 
         SMK.TYPE.PanelTool.prototype.constructor.call( this, $.extend( {
             // order:      2,
@@ -150,11 +172,15 @@ include.module( 'tool-search', [ 'tool', 'sidepanel', 'widgets', 'tool-search.wi
             'pick': function ( ev ) {
                 smk.$viewer.searched.pick( null )
                 smk.$viewer.searched.pick( ev.result.id )
+                if ( self.showDropdown ) {
+                    self.active = false
+                    self.initialSearch = ev.result.title
+                }
             },
 
             'clear': function ( ev ) {
                 smk.$viewer.searched.clear()
-                self.initialSearch += 1
+                // self.initialSearch += 1
             }
         } )
 
