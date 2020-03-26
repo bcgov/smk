@@ -24,7 +24,8 @@ include.module( 'tool', [ 'jquery', 'event' ], function () {
 
         this.makePropWidget( 'type', 'unknown' )
         this.makePropWidget( 'showTitle', false )
-
+        this.makePropWidget( 'showWidget', null )
+        
         $.extend( this, option )
     }
 

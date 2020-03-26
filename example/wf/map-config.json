@@ -52,6 +52,7 @@
       "title": "Identify",
       "enabled": true,
       "showTitle": false,
+      "showWidget": false,
       "position": "shortcut-menu",
       "tolerance": 10,
       "command": {

@@ -36,7 +36,7 @@ include.module( 'widgets', [ 'vue', 'widgets.tool-button-html', 'widgets.toggle-
         toolButton: Vue.extend( {
             mixins: [ emit ],
             template: inc[ 'widgets.tool-button-html' ],
-            props: { 'id': String, 'type': String, 'title': String, 'visible': Boolean, 'enabled': Boolean, 'active': Boolean, 'icon': String, 'showTitle': Boolean },
+            props: { 'id': String, 'type': String, 'title': String, 'visible': Boolean, 'enabled': Boolean, 'active': Boolean, 'icon': String, 'showTitle': Boolean, 'showWidget': Boolean },
             computed: {
                 classes: function () {
                     var c = {
