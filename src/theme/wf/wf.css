@@ -336,7 +336,7 @@
 .smk-theme-wf .smk-overlay .smk-shortcut-menu {
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
+    align-items: center;
 }
 
 .smk-theme-wf .smk-overlay .smk-shortcut-menu .smk-tool {
@@ -347,11 +347,10 @@
     width: 40px;
     height: 40px;
     border-radius: 40px;
-    background-color: #0000cc;
+    background-color: #1A5A96;
     color: white;
 }
 
 .smk-theme-wf .smk-overlay .smk-shortcut-menu .smk-bespoke-tool i {
-    margin-left: 7px;
     margin-top: 7px;
 }
