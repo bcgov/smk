@@ -87,3 +87,21 @@
 .smk-tool.smk-search-tool .smk-search-dropdown .smk-item:last-child {
     border-bottom: none;
 }
+
+.smk-tool.smk-search-tool .smk-search-dropdown .smk-item .smk-intersection,
+.smk-tool.smk-search-tool .smk-search-dropdown .smk-item .smk-street,
+.smk-tool.smk-search-tool .smk-search-dropdown .smk-item .smk-locality {
+    display: inline;
+}
+
+.smk-tool.smk-search-tool .smk-search-dropdown .smk-item .smk-precision-street .smk-street {
+    font-weight: bold;
+}
+
+.smk-tool.smk-search-tool .smk-search-dropdown .smk-item .smk-precision-locality .smk-locality {
+    font-weight: bold;
+}
+
+.smk-tool.smk-search-tool .smk-search-dropdown .smk-item .smk-precision-intersection .smk-intersection {
+    font-weight: bold;
+}

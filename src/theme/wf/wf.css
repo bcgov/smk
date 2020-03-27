@@ -1,5 +1,12 @@
 /* variables.css */
 
+.smk-theme-wf.smk-map-frame {
+    /* --overlay-padding: 7px; */
+    --panel-width: 300px;
+    /* --panel-bottom: 0; */
+    --toolbar-height: 40px;
+}
+
 .smk-device-mobile.smk-theme-wf.smk-map-frame .smk-overlay {
     display: flex;
     flex-direction: column;
@@ -100,6 +107,10 @@
 
 /* toolbar.css */
 
+.smk-theme-wf .smk-toolbar {
+    padding: 0 4px;
+}
+
 .smk-device-mobile.smk-theme-wf .smk-toolbar {
     right: 0;
 }
@@ -124,6 +135,10 @@
 }
 
 /* sidepanel.css */
+
+.smk-theme-wf .smk-sidepanel {
+    width: calc( var( --panel-width ) + 8px );
+}
 
 .smk-device-mobile.smk-theme-wf .smk-sidepanel {
     left: 0;
