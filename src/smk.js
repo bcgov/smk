@@ -699,6 +699,9 @@
                     return function () {
                         console.warn( 'handler ' + id + '.' + method + ' invoked' )
                     }
+                },
+                has: function ( id, method ) {
+                    return !!( this.handler[ id ] && this.handler[ id ][ method ] )
                 }
             }
 

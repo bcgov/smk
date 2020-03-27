@@ -55,7 +55,12 @@ include.module( 'tool-bespoke', [ 'tool', 'widgets', 'tool-bespoke.panel-bespoke
             'activate': function () {
                 if ( !self.enabled ) return
 
-                self.active = !self.active
+                if ( SMK.HANDLER.has( self.id, 'triggered' ) ) {
+                    SMK.HANDLER.get( self.id, 'triggered' )( smk, self )
+                }
+                else {
+                    self.active = !self.active
+                }
             },
 
             'swipe-up': function ( ev ) {                
