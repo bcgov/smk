@@ -103,7 +103,8 @@
     {
       "type": "search",
       "enabled": true,
-      "position": "toolbar"
+      "position": "toolbar",
+      "showDropdown": true
     },
     {
       "type": "search-location",
@@ -151,6 +152,16 @@
     {
       "type": "shortcut-menu",
       "enabled": "mobile"
+    },
+    {
+      "type": "bespoke",
+      "instance": "menu",
+      "title": "Menu",
+      "enabled": "mobile",
+      "position": "toolbar",
+      "showTitle": false,
+      "icon": "menu",
+      "order": 1
     }
- ]
+  ]
 }
