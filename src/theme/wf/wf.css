@@ -184,12 +184,12 @@
 }
 
 .smk-device-mobile.smk-theme-wf .smk-sidepanel .smk-elastic-panel {
-    max-height: calc( 50vh - var( --toolbar-height ) );
+    height: calc( 50vh - var( --toolbar-height ) );
 }
 
 .smk-device-mobile.smk-theme-wf .smk-sidepanel.sidepanel-slide-enter .smk-elastic-panel, 
 .smk-device-mobile.smk-theme-wf .smk-sidepanel.sidepanel-slide-leave-to .smk-elastic-panel {
-    max-height: 0;
+    height: 0;
 }
 
 .smk-device-mobile.smk-theme-wf .smk-sidepanel.sidepanel-slide-enter-active .smk-elastic-panel, 
@@ -368,4 +368,10 @@
 
 .smk-theme-wf .smk-overlay .smk-shortcut-menu .smk-bespoke-tool i {
     margin-top: 7px;
+}
+
+/* tool-search.css */
+
+.smk-theme-wf .smk-tool.smk-search-tool .smk-search-dropdown {
+    top: calc( var( --toolbar-height ) - 8px );
 }

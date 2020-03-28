@@ -1,4 +1,5 @@
 <div v-bind:class="{ 'smk-busy': busy }">
+    <div class="smk-panel">
     <transition name="status-message">
         <div class="smk-message" 
             v-bind:class="'smk-' + ( status || 'summary' )" 
@@ -40,4 +41,5 @@
             v-if="canScrollDown"
         >arrow_drop_down</i>
     </div>
+</div>
 </div>

@@ -76,13 +76,13 @@
     left: 0;
     background-color: white;
     border-radius: 3px;
-    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65);
+    /* box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65); */
 }
 
 .smk-tool.smk-search-tool .smk-search-dropdown .smk-item {
     border-radius: 0;
     border-bottom: 1px solid gray;
-    padding: 2px 5px;
+    padding: 5px 5px;
 }
 
 .smk-tool.smk-search-tool .smk-search-dropdown .smk-item:last-child {

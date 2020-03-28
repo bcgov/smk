@@ -129,6 +129,9 @@ include.module( 'tool-search', [ 'tool', 'sidepanel', 'widgets', 'tool-search.wi
             widgetComponent: 'search-widget',
             panelComponent: 'search-panel',
         }, option ) )
+
+        if ( this.showDropdown )
+            this.showPanel = false
     }
 
     SMK.TYPE.SearchTool = SearchTool
