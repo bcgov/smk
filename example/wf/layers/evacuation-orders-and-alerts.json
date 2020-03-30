@@ -43,7 +43,7 @@
     {
       "type": "esri-feature",
       "id": "evacuation-orders-and-alerts-esri",
-      "title": "Evacuation Orders and Alerts (ESRI)",
+      "title": "Evacuation Orders and Alerts",
       "isQueryable": true,
       "attribution": "Copyright 117 DataBC, Government of British Columbia",
       "serviceUrl": "https://services6.arcgis.com/ubm4tcTYICKBpist/ArcGIS/rest/services/Evacuation_Orders_and_Alerts/FeatureServer/0",

@@ -19,7 +19,7 @@
     {
       "type": "esri-tiled",
       "id": "bc-fire-centres-esri",
-      "title": "BC Fire Centres (ESRI)",
+      "title": "BC Fire Centres",
       "isQueryable": false,
       "attribution": "Copyright 117 DataBC, Government of British Columbia",
       "serviceUrl": "https://tiles.arcgis.com/tiles/ubm4tcTYICKBpist/arcgis/rest/services/BCWS_FireCenterBdys2/MapServer",

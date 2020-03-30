@@ -37,7 +37,7 @@
     {
       "type": "esri-feature",
       "id": "closed-recreation-sites-esri",
-      "title": "Closed Recreation Sites (ESRI)",
+      "title": "Closed Recreation Sites",
       "attribution": "Copyright 117 DataBC, Government of British Columbia",
       "attributes": [
         {
