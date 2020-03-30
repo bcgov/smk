@@ -87,8 +87,8 @@
 
 .smk-tool.smk-search-tool .smk-search-dropdown .smk-item {
     border-radius: 0;
-    border-bottom: 1px solid gray;
-    padding: 5px 5px;
+    /* border-bottom: 1px solid gray; */
+    padding: 7px 5px;
 }
 
 .smk-tool.smk-search-tool .smk-search-dropdown .smk-item:last-child {

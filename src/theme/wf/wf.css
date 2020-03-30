@@ -302,6 +302,10 @@
 
 /* tool-layers.css */
 
+.smk-theme-wf .smk-layers-panel .smk-item {
+    padding: 2px 0;
+}
+
 .smk-theme-wf .smk-layers-panel .smk-legend-item {
     display: flex;
     align-items: center;
