@@ -61,6 +61,12 @@
     outline: 0;
 }
 
+.smk-tool.smk-search-tool .smk-clear-search {
+    position: absolute;
+    right: 28px;
+    top: 2px;
+    /* opacity: 0.2; */
+}
 
 .smk-sidepanel .smk-search-location-panel .smk-body .smk-address {
     font-weight: bold;

@@ -186,7 +186,10 @@ include.module( 'tool-search', [ 'tool', 'sidepanel', 'widgets', 'tool-search.wi
 
             'clear': function ( ev ) {
                 smk.$viewer.searched.clear()
-                // self.initialSearch += 1
+                self.initialSearch = ' '
+                Vue.nextTick( function () {
+                    self.initialSearch = ''
+                } )
             }
         } )
 

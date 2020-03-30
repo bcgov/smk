@@ -6,6 +6,14 @@
         v-on:focus="focus()"
     >
 
+    <div class="smk-clear-search"
+        v-on:click="$$emit( 'clear' ); focus()"
+        v-if="search || !isEmpty"
+        title="Clear results"
+    >
+        <i class="material-icons">clear</i>
+    </div>
+
     <div 
         v-on:click="$$emit( 'activate', { toggle: true } ); focus()"
         v-bind:title="title"
