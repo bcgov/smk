@@ -65,7 +65,9 @@ include.module( 'smk-map', [ 'jquery', 'util', 'theme-base', 'sidepanel' ], func
             function () {
                 console.groupEnd()
             }
-        )
+        ).then( function () {
+            return self
+        } )
 
         // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -578,6 +580,11 @@ include.module( 'smk-map', [ 'jquery', 'util', 'theme-base', 'sidepanel' ], func
 
     SmkMap.prototype.setToolGroup = function ( rootId, ids ) {
         this.$group[ rootId ] = ids
+    }
+
+    SmkMap.prototype.updateMapSize = function () {
+        if ( this.$viewer.mapResized )
+            this.$viewer.mapResized()
     }
     
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
