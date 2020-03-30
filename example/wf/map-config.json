@@ -25,7 +25,7 @@
       "showTitle": false,
       "icon": "my_location",
       "order": 80,
-      "showSwipe": true
+      "showSwipe": false
     },
     {
       "type": "location",
