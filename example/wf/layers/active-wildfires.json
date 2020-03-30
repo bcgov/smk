@@ -53,7 +53,7 @@
     {
       "type": "esri-feature",
       "id": "active-wildfires-esri",
-      "title": "Active Wildfires (ESRI)",
+      "title": "Active Wildfires",
       "attribution": "Copyright 117 DataBC, Government of British Columbia",
       "serviceUrl": "https://services6.arcgis.com/ubm4tcTYICKBpist/arcgis/rest/services/BCWS_ActiveFires_PublicView/FeatureServer/0",
       "metadataUrl": "https://catalogue.data.gov.bc.ca/dataset/diagnostic-facilities",

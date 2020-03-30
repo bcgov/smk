@@ -3,11 +3,11 @@
         {
             "type": "layers",
             "display": [
-                { "id": "active-wildfires", "isVisible": true },
-                { "#id": "active-wildfires-esri", "isVisible": false },
+                { "#id": "active-wildfires", "isVisible": true },
+                { "id": "active-wildfires-esri", "isVisible": true },
                 
-                { "id": "bcws-activefires-publicview-inactive", "isVisible": false },
-                { "#id": "bcws-activefires-publicview-inactive-esri", "isVisible": false },
+                { "#id": "bcws-activefires-publicview-inactive", "isVisible": false },
+                { "id": "bcws-activefires-publicview-inactive-esri", "isVisible": false },
                 
                 { "id": "danger-rating", "isVisible": false },
                 { "#id": "danger-rating-esri", "isVisible": false },
