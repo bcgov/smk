@@ -258,6 +258,9 @@ include.module( 'feature-list', [ 'tool', 'widgets', 'sidepanel',
         } ),
         asLink: makeFormatter( inc[ 'feature-list.format-link-html' ], function ( url, label ) {
             return { url: url, label: label }
+        } ),
+        asHTML: makeFormatter( '<span class="smk-value" v-if="html" v-html="html"></span>', function ( html ) {
+            return { html: html }
         } )
     }
 
