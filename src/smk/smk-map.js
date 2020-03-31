@@ -28,7 +28,7 @@ include.module( 'smk-map', [ 'jquery', 'util', 'theme-base', 'sidepanel' ], func
             .addClass( 'smk-map-frame smk-hidden' )
 
         var spinner = $( '<img class="smk-startup smk-spinner">' )
-            .attr( 'src', include.option( 'baseUrl' ) + '/images/spinner.gif' )
+            .attr( 'src', include.option( 'baseUrl' ) + 'images/spinner.gif' )
             .appendTo( this.$container )
 
         var status = $( '<div class="smk-startup smk-status">' )
