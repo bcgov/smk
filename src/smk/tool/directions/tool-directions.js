@@ -10,7 +10,7 @@ include.module( 'tool-directions', [
 ], function ( inc ) {
     "use strict";
 
-    var base = include.option( 'baseUrl' ) + '/images/tool/directions'
+    var base = include.option( 'baseUrl' ) + 'images/tool/directions'
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
     Vue.component( 'directions-widget', {

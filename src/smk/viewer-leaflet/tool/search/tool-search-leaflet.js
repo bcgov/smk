@@ -9,7 +9,7 @@ include.module( 'tool-search-leaflet', [ 'leaflet', 'tool-search' ], function ( 
         _OTHER_:        12
     }
 
-    var base = include.option( 'baseUrl' ) + '/images/tool/search'
+    var base = include.option( 'baseUrl' ) + 'images/tool/search'
 
     var yellowMarker = new L.Icon( {
         iconUrl:        base + '/marker-icon-yellow.png',

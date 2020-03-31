@@ -1,7 +1,7 @@
 include.module( 'feature-list-clustering-leaflet', [ 'leaflet', 'feature-list-leaflet', 'turf' ], function ( inc ) {
     "use strict";
 
-    var base = include.option( 'baseUrl' ) + '/images/feature-list'
+    var base = include.option( 'baseUrl' ) + 'images/feature-list'
 
     var whiteMarker = new L.Icon( {
         iconUrl:        base + '/marker-icon-white.png',
