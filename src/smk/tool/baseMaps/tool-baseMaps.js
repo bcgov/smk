@@ -3,6 +3,24 @@ include.module( 'tool-baseMaps', [ 'tool', 'widgets', 'viewer', 'leaflet', 'tool
 
     Vue.component( 'baseMaps-widget', {
         extends: inc.widgets.toolButton,
+        props: [ 'status' ],
+        computed: {
+            classes: function () {
+                var c = {
+                    'smk-tool': true,
+                    'smk-tool-active': this.active,
+                    'smk-tool-visible': this.visible,
+                    'smk-tool-enabled': this.enabled,
+                    'smk-tool-title': this.showTitle
+                }
+                c[ 'smk-' + this.id + '-tool' ] = true
+
+                if ( this.status )
+                    c[ 'smk-' + this.status ] = true
+                
+                return c
+            }
+        },
     } )
 
     Vue.component( 'baseMaps-panel', {
@@ -60,6 +78,7 @@ include.module( 'tool-baseMaps', [ 'tool', 'widgets', 'viewer', 'leaflet', 'tool
     //
     function BaseMapsTool( option ) {
         this.makePropWidget( 'icon', null ) //'map' )
+        this.makePropWidget( 'status', null ) 
         
         this.makePropPanel( 'center', null )
         this.makePropPanel( 'zoom', null )
@@ -102,22 +121,37 @@ include.module( 'tool-baseMaps', [ 'tool', 'widgets', 'viewer', 'leaflet', 'tool
             } )
             .sort( function ( a, b ) { return a.order - b.order } )
 
-        this.current = smk.viewer.baseMap
-
         smk.on( this.id, {
             'activate': function () {
                 if ( !self.enabled ) return
 
-                self.active = !self.active
+                if ( self.showPanel !== false ) {
+                    self.active = !self.active
+                }
+                else {
+                    var i = self.basemaps.findIndex( function ( b ) {
+                        return b.id == self.current
+                    } )
+                    setBasemap( self.basemaps[ ( i + 1 ) % self.basemaps.length ] )
+                }
             },
 
             'set-base-map': function ( ev ) {
-                smk.$viewer.setBasemap( ev.id )
+                setBasemap( ev )
             }
         } )
 
+        function setBasemap( basemap ) {
+            smk.$viewer.setBasemap( basemap.id )
+        }
+
         smk.$viewer.changedBaseMap( function ( ev ) {
             self.current = ev.baseMap
+            var bm = self.basemaps.find( function ( b ) {
+                return b.id == self.current
+            } )
+            self.status = 'basemap-' + bm.id
+            self.title = 'Base Map: ' + bm.title
         } )
 
         smk.$viewer.changedView( function ( ev ) {
@@ -133,6 +167,7 @@ include.module( 'tool-baseMaps', [ 'tool', 'widgets', 'viewer', 'leaflet', 'tool
             self.zoom = v.zoom
         }
 
+        smk.$viewer.setBasemap( smk.viewer.baseMap )
     } )
 
     return BaseMapsTool

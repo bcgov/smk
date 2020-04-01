@@ -1,9 +1,16 @@
-<side-panel class="smk-base-maps-panel" v-bind:showHeader="true">
+<side-panel class="smk-base-maps-panel" 
+    v-bind:showHeader="true"
+    v-if="showPanel !== false"
+>
     <template slot="header">
         <slot></slot>
     </template>
 
-    <div v-for="basemap in basemaps" class="smk-base-map" v-on:click="$$emit( 'set-base-map', basemap )" v-bind:class="{ 'smk-active': basemap.id == current }">
+    <div class="smk-base-map"  
+        v-for="basemap in basemaps" 
+        v-on:click="$$emit( 'set-base-map', basemap )" 
+        v-bind:class="{ 'smk-active': basemap.id == current }"
+    >
         <!-- <h2>{{ basemap.title }}</h2> -->
         <div class="smk-base-map-sample" 
             v-bind:title="basemap.title"

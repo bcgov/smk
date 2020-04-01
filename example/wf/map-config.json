@@ -76,14 +76,10 @@
       "type": "baseMaps",
       "enabled": true,
       "showTitle": false,
+      "showPanel": false,
       "choices": [
         "Topographic",
-        "Streets",
-        "Imagery",
-        "Oceans",
-        "NationalGeographic",
-        "DarkGray",
-        "Gray"
+        "Imagery"
       ],
       "position": "shortcut-menu",
       "mapStyle": {
