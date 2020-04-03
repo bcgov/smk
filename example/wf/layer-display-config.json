@@ -16,7 +16,7 @@
                 { "id": "evacuation-orders-and-alerts-esri", "isVisible": true },
                 
                 { "#id": "fire-perimeters", "isVisible": true },
-                { "id": "fire-perimeters-esri", "isVisible": true },
+                { "#id": "fire-perimeters-esri", "isVisible": true },
                 
                 { "#id": "bc-fire-centres", "isVisible": true },
                 { "id": "bc-fire-centres-esri", "isVisible": true },
