@@ -12,7 +12,7 @@
       "#metadataUrl": "https://catalogue.data.gov.bc.ca/dataset/diagnostic-facilities",
       "#scaleMin": 500000,
       "#scaleMax": 3000000,
-      "#titleAttribute": "FIRE_CENTRE_NAME",
+      "titleAttribute": "FIRE_CENTRE_NAME",
       "popupTemplate": "@wf-feature",
       "attributes": [
         {

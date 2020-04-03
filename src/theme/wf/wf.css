@@ -379,3 +379,15 @@
 .smk-theme-wf .smk-tool.smk-search-tool .smk-search-dropdown {
     top: calc( var( --toolbar-height ) - 8px );
 }
+
+/* tool-base-maps.css */
+
+.smk-theme-wf .smk-tool.smk-baseMaps-tool.smk-basemap-Topographic {
+    background-color: transparent;
+    color: black;
+}
+
+.smk-theme-wf .smk-tool.smk-baseMaps-tool.smk-basemap-Imagery {
+    background-color: #1A5A96;
+    color: white;
+}
