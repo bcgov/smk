@@ -1,0 +1,18 @@
+<div class="smk-location-title">
+    <div class="smk-intersection" v-if="intersectionName">
+        <span class="smk-intersection-name">{{ intersectionName }}</span>
+    </div>
+    <div class="smk-street" v-else-if="streetName">
+        <span class="smk-civic-number">{{ civicNumber }}</span>
+        <span class="smk-street-name">{{ streetName }}</span>
+        <span class="smk-street-qualifier">{{ streetQualifier }}</span>
+        <span class="smk-street-type">{{ streetType }}</span>
+    </div>
+    <div class="smk-locality" v-else-if="localityName">
+        <span class="smk-locality-name">{{ localityName }}</span>
+        <!-- <span class="smk-locality-type" v-if="localityType != 'Unknown'">({{ localityType }})</span> -->
+    </div>
+    <div v-else>
+        (unknown)
+    </div>
+</div>

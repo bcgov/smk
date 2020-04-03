@@ -1,0 +1,14 @@
+{
+  "layers": [
+    {
+      "type": "wms",
+      "id": "whse-land-and-natural-resource-prot-current-fire-polys-sp",
+      "title": "Fire Perimeters - Current",
+      "serviceUrl": "https://openmaps.gov.bc.ca/geo/pub/wms",
+      "layerName": "WHSE_LAND_AND_NATURAL_RESOURCE.PROT_CURRENT_FIRE_POLYS_SP",
+      "isQueryable": false,
+      "popupTemplate": "@wf-feature",
+      "titleAttribute": "FIRE_NUMBER"
+    }
+  ]
+}

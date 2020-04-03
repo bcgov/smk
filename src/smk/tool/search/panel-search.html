@@ -2,9 +2,14 @@
     v-bind:busy="busy"
     v-bind:message="busy ? 'Searching' : isEmpty() ? 'Enter name of location.' : ''"
     v-bind:status="busy ? 'progress' : ''"
+    v-if="results && results.length > 0 && !showDropdown"
 >
+    <template slot="header">
+        <slot></slot>
+    </template>
+
     <template slot="commands">
-        <span class="smk-command"
+        <!-- <span class="smk-command"
             v-bind:class="{ 'smk-disabled': isEmpty() }"
             v-on:click="$$emit( 'clear' )"
         >Clear results</span>
@@ -12,7 +17,7 @@
         <span class="smk-command"
             v-bind:class="{ 'smk-disabled': isEmpty() }"
             v-on:click="$$emit( 'zoom' )"
-        >Zoom to results</span>
+        >Zoom to results</span> -->
     </template>
 
     <div class="smk-search-result smk-item"

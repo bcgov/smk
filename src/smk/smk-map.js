@@ -65,7 +65,9 @@ include.module( 'smk-map', [ 'jquery', 'util', 'theme-base', 'sidepanel' ], func
             function () {
                 console.groupEnd()
             }
-        )
+        ).then( function () {
+            return self
+        } )
 
         // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -627,6 +629,11 @@ include.module( 'smk-map', [ 'jquery', 'util', 'theme-base', 'sidepanel' ], func
         return cfg
     }
 
+    SmkMap.prototype.updateMapSize = function () {
+        if ( this.$viewer.mapResized )
+            this.$viewer.mapResized()
+    }
+    
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     function findProperty( obj, collectionName, propName, cb ) {

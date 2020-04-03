@@ -1,0 +1,316 @@
+{
+  "layers": [
+    {
+      "type": "wms",
+      "id": "active-wildfires",
+      "title": "BC Wildfires - Active",
+      "isQueryable": true,
+      "serviceUrl": "https://delivery.openmaps.gov.bc.ca/geo/pub/ows",
+      "#serviceUrl": "https://openmaps.gov.bc.ca/geo/pub/ows",
+      "layerName": "pub:WHSE_LAND_AND_NATURAL_RESOURCE.PROT_CURRENT_FIRE_PNTS_SP",
+      "styleName": "6055",
+      "where": "FIRE_STATUS <> 'Out' and FIRE_STATUS <> 'Not Active'",
+      "#metadataUrl": "https://catalogue.data.gov.bc.ca/dataset/diagnostic-facilities",
+      "#scaleMin": 500000,
+      "#scaleMax": 0,
+      "popupTemplate": "@wf-feature",
+      "titleAttribute": "FIRE_NUMBER",
+      "attributes": [
+        {
+          "name": "FIRE_NUMBER",
+          "title": "Fire Number"
+        },
+        {
+          "name": "IGNITION_DATE",
+          "title": "Date of Discovery",
+          "format": "asLocalDate"
+        },
+        {
+          "name": "FIRE_CAUSE",
+          "title": "Suspected Cause"
+        },
+        {
+          "name": "GEOGRAPHIC_DESCRIPTION",
+          "title": "Approximate Location"
+        },
+        {
+          "name": "CURRENT_SIZE",
+          "title": "Estimated Size",
+          "format": "asUnit('ha')"
+        },
+        {
+          "name": "FIRE_STATUS",
+          "title": "Stage of Control"
+        },
+        {
+          "name": "FIRE_OF_NOTE_NAME",
+          "title": "Fire of Note Information",
+          "format": "asLink(this.feature.properties.FIRE_OF_NOTE_URL)"
+        }
+      ]
+    },
+
+    {
+      "type": "esri-feature",
+      "id": "active-wildfires-esri",
+      "title": "BC Wildfires - Active",
+      "attribution": "Copyright 117 DataBC, Government of British Columbia",
+      "serviceUrl": "https://services6.arcgis.com/ubm4tcTYICKBpist/arcgis/rest/services/BCWS_ActiveFires_PublicView/FeatureServer/0",
+      "metadataUrl": "https://catalogue.data.gov.bc.ca/dataset/diagnostic-facilities",
+      "where": "FIRE_STATUS <> 'Out' AND FIRE_STATUS <> 'Not Active'",
+      "opacity": 1,
+      "scaleMin": 500000,
+      "scaleMax": 0,
+      "drawingInfo": {
+        "renderer": {
+          "type": "uniqueValue",
+          "field1": "FIRE_STATUS",
+          "defaultSymbol": null,
+          "uniqueValueInfos": [
+            {
+              "value": "Fire of Note",
+              "symbol": {
+                "angle": 0,
+                "xoffset": 0,
+                "yoffset": 0,
+                "type": "esriPMS",
+                "url": "fcfb84d5-7117-4125-90d5-ca2ea95bcd35",
+                "width": 12,
+                "height": 17.333333333333336,
+                "imageData": "iVBORw0KGgoAAAANSUhEUgAAABIAAAAaCAYAAAC6nQw6AAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAABcvAAAXLwG1k46fAAAAB3RJTUUH4QQDEzcJAUJuEAAAA19JREFUOMuF1U9sVFUUBvDfu+/NTGemMy102lJoS6VQS6EqCoYqmhiNkiiaQKJbFho3xhW6MLo1rEyMiSsTt7pwR9xowkISWagYiEbcCEqpC1uMBaZO/zwXc6cg4c9N7uLlnPOd7/vOyX2Ju5y5GZDhcXyPq0Pf3j43uPfZhmexfLek7B5s4AWMYuUOOQkq2U0fOdxCvRuHMH8HkBKewmJH2jQatyE2KfGQoGZV8RaQHryLvfihI+0BPIMPbpJEbka3XqsGLKlKNWO8juOx7mU0O4yW8Hpk1gHJJB7Ti8Sg1ECMFPA2juJTzN48tVaczqtII1C/zLRerOkTTMTcF/EmLuHrjq8doGIEPbLOKrdN2bAacsXoxRDekqhJ/CI31xHQAeqNk9sSNcOUbnWVGGkv5WtSe/Uh+NOvWrcCjUkkUdRLGJGY0itRWhe7T+4NQ1J1rMjcf2MuIe7CTmlcgMQEDsnsUI+iy6CqqN8YVpEbXo9EoC2YkmMTajJrjirapR4HvSGua1+87bMj1q4DPYwRedzjESQeUTKqgf7YoBStLqILiWE80VnQgKdRlcWEEVQEFcHGOIZG7N+IftWIjh6J7QUckKMSZWzFcEyuRyldEWhTBO54157kox2gcWK3bkxgEhujnJ5YnGIs2luNYLkePHdjagUMthOSwYz90cZCvCMRYHMEKUbvbpheDHILKrFznUL3uHRiE7sjI0nb5K2oJfQl7VdsYF1eCWmQOy3TDlYJaU1tw2Fhsod+snSzUK0xmSh17xYatbYF1cgyt4BWwOearrneXrQ8X1Uq71Hrf0Wo1JW6phVK90krDdX680Kl2jY9i7JzZ7GaSXyp6RsXHbSNfKmFNeXKjJCUJUlRtjrs3+ZZheKorLjZyuAcPyF32aqvBILEgtyHLpj3IyvnfrN09TvkSuU9il07lcoPqnQ/KQllhdJE+zdwxYqmT1x2DtJjIwguWDbvbxP5teWe5db5dK1yTVZpCGlVkpSkWT+C5YXzWid/vu6sj110XENz6HR8IOZmEAQto+r2GTdlVxgr7BkbL08c2F7aOD0Qsp60tXh+efHkZ2dWTsx+5JQvNDSHTrn9mcOlw8xuEf44pnfuRNfeK7/vf/+f+YPn/jqz/Z3Z9wznmNv5/7r/ALPYw78SkHupAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDE3LTA0LTAzVDE5OjU1OjA5LTA0OjAwnkdlngAAACV0RVh0ZGF0ZTptb2RpZnkAMjAxNy0wNC0wM1QxOTo1NTowOS0wNDowMO8a3SIAAAAZdEVYdFNvZnR3YXJlAHd3dy5pbmtzY2FwZS5vcmeb7jwaAAAAAElFTkSuQmCC",
+                "contentType": "image/png"
+              },
+              "label": "Fires of Note"
+            },
+            {
+              "value": "New",
+              "symbol": {
+                "angle": 0,
+                "xoffset": 0,
+                "yoffset": 0,
+                "type": "esriPMS",
+                "url": "daaeb38b-43b4-47e0-a01d-e2795e9dd863",
+                "width": 10.5,
+                "height": 12.250000000000002,
+                "imageData": "iVBORw0KGgoAAAANSUhEUgAAAAwAAAAOCAYAAAAbvf3sAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3QUQFTcL57VlmQAAAg5JREFUKM99kktIVHEYxX///7137vvOqPPQccZ0EtKEwowWBkFQZEFG1qYHFOVC2kS5skXLCqJ9QUvBpYsea4NArOixiFqMplmmZpQ2zowzd+a2KJUW9Vsdzjl8i48DfzjWE+dfDF5q/ts43bdZzlgRedB0Qkf1mlCnEpLr/u3rGQDEqeMJRkYXALgYTkSb8pVuW6HTUDUseAWMX8h9+QpwYyiDWL8w4MVS7av+UMZx++pVq14rr7GmKfO+7z+YLxVvnijMfwBQAM4ajr3NV6902d7VrnNn3NTePbjTs3iK6tiG2WUh1CNBaHzEzxVl21aLBsVsrq/Sm47Fhdfbg+w9hJ9MgGXiROsIx2LHDcPo6McR6paPQhhqkHJ1vd1Y+k7+/jDCdZB+BRH2ELUR7GqQDL4ttmbxx1VQkIAiBFJVKT9/jYzWQsRD6DpKcxqxkqMIrqQqZDZZDqSUn6rwrkQA8vcnVcdBbWpE62ijZNlLuVJlYYUgkJMzBaiKaR8eFwlQTANRE4GmRtRdO5Cew9xU9sXb5cX3cwSBAjDmr5YPKGY2IvU63TZbzWQqFGqIUymX8zNjTyfGHj66NxwUJqbwS2JwIM2du7MAjOqJdNh1D9thb3fVMNyfhfzkm89zT0bWfjx7SWl5Yw63hlo29Hl0rR8zfBIrvg89EkXT1rP93TWbe7p2uYX/sXO7C8AvIQmfMtfi+ycAAAAASUVORK5CYII=",
+                "contentType": "image/png"
+              },
+              "label": "New Fires (less than 24hrs old - not fires of note)"
+            },
+            {
+              "value": "Active",
+              "symbol": {
+                "angle": 0,
+                "xoffset": 0,
+                "yoffset": 0,
+                "type": "esriPMS",
+                "url": "812d0c00-cfe4-4bff-880a-4e200d27e128",
+                "width": 10.5,
+                "height": 12.250000000000002,
+                "imageData": "iVBORw0KGgoAAAANSUhEUgAAAAwAAAAOCAYAAAAbvf3sAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3QUQFjQDwAUAMQAAAhZJREFUKM99kj9oU1EUxr9z77v59/raxjaxpg1JqoLGogiV1rroZhclVQfdXEQcdCiIKdhJjCCiCEIFwcHBrQ6CjlINVIpah1IVDa1ESZqkxDR9SZOXd69DTIuD/sYf3znD+Q7wh5PH/fgX45fCf4tzY1vhgR2cnR92OS4ccTuO7has5W9P9gMA6GxsO54+W2nKWFt30MtH/AY7qDsIhpPmAcxGb6zmAeBmvB/U2nD/jNG3v1eLR4PtY7wz1ENMQEkrq6zq80ZxOdETzy8BaA5Mjur6UFjEhwZCE57hy0QeHxo/56AsE6puwi6lHzSyH6/7r2aKbM9ODyJdPBzaxk9ogUESwcPQ/FGQ8ABMAzMC4J2hGLm8++6eaiPtUJckp6A+n8H3AkB9+TWICyglQUIHuTrAuSMAJXd9SDdmNakARgBxAeICdjHVDAo34NDBdD9UrQxl1wyNgdjbHCmXhh/Ktj4pq7p5XhI6mKcbvL0XkI2CuV5eyZWlYqnvVTQklpVSL1S9DNLcIKcBcnvBO4KA5oSVmX+XTNU/f8nZigHA6UclM1Oyp6SZeyI3fpnEBEjokBtrldridHLhzfTjh8lq6lveljR+MYg7U2kAQDbhC2rtgVGm+wdBzJCVQur9Qmrm3qvK3MvFemmzh1vxCK4lllptC0bwFNalc2nVrs98tczMmrQA4NiId+ufJq5E8D8ORA0AwG8kgMOYqNPZSgAAAABJRU5ErkJggg==",
+                "contentType": "image/png"
+              },
+              "label": "Active Fires (not fires of note)"
+            },
+            {
+              "value": "Being Held",
+              "symbol": {
+                "angle": 0,
+                "xoffset": 0,
+                "yoffset": 0,
+                "type": "esriPMS",
+                "url": "812d0c00-cfe4-4bff-880a-4e200d27e128",
+                "width": 10.5,
+                "height": 12.250000000000002,
+                "imageData": "iVBORw0KGgoAAAANSUhEUgAAAAwAAAAOCAYAAAAbvf3sAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3QUQFjQDwAUAMQAAAhZJREFUKM99kj9oU1EUxr9z77v59/raxjaxpg1JqoLGogiV1rroZhclVQfdXEQcdCiIKdhJjCCiCEIFwcHBrQ6CjlINVIpah1IVDa1ESZqkxDR9SZOXd69DTIuD/sYf3znD+Q7wh5PH/fgX45fCf4tzY1vhgR2cnR92OS4ccTuO7has5W9P9gMA6GxsO54+W2nKWFt30MtH/AY7qDsIhpPmAcxGb6zmAeBmvB/U2nD/jNG3v1eLR4PtY7wz1ENMQEkrq6zq80ZxOdETzy8BaA5Mjur6UFjEhwZCE57hy0QeHxo/56AsE6puwi6lHzSyH6/7r2aKbM9ODyJdPBzaxk9ogUESwcPQ/FGQ8ABMAzMC4J2hGLm8++6eaiPtUJckp6A+n8H3AkB9+TWICyglQUIHuTrAuSMAJXd9SDdmNakARgBxAeICdjHVDAo34NDBdD9UrQxl1wyNgdjbHCmXhh/Ktj4pq7p5XhI6mKcbvL0XkI2CuV5eyZWlYqnvVTQklpVSL1S9DNLcIKcBcnvBO4KA5oSVmX+XTNU/f8nZigHA6UclM1Oyp6SZeyI3fpnEBEjokBtrldridHLhzfTjh8lq6lveljR+MYg7U2kAQDbhC2rtgVGm+wdBzJCVQur9Qmrm3qvK3MvFemmzh1vxCK4lllptC0bwFNalc2nVrs98tczMmrQA4NiId+ufJq5E8D8ORA0AwG8kgMOYqNPZSgAAAABJRU5ErkJggg==",
+                "contentType": "image/png"
+              },
+              "label": "Active Fires (not fires of note)",
+              "skipLegend": true
+            },
+            {
+              "value": "Under Control",
+              "symbol": {
+                "angle": 0,
+                "xoffset": 0,
+                "yoffset": 0,
+                "type": "esriPMS",
+                "url": "812d0c00-cfe4-4bff-880a-4e200d27e128",
+                "width": 10.5,
+                "height": 12.250000000000002,
+                "imageData": "iVBORw0KGgoAAAANSUhEUgAAAAwAAAAOCAYAAAAbvf3sAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3QUQFjQDwAUAMQAAAhZJREFUKM99kj9oU1EUxr9z77v59/raxjaxpg1JqoLGogiV1rroZhclVQfdXEQcdCiIKdhJjCCiCEIFwcHBrQ6CjlINVIpah1IVDa1ESZqkxDR9SZOXd69DTIuD/sYf3znD+Q7wh5PH/fgX45fCf4tzY1vhgR2cnR92OS4ccTuO7has5W9P9gMA6GxsO54+W2nKWFt30MtH/AY7qDsIhpPmAcxGb6zmAeBmvB/U2nD/jNG3v1eLR4PtY7wz1ENMQEkrq6zq80ZxOdETzy8BaA5Mjur6UFjEhwZCE57hy0QeHxo/56AsE6puwi6lHzSyH6/7r2aKbM9ODyJdPBzaxk9ogUESwcPQ/FGQ8ABMAzMC4J2hGLm8++6eaiPtUJckp6A+n8H3AkB9+TWICyglQUIHuTrAuSMAJXd9SDdmNakARgBxAeICdjHVDAo34NDBdD9UrQxl1wyNgdjbHCmXhh/Ktj4pq7p5XhI6mKcbvL0XkI2CuV5eyZWlYqnvVTQklpVSL1S9DNLcIKcBcnvBO4KA5oSVmX+XTNU/f8nZigHA6UclM1Oyp6SZeyI3fpnEBEjokBtrldridHLhzfTjh8lq6lveljR+MYg7U2kAQDbhC2rtgVGm+wdBzJCVQur9Qmrm3qvK3MvFemmzh1vxCK4lllptC0bwFNalc2nVrs98tczMmrQA4NiId+ufJq5E8D8ORA0AwG8kgMOYqNPZSgAAAABJRU5ErkJggg==",
+                "contentType": "image/png"
+              },
+              "label": "Active Fires (not fires of note)",
+              "skipLegend": true
+            },
+            {
+              "value": "Out of Control",
+              "symbol": {
+                "angle": 0,
+                "xoffset": 0,
+                "yoffset": 0,
+                "type": "esriPMS",
+                "url": "812d0c00-cfe4-4bff-880a-4e200d27e128",
+                "width": 10.5,
+                "height": 12.250000000000002,
+                "imageData": "iVBORw0KGgoAAAANSUhEUgAAAAwAAAAOCAYAAAAbvf3sAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3QUQFjQDwAUAMQAAAhZJREFUKM99kj9oU1EUxr9z77v59/raxjaxpg1JqoLGogiV1rroZhclVQfdXEQcdCiIKdhJjCCiCEIFwcHBrQ6CjlINVIpah1IVDa1ESZqkxDR9SZOXd69DTIuD/sYf3znD+Q7wh5PH/fgX45fCf4tzY1vhgR2cnR92OS4ccTuO7has5W9P9gMA6GxsO54+W2nKWFt30MtH/AY7qDsIhpPmAcxGb6zmAeBmvB/U2nD/jNG3v1eLR4PtY7wz1ENMQEkrq6zq80ZxOdETzy8BaA5Mjur6UFjEhwZCE57hy0QeHxo/56AsE6puwi6lHzSyH6/7r2aKbM9ODyJdPBzaxk9ogUESwcPQ/FGQ8ABMAzMC4J2hGLm8++6eaiPtUJckp6A+n8H3AkB9+TWICyglQUIHuTrAuSMAJXd9SDdmNakARgBxAeICdjHVDAo34NDBdD9UrQxl1wyNgdjbHCmXhh/Ktj4pq7p5XhI6mKcbvL0XkI2CuV5eyZWlYqnvVTQklpVSL1S9DNLcIKcBcnvBO4KA5oSVmX+XTNU/f8nZigHA6UclM1Oyp6SZeyI3fpnEBEjokBtrldridHLhzfTjh8lq6lveljR+MYg7U2kAQDbhC2rtgVGm+wdBzJCVQur9Qmrm3qvK3MvFemmzh1vxCK4lllptC0bwFNalc2nVrs98tczMmrQA4NiId+ufJq5E8D8ORA0AwG8kgMOYqNPZSgAAAABJRU5ErkJggg==",
+                "contentType": "image/png"
+              },
+              "label": "Active Fires (not fires of note)",
+              "skipLegend": true
+            }
+          ]
+        },
+        "transparency": 0
+      },
+      "attributes": [
+        {
+          "name": "FIRE_NUMBER",
+          "title": "Fire Number"
+        },
+        {
+          "name": "IGNITION_DATE",
+          "title": "Date of Discovery",
+          "format": "asLocalDate"
+        },
+        {
+          "name": "FIRE_CAUSE",
+          "title": "Suspected Cause"
+        },
+        {
+          "name": "GEOGRAPHIC_DESCRIPTION",
+          "title": "Approximate Location"
+        },
+        {
+          "name": "CURRENT_SIZE",
+          "title": "Estimated Size",
+          "format": "asUnit('ha')"
+        },
+        {
+          "name": "FIRE_STATUS",
+          "title": "Stage of Control"
+        },
+        {
+          "name": "FIRE_OF_NOTE_NAME",
+          "title": "Fire of Note Information",
+          "format": "asLink(this.feature.properties.FIRE_OF_NOTE_URL)"
+        }
+      ],
+      "popupTemplate": "@wf-feature",
+      "titleAttribute": "FIRE_NUMBER",
+      "queries": [
+        {
+          "id": "fire",
+          "title": "Active Fires",
+          "description": "",
+          "parameters": [
+            {
+              "id": "param1",
+              "type": "input",
+              "title": "Fire Name, Number, Location, or Stage of Control"
+            },
+            {
+              "id": "param2",
+              "type": "constant",
+              "value": "Out"
+            }
+          ],
+          "predicate": {
+            "operator": "and",
+            "arguments": [
+                {
+                    "operator": "or",
+                    "arguments": [              
+                        {
+                            "operator": "contains",
+                            "arguments": [
+                                {
+                                    "operand": "attribute",
+                                    "name": "FIRE_NUMBER"
+                                },
+                                {
+                                    "operand": "parameter",
+                                    "id": "param1"
+                                }
+                            ]
+                        },
+                        {
+                            "operator": "contains",
+                            "arguments": [
+                                {
+                                    "operand": "attribute",
+                                    "name": "FIRE_CAUSE"
+                                },
+                                {
+                                    "operand": "parameter",
+                                    "id": "param1"
+                                }
+                            ]
+                        },
+                        {
+                            "operator": "contains",
+                            "arguments": [
+                                {
+                                    "operand": "attribute",
+                                    "name": "GEOGRAPHIC_DESCRIPTION"
+                                },
+                                {
+                                    "operand": "parameter",
+                                    "id": "param1"
+                                }
+                            ]
+                        },
+                        {
+                            "operator": "contains",
+                            "arguments": [
+                                {
+                                    "operand": "attribute",
+                                    "name": "FIRE_STATUS"
+                                },
+                                {
+                                    "operand": "parameter",
+                                    "id": "param1"
+                                }
+                            ]
+                        },
+                        {
+                            "operator": "contains",
+                            "arguments": [
+                                {
+                                    "operand": "attribute",
+                                    "name": "FIRE_OF_NOTE_NAME"
+                                },
+                                {
+                                    "operand": "parameter",
+                                    "id": "param1"
+                                }
+                            ]
+                        }
+                    ]
+                },
+              {
+                "operator": "not",
+                "arguments": [
+                  {
+                    "operator": "equals",
+                    "arguments": [
+                        {
+                            "operand": "attribute",
+                            "name": "FIRE_STATUS"
+                        },
+                        {
+                            "operand": "parameter",
+                            "id": "param2"
+                        }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

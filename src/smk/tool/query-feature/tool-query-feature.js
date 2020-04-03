@@ -36,6 +36,9 @@ include.module( 'tool-query-feature', [ 'feature-list' ], function ( inc ) {
                 self.featureSet.highlight()
                 Vue.nextTick( function () {
                     smk.$tool[ self.parentId ].visible = true
+
+                    if ( self.command.zoom === false )
+                        self.featureSet.zoomTo( featureIds[ self.resultPosition ] )
                 } )
             }
             else {
@@ -57,9 +60,13 @@ include.module( 'tool-query-feature', [ 'feature-list' ], function ( inc ) {
             'directions': console.log,
             'move-previous': function ( ev ) {
                 self.featureSet.pick( featureIds[ ( self.resultPosition + self.resultCount - 1 ) % self.resultCount ] )
+                if ( self.command.zoom === false )
+                    self.featureSet.zoomTo( featureIds[ self.resultPosition ] )
             },
             'move-next': function ( ev ) {
                 self.featureSet.pick( featureIds[ ( self.resultPosition + 1 ) % self.resultCount ] )
+                if ( self.command.zoom === false )
+                    self.featureSet.zoomTo( featureIds[ self.resultPosition ] )
             },
         } )
 
@@ -98,7 +105,8 @@ include.module( 'tool-query-feature', [ 'feature-list' ], function ( inc ) {
             self.resultCount = self.featureSet.getStats().featureCount 
             self.resultPosition = featureIds.indexOf( ev.feature.id )
 
-            smk.$viewer.panToFeature( ev.feature )
+            if ( self.command.zoom !== false )
+                smk.$viewer.panToFeature( ev.feature )
         } )
 
         self.featureSet.addedFeatures( function ( ev ) {

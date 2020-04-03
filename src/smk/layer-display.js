@@ -43,6 +43,7 @@ include.module( 'layer-display', [ 'jquery', 'util', 'event' ], function () {
     LayerDisplay.layer = function ( option, layerCatalog, forceVisible ) {
         var self = this
 
+        if ( option[ '#id' ] ) return
         if ( !option.id )
             throw new Error( 'display layer needs id' )
 
@@ -132,6 +133,10 @@ include.module( 'layer-display', [ 'jquery', 'util', 'event' ], function () {
     //
     LayerDisplay.folder = function ( option, layerCatalog, forceVisible ) {
         var self = this
+
+        if ( option[ '#id' ] ) return
+        if ( !option.id )
+            option.id = SMK.UTIL.makeId( option.type, option.title ) 
         
         LayerDisplay.prototype.constructor.call( this, Object.assign( { isExpanded: false }, option ), forceVisible )
 
@@ -180,6 +185,8 @@ include.module( 'layer-display', [ 'jquery', 'util', 'event' ], function () {
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
     function createLayerDisplay( option, layerCatalog, forceVisible ) {
+        if ( option[ '#type' ] ) return
+
         if ( !option.type )
             option.type = 'layer'
 

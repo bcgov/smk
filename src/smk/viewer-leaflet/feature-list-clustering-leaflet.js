@@ -130,8 +130,9 @@ include.module( 'feature-list-clustering-leaflet', [ 'leaflet', 'feature-list-le
             var bounds
             switch ( turf.getType( ev.feature ) ) {
             case 'Point':
-                var ll = L.latLng( ev.feature.geometry.coordinates[ 1 ], ev.feature.geometry.coordinates[ 0 ] )
-                bounds = L.latLngBounds( [ ll, ll ] )
+                var buffered = turf.circle( ev.feature, ev.feature.radius || 100, { units: 'meters', steps: 8 } )
+                var bbox = turf.bbox( buffered )
+                bounds = L.latLngBounds( [ [ bbox[ 1 ], bbox[ 0 ] ], [ bbox[ 3 ], bbox[ 2 ] ] ] )
                 break;
 
             default:
@@ -141,19 +142,19 @@ include.module( 'feature-list-clustering-leaflet', [ 'leaflet', 'feature-list-le
 
             if ( !bounds ) return
 
-            var old = self.featureSet.pick( null )
+            // var old = self.featureSet.pick( null )
 
             var padding = smk.$viewer.getPanelPadding( true )
 
             smk.$viewer.map
-                .once( 'zoomend moveend', function () {
-                    if ( old )
-                        self.featureSet.pick( old )
-                } )
+                // .once( 'zoomend moveend', function () {
+                //     if ( old )
+                //         self.featureSet.pick( old )
+                // } )
                 .fitBounds( bounds, {
                     paddingTopLeft: padding.topLeft,
                     paddingBottomRight: padding.bottomRight,
-                    maxZoom: 15,        
+                    // maxZoom: 20,
                     animate: true
                 } )
         } )

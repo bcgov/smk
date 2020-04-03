@@ -23,7 +23,7 @@ include.module( 'tool-identify', [ 'feature-list', 'widgets', 'tool-identify.pan
             // title:              'Identify Results',
             widgetComponent:    'identify-widget',
             panelComponent:     'identify-panel',
-            showPanel:          false,
+            // showPanel:          false,
             showFeatures:       'popup'
         }, option ) )
     }

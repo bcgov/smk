@@ -1,4 +1,15 @@
 <div v-bind:class="{ 'smk-busy': busy }">
+    <div class="smk-panel">
+    <transition name="status-message">
+        <div class="smk-message" 
+            v-bind:class="'smk-' + ( status || 'summary' )" 
+            v-show="message"
+        >
+            <div v-html="message"></div>
+            <busy-spinner v-bind:size="16" v-bind:busy="busy"></busy-spinner>
+        </div>            
+    </transition>
+
     <div class="smk-header" 
         v-if="showHeader"
         v-on:touchstart="startSwipe"
@@ -42,4 +53,5 @@
             v-if="canScrollDown"
         >arrow_drop_down</i>
     </div>
+</div>
 </div>

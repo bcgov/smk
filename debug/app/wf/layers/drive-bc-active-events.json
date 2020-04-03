@@ -1,0 +1,43 @@
+{
+  "layers": [
+    {
+      "type": "wms",
+      "id": "drive-bc-active-events",
+      "title": "Drive BC Active Events",
+      "isQueryable": true,
+      "serviceUrl": "https://maps.th.gov.bc.ca/geoV05/ows",
+      "layerName": "op5:OP5_EVENT511_ACTIVE_V",
+      "metadataUrl": "https://catalogue.data.gov.bc.ca/dataset/diagnostic-facilities",
+      "scaleMin": 500000,
+      "scaleMax": 0,
+      "popupTemplate": "@wf-feature",
+      "titleAttribute": "HEADLINE",
+      "attributes": [
+        {
+          "name": "HEADLINE",
+          "title": "HEADLINE"
+        },
+        {
+          "name": "DESCRIPTION",
+          "title": "Description"
+        },
+        {
+          "name": "CREATED_TIME",
+          "title": "Created"
+        },
+        {
+          "name": "SEVERITY",
+          "title": "Severity"
+        },
+        {
+          "name": "STATUS",
+          "title": "Status"
+        },
+        {
+          "name": "AREA",
+          "title": "Area"
+        }
+      ]
+    }
+  ]
+}

@@ -139,7 +139,7 @@ include.module( 'widgets', [
         toolButton: Vue.extend( {
             mixins: [ emit ],
             template: inc[ 'widgets.tool-button-html' ],
-            props: { 'id': String, 'type': String, 'title': String, 'visible': Boolean, 'enabled': Boolean, 'active': Boolean, 'icon': String, 'showTitle': Boolean },
+            props: { 'id': String, 'type': String, 'title': String, 'visible': Boolean, 'enabled': Boolean, 'active': Boolean, 'icon': String, 'showTitle': Boolean, 'showWidget': Boolean },
             computed: {
                 classes: function () {
                     var c = {
@@ -157,7 +157,7 @@ include.module( 'widgets', [
 
         toolPanel: Vue.extend( {
             mixins: [ emit ],
-            props: [ 'id', 'title', 'visible', 'enabled', 'active', 'busy', 'message', 'status', 'expand', 'hasPrevious' ],
+            props: [ 'id', 'title', 'visible', 'enabled', 'active', 'busy', 'message', 'status', 'expand', 'hasPrevious', 'showPanel' ],
         } )
 
     }

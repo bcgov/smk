@@ -47,6 +47,20 @@ include.module( 'tool-shortcut-menu', [ 'tool', 'tool-shortcut-menu.shortcut-men
             widget:             tool.widget,
         } )
 
+        tool.changedActive( function () {
+            // console.log('active!',tool.id,tool.active)
+            if ( tool.active ) {
+                // self.model.widgets.forEach( function ( w ) {
+                Object.keys( smk.$tool ).forEach( function ( id ) {
+                    // if ( w.id == tool.id ) return
+                    if ( id == tool.id ) return
+                    smk.$tool[ id ].active = false
+                } )
+            }
+            else {
+            }
+        } )
+
         return true
     }
 

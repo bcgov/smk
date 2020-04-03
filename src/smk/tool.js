@@ -21,10 +21,12 @@ include.module( 'tool', [ 'jquery', 'event' ], function () {
 
         this.makePropPanel( 'expand', 0 )
         this.makePropPanel( 'hasPrevious', false )
+        this.makePropPanel( 'showPanel', null )
 
         this.makePropWidget( 'type', 'unknown' )
         this.makePropWidget( 'showTitle', false )
-
+        this.makePropWidget( 'showWidget', null )
+        
         $.extend( this, option )
     }
 
