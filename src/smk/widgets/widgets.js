@@ -1,6 +1,6 @@
 include.module( 'widgets', [ 
     'vue', 
-    'widgets.tool-button-html', 
+    // 'widgets.tool-button-html', 
     'widgets.command-button-html',
     'widgets.toggle-button-html', 
     'widgets.select-option-html', 

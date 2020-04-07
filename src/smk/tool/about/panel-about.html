@@ -1,3 +1,9 @@
-<side-panel class="smk-about-panel" v-bind:showHeader="false">
+<tool-panel class="smk-about-panel" 
+    v-bind="$$panelProps()"
+>
+    <template slot="header">
+        <slot></slot>
+    </template>
+
     <div class="smk-about-description" v-html="content"></div>
-</side-panel>
+</tool-panel>

@@ -1,68 +1,44 @@
-include.module( 'tool-bespoke', [ 'tool', 'widgets', 'tool-bespoke.panel-bespoke-html', 'vue-config' ], function ( inc ) {
+include.module( 'tool-bespoke', [ 'tool.tool-panel-js', 'tool-bespoke.panel-bespoke-html', 'vue-config' ], function ( inc ) {
     "use strict";
 
     Vue.component( 'bespoke-widget', {
-        extends: inc.widgets.toolButton,
-        props: [ 'status' ],
-        computed: {
-            classes: function () {
-                var c = {
-                    'smk-tool': true,
-                    'smk-tool-active': this.active,
-                    'smk-tool-visible': this.visible,
-                    'smk-tool-enabled': this.enabled,
-                    'smk-tool-title': this.showTitle
-                }
-                c[ 'smk-' + this.id + '-tool' ] = true
-
-                if ( this.status )
-                    c[ 'smk-' + this.status ] = true
-                
-                return c
-            }
-        },
-
+        extends: SMK.COMPONENT.ToolWidget,
     } )
 
     Vue.component( 'bespoke-panel', {
-        extends: inc.widgets.toolPanel,
+        extends: SMK.COMPONENT.ToolPanel,
         template: inc[ 'tool-bespoke.panel-bespoke-html' ],
-        props: [ 'content', 'showSwipe', 'component' ]
+        props: [ 'content', 'component' ]
     } )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
-    function BespokeTool( option ) {
-        this.makePropWidget( 'icon', 'extension' ) 
-        this.makePropWidget( 'status', null ) 
+    function BespokeTool() {
+        SMK.TYPE.ToolPanel.prototype.constructor.call( this, 'bespoke-panel', 'bespoke-widget' )
 
-        this.makePropPanel( 'content', null )
-        this.makePropPanel( 'component', null )
-        this.makePropPanel( 'showSwipe', false )
-
-        SMK.TYPE.Tool.prototype.constructor.call( this, $.extend( {
-            widgetComponent:'bespoke-widget',
-            panelComponent: 'bespoke-panel'
-        }, option ) )
+        this.toolProp( 'content', { 
+            forWidget: false 
+        } )
+        this.toolProp( 'component', { 
+            forWidget: false 
+        } )
     }
 
     SMK.TYPE.BespokeTool = BespokeTool
 
-    $.extend( BespokeTool.prototype, SMK.TYPE.Tool.prototype )
-    BespokeTool.prototype.afterInitialize = []
+    $.extend( BespokeTool.prototype, SMK.TYPE.ToolPanel.prototype )
+    // BespokeTool.prototype.afterInitialize = SMK.TYPE.ToolPanel.prototype.afterInitialize.concat( [] )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
-    BespokeTool.prototype.afterInitialize.push( function ( smk ) {
+    BespokeTool.prototype.afterInitialize = SMK.TYPE.ToolPanel.prototype.afterInitialize.concat( function ( smk ) {
         var self = this
-
+        
         smk.on( this.id, {
             'activate': function () {
                 if ( !self.enabled ) return
 
                 if ( SMK.HANDLER.has( self.id, 'triggered' ) ) {
+                    self.active = false
                     SMK.HANDLER.get( self.id, 'triggered' )( smk, self )
-                }
-                else {
-                    self.active = !self.active
                 }
             },
 
@@ -75,7 +51,7 @@ include.module( 'tool-bespoke', [ 'tool', 'widgets', 'tool-bespoke.panel-bespoke
             }
         } )
 
-        if ( !this.useComponent )
+        if ( !this.component )
             this.content = { 
                 create: function ( el ) {
                     SMK.HANDLER.get( self.id, 'activated' )( smk, self, el )
@@ -84,7 +60,7 @@ include.module( 'tool-bespoke', [ 'tool', 'widgets', 'tool-bespoke.panel-bespoke
 
         this.changedActive( function () {
             if ( self.active ) {
-                if ( self.useComponent )
+                if ( self.component )
                     SMK.HANDLER.get( self.id, 'activated' )( smk, self )
             }
             else {

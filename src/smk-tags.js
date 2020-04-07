@@ -33,10 +33,12 @@ t.script( 'smk-map',    'smk/smk-map.js' )
 t.script( 'util',       'smk/util.js' )
 t.script( 'event',      'smk/event.js' )
 t.script( 'viewer',     'smk/viewer.js' )
-t.script( 'tool',       'smk/tool.js' )
 t.script( 'feature-set','smk/feature-set.js' )
 t.script( 'projections','smk/projections.js' )
 t.script( 'layer-display','smk/layer-display.js' )
+
+t.group( 'tool' )
+    .dir( 'smk/tool/*' )
 
 t.group( 'layer' )
     .dir( 'smk/layer/**/*' )

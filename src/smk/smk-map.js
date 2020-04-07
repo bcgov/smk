@@ -364,7 +364,7 @@ include.module( 'smk-map', [ 'jquery', 'util', 'theme-base', 'sidepanel' ], func
                         var id = t.type + ( t.instance ? '--' + t.instance : '' )
 
                         if ( !( id in self.$tool ) ) {
-                            self.$tool[ id ] = new inc[ tag ]( t )
+                            self.$tool[ id ] = ( new inc[ tag ]() ).configure( t )
                             self.$tool[ id ].id = id
                         }
                         else {
