@@ -1,19 +1,17 @@
-include.module( 'tool-zoom', [ 'tool' ], function () {
+include.module( 'tool-zoom', [ 'tool.tool-js' ], function () {
     "use strict";
 
-    function ZoomTool( option ) {
-        SMK.TYPE.Tool.prototype.constructor.call( this, $.extend( {
-            // order: 1
-        }, option ) )
+    function ZoomTool() {
+        SMK.TYPE.Tool.prototype.constructor.call( this )
     }
 
     SMK.TYPE.ZoomTool = ZoomTool
 
-    $.extend( ZoomTool.prototype, SMK.TYPE.Tool.prototype )
-    ZoomTool.prototype.afterInitialize = []
+    Object.assign( ZoomTool.prototype, SMK.TYPE.Tool.prototype )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
-    return ZoomTool
+    ZoomTool.prototype.afterInitialize = SMK.TYPE.Tool.prototype.afterInitialize.concat()
 
+    return ZoomTool
 } )
 

@@ -1,18 +1,17 @@
-include.module( 'tool-pan', [ 'tool' ], function () {
+include.module( 'tool-pan', [ 'tool.tool-js' ], function () {
     "use strict";
 
-    function PanTool( option ) {
-        SMK.TYPE.Tool.prototype.constructor.call( this, $.extend( {
-        }, option ) )
+    function PanTool() {
+        SMK.TYPE.Tool.prototype.constructor.call( this )
     }
 
     SMK.TYPE.PanTool = PanTool
 
-    $.extend( PanTool.prototype, SMK.TYPE.Tool.prototype )
-    PanTool.prototype.afterInitialize = []
+    Object.assign( PanTool.prototype, SMK.TYPE.Tool.prototype )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
-    return PanTool
+    PanTool.prototype.afterInitialize = SMK.TYPE.Tool.prototype.afterInitialize.concat()
 
+    return PanTool
 } )
 

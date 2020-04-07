@@ -133,5 +133,4 @@ include.module( 'tool-baseMaps', [ 'tool.tool-panel-js', 'viewer', 'leaflet', 't
     } )
 
     return BaseMapsTool
-
 } )

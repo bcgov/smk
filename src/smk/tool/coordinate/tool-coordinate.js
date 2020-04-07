@@ -1,19 +1,16 @@
-include.module( 'tool-coordinate', [ 'tool', 'tool-coordinate.coordinate-html' ], function ( inc ) {
+include.module( 'tool-coordinate', [ 'tool.tool-js', 'tool-coordinate.coordinate-html' ], function ( inc ) {
     "use strict";
 
     function CoordinateTool( option ) {
-        SMK.TYPE.Tool.prototype.constructor.call( this, $.extend( {
-            order: 3
-        }, option ) )
+        SMK.TYPE.Tool.prototype.constructor.call( this )
     }
 
     SMK.TYPE.CoordinateTool = CoordinateTool
 
     $.extend( CoordinateTool.prototype, SMK.TYPE.Tool.prototype )
-    CoordinateTool.prototype.afterInitialize = []
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
-    SMK.TYPE.CoordinateTool.prototype.afterInitialize.push( function ( smk ) {
+    SMK.TYPE.CoordinateTool.prototype.afterInitialize = SMK.TYPE.Tool.prototype.afterInitialize.concat( function ( smk ) {
         var self = this
 
         if ( smk.$device == 'mobile' ) return
