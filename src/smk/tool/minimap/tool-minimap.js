@@ -1,19 +1,17 @@
-include.module( 'tool-minimap', [ 'tool' ], function () {
+include.module( 'tool-minimap', [ 'tool.tool-js' ], function () {
     "use strict";
 
-    function MinimapTool( option ) {
-        SMK.TYPE.Tool.prototype.constructor.call( this, $.extend( {
-            // order: 1
-        }, option ) )
+    function MinimapTool() {
+        SMK.TYPE.Tool.prototype.constructor.call( this )
     }
 
     SMK.TYPE.MinimapTool = MinimapTool
 
-    $.extend( MinimapTool.prototype, SMK.TYPE.Tool.prototype )
-    MinimapTool.prototype.afterInitialize = []
+    Object.assign( MinimapTool.prototype, SMK.TYPE.Tool.prototype )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
-    return MinimapTool
+    SMK.TYPE.MinimapTool.prototype.afterInitialize = SMK.TYPE.Tool.prototype.afterInitialize.concat()
 
+    return MinimapTool
 } )
 
