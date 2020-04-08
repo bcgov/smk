@@ -11,17 +11,17 @@ include.module( 'tool-measure-leaflet', [ 'leaflet', 'tool-measure', 'turf' ], f
         self.setMessage( "Select measurement method" )
 
         this.control = L.control.measure( {
-                position: 'topright',
-                primaryLengthUnit: 'meters',
-                secondaryLengthUnit: 'kilometers',
-                primaryAreaUnit: 'hectares',
-                secondaryAreaUnit: 'sqmeters',
-                activeColor: '#38598a',
-                completedColor: '#036',
-                popupOptions: {
-                    pane: 'hiddenPane'
-                }
-            } )
+            position: 'topright',
+            primaryLengthUnit: 'meters',
+            secondaryLengthUnit: 'kilometers',
+            primaryAreaUnit: 'hectares',
+            secondaryAreaUnit: 'sqmeters',
+            activeColor: '#38598a',
+            completedColor: '#036',
+            popupOptions: {
+                pane: 'hiddenPane'
+            }
+        } )
 
         this.control.addTo( smk.$viewer.map )
 
@@ -81,27 +81,27 @@ include.module( 'tool-measure-leaflet', [ 'leaflet', 'tool-measure', 'turf' ], f
         } )
 
         function displayResult( res ) {
-            Vue.set( self.panel, 'results', [] )
+            self.results = []
 
             if ( !res.count ) return
 
             if ( res.count > 2 ) {
                 self.setMessage()
-                self.panel.results.push( {
+                self.results.push( {
                     title:  'Number of edges',
                     value:  res.count,
                     // unit:   'vertices'
                 } )
 
                 if ( res.area )
-                    self.panel.results.push( {
+                    self.results.push( {
                         title:  'Area',
                         value:  res.area,
                         dim:    2
                     } )
 
                 if ( res.length )
-                    self.panel.results.push( {
+                    self.results.push( {
                         title:  'Perimeter',
                         value:  res.length,
                         dim:    1
@@ -109,7 +109,7 @@ include.module( 'tool-measure-leaflet', [ 'leaflet', 'tool-measure', 'turf' ], f
             }
             else if ( res.count > 1 ) {
                 self.setMessage()
-                self.panel.results.push( {
+                self.results.push( {
                     title:  'Length',
                     value:  res.length,
                     dim:    1

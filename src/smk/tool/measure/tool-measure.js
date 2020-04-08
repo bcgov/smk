@@ -1,14 +1,14 @@
-include.module( 'tool-measure', [ 'tool', 'widgets', 'sidepanel', 'tool-measure.panel-measure-html' ], function ( inc ) {
+include.module( 'tool-measure', [ 'tool.tool-panel-js', 'tool-measure.panel-measure-html', 'widgets' ], function ( inc ) {
     "use strict";
 
     Vue.component( 'measure-widget', {
-        extends: inc.widgets.toolButton,
+        extends: SMK.COMPONENT.ToolWidget,
     } )
 
     Vue.component( 'measure-panel', {
-        extends: inc.widgets.toolPanel,
+        extends: SMK.COMPONENT.ToolPanel,
         template: inc[ 'tool-measure.panel-measure-html' ],
-        props: [ 'results', 'viewer' ],
+        props: [ 'results', 'viewer', 'content' ],
         data: function () {
             return {
                 unit: 'metric'
@@ -23,54 +23,28 @@ include.module( 'tool-measure', [ 'tool', 'widgets', 'sidepanel', 'tool-measure.
         }
     } )
 
-    Vue.directive( 'container', {
-        unbind: function ( el, binding, vnode ) {
-            // console.log( 'unbind', arguments )
-            vnode.context.$$emit( 'container-unbind', { el: el } )
-        },
+    function MeasureTool() {
+        SMK.TYPE.ToolPanel.prototype.constructor.call( this, 'measure-panel', 'measure-widget' )
 
-        inserted: function ( el, binding, vnode ) {
-            vnode.context.$$emit( 'container-inserted', { el: el } )
-            // console.log( 'inserted', arguments )
-        },
-
-        update: function ( el, binding ) {
-            // console.log( 'update', arguments )
-        }
-    } )
-    // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
-    //
-    function MeasureTool( option ) {
-        this.makePropWidget( 'icon' )//, 'straighten' )
-
-        this.makePropPanel( 'results', [] )
-        this.makePropPanel( 'viewer', {} )
-
-        SMK.TYPE.PanelTool.prototype.constructor.call( this, $.extend( {
-            // order:          6,
-            // position:       'menu',
-            // title:          'Measurement',
-            widgetComponent:'measure-widget',
-            panelComponent: 'measure-panel',
-        }, option ) )
+        this.toolProp( 'results', { 
+            initial: [],
+            forWidget: false 
+        } )
+        this.toolProp( 'viewer', { 
+            initial: {},
+            forWidget: false 
+        } )
+        this.toolProp( 'content', { 
+            forWidget: false 
+        } )
     }
 
     SMK.TYPE.MeasureTool = MeasureTool
 
-    $.extend( MeasureTool.prototype, SMK.TYPE.PanelTool.prototype )
-    MeasureTool.prototype.afterInitialize = []
+    Object.assign( MeasureTool.prototype, SMK.TYPE.ToolPanel.prototype )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
-    MeasureTool.prototype.afterInitialize.push( function ( smk ) {
-        var self = this
-
-        smk.on( this.id, {
-            'activate': function () {
-                if ( !self.enabled ) return
-
-                self.active = !self.active
-            },
-        } )
+    SMK.TYPE.MeasureTool.prototype.afterInitialize = SMK.TYPE.ToolPanel.prototype.afterInitialize.concat( function ( smk ) {
     } )
 
     return MeasureTool
