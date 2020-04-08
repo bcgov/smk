@@ -4,6 +4,7 @@ include.module( 'widgets', [
     'widgets.command-button-html',
     'widgets.toggle-button-html', 
     'widgets.select-option-html', 
+    'widgets.select-dropdown-html',
     'widgets.enter-input-html',
     'widgets.activate-tool-html' 
 ], function ( inc ) {
@@ -65,6 +66,23 @@ include.module( 'widgets', [
         methods: {
             clickOption: function ( option, index ) {
                 this.$emit( 'change', option.value )
+            }
+        }
+    } )
+
+    Vue.component( 'select-dropdown', {
+        template: inc[ 'widgets.select-dropdown-html' ],
+        props: { 
+            options: { type: Array, default: [] },
+            value:   {},
+        },
+        model: {
+            prop: 'value',
+            event: 'change'
+        },
+        methods: {
+            clickOption: function ( value ) {
+                this.$emit( 'change', value )
             }
         }
     } )
@@ -134,31 +152,31 @@ include.module( 'widgets', [
     } )
 
     return {
-        emit: emit,
+        // emit: emit,
 
-        toolButton: Vue.extend( {
-            mixins: [ emit ],
-            template: inc[ 'widgets.tool-button-html' ],
-            props: { 'id': String, 'type': String, 'title': String, 'visible': Boolean, 'enabled': Boolean, 'active': Boolean, 'icon': String, 'showTitle': Boolean, 'showWidget': Boolean },
-            computed: {
-                classes: function () {
-                    var c = {
-                        'smk-tool': true,
-                        'smk-tool-active': this.active,
-                        'smk-tool-visible': this.visible,
-                        'smk-tool-enabled': this.enabled,
-                        'smk-tool-title': this.showTitle
-                    }
-                    c[ 'smk-' + this.id + '-tool' ] = true
-                    return c
-                }
-            },
-        } ),
+        // toolButton: Vue.extend( {
+        //     mixins: [ emit ],
+        //     template: inc[ 'widgets.tool-button-html' ],
+        //     props: { 'id': String, 'type': String, 'title': String, 'visible': Boolean, 'enabled': Boolean, 'active': Boolean, 'icon': String, 'showTitle': Boolean, 'showWidget': Boolean },
+        //     computed: {
+        //         classes: function () {
+        //             var c = {
+        //                 'smk-tool': true,
+        //                 'smk-tool-active': this.active,
+        //                 'smk-tool-visible': this.visible,
+        //                 'smk-tool-enabled': this.enabled,
+        //                 'smk-tool-title': this.showTitle
+        //             }
+        //             c[ 'smk-' + this.id + '-tool' ] = true
+        //             return c
+        //         }
+        //     },
+        // } ),
 
-        toolPanel: Vue.extend( {
-            mixins: [ emit ],
-            props: [ 'id', 'title', 'visible', 'enabled', 'active', 'busy', 'message', 'status', 'expand', 'hasPrevious', 'showPanel' ],
-        } )
+        // toolPanel: Vue.extend( {
+        //     mixins: [ emit ],
+        //     props: [ 'id', 'title', 'visible', 'enabled', 'active', 'busy', 'message', 'status', 'expand', 'hasPrevious', 'showPanel' ],
+        // } )
 
     }
 
