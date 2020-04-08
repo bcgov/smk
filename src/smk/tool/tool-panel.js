@@ -140,5 +140,32 @@ include.module( 'tool.tool-panel-js', [ 'tool.tool-widget-js', 'tool.tool-panel-
         SMK.TYPE.ToolWidget.prototype._setProp.call( this, name, val, opt )
         if ( opt.forPanel !== false ) this.panel.prop[ name ] = val
     }
+
+    ToolPanel.prototype.setMessage = function ( message, status, delay ) {
+        var self = this
+
+        if ( !message ) {
+            this.status = null
+            this.message = null
+            return
+        }
+
+        this.status = status
+        this.message = message
+
+        if ( delay === null ) return
+
+        if ( this.messageClear )
+            this.messageClear.cancel()
+
+        return SMK.UTIL.makePromise( function ( res, rej ) {
+            self.messageClear = SMK.UTIL.makeDelayedCall( function () {
+                self.status = null
+                self.message = null        
+                res()
+            }, { delay: delay || 2000 } )()
+        } )
+    }
+
 } )
 
