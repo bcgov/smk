@@ -1,11 +1,13 @@
-include.module( 'tool-layers', [ 'tool', 'widgets', 'tool-layers.panel-layers-html', 'tool-layers.layer-display-html' ], function ( inc ) {
+include.module( 'tool-layers', [ 
+    'tool.tool-panel-js', 
+    'tool-layers.panel-layers-html', 
+    'tool-layers.layer-display-html', 
+    'widgets' 
+], function ( inc ) {
     "use strict";
 
-    Vue.component( 'layers-widget', {
-        extends: inc.widgets.toolButton,
-    } )
-
     Vue.component( 'layer-display', {
+        mixins: [ SMK.COMPONENT.ToolEmit ],
         template: inc[ 'tool-layers.layer-display-html' ],
         props: {
             id:      { type: String },
@@ -13,53 +15,61 @@ include.module( 'tool-layers', [ 'tool', 'widgets', 'tool-layers.panel-layers-ht
             glyph:   { type: Object },
             inGroup: { type: Boolean, default: false }
         },
-        mixins: [ inc.widgets.emit ],
+    } )
+
+    Vue.component( 'layers-widget', {
+        extends: SMK.COMPONENT.ToolWidget,
     } )
 
     Vue.component( 'layers-panel', {
-        extends: inc.widgets.toolPanel,
+        extends: SMK.COMPONENT.ToolPanel,
         template: inc[ 'tool-layers.panel-layers-html' ],
         props: [ 'contexts', 'allVisible', 'glyph', 'command', 'filter', 'legend' ],
     } )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
-    function LayersTool( option ) {
-        this.makePropWidget( 'icon' ) //, 'layers' )
+    function LayersTool() {
+        SMK.TYPE.ToolPanel.prototype.constructor.call( this, 'layers-panel', 'layers-widget' )
 
-        this.makePropPanel( 'busy', false )
-        this.makePropPanel( 'contexts', [] )
-        this.makePropPanel( 'allVisible', true )
-        this.makePropPanel( 'glyph', {} )
-        this.makePropPanel( 'command', {} )
-        this.makePropPanel( 'filter', null )
-        this.makePropPanel( 'legend', false )
-
-        SMK.TYPE.Tool.prototype.constructor.call( this, $.extend( {
-            // order:          3,
-            // position:       'menu',
-            // title:          'Layers',
-            widgetComponent:'layers-widget',
-            panelComponent: 'layers-panel',
-            display:        null
-        }, option ) )
+        this.toolProp( 'contexts', { 
+            forWidget: false,
+            initial: []
+        } )
+        this.toolProp( 'allVisible', { 
+            forWidget: false,
+            initial: true
+        } )
+        this.toolProp( 'glyph', { 
+            forWidget: false,
+            initial: {}
+        } )
+        this.toolProp( 'command', { 
+            forWidget: false,
+            initial: {} 
+        } )
+        this.toolProp( 'filter', { 
+            forWidget: false 
+        } )
+        this.toolProp( 'legend', { 
+            forWidget: false,
+            initial: false
+        } )
     }
 
     SMK.TYPE.LayersTool = LayersTool
 
-    $.extend( LayersTool.prototype, SMK.TYPE.Tool.prototype )
-    LayersTool.prototype.afterInitialize = []
+    Object.assign( LayersTool.prototype, SMK.TYPE.ToolPanel.prototype )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
-    LayersTool.prototype.afterInitialize.push( function ( smk ) {
+    LayersTool.prototype.afterInitialize = SMK.TYPE.ToolPanel.prototype.afterInitialize.concat( function ( smk ) {
         var self = this
 
-        smk.$viewer.setDisplayContextItems( this.id, this.display )
+        if ( this.display )
+            smk.$viewer.setDisplayContextItems( this.id, this.display )
 
         smk.on( this.id, {
             'activate': function () {
                 if ( !self.enabled ) return
-
-                self.active = !self.active
                 if ( !self.active ) return
 
                 self.contexts = smk.$viewer.getDisplayContexts()
@@ -68,7 +78,6 @@ include.module( 'tool-layers', [ 'tool', 'widgets', 'tool-layers.panel-layers-ht
             },
 
             'change': function ( ev ) {
-                // console.log(ev)
                 Object.assign( self, ev )
 
                 smk.$viewer.setDisplayContextLegendsVisible( self.legend )

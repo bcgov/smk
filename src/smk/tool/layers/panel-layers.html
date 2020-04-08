@@ -1,7 +1,8 @@
-<side-panel class="smk-layers-panel" 
-    v-bind:busy="busy"
-    v-bind:message="busy ? 'Loading data' : ( !contexts[ 0 ].items || contexts[ 0 ].items.length == 0 ) ? 'No layers are configured' : ''"
-    v-bind:status="busy ? 'progress' : ( !contexts[ 0 ].items || contexts[ 0 ].items.length == 0 ) ? 'warning' : ''"
+<tool-panel class="smk-layers-panel" 
+    v-bind="$$panelProps()"
+    xv-bind:busy="busy"
+    xv-bind:message="busy ? 'Loading data' : ( !contexts[ 0 ].items || contexts[ 0 ].items.length == 0 ) ? 'No layers are configured' : ''"
+    xv-bind:status="busy ? 'progress' : ( !contexts[ 0 ].items || contexts[ 0 ].items.length == 0 ) ? 'warning' : ''"
     xv-bind:showSwipe="true"
     xv-on:swipe-up="$$emit('swipe-up')"
     xv-on:swipe-down="$$emit('swipe-down')"    
@@ -11,7 +12,6 @@
     </template>
 
     <template slot="commands">
-
         <i class="smk-all-visibility material-icons smk-command smk-icon"
             v-if="command.allVisibility !== false"
             v-bind:title="'Toggle visibility of all layers.\nSHIFT-click to toggle visibility on each layer.'"
@@ -30,7 +30,6 @@
             v-bind:value="legend"
             v-on:change="$$emit( 'change', { legend: $event } )"
         >Legend</toggle-button>
-
     </template>
 
     <layer-display 
@@ -41,4 +40,4 @@
         v-bind:glyph="glyph"
     ></layer-display>
 
-</side-panel>
+</tool-panel>
