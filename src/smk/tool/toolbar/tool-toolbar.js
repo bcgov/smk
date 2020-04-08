@@ -41,7 +41,7 @@ include.module( 'tool-toolbar', [ 'tool.tool-js', 'tool-toolbar.toolbar-html' ],
 
         // this.toolIds.push( tool.id )
 
-        smk.getSidepanel().addTool( tool, smk )
+        // smk.getSidepanel().addTool( tool, smk )
 
         return true
     }

@@ -59,7 +59,7 @@ include.module( 'tool-list-menu', [ 'tool', 'widgets', 'tool-list-menu.panel-too
             tool.setParentId( this.id, smk )
         }
 
-        smk.getSidepanel().addTool( tool, smk )
+        // smk.getSidepanel().addTool( tool, smk )
 
         tool.showTitle = true
 

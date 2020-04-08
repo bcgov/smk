@@ -182,6 +182,9 @@ include.module( 'tool.tool-js', [ 'event' ], function ( inc ) {
             }
         }
 
+        if ( self.panel )
+            smk.getSidepanel().addTool( self, smk )
+
         this.changedActive( function () {
             var ids = smk.getToolGroup( self.rootId )
             var g = ids.some( function ( id ) {
