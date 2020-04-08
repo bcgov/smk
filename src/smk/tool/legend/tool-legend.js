@@ -1,4 +1,8 @@
-include.module( 'tool-legend', [ 'tool', 'tool-legend.legend-html', 'tool-legend.legend-display-html' ], function ( inc ) {
+include.module( 'tool-legend', [ 
+    'tool.tool-js', 
+    'tool-legend.legend-html', 
+    'tool-legend.legend-display-html' 
+], function ( inc ) {
     "use strict";
 
     Vue.component( 'legend-display', {
@@ -10,19 +14,17 @@ include.module( 'tool-legend', [ 'tool', 'tool-legend.legend-html', 'tool-legend
     } )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
-    function LegendTool( option ) {
-        SMK.TYPE.Tool.prototype.constructor.call( this, $.extend( {
-            order: 3
-        }, option ) )
+    function LegendTool() {
+        SMK.TYPE.Tool.prototype.constructor.call( this )
+            // order: 3
     }
 
     SMK.TYPE.LegendTool = LegendTool
 
     $.extend( LegendTool.prototype, SMK.TYPE.Tool.prototype )
-    LegendTool.prototype.afterInitialize = []
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
-    SMK.TYPE.LegendTool.prototype.afterInitialize.push( function ( smk ) {
+    SMK.TYPE.LegendTool.prototype.afterInitialize = SMK.TYPE.Tool.prototype.afterInitialize.concat( function ( smk ) {
         var self = this
 
         this.model = {
