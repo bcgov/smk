@@ -1,13 +1,13 @@
 include.module( 'tool-coordinate', [ 'tool.tool-js', 'tool-coordinate.coordinate-html' ], function ( inc ) {
     "use strict";
 
-    function CoordinateTool( option ) {
+    function CoordinateTool() {
         SMK.TYPE.Tool.prototype.constructor.call( this )
     }
 
     SMK.TYPE.CoordinateTool = CoordinateTool
 
-    $.extend( CoordinateTool.prototype, SMK.TYPE.Tool.prototype )
+    Object.assign( CoordinateTool.prototype, SMK.TYPE.Tool.prototype )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
     SMK.TYPE.CoordinateTool.prototype.afterInitialize = SMK.TYPE.Tool.prototype.afterInitialize.concat( function ( smk ) {
