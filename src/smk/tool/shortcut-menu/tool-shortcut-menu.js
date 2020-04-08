@@ -39,7 +39,7 @@ include.module( 'tool-shortcut-menu', [ 'tool', 'tool-shortcut-menu.shortcut-men
 
         if ( smk.$device == 'desktop' ) return false
 
-        // smk.getSidepanel().addTool( tool, smk )
+        smk.getSidepanel().addTool( tool, smk )
 
         this.model.widgets.push( {
             id:                 tool.id,

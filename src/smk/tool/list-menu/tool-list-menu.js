@@ -52,14 +52,14 @@ include.module( 'tool-list-menu', [ 'tool', 'widgets', 'tool-list-menu.panel-too
     } )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
-    ListMenuTool.prototype.addTool = function ( tool, smk ) {
+    ListMenuTool.prototype.addTool = function ( tool, smk, setParentId ) {
         var self = this
 
         if ( !tool.parentId ) {
-            tool.setParentId( this.id, smk )
+            setParentId( tool, this.id )
         }
 
-        // smk.getSidepanel().addTool( tool, smk )
+        smk.getSidepanel().addTool( tool, smk )
 
         tool.showTitle = true
 

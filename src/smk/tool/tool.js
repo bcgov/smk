@@ -76,6 +76,8 @@ include.module( 'tool.tool-js', [ 'event' ], function ( inc ) {
             initial: false, 
             onSet: function () { this.changedGroup() } 
         } )
+        this.toolProp( 'parentId', { 
+        } )
     }
 
     Tool.prototype.configure = function ( option ) {
@@ -130,12 +132,12 @@ include.module( 'tool.tool-js', [ 'event' ], function ( inc ) {
     Tool.prototype.initialize = function ( smk ) {
         var self = this
 
-        function setParentId ( toolId ) {
-            self.parentId = toolId
-            self.hasPrevious = !!toolId
+        function setParentId ( tool, parentId ) {
+            tool.parentId = parentId
+            tool.hasPrevious = !!parentId
             
-            if ( !self.parentId ) {
-                self.rootId = self.id
+            if ( !tool.parentId ) {
+                tool.rootId = tool.id
             }
     
             var group = {}
@@ -158,7 +160,7 @@ include.module( 'tool.tool-js', [ 'event' ], function ( inc ) {
             }
         }   
     
-        setParentId( this.parentId )
+        setParentId( this, this.parentId )
 
         var positions = [].concat( this.position || [] )
 
@@ -174,16 +176,13 @@ include.module( 'tool.tool-js', [ 'event' ], function ( inc ) {
                 if ( p == self.id )
                     return false 
 
-                return smk.$tool[ p ].addTool( self, smk )
+                return smk.$tool[ p ].addTool( self, smk, setParentId )
             } )
 
             if ( !found ) {
                 console.warn( 'no position found for tool ' + self.id )
             }
         }
-
-        if ( self.panel )
-            smk.getSidepanel().addTool( self, smk )
 
         this.changedActive( function () {
             var ids = smk.getToolGroup( self.rootId )
@@ -219,7 +218,7 @@ include.module( 'tool.tool-js', [ 'event' ], function ( inc ) {
             } )
 
         return this.afterInitialize.forEach( function ( init ) {
-            init.call( self, smk, setParentId )
+            init.call( self, smk )
         } )
     }
 
