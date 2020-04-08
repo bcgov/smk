@@ -33,7 +33,6 @@ include.module( 'tool-baseMaps', [ 'tool.tool-panel-js', 'viewer', 'leaflet', 't
     SMK.TYPE.BaseMapsTool = BaseMapsTool
 
     $.extend( BaseMapsTool.prototype, SMK.TYPE.ToolPanel.prototype )
-    // BaseMapsTool.prototype.afterInitialize = []
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
     BaseMapsTool.prototype.afterInitialize = SMK.TYPE.ToolPanel.prototype.afterInitialize.concat( function ( smk ) {

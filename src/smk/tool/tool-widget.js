@@ -25,8 +25,7 @@ include.module( 'tool.tool-widget-js', [ 'tool.tool-js', 'tool.tool-widget-html'
             prop: {} 
         }
 
-        SMK.TYPE.Tool.prototype.constructor.call( this ) //, Object.assign( {
-        // }, option ) )
+        SMK.TYPE.Tool.prototype.constructor.call( this )
 
         this.toolProp( 'showWidget', {
             initial: true,
@@ -36,7 +35,7 @@ include.module( 'tool.tool-widget-js', [ 'tool.tool-js', 'tool.tool-widget-html'
             initial: false
         } )
         this.toolProp( 'icon', { 
-            initial: 0, 
+            forPanel: false
         } )
     }
 

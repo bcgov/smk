@@ -35,7 +35,7 @@ include.module( 'tool-toolbar', [ 'tool.tool-js', 'tool-toolbar.toolbar-html' ],
     ToolBarTool.prototype.addTool = function ( tool, smk ) {
         var self = this
 
-        if ( tool.widget && !tool.parentId ) {          
+        if ( tool.widget && tool.widget.component && !tool.parentId ) {          
             this.model.widgets.push( tool.widget )
         }
 
