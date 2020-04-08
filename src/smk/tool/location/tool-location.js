@@ -1,33 +1,40 @@
-include.module( 'tool-location', [ 'tool', 'widgets', 'tool-location.panel-location-html' ], function ( inc ) {
+include.module( 'tool-location', [ 
+    'tool.tool-panel-js', 
+    'tool-location.panel-location-html', 
+    'api' 
+], function ( inc ) {
     "use strict";
 
     Vue.component( 'location-panel', {
-        extends: inc.widgets.toolPanel,
+        extends: SMK.COMPONENT.ToolPanel,
         template: inc[ 'tool-location.panel-location-html' ],
         props: [ 'site', 'tool' ]
     } )
 
     function LocationTool( option ) {
-        this.makeProp( 'site', {} )
-        this.makeProp( 'tool', {} )
+        SMK.TYPE.ToolPanel.prototype.constructor.call( this, 'location-panel' )
 
-        SMK.TYPE.Tool.prototype.constructor.call( this, $.extend( {
-            class:      'smk-location-panel',
-            title:      'Location',
-            position:   'toolbar',
-            panelComponent: 'location-panel',
-        }, option ) )
+        this.toolProp( 'site', { 
+            forWidget: false,
+            initial: {}
+        } )
+        this.toolProp( 'tool', { 
+            forWidget: false,
+            initial: {}
+        } )
+
+        this.showHeader = false
     }
-
 
     SMK.TYPE.LocationTool = LocationTool
 
-    $.extend( LocationTool.prototype, SMK.TYPE.Tool.prototype )
-    LocationTool.prototype.afterInitialize = []
+    Object.assign( LocationTool.prototype, SMK.TYPE.ToolPanel.prototype )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
-    LocationTool.prototype.afterInitialize.push( function ( smk ) {
+    LocationTool.prototype.afterInitialize = SMK.TYPE.ToolPanel.prototype.afterInitialize.concat( function ( smk ) {
         var self = this
+
+        this.geocoder = new SMK.TYPE.Geocoder( this.geocoderService )
 
         this.setIdentifyHandler = function ( handler ) {
             if ( !smk.$tool.identify ) return
@@ -74,7 +81,7 @@ include.module( 'tool-location', [ 'tool', 'widgets', 'tool-location.panel-locat
                 smk.$viewer.identifyFeatures( location )
             } )
 
-            return SMK.UTIL.findNearestSite( location.map )
+            return self.geocoder.fetchNearestSite( location.map )
                 .then( function ( site ) {
                     self.site = site
 
