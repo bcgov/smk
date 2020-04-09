@@ -126,7 +126,7 @@ include.module( 'tool.tool-panel-js', [ 'tool.tool-widget-js', 'tool.tool-panel-
             initial: 0, 
             forWidget: false 
         } )
-        this.toolProp( 'hasProvious', { 
+        this.toolProp( 'hasPrevious', { 
             initial: false, 
             forWidget: false 
         } )

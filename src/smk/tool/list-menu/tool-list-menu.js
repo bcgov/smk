@@ -1,46 +1,38 @@
-include.module( 'tool-list-menu', [ 'tool', 'widgets', 'tool-list-menu.panel-tool-list-html' ], function ( inc ) {
+include.module( 'tool-list-menu', [ 'tool.tool-panel-js', 'tool-list-menu.panel-list-menu-html' ], function ( inc ) {
     "use strict";
 
     Vue.component( 'list-menu-widget', {
-        extends: inc.widgets.toolButton,
+        extends: SMK.COMPONENT.ToolWidget,
     } )
 
-    Vue.component( 'tool-list-panel', {
-        extends: inc.widgets.toolPanel,
-        template: inc[ 'tool-list-menu.panel-tool-list-html' ],
+    Vue.component( 'list-menu-panel', {
+        extends: SMK.COMPONENT.ToolPanel,
+        template: inc[ 'tool-list-menu.panel-list-menu-html' ],
         props: [ 'subWidgets' ]
     } )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
-    function ListMenuTool( option ) {
-        this.makePropWidget( 'icon', 'menu' )
-        this.makePropPanel( 'subWidgets', [] )
-        
-        SMK.TYPE.Tool.prototype.constructor.call( this, $.extend( {
-            title:          'Menu',
-            position:       'toolbar',
-            widgetComponent:'list-menu-widget',
-            panelComponent: 'tool-list-panel',
-            currentTool:    null
-        }, option ) )
+    function ListMenuTool() {
+        SMK.TYPE.ToolPanel.prototype.constructor.call( this, 'list-menu-panel', 'list-menu-widget' )
+
+        this.toolProp( 'subWidgets', { 
+            initial: [],
+            forWidget: false 
+        } )
+
+        this.icon = 'menu'
+        this.position = 'toolbar'
     }
 
     SMK.TYPE.ListMenuTool = ListMenuTool
 
-    $.extend( ListMenuTool.prototype, SMK.TYPE.Tool.prototype )
-    ListMenuTool.prototype.afterInitialize = []
+    $.extend( ListMenuTool.prototype, SMK.TYPE.ToolPanel.prototype )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
-    ListMenuTool.prototype.afterInitialize.push( function ( smk ) {
+    ListMenuTool.prototype.afterInitialize = SMK.TYPE.ToolPanel.prototype.afterInitialize.concat( function ( smk ) {
         var self = this
 
         smk.on( this.id, {
-            'activate': function () {
-                if ( !self.enabled ) return
-
-                self.active = !self.active
-            },
-
             'swipe-up': function ( ev ) {                
                 smk.$sidepanel.setExpand( 2 )
             },
@@ -55,21 +47,16 @@ include.module( 'tool-list-menu', [ 'tool', 'widgets', 'tool-list-menu.panel-too
     ListMenuTool.prototype.addTool = function ( tool, smk, setParentId ) {
         var self = this
 
-        if ( !tool.parentId ) {
+        if ( tool.parentId ) {
+        }
+        else {
             setParentId( tool, this.id )
+            this.subWidgets.push( tool.widget )
         }
 
         smk.getSidepanel().addTool( tool, smk )
 
         tool.showTitle = true
-
-        if ( tool.widgetComponent )
-            this.subWidgets.push( {
-                id: tool.id,
-                type: tool.type,
-                widgetComponent: tool.widgetComponent,
-                widget: tool.widget
-            } )
 
         return true
     }

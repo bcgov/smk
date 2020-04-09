@@ -103,7 +103,7 @@ include.module( 'sidepanel', [ 'vue', 'tool', 'sidepanel.sidepanel-html', 'sidep
         }
 
         function getTool( id ) {
-            return self.model.panels.find( function ( t ) { return t.id == id } )
+            return self.model.panels.find( function ( p ) { return p.prop.id == id } )
         }
 
         this.vm = new Vue( {
@@ -117,10 +117,10 @@ include.module( 'sidepanel', [ 'vue', 'tool', 'sidepanel.sidepanel-html', 'sidep
                 'previousPanel': function ( id ) {     
                     var t = getTool( id )
                     if ( t ) {
-                        var pt = getTool( t.parentId )
+                        var pt = getTool( t.prop.parentId )
                         if ( pt ) {
-                            smk.$tool[ pt.id ].active = true
-                            smk.$tool[ t.id ].active = false
+                            smk.$tool[ pt.prop.id ].active = true
+                            smk.$tool[ t.prop.id ].active = false
                         }
                     }
 
