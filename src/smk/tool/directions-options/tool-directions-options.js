@@ -1,8 +1,11 @@
-include.module( 'tool-directions-options', [ 'tool', 'widgets', 'sidepanel', 'tool-directions-options.panel-directions-options-html' ], function ( inc ) {
+include.module( 'tool-directions-options', [ 
+    'tool.tool-panel-js', 
+    'tool-directions-options.panel-directions-options-html' 
+], function ( inc ) {
     "use strict";
 
     Vue.component( 'directions-options-panel', {
-        extends: inc.widgets.toolPanel,
+        extends: SMK.COMPONENT.ToolPanel,
         template: inc[ 'tool-directions-options.panel-directions-options-html' ],
         props: {
             'truck' : Boolean, 
@@ -29,7 +32,6 @@ include.module( 'tool-directions-options', [ 'tool', 'widgets', 'sidepanel', 'to
             toUnit: function ( val, unit ) {
                 return ( val / unit )
             },
-
             formatNumber: function ( value, fractionPlaces ) {
                 var i = Math.floor( value ),
                     f = value - i
@@ -38,47 +40,94 @@ include.module( 'tool-directions-options', [ 'tool', 'widgets', 'sidepanel', 'to
             }
         }
     } )
-
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
-    function DirectionsOptionsTool( option ) {
-        this.makePropPanel( 'truck',        false )
-        this.makePropPanel( 'optimal',      false )
-        this.makePropPanel( 'roundTrip',    false )
-        this.makePropPanel( 'criteria',     'shortest' )
-        this.makePropPanel( 'truckRoute',   null )
-        this.makePropPanel( 'truckHeight',  null, null, positiveFloat )
-        this.makePropPanel( 'truckWidth',   null, null, positiveFloat )
-        this.makePropPanel( 'truckLength',  null, null, positiveFloat )
-        this.makePropPanel( 'truckWeight',  null, null, positiveFloat )
-        this.makePropPanel( 'truckHeightUnit',  1 )
-        this.makePropPanel( 'truckWidthUnit',   1 )
-        this.makePropPanel( 'truckLengthUnit',  1 )
-        this.makePropPanel( 'truckWeightUnit',  1 )
-        this.makePropPanel( 'oversize',    false )
-        this.makePropPanel( 'command',      {} )
-        this.makePropPanel( 'bespoke',      {} )
+    function DirectionsOptionsTool() {
+        SMK.TYPE.ToolPanel.prototype.constructor.call( this, 'directions-options-panel' )
 
-        SMK.TYPE.PanelTool.prototype.constructor.call( this, $.extend( {
-            title:          'Route Planner Options',
-            panelComponent: 'directions-options-panel',
-        }, option ) )
-    }
+        this.toolProp( 'truck', {
+            initial: false,
+            forWidget: false
+        } )
+        this.toolProp( 'optimal', {
+            initial: false,
+            forWidget: false
+        } )
+        this.toolProp( 'roundTrip', {
+            initial: false,
+            forWidget: false
+        } )
+        this.toolProp( 'criteria', {
+            initial: 'shortest',
+            forWidget: false
+        } )
+        this.toolProp( 'truckRoute', {
+            initial: null,
+            forWidget: false
+        } )
+        this.toolProp( 'truckHeight', {
+            initial: null,
+            validate: positiveFloat,
+            forWidget: false
+        } )
+        this.toolProp( 'truckWidth', {
+            initial: null,
+            validate: positiveFloat,
+            forWidget: false
+        } )
+        this.toolProp( 'truckLength', {
+            initial: null,
+            validate: positiveFloat,
+            forWidget: false
+        } )
+        this.toolProp( 'truckWeight', {
+            initial: null,
+            validate: positiveFloat,
+            forWidget: false
+        } )
+        this.toolProp( 'truckHeightUnit', {
+            initial: 1,
+            forWidget: false
+        } )
+        this.toolProp( 'truckWidthUnit', {
+            initial: 1,
+            forWidget: false
+        } )
+        this.toolProp( 'truckLengthUnit', {
+            initial: 1,
+            forWidget: false
+        } )
+        this.toolProp( 'truckWeightUnit', {
+            initial: 1,
+            forWidget: false
+        } )
+        this.toolProp( 'oversize', {
+            initial: false,
+            forWidget: false
+        } )
+        this.toolProp( 'command', {
+            initial: {},
+            forWidget: false
+        } )
+        this.toolProp( 'bespoke', {
+            initial: {},
+            forWidget: false
+        } )
 
-    function positiveFloat( newVal, oldVal, propName ) {
-        var i = parseFloat( newVal )
-        if ( !newVal || !i ) return null
-        if ( i < 0 ) return oldVal
-        return i
+        function positiveFloat( newVal, oldVal, propName ) {
+            var i = parseFloat( newVal )
+            if ( !newVal || !i ) return null
+            if ( i < 0 ) return oldVal
+            return i
+        }
     }
 
     SMK.TYPE.DirectionsOptionsTool = DirectionsOptionsTool
 
-    $.extend( DirectionsOptionsTool.prototype, SMK.TYPE.PanelTool.prototype )
-    DirectionsOptionsTool.prototype.afterInitialize = []
+    $.extend( DirectionsOptionsTool.prototype, SMK.TYPE.ToolPanel.prototype )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
-    DirectionsOptionsTool.prototype.afterInitialize.push( function ( smk ) {
+    DirectionsOptionsTool.prototype.afterInitialize = SMK.TYPE.ToolPanel.prototype.afterInitialize.concat( function ( smk ) {
         var self = this
 
         var directions = smk.$tool[ 'directions' ]
@@ -93,7 +142,6 @@ include.module( 'tool-directions-options', [ 'tool', 'widgets', 'sidepanel', 'to
 
                 comp.$forceUpdate()
                 findRouteDelayed()
-                // directions.findRoute()
             },
         } )
 

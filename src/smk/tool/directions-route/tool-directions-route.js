@@ -1,4 +1,8 @@
-include.module( 'tool-directions-route', [ 'tool', 'widgets', 'tool-directions-route.panel-directions-route-html', 'turf' ], function ( inc ) {
+include.module( 'tool-directions-route', [ 
+    'tool.tool-panel-js', 
+    'tool-directions-route.panel-directions-route-html', 
+    'turf' 
+], function ( inc ) {
     "use strict";
 
     var instructionType = {
@@ -20,9 +24,9 @@ include.module( 'tool-directions-route', [ 'tool', 'widgets', 'tool-directions-r
     }
 
     Vue.component( 'route-panel', {
-        extends: inc.widgets.toolPanel,
+        extends: SMK.COMPONENT.ToolPanel,
         template: inc[ 'tool-directions-route.panel-directions-route-html' ],
-        props: [ 'busy', 'directions', 'directionHighlight', 'directionPick', 'status', 'message' ],
+        props: [ 'directions', 'directionHighlight', 'directionPick' ],
         methods: {
             instructionTypeIcon: function ( type ) {                
                 if ( !instructionType[ type ] ) return 'report'
@@ -41,32 +45,31 @@ include.module( 'tool-directions-route', [ 'tool', 'widgets', 'tool-directions-r
     } )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
-    function DirectionsRouteTool( option ) {
-        this.makePropPanel( 'busy', false )
-        this.makePropPanel( 'directions', [] )
-        this.makePropPanel( 'directionHighlight', null )
-        this.makePropPanel( 'directionPick', null )
-        this.makePropPanel( 'status', null )
-        this.makePropPanel( 'message', null )
+    function DirectionsRouteTool() {
+        SMK.TYPE.ToolPanel.prototype.constructor.call( this, 'route-panel' )
 
-        SMK.TYPE.Tool.prototype.constructor.call( this, $.extend( {
-            order:          4,
-            position:       'menu',
-            title:          'Route',
-            // subPanel:       1,
-            panelComponent: 'route-panel',
-        }, option ) )
+        this.toolProp( 'directions', {
+            initial: [],
+            forWidget: false
+        } )
+        this.toolProp( 'directionHighlight', {
+            initial: null,
+            forWidget: false
+        } )
+        this.toolProp( 'directionPick', {
+            initial: null,
+            forWidget: false
+        } )
 
         this.activating = SMK.UTIL.resolved()
     }
 
     SMK.TYPE.DirectionsRouteTool = DirectionsRouteTool
 
-    $.extend( DirectionsRouteTool.prototype, SMK.TYPE.Tool.prototype )
-    DirectionsRouteTool.prototype.afterInitialize = []
+    $.extend( DirectionsRouteTool.prototype, SMK.TYPE.ToolPanel.prototype )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
-    DirectionsRouteTool.prototype.afterInitialize.push( function ( smk ) {
+    DirectionsRouteTool.prototype.afterInitialize = SMK.TYPE.ToolPanel.prototype.afterInitialize.concat( function ( smk ) {
         var self = this
 
         var directions = smk.$tool[ 'directions' ]
@@ -120,51 +123,51 @@ include.module( 'tool-directions-route', [ 'tool', 'widgets', 'tool-directions-r
         } )        
     } )
 
-    DirectionsRouteTool.prototype.setMessage = function ( message, status, delay ) {
-        if ( !message ) {
-            this.status = null
-            this.message = null
-            return
-        }
+    // DirectionsRouteTool.prototype.setMessage = function ( message, status, delay ) {
+    //     if ( !message ) {
+    //         this.status = null
+    //         this.message = null
+    //         return
+    //     }
 
-        this.status = status
-        this.message = message
+    //     this.status = status
+    //     this.message = message
 
-        if ( delay === null ) return
+    //     if ( delay === null ) return
 
-        this.clearMessage.option.delay = delay || 2000
-        this.clearMessage()
-    }
+    //     this.clearMessage.option.delay = delay || 2000
+    //     this.clearMessage()
+    // }
 
-    DirectionsRouteTool.prototype.clearMessage = SMK.UTIL.makeDelayedCall( function () {
-        this.status = null
-        this.message = null        
-    }, { delay: 2000 } )
+    // DirectionsRouteTool.prototype.clearMessage = SMK.UTIL.makeDelayedCall( function () {
+    //     this.status = null
+    //     this.message = null        
+    // }, { delay: 2000 } )
 
     return DirectionsRouteTool
 
-    function makeDataUrl( img ) {
-        // Create an empty canvas element
-        var canvas = document.createElement("canvas");
-        canvas.width = img.width;
-        canvas.height = img.height;
+    // function makeDataUrl( img ) {
+    //     // Create an empty canvas element
+    //     var canvas = document.createElement("canvas");
+    //     canvas.width = img.width;
+    //     canvas.height = img.height;
     
-        // Copy the image contents to the canvas
-        var ctx = canvas.getContext("2d");
-        try {
-            ctx.drawImage(img, 0, 0);
-        }
-        catch ( e ) {
-            ctx.drawImage(img.children[0], 0, 0);
-        }
+    //     // Copy the image contents to the canvas
+    //     var ctx = canvas.getContext("2d");
+    //     try {
+    //         ctx.drawImage(img, 0, 0);
+    //     }
+    //     catch ( e ) {
+    //         ctx.drawImage(img.children[0], 0, 0);
+    //     }
     
-        // Get the data-URL formatted image
-        // Firefox supports PNG and JPEG. You could check img.src to
-        // guess the original format, but be aware the using "image/jpg"
-        // will re-encode the image.
-        var dataURL = canvas.toDataURL("image/png");
+    //     // Get the data-URL formatted image
+    //     // Firefox supports PNG and JPEG. You could check img.src to
+    //     // guess the original format, but be aware the using "image/jpg"
+    //     // will re-encode the image.
+    //     var dataURL = canvas.toDataURL("image/png");
     
-        return dataURL //.replace(/^data:image\/(png|jpg);base64,/, "");
-    }    
+    //     return dataURL //.replace(/^data:image\/(png|jpg);base64,/, "");
+    // }    
 } )
 

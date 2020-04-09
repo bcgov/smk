@@ -1,7 +1,5 @@
-<side-panel class="smk-directions-options-panel" 
-    v-bind:busy="busy"
-    v-bind:message="busy ? 'Calculating' : message"
-    v-bind:status="busy ? 'progress' : status"
+<tool-panel class="smk-directions-options-panel" 
+    v-bind="$$panelProps()"
 >
     <template slot="header">
         <slot></slot>
@@ -146,4 +144,4 @@
         </enter-number>
     </div>
 
-</side-panel>
+</tool-panel>

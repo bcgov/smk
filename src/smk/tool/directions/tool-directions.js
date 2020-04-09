@@ -1,7 +1,5 @@
 include.module( 'tool-directions', [ 
-    'tool', 
-    'widgets', 
-    'sidepanel', 
+    'tool.tool-panel-js', 
     'tool-directions.panel-directions-html', 
     'tool-directions-route', 
     'tool-directions-options',
@@ -14,115 +12,119 @@ include.module( 'tool-directions', [
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
     Vue.component( 'directions-widget', {
-        extends: inc.widgets.toolButton,
+        extends: SMK.COMPONENT.ToolWidget,
     } )
 
     Vue.component( 'directions-panel', {
-        extends: inc.widgets.toolPanel,
+        extends: SMK.COMPONENT.ToolPanel,
         template: inc[ 'tool-directions.panel-directions-html' ],
         props: [ 'waypoints', 'hasRoute', 'optimal', 'geocoderService' ],
     } )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
-    function DirectionsTool( option ) {
-        this.makePropWidget( 'icon', null ) 
+    function DirectionsTool() {
+        SMK.TYPE.ToolPanel.prototype.constructor.call( this, 'directions-panel', 'directions-widget' )
 
-        this.makePropPanel( 'waypoints', [] )
-        this.makePropPanel( 'hasRoute', false )
-        this.makePropPanel( 'optimal', false )
-        this.makePropPanel( 'geocoderService', {} )
+        this.toolProp( 'waypoints', { 
+            initial: [],
+            forWidget: false 
+        } )
+        this.toolProp( 'hasRoute', { 
+            initial: false,
+            forWidget: false 
+        } )
+        this.toolProp( 'optimal', { 
+            initial: false,
+            forWidget: false 
+        } )
+        this.toolProp( 'geocoderService', { 
+            initial: {},
+            forWidget: false 
+        } )
 
-        SMK.TYPE.PanelTool.prototype.constructor.call( this, $.extend( {
-            // order:          4,
-            // position:       'menu',
-            // title:          'Route Planner',
-            widgetComponent:'directions-widget',
-            panelComponent: 'directions-panel',
-            segmentLayers: [
-                {
-                    id: "@segments",
-                    title: "Segments",
-                    style: {
-                        strokeColor: "blue",
-                        strokeWidth: 8,
-                        strokeOpacity: 0.8
-                    },
-                    legend: {
-                        line: true
-                    }
+        this.segmentLayers = [
+            {
+                id: "@segments",
+                title: "Segments",
+                style: {
+                    strokeColor: "blue",
+                    strokeWidth: 8,
+                    strokeOpacity: 0.8
                 },
-            ],
-            waypointLayers: [
-                {
-                    id: "@waypoint-start",
-                    title: "Starting Route Location",
-                    style: {
-                        markerUrl:      base + '/marker-icon-green.png',
-                        markerSize:     [ 25, 41 ],
-                        markerOffset:   [ 12, 41 ],
-                        shadowUrl:      base + '/marker-shadow.png',
-                        shadowSize:     [ 41, 41 ],
-                        popupOffset:    [ 1, -34 ],
-                    },
-                    legend: {
-                        title: "Starting Route Location",
-                        point: true
-                    },
-                    isDraggable: true,
-                    isQueryable: false
-                },
-                {
-                    id: "@waypoint-end",
-                    title: "Ending Route Location",
-                    style: {
-                        markerUrl:      base + '/marker-icon-red.png',
-                        markerSize:     [ 25, 41 ],
-                        markerOffset:   [ 12, 41 ],
-                        shadowUrl:      base + '/marker-shadow.png',
-                        shadowSize:     [ 41, 41 ],
-                        popupOffset:    [ 1, -34 ],
-                    },
-                    legend: {
-                        title: "Ending Route Location",
-                        point: true
-                    },
-                    isDraggable: true,
-                    isQueryable: false
-                },
-                {
-                    id: "@waypoint-middle",
-                    title: "Waypoint on Route",
-                    style: {
-                        markerUrl:      base + '/marker-icon-blue.png',
-                        markerSize:     [ 25, 41 ],
-                        markerOffset:   [ 12, 41 ],
-                        shadowUrl:      base + '/marker-shadow.png',
-                        shadowSize:     [ 41, 41 ],
-                        popupOffset:    [ 1, -34 ],
-                    },
-                    legend: {
-                        title: "Waypoint on Route",
-                        point: true
-                    },
-                    isDraggable: true,
-                    isQueryable: false
+                legend: {
+                    line: true
                 }
-            ],
-            routePlannerService: {}
-        }, option ) )
+            },
+        ]
+        
+        this.waypointLayers = [
+            {
+                id: "@waypoint-start",
+                title: "Starting Route Location",
+                style: {
+                    markerUrl:      base + '/marker-icon-green.png',
+                    markerSize:     [ 25, 41 ],
+                    markerOffset:   [ 12, 41 ],
+                    shadowUrl:      base + '/marker-shadow.png',
+                    shadowSize:     [ 41, 41 ],
+                    popupOffset:    [ 1, -34 ],
+                },
+                legend: {
+                    title: "Starting Route Location",
+                    point: true
+                },
+                isDraggable: true,
+                isQueryable: false
+            },
+            {
+                id: "@waypoint-end",
+                title: "Ending Route Location",
+                style: {
+                    markerUrl:      base + '/marker-icon-red.png',
+                    markerSize:     [ 25, 41 ],
+                    markerOffset:   [ 12, 41 ],
+                    shadowUrl:      base + '/marker-shadow.png',
+                    shadowSize:     [ 41, 41 ],
+                    popupOffset:    [ 1, -34 ],
+                },
+                legend: {
+                    title: "Ending Route Location",
+                    point: true
+                },
+                isDraggable: true,
+                isQueryable: false
+            },
+            {
+                id: "@waypoint-middle",
+                title: "Waypoint on Route",
+                style: {
+                    markerUrl:      base + '/marker-icon-blue.png',
+                    markerSize:     [ 25, 41 ],
+                    markerOffset:   [ 12, 41 ],
+                    shadowUrl:      base + '/marker-shadow.png',
+                    shadowSize:     [ 41, 41 ],
+                    popupOffset:    [ 1, -34 ],
+                },
+                legend: {
+                    title: "Waypoint on Route",
+                    point: true
+                },
+                isDraggable: true,
+                isQueryable: false
+            }
+        ]
 
+        this.routePlannerService = {}
         this.activating = SMK.UTIL.resolved()
-
         this.directions = []
     }
 
     SMK.TYPE.DirectionsTool = DirectionsTool
 
-    $.extend( DirectionsTool.prototype, SMK.TYPE.PanelTool.prototype )
-    DirectionsTool.prototype.afterInitialize = []
+    $.extend( DirectionsTool.prototype, SMK.TYPE.ToolPanel.prototype )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
-    DirectionsTool.prototype.afterInitialize.push( function ( smk ) {
+    DirectionsTool.prototype.afterInitialize = SMK.TYPE.ToolPanel.prototype.afterInitialize.concat( function ( smk ) {
         var self = this
 
         this.routePanel = smk.$tool[ 'directions-route' ]
@@ -177,12 +179,6 @@ include.module( 'tool-directions', [
         } )
 
         smk.on( this.id, {
-            'activate': function () {
-                if ( !self.enabled ) return
-
-                self.active = !self.active
-            },
-
             'current-location': function ( ev ) {
                 self.addCurrentLocation().then( function () {
                     self.findRoute()
