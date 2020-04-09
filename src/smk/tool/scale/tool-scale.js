@@ -1,21 +1,19 @@
-include.module( 'tool-scale', [ 'tool', 'tool-scale.scale-html' ], function ( inc ) {
+include.module( 'tool-scale', [ 'tool.tool-js', 'tool-scale.scale-html' ], function ( inc ) {
     "use strict";
 
-    function ScaleTool( option ) {
-        SMK.TYPE.Tool.prototype.constructor.call( this, $.extend( {
-            // order: 2
-            showFactor: true,
-            showBar:    true,
-        }, option ) )
+    function ScaleTool() {
+        SMK.TYPE.Tool.prototype.constructor.call( this )
+
+        this.showFactor = true
+        this.showBar = true
     }
 
     SMK.TYPE.ScaleTool = ScaleTool
 
-    $.extend( ScaleTool.prototype, SMK.TYPE.Tool.prototype )
-    ScaleTool.prototype.afterInitialize = []
+    Object.assign( ScaleTool.prototype, SMK.TYPE.Tool.prototype )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
-    SMK.TYPE.ScaleTool.prototype.afterInitialize.push( function ( smk ) {
+    SMK.TYPE.ScaleTool.prototype.afterInitialize = SMK.TYPE.Tool.prototype.afterInitialize.concat( function ( smk ) {
         var self = this
 
         this.model = {
