@@ -1,12 +1,8 @@
-include.module( 'tool-shortcut-menu', [ 'tool', 'tool-shortcut-menu.shortcut-menu-html' ], function ( inc ) {
+include.module( 'tool-shortcut-menu', [ 'tool.tool-js', 'tool-shortcut-menu.shortcut-menu-html' ], function ( inc ) {
     "use strict";
 
-    // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
-    //
-    function ShortcutMenuTool( option ) {    
-        SMK.TYPE.Tool.prototype.constructor.call( this, $.extend( {
-            // order: 10
-        }, option ) )
+    function ShortcutMenuTool() {
+        SMK.TYPE.Tool.prototype.constructor.call( this )
 
         this.model = {
             widgets: []
@@ -15,13 +11,10 @@ include.module( 'tool-shortcut-menu', [ 'tool', 'tool-shortcut-menu.shortcut-men
 
     SMK.TYPE.ShortcutMenuTool = ShortcutMenuTool
 
-    $.extend( ShortcutMenuTool.prototype, SMK.TYPE.Tool.prototype )
-    ShortcutMenuTool.prototype.afterInitialize = []
+    Object.assign( ShortcutMenuTool.prototype, SMK.TYPE.Tool.prototype )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
-    ShortcutMenuTool.prototype.afterInitialize.push( function ( smk ) {
-        var self = this
-
+    SMK.TYPE.ShortcutMenuTool.prototype.afterInitialize = SMK.TYPE.Tool.prototype.afterInitialize.concat( function ( smk ) {
         this.vm = new Vue( {
             el: smk.addToStatus( inc[ 'tool-shortcut-menu.shortcut-menu-html' ] ),
             data: this.model,
@@ -35,31 +28,9 @@ include.module( 'tool-shortcut-menu', [ 'tool', 'tool-shortcut-menu.shortcut-men
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
     ShortcutMenuTool.prototype.addTool = function ( tool, smk ) {
-        var self = this
-
-        if ( smk.$device == 'desktop' ) return false
-
         smk.getSidepanel().addTool( tool, smk )
 
-        this.model.widgets.push( {
-            id:                 tool.id,
-            widgetComponent:    tool.widgetComponent,
-            widget:             tool.widget,
-        } )
-
-        tool.changedActive( function () {
-            // console.log('active!',tool.id,tool.active)
-            if ( tool.active ) {
-                // self.model.widgets.forEach( function ( w ) {
-                Object.keys( smk.$tool ).forEach( function ( id ) {
-                    // if ( w.id == tool.id ) return
-                    if ( id == tool.id ) return
-                    smk.$tool[ id ].active = false
-                } )
-            }
-            else {
-            }
-        } )
+        this.model.widgets.push( tool.widget )
 
         return true
     }
