@@ -1,8 +1,8 @@
-include.module( 'tool.tool-panel-js', [ 'tool.tool-widget-js', 'tool.tool-panel-html' ], function ( inc ) {
+include.module( 'tool.tool-panel-js', [ 'tool.tool-base-js', 'tool.tool-panel-html' ], function ( inc ) {
     "use strict";
 
     SMK.COMPONENT.ToolPanel = { 
-        extends: SMK.COMPONENT.Tool,
+        extends: SMK.COMPONENT.ToolBase,
         props: {
             showTitle:      Boolean,
             icon:           String,
@@ -29,7 +29,6 @@ include.module( 'tool.tool-panel-js', [ 'tool.tool-widget-js', 'tool.tool-panel-
     SMK.COMPONENT.ToolPanel.methods.$$panelProps = function () { 
         return propProjection( this.$props )
     }
-
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
     Vue.component( 'tool-panel', {
@@ -95,77 +94,58 @@ include.module( 'tool.tool-panel-js', [ 'tool.tool-widget-js', 'tool.tool-panel-
     } )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
-    function ToolPanel( panel, widget ) {
-        this.panel = { 
-            component: panel,
-            prop: {} 
-        }
-
-        SMK.TYPE.ToolWidget.prototype.constructor.call( this, widget )
-
-        this.toolProp( 'showPanel', { 
-            initial: true,
-            forWidget: false 
-        } )
-        this.toolProp( 'showHeader', { 
-            initial: true,
-            forWidget: false 
-        } )
-        this.toolProp( 'showSwipe', { 
-            initial: false,
-            forWidget: false 
-        } )
-        this.toolProp( 'busy', { 
-            initial: false, 
-            forWidget: false 
-        } )
-        this.toolProp( 'message', { 
-            forWidget: false 
-        } )
-        this.toolProp( 'expand', { 
-            initial: 0, 
-            forWidget: false 
-        } )
-        this.toolProp( 'hasPrevious', { 
-            initial: false, 
-            forWidget: false 
-        } )
-    }
-
-    SMK.TYPE.ToolPanel = ToolPanel
-
-    Object.assign( ToolPanel.prototype, SMK.TYPE.ToolWidget.prototype )
-
-    ToolPanel.prototype._setProp = function ( name, val, opt ) {
-        SMK.TYPE.ToolWidget.prototype._setProp.call( this, name, val, opt )
-        if ( opt.forPanel !== false ) this.panel.prop[ name ] = val
-    }
-
-    ToolPanel.prototype.setMessage = function ( message, status, delay ) {
+    SMK.TYPE.ToolPanel = function ( componentName ) {
         var self = this
 
-        if ( !message ) {
-            this.status = null
-            this.message = null
-            return
-        }
+        this.defineProp( 'showPanel' )
+        this.defineProp( 'showHeader' )
+        this.defineProp( 'showSwipe' )
+        this.defineProp( 'busy' )
+        this.defineProp( 'message' )
+        this.defineProp( 'expand' )
+        this.defineProp( 'hasPrevious' )
 
-        this.status = status
-        this.message = message
+        this.showPanel = true
+        this.showHeader = true
+        this.showSwipe = false
+        this.busy = false
+        this.expand = 0
+        this.hasPrevious = false
 
-        if ( delay === null ) return
+        this.$propFilter.classes = false
 
-        if ( this.messageClear )
-            this.messageClear.cancel()
+        this.makePanelComponent = function () {
+            return {
+                component: componentName,
+                prop: self.getComponentProps( componentName )    
+            }
+        }        
 
-        return SMK.UTIL.makePromise( function ( res, rej ) {
-            self.messageClear = SMK.UTIL.makeDelayedCall( function () {
-                self.status = null
-                self.message = null        
-                res()
-            }, { delay: delay || 2000 } )()
-        } )
+        this.setMessage = function ( message, status, delay ) {
+            var self = this
+    
+            if ( !message ) {
+                this.status = null
+                this.message = null
+                return
+            }
+    
+            this.status = status
+            this.message = message
+    
+            if ( delay === null ) return
+    
+            if ( this.messageClear )
+                this.messageClear.cancel()
+    
+            return SMK.UTIL.makePromise( function ( res, rej ) {
+                self.messageClear = SMK.UTIL.makeDelayedCall( function () {
+                    self.status = null
+                    self.message = null        
+                    res()
+                }, { delay: delay || 2000 } )()
+            } )
+        }   
     }
-
 } )
 

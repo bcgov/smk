@@ -1,8 +1,8 @@
-include.module( 'tool.tool-widget-js', [ 'tool.tool-js', 'tool.tool-widget-html' ], function ( inc ) {
+include.module( 'tool.tool-widget-js', [ 'tool.tool-base-js', 'tool.tool-widget-html' ], function ( inc ) {
     "use strict";
 
     SMK.COMPONENT.ToolWidget = { 
-        extends: SMK.COMPONENT.Tool,
+        extends: SMK.COMPONENT.ToolBase,
         template: inc[ 'tool.tool-widget-html' ],
         props: { 
             showWidget: Boolean,
@@ -19,32 +19,27 @@ include.module( 'tool.tool-widget-js', [ 'tool.tool-js', 'tool.tool-widget-html'
     } 
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
-    function ToolWidget( widget ) {
-        this.widget = { 
-            component: widget,
-            prop: {} 
-        }
+    SMK.TYPE.ToolWidget = function ( componentName ) {       
+        var self = this
 
-        SMK.TYPE.Tool.prototype.constructor.call( this )
+        this.defineProp( 'showWidget' )
+        this.defineProp( 'showTitle' )
+        this.defineProp( 'icon' )
 
-        this.toolProp( 'showWidget', {
-            initial: true,
-            forPanel: false
-        } )
-        this.toolProp( 'showTitle', { 
-            initial: false
-        } )
-        this.toolProp( 'icon', { 
-            forPanel: false
-        } )
-    }
+        this.showWidget = true
+        this.showTitle = false
+        this.icon = 'widgets'
 
-    SMK.TYPE.ToolWidget = ToolWidget
+        this.makeWidgetComponent = function () {
+            return {
+                component: componentName,
+                prop: self.getComponentProps( componentName )    
+            }
+        }        
 
-    Object.assign( ToolWidget.prototype, SMK.TYPE.Tool.prototype )
+        this.$propFilter.classes = false
 
-    ToolWidget.prototype.afterInitialize = [
-        function ( smk ) {
+        this.$initializers.push( function ( smk ) {
             var self = this
     
             smk.on( this.id, {
@@ -54,12 +49,7 @@ include.module( 'tool.tool-widget-js', [ 'tool.tool-js', 'tool.tool-widget-html'
                     self.active = !self.active
                 }
             } )
-        }
-    ]
-
-    ToolWidget.prototype._setProp = function ( name, val, opt ) {
-        SMK.TYPE.Tool.prototype._setProp.call( this, name, val, opt )
-        if ( opt.forWidget !== false ) this.widget.prop[ name ] = val
+        } )
     }
 } )
 
