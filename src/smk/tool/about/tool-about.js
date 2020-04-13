@@ -1,12 +1,13 @@
-include.module( 'tool-about', [ 'tool.tool-panel-js', 'tool-about.panel-about-html' ], function ( inc ) {
+include.module( 'tool-about', [ 
+    'tool.tool-base-js', 
+    'tool.tool-widget-js', 
+    'tool.tool-panel-js', 
+    'tool-about.panel-about-html' 
+], function ( inc ) {
     "use strict";
 
     Vue.component( 'about-widget', {
         extends: SMK.COMPONENT.ToolWidget,
-        // created: function () { console.log( 'created' ) },
-        // mounted: function () { console.log( 'mounted' ) },
-        // updated: function () { console.log( 'updated' ) },
-        // activated: function () { console.log( 'activated' ) },        
     } )
 
     Vue.component( 'about-panel', {
@@ -16,20 +17,12 @@ include.module( 'tool-about', [ 'tool.tool-panel-js', 'tool-about.panel-about-ht
     } )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
-    function AboutTool() {
-        SMK.TYPE.ToolPanel.prototype.constructor.call( this, 'about-panel', 'about-widget' )
-
-        this.toolProp( 'content', { 
-            forWidget: false 
-        } )
-    }
-
-    SMK.TYPE.AboutTool = AboutTool
-
-    Object.assign( AboutTool.prototype, SMK.TYPE.ToolPanel.prototype )
-
-    // AboutTool.prototype.afterInitialize.push( function ( smk ) {
-    // } )
-
-    return AboutTool
+    return SMK.TYPE.Tool.define( 'AboutTool', 
+        function () {
+            SMK.TYPE.ToolWidget.call( this, 'about-widget' )
+            SMK.TYPE.ToolPanel.call( this, 'about-panel' )
+        
+            this.defineProp( 'content' )
+        }
+    )
 } )
