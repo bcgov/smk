@@ -21,6 +21,8 @@ include.module( 'tool.tool-base-js', [ 'tool.tool-js' ], function ( inc ) {
             enabled:    Boolean,
             visible:    Boolean,
             group:      Boolean,
+            showTitle:  Boolean,
+            icon:       String
         },
         computed: {
             baseClasses: function () {
@@ -49,11 +51,16 @@ include.module( 'tool.tool-base-js', [ 'tool.tool-js' ], function ( inc ) {
         this.defineProp( 'active', { onSet: function () { this.changedActive() } } )
         this.defineProp( 'group', { onSet: function () { this.changedGroup() } } )
         this.defineProp( 'parentId' )
+        this.defineProp( 'showTitle' )
+        this.defineProp( 'icon' )
+        this.defineProp( 'order' )
 
         this.visible = false
         this.enabled = true
         this.active = false
         this.group = false
+        this.showTitle = false
+        this.icon = 'widgets'
 
         this.order = 1       
 

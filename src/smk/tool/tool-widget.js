@@ -6,8 +6,6 @@ include.module( 'tool.tool-widget-js', [ 'tool.tool-base-js', 'tool.tool-widget-
         template: inc[ 'tool.tool-widget-html' ],
         props: { 
             showWidget: Boolean,
-            showTitle:  Boolean,
-            icon:       String
         },
         computed: {
             classes: function () {
@@ -23,12 +21,8 @@ include.module( 'tool.tool-widget-js', [ 'tool.tool-base-js', 'tool.tool-widget-
         var self = this
 
         this.defineProp( 'showWidget' )
-        this.defineProp( 'showTitle' )
-        this.defineProp( 'icon' )
 
         this.showWidget = true
-        this.showTitle = false
-        this.icon = 'widgets'
 
         this.makeWidgetComponent = function () {
             return {

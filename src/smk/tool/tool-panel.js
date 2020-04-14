@@ -4,9 +4,6 @@ include.module( 'tool.tool-panel-js', [ 'tool.tool-base-js', 'tool.tool-panel-ht
     SMK.COMPONENT.ToolPanel = { 
         extends: SMK.COMPONENT.ToolBase,
         props: {
-            showTitle:      Boolean,
-            icon:           String,
-
             showPanel:      Boolean,
             showHeader:     Boolean,
             showSwipe:      Boolean,
@@ -14,6 +11,7 @@ include.module( 'tool.tool-panel-js', [ 'tool.tool-base-js', 'tool.tool-panel-ht
             message:        String,
             expand:         Number,
             hasPrevious:    Boolean,
+            parentId:       String,
         },
         computed: {
             classes: function () {
