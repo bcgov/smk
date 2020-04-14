@@ -1,4 +1,6 @@
 include.module( 'tool-layers', [ 
+    'tool.tool-base-js', 
+    'tool.tool-widget-js', 
     'tool.tool-panel-js', 
     'tool-layers.panel-layers-html', 
     'tool-layers.layer-display-html', 
@@ -28,115 +30,99 @@ include.module( 'tool-layers', [
     } )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
-    function LayersTool() {
-        SMK.TYPE.ToolPanel.prototype.constructor.call( this, 'layers-panel', 'layers-widget' )
+    return SMK.TYPE.Tool.define( 'LayersTool', 
+        function () {
+            SMK.TYPE.ToolWidget.call( this, 'layers-widget' )
+            SMK.TYPE.ToolPanel.call( this, 'layers-panel' )
+        
+            this.defineProp( 'contexts' )
+            this.defineProp( 'allVisible' )
+            this.defineProp( 'glyph' )
+            this.defineProp( 'command' )
+            this.defineProp( 'filter' )
+            this.defineProp( 'legend' )
+    
+            this.contexts = []
+            this.allVisible = true
+            this.glyph = {}
+            this.command = {}
+            this.legend = false
+        },
+        function ( smk ) {
+            var self = this
 
-        this.toolProp( 'contexts', { 
-            forWidget: false,
-            initial: []
-        } )
-        this.toolProp( 'allVisible', { 
-            forWidget: false,
-            initial: true
-        } )
-        this.toolProp( 'glyph', { 
-            forWidget: false,
-            initial: {}
-        } )
-        this.toolProp( 'command', { 
-            forWidget: false,
-            initial: {} 
-        } )
-        this.toolProp( 'filter', { 
-            forWidget: false 
-        } )
-        this.toolProp( 'legend', { 
-            forWidget: false,
-            initial: false
-        } )
-    }
-
-    SMK.TYPE.LayersTool = LayersTool
-
-    Object.assign( LayersTool.prototype, SMK.TYPE.ToolPanel.prototype )
-    // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
-    //
-    LayersTool.prototype.afterInitialize = SMK.TYPE.ToolPanel.prototype.afterInitialize.concat( function ( smk ) {
-        var self = this
-
-        if ( this.display )
-            smk.$viewer.setDisplayContextItems( this.id, this.display )
-
-        smk.on( this.id, {
-            'activate': function () {
-                if ( !self.enabled ) return
-                if ( !self.active ) return
-
-                self.contexts = smk.$viewer.getDisplayContexts()
-
-                smk.$viewer.setDisplayContextLegendsVisible( self.legend )
-            },
-
-            'change': function ( ev ) {
-                Object.assign( self, ev )
-
-                smk.$viewer.setDisplayContextLegendsVisible( self.legend )
-
-                var re 
-                if ( !self.filter || !self.filter.trim() ) 
-                    re = /.*/;
-                else {
-                    var f = self.filter.trim()
-                    re = new RegExp( f.toLowerCase().split( /\s+/ ).map( function ( part ) { return '(?=.*' + part + ')' } ).join( '' ), 'i' )
+            if ( this.display )
+                smk.$viewer.setDisplayContextItems( this.id, this.display )
+    
+            smk.on( this.id, {
+                'activate': function () {
+                    if ( !self.enabled ) return
+                    if ( !self.active ) return
+    
+                    self.contexts = smk.$viewer.getDisplayContexts()
+    
+                    smk.$viewer.setDisplayContextLegendsVisible( self.legend )
+                },
+    
+                'change': function ( ev ) {
+                    Object.assign( self, ev )
+    
+                    smk.$viewer.setDisplayContextLegendsVisible( self.legend )
+    
+                    var re 
+                    if ( !self.filter || !self.filter.trim() ) 
+                        re = /.*/;
+                    else {
+                        var f = self.filter.trim()
+                        re = new RegExp( f.toLowerCase().split( /\s+/ ).map( function ( part ) { return '(?=.*' + part + ')' } ).join( '' ), 'i' )
+                    }
+                    smk.$viewer.displayContext.layers.setFilter( re )
+                },
+    
+                'set-all-layers-visible': function ( ev ) {
+                    smk.$viewer.displayContext.layers.setItemVisible( smk.$viewer.displayContext.layers.root.id, ev.visible, ev.deep )
+                    smk.$viewer.updateLayersVisible()
+                },
+    
+                'set-item-visible': function ( ev ) {
+                    smk.$viewer.displayContext.layers.setItemVisible( ev.id, ev.visible, ev.deep )
+                    smk.$viewer.updateLayersVisible()
+                },
+    
+                'layer-click': function ( ev ) {
+                    if ( ev.metadataUrl )
+                        window.open( ev.metadataUrl, '_blank' )
+                },
+    
+                'folder-click': function ( ev ) {
+                    smk.$viewer.setDisplayContextFolderExpanded( ev.id, !ev.isExpanded )
+                },
+    
+                'group-click': function ( ev ) {
+                    // console.log( 'group item-click', ev )
+                },
+    
+                'swipe-up': function ( ev ) {                
+                    smk.$sidepanel.setExpand( 2 )
+                },
+    
+                'swipe-down': function ( ev ) {
+                    smk.$sidepanel.incrExpand( -1 )
                 }
-                smk.$viewer.displayContext.layers.setFilter( re )
-            },
-
-            'set-all-layers-visible': function ( ev ) {
-                smk.$viewer.displayContext.layers.setItemVisible( smk.$viewer.displayContext.layers.root.id, ev.visible, ev.deep )
-                smk.$viewer.updateLayersVisible()
-            },
-
-            'set-item-visible': function ( ev ) {
-                smk.$viewer.displayContext.layers.setItemVisible( ev.id, ev.visible, ev.deep )
-                smk.$viewer.updateLayersVisible()
-            },
-
-            'layer-click': function ( ev ) {
-                if ( ev.metadataUrl )
-                    window.open( ev.metadataUrl, '_blank' )
-            },
-
-            'folder-click': function ( ev ) {
-                smk.$viewer.setDisplayContextFolderExpanded( ev.id, !ev.isExpanded )
-            },
-
-            'group-click': function ( ev ) {
-                // console.log( 'group item-click', ev )
-            },
-
-            'swipe-up': function ( ev ) {                
-                smk.$sidepanel.setExpand( 2 )
-            },
-
-            'swipe-down': function ( ev ) {
-                smk.$sidepanel.incrExpand( -1 )
-            }
-        } )
-
-
-        smk.$viewer.changedLayerVisibility( function () {
-            self.allVisible = smk.$viewer.displayContext.layers.isItemVisible( smk.$viewer.displayContext.layers.root.id )
-        } )
-
-        smk.$viewer.startedLoading( function ( ev ) {
-            self.busy = true
-        } )
-
-        smk.$viewer.finishedLoading( function ( ev ) {
-            self.busy = false
-        } )
-    } )
-
-    return LayersTool
+            } )
+    
+    
+            smk.$viewer.changedLayerVisibility( function () {
+                self.allVisible = smk.$viewer.displayContext.layers.isItemVisible( smk.$viewer.displayContext.layers.root.id )
+            } )
+    
+            smk.$viewer.startedLoading( function ( ev ) {
+                self.busy = true
+            } )
+    
+            smk.$viewer.finishedLoading( function ( ev ) {
+                self.busy = false
+            } )
+        }
+    )    
 } )
