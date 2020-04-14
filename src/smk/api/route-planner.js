@@ -117,7 +117,7 @@ include.module( 'api.route-planner-js', [ 'jquery', 'util' ], function () {
                     }
                 }
                 else {
-                    data.segments = [ turf.lineString( data.route ) ]
+                    data.segments = [ turf.lineString( data.route, { index: 0 } ) ]
                 }
 
                 data.segments = turf.featureCollection( data.segments )
