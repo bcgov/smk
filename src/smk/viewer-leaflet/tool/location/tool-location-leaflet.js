@@ -12,7 +12,7 @@ include.module( 'tool-location-leaflet', [ 'leaflet', 'tool-location' ], functio
         shadowSize:     [ 41, 41 ]
     } )
 
-    SMK.TYPE.LocationTool.prototype.afterInitialize.push( function ( smk ) {
+    SMK.TYPE.LocationTool.addInitializer( function ( smk ) {
         var self = this
 
         this.locationMarker = L.marker( null, { icon: blueIcon } )
@@ -31,6 +31,4 @@ include.module( 'tool-location-leaflet', [ 'leaflet', 'tool-location' ], functio
                 .addTo( smk.$viewer.map )
         } 
     } )
-
-
 } )
