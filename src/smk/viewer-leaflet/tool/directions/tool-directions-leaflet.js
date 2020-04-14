@@ -1,7 +1,7 @@
 include.module( 'tool-directions-leaflet', [ 'leaflet', 'tool-directions' ], function ( inc ) {
     "use strict";
 
-    SMK.TYPE.DirectionsTool.prototype.afterInitialize.push( function ( smk ) {
+    SMK.TYPE.DirectionsTool.addInitializer( function ( smk ) {
         var self = this
 
         this.changedGroup( function () {

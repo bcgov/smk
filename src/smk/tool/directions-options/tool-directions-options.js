@@ -1,4 +1,5 @@
 include.module( 'tool-directions-options', [ 
+    'tool.tool-base-js', 
     'tool.tool-panel-js', 
     'tool-directions-options.panel-directions-options-html' 
 ], function ( inc ) {
@@ -42,122 +43,81 @@ include.module( 'tool-directions-options', [
     } )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
-    function DirectionsOptionsTool() {
-        SMK.TYPE.ToolPanel.prototype.constructor.call( this, 'directions-options-panel' )
+    return SMK.TYPE.Tool.define( 'DirectionsOptionsTool', 
+        function () {
+            SMK.TYPE.ToolPanel.call( this, 'directions-options-panel' )
+        
+            this.defineProp( 'truck' )
+            this.defineProp( 'optimal' )
+            this.defineProp( 'roundTrip' )
+            this.defineProp( 'criteria' )
+            this.defineProp( 'truckRoute' )
+            this.defineProp( 'truckHeight', { validate: positiveFloat } )
+            this.defineProp( 'truckWidth', { validate: positiveFloat } )
+            this.defineProp( 'truckLength', { validate: positiveFloat } )
+            this.defineProp( 'truckWeight', { validate: positiveFloat } )
+            this.defineProp( 'truckHeightUnit' )
+            this.defineProp( 'truckWidthUnit' )
+            this.defineProp( 'truckLengthUnit' )
+            this.defineProp( 'truckWeightUnit' )
+            this.defineProp( 'oversize' )
+            this.defineProp( 'command' )
+            this.defineProp( 'bespoke' )
+    
+            this.truck = false
+            this.optimal = false
+            this.roundTrip = false
+            this.criteria = 'shortest'
+            this.truckRoute = null
+            this.truckHeight = null
+            this.truckWidth = null
+            this.truckLength = null
+            this.truckWeight = null
+            this.truckHeightUnit = 1
+            this.truckWidthUnit = 1
+            this.truckLengthUnit = 1
+            this.truckWeightUnit = 1
+            this.oversize = false
+            this.command = {}
+            this.bespoke = {}
 
-        this.toolProp( 'truck', {
-            initial: false,
-            forWidget: false
-        } )
-        this.toolProp( 'optimal', {
-            initial: false,
-            forWidget: false
-        } )
-        this.toolProp( 'roundTrip', {
-            initial: false,
-            forWidget: false
-        } )
-        this.toolProp( 'criteria', {
-            initial: 'shortest',
-            forWidget: false
-        } )
-        this.toolProp( 'truckRoute', {
-            initial: null,
-            forWidget: false
-        } )
-        this.toolProp( 'truckHeight', {
-            initial: null,
-            validate: positiveFloat,
-            forWidget: false
-        } )
-        this.toolProp( 'truckWidth', {
-            initial: null,
-            validate: positiveFloat,
-            forWidget: false
-        } )
-        this.toolProp( 'truckLength', {
-            initial: null,
-            validate: positiveFloat,
-            forWidget: false
-        } )
-        this.toolProp( 'truckWeight', {
-            initial: null,
-            validate: positiveFloat,
-            forWidget: false
-        } )
-        this.toolProp( 'truckHeightUnit', {
-            initial: 1,
-            forWidget: false
-        } )
-        this.toolProp( 'truckWidthUnit', {
-            initial: 1,
-            forWidget: false
-        } )
-        this.toolProp( 'truckLengthUnit', {
-            initial: 1,
-            forWidget: false
-        } )
-        this.toolProp( 'truckWeightUnit', {
-            initial: 1,
-            forWidget: false
-        } )
-        this.toolProp( 'oversize', {
-            initial: false,
-            forWidget: false
-        } )
-        this.toolProp( 'command', {
-            initial: {},
-            forWidget: false
-        } )
-        this.toolProp( 'bespoke', {
-            initial: {},
-            forWidget: false
-        } )
+            function positiveFloat( newVal, oldVal, propName ) {
+                var i = parseFloat( newVal )
+                if ( !newVal || !i ) return null
+                if ( i < 0 ) return oldVal
+                return i
+            }   
+        },
+        function ( smk ) {
+            var self = this
 
-        function positiveFloat( newVal, oldVal, propName ) {
-            var i = parseFloat( newVal )
-            if ( !newVal || !i ) return null
-            if ( i < 0 ) return oldVal
-            return i
+            var directions = smk.$tool[ 'directions' ]
+    
+            var findRouteDelayed = SMK.UTIL.makeDelayedCall( function () {
+                directions.findRoute()
+            } )
+    
+            smk.on( this.id, {
+                'change': function ( ev, comp ) {
+                    Object.assign( self, ev )
+    
+                    comp.$forceUpdate()
+                    findRouteDelayed()
+                },
+            } )
+    
+            smk.$viewer.handlePick( 3, function ( location ) {
+                if ( !self.active ) return
+    
+                directions.active = true
+    
+                return false
+            } )        
+    
+            this.bespoke.create = function ( el ) {
+                SMK.HANDLER.get( self.id, 'activated' )( smk, self, el )
+            }
         }
-    }
-
-    SMK.TYPE.DirectionsOptionsTool = DirectionsOptionsTool
-
-    $.extend( DirectionsOptionsTool.prototype, SMK.TYPE.ToolPanel.prototype )
-    // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
-    //
-    DirectionsOptionsTool.prototype.afterInitialize = SMK.TYPE.ToolPanel.prototype.afterInitialize.concat( function ( smk ) {
-        var self = this
-
-        var directions = smk.$tool[ 'directions' ]
-
-        var findRouteDelayed = SMK.UTIL.makeDelayedCall( function () {
-            directions.findRoute()
-        } )
-
-        smk.on( this.id, {
-            'change': function ( ev, comp ) {
-                Object.assign( self, ev )
-
-                comp.$forceUpdate()
-                findRouteDelayed()
-            },
-        } )
-
-        smk.$viewer.handlePick( 3, function ( location ) {
-            if ( !self.active ) return
-
-            directions.active = true
-
-            return false
-        } )        
-
-        this.bespoke.create = function ( el ) {
-            SMK.HANDLER.get( self.id, 'activated' )( smk, self, el )
-        }
-    } )
-
-    return DirectionsOptionsTool
+    )    
 } )
 
