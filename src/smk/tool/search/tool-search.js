@@ -1,4 +1,10 @@
-include.module( 'tool-search', [ 'tool', 'sidepanel', 'widgets', 'tool-search.widget-search-html', 'tool-search.panel-search-html' ], function ( inc ) {
+include.module( 'tool-search', [
+    'tool.tool-base-js', 
+    'tool.tool-widget-js', 
+    'tool.tool-panel-js', 
+    'tool-search.widget-search-html', 
+    'tool-search.panel-search-html' 
+], function ( inc ) {
     "use strict";
 
     var request
@@ -53,9 +59,9 @@ include.module( 'tool-search', [ 'tool', 'sidepanel', 'widgets', 'tool-search.wi
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
     Vue.component( 'search-widget', {
-        mixins: [ inc.widgets.emit ],
+        extends: SMK.COMPONENT.ToolWidget,
         template: inc[ 'tool-search.widget-search-html' ],
-        props: [ 'id', 'type', 'title', 'visible', 'enabled', 'active', 'icon', 'type', 'initialSearch', 'results', 'highlightId', 'showDropdown' ],
+        props: [ 'initialSearch', 'results', 'highlightId' , 'showPanel' ],
         data: function () {
             return {
                 search: null
@@ -95,9 +101,9 @@ include.module( 'tool-search', [ 'tool', 'sidepanel', 'widgets', 'tool-search.wi
     } )
 
     Vue.component( 'search-panel', {
-        extends: inc.widgets.toolPanel,
+        extends: SMK.COMPONENT.ToolPanel,
         template: inc[ 'tool-search.panel-search-html' ],
-        props: [ 'results', 'highlightId', 'showDropdown' ],
+        props: [ 'results', 'highlightId' ],
         methods: {
             isEmpty: function () {
                 return !this.results || this.results.length == 0
@@ -111,111 +117,86 @@ include.module( 'tool-search', [ 'tool', 'sidepanel', 'widgets', 'tool-search.wi
     } )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
-    function SearchTool( option ) {
-        this.makeProp( 'showDropdown', false )
-        this.makeProp( 'results', [] )
-        this.makeProp( 'highlightId', null )
+    return SMK.TYPE.Tool.define( 'SearchTool', 
+        function () {
+            SMK.TYPE.ToolWidget.call( this, 'search-widget' )
+            SMK.TYPE.ToolPanel.call( this, 'search-panel' )
+        
+            this.defineProp( 'results' )
+            this.defineProp( 'highlightId' )
+            this.defineProp( 'initialSearch' )
 
-        this.makePropWidget( 'icon' ) //, 'search' )
-        this.makePropWidget( 'initialSearch', null )
+            this.results = []
+        },
+        function ( smk ) {
+            var self = this
 
-        // this.makePropPanel( 'results', [] )
-        // this.makePropPanel( 'highlightId', null )
-
-        SMK.TYPE.PanelTool.prototype.constructor.call( this, $.extend( {
-            // order:      2,
-            // position:       'toolbar',
-            // title:      'Search for Location',
-            widgetComponent: 'search-widget',
-            panelComponent: 'search-panel',
-        }, option ) )
-
-        if ( this.showDropdown )
-            this.showPanel = false
-    }
-
-    SMK.TYPE.SearchTool = SearchTool
-
-    $.extend( SearchTool.prototype, SMK.TYPE.PanelTool.prototype )
-    SearchTool.prototype.afterInitialize = []
-    // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
-    //
-    SearchTool.prototype.afterInitialize.push( function ( smk ) {
-        var self = this
-
-        smk.$container.classList.add( 'smk-tool-search' )
-
-        smk.on( this.id, {
-            'activate': function ( ev ) {
-                if ( !self.enabled ) return
-
-                if ( ev.toggle )
-                    self.active = !self.active
-                else
-                    self.active = true
-            },
-
-            'input-change': function ( ev ) {
-                smk.$viewer.searched.clear()
-
-                self.busy = true
-                //self.title = 'Locations matching <wbr>"' + ev.text + '"'
-                doAddressSearch( ev.text )
-                    .then( function ( features ) {
+            smk.$container.classList.add( 'smk-tool-search' )
+    
+            smk.on( this.id, {
+                'activate': function ( ev ) {
+                    if ( !ev.toggle )
                         self.active = true
-                        smk.$viewer.searched.add( 'search', features, 'fullAddress' )
-                        self.busy = false
+                },
+    
+                'input-change': function ( ev ) {
+                    smk.$viewer.searched.clear()
+    
+                    self.busy = true
+                    //self.title = 'Locations matching <wbr>"' + ev.text + '"'
+                    doAddressSearch( ev.text )
+                        .then( function ( features ) {
+                            self.active = true
+                            smk.$viewer.searched.add( 'search', features, 'fullAddress' )
+                            self.busy = false
+                        } )
+                        .catch( function ( e ) {
+                            console.warn( 'search failure:', e )
+                        } )
+                },
+    
+                'hover': function ( ev ) {
+                    smk.$viewer.searched.highlight( ev.result ? [ ev.result.id ] : [] )
+                },
+    
+                'pick': function ( ev ) {
+                    smk.$viewer.searched.pick( null )
+                    smk.$viewer.searched.pick( ev.result.id )
+                    if ( !self.showPanel ) {
+                        self.active = false
+                        self.initialSearch = ev.result.title
+                    }
+                },
+    
+                'clear': function ( ev ) {
+                    smk.$viewer.searched.clear()
+                    self.initialSearch = ' '
+                    Vue.nextTick( function () {
+                        self.initialSearch = ''
                     } )
-                    .catch( function ( e ) {
-                        console.warn( 'search failure:', e )
-                    } )
-            },
-
-            'hover': function ( ev ) {
-                smk.$viewer.searched.highlight( ev.result ? [ ev.result.id ] : [] )
-            },
-
-            'pick': function ( ev ) {
-                smk.$viewer.searched.pick( null )
-                smk.$viewer.searched.pick( ev.result.id )
-                if ( self.showDropdown ) {
-                    self.active = false
-                    self.initialSearch = ev.result.title
                 }
-            },
-
-            'clear': function ( ev ) {
-                smk.$viewer.searched.clear()
-                self.initialSearch = ' '
-                Vue.nextTick( function () {
-                    self.initialSearch = ''
-                } )
-            }
-        } )
-
-        // = : = : = : = : = : = : = : = : = : = : = : = : = : = : = : = : = : = : =
-
-        smk.$viewer.searched.addedFeatures( function ( ev ) {
-            self.results = ev.features
-        } )
-
-        // // smk.$viewer.selected.removedFeatures( function ( ev ) {
-        // // } )
-
-        smk.$viewer.searched.pickedFeature( function ( ev ) {
-            self.highlightId = ev.feature && ev.feature.id
-        } )
-
-        // // smk.$viewer.selected.highlightedFeatures( function ( ev ) {
-        // // } )
-
-        smk.$viewer.searched.clearedFeatures( function ( ev ) {
-            self.results = []
-        } )
-
-    } )
-
-    return SearchTool
-
+            } )
+    
+            // = : = : = : = : = : = : = : = : = : = : = : = : = : = : = : = : = : = : =
+    
+            smk.$viewer.searched.addedFeatures( function ( ev ) {
+                self.results = ev.features
+            } )
+    
+            // // smk.$viewer.selected.removedFeatures( function ( ev ) {
+            // // } )
+    
+            smk.$viewer.searched.pickedFeature( function ( ev ) {
+                self.highlightId = ev.feature && ev.feature.id
+            } )
+    
+            // // smk.$viewer.selected.highlightedFeatures( function ( ev ) {
+            // // } )
+    
+            smk.$viewer.searched.clearedFeatures( function ( ev ) {
+                self.results = []
+            } )
+        }
+    )
 } )
 

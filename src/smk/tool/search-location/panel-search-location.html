@@ -1,4 +1,6 @@
-<side-panel class="smk-search-location-panel">
+<tool-panel class="smk-search-location-panel"
+    v-bind="$$panelProps()"
+>
     <template slot="header">
         <slot></slot>
     </template>
@@ -12,4 +14,4 @@
     <component class="smk-address"
         v-bind:is="locationComponent"
     ></component>
-</side-panel>
+</tool-panel>
