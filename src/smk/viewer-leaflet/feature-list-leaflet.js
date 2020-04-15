@@ -1,4 +1,7 @@
-include.module( 'feature-list-leaflet', [ 'leaflet', 'feature-list' ], function ( inc ) {
+include.module( 'feature-list-leaflet', [ 
+    'leaflet', 
+    'tool.tool-panel-feature-list-js', 
+], function ( inc ) {
     "use strict";
 
     return function ( smk ) {

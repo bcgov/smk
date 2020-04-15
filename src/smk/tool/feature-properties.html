@@ -1,0 +1,19 @@
+<div>
+    <div class="smk-header" v-if="showHeader">
+        <h3>{{ layer.title }}</h3>
+        <h2>{{ feature.title }}</h2>
+    </div>
+
+    <div class="smk-layer">{{ layer.title }}</div>
+
+    <div class="smk-attributes"
+        v-if="feature.properties"
+    >
+        <div class="smk-attribute"
+            v-for="(attr) in sortedProperties"
+        >
+            <span class="smk-attribute-title" v-html="insertWordBreaks( attr )"></span>
+            <span class="smk-value" v-html="formatValue( feature.properties[ attr ] )"></span>
+        </div>
+    </div>
+</div>
