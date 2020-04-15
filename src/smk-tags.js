@@ -60,7 +60,12 @@ t.group( 'widget-address-search' )
 
 t.group( 'api' )
     .dir( 'smk/api/*' )
-    
+
+tg.forEachDir( 'smk/component/*', function ( fn, bn ) {
+    t.group( 'component-' + bn )
+        .dir( fn + '/**' )
+} )
+
 // ==================================================================================
 // smk tools
 // ==================================================================================

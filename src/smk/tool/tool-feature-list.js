@@ -1,41 +1,43 @@
-include.module( 'tool.tool-panel-feature-list-js', [ 
-    'tool.tool-panel-js',
-    'tool.tool-panel-feature-list-html'
+include.module( 'tool.tool-feature-list-js', [ 
+    // 'tool.tool-panel-js',
+    // 'tool.tool-panel-feature-list-html'
 ], function ( inc ) {
     "use strict";
 
-    Vue.component( 'feature-list-panel', {
-        extends: SMK.COMPONENT.ToolPanel,
-        template: inc[ 'tool.tool-panel-feature-list-html' ],
-        props: [ 'layers', 'highlightId', 'canRemove', 'canClear', 'command', 'showSwipe' ],
-        computed: {
-            featureCount: {
-                get: function () {
-                    if ( !this.layers || this.layers.length == 0 ) return 0
-                    return this.layers.reduce( function ( accum, ly ) { return accum + ly.features.length }, 0 )
-                }
-            }
-        }
-    } )
+    // Vue.component( 'feature-list-panel', {
+    //     extends: SMK.COMPONENT.ToolPanel,
+    //     template: inc[ 'tool.tool-panel-feature-list-html' ],
+    //     props: [ 'layers', 'highlightId', 'canRemove', 'canClear', 'command', 'showSwipe' ],
+    //     computed: {
+    //         featureCount: {
+    //             get: function () {
+    //                 if ( !this.layers || this.layers.length == 0 ) return 0
+    //                 return this.layers.reduce( function ( accum, ly ) { return accum + ly.features.length }, 0 )
+    //             }
+    //         }
+    //     }
+    // } )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
-    SMK.TYPE.ToolPanelFeatureList = function () {
+    SMK.TYPE.ToolFeatureList = function ( featureSetCallback ) {
         this.defineProp( 'layers' )
         this.defineProp( 'highlightId' )
-        this.defineProp( 'canRemove' )
-        this.defineProp( 'canClear' )
-        this.defineProp( 'command' )
-        this.defineProp( 'debugView' )
+        // this.defineProp( 'canRemove' )
+        // this.defineProp( 'canClear' )
+        // this.defineProp( 'command' )
+        // this.defineProp( 'debugView' )
 
         this.layers = []
-        this.command = {}
-        this.debugView = false
+        // this.command = {}
+        // this.debugView = false
 
-        this.$propFilter.featureCount = false
-       
+        // this.$propFilter.featureCount = false
+
         this.$initializers.push( function ( smk ) {
             var self = this
-    
+
+            this.featureSet = featureSetCallback( smk )
+            
             smk.on( this.id, {
                 'active': function ( ev ) {
                     self.featureSet.pick( ev.featureId )

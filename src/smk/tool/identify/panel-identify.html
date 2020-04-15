@@ -1,5 +1,5 @@
-<feature-list-panel class="smk-identify-panel"
-    v-bind="$$projectProps( 'feature-list-panel' )"
+<tool-panel class="smk-identify-panel"
+    v-bind="$$projectProps( 'tool-panel' )"
 >
     <template slot="header">
         <slot></slot>
@@ -13,8 +13,13 @@
         >Add all to selection</command-button>
     </template>
 
+    <feature-list
+        v-bind:layers="layers"
+        v-bind:highlightId="highlightId"
+    ></feature-list>
+
     <div v-if="layers.length == 0">
         Click on the map to identify features under the clicked point.
     </div>
 
-</feature-list-panel>
+</tool-panel>

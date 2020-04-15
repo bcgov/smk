@@ -1,7 +1,8 @@
 include.module( 'tool-identify', [ 
     'tool.tool-base-js', 
     'tool.tool-widget-js', 
-    'tool.tool-panel-feature-list-js', 
+    'tool.tool-feature-list-js', 
+    'component-feature-list', 
     'tool-identify.panel-identify-html' 
 ], function ( inc ) {
     "use strict";
@@ -22,10 +23,10 @@ include.module( 'tool-identify', [
             SMK.TYPE.ToolWidget.call( this, 'identify-widget' )
             SMK.TYPE.ToolPanel.call( this, 'identify-panel' )
 
-            this.$initializers.push( function ( smk ) {
-                this.featureSet = smk.$viewer.identified
-            } )
-            SMK.TYPE.ToolPanelFeatureList.call( this )
+            // this.$initializers.push( function ( smk ) {
+            //     this.featureSet = smk.$viewer.identified
+            // } )
+            SMK.TYPE.ToolFeatureList.call( this, function ( smk ) { return smk.$viewer.identified } )
         
             this.defineProp( 'tool' )
 

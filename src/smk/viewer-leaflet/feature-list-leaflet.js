@@ -1,6 +1,6 @@
 include.module( 'feature-list-leaflet', [ 
     'leaflet', 
-    'tool.tool-panel-feature-list-js', 
+    // 'tool.tool-panel-feature-list-js', 
 ], function ( inc ) {
     "use strict";
 
