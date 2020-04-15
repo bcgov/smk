@@ -12,6 +12,8 @@ include.module( 'tool-identify-feature', [
                 this.featureSet = smk.$viewer.identified
             } )
             SMK.TYPE.ToolPanelFeature.call( this )       
+
+            this.parentId = 'identify'
         },
         function ( smk ) {
             var self = this
