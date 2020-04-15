@@ -1,0 +1,28 @@
+{
+    "viewer": {
+        "baseMap": "Imagery"
+    },
+    "tools": [
+        {
+            "type": "*",
+            "enabled": false
+        },
+        {
+            "type": "toolbar",
+            "enabled": true
+        },
+        {
+            "type": "select",
+            "enabled": true,
+            "position": "toolbar"
+        },
+        {
+            "type": "pan",
+            "enabled": true
+        },
+        {
+            "type": "zoom",
+            "enabled": true
+        }
+    ]
+}
