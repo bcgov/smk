@@ -1,7 +1,5 @@
 <feature-list-panel class="smk-identify-panel"
-    v-bind="$props"
-    canClear="true"
-    v-bind:showSwipe="true"
+    v-bind="$$projectProps( 'feature-list-panel' )"
 >
     <template slot="header">
         <slot></slot>
