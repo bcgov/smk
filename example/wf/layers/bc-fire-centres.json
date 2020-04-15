@@ -3,7 +3,7 @@
     {
       "type": "wms",
       "id": "bc-fire-centres",
-      "title": "BC Fire Centres",
+      "title": "BC Wildfire Fire Centres",
       "serviceUrl": "https://delivery.openmaps.gov.bc.ca/geo/pub/ows",
       "#serviceUrl": "https://openmaps.gov.bc.ca/geo/pub/ows",
       "layerName": "pub:WHSE_LEGAL_ADMIN_BOUNDARIES.DRP_MOF_FIRE_CENTRES_SP,pub:WHSE_LEGAL_ADMIN_BOUNDARIES.DRP_MOF_FIRE_CENTRES_SP",
@@ -19,7 +19,7 @@
     {
       "type": "esri-tiled",
       "id": "bc-fire-centres-esri",
-      "title": "BC Fire Centres",
+      "title": "BC Wildfire Fire Centres",
       "isQueryable": false,
       "attribution": "Copyright 117 DataBC, Government of British Columbia",
       "serviceUrl": "https://tiles.arcgis.com/tiles/ubm4tcTYICKBpist/arcgis/rest/services/BCWS_FireCenterBdys2/MapServer",
