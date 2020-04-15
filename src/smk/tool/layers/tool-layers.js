@@ -73,6 +73,13 @@ include.module( 'tool-layers', [ 'tool', 'widgets', 'tool-layers.panel-layers-ht
     LayersTool.prototype.afterInitialize.push( function ( smk ) {
         var self = this
 
+        this.changedActive( function () {
+            if ( self.active )
+                SMK.HANDLER.get( self.id, 'activated' )( smk, self )
+            else
+                SMK.HANDLER.get( self.id, 'deactivated' )( smk, self )
+        } )
+
         smk.on( this.id, {
             'activate': function () {
                 if ( !self.enabled ) return

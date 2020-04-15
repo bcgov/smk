@@ -108,6 +108,13 @@ include.module( 'tool-baseMaps', [ 'tool', 'widgets', 'viewer', 'leaflet', 'tool
     BaseMapsTool.prototype.afterInitialize.push( function ( smk ) {
         var self = this
 
+        this.changedActive( function () {
+            if ( self.active )
+                SMK.HANDLER.get( self.id, 'activated' )( smk, self )
+            else
+                SMK.HANDLER.get( self.id, 'deactivated' )( smk, self )
+        } )
+
         this.basemaps = Object.keys( smk.$viewer.basemap )
             .map( function ( id ) {
                 return Object.assign( { id: id }, smk.$viewer.basemap[ id ] )
@@ -133,6 +140,7 @@ include.module( 'tool-baseMaps', [ 'tool', 'widgets', 'viewer', 'leaflet', 'tool
                         return b.id == self.current
                     } )
                     setBasemap( self.basemaps[ ( i + 1 ) % self.basemaps.length ] )
+                    SMK.HANDLER.get( self.id, 'triggered' )( smk, self )
                 }
             },
 

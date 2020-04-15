@@ -145,6 +145,13 @@ include.module( 'tool-search', [ 'tool', 'sidepanel', 'widgets', 'tool-search.wi
 
         smk.$container.classList.add( 'smk-tool-search' )
 
+        this.changedActive( function () {
+            if ( self.active )
+                SMK.HANDLER.get( self.id, 'activated' )( smk, self )
+            else
+                SMK.HANDLER.get( self.id, 'deactivated' )( smk, self )
+        } )
+
         smk.on( this.id, {
             'activate': function ( ev ) {
                 if ( !self.enabled ) return

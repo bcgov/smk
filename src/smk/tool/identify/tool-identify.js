@@ -46,6 +46,13 @@ include.module( 'tool-identify', [ 'feature-list', 'widgets', 'tool-identify.pan
 
         self.setMessage( 'Click on map to identify features.' )
 
+        this.changedActive( function () {
+            if ( self.active )
+                SMK.HANDLER.get( self.id, 'activated' )( smk, self )
+            else
+                SMK.HANDLER.get( self.id, 'deactivated' )( smk, self )
+        } )
+
         self.changedGroup( function () {
             if ( !self.group ) {
                 smk.$viewer.identified.clear()
