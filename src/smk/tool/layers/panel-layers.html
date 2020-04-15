@@ -1,11 +1,7 @@
 <tool-panel class="smk-layers-panel" 
-    v-bind="$$panelProps()"
-    xv-bind:busy="busy"
+    v-bind="$$projectProps( 'tool-panel' )"
     xv-bind:message="busy ? 'Loading data' : ( !contexts[ 0 ].items || contexts[ 0 ].items.length == 0 ) ? 'No layers are configured' : ''"
     xv-bind:status="busy ? 'progress' : ( !contexts[ 0 ].items || contexts[ 0 ].items.length == 0 ) ? 'warning' : ''"
-    xv-bind:showSwipe="true"
-    xv-on:swipe-up="$$emit('swipe-up')"
-    xv-on:swipe-down="$$emit('swipe-down')"    
 >
     <template slot="header">
         <slot></slot>

@@ -38,6 +38,9 @@ include.module( 'tool.tool-js', [ 'event' ], function ( inc ) {
     Tool.prototype.defineProp = function ( name, opt ) {
         var self = this
 
+        if ( name in this.$prop )
+            throw new Error( 'prop "' + name + '" is already defined' )
+
         var prop = this.$prop[ name ] = Object.assign( {
             onSet: [],
             validate: function ( val, oldVal, name ) { return val }
@@ -66,7 +69,7 @@ include.module( 'tool.tool-js', [ 'event' ], function ( inc ) {
         var self = this
 
         var component = Vue.component( componentName )
-        if ( !componentName ) throw new Error( 'component "' + componentName + '" not defined' )
+        if ( !component ) throw new Error( 'component "' + componentName + '" not defined' )
 
         var propNames = Object.keys( component.prototype ).filter( function ( c ) {
             if ( c in self.$propFilter ) return self.$propFilter[ c ]

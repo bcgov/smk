@@ -1,6 +1,8 @@
 include.module( 'tool.tool-panel-js', [ 'tool.tool-base-js', 'tool.tool-panel-html' ], function ( inc ) {
     "use strict";
 
+    var componentProps = {}
+
     SMK.COMPONENT.ToolPanel = { 
         extends: SMK.COMPONENT.ToolBase,
         props: {
@@ -19,13 +21,14 @@ include.module( 'tool.tool-panel-js', [ 'tool.tool-base-js', 'tool.tool-panel-ht
                 return c
             }
         },
-        methods: {}
-    }
+        methods: {
+            $$projectProps: function ( componentName ) {
+                if ( !componentProps[ componentName ] ) 
+                    componentProps[ componentName ] = SMK.UTIL.projection.apply( null, Object.keys( ( new ( Vue.component( componentName ) )() )._props ) )
 
-    var propProjection = SMK.UTIL.projection.apply( null, Object.keys( ( new ( Vue.extend( SMK.COMPONENT.ToolPanel ) )() )._props ) )
-
-    SMK.COMPONENT.ToolPanel.methods.$$panelProps = function () { 
-        return propProjection( this.$props )
+                return componentProps[ componentName ]( this.$props )
+            }
+        }
     }
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //

@@ -1,9 +1,8 @@
 <tool-panel class="smk-search-panel" 
-    v-bind="$$panelProps()"
-    xv-bind:busy="busy"
+    v-bind="$$projectProps( 'tool-panel' )"
     xv-bind:message="busy ? 'Searching' : isEmpty() ? 'Enter name of location.' : ''"
     xv-bind:status="busy ? 'progress' : ''"
-    xv-if="results && results.length > 0 && !showDropdown"
+    v-if="results && results.length > 0"
 >
     <template slot="header">
         <slot></slot>

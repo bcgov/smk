@@ -1,7 +1,5 @@
 <tool-panel class="smk-bespoke-panel" 
-    v-bind="$$panelProps()"
-    xv-on:swipe-up="showSwipe && $$emit('swipe-up')"
-    xv-on:swipe-down="showSwipe && $$emit('swipe-down')"    
+    v-bind="$$projectProps( 'tool-panel' )"
 >
     <template slot="header">
         <slot></slot>
