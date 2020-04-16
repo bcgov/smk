@@ -16,6 +16,8 @@
     <feature-list
         v-bind:layers="layers"
         v-bind:highlightId="highlightId"
+        v-on:active="$$emit( 'active', $event )"
+        v-on:hover="$$emit( 'hover', $event )"
     ></feature-list>
 
     <div v-if="layers.length == 0">

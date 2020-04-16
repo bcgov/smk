@@ -22,10 +22,6 @@ include.module( 'tool-identify', [
         function () {
             SMK.TYPE.ToolWidget.call( this, 'identify-widget' )
             SMK.TYPE.ToolPanel.call( this, 'identify-panel' )
-
-            // this.$initializers.push( function ( smk ) {
-            //     this.featureSet = smk.$viewer.identified
-            // } )
             SMK.TYPE.ToolFeatureList.call( this, function ( smk ) { return smk.$viewer.identified } )
         
             this.defineProp( 'tool' )

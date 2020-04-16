@@ -16,6 +16,7 @@ include.module( 'tool.tool-js', [ 'event' ], function ( inc ) {
         this.$propFilter = {
             constructor: false
         }
+        this.$componentProp = {}
         this.$initializers = []
     }
     SMK.TYPE.Tool = Tool
@@ -68,6 +69,9 @@ include.module( 'tool.tool-js', [ 'event' ], function ( inc ) {
     Tool.prototype.getComponentProps = function ( componentName ) {
         var self = this
 
+        if ( this.$componentProp[ componentName ] )
+            return this.$componentProp[ componentName ]
+
         var component = Vue.component( componentName )
         if ( !component ) throw new Error( 'component "' + componentName + '" not defined' )
 
@@ -78,15 +82,25 @@ include.module( 'tool.tool-js', [ 'event' ], function ( inc ) {
             return false
         } )
 
-        var props = {}
+        var prop = this.$componentProp[ componentName ] = {}
         propNames.forEach( function ( p ) {
-            props[ p ] = self[ p ]
+            prop[ p ] = self[ p ]
             self.$prop[ p ].onSet.unshift( function ( name, val ) {
-                props[ p ] = val
+                console.debug( 'set',componentName,name,val )
+                prop[ p ] = val
             } )
         } )
 
-        return props
+        return this.$componentProp[ componentName ]
+    } 
+
+    Tool.prototype.modifyComponentProp = function ( propName, modify ) {
+        var self = this
+        Object.keys( this.$componentProp ).forEach( function ( c ) {
+            if ( !( propName in self.$componentProp[ c ] ) ) return
+
+            modify.call( this, self.$componentProp[ c ][ propName ], c )
+        } )
     }
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //

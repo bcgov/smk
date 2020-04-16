@@ -79,22 +79,24 @@ include.module( 'tool.tool-feature-list-js', [
                 var ly = smk.$viewer.layerId[ ev.layerId ]
                 var index = smk.$viewer.displayContext.layers.getLayerIndex( ev.layerId ) || 0
     
-                if ( !self.layers[ index ] )
-                    self.layers[ index ] = {
-                        id:         ly.id,
-                        title:      ly.config.title,
-                        features:   []
-                    } 
+                self.modifyComponentProp( 'layers', function ( prop ) {
+                    if ( !prop[ index ] )
+                        Vue.set( prop, index, {
+                            id:         ly.id,
+                            title:      ly.config.title,
+                            features:   []
+                        } )
 
-                self.layers[ index ].features = self.layers[ index ].features.concat( ev.features.map( function ( ft ) {
-                    if ( !self.firstId )
-                        self.firstId = ft.id
-    
-                    return {
-                        id:     ft.id,
-                        title:  ft.title
-                    }
-                } ) ) 
+                    Vue.set( prop[ index ], 'features', prop[ index ].features.concat( ev.features.map( function ( ft ) {
+                        if ( !self.firstId )
+                            self.firstId = ft.id
+        
+                        return {
+                            id:     ft.id,
+                            title:  ft.title
+                        }
+                    } ) ) ) 
+                } )
             } )
     
             self.featureSet.clearedFeatures( function ( ev ) {
