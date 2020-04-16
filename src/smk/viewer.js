@@ -43,7 +43,10 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
     Viewer.prototype.basemap = {
         Topographic: {
             order: 1,
-            title: 'Topographic'
+            title: 'Topographic',
+            option: {
+                maxNativeZoom: 17
+            }
         },
         Streets: {
             order: 2,
@@ -51,7 +54,10 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
         },
         Imagery: {
             order: 3,
-            title: 'Imagery'
+            title: 'Imagery',
+            option: {
+                maxNativeZoom: 14
+            }
         },
         Oceans: {
             order: 4,

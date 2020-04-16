@@ -176,12 +176,14 @@ include.module( 'viewer-leaflet', [ 'viewer', 'leaflet', 'layer-leaflet', 'featu
     }
 
     ViewerLeaflet.prototype.createBasemapLayer = function ( basemapId ) {
+        var opt = Object.assign( { detectRetina: true }, this.basemap[ basemapId ].option )
+
         var lys = []
-        lys.push( L.esri.basemapLayer( basemapId, { detectRetina: true } ) )
+        lys.push( L.esri.basemapLayer( basemapId, opt ) )
 
         if ( this.basemap[ basemapId ].labels )
             this.basemap[ basemapId ].labels.forEach( function ( id ) {
-                lys.push( L.esri.basemapLayer( id, { detectRetina: true } ) )
+                lys.push( L.esri.basemapLayer( id, opt ) )
             } )
 
         return lys
