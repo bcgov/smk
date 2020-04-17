@@ -17,6 +17,11 @@
             "position": "toolbar"
         },
         {
+            "type": "identify",
+            "enabled": true,
+            "position": "toolbar"
+        },
+        {
             "type": "pan",
             "enabled": true
         },
