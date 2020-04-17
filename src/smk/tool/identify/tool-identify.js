@@ -68,10 +68,14 @@ include.module( 'tool-identify', [
     
             smk.on( this.id, {  
                 'add-all': function ( ev ) {
-                    self.layers.forEach( function ( ly ) {
-                        smk.$viewer.selected.add( ly.id, ly.features.map( function ( ft ) {
+                    var lyfts = self.layers.map( function ( ly ) {
+                        return [ ly.id, ly.features.map( function ( ft ) {
                             return smk.$viewer.identified.get( ft.id )
-                        } ) )
+                        } ) ] 
+                    } )
+
+                    lyfts.forEach( function ( lf ) {
+                        smk.$viewer.selected.add.apply( smk.$viewer.selected, lf )
                     } )
                 },
     

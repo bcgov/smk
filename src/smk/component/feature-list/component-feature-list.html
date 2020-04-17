@@ -17,7 +17,10 @@
             <i class="smk-highlight material-icons smk-command smk-icon"
             >speaker_notes</i>
 
-            <slot name="item"></slot>
+            <slot name="item"
+                v-bind:layer="layer"
+                v-bind:feature="feature"
+            ></slot>
             <!-- <command-button class="smk-remove"
                 title="Remove item"
                 v-on:click="$emit( 'remove', { layerId: layer.id, featureId: feature.id } )"
