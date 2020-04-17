@@ -32,7 +32,9 @@
             </transition>
         </div> -->
 
-        <div class="smk-commands">
+        <div class="smk-commands"
+            v-if="$slots.commands"
+        >
             <slot name="commands"></slot>
         </div>
 
