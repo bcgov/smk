@@ -5,7 +5,8 @@ include.module( 'tool-directions', [
     'tool-directions.panel-directions-html', 
     'tool-directions-route', 
     'tool-directions-options',
-    'widget-address-search',
+    'component-address-search',
+    'component-command-button',
     'api'
 ], function ( inc ) {
     "use strict";
@@ -20,11 +21,11 @@ include.module( 'tool-directions', [
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
     Vue.component( 'directions-widget', {
-        extends: SMK.COMPONENT.ToolWidget,
+        extends: SMK.COMPONENT.ToolWidgetBase,
     } )
 
     Vue.component( 'directions-panel', {
-        extends: SMK.COMPONENT.ToolPanel,
+        extends: SMK.COMPONENT.ToolPanelBase,
         template: inc[ 'tool-directions.panel-directions-html' ],
         props: [ 'waypoints', 'hasRoute', 'optimal', 'geocoderService' ],
     } )

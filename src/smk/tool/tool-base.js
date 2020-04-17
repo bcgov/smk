@@ -1,46 +1,6 @@
 include.module( 'tool.tool-base-js', [ 'tool.tool-js' ], function ( inc ) {
     "use strict";
 
-    SMK.COMPONENT.ToolEmit = {
-        methods: {
-            $$emit: function ( event, arg ) {
-                this.$root.trigger( this.id, event, arg, this )
-            }
-        }
-    }
-    // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
-    //
-    SMK.COMPONENT.ToolBase = {
-        mixins: [ SMK.COMPONENT.ToolEmit ],
-        props: { 
-            id:         String,
-            type:       String,
-            title:      String,
-            status:     String,
-            active:     Boolean,
-            enabled:    Boolean,
-            visible:    Boolean,
-            group:      Boolean,
-            showTitle:  Boolean,
-            icon:       String
-        },
-        computed: {
-            baseClasses: function () {
-                var c = {
-                    'smk-tool-active': this.active,
-                    'smk-tool-visible': this.visible,
-                    'smk-tool-enabled': this.enabled,
-                }
-                c[ 'smk-tool-' + this.id ] = true
-                if ( this.status )
-                    c[ 'smk-tool-status-' + this.status ] = true
-
-                return c
-            }
-        }
-    } 
-    // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
-    //
     SMK.TYPE.ToolBase = function () {       
         this.defineProp( 'id' )
         this.defineProp( 'type' )

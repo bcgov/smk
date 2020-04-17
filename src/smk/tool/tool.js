@@ -1,4 +1,6 @@
-include.module( 'tool.tool-js', [ 'event' ], function ( inc ) {
+include.module( 'tool.tool-js', [ 
+    'event' 
+], function ( inc ) {
     "use strict";
 
     var ToolEvent = SMK.TYPE.Event.define( [

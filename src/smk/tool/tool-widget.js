@@ -1,22 +1,9 @@
-include.module( 'tool.tool-widget-js', [ 'tool.tool-base-js', 'tool.tool-widget-html' ], function ( inc ) {
+include.module( 'tool.tool-widget-js', [ 
+    'tool.tool-base-js'
+    // 'component' 
+], function ( inc ) {
     "use strict";
 
-    SMK.COMPONENT.ToolWidget = { 
-        extends: SMK.COMPONENT.ToolBase,
-        template: inc[ 'tool.tool-widget-html' ],
-        props: { 
-            showWidget: Boolean,
-        },
-        computed: {
-            classes: function () {
-                var c = this.baseClasses
-                c[ 'smk-tool-title' ] = this.showTitle
-                return c
-            }
-        }
-    } 
-    // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
-    //
     SMK.TYPE.ToolWidget = function ( componentName ) {       
         var self = this
 

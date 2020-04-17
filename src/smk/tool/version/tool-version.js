@@ -7,11 +7,11 @@ include.module( 'tool-version', [
     "use strict";
 
     Vue.component( 'version-widget', {
-        extends: SMK.COMPONENT.ToolWidget,
+        extends: SMK.COMPONENT.ToolWidgetBase,
     } )
 
     Vue.component( 'version-panel', {
-        extends: SMK.COMPONENT.ToolPanel,
+        extends: SMK.COMPONENT.ToolPanelBase,
         template: inc[ 'tool-version.panel-version-html' ],
         props: [ 'build', 'config' ]
     } )

@@ -2,6 +2,7 @@ include.module( 'tool-directions-route', [
     'tool.tool-base-js', 
     'tool.tool-panel-js', 
     'tool-directions-route.panel-directions-route-html', 
+    'component-command-button',
     'turf' 
 ], function ( inc ) {
     "use strict";
@@ -25,7 +26,7 @@ include.module( 'tool-directions-route', [
     }
 
     Vue.component( 'route-panel', {
-        extends: SMK.COMPONENT.ToolPanel,
+        extends: SMK.COMPONENT.ToolPanelBase,
         template: inc[ 'tool-directions-route.panel-directions-route-html' ],
         props: [ 'directions', 'directionHighlight', 'directionPick' ],
         methods: {

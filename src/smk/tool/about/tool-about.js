@@ -7,11 +7,11 @@ include.module( 'tool-about', [
     "use strict";
 
     Vue.component( 'about-widget', {
-        extends: SMK.COMPONENT.ToolWidget,
+        extends: SMK.COMPONENT.ToolWidgetBase,
     } )
 
     Vue.component( 'about-panel', {
-        extends: SMK.COMPONENT.ToolPanel,
+        extends: SMK.COMPONENT.ToolPanelBase,
         template: inc[ 'tool-about.panel-about-html' ],
         props: [ 'content' ]
     } )

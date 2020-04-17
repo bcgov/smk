@@ -49,22 +49,24 @@ t.group( 'query' )
 t.group( 'sidepanel' )
     .dir( 'smk/sidepanel/**/*' )
 
-t.group( 'feature-list' )
-    .dir( 'smk/feature-list/**/*' )
+// t.group( 'feature-list' )
+    // .dir( 'smk/feature-list/**/*' )
 
-t.group( 'widgets' )
-    .dir( 'smk/widgets/*' )
+// t.group( 'widgets' )
+    // .dir( 'smk/widgets/*' )
 
-t.group( 'widget-address-search' )
-    .dir( 'smk/widgets/address-search/*' )
+// t.group( 'widget-address-search' )
+    // .dir( 'smk/widgets/address-search/*' )
 
 t.group( 'api' )
     .dir( 'smk/api/*' )
 
-tg.forEachDir( 'smk/component/*', function ( fn, bn ) {
+tg.forEachDir( 'smk/component/*/', function ( fn, bn ) {
     t.group( 'component-' + bn )
         .dir( fn + '/**' )
 } )
+t.group( 'component' )
+    .dir( 'smk/component/*' )
 
 // ==================================================================================
 // smk tools

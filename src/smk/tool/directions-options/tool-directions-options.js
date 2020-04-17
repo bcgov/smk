@@ -1,12 +1,13 @@
 include.module( 'tool-directions-options', [ 
     'tool.tool-base-js', 
     'tool.tool-panel-js', 
+    'component-select-option',
     'tool-directions-options.panel-directions-options-html' 
 ], function ( inc ) {
     "use strict";
 
     Vue.component( 'directions-options-panel', {
-        extends: SMK.COMPONENT.ToolPanel,
+        extends: SMK.COMPONENT.ToolPanelBase,
         template: inc[ 'tool-directions-options.panel-directions-options-html' ],
         props: {
             'truck' : Boolean, 

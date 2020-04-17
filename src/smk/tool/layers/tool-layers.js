@@ -4,7 +4,8 @@ include.module( 'tool-layers', [
     'tool.tool-panel-js', 
     'tool-layers.panel-layers-html', 
     'tool-layers.layer-display-html', 
-    'widgets' 
+    'component-enter-input',
+    'component-toggle-button'
 ], function ( inc ) {
     "use strict";
 
@@ -20,11 +21,11 @@ include.module( 'tool-layers', [
     } )
 
     Vue.component( 'layers-widget', {
-        extends: SMK.COMPONENT.ToolWidget,
+        extends: SMK.COMPONENT.ToolWidgetBase,
     } )
 
     Vue.component( 'layers-panel', {
-        extends: SMK.COMPONENT.ToolPanel,
+        extends: SMK.COMPONENT.ToolPanelBase,
         template: inc[ 'tool-layers.panel-layers-html' ],
         props: [ 'contexts', 'allVisible', 'glyph', 'command', 'filter', 'legend' ],
     } )

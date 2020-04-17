@@ -3,16 +3,17 @@ include.module( 'tool-measure', [
     'tool.tool-widget-js', 
     'tool.tool-panel-js', 
     'tool-measure.panel-measure-html', 
-    'widgets' 
+    'component-command-button',
+    'component-select-dropdown'
 ], function ( inc ) {
     "use strict";
 
     Vue.component( 'measure-widget', {
-        extends: SMK.COMPONENT.ToolWidget,
+        extends: SMK.COMPONENT.ToolWidgetBase,
     } )
 
     Vue.component( 'measure-panel', {
-        extends: SMK.COMPONENT.ToolPanel,
+        extends: SMK.COMPONENT.ToolPanelBase,
         template: inc[ 'tool-measure.panel-measure-html' ],
         props: [ 'results', 'viewer', 'content' ],
         data: function () {
@@ -41,6 +42,8 @@ include.module( 'tool-measure', [
 
             this.results = []
             this.viewer = {}
+
+            this.$propFilter.dimensionalNumber = false
         }
     )
 } )

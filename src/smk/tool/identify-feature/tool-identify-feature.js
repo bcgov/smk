@@ -1,17 +1,14 @@
 
 include.module( 'tool-identify-feature', [
+    'component-tool-panel-feature',
     'tool.tool-panel-feature-js'
  ], function ( inc ) {
     "use strict";
 
     return SMK.TYPE.Tool.define( 'IdentifyFeatureTool', 
         function () {
-            SMK.TYPE.ToolPanel.call( this, 'feature-panel' )
-
-            this.$initializers.push( function ( smk ) {
-                this.featureSet = smk.$viewer.identified
-            } )
-            SMK.TYPE.ToolPanelFeature.call( this )       
+            SMK.TYPE.ToolPanel.call( this, 'tool-panel-feature' )
+            SMK.TYPE.ToolPanelFeature.call( this, function ( smk ) { return smk.$viewer.identified } )       
 
             this.parentId = 'identify'
         },

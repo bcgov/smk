@@ -9,11 +9,11 @@ include.module( 'tool-baseMaps', [
     "use strict";
 
     Vue.component( 'baseMaps-widget', {
-        extends: SMK.COMPONENT.ToolWidget,
+        extends: SMK.COMPONENT.ToolWidgetBase,
     } )
 
     Vue.component( 'baseMaps-panel', {
-        extends: SMK.COMPONENT.ToolPanel,
+        extends: SMK.COMPONENT.ToolPanelBase,
         template: inc[ 'tool-baseMaps.panel-base-maps-html' ],
         props: [ 'current', 'basemaps', 'mapStyle' ]
     } )

@@ -3,16 +3,17 @@ include.module( 'tool-identify', [
     'tool.tool-widget-js', 
     'tool.tool-feature-list-js', 
     'component-feature-list', 
+    'component-command-button',
     'tool-identify.panel-identify-html' 
 ], function ( inc ) {
     "use strict";
 
     Vue.component( 'identify-widget', {
-        extends: SMK.COMPONENT.ToolWidget,
+        extends: SMK.COMPONENT.ToolWidgetBase,
     } )
 
     Vue.component( 'identify-panel', {
-        extends: SMK.COMPONENT.ToolPanel,
+        extends: SMK.COMPONENT.ToolPanelBase,
         template: inc[ 'tool-identify.panel-identify-html' ],
         props: [ 'tool', 'layers', 'highlightId', 'command' ],
     } )
@@ -25,8 +26,10 @@ include.module( 'tool-identify', [
             SMK.TYPE.ToolFeatureList.call( this, function ( smk ) { return smk.$viewer.identified } )
         
             this.defineProp( 'tool' )
+            this.defineProp( 'command' )
 
             this.tool = {}
+            this.command = {}
         },
         function ( smk ) {
             var self = this

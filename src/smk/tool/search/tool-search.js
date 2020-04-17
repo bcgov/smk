@@ -59,7 +59,7 @@ include.module( 'tool-search', [
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
     Vue.component( 'search-widget', {
-        extends: SMK.COMPONENT.ToolWidget,
+        extends: SMK.COMPONENT.ToolWidgetBase,
         template: inc[ 'tool-search.widget-search-html' ],
         props: [ 'initialSearch', 'results', 'highlightId' , 'showPanel' ],
         data: function () {
@@ -101,7 +101,7 @@ include.module( 'tool-search', [
     } )
 
     Vue.component( 'search-panel', {
-        extends: SMK.COMPONENT.ToolPanel,
+        extends: SMK.COMPONENT.ToolPanelBase,
         template: inc[ 'tool-search.panel-search-html' ],
         props: [ 'results', 'highlightId' ],
         methods: {

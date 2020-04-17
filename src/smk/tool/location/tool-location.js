@@ -7,7 +7,7 @@ include.module( 'tool-location', [
     "use strict";
 
     Vue.component( 'location-panel', {
-        extends: SMK.COMPONENT.ToolPanel,
+        extends: SMK.COMPONENT.ToolPanelBase,
         template: inc[ 'tool-location.panel-location-html' ],
         props: [ 'site', 'tool' ]
     } )

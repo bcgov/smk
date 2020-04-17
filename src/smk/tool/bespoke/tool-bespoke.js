@@ -8,11 +8,11 @@ include.module( 'tool-bespoke', [
     "use strict";
 
     Vue.component( 'bespoke-widget', {
-        extends: SMK.COMPONENT.ToolWidget,
+        extends: SMK.COMPONENT.ToolWidgetBase,
     } )
 
     Vue.component( 'bespoke-panel', {
-        extends: SMK.COMPONENT.ToolPanel,
+        extends: SMK.COMPONENT.ToolPanelBase,
         template: inc[ 'tool-bespoke.panel-bespoke-html' ],
         props: [ 'content', 'component' ]
     } )

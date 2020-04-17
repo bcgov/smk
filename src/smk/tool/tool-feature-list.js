@@ -1,37 +1,12 @@
 include.module( 'tool.tool-feature-list-js', [ 
-    // 'tool.tool-panel-js',
-    // 'tool.tool-panel-feature-list-html'
 ], function ( inc ) {
     "use strict";
 
-    // Vue.component( 'feature-list-panel', {
-    //     extends: SMK.COMPONENT.ToolPanel,
-    //     template: inc[ 'tool.tool-panel-feature-list-html' ],
-    //     props: [ 'layers', 'highlightId', 'canRemove', 'canClear', 'command', 'showSwipe' ],
-    //     computed: {
-    //         featureCount: {
-    //             get: function () {
-    //                 if ( !this.layers || this.layers.length == 0 ) return 0
-    //                 return this.layers.reduce( function ( accum, ly ) { return accum + ly.features.length }, 0 )
-    //             }
-    //         }
-    //     }
-    // } )
-    // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
-    //
     SMK.TYPE.ToolFeatureList = function ( featureSetCallback ) {
         this.defineProp( 'layers' )
         this.defineProp( 'highlightId' )
-        // this.defineProp( 'canRemove' )
-        // this.defineProp( 'canClear' )
-        // this.defineProp( 'command' )
-        // this.defineProp( 'debugView' )
 
         this.layers = []
-        // this.command = {}
-        // this.debugView = false
-
-        // this.$propFilter.featureCount = false
 
         this.$initializers.push( function ( smk ) {
             var self = this
@@ -64,13 +39,7 @@ include.module( 'tool.tool-feature-list-js', [
                 }
     
             } )
-    
-            // this.changedActive( function () {
-                // if ( !self.active )
-                    // self.featureSet.clear()
-                // console.log( 'feature list active', self.active )
-            // } )
-    
+      
             // = : = : = : = : = : = : = : = : = : = : = : = : = : = : = : = : = : = : =
     
             self.featureSet.addedFeatures( function ( ev ) {

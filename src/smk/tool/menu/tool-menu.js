@@ -7,11 +7,11 @@ include.module( 'tool-menu', [
     "use strict";
 
     Vue.component( 'menu-widget', {
-        extends: SMK.COMPONENT.ToolWidget,
+        extends: SMK.COMPONENT.ToolWidgetBase,
     } )
 
     Vue.component( 'menu-panel', {
-        extends: SMK.COMPONENT.ToolPanel,
+        extends: SMK.COMPONENT.ToolPanelBase,
         template: inc[ 'tool-menu.panel-menu-html' ],
         props: [ 'subWidgets', 'subPanels' ],
         methods: {
