@@ -11,7 +11,7 @@ include.module( 'tool.tool-feature-list-js', [
         this.$initializers.push( function ( smk ) {
             var self = this
 
-            this.featureSet = featureSetCallback( smk )
+            this.featureSet = featureSetCallback.call( this, smk )
             
             smk.on( this.id, {
                 'active': function ( ev ) {

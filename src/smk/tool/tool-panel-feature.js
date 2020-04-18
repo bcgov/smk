@@ -23,7 +23,7 @@ include.module( 'tool.tool-panel-feature-js', [
         this.$propFilter.attributes = false
        
         this.$initializers.push( function ( smk ) {
-            this.featureSet = featureSetCallback( smk )
+            this.featureSet = featureSetCallback.call( this, smk )
 
             smk.on( this.id, {
                 'swipe-up': function ( ev ) {
