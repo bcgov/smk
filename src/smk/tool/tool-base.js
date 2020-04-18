@@ -21,7 +21,6 @@ include.module( 'tool.tool-base-js', [ 'tool.tool-js' ], function ( inc ) {
         this.group = false
         this.showTitle = false
         this.icon = 'widgets'
-
         this.order = 1       
 
         this.$propFilter.baseClasses = false

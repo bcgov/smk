@@ -15,9 +15,7 @@ include.module( 'tool.tool-js', [
         ToolEvent.prototype.constructor.call( this )
 
         this.$prop = {}
-        this.$propFilter = {
-            constructor: false
-        }
+        this.$propFilter = { constructor: false }
         this.$componentProp = {}
         this.$initializers = []
     }
@@ -33,8 +31,13 @@ include.module( 'tool.tool-js', [
     Tool.prototype.initialize = function ( smk ) {
         var self = this
 
-        return this.$initializers.forEach( function ( init ) {
-            init.call( self, smk )
+        return this.$initializers.concat( this.$moreInitializers ).forEach( function ( init, i ) {
+            try {
+                init.call( self, smk )
+            }
+            catch ( e ) {
+                console.warn( self.id + ' initializer #' + i + ' failed:', e )
+            }
         } )
     }
 
@@ -107,7 +110,7 @@ include.module( 'tool.tool-js', [
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
     SMK.TYPE.Tool.define = function( name, construct, initialize, methods ) {
-        var additionalInitializers = []
+        var initializers = []
 
         SMK.TYPE[ name ] = function () {
             SMK.TYPE.Tool.prototype.constructor.call( this )
@@ -116,8 +119,10 @@ include.module( 'tool.tool-js', [
 
             if ( construct ) construct.call( this )
 
-            if ( initialize ) this.$initializers.push( initialize )
-            this.$initializers = this.$initializers.concat( additionalInitializers )
+            if ( initialize )
+                this.$initializers.push( initialize )
+
+            this.$moreInitializers = initializers
            
             Object.assign( this, methods )
         }
@@ -125,7 +130,7 @@ include.module( 'tool.tool-js', [
         Object.assign( SMK.TYPE[ name ].prototype, SMK.TYPE.Tool.prototype )
     
         SMK.TYPE[ name ].addInitializer = function ( initialize ) {
-            additionalInitializers = additionalInitializers.concat( initialize )
+            initializers.push( initialize )
         }
     
         return SMK.TYPE[ name ]
