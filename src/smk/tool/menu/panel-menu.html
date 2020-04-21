@@ -1,9 +1,6 @@
-<side-panel class="smk-menu-panel"
-    v-bind:showSwipe="true"
-    v-on:swipe-up="$$emit('swipe-up')"
-    v-on:swipe-down="$$emit('swipe-down')"    
+<tool-panel class="smk-menu-panel"
+    v-bind="$$projectProps( 'tool-panel' )"
 >
-
     <template slot="header">
         <div class="smk-menu-title">
             <slot></slot>
@@ -12,20 +9,20 @@
         <div class="smk-menu-widgets">
             <component class="smk-tool"
                 v-for="w in subWidgets"
-                v-bind:key="'w' + w.id"
-                v-bind:is="w.widgetComponent"
-                v-bind="w.widget"
-                v-bind:active="isActivePanel( w.id )"
+                v-bind:key="'w' + w.prop.id"
+                v-bind:is="w.component"
+                v-bind="w.prop"
+                v-bind:active="isActivePanel( w.prop.id )"
             ></component>
         </div>
     </template>
 
     <component class="smk-panel"
         v-for="p in subPanels"
-        v-if="p.panel.active"
-        v-bind:key="'p' + p.id"
-        v-bind:is="p.panelComponent"
-        v-bind="p.panel"
+        v-if="p.prop.active"
+        v-bind:key="'p' + p.prop.id"
+        v-bind:is="p.component"
+        v-bind="p.prop"
     ></component>
 
-</side-panel>
+</tool-panel>

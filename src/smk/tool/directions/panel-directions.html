@@ -1,9 +1,5 @@
-<side-panel class="smk-directions-panel" 
-    v-bind:busy="busy"
-    xxv-bind:message="busy ? 'Calculating' : message"
-    xxv-bind:status="busy ? 'progress' : status"
-    v-bind:message="message"
-    v-bind:status="status"
+<tool-panel class="smk-directions-panel" 
+    v-bind="$$projectProps( 'tool-panel' )"
 >
     <template slot="header">
         <slot></slot>
@@ -113,4 +109,4 @@
         </div>
     </draggable>
 
-</side-panel>
+</tool-panel>

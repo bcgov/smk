@@ -1,0 +1,36 @@
+{
+    "tools": [
+        {
+            "type": "*",
+            "enabled": false
+        },
+        {
+            "type": "toolbar",
+            "enabled": true
+        },
+        {
+            "type": "menu",
+            "enabled": true,
+            "title": "Tools"
+        },
+        {
+            "type": "measure",
+            "enabled": true,
+            "position": "menu",
+            "showTitle": true
+        },
+        {
+            "type": "about",
+            "enabled": true,
+            "position": "menu",
+            "content": "About this map",
+            "showTitle": true
+        },
+        {
+            "type": "layers",
+            "enabled": true,
+            "position": "menu",
+            "showTitle": true
+        }
+    ]
+}

@@ -1,7 +1,5 @@
-<side-panel class="smk-bespoke-panel" 
-    v-bind:showSwipe="showSwipe"
-    v-on:swipe-up="showSwipe && $$emit('swipe-up')"
-    v-on:swipe-down="showSwipe && $$emit('swipe-down')"    
+<tool-panel class="smk-bespoke-panel" 
+    v-bind="$$projectProps( 'tool-panel' )"
 >
     <template slot="header">
         <slot></slot>
@@ -16,4 +14,4 @@
         v-if="component"
         v-bind:is="component"
     ></div>
-</side-panel>
+</tool-panel>

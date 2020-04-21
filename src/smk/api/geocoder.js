@@ -57,8 +57,8 @@ include.module( 'api.geocoder-js', [ 'jquery', 'util' ], function () {
             maxDistance:        1000,
         }, this.parameter, option )
 
-        var locationMode = option.locationMode
-        delete option.locationMode
+        var locationOut = option.locationOut
+        delete option.locationOut
 
         return this.fetchGeocoder( 'sites/nearest', option )
             .then( function ( data ) {
@@ -72,11 +72,11 @@ include.module( 'api.geocoder-js', [ 'jquery', 'util' ], function () {
                     streetType:          data.properties.streetType,
                 }
 
-                if ( locationMode == 'geocoder' ) {
+                if ( locationOut == 'geocoder' ) {
                     site.longitude  = data.geometry.coordinates[ 0 ]
                     site.latitude   = data.geometry.coordinates[ 1 ]
                 }
-                else if ( locationMode == 'input' ) { 
+                else if ( locationOut == 'input' ) { 
                     site = Object.assign( site, location )
                 }
 

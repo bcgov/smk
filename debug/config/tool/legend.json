@@ -1,0 +1,16 @@
+{
+    "tools": [
+        {
+            "type": "*",
+            "enabled": false
+        },
+        {
+            "type": "toolbar",
+            "enabled": false
+        },
+        {
+            "type": "legend",
+            "enabled": true
+        }
+     ]
+}

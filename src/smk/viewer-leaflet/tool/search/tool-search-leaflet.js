@@ -38,7 +38,7 @@ include.module( 'tool-search-leaflet', [ 'leaflet', 'tool-search' ], function ( 
         shadowSize:     [ 31, 31 ]
     } )
 
-    SMK.TYPE.SearchTool.prototype.afterInitialize.push( function ( smk ) {
+    SMK.TYPE.SearchTool.addInitializer( function ( smk ) {
         var self = this
 
         var vw = smk.$viewer

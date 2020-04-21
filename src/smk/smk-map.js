@@ -361,18 +361,17 @@ include.module( 'smk-map', [ 'jquery', 'util', 'theme-base', 'sidepanel' ], func
                             } )
                     } )
                     .then( function ( inc ) {
-                        var id = t.type + ( t.instance ? '--' + t.instance : '' )
+                        t.id = t.type + ( t.instance ? '--' + t.instance : '' )
 
-                        if ( !( id in self.$tool ) ) {
-                            self.$tool[ id ] = new inc[ tag ]( t )
-                            self.$tool[ id ].id = id
+                        if ( !( t.id in self.$tool ) ) {
+                            self.$tool[ t.id ] = ( new inc[ tag ]() ).configure( t )
                         }
                         else {
-                            console.warn( 'tool "' + id + '" is defined more than once' )
+                            console.warn( 'tool "' + t.id + '" is defined more than once' )
                         }
                     } )
                     .catch( function ( e ) {
-                        console.warn( 'tool "' + t.type + '" failed to create:', e )
+                        console.warn( 'tool "' + t.id + '" failed to create:', e )
                     } )
             } ) )
         }

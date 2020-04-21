@@ -33,10 +33,12 @@ t.script( 'smk-map',    'smk/smk-map.js' )
 t.script( 'util',       'smk/util.js' )
 t.script( 'event',      'smk/event.js' )
 t.script( 'viewer',     'smk/viewer.js' )
-t.script( 'tool',       'smk/tool.js' )
 t.script( 'feature-set','smk/feature-set.js' )
 t.script( 'projections','smk/projections.js' )
 t.script( 'layer-display','smk/layer-display.js' )
+
+t.group( 'tool' )
+    .dir( 'smk/tool/*' )
 
 t.group( 'layer' )
     .dir( 'smk/layer/**/*' )
@@ -47,18 +49,25 @@ t.group( 'query' )
 t.group( 'sidepanel' )
     .dir( 'smk/sidepanel/**/*' )
 
-t.group( 'feature-list' )
-    .dir( 'smk/feature-list/**/*' )
+// t.group( 'feature-list' )
+    // .dir( 'smk/feature-list/**/*' )
 
-t.group( 'widgets' )
-    .dir( 'smk/widgets/*' )
+// t.group( 'widgets' )
+    // .dir( 'smk/widgets/*' )
 
-t.group( 'widget-address-search' )
-    .dir( 'smk/widgets/address-search/*' )
+// t.group( 'widget-address-search' )
+    // .dir( 'smk/widgets/address-search/*' )
 
 t.group( 'api' )
     .dir( 'smk/api/*' )
-    
+
+tg.forEachDir( 'smk/component/*/', function ( fn, bn ) {
+    t.group( 'component-' + bn )
+        .dir( fn + '/**' )
+} )
+t.group( 'component' )
+    .dir( 'smk/component/*' )
+
 // ==================================================================================
 // smk tools
 // ==================================================================================

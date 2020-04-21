@@ -649,7 +649,8 @@
             VIEWER: {},
             TYPE: {},
             UTIL: util,
-
+            COMPONENT: {},
+            
             CONFIG: {
                 name: 'SMK Default Map',
                 viewer: {

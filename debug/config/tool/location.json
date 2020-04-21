@@ -1,0 +1,19 @@
+{
+    "tools": [
+        {
+            "type": "*",
+            "enabled": false
+        },
+        {
+            "type": "toolbar",
+            "enabled": false
+        },
+        {
+            "type": "location",
+            "enabled": true,
+            "geocoderService": {
+                "url": "https://geocoder.api.gov.bc.ca/"
+            }
+        }
+    ]
+}

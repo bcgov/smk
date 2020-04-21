@@ -1,4 +1,4 @@
-include.module( 'viewer-leaflet', [ 'viewer', 'leaflet', 'layer-leaflet', 'feature-list-leaflet', 'turf' ], function () {
+include.module( 'viewer-leaflet', [ 'viewer', 'leaflet', 'layer-leaflet', /*'feature-list-leaflet',*/ 'turf' ], function () {
     "use strict";
 
     function ViewerLeaflet() {
