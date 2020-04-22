@@ -3,10 +3,9 @@ include.module( 'check-identify', [], function ( inc ) {
 
     return function ( smk, tool ) {
         smk.tools.push( Object.assign( {}, tool, {
-            id: 'identify-feature',
+            id: null,
             type: 'identify-feature',
             enabled: true,
-            parentId: tool.id,
         } ) )
     }
     

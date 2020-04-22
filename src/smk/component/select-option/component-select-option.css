@@ -1,0 +1,29 @@
+.smk-select-option {
+    font-size: 12px;
+}
+
+.smk-select-option .smk-options {
+    border-radius: 8px;
+    padding: 2px;
+    display: flex;
+    justify-content: space-around;
+    background-color: #bbb;
+}
+
+.smk-select-option .smk-options .smk-command {
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 100%;
+    text-align: center;
+    color: black;
+}
+
+.smk-select-option .smk-options .smk-selected-option {
+    font-weight: bold;
+    background-color: white;
+}
+
+.smk-select-option .smk-options .smk-command:hover {
+    background-color: #ddd;
+    border: 1px solid transparent;
+}

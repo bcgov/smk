@@ -8,7 +8,7 @@
 
 .smk-sidepanel {
     position: absolute;
-    top: 40px;
+    top: calc( var( --toolbar-height ) + 10px );
     left: 0;
     width: var( --panel-width );
     bottom: var( --panel-bottom );
@@ -38,7 +38,7 @@
 
 .smk-panel .smk-header {
     display: flex;
-    flex-wrap: wrap;
+    /* flex-wrap: wrap; */
     justify-content: space-between;
     align-items: center;
     align-content: flex-start;
@@ -57,6 +57,7 @@
     justify-content: space-between;
     align-items: center;
     align-content: flex-start;
+    margin-bottom: 5px;
 }
 
 .smk-panel .smk-commands > * {
@@ -74,6 +75,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    text-align: center;
+    padding: 3px 0;
 }
 
 .smk-panel .smk-panel-close {

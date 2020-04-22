@@ -1,9 +1,5 @@
-<side-panel class="smk-directions-panel" 
-    v-bind:busy="busy"
-    xxv-bind:message="busy ? 'Calculating' : message"
-    xxv-bind:status="busy ? 'progress' : status"
-    v-bind:message="message"
-    v-bind:status="status"
+<tool-panel class="smk-directions-panel" 
+    v-bind="$$projectProps( 'tool-panel' )"
 >
     <template slot="header">
         <slot></slot>
@@ -39,6 +35,7 @@
         <address-search class="smk-address"
             ref="address"
             placeholder="Enter address here, or click on map"
+            v-bind:geocoderService="geocoderService"
             v-on:update="$$emit( 'new-waypoint', $event ); $refs.address.clear()"
         ></address-search>
 
@@ -112,4 +109,4 @@
         </div>
     </draggable>
 
-</side-panel>
+</tool-panel>

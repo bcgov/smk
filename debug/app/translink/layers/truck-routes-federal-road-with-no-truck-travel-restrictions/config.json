@@ -1,0 +1,85 @@
+{
+    "layers": [
+        {
+            "type": "vector",
+            "id": "truck-routes-federal-road-with-no-truck-travel-restrictions-high-zoom",
+            "title": "Federal Road with No Truck Travel Restrictions",
+            "dataUrl": "./layers/truck-routes-federal-road-with-no-truck-travel-restrictions/truck-routes-federal-road-with-no-truck-travel-restrictions.geojson",
+            "scaleMin": 28505,
+            "attributes": [
+                {
+                    "name": "Municipality",
+                    "title": "Municipality"
+                },
+                {
+                    "name": "RouteType",
+                    "title": "Truck Route Type"
+                },
+                {
+                    "name": "Bylaw",
+                    "title": "Bylaw Link",
+                    "format": "asLink(this.feature.properties.BylawLink)"
+                },
+                {
+                    "name": "TruckDefinitionWeight",
+                    "title": "Heavy Truck Definition (LGVW)",
+                    "format": "asUnit('kg')"
+                },
+                {
+                    "name": "Notes",
+                    "title": "Notes"
+                }
+            ],
+            "titleAttribute": "RouteType",
+            "style": {
+                "strokeWidth": 3,
+                "strokeColor": "#E6E600",
+                "strokeOpacity": 1
+            },
+            "legend": {
+                "line": true
+            }
+        },
+        {
+            "type": "vector",
+            "id": "truck-routes-federal-road-with-no-truck-travel-restrictions",
+            "title": "Federal Road with No Truck Travel Restrictions",
+            "dataUrl": "./layers/truck-routes-federal-road-with-no-truck-travel-restrictions/truck-routes-federal-road-with-no-truck-travel-restrictions.geojson",
+            "scaleMin": 4622325,
+            "scaleMax": 28505,
+            "attributes": [
+                {
+                    "name": "Municipality",
+                    "title": "Municipality"
+                },
+                {
+                    "name": "RouteType",
+                    "title": "Truck Route Type"
+                },
+                {
+                    "name": "Bylaw",
+                    "title": "Bylaw Link",
+                    "format": "asLink(this.feature.properties.BylawLink)"
+                },
+                {
+                    "name": "TruckDefinitionWeight",
+                    "title": "Heavy Truck Definition (LGVW)",
+                    "format": "asUnit('kg')"
+                },
+                {
+                    "name": "Notes",
+                    "title": "Notes"
+                }
+            ],
+            "titleAttribute": "RouteType",
+            "style": {
+                "strokeWidth": 1.5,
+                "strokeColor": "#E6E600",
+                "strokeOpacity": 1
+            },
+            "legend": {
+                "line": true
+            }
+        }
+    ]
+}

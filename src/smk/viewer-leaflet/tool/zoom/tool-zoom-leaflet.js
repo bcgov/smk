@@ -1,7 +1,7 @@
 include.module( 'tool-zoom-leaflet', [ 'tool-zoom', 'leaflet' ], function () {
     "use strict";
 
-    SMK.TYPE.ZoomTool.prototype.afterInitialize.push( function ( smk ) {
+    SMK.TYPE.ZoomTool.addInitializer( function ( smk ) {
         // if ( smk.$device == 'mobile' ) return
 
         if ( this.mouseWheel !== false ) {
@@ -22,6 +22,5 @@ include.module( 'tool-zoom-leaflet', [ 'tool-zoom', 'leaflet' ], function () {
             } ).addTo( smk.$viewer.map )
         }
     } )
-
 } )
 

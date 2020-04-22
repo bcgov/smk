@@ -10,36 +10,6 @@
     /* margin: 10px 0; */
 }
 
-.smk-sidepanel .smk-query-panel .smk-parameter {
-    /* margin-top: 10px; */
-}
-
-.smk-sidepanel .smk-query-panel .smk-parameter label {
-    font-size: 12px;
-    display: block;
-    width: calc( 100% - 10px );
-    position: relative;
-}
-
-.smk-sidepanel .smk-query-panel .smk-parameter input, 
-.smk-sidepanel .smk-query-panel .smk-parameter select, 
-.smk-sidepanel .smk-query-panel .smk-parameter span {
-    display: block;
-    width: 100%;
-    border: 0;
-    font-size: 16px;
-    padding: 3px;
-    border-bottom: 1px solid lightgrey;
-    background-color: white;
-}
-
-.smk-sidepanel .smk-query-panel .smk-parameter input:focus, 
-.smk-sidepanel .smk-query-panel .smk-parameter select:focus, 
-.smk-sidepanel .smk-query-panel .smk-parameter span:focus {
-    outline: 0;
-    border-bottom: 1px dashed gray;
-}
-
 .smk-query-panel .smk-commands {
     order: 1;
 }

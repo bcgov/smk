@@ -341,8 +341,43 @@
 
         SMK.INIT( {
             'smk-container-sel': "#smk-map-frame",
-            'smk-title-sel': "#header-title, head title",
-            'smk-config': "./map-config.json|./layer-config.json|./layer-display-config.json|?",
+            // 'smk-title-sel': "#header-title, head title",
+            'smk-config': [
+                './layers/cardlock/config.json',
+                // './layers/dangerous-goods-routes/config.json',
+                './layers/dangerous-goods-restrictions/config.json',
+                './layers/downtown-vancouver/config.json',
+                './layers/industrial-area/config.json',
+                './layers/inspection-station/config.json',
+                './layers/major-road-network/config.json',
+                './layers/metro-vancouver-boundary/config.json',
+                './layers/overhead-directional-signs/config.json',
+                './layers/overhead-structure-with-height-marker/config.json',
+                './layers/overhead-structure-without-height-marker/config.json',
+                './layers/oversize-overweight-truck-routes-oah-up-to-4-88-m/config.json',
+                './layers/oversize-overweight-truck-routes-oaw-up-to-5-m/config.json',
+                './layers/oversize-overweight-truck-routes-gvw-up-to-80000-kg/config.json',
+                './layers/oversize-overweight-truck-routes-gvw-up-to-85000-kg/config.json',
+                './layers/oversize-overweight-truck-routes-gvw-up-to-125000-kg/config.json',
+                './layers/port-of-vancouver-facilities-terminals/config.json',
+                './layers/provincial-highway/config.json',
+                './layers/term-permit-restricted-route/config.json',
+                './layers/term-permit-restriction/config.json',
+                './layers/term-permit-route/config.json',
+                './layers/term-permit-roundabout/config.json',
+                './layers/truck-advisories-restrictions/config.json',
+                './layers/truck-advisories-warning/config.json',
+                './layers/truck-parking/config.json',
+                './layers/truck-routes-designated-municipal-truck-route-with-restrictions/config.json',
+                './layers/truck-routes-designated-municipal-truck-route/config.json',
+                './layers/truck-routes-federal-road-with-no-truck-travel-restrictions/config.json',
+                './layers/truck-routes-municipal-road-with-no-truck-travel-restriction/config.json',
+
+                './map-config.json', 
+                './layer-display.json', 
+                '?'
+            ]
+            // "./map-config.json|./layer-config.json|./layer-display-config.json|?",
         } ).then( function () {
             SMK.HANDLER.set( 'bespoke', 'initialized', function ( smk ) {} )
 

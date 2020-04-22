@@ -1,0 +1,36 @@
+{
+    "viewer": {
+        "baseMap": "Imagery"
+    },
+    "tools": [
+        {
+            "type": "*",
+            "enabled": false
+        },
+        {
+            "type": "toolbar",
+            "enabled": true
+        },
+        {
+            "type": "identify",
+            "title": "Identify",
+            "enabled": true,
+            "showTitle": "mobile",
+            "position": "toolbar",
+            "tolerance": 10,
+            "command": {
+              "attributeMode": false,
+              "clear": false
+            },
+            "order": 2
+        },
+        {
+            "type": "pan",
+            "enabled": true
+        },
+        {
+            "type": "zoom",
+            "enabled": true
+        }
+    ]
+}

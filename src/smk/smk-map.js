@@ -28,7 +28,7 @@ include.module( 'smk-map', [ 'jquery', 'util', 'theme-base', 'sidepanel' ], func
             .addClass( 'smk-map-frame smk-hidden' )
 
         var spinner = $( '<img class="smk-startup smk-spinner">' )
-            .attr( 'src', include.option( 'baseUrl' ) + '/images/spinner.gif' )
+            .attr( 'src', include.option( 'baseUrl' ) + 'images/spinner.gif' )
             .appendTo( this.$container )
 
         var status = $( '<div class="smk-startup smk-status">' )
@@ -65,7 +65,9 @@ include.module( 'smk-map', [ 'jquery', 'util', 'theme-base', 'sidepanel' ], func
             function () {
                 console.groupEnd()
             }
-        )
+        ).then( function () {
+            return self
+        } )
 
         // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -359,18 +361,17 @@ include.module( 'smk-map', [ 'jquery', 'util', 'theme-base', 'sidepanel' ], func
                             } )
                     } )
                     .then( function ( inc ) {
-                        var id = t.type + ( t.instance ? '--' + t.instance : '' )
+                        t.id = t.type + ( t.instance ? '--' + t.instance : '' )
 
-                        if ( !( id in self.$tool ) ) {
-                            self.$tool[ id ] = new inc[ tag ]( t )
-                            self.$tool[ id ].id = id
+                        if ( !( t.id in self.$tool ) ) {
+                            self.$tool[ t.id ] = ( new inc[ tag ]() ).configure( t )
                         }
                         else {
-                            console.warn( 'tool "' + id + '" is defined more than once' )
+                            console.warn( 'tool "' + t.id + '" is defined more than once' )
                         }
                     } )
                     .catch( function ( e ) {
-                        console.warn( 'tool "' + t.type + '" failed to create:', e )
+                        console.warn( 'tool "' + t.id + '" failed to create:', e )
                     } )
             } ) )
         }
@@ -614,13 +615,24 @@ include.module( 'smk-map', [ 'jquery', 'util', 'theme-base', 'sidepanel' ], func
         cfg.viewer.displayContext = this.$viewer.getDisplayContextConfig()
 
         cfg.layers.forEach( function ( ly ) {
-            ly.isVisible = self.$viewer.isDisplayContextItemVisible( ly.id )
-            ly.class = self.$viewer.getDisplayContextItem( ly.id ).class
+            var item = self.$viewer.getDisplayContextItem( ly.id )
+            if ( item ) {
+                ly.isVisible = self.$viewer.isDisplayContextItemVisible( ly.id )
+                ly.class = item.class
+            }
+            else {
+                ly.isVisible = false
+            }
         } )
         
         return cfg
     }
 
+    SmkMap.prototype.updateMapSize = function () {
+        if ( this.$viewer.mapResized )
+            this.$viewer.mapResized()
+    }
+    
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     function findProperty( obj, collectionName, propName, cb ) {

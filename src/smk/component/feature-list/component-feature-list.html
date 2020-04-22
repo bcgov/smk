@@ -1,0 +1,36 @@
+ <div class="smk-feature-list">
+    <div class="smk-layer"
+        v-for="layer in layers"
+        v-if="layer && layer.features.length > 0"
+    >
+        <h2>{{ layer.title }}<span class="smk-count" v-if="layer.features.length > 1">({{ layer.features.length }})</span></h2>
+
+        <div class="smk-feature smk-item" title="Click to see attributes"
+            v-for="feature in layer.features"
+            v-bind:class="{ 'smk-highlighted': feature.id == highlightId }"
+            v-on:click="$emit( 'active', { featureId: feature.id } )"
+            v-on:mouseenter="$emit( 'hover', { features: [ feature ] } )"
+            v-on:mouseleave="$emit( 'hover', { features: null } )"
+        >
+            <span >{{ feature.title }}</span>
+
+            <i class="smk-highlight material-icons smk-command smk-icon"
+            >speaker_notes</i>
+
+            <slot name="item"
+                v-bind:layer="layer"
+                v-bind:feature="feature"
+            ></slot>
+            <!-- <command-button class="smk-remove"
+                title="Remove item"
+                v-on:click="$emit( 'remove', { layerId: layer.id, featureId: feature.id } )"
+                icon="delete"
+            ></command-button> -->
+
+            <!-- <i class="smk-remove material-icons smk-command smk-icon"
+                v-if="canRemove"
+                v-on:click.stop="$emit( 'remove', { layerId: layer.id, featureId: feature.id } )"
+            >delete</i> -->
+        </div>
+    </div>
+</div>

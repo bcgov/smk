@@ -91,3 +91,15 @@ tl.prototype.dir = function ( pattern, option ) {
 
     return this
 }
+
+exports.forEachDir = function ( pattern, cb, option ) {
+    option = Object.assign( globOption, { nodir: false }, option )
+    // console.log( 'forEachDir ' + pattern + ', ' + JSON.stringify( option ) )
+
+    var files = glob.sync( pattern, option )
+    // console.log( 'forEachDir ' + JSON.stringify( files ) )
+
+    files.forEach( function ( f ) {
+        cb( f, path.basename( f, path.extname( f ) ) )
+    } )
+}

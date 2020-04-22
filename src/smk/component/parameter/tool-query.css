@@ -1,0 +1,26 @@
+.smk-parameter label {
+    font-size: 12px;
+    display: block;
+    width: calc( 100% - 10px );
+    position: relative;
+}
+
+.smk-parameter input, 
+.smk-parameter select, 
+.smk-parameter span {
+    display: block;
+    width: 100%;
+    border: 0;
+    font-size: 16px;
+    padding: 3px;
+    border-bottom: 1px solid lightgrey;
+    background-color: white;
+}
+
+.smk-parameter input:focus, 
+.smk-parameter select:focus, 
+.smk-parameter span:focus {
+    outline: 0;
+    border-bottom: 1px dashed gray;
+}
+

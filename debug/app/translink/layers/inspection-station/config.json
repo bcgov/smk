@@ -1,0 +1,56 @@
+{
+    "layers": [
+        {
+            "type": "vector",
+            "id": "inspection-station",
+            "title": "Inspection Station",
+            "dataUrl": "./layers/inspection-station/inspection-station.geojson",
+            "scaleMin": 178426,
+            "attributes": [
+                {
+                    "name": "Scale",
+                    "title": "Scale"
+                },
+                {
+                    "title": "Street View",
+                    "format": "asLink( this.feature.properties.Streetview_Link, 'Link' )"
+                },
+                {
+                    "name": "Hours",
+                    "title": "Hours"
+                },
+                {
+                    "value": "<%= this.feature.properties.Mailing_Addr_StNum %> <%= this.feature.properties.Mailing_Addr_St %> <%= this.feature.properties.City %> <%= this.feature.properties.Postal_Code %>",
+                    "title": "Address"
+                },
+                {
+                    "name": "Phone_Number",
+                    "title": "Phone"
+                },
+                {
+                    "name": "Fax_Number",
+                    "title": "Fax "
+                },
+                {
+                    "name": "Notes",
+                    "title": "Notes"
+                }
+            ],
+            "titleAttribute": "Scale",
+            "style": {
+                "markerUrl": "./layers/inspection-station/images/inspection_2.png",
+                "markerSize": [
+                    22,
+                    22
+                ],
+                "markerOffset": [
+                    11,
+                    11
+                ]
+            },
+            "legend": {
+                "point": true
+            }
+        }
+    ]
+}

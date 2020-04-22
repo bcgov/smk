@@ -1,0 +1,24 @@
+{
+    "layers": [
+        {
+            "type": "vector",
+            "id": "metro-vancouver-boundary",
+            "title": "Metro Vancouver Boundary",
+            "dataUrl": "./layers/metro-vancouver-boundary/metro-vancouver-boundary.geojson",
+            "attributes": [
+                {
+                    "value": "This application is only intended to be used within the Metro Vancouver region.",
+                    "title": "Note"
+                }
+            ],
+            "style": {
+                "strokeWidth": 3,
+                "strokeColor": "#242424",
+                "strokeOpacity": 0.5
+            },
+            "legend": {
+                "line": true
+            }
+        }
+    ]
+}

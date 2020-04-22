@@ -23,7 +23,6 @@
     font-size: 14px;
 }
 
-
 .smk-layers-panel .smk-display .smk-display {
     padding-left: 12px;
 }
@@ -48,6 +47,17 @@
     margin-left: 5px;
     margin-top: 5px;
     margin-bottom: 5px;
+    flex-grow: 1;
+}
+
+.smk-layers-panel .smk-display .smk-item .smk-metadata {
+    display: none;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.smk-layers-panel .smk-display .smk-item:hover .smk-metadata {
+    display: block;
 }
 
 .smk-layers-panel .smk-display.smk-obscured .smk-layer-title {
@@ -72,6 +82,7 @@
 
 .smk-layers-panel .smk-legend {
     padding-left: 12px;
+    flex-grow: 1;
 }
 
 .smk-layers-panel .smk-legend .smk-legend-item {
@@ -99,10 +110,15 @@
 .smk-layers-panel .smk-display.smk-inline-legend .smk-legend {
     order: 1;
     padding-left: 0;
+    flex-grow: 0;
 }
 
 .smk-layers-panel .smk-display.smk-inline-legend .smk-layer-title {
     order: 2;
+}
+
+.smk-layers-panel .smk-display.smk-inline-legend .smk-metadata {
+    order: 3;
 }
 
 .smk-layers-panel .smk-display.smk-inline-legend .smk-legend-title {

@@ -17,6 +17,7 @@ include.module( 'layer-leaflet.layer-wms-leaflet-js', [ 'layer.layer-wms-js' ], 
         var version     = layers[ 0 ].config.version || '1.1.1'
         var attribution = layers[ 0 ].config.attribution
         var opacity     = layers[ 0 ].config.opacity
+        var where       = layers.map( function ( c ) { return c.config.where || 'include' } ).join( ';' )
 
         var layer = L.nonTiledLayer.wms( serviceUrl, {
             layers:         layerNames,
@@ -26,7 +27,8 @@ include.module( 'layer-leaflet.layer-wms-leaflet-js', [ 'layer.layer-wms-js' ], 
             opacity:        opacity,
             format:         'image/png',
             transparent:    true,
-            zIndex:         zIndex
+            zIndex:         zIndex,
+            cql_filter:     where
         } )
 
         layer.on( 'load', function ( ev ) {

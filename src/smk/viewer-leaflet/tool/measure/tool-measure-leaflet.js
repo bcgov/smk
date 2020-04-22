@@ -1,7 +1,7 @@
 include.module( 'tool-measure-leaflet', [ 'leaflet', 'tool-measure', 'turf' ], function () {
     "use strict";
 
-    SMK.TYPE.MeasureTool.prototype.afterInitialize.push( function ( smk ) {
+    SMK.TYPE.MeasureTool.addInitializer( function ( smk ) {
         var self = this
 
         self.viewer.leaflet = true
@@ -11,17 +11,17 @@ include.module( 'tool-measure-leaflet', [ 'leaflet', 'tool-measure', 'turf' ], f
         self.setMessage( "Select measurement method" )
 
         this.control = L.control.measure( {
-                position: 'topright',
-                primaryLengthUnit: 'meters',
-                secondaryLengthUnit: 'kilometers',
-                primaryAreaUnit: 'hectares',
-                secondaryAreaUnit: 'sqmeters',
-                activeColor: '#38598a',
-                completedColor: '#036',
-                popupOptions: {
-                    pane: 'hiddenPane'
-                }
-            } )
+            position: 'topright',
+            primaryLengthUnit: 'meters',
+            secondaryLengthUnit: 'kilometers',
+            primaryAreaUnit: 'hectares',
+            secondaryAreaUnit: 'sqmeters',
+            activeColor: '#38598a',
+            completedColor: '#036',
+            popupOptions: {
+                pane: 'hiddenPane'
+            }
+        } )
 
         this.control.addTo( smk.$viewer.map )
 
@@ -81,27 +81,27 @@ include.module( 'tool-measure-leaflet', [ 'leaflet', 'tool-measure', 'turf' ], f
         } )
 
         function displayResult( res ) {
-            Vue.set( self.panel, 'results', [] )
+            self.results = []
 
             if ( !res.count ) return
 
             if ( res.count > 2 ) {
                 self.setMessage()
-                self.panel.results.push( {
+                self.results.push( {
                     title:  'Number of edges',
                     value:  res.count,
                     // unit:   'vertices'
                 } )
 
                 if ( res.area )
-                    self.panel.results.push( {
+                    self.results.push( {
                         title:  'Area',
                         value:  res.area,
                         dim:    2
                     } )
 
                 if ( res.length )
-                    self.panel.results.push( {
+                    self.results.push( {
                         title:  'Perimeter',
                         value:  res.length,
                         dim:    1
@@ -109,7 +109,7 @@ include.module( 'tool-measure-leaflet', [ 'leaflet', 'tool-measure', 'turf' ], f
             }
             else if ( res.count > 1 ) {
                 self.setMessage()
-                self.panel.results.push( {
+                self.results.push( {
                     title:  'Length',
                     value:  res.length,
                     dim:    1
@@ -130,7 +130,7 @@ include.module( 'tool-measure-leaflet', [ 'leaflet', 'tool-measure', 'turf' ], f
             'start-area': function ( ev ) {
                 self.busy = true
                 self.control._layer.clearLayers()
-                Vue.set( self.panel, 'results', [] )
+                self.results = []
                 self.setMessage( "Click on map to set first point", 'progress' )
 
                 self.minPoints = 3
@@ -142,7 +142,7 @@ include.module( 'tool-measure-leaflet', [ 'leaflet', 'tool-measure', 'turf' ], f
             'start-distance': function ( ev ) {
                 self.busy = true
                 self.control._layer.clearLayers()
-                Vue.set( self.panel, 'results', [] )
+                self.results = []
                 self.setMessage( "Click on map to set starting point", 'progress' )
 
                 self.minPoints = 2
@@ -153,7 +153,7 @@ include.module( 'tool-measure-leaflet', [ 'leaflet', 'tool-measure', 'turf' ], f
 
             'cancel': function ( ev ) {
                 self.busy = false
-                Vue.set( self.panel, 'results', [] )
+                self.results = []
                 self.setMessage( "Select measurement method" )
 
                 self.control._finishMeasure()

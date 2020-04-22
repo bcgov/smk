@@ -216,7 +216,7 @@ include.module( 'vue-config', [ 'vue' ], function ( inc ) {
         },
         data: function () {
             return {
-                imageUrl: include.option( 'baseUrl' ) + '/images/spinner.gif'
+                imageUrl: include.option( 'baseUrl' ) + 'images/spinner.gif'
             }
         }
     } )

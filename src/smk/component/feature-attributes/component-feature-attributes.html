@@ -1,0 +1,19 @@
+<div>
+    <div class="smk-header" v-if="showHeader">
+        <h3>{{ layer.title }}</h3>
+        <h2>{{ feature.title }}</h2>
+    </div>
+
+    <div class="smk-layer">{{ layer.title }}</div>
+
+    <div class="smk-attributes"
+        v-if="attributes && attributes.length > 0"
+    >
+        <feature-attribute 
+            v-for="attr, i in attributes"
+            v-bind:key="'attr' + i"
+            v-bind:title="formatTitle( attr )"
+            v-bind:value="formatAttribute( attr )"
+        ></feature-attribute>        
+    </div>
+</div>

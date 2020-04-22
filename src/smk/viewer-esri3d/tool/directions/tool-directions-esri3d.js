@@ -3,7 +3,7 @@ include.module( 'tool-directions-esri3d', [ 'esri3d', 'types-esri3d', 'util-esri
 
     var E = SMK.TYPE.Esri3d
 
-    var base = include.option( 'baseUrl' ) + '/images/tool/directions'
+    var base = include.option( 'baseUrl' ) + 'images/tool/directions'
 
     var redSymbol = {
         type: 'point-3d',

@@ -50,6 +50,8 @@ include.module( 'query.query-place-js', [ 'query.query-js' ], function () {
                     // exclude whole province match
                     if ( feature.properties.fullAddress == 'BC' ) return;
 
+                    feature.radius = self.getAddressRadius( feature.properties )
+
                     feature.title = feature.properties.fullAddress
                     return feature
                 } )
@@ -61,4 +63,17 @@ include.module( 'query.query-place-js', [ 'query.query-js' ], function () {
         } )
     }
 
+    PlaceQuery.prototype.getAddressRadius = function ( address ) {
+        switch ( address.matchPrecision ) {
+            case 'STREET':          
+                return 500
+
+            case 'INTERSECTION':    
+            case 'BLOCK':           
+            case 'CIVIC_NUMBER':    
+                return 100
+
+            default: return 1000
+        }
+    }
 } )

@@ -1,4 +1,6 @@
-<side-panel class="smk-base-maps-panel">
+<tool-panel class="smk-base-maps-panel" 
+    v-bind="$$projectProps( 'tool-panel' )"
+>
     <template slot="header">
         <slot></slot>
     </template>
@@ -14,4 +16,4 @@
             v-content="basemap"
         ></div>
     </div>
-</side-panel>
+</tool-panel>

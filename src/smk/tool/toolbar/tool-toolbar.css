@@ -17,7 +17,7 @@
 
     display: flex;
     justify-content: flex-start;
-    align-items: stretch;
+    align-items: center;
 }
 
 /* .smk-toolbar.smk-hidden  {

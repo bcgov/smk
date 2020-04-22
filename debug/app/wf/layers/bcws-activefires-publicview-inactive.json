@@ -1,0 +1,142 @@
+{
+  "layers": [
+    {
+      "type": "wms",
+      "id": "bcws-activefires-publicview-inactive",
+      "title": "BC Wildfires - Declared Out",
+      "isQueryable": true,
+      "serviceUrl": "https://delivery.openmaps.gov.bc.ca/geo/pub/ows",
+      "#serviceUrl": "https://openmaps.gov.bc.ca/geo/pub/ows",
+      "layerName": "pub:WHSE_LAND_AND_NATURAL_RESOURCE.PROT_CURRENT_FIRE_PNTS_SP",
+      "styleName": "6055",
+      "where": "FIRE_STATUS = 'Out' or FIRE_STATUS = 'Not Active'",
+      "#metadataUrl": "https://catalogue.data.gov.bc.ca/dataset/diagnostic-facilities",
+      "#scaleMin": 500000,
+      "#scaleMax": 0,
+      "popupTemplate": "@wf-feature",
+      "titleAttribute": "FIRE_NUMBER",
+      "attributes": [
+        {
+          "name": "FIRE_NUMBER",
+          "title": "Fire Number"
+        },
+        {
+          "name": "IGNITION_DATE",
+          "title": "Date of Discovery",
+          "format": "asLocalDate"
+        },
+        {
+          "name": "FIRE_CAUSE",
+          "title": "Suspected Cause"
+        },
+        {
+          "name": "GEOGRAPHIC_DESCRIPTION",
+          "title": "Approximate Location"
+        },
+        {
+          "name": "CURRENT_SIZE",
+          "title": "Estimated Size",
+          "format": "asUnit('ha')"
+        },
+        {
+          "name": "FIRE_STATUS",
+          "title": "Stage of Control"
+        },
+        {
+          "name": "FIRE_OF_NOTE_NAME",
+          "title": "Fire of Note Information",
+          "format": "asLink(this.feature.properties.FIRE_OF_NOTE_URL)"
+        }
+      ]
+    },
+
+    {
+      "type": "esri-feature",
+      "id": "bcws-activefires-publicview-inactive-esri",
+      "title": "BC Wildfires - Declared Out",
+      "attribution": "Copyright 117 DataBC, Government of British Columbia",
+      "serviceUrl": "https://services6.arcgis.com/ubm4tcTYICKBpist/arcgis/rest/services/BCWS_ActiveFires_PublicView/FeatureServer/0",
+      "metadataUrl": "https://catalogue.data.gov.bc.ca/dataset/diagnostic-facilities",
+      "where": "FIRE_STATUS = 'Out' OR FIRE_STATUS = 'Not Active'",
+      "opacity": 1,
+      "scaleMin": 500000,
+      "scaleMax": 0,
+      "drawingInfo": {
+        "renderer": {
+          "type": "uniqueValue",
+          "field1": "FIRE_STATUS",
+          "defaultSymbol": null,
+          "uniqueValueInfos": [
+            {
+              "value": "Not Active",
+              "symbol": {
+                "angle": 0,
+                "xoffset": 0,
+                "yoffset": 0,
+                "type": "esriPMS",
+                "url": "d4c0d1aa-5e1b-4b6e-8e3c-4b7a9f544993",
+                "width": 10.5,
+                "height": 12.250000000000002,
+                "imageData": "iVBORw0KGgoAAAANSUhEUgAAAAwAAAAOCAYAAAAbvf3sAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3QUQFTkprFYJ8wAAAiFJREFUKM99kjFrU1EAhc999777XnPfbfIaaUKaQNMEjHbQWiWQpahDq4gl7aS/oLiIdjFSnIoRRHDUX+DoILhIoHYwVAQLEiK2aSOm1bZJi21Sm7y+XAeNxUG/8XA4wzkH+M34WC/+xfSN/r+F6xNH5kAwqJ1JJvm5VIpH43Gtoz+8NwAAINfSATx7vgEAGBsfP+bz+VJCyiHOOQzDeA8g/zib3QKA+5kBkE7ClcnJcDAUyoTD4QnbtoOUUriu+81xnBe1nZ1sdmZmFQAoAFwYHRWBUOhWIpG4fXFkRB6PxaARAiGEJTyeYcMw2FAymZ/P5Q60RMwD2+/vt237aqSvj0QjEQR7e6HrOjRNg1dK9Ph8aY9pDl5OpwkzewYJYywspDwBAMvlMiilUErB0HWYpglKaUgpFV+vVPJMKQVCCCiloJSiur0NQ9eh6zo455BC4KDVwuHhodQ0jWj1rYJijFVc1y06jvOnXs45hBDwer1ot9vVer2+0djbU1rp8w+02+2yUupls9kEZwyGYcBjmrC9XjDGUFlff1deWflY3dxUFAA+LC46p4eHly0p/V1dXXFLCG4JAdd194tLSwuvcrmn87ncwte1tRaZnorg0ZMvAIDM7GzE1919ybKss4QQ2Wg0SoVC4fWbubm3n4rF7wB+DfcgE8Wd7GpnbZ0Q4tmv142dWq21Wio19nZ3HQA4n7KP/nT3ZhT/49RJCQD4Cf/TszxdxDHIAAAAAElFTkSuQmCC",
+                "contentType": "image/png"
+              },
+              "label": "Not Active",
+              "skipLegend": true
+            },
+            {
+              "value": "Out",
+              "symbol": {
+                "angle": 0,
+                "xoffset": 0,
+                "yoffset": 0,
+                "type": "esriPMS",
+                "url": "d4c0d1aa-5e1b-4b6e-8e3c-4b7a9f544993",
+                "width": 10.5,
+                "height": 12.250000000000002,
+                "imageData": "iVBORw0KGgoAAAANSUhEUgAAAAwAAAAOCAYAAAAbvf3sAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3QUQFTkprFYJ8wAAAiFJREFUKM99kjFrU1EAhc999777XnPfbfIaaUKaQNMEjHbQWiWQpahDq4gl7aS/oLiIdjFSnIoRRHDUX+DoILhIoHYwVAQLEiK2aSOm1bZJi21Sm7y+XAeNxUG/8XA4wzkH+M34WC/+xfSN/r+F6xNH5kAwqJ1JJvm5VIpH43Gtoz+8NwAAINfSATx7vgEAGBsfP+bz+VJCyiHOOQzDeA8g/zib3QKA+5kBkE7ClcnJcDAUyoTD4QnbtoOUUriu+81xnBe1nZ1sdmZmFQAoAFwYHRWBUOhWIpG4fXFkRB6PxaARAiGEJTyeYcMw2FAymZ/P5Q60RMwD2+/vt237aqSvj0QjEQR7e6HrOjRNg1dK9Ph8aY9pDl5OpwkzewYJYywspDwBAMvlMiilUErB0HWYpglKaUgpFV+vVPJMKQVCCCiloJSiur0NQ9eh6zo455BC4KDVwuHhodQ0jWj1rYJijFVc1y06jvOnXs45hBDwer1ot9vVer2+0djbU1rp8w+02+2yUupls9kEZwyGYcBjmrC9XjDGUFlff1deWflY3dxUFAA+LC46p4eHly0p/V1dXXFLCG4JAdd194tLSwuvcrmn87ncwte1tRaZnorg0ZMvAIDM7GzE1919ybKss4QQ2Wg0SoVC4fWbubm3n4rF7wB+DfcgE8Wd7GpnbZ0Q4tmv142dWq21Wio19nZ3HQA4n7KP/nT3ZhT/49RJCQD4Cf/TszxdxDHIAAAAAElFTkSuQmCC",
+                "contentType": "image/png"
+              },
+              "label": "Out"
+            }
+          ]
+        },
+        "transparency": 0
+      },
+      "attributes": [
+        {
+          "name": "FIRE_NUMBER",
+          "title": "Fire Number"
+        },
+        {
+          "name": "IGNITION_DATE",
+          "title": "Date of Discovery",
+          "format": "asLocalDate"
+        },
+        {
+          "name": "FIRE_CAUSE",
+          "title": "Suspected Cause"
+        },
+        {
+          "name": "GEOGRAPHIC_DESCRIPTION",
+          "title": "Approximate Location"
+        },
+        {
+          "name": "CURRENT_SIZE",
+          "title": "Estimated Size",
+          "format": "asUnit('ha')"
+        },
+        {
+          "name": "FIRE_STATUS",
+          "title": "Stage of Control"
+        },
+        {
+          "name": "FIRE_OF_NOTE_NAME",
+          "title": "Fire of Note Information",
+          "format": "asLink(this.feature.properties.FIRE_OF_NOTE_URL)"
+        }
+      ],
+      "popupTemplate": "@wf-feature",
+      "titleAttribute": "FIRE_NUMBER"
+    }
+   ]
+}

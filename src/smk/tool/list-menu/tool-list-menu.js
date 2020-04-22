@@ -1,79 +1,61 @@
-include.module( 'tool-list-menu', [ 'tool', 'widgets', 'tool-list-menu.panel-tool-list-html' ], function ( inc ) {
+include.module( 'tool-list-menu', [ 
+    'tool.tool-base-js', 
+    'tool.tool-widget-js', 
+    'tool.tool-panel-js', 
+    'tool-list-menu.panel-list-menu-html' 
+], function ( inc ) {
     "use strict";
 
     Vue.component( 'list-menu-widget', {
-        extends: inc.widgets.toolButton,
+        extends: SMK.COMPONENT.ToolWidgetBase,
     } )
 
-    Vue.component( 'tool-list-panel', {
-        extends: inc.widgets.toolPanel,
-        template: inc[ 'tool-list-menu.panel-tool-list-html' ],
+    Vue.component( 'list-menu-panel', {
+        extends: SMK.COMPONENT.ToolPanelBase,
+        template: inc[ 'tool-list-menu.panel-list-menu-html' ],
         props: [ 'subWidgets' ]
     } )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
-    function ListMenuTool( option ) {
-        this.makePropWidget( 'icon', 'menu' )
-        this.makePropPanel( 'subWidgets', [] )
+    return SMK.TYPE.Tool.define( 'ListMenuTool', 
+        function () {
+            SMK.TYPE.ToolWidget.call( this, 'list-menu-widget' )
+            SMK.TYPE.ToolPanel.call( this, 'list-menu-panel' )
         
-        SMK.TYPE.Tool.prototype.constructor.call( this, $.extend( {
-            title:          'Menu',
-            position:       'toolbar',
-            widgetComponent:'list-menu-widget',
-            panelComponent: 'tool-list-panel',
-            currentTool:    null
-        }, option ) )
-    }
+            this.defineProp( 'subWidgets' )
 
-    SMK.TYPE.ListMenuTool = ListMenuTool
-
-    $.extend( ListMenuTool.prototype, SMK.TYPE.Tool.prototype )
-    ListMenuTool.prototype.afterInitialize = []
-    // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
-    //
-    ListMenuTool.prototype.afterInitialize.push( function ( smk ) {
-        var self = this
-
-        smk.on( this.id, {
-            'activate': function () {
-                if ( !self.enabled ) return
-
-                self.active = !self.active
-            },
-
-            'swipe-up': function ( ev ) {                
-                smk.$sidepanel.setExpand( 2 )
-            },
-
-            'swipe-down': function ( ev ) {
-                smk.$sidepanel.incrExpand( -1 )
-            }
-        } )
-    } )
-    // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
-    //
-    ListMenuTool.prototype.addTool = function ( tool, smk ) {
-        var self = this
-
-        if ( !tool.parentId ) {
-            tool.setParentId( this.id, smk )
-        }
-
-        smk.getSidepanel().addTool( tool, smk )
-
-        tool.showTitle = true
-
-        if ( tool.widgetComponent )
-            this.subWidgets.push( {
-                id: tool.id,
-                type: tool.type,
-                widgetComponent: tool.widgetComponent,
-                widget: tool.widget
+            this.subWidgets = []
+            this.icon = 'menu'
+            this.position = 'toolbar'
+        },
+        function ( smk ) {
+            smk.on( this.id, {
+                'swipe-up': function ( ev ) {                
+                    smk.$sidepanel.setExpand( 2 )
+                },
+    
+                'swipe-down': function ( ev ) {
+                    smk.$sidepanel.incrExpand( -1 )
+                }
             } )
-
-        return true
-    }
-
-    return ListMenuTool
+        },
+        {
+            addTool: function ( tool, smk, setParentId ) {
+                // if ( tool.makeWidgetComponent ) {          //  && !tool.parentId 
+                //     this.model.widgets.push( tool.makeWidgetComponent() )
+                // }
+                if ( !tool.parentId ) {
+                    setParentId( tool, this.id )
+                    this.subWidgets.push( tool.makeWidgetComponent() )
+                }
+        
+                smk.getSidepanel().addTool( tool, smk )
+        
+                tool.showTitle = true
+        
+                return true
+            }        
+        }
+    )
 } )
 

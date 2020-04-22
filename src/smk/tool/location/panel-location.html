@@ -1,4 +1,10 @@
-<side-panel class="smk-location-panel">
+<tool-panel class="smk-location-panel"
+    v-bind="$$projectProps( 'tool-panel' )"
+>
+    <template slot="header">
+        <slot></slot>
+    </template>
+
     <template slot="commands">
         <span class="smk-command" v-if="tool.identify" v-on:click="$$emit( 'identify' )">Identify features</span>
         <span class="smk-command" v-if="tool.measure" v-on:click="$$emit( 'measure' )">Start measurement</span>
@@ -26,4 +32,4 @@
         </span>
     </div>
 
-</side-panel>
+</tool-panel>

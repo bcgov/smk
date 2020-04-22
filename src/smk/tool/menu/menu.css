@@ -1,4 +1,4 @@
-.smk-sidepanel .smk-panel.smk-menu-panel > .smk-header {
+.smk-sidepanel .smk-menu-panel .smk-panel .smk-header {
     padding: 0;
     margin: 0;
     font-size: 16px;
@@ -9,24 +9,28 @@
     align-items: stretch;
 }
 
-.smk-sidepanel .smk-panel.smk-menu-panel > .smk-header .smk-menu-title {   
+.smk-sidepanel .smk-menu-panel .smk-panel .smk-body .smk-header {
+    display: none;
+}
+
+.smk-sidepanel .smk-menu-panel .smk-panel > .smk-header .smk-menu-title {   
     width: 100%;
     display: flex;
     justify-content: space-between;
 }
 
-.smk-sidepanel .smk-panel.smk-menu-panel > .smk-header .smk-menu-widgets {
+.smk-sidepanel .smk-menu-panel .smk-panel > .smk-header .smk-menu-widgets {
     width: 100%;
     display: flex;
     justify-content: space-between;
 }
 
-.smk-sidepanel .smk-panel.smk-menu-panel > .smk-header .smk-menu-widgets .smk-tool-title {
+.smk-sidepanel .smk-menu-panel .smk-panel > .smk-header .smk-menu-widgets .smk-tool-title {
     flex-grow: 1;
     justify-content: center;
 }
 
-.smk-sidepanel .smk-panel.smk-menu-panel > .smk-body {
+.smk-sidepanel .smk-menu-panel .smk-panel > .smk-body {
     padding: 0;
     padding-top: 5px;
     overflow-y: hidden;
@@ -35,9 +39,4 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: stretch;
-}
-
-.smk-sidepanel .smk-panel.smk-menu-panel > .smk-body .smk-header {
-    border: 0;
-    margin: 0;
 }
