@@ -101,7 +101,7 @@ module.exports = function( grunt ) {
 
             debug: {
                 files: [ 
-                    'debug/**', 
+                    'debug/*/**', 
                 ]
             }
         },
@@ -144,7 +144,7 @@ module.exports = function( grunt ) {
         'build-themes',
         'build-smk',
         // 'build-pom',
-        'clean:temp',
+        // 'clean:temp',
     ] )
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
