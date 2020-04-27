@@ -17,9 +17,8 @@
         setupGlobalSMK( util )
     }
     catch ( e ) {
-        setTimeout( function () {
-            document.querySelector( 'body' ).appendChild( failureMessage( e ) )
-        }, 1000 )
+        if ( !window.SMK ) window.SMK = {}
+        SMK.FAILURE = e
     }
 
     SMK.INIT = function ( option ) {
