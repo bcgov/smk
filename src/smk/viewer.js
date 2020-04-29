@@ -45,7 +45,7 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
             order: 1,
             title: 'Topographic',
             option: {
-                maxNativeZoom: 17
+                maxNativeZoom: 16
             }
         },
         Streets: {
