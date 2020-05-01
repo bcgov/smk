@@ -7,7 +7,7 @@
 -->
 <html>
     <head>
-        <title>Minimal</title>
+        <title>Error Handler</title>
         <script src="../../../../dist/smk.js"></script>
         <link rel="stylesheet" type="text/css" href="style.css"/>
     </head>
@@ -16,11 +16,14 @@
 
     <script>
         SMK.INIT( {
-            'smk-container-sel': "#smk-map-frame"
+            'smk-container-sel': "#smk-map-frameXXX"
+        } )
+        .catch( function ( e ) {
+            console.log( e )
         } )
     </script>
 
     <!-- The following module is used only for demo purposes -->
-    <script src="example-post-init.js"></script>
+    <!-- <script src="example-post-init.js"></script> -->
 </html>
 

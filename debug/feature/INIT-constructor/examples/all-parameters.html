@@ -7,43 +7,29 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <script src="/dist/smk.js"></script>
+        <title>All Parameters</title>
+        <script src="../../../../dist/smk.js"></script>
         <link rel="stylesheet" type="text/css" href="style.css"/>
     </head>
 
-    <body id="smk-map-frame">
-    </body>
-
-    <dialog id="ready" onclick="this.close()">
-        <p>Map is ready.</p>
-        <p id="ready-detail"></p>
-    </dialog>
-
-    <dialog id="failed" onclick="this.close()">
-        <p>Map failed to initialize</p>
-        <p id="failed-detail"></p>
-    </dialog>
+    <body id="smk-map-frame"></body>
 
     <script>
+        var m = document.location.toString().match( /(^.+)[/]debug/ )
+
         SMK.INIT( {
-                'smk-id':               'map',
-                'smk-container-sel':    '#smk-map-frame',
-                // 'smk-base-url':         '/dist',
-                'smk-config': [ 
-                    // './map-config.json', 
-                    // './layer-config.json', 
-                    // './layer-display-config.json', 
-                    '?' 
-                ],
-            } )
-            .then( function ( smk ) {
-                document.getElementById( 'ready' ).showModal()
-                document.getElementById( 'ready-detail' ).innerText = JSON.stringify( smk, null, '  ' )
-            } )
-            .catch( function ( e ) {
-                document.getElementById( 'failed' ).showModal()
-                document.getElementById( 'failed-detail' ).innerText = e
-            } )
+            'smk-id':               'map',
+            'smk-container-sel':    '#smk-map-frame',
+            'smk-base-url':         m[ 1 ] + '/dist/../dist/',
+            'smk-config': [ 
+                { tools: [ { type: 'markup', enabled: false } ] },
+                './map-config.json', 
+                '?' 
+            ],
+        } )
     </script>
+
+    <!-- The following module is used only for demo purposes -->
+    <script src="example-post-init.js"></script>
 </html>
 

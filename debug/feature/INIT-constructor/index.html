@@ -2,103 +2,10 @@
 <html>
     <head>
         <title>INIT Constructor</title>
-        <style>
-            #app {
-                position: absolute;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-
-                margin: 0;
-                padding: 0;
-
-                display: flex;
-                flex-direction: column;                
-            }
-
-            header {
-                border-bottom: 2px solid black;
-                /* padding: 5px; */
-            }
-
-            header h1 {
-                display: inline-block;
-                padding: 5px;
-                margin: 0;
-                font-size: 20px;
-            }
-
-            header ul {
-                display: inline-block;
-                margin: 0;
-                padding: 0;
-                border-left: 2px solid black;
-            }
-
-            header ul li {
-                display: inline-block;
-                /* border-radius: 10px; */
-                /* border: 2px solid black; */
-                margin: 0;
-                padding: 5px;
-                border-right: 2px solid black;
-            }
-
-            header ul li.selected {
-                background-color: yellow;
-            }
-
-            header ul li:hover {
-                background-color: orange;
-            }
-
-            article {
-                flex-grow: 1;
-                display: flex;                
-            }
-
-            #source {
-                /* white-space: pre; */
-                font-family: monospace;
-                font-size: 12px;
-                max-width: 50%;
-
-                border-right: 2px solid black;
-            }
-
-            #source h1 {
-                background-color: #aaa;
-                font-size: 14px;
-                padding: 5px;
-                margin: 0;
-            }
-
-            #source pre {
-                padding: 5px;
-            }
-
-            #demo {
-                flex-grow: 1;
-                position: relative;
-            }
-
-            #demo iframe {
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                border: none;
-            }
-        </style>
+        <link rel="stylesheet" type="text/css" href="style.css"/>
     </head>
 
     <body>
-        <div id="app"></div>
-    </body>
-
-    <template id="site">
         <div id="app">
             <header>
                 <h1>INIT Constructor</h1>
@@ -110,11 +17,13 @@
                     >{{ ex.title }}</li>
                 </ul>
             </header>
+
             <article>
                 <section id="source">
                     <h1 v-if="selectedExample">{{ selectedExample.url }}</h1>
-                    <pre>{{ selectedExampleSource }}</pre>
+                    <pre v-if="selectedExample">{{ selectedExample.doc }}</pre>
                 </section>
+
                 <section id="demo">
                     <iframe 
                         v-if="selectedExample" 
@@ -123,16 +32,14 @@
                 </section>
             </article>
         </div>
-    </template>
+    </body>
 
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script>
         var vm = new Vue( {
             el: '#app',
-            template: '#site',
             data: {
                 selectedExample: null,
-                selectedExampleSource: null,
                 examples: []
             },
             methods: {
@@ -140,43 +47,43 @@
                     var self = this
 
                     this.selectedExample = example
-                    this.selectedExampleSource = null
                     document.location.hash = example.id 
-
-                    return fetch( this.selectedExample.url )
-                        .then( function ( resp ) {
-                            return resp.text()
-                        } )
-                        .then( function ( out ) {
-                            self.selectedExampleSource = out
-                        } )
+                    this.selectedExampleSource = null
                 }
             }
         } )
 
-        vm.examples.push( example( 'Minimal' ) )
-        vm.examples.push( example( 'All Parameters' ) )
+        add( 'minimal' )
+        add( 'all-parameters' )
+        add( 'error-handler' )
+
+        function add ( exampleId ) {
+            var ex = {
+                id: exampleId,
+                url: 'examples/' + exampleId + '.html',
+                title: null,
+                doc: null,
+                description: null,
+            }
+
+            fetch( ex.url )
+                .then( function ( resp ) {
+                    return resp.text()
+                } )
+                .then( function ( out ) {
+                    ex.doc = out
+
+                    var m = out.match( /title[>](.+)[<][/]title/ )
+                    if ( m ) ex.title = m[ 1 ]
+                } )
+
+            vm.examples.push( ex )
+        }
 
         vm.examples.forEach( function ( ex ) { 
             if ( ( '#' + ex.id ) == document.location.hash )
                 vm.selectExample( ex )
         } )
-
-        function example( title, id, url ) {
-            var ex = {
-                title: title,
-                id: id,
-                url: url
-            }
-
-            if ( !id )
-                ex.id = title.toLowerCase().replace( /[^a-z0-9]+/g, '-' )
-            
-            if ( !url )
-                ex.url = 'examples/' + ex.id + '.html' 
-
-            return ex
-        }
     </script>   
 </html>
 

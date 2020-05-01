@@ -1,0 +1,21 @@
+{
+    "tools": [
+        {
+            "type": "toolbar",
+            "enabled": true
+        },
+        {
+            "type": "about",
+            "enabled": true,
+            "content": "SMK demo"
+        },
+        {
+            "type": "zoom",
+            "enabled": true
+        },
+        {
+            "type": "pan",
+            "enabled": true
+        }
+    ]
+}

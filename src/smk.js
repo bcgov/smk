@@ -1,16 +1,18 @@
+
 ( function () {
     "use strict";
+
 
     function isIE() {
         return navigator.userAgent.indexOf( "MSIE " ) > -1 || navigator.userAgent.indexOf( "Trident/" ) > -1;
     }
 
-    var documentReadyPromise
-    var bootstrapScriptEl = document.currentScript
+    // var documentReadyPromise
+    // var bootstrapScriptEl = document.currentScript
 
     try {
-        if ( isIE() )
-            throw new Error( 'SMK will not function in Internet Explorer 11. Use Google Chrome, or Microsoft Edge, or Firefox, or Safari.' )
+        // if ( isIE() )
+        //     throw new Error( 'SMK will not function in Internet Explorer 11. Use Google Chrome, or Microsoft Edge, or Firefox, or Safari.' )
 
         var util = {}
         installPolyfills( util )
@@ -22,41 +24,99 @@
         }, 1000 )
     }
 
-    SMK.INIT = function ( option ) {
-        var scriptEl = bootstrapScriptEl
+    var bootstrapScriptEl = document.currentScript
 
-        if ( option ) {
-            scriptEl = {
-                src: scriptEl.src,
-                attributes: Object.keys( option ).reduce( function ( acc, key ) {
-                    acc[ key ] = { value: option[ key ] }
-                    return acc
-                }, {} )
+    SMK.INIT = function ( option ) {
+        var attr = {}
+
+        function defineAttr( name, attrName, defaultFn, filterFn ) {
+            if ( !defaultFn ) defaultFn = function () {}
+            if ( !filterFn ) filterFn = function ( val ) { return val }
+            var scriptVal = bootstrapScriptEl.attributes[ attrName ] && bootstrapScriptEl.attributes[ attrName ].value
+            var optionVal = option && option[ attrName ] || option[ name ]
+            var valFn = function () { 
+                if ( optionVal ) {
+                    console.debug( 'attr', name, 'from INIT arguments:', optionVal )
+                    return optionVal 
+                }
+                if ( scriptVal ) {
+                    console.debug( 'attr', name, 'from script element attribute:', scriptVal )
+                    return scriptVal 
+                }
+                var d = defaultFn()
+                console.debug( 'attr', name, 'from default:', d )
+                return d
             }
+            var val
+            Object.defineProperty( attr, name, {
+                get: function () {
+                    if ( valFn ) val = filterFn( valFn() )
+                    valFn = null
+                    return val
+                }
+            } )
         }
 
-        try {
-            var timer
-            SMK.BOOT = SMK.BOOT
-                .then( function () { return scriptEl } )
-                .then( parseScriptElement )
-                .then( function ( attr ) {
-                    timer = 'SMK initialize ' + attr.id
-                    console.time( timer )
-                    return attr
-                } )
-                .then( resolveConfig )
-                .then( initializeSmkMap )
-                .catch( SMK.ON_FAILURE )
+        defineAttr( 'id', 'id', function () { return Object.keys( SMK.MAP ).length + 1 } )
+        defineAttr( 'containerSel', 'container-sel' )
+        defineAttr( 'config', 'config', function () { return '?smk-' }, function ( val ) {
+            if ( Array.isArray( val ) ) return val 
+            return val.split( /\s*[|]\s*/ ).filter( function ( i ) { return !!i } )
+        } )
+        defineAttr( 'baseUrl', 'base-url', function () {
+            var path = bootstrapScriptEl.src.replace( /([/]?)[^/?]+([?].+)?$/, function ( m, a ) { return a } )
+            console.debug( 'base path extracted from', bootstrapScriptEl.src, ' is ', path )
+            return ( new URL( path, document.location ) ).toString()
+        } )
+    // var scriptEl = bootstrapScriptEl
 
-            util.promiseFinally( SMK.BOOT, function () {
+    //     if ( option ) {
+    //         scriptEl = {
+    //             src: scriptEl.src,
+    //             attributes: Object.keys( option ).reduce( function ( acc, key ) {
+    //                 acc[ key ] = { value: option[ key ] }
+    //                 return acc
+    //             }, {} )
+    //         }
+    //     }
+        
+        try {
+            if ( isIE() )
+                throw new Error( 'SMK will not function in Internet Explorer 11. Use Google Chrome, or Microsoft Edge, or Firefox, or Safari.' )
+
+            var timer = 'SMK initialize ' + attr.id
+            console.time( timer )
+            console.groupCollapsed( timer )
+
+            var init = SMK.BOOT
+                // .then( function () { return scriptEl } )
+                // .then( parseScriptElement )
+                // .then( function () {
+                //     timer = 'SMK initialize ' + attr.id
+                //     console.groupCollapsed( timer )
+                //     console.time( timer )
+                //     // return attr
+                // } )
+                .then( function () {
+                    return resolveConfig( attr )
+                } )
+                .then( function () {
+                    return initializeSmkMap( attr )
+                } )
+                // .then( initializeSmkMap )
+                // .catch( SMK.ON_FAILURE )
+
+            SMK.BOOT = util.promiseFinally( init, function () {
+                console.groupEnd()
                 console.timeEnd( timer )
             } )
+            .catch( SMK.ON_FAILURE )
 
             return SMK.BOOT
         }
         catch ( e ) {
             setTimeout( function () {
+                // if ( scriptEl.attributes[ 'smk-container-sel' ].value )
                 document.querySelector( 'body' ).appendChild( failureMessage( e ) )
             }, 1000 )
         }
@@ -506,67 +566,70 @@
 // = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 
     function initializeSmkMap( attr ) {
-        include.option( { baseUrl: attr[ 'base-url' ] } )
+        include.option( { baseUrl: attr.baseUrl } )
 
-        return whenDocumentReady()
-            .then( function () {
-                if ( window.jQuery ) {
-                    include.tag( 'jquery' ).include = Promise.resolve( window.jQuery )
-                    return
-                }
+        if ( attr.id in SMK.MAP )
+            throw new Error( 'An SMK map with smk-id "' + attr.id + '" already exists' )
 
-                return include( 'jquery' )
-            } )
-            .then( function () {
-                if ( window.Vue ) {
-                    include.tag( 'vue' ).include = Promise.resolve( window.Vue )
-                    return
-                }
+        // return whenDocumentReady()
+        //     .then( function () {
+        //         if ( window.jQuery ) {
+        //             include.tag( 'jquery' ).include = Promise.resolve( window.jQuery )
+        //             return
+        //         }
 
-                return include( 'vue' )
-            } )
-            .then( function () {
-                return include( 'vue-config' )
-            } )
-            .then( function () {
-                if ( window.turf ) {
-                    include.tag( 'turf' ).include = Promise.resolve( window.turf )
-                    return
-                }
+        //         return include( 'jquery' )
+        //     } )
+        //     .then( function () {
+        //         if ( window.Vue ) {
+        //             include.tag( 'vue' ).include = Promise.resolve( window.Vue )
+        //             return
+        //         }
 
-                return include( 'turf' )
-            } )
-            .then( function () {
-                return include( 'smk-map' ).then( function ( inc ) {
-                    if ( attr[ 'id' ] in SMK.MAP )
-                        throw new Error( 'An SMK map with smk-id "' + attr[ 'id' ] + '" already exists' )
+        //         return include( 'vue' )
+        //     } )
+        //     .then( function () {
+        //         return include( 'vue-config' )
+        //     } )
+        //     .then( function () {
+        //         if ( window.turf ) {
+        //             include.tag( 'turf' ).include = Promise.resolve( window.turf )
+        //             return
+        //         }
 
-                    var map = SMK.MAP[ attr[ 'id' ] ] = new SMK.TYPE.SmkMap( attr )
+        //         return include( 'turf' )
+        //     } )
+            // .then( function () {
+                return include( 'smk-map' ).then( function () {
+                    // if ( attr[ 'id' ] in SMK.MAP )
+                    //     throw new Error( 'An SMK map with smk-id "' + attr[ 'id' ] + '" already exists' )
+
+                    var map = SMK.MAP[ attr.id ] = new SMK.TYPE.SmkMap( attr )
                     return map.initialize()
                 } )
-            } )
+            // } )
     }
 
 // = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 
-    function whenDocumentReady() {
-        if ( documentReadyPromise ) return documentReadyPromise
+    // function whenDocumentReady() {
+    //     if ( documentReadyPromise ) return documentReadyPromise
 
-        return ( documentReadyPromise = new Promise( function ( res, rej ) {
-            if ( document.readyState != "loading" )
-                return res()
+    //     return ( documentReadyPromise = new Promise( function ( res, rej ) {
+    //         if ( document.readyState != "loading" )
+    //             return res()
 
-            document.addEventListener( "DOMContentLoaded", function( ev ) {
-                clearTimeout( id )
-                res()
-            } )
+    //         document.addEventListener( "DOMContentLoaded", function( ev ) {
+    //             clearTimeout( id )
+    //             res()
+    //         } )
 
-            var id = setTimeout( function () {
-                console.error( 'timeout waiting for document ready' )
-                rej()
-            }, 20000 )
-        } ) )
-    }
+    //         var id = setTimeout( function () {
+    //             console.error( 'timeout waiting for document ready' )
+    //             rej()
+    //         }, 20000 )
+    //     } ) )
+    // }
 
 // = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 
@@ -695,9 +758,10 @@
             BOOT: Promise.resolve(),
             TAGS_DEFINED: false,
             ON_FAILURE: function ( e ) {
-                whenDocumentReady().then( function () {
+                // whenDocumentReady().then( function () {
                     document.querySelector( 'body' ).appendChild( failureMessage( e ) )
-                } )
+                // } )
+                throw new Error( e )
             },
 
             BUILD: {
@@ -757,6 +821,7 @@
             </div>\
         '.replace( /\s+/g, ' ' ).replace( '{}', e || '' )
 
+        
         return message
     }
 

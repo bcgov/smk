@@ -8,13 +8,26 @@ var t = new tg.TagSet()
 // viewer agnostic libraries
 // ==================================================================================
 
-t.script( 'jquery', 'lib/jquery-3.3.1.min.js' )
+t.script( 'document-ready', 'smk/document-ready.js' )
 
-t.script( 'vue', 'lib/vue-2.5.11.js' )
+t.script( 'jquery', 'lib/jquery-3.3.1.min.js' )
+// t.script( 'vue', 'lib/vue-2.5.11.js' )
+t.script( 'vue', 'lib/vue-2.5.11.min.js' )
+t.script( 'turf', 'lib/turf-5.1.6.min.js' )
+
+t.sequence( 'libs' )
+    .script( 'smk/libs.js' )
+    .tag( 'jquery' )
+    .tag( 'vue' )
+    .tag( 'turf' )
+
+// t.script( 'jquery', 'lib/jquery-3.3.1.min.js' )
+
+// t.script( 'vue', 'lib/vue-2.5.11.js' )
 // t.script( 'vue', 'lib/vue-2.5.11.min.js' )
 t.script( 'vue-config', 'smk/vue-config.js' )
 
-t.script( 'turf', 'lib/turf-5.1.6.min.js' )
+// t.script( 'turf', 'lib/turf-5.1.6.min.js' )
 
 t.script( 'proj4', 'lib/proj4-2.4.4.min.js' )
 
@@ -29,7 +42,10 @@ t.style( 'material-icons', 'https://fonts.googleapis.com/icon?family=Material+Ic
 // smk base
 // ==================================================================================
 
-t.script( 'smk-map',    'smk/smk-map.js' )
+t.sequence( 'smk-map' )
+    .tag( 'libs' )
+    .script( 'smk/smk-map.js' )
+
 t.script( 'util',       'smk/util.js' )
 t.script( 'event',      'smk/event.js' )
 t.script( 'viewer',     'smk/viewer.js' )

@@ -1,4 +1,3 @@
-
 include.module( 'tool-identify-feature', [
     'component-tool-panel-feature',
     'tool.tool-panel-feature-js'
