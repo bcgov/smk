@@ -36,6 +36,7 @@
     position: absolute;
     right: 0;
     bottom: 10px;
+    top: 0;
 
     display: flex;
     flex-direction: column-reverse;

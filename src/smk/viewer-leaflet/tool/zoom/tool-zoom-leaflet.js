@@ -20,6 +20,8 @@ include.module( 'tool-zoom-leaflet', [ 'tool-zoom', 'leaflet' ], function () {
             L.control.zoom( {
                 position: 'topright'
             } ).addTo( smk.$viewer.map )
+
+            smk.addToStatus( $( '<div class="smk-spacer" style="order: 1; height: 70px; flex-shrink: 0">' ).get( 0 ) )
         }
     } )
 
