@@ -94,14 +94,22 @@ include.module( 'layer.layer-vector-js', [ 'layer.layer-js' ], function () {
                 // var w = self.config.style.strokeWidth
                 // ctx.lineWidth = w
                 // ctx.strokeStyle = self.config.style.strokeColor + alpha( self.config.style.strokeOpacity )
-                ctx.fillStyle = st.fillColor + alpha( st.fillOpacity )
+                ctx.fillStyle = rgba( st.fillColor, st.fillOpacity )
 
                 ctx.fillRect( 0, 0, width, height )
-
                 // ctx.strokeRect( w / 2, w / 2, width - w , height - w )
             } )
 
             return offset + width
+        }
+
+        function rgba( color, opacity ) {
+            var div = $( '<div>' ).appendTo( 'body' ).css( 'background-color', color )
+            var rgb = window.getComputedStyle( div.get( 0 ) ).backgroundColor
+            div.remove()
+
+            var m = /^.+[(]([^,]+)[,]([^,]+)[,]([^,]+).+$/.exec( rgb )
+            return 'rgba( ' + m[ 1 ] + ',' + m[ 2 ] + ',' + m[ 3 ] + ',' + ( opacity || 1 ) + ')' 
         }
 
         function alpha( op ) {
