@@ -43,6 +43,8 @@ include.module( 'api.geocoder-js', [ 'jquery', 'util' ], function () {
                             localityType:        feature.properties.localityType,
                             streetName:          feature.properties.streetName,
                             streetType:          feature.properties.streetType,
+                            siteName:            feature.properties.siteName,
+                            matchPrecision:      feature.properties.matchPrecision,
                         }                        
                     } )
             } )
@@ -71,6 +73,8 @@ include.module( 'api.geocoder-js', [ 'jquery', 'util' ], function () {
                     localityType:        data.properties.localityType,
                     streetName:          data.properties.streetName,
                     streetType:          data.properties.streetType,
+                    siteName:            data.properties.siteName,
+                    matchPrecision:      data.properties.matchPrecision,
                 }
 
                 if ( locationMode == 'geocoder' ) {
