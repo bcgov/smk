@@ -22,6 +22,7 @@ include.module( 'api.geocoder-js', [ 'jquery', 'util' ], function () {
         }, this.parameter, option )
 
         delete option.maxDistance
+        delete option.locationMode
 
         return this.fetchGeocoder( 'addresses', option )
             .then( function ( data ) {
