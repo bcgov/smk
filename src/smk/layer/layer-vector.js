@@ -54,8 +54,8 @@ include.module( 'layer.layer-vector-js', [ 'layer.layer-js' ], function () {
                     ctx.beginPath()
                     ctx.arc( offset + width / 2, height / 2, styles[ 0 ].strokeWidth / 2, 0, 2 * Math.PI )
                     ctx.lineWidth = 2
-                    ctx.strokeStyle = styles[ 0 ].strokeColor + alpha( styles[ 0 ].strokeOpacity )
-                    ctx.fillStyle = styles[ 0 ].fillColor + alpha( styles[ 0 ].fillOpacity )
+                    ctx.strokeStyle = cssColorAsRGBA( styles[ 0 ].strokeColor, styles[ 0 ].strokeOpacity )
+                    ctx.fillStyle = cssColorAsRGBA( styles[ 0 ].fillColor, styles[ 0 ].fillOpacity )
                     ctx.fill()
                     ctx.stroke()
 
@@ -70,7 +70,7 @@ include.module( 'layer.layer-vector-js', [ 'layer.layer-js' ], function () {
         
             styles.forEach( function ( st ) {
                 ctx.lineWidth = st.strokeWidth
-                ctx.strokeStyle = st.strokeColor
+                ctx.strokeStyle = cssColorAsRGBA( st.strokeColor, st.strokeOpacity )
                 ctx.lineCap = st.strokeCap
                 if ( st.strokeDashes ) {
                     ctx.setLineDash( st.strokeDashes.split( ',' ) )
@@ -94,7 +94,7 @@ include.module( 'layer.layer-vector-js', [ 'layer.layer-js' ], function () {
                 // var w = self.config.style.strokeWidth
                 // ctx.lineWidth = w
                 // ctx.strokeStyle = self.config.style.strokeColor + alpha( self.config.style.strokeOpacity )
-                ctx.fillStyle = rgba( st.fillColor, st.fillOpacity )
+                ctx.fillStyle = cssColorAsRGBA( st.fillColor, st.fillOpacity )
 
                 ctx.fillRect( 0, 0, width, height )
                 // ctx.strokeRect( w / 2, w / 2, width - w , height - w )
@@ -102,19 +102,6 @@ include.module( 'layer.layer-vector-js', [ 'layer.layer-js' ], function () {
 
             return offset + width
         }
-
-        function rgba( color, opacity ) {
-            var div = $( '<div>' ).appendTo( 'body' ).css( 'background-color', color )
-            var rgb = window.getComputedStyle( div.get( 0 ) ).backgroundColor
-            div.remove()
-
-            var m = /^.+[(]([^,]+)[,]([^,]+)[,]([^,]+).+$/.exec( rgb )
-            return 'rgba( ' + m[ 1 ] + ',' + m[ 2 ] + ',' + m[ 3 ] + ',' + ( opacity || 1 ) + ')' 
-        }
-
-        function alpha( op ) {
-            return Number( Math.round( ( op || 1 ) * 255 ) ).toString( 16 )
-        } 
     }
 
     VectorLayer.prototype.initialize = function () {
@@ -176,5 +163,19 @@ include.module( 'layer.layer-vector-js', [ 'layer.layer-js' ], function () {
     VectorLayer.prototype.clear = function () {
         if ( this.clearLayer )
             return this.clearLayer()
+    }
+
+    var colorMemo = {}
+    function cssColorAsRGBA( color, opacity ) {
+        var rgb = colorMemo[ color ]
+        if ( !rgb ) {
+            var div = $( '<div>' ).appendTo( 'body' ).css( 'background-color', color )
+            colorMemo[ color ] = rgb = window.getComputedStyle( div.get( 0 ) ).backgroundColor
+            div.remove()
+        }
+
+        var s = rgb.split( /\b/ )
+        if ( s.length != 8 ) throw new Error( 'can\'t parse: ' + rgb )
+        return 'rgba( ' + s[ 2 ] + ',' + s[ 4 ] + ',' + s[ 6 ] + ',' + ( opacity || 1 ) + ')' 
     }
 } )
