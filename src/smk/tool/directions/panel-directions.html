@@ -68,7 +68,7 @@
             <div class="smk-description">
                 <div class="smk-address"
                     v-if="site.fullAddress"
-                    v-bind:class="'smk-precision-' + site.matchPrecision.toLowerCase()"
+                    v-bind:class="'smk-precision-' + ( site.matchPrecision || 'unknown' ).toLowerCase()"
                 >
                     <div class="smk-site"
                         v-if="site.siteName"
