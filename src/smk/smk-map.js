@@ -422,7 +422,11 @@ include.module( 'smk-map', [ 'jquery', 'util', 'theme-base', 'sidepanel' ], func
             if ( self.viewer.activeTool in self.$tool )
                 self.$tool[ self.viewer.activeTool ].active = true
 
-            return self.$viewer.updateLayersVisible()
+            return self.$viewer.updateLayersVisible().then( function () {
+                return self.$viewer.waitFinishedLoading()
+            } ).then( function () {
+                // console.log('all layers loaded')
+            } )
         }
     }
 
@@ -444,7 +448,7 @@ include.module( 'smk-map', [ 'jquery', 'util', 'theme-base', 'sidepanel' ], func
 
     SmkMap.prototype.addToStatus = function ( html ) {
         if ( !this.$status )
-            this.$status = this.addToOverlay( '<div class="smk-status">' )
+            this.$status = this.addToOverlay( '<div class="smk-status smk-elastic-container">' )
 
         return $( html ).appendTo( this.$status ).get( 0 )
     }

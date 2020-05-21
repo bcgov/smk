@@ -11,7 +11,7 @@
   ],
   "scripts": {
       "build": "grunt release",
-      "debug": "grunt develop watch",
+      "debug": "grunt develop connect",
       "serve": "grunt connect"
   },
   "dependencies": {

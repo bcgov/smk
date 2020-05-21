@@ -19,9 +19,8 @@
         setupGlobalSMK( util )
     }
     catch ( e ) {
-        setTimeout( function () {
-            document.querySelector( 'body' ).appendChild( failureMessage( e ) )
-        }, 1000 )
+        if ( !window.SMK ) window.SMK = {}
+        SMK.FAILURE = e
     }
 
     var bootstrapScriptEl = document.currentScript

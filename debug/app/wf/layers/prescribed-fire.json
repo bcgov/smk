@@ -3,7 +3,7 @@
     {
       "type": "esri-feature",
       "id": "prescribed-fire",
-      "title": "Prescribed Fire",
+      "title": "BC Wildfire Prescribed Fire",
       "isQueryable": false,
       "attribution": "Copyright 117 DataBC, Government of British Columbia",
       "serviceUrl": "https://services6.arcgis.com/ubm4tcTYICKBpist/ArcGIS/rest/services/British_Columbia_Prescribed_Fire/FeatureServer/0",

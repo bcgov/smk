@@ -27,9 +27,9 @@
                 { "id": "area-restrictions", "isVisible": false },
                 { "#id": "area-restrictions-esri", "isVisible": false },
                 
-                { "id": "whse-land-and-natural-resource-prot-current-fire-polys-sp", "isVisible": false },
+                { "#id": "whse-land-and-natural-resource-prot-current-fire-polys-sp", "isVisible": false },
                 
-                { "id": "prescribed-fire", "isVisible": false },
+                { "#id": "prescribed-fire", "isVisible": false },
                 
                 { "#id": "closed-recreation-sites", "isVisible": false },
                 { "id": "closed-recreation-sites-esri", "isVisible": false },
