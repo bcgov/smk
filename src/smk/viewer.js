@@ -240,6 +240,33 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
         this.changedLayerVisibility( function () {
             self.delayedUpdateLayersVisible()
         } )
+
+        this.layersLoading = SMK.UTIL.resolved()
+        var whenFinishedLoading
+        this.startedLoading( function () {
+            if ( whenFinishedLoading ) {
+                whenFinishedLoading[ 1 ]( new Error( 'startedLoading called before finishedLoading' ) )
+                whenFinishedLoading = null
+            }
+
+            this.layersLoading = SMK.UTIL.makePromise( function ( res, rej ) {
+                whenFinishedLoading = [ res, rej ]
+            } )
+        } )
+        if ( this.loading ) {
+            console.log( 'already laoding' )
+        }
+
+        this.finishedLoading( function () {
+            if ( whenFinishedLoading ) {
+                whenFinishedLoading[ 0 ]()
+                whenFinishedLoading = null
+            }
+        } )
+    }
+
+    Viewer.prototype.waitFinishedLoading = function () {
+        return this.layersLoading
     }
 
     Viewer.prototype.addLayer = function ( layerConfig ) {
