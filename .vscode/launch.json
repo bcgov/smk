@@ -8,7 +8,7 @@
             "type": "chrome",
             "request": "launch",
             "name": "Launch Chrome",
-            "url": "https://localhost:8443",
+            "url": "https://localhost:8443/debug",
             "pathMapping": {
                 "/": "${workspaceFolder}",
                 "/dist/smk": "${workspaceFolder}/src/smk"
