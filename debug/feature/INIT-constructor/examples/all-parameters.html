@@ -11,25 +11,26 @@
         <script src="../../../../dist/smk.js"></script>
         <link rel="stylesheet" type="text/css" href="style.css"/>
     </head>
+    <body>
+        <div id="smk-map-frame"></div>
 
-    <body id="smk-map-frame"></body>
+        <script>
+            var m = document.location.toString().match( /(^.+)[/]debug/ )
 
-    <script>
-        var m = document.location.toString().match( /(^.+)[/]debug/ )
+            SMK.INIT( {
+                'smk-id':               'map',
+                'smk-container-sel':    '#smk-map-frame',
+                'smk-base-url':         m[ 1 ] + '/dist/../dist/',
+                'smk-config': [ 
+                    { tools: [ { type: 'markup', enabled: false } ] },
+                    './map-config.json', 
+                    '?' 
+                ],
+            } )
+        </script>
 
-        SMK.INIT( {
-            'smk-id':               'map',
-            'smk-container-sel':    '#smk-map-frame',
-            'smk-base-url':         m[ 1 ] + '/dist/../dist/',
-            'smk-config': [ 
-                { tools: [ { type: 'markup', enabled: false } ] },
-                './map-config.json', 
-                '?' 
-            ],
-        } )
-    </script>
-
-    <!-- The following module is used only for demo purposes -->
-    <script src="example-post-init.js"></script>
+        <!-- The following module is used only for demo purposes -->
+        <script src="example-post-init.js"></script>
+    </body>
 </html>
 

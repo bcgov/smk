@@ -12,18 +12,28 @@
         <link rel="stylesheet" type="text/css" href="style.css"/>
     </head>
 
-    <body id="smk-map-frame"></body>
+    <body>
+        <header>HEADER</header>
+        <article>
+            <div id="smk-map-frame"></div>
+        </article>
+        <footer>FOOTER</footer>
+        
+        <script>
+            SMK.INIT( {
+                // 'smk-container-sel': "#smk-map-frameXXX",
+                containerSel: "#smk-map-frame",
+                config: [
+                    'foo.json'
+                ]
+            } )
+            .catch( function ( e ) {
+                console.log( e )
+            } )
+        </script>
 
-    <script>
-        SMK.INIT( {
-            'smk-container-sel': "#smk-map-frameXXX"
-        } )
-        .catch( function ( e ) {
-            console.log( e )
-        } )
-    </script>
-
-    <!-- The following module is used only for demo purposes -->
-    <!-- <script src="example-post-init.js"></script> -->
+        <!-- The following module is used only for demo purposes -->
+        <script src="example-post-init.js"></script>
+    </body>
 </html>
 
