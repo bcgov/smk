@@ -12,15 +12,11 @@ include.module( 'smk-map', [ 'jquery', 'util', 'theme-base', 'sidepanel' ], func
     SMK.TYPE.SmkMap = SmkMap
 
     SmkMap.prototype.initialize = function () {
-        var self = this;
+        var self = this
 
-        console.groupCollapsed( 'SMK initialize ' + this.$option[ 'id' ] )
-
-        console.log( 'options:', JSON.parse( JSON.stringify( this.$option ) ) )
-
-        var container = $( this.$option[ 'container-sel' ] )
+        var container = $( this.$option.containerSel )
         if ( container.length != 1 )
-            throw new Error( 'smk-container-sel "' + this.$option[ 'container-sel' ] + '" doesn\'t match a unique element' )
+            throw new Error( 'smk-container-sel "' + this.$option.containerSel + '" doesn\'t match a unique element' )
 
         this.$container = container.get( 0 )
 
@@ -28,53 +24,35 @@ include.module( 'smk-map', [ 'jquery', 'util', 'theme-base', 'sidepanel' ], func
             .addClass( 'smk-map-frame smk-hidden' )
 
         var spinner = $( '<img class="smk-startup smk-spinner">' )
-            .attr( 'src', include.option( 'baseUrl' ) + 'images/spinner.gif' )
+            .attr( 'src', this.$option.baseUrl + 'images/spinner.gif' )
             .appendTo( this.$container )
 
-        var status = $( '<div class="smk-startup smk-status">' )
-            // .text( 'Reticulating splines...' )
-            .appendTo( this.$container )
-
-        return SMK.UTIL.promiseFinally(
-            SMK.UTIL.resolved()
-                .then( loadConfigs )
-                .then( mergeConfigs )
-                // .then( resolveConfig )
-                .then( initMapFrame )
-                .then( resolveDeviceConfig )
-                .then( checkTools )
-                .then( loadViewer )
-                .then( loadTools )
-                .then( initViewer )
-                .then( initTools )
-                .then( showMap )
-                .catch( function ( e ) {
-                    console.error( e )
-
-                    $( self.$container )
-                        .removeClass( 'smk-hidden' )
-
-                    status.html(
-                        '<h3>SMK initialization failed</h3><br>' +
-                        e + ( e.parseSource ? ',<br>while parsing ' + e.parseSource : '' )
-                    )
-                    spinner.remove()
-
-                    return Promise.reject( )
-                } ),
-            function () {
-                console.groupEnd()
-            }
-        ).then( function () {
-            return self
-        } )
+        return SMK.UTIL.resolved()
+            .then( loadConfigs )
+            .then( mergeConfigs )
+            // .then( resolveConfig )
+            .then( initMapFrame )
+            .then( resolveDeviceConfig )
+            .then( checkTools )
+            .then( loadViewer )
+            .then( loadTools )
+            .then( initViewer )
+            .then( initTools )
+            .then( showMap )
+            .finally( function () {
+                spinner.remove()
+                $( self.$container )
+                    .hide()
+                    .removeClass( 'smk-hidden' )
+                    .fadeIn( 1000 )
+            } )
 
         // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
         function loadConfigs() {
-            return SMK.UTIL.waitAll( self.$option.config.map( function ( c ) {
-                if ( !c.url )
-                    return SMK.UTIL.resolved( c )
+            return SMK.UTIL.waitAll( self.$option.parsedConfig.map( function ( c ) {
+                if ( c.obj )
+                    return SMK.UTIL.resolved( c.obj )
 
                 var id = c.url.toLowerCase().replace( /[^a-z0-9]+/g, '-' ).replace( /^[-]|[-]$/g, '' )
                 var tag = 'config-' + id
@@ -88,12 +66,12 @@ include.module( 'smk-map', [ 'jquery', 'util', 'theme-base', 'sidepanel' ], func
                 return include( tag )
                     .then( function ( inc ) {
                         var obj = JSON.parse( inc[ tag ] )
-                        obj.$sources = c.$sources
+                        obj.$source = c.$source
                         return obj
                     } )
                     .catch( function ( e ) {
-                        console.warn( c.$sources[ 0 ] )
-                        e.parseSource = c.$sources[ 0 ]
+                        console.warn( 'failed to load tag "' + tag + '" for ' + c.$source ) 
+                        e.parseSource = c.$source 
                         throw e
                     } )
             } ) )
@@ -101,7 +79,6 @@ include.module( 'smk-map', [ 'jquery', 'util', 'theme-base', 'sidepanel' ], func
 
         function mergeConfigs( configs ) {
             var config = Object.assign( {}, SMK.CONFIG )
-            config.$sources = []
 
             console.log( 'base', JSON.parse( JSON.stringify( config ) ) )
 
@@ -113,9 +90,6 @@ include.module( 'smk-map', [ 'jquery', 'util', 'theme-base', 'sidepanel' ], func
                 mergeViewer( config, c )
                 mergeTools( config, c )
                 mergeLayers( config, c )
-
-                config.$sources = config.$sources.concat( c.$sources || '(unknown)' )
-                delete c.$sources
 
                 Object.assign( config, c )
 
@@ -279,9 +253,6 @@ include.module( 'smk-map', [ 'jquery', 'util', 'theme-base', 'sidepanel' ], func
             $( self.$container )
                 .addClass( 'smk-viewer-' + self.viewer.type )
 
-            // if ( self.$option[ 'title-sel' ] )
-            //     $( self.$option[ 'title-sel' ] ).text( self.name )
-
             var themes = [ 'base' ].concat( self.viewer.themes ).map( function ( th ) { return 'theme-' + th } )
             
             $( self.$container )
@@ -409,7 +380,6 @@ include.module( 'smk-map', [ 'jquery', 'util', 'theme-base', 'sidepanel' ], func
         }
 
         function showMap() {
-            status.remove()
             spinner.remove()
             $( self.$container )
                 .hide()
@@ -422,11 +392,19 @@ include.module( 'smk-map', [ 'jquery', 'util', 'theme-base', 'sidepanel' ], func
             if ( self.viewer.activeTool in self.$tool )
                 self.$tool[ self.viewer.activeTool ].active = true
 
-            return self.$viewer.updateLayersVisible().then( function () {
-                return self.$viewer.waitFinishedLoading()
-            } ).then( function () {
-                // console.log('all layers loaded')
-            } )
+            return SMK.UTIL.resolved()
+                .then( function () {
+                    return self.$viewer.updateLayersVisible()
+                } )
+                .then( function () {
+                    return self.$viewer.waitFinishedLoading()
+                } )
+                .then( function () {
+                    // console.log('all layers loaded')
+                    return self
+                } )
+
+
         }
     }
 

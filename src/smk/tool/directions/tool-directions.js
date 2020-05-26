@@ -156,7 +156,7 @@ include.module( 'tool-directions', [
                 self.setMessage( 'Finding current location...', 'progress', null )
                 self.busy = true
     
-                return SMK.UTIL.promiseFinally( smk.$viewer.getCurrentLocation(), function () {
+                smk.$viewer.getCurrentLocation().finally( function () {
                     self.busy = false
                     self.setMessage()
                 } )
@@ -370,39 +370,41 @@ include.module( 'tool-directions', [
                     oversize:           this.routeOptions.oversize,  
                 }
         
-                return SMK.UTIL.promiseFinally( this.routePlanner.fetchDirections( points, opt ).then( function ( data ) {
-                    self.handleRouteData( data )
-        
-                    self.displaySegments( data.segments )
-        
-                    if ( data.visitOrder && data.visitOrder.findIndex( function ( v, i ) { return points[ v ].index != i } ) != -1 ) {
-                        // console.log( data.visitOrder )
-                        // console.log( data.visitOrder.map( function ( v ) { return points[ v ].index } ) )
-                        // console.log( JSON.stringify( self.waypoints, null, '  ' ) )
-        
-                        self.waypoints = data.visitOrder.map( function ( v ) { return self.waypoints[ points[ v ].index ] } )
-                        // console.log( JSON.stringify( self.waypoints, null, '  ' ) )
-                        // self.addWaypoint()
-                    }
-        
-                    self.displayWaypoints()
-        
-                    self.setMessage( 'Route travels ' + data.distance + ' km in ' + data.timeText, 'summary' )
-        
-                    self.hasRoute = true
-        
-                    self.directions = data.directions
-                    
-                    self.directionsRaw = data
-                    self.directionsRaw.waypoints = JSON.parse( JSON.stringify( self.waypoints ) )
-                } )
-                .catch( function ( err ) {
-                    console.debug( err )
-                    self.setMessage( 'Unable to find route', 'error' )
-                    self.displayWaypoints()
-                } ), function () {
-                    self.busy = false
-                } )
+                return this.routePlanner.fetchDirections( points, opt )
+                    .then( function ( data ) {
+                        self.handleRouteData( data )
+            
+                        self.displaySegments( data.segments )
+            
+                        if ( data.visitOrder && data.visitOrder.findIndex( function ( v, i ) { return points[ v ].index != i } ) != -1 ) {
+                            // console.log( data.visitOrder )
+                            // console.log( data.visitOrder.map( function ( v ) { return points[ v ].index } ) )
+                            // console.log( JSON.stringify( self.waypoints, null, '  ' ) )
+            
+                            self.waypoints = data.visitOrder.map( function ( v ) { return self.waypoints[ points[ v ].index ] } )
+                            // console.log( JSON.stringify( self.waypoints, null, '  ' ) )
+                            // self.addWaypoint()
+                        }
+            
+                        self.displayWaypoints()
+            
+                        self.setMessage( 'Route travels ' + data.distance + ' km in ' + data.timeText, 'summary' )
+            
+                        self.hasRoute = true
+            
+                        self.directions = data.directions
+                        
+                        self.directionsRaw = data
+                        self.directionsRaw.waypoints = JSON.parse( JSON.stringify( self.waypoints ) )
+                    } )
+                    .catch( function ( err ) {
+                        console.debug( err )
+                        self.setMessage( 'Unable to find route', 'error' )
+                        self.displayWaypoints()
+                    } )
+                    .finally( function () {
+                        self.busy = false
+                    } )
             },
         
             clearLayers: function () {
