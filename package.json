@@ -7,12 +7,12 @@
   "repository": "github:bcgov/smk-client",
   "main": "dist/smk.js",
   "files": [
-      "dist"
+    "dist"
   ],
   "scripts": {
-      "build": "grunt release",
-      "debug": "grunt develop connect",
-      "serve": "grunt connect"
+    "build": "grunt release",
+    "debug": "grunt develop connect",
+    "serve": "grunt connect"
   },
   "dependencies": {
     "grunt": "^1.0.3",

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Error Handler</title>
+        <script src="../../../../dist/smk.js"></script>
+        <link rel="stylesheet" type="text/css" href="style.css"/>
+    </head>
+    <body>
+        <header>HEADER</header>
+        <article>
+            <div id="smk-map-frame"></div>
+        </article>
+        <footer>FOOTER</footer>
+        
+<!--***************************************************************************
+    This example shows a minimal SMK application.
+
+    Instead of using smk-container-sel attribute on the script tag for smk.js,
+    this app uses the same attribute as an argument to SMK.INIT.
+-->
+        <script>
+            SMK.INIT( {
+                containerSel: "#smk-map-frame",
+                config: [
+                    'foo.json'
+                ]
+            } )
+        </script>
+<!--***************************************************************************-->
+
+        <!-- The following module is used only for demo purposes -->
+        <script src="../lib/example-post-init.js"></script>
+    </body>
+</html>
+

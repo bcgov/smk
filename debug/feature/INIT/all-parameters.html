@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>All Parameters</title>
+
+        <script src="../../../dist/smk.js"></script>
+        <link rel="stylesheet" type="text/css" href="style.css"/>
+    </head>
+    <body>
+        <div id="smk-map-frame"></div>
+
+<!--***************************************************************************
+    This example shows all the parameters that can be passed to SMK.INIT.
+
+    Notice that the smk-config parameter receives a JS array, 
+    instead of URLs separated by '|'.
+-->
+        <script>
+            SMK.INIT( {
+                'smk-id':               'map',
+                'smk-container-sel':    '#smk-map-frame',
+                'smk-base-url':         SMK.BASE_URL + '../dist/',
+                'smk-config': [ 
+                    { tools: [ { type: 'markup', enabled: false } ] },
+                    './map-config.json', 
+                    '?' 
+                ],
+            } )
+        </script>
+<!--***************************************************************************-->
+
+        <!-- The following module is used only for demo purposes -->
+        <script src="../lib/example-post-init.js"></script>
+    </body>
+</html>
+

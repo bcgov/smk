@@ -123,7 +123,7 @@ include.module( 'tool-query', [
                         param[ p.prop.id ] = $.extend( {}, p.prop )
                     } )
 
-                    return SMK.UTIL.promiseFinally( SMK.UTIL.resolved()
+                    return SMK.UTIL.resolved()
                         .then( function () {
                             return self.query.queryLayer( param, { within: self.within }, smk.$viewer )
                         } )
@@ -143,7 +143,8 @@ include.module( 'tool-query', [
                         .catch( function ( err ) {
                             console.warn( err )
                             self.setMessage( 'No features found', 'warning' )
-                        } ), function () {
+                        } )
+                        .finally( function () {
                             self.busy = false
                         } )
 
