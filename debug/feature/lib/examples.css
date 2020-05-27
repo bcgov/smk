@@ -71,6 +71,12 @@ article {
 
 #source pre {
     padding: 5px;
+    color: #ccc;
+}
+
+#source pre b {
+    color: #000;
+    font-size: 1.1em;
 }
 
 #demo {

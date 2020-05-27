@@ -1,17 +1,10 @@
 <!DOCTYPE html>
-<!--
-    This example shows a minimal SMK application.
-
-    Instead of using smk-container-sel attribute on the script tag for smk.js,
-    this app uses the same attribute as an argument to SMK.INIT.
--->
 <html>
     <head>
         <title>Error Handler</title>
         <script src="../../../../dist/smk.js"></script>
         <link rel="stylesheet" type="text/css" href="style.css"/>
     </head>
-
     <body>
         <header>HEADER</header>
         <article>
@@ -19,21 +12,24 @@
         </article>
         <footer>FOOTER</footer>
         
+<!--***************************************************************************
+    This example shows a minimal SMK application.
+
+    Instead of using smk-container-sel attribute on the script tag for smk.js,
+    this app uses the same attribute as an argument to SMK.INIT.
+-->
         <script>
             SMK.INIT( {
-                // 'smk-container-sel': "#smk-map-frameXXX",
                 containerSel: "#smk-map-frame",
                 config: [
                     'foo.json'
                 ]
             } )
-            .catch( function ( e ) {
-                console.log( e )
-            } )
         </script>
+<!--***************************************************************************-->
 
         <!-- The following module is used only for demo purposes -->
-        <script src="example-post-init.js"></script>
+        <script src="../lib/example-post-init.js"></script>
     </body>
 </html>
 

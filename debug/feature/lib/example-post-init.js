@@ -1,4 +1,3 @@
-
 SMK.BOOT
     .then( function ( smk ) {
         dialog( [ 'Map is ready.' ] )
