@@ -1,6 +1,4 @@
-# SMK
-## Simple Map Kit
-### A versatile and lightweight toolkit for building a simple web map.
+*A versatile and lightweight toolkit for building a simple web map.*
 
 **SMK** is designed to make it easy to integrate a map into a web application.
 
