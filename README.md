@@ -1,48 +1,45 @@
-# smk-client
-## Simple Map Kit Client
+# SMK
+## Simple Map Kit
 ### A versatile and lightweight toolkit for building a simple web map.
 
-[Repository](https://github.com/bcgov/smk-client)
-|
-[Docs](https://bcgov.github.io/smk-client/)
-|
-[Issues](https://github.com/bcgov/smk/issues)
+**SMK** is designed to make it easy to integrate a map into a web application.
 
-**smk-client** is designed to make it easy to integrate a map into a web application.
-
-The application only needs to include one `<script>` tag to load the library, and define a single `<div>` tag to contain the map.
+The application needs to include one `<script>` tag to load the library, define a single `<div>` tag to contain the map, and call one method to initialize the map.
 There is no other code for the application to write, the map functionality is defined completely by a JSON configuration structure.
 
-Here is an example of a complete HTML page that uses smk-client to show a map:
+Here is an example of a complete HTML page that uses SMK to show a map:
 
 ```html
 <!DOCTYPE html>
 <html>
     <head>
-        <title></title>
-        <script src="smk.js" smk-container-sel="#smk-map-frame"></script>
+        <title>SMK Demo</title>
+        <script src="smk.js"></script>
         <style>
-            #smk-map-frame { position: absolute; top: 0; left: 0; right: 0; bottom: 0; margin: 0; padding: 0; }
+            #smk-map-frame { 
+                position: absolute; 
+                top: 0; left: 0; right: 0; bottom: 0; margin: 0; padding: 0; 
+            }
         </style>
     </head>
-    <body id="smk-map-frame"></body>
+    <body>
+        <div id="smk-map-frame"></div>
+        <script>
+            SMK.INIT( { containerSel: '#smk-map-frame' } )
+        </script>
+    </body>
 </html>
 ```
 
-The [client API](https://bcgov.github.io/smk-client/SMK-Client-API) details how the application interacts with the map. 
-The interaction is via attributes on the `<script>` tag, and/or parameters passed to the page in the URL.
-There are [examples](https://bcgov.github.io/smk-client/SMK-Client-API-Examples) of the various ways the map can be configured.
+The [client API](docs/SMK-Client-API) details how the application interacts with the map.
+There are [examples](docs/SMK-Client-API-Examples) of the various ways the map can be configured.
+The [configuration](docs/SMK-Client-Configuration) controls all aspects of the map.
 
-The [configuration](https://bcgov.github.io/smk-client/SMK-Client-Configuration) controls all aspects of the map.
+Creating the configuration by hand is possible, but an easier way to create a simple SMK application is to use the command-line development tool [SMK CLI](). 
+This tool lets you initialize a new SMK map application project by answering a few questions.
+It also gives you an interactive web-based UI to do more detailed configuration of your map.
 
-Creating the configuration by hand is tedious, for most uses it is easier to use the **smk-admin** tool.
-The smk-admin tool lets you edit the configuration in an interactive UI, and lets you test the map in a demo application.
-When you satisfied with the map, you can ask smk-admin to generate an export package that contains the smk-client library along with the configuration.
-This export package can be easily integrated into an application.
-
-See [EXPORT.md](EXPORT.md) for more information on working with export packages.
-
-See [DEVELOPMENT.md](DEVELOPMENT.md) for more information on doing development on smk-client.
+If you would like to fork and do your own development on it, take a look at the [developer documentation](docs/development.md).
 
 # License
 ```

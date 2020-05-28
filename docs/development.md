@@ -1,54 +1,53 @@
-# smk-client
-## Simple Map Kit Client
-### A versatile and lightweight toolkit for building a simple web map.
+# SMK
+## Simple Map Kit
 
-[Repository](https://github.com/bcgov/smk-client)
-|
-[Docs](https://bcgov.github.io/smk-client/)
-|
-[Issues](https://github.com/bcgov/smk/issues)
+### Setting up SMK Development Environment
 
-### smk-client Development
-
-Clone this repo, let's say into `projects/smk-client`.
+Clone this repo, let's say into `projects/smk`.
 
 Install [NodeJS](https://nodejs.org/en/).
 
-    > cd projects/smk-client
+After NodeJS is installed, open a terminal window, and execute these commands:
+
+    > cd projects/smk
 
     # Install node modules:
     > npm install
 
-    # Change to src directory
-    > cd src
+    # Build smk into dist/
+    > npm run build 
 
-    # Build smk in development mode (unminified) into ../smk.js
-    > grunt develop 
+    # Start a simple web server to serve dist/
+    > npm run serve
 
-    # *OR* Build smk in release mode (minified) into ../smk.js
-    > grunt release 
+Point browser at [https://localhost:8443/debug](https://localhost:8443/debug).
+Visit 'layout', and then 'header' for example.
 
-    # Change back to root of project
-    > cd ..
+### Automatically rebuild SMK soce
 
-    # Start test server to serve code:
-    > grunt 
+If you would like to build SMK in development mode, and rebuild automatically when the code changes, then do this:
 
-Point browser at [https://localhost:8443](https://localhost:8443).
+    > cd projects/smk
 
-It's possible to have the code automatically rebuild when changes are saved:
+    # Build smk into dist/
+    > npm run debug
 
-    > cd projects/smk-client/src
+In another terminal window:
 
-    # Build smk in development mode (unminified) into ../smk.js, then wait for changes to trigger a rebuild.
-    > grunt develop watch
+    > cd projects/smk
 
-In another console window:
+    # Build smk into dist/
+    > npm run serve
 
-    > cd projects/smk-client
+Edit the code in `src` or `debug`, but don't edit anything in `dist`.
+When you save changes, the code will automatically rebuild.
 
-    # Start test server to serve code:
-    > grunt 
+### VS Code Integration
+
+If you are editing this project in VS Code, there is a build task and launch configuration defined.
+
+Open VS Code to the `projects/smk` folder, and hit `F5` (or select Run|Start Debugging).
+This will build the code, and then open Chrome with the debugger attached to VS Code.
 
 ### Code Organization
 
