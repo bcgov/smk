@@ -1,3 +1,5 @@
+var pageExampleId = document.location.hash.substr( 1 )
+
 var examples = []
 var defaultExampleId
 
@@ -21,6 +23,10 @@ var vmInit = fetch( templateUrl )
                 selectExample: function ( example ) {
                     this.selectedExample = example
                     document.location.hash = example.id 
+
+                    this.$nextTick( function () {
+                        document.getElementById( 'sourceFocus' ).scrollIntoView( true )
+                    } )
                 }
             },
             computed: {
@@ -28,18 +34,26 @@ var vmInit = fetch( templateUrl )
                     get: function () {
                         return document.getElementsByTagName( 'title' )[ 0 ].innerText
                     }
+                },
+                selectedExampleURL: {
+                    get: function () {
+                        if ( !this.selectedExample ) return
+                        if ( this.selectedExample.parameters )
+                            return this.selectedExample.url + '?' + this.selectedExample.parameters
+                        return this.selectedExample.url
+                    }
                 }
             }
         } )
     } )    
 
-function addExample ( exampleId ) {
+function addExample ( exampleId, parameters ) {
     var ex = {
-        id: exampleId,
-        url: exampleId + '.html',
-        title: null,
-        doc: null,
-        description: null,
+        id:         exampleId,
+        url:        exampleId + '.html',
+        parameters: parameters,
+        title:      null,
+        doc:        null
     }
     examples.push( ex )
     if ( !defaultExampleId ) defaultExampleId = exampleId
@@ -57,11 +71,11 @@ function addExample ( exampleId ) {
                 .replace( /[<]/g, '&lt;' )
                 .replace( /[>]/g, '&gt;' )
                 .replace( /[&]lt[;][!][-][-][*]{3,}[^\0]+[*]{3,}[-][-][&]gt[;]/, function ( m ) {
-                    return '<b>' + m + '</b>'
+                    return '<b id="sourceFocus">' + m + '</b>'
                 } )
 
             return vmInit.then( function ( vm ) {
-                if ( ex.id == ( document.location.hash || defaultExampleId ) )
+                if ( ex.id == ( pageExampleId || defaultExampleId ) )
                     vm.selectExample( ex )
             } )            
         } )
@@ -70,4 +84,3 @@ function addExample ( exampleId ) {
             ex.title = exampleId
         } )
 }
-

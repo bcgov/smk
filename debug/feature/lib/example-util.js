@@ -1,10 +1,10 @@
-SMK.BOOT
-    .then( function ( smk ) {
-        dialog( [ 'Map is ready.' ] )
-    } )
-    .catch( function ( e ) {
-        dialog( [ 'Map failed to start.', e ] )
-    } )
+// SMK.BOOT
+//     .then( function ( smk ) {
+//         dialog( [ 'Map is ready.' ] )
+//     } )
+//     .catch( function ( e ) {
+//         dialog( [ 'Map failed to start.', e ] )
+//     } )
 
 function dialog( contents ) {
     var el = document.createElement( 'dialog' )

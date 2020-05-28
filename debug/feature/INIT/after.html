@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>After</title>
+
+        <script src="../../../dist/smk.js"></script>
+        <link rel="stylesheet" type="text/css" href="style.css"/>
+    </head>
+    <body>
+<!--***************************************************************************
+    This example show that SMK.INIT() returns a promise that resolves when the 
+    the map is created and ready to be used. The promise also resolves with the
+    `smk` parameter, to give the application access to the smkMap object that
+    was created.
+-->
+        <div id="smk-map-frame"></div>
+        <script>
+            SMK.INIT( {
+                containerSel:   '#smk-map-frame',
+            } )
+            .then( function ( smk ) {
+                dialog( [ 'SMK is iniialized and ready' ] )
+            } )
+        </script>
+<!--***************************************************************************-->
+        <script src="../lib/example-util.js"></script>
+    </body>    
+</html>
+
