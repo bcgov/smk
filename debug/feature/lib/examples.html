@@ -1,6 +1,9 @@
 <div id="app">
     <header>
-        <h1>{{ title }}</h1>
+        <h1>
+            <div>SMK Feature</div>
+            <div class="title">{{ title }}</div>
+        </h1>
         <ul>
             <li v-for="ex in examples"
                 v-bind:key="ex.id"
