@@ -18,14 +18,23 @@ include.module( 'smk-map', [ 'jquery', 'util', 'theme-base', 'sidepanel' ], func
         if ( container.length != 1 )
             throw new Error( 'smk-container-sel "' + this.$option.containerSel + '" doesn\'t match a unique element' )
 
-        this.$container = container.get( 0 )
+        container.addClass( 'smk-map-frame smk-hidden' )
 
-        $( this.$container )
-            .addClass( 'smk-map-frame smk-hidden' )
-
-        var spinner = $( '<img class="smk-startup smk-spinner">' )
+        var p = container.position()
+        var spinner = $( '<img>' )
             .attr( 'src', this.$option.baseUrl + 'images/spinner.gif' )
-            .appendTo( this.$container )
+            .insertAfter( container )
+            .css( {
+                zIndex:     99999,
+                visibility: 'visible',
+                position:   'absolute',
+                width:      64,
+                height:     64,            
+                left:       p.left + container.outerWidth() / 2 - 32,
+                top:        p.top + container.outerHeight() / 2 - 32,
+            } )
+
+        this.$container = container.get( 0 )
 
         return SMK.UTIL.resolved()
             .then( loadConfigs )
@@ -40,11 +49,17 @@ include.module( 'smk-map', [ 'jquery', 'util', 'theme-base', 'sidepanel' ], func
             .then( initTools )
             .then( showMap )
             .finally( function () {
-                spinner.remove()
-                $( self.$container )
-                    .hide()
-                    .removeClass( 'smk-hidden' )
-                    .fadeIn( 1000 )
+                return ( new Promise( function ( res ) {
+                        container
+                            .hide()
+                            .removeClass( 'smk-hidden' )
+                            .fadeIn( 1000, res )
+
+                        spinner.fadeOut( 1000 )
+                    } ) )
+                    .then( function () {
+                        spinner.remove()
+                    } )
             } )
 
         // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -380,12 +395,6 @@ include.module( 'smk-map', [ 'jquery', 'util', 'theme-base', 'sidepanel' ], func
         }
 
         function showMap() {
-            spinner.remove()
-            $( self.$container )
-                .hide()
-                .removeClass( 'smk-hidden' )
-                .fadeIn( 1000 )
-
             if ( !self.$viewer.isDisplayContext( 'layers' ) )
                 self.$viewer.setDisplayContextItems( 'layers', self.$viewer.defaultLayerDisplay )
 
