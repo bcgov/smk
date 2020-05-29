@@ -39,6 +39,8 @@ It also gives you an interactive web-based UI to do more detailed configuration 
 
 If you would like to fork and do your own development on it, take a look at the [developer documentation](docs/development.md).
 
+To see some samples of SMK in action, you can look at the [debug folder](debug).
+
 # License
 ```
 Copyright 2018 Province of British Columbia
