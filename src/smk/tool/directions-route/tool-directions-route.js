@@ -1,79 +1,115 @@
-include.module( 'tool-directions-route', [ 'tool', 'widgets', 'tool-directions-route.panel-route-html' ], function ( inc ) {
+include.module( 'tool-directions-route', [ 
+    'tool.tool-base-js', 
+    'tool.tool-panel-js', 
+    'tool-directions-route.panel-directions-route-html', 
+    'component-command-button',
+    'turf' 
+], function ( inc ) {
     "use strict";
 
+    var instructionType = {
+        START:              [ 'trip_origin', null,      'Go on' ],
+        START_NORTH:        [ 'trip_origin', null,      'Head north on' ],
+        START_SOUTH:        [ 'trip_origin', null,      'Head south on' ],
+        START_EAST:         [ 'trip_origin', null,      'Head east on' ],
+        START_WEST:         [ 'trip_origin', null,      'Head west on' ],
+        CONTINUE:           [ 'expand_more', null,      'Continue onto'  ],
+        TURN_LEFT:          [ 'arrow_back', null,       'Turn left onto' ],
+        TURN_SLIGHT_LEFT:   [ 'undo', null,             'Slight turn left onto' ],
+        TURN_SHARP_LEFT:    [ 'directions', true,       'Sharp turn left onto' ],
+        TURN_RIGHT:         [ 'arrow_forward', null,    'Turn right onto' ],
+        TURN_SLIGHT_RIGHT:  [ 'undo', true,             'Slight turn right onto' ],
+        TURN_SHARP_RIGHT:   [ 'directions', null,       'Sharp turn right onto' ],
+        FERRY:              [ 'directions_boat', null,  'Board' ],
+        STOPOVER:           [ 'pause', null,            '' ],
+        FINISH:             [ 'stop', null,             '' ],
+    }
+
     Vue.component( 'route-panel', {
-        extends: inc.widgets.toolPanel,
-        template: inc[ 'tool-directions-route.panel-route-html' ],
-        props: [ 'busy', 'directions', 'directionHighlight', 'directionPick', 'statusMessage' ],
+        extends: SMK.COMPONENT.ToolPanelBase,
+        template: inc[ 'tool-directions-route.panel-directions-route-html' ],
+        props: [ 'directions', 'directionHighlight', 'directionPick' ],
+        methods: {
+            instructionTypeIcon: function ( type ) {                
+                if ( !instructionType[ type ] ) return 'report'
+                return instructionType[ type ][ 0 ]
+            },
+            instructionTypeClass: function ( type ) {
+                if ( !instructionType[ type ] ) return 'smk-hidden'
+                return instructionType[ type ][ 1 ] ? 'smk-reverse' : ''
+            },
+            instructionTypePrefix: function ( type, heading ) {
+                if ( heading ) type = type + '_' + heading
+                if ( !instructionType[ type ] ) return ''
+                return instructionType[ type ][ 2 ] || ''
+            },
+        }
     } )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
-    function DirectionsRouteTool( option ) {
-        this.makePropPanel( 'busy', false )
-        this.makePropPanel( 'directions', [] )
-        this.makePropPanel( 'directionHighlight', null )
-        this.makePropPanel( 'directionPick', null )
-        this.makePropPanel( 'statusMessage', null )
+    return SMK.TYPE.Tool.define( 'DirectionsRouteTool', 
+        function () {
+            SMK.TYPE.ToolPanel.call( this, 'route-panel' )
+        
+            this.defineProp( 'directions' )
+            this.defineProp( 'directionHighlight' )
+            this.defineProp( 'directionPick' )
 
-        SMK.TYPE.Tool.prototype.constructor.call( this, $.extend( {
-            order:          4,
-            position:       'menu',
-            title:          'Route',
-            subPanel:       1,
-            panelComponent: 'route-panel',
-        }, option ) )
+            this.directions = []
+        },
+        function ( smk ) {
+            var self = this
 
-        this.activating = SMK.UTIL.resolved()
-    }
-
-    SMK.TYPE.DirectionsRouteTool = DirectionsRouteTool
-
-    $.extend( DirectionsRouteTool.prototype, SMK.TYPE.Tool.prototype )
-    DirectionsRouteTool.prototype.afterInitialize = []
-    // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
-    //
-    DirectionsRouteTool.prototype.afterInitialize.push( function ( smk ) {
-        var self = this
-
-        var directions = smk.$tool[ 'directions' ]
-
-        this.changedActive( function () {
-            if ( self.active ) {
-                self.directions = directions.directions
-                self.directionHighlight = directions.directionHighlight
-                self.directionPick = directions.directionPick
-            }
-
-            directions.visible = self.active
-        } )
-
-        smk.on( this.id, {
-            'hover-direction': function ( ev ) {
-                self.directionHighlight = ev.highlight
-            },
-
-            'pick-direction': function ( ev ) {
-                self.directionPick = ev.pick
-            },
-        } )
-
-    } )
-
-    DirectionsRouteTool.prototype.setMessage = function ( message, status, delay ) {
-        if ( !message ) {
-            this.statusMessage = null
-            return
+            var directions = smk.$tool[ 'directions' ]
+    
+            this.changedActive( function () {
+                if ( self.active ) {
+                    self.directions = directions.directions
+                    self.directionHighlight = directions.directionHighlight
+                    self.directionPick = directions.directionPick
+                }
+            } )
+    
+            smk.on( this.id, {
+                'hover-direction': function ( ev ) {
+                    self.directionHighlight = ev.highlight
+                },
+    
+                'pick-direction': function ( ev ) {
+                    self.directionPick = ev.pick
+                },
+    
+                'print': function ( ev ) {
+                    var cfg = smk.getConfig()
+                    cfg.etc = { 
+                        directions: directions.directionsRaw
+                    }
+    
+                    var key = SMK.UTIL.makeUUID()
+                    window.sessionStorage.setItem( key, JSON.stringify( cfg ) )
+    
+                    self.setMessage( 'Preparing print...', 'progress', null )
+                    self.busy = true
+                    SMK.HANDLER.get( self.id, 'print' )( smk, self, key, ev )
+                        .then( function () {
+                            self.busy = false
+                            return self.setMessage( 'Printing...', 'progress', 2000 )
+                        } )
+                        .catch( function () {
+                            self.busy = false
+                            return self.setMessage( 'Print failed', 'error', 2000 )
+                        } )
+                },
+            } )
+    
+            smk.$viewer.handlePick( 3, function ( location ) {
+                if ( !self.active ) return
+    
+                directions.active = true
+    
+                return false
+            } )            
         }
-
-        this.statusMessage = {
-            message: message,
-            status: status
-        }
-
-        if ( delay )
-            return SMK.UTIL.makePromise( function ( res ) { setTimeout( res, delay ) } )
-    }
-
-    return DirectionsRouteTool
+    )
 } )
 

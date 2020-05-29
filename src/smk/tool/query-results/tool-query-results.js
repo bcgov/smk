@@ -1,76 +1,51 @@
-include.module( 'tool-query-results', [ 'feature-list', 'widgets', 'tool-query-results.panel-query-results-html' ], function ( inc ) {
+include.module( 'tool-query-results', [ 
+    'tool.tool-base-js', 
+    'tool.tool-feature-list-js', 
+    'component-feature-list', 
+    'component-command-button',
+    'tool-query-results.panel-query-results-html'
+], function ( inc ) {
     "use strict";
 
     Vue.component( 'query-results-panel', {
-        extends: inc.widgets.toolPanel,
+        extends: SMK.COMPONENT.ToolPanelBase,
         template: inc[ 'tool-query-results.panel-query-results-html' ],
-        props: [ 'tool', 'layers', 'highlightId' ],
-        methods: {
-            featureListProps: function () {
-                var self = this
-
-                var prop = {}
-                Object.keys( Vue.component( 'feature-list-panel' ).options.props ).forEach( function ( p ) {
-                    prop[ p ] = self[ p ]
-                } )
-                return prop
-            }
-        }
+        props: [ 'tool', 'layers', 'highlightId', 'command' ],
     } )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
-    function QueryResultsTool( option ) {
-        this.makePropPanel( 'tool', {} )
+    return SMK.TYPE.Tool.define( 'QueryResultsTool', 
+        function () {
+            SMK.TYPE.ToolPanel.call( this, 'query-results-panel' )
+            SMK.TYPE.ToolFeatureList.call( this, function ( smk ) { return smk.$viewer.queried[ this.instance ] } )
+        
+            this.defineProp( 'tool' )
+            this.defineProp( 'command' )
 
-        SMK.TYPE.FeatureList.prototype.constructor.call( this, $.extend( {
-            panelComponent: 'query-results-panel',
-            subPanel:       1,
-        }, option ) )
+            this.tool = {}
+            this.command = {}
+        },
+        function ( smk ) {
+            var self = this
 
-        if ( !this.instance )
-            throw new Error( 'query tool needs an instance' )
-    }
+            this.title = smk.$viewer.query[ this.instance ].title
 
-    SMK.TYPE.QueryResultsTool = QueryResultsTool
+            this.tool.select = smk.$tool.select
+            this.tool.zoom = smk.$tool.zoom
 
-    $.extend( QueryResultsTool.prototype, SMK.TYPE.FeatureList.prototype )
-    QueryResultsTool.prototype.afterInitialize = SMK.TYPE.FeatureList.prototype.afterInitialize.concat( [] )
-    // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
-    //
-    QueryResultsTool.prototype.afterInitialize.unshift( function ( smk ) {
-        this.featureSet = smk.$viewer.queried[ this.instance ]
+            smk.on( this.id, {
+                'previous-panel': function () {
+                    self.featureSet.clear()
+                },
+            } )
 
-        this.title = smk.$viewer.query[ this.instance ].title
-    } )
+            self.featureSet.addedFeatures( function ( ev ) {
+                var stat = self.featureSet.getStats()
 
-    QueryResultsTool.prototype.afterInitialize.push( function ( smk ) {
-        var self = this
+                self.active = true;
 
-        this.tool.select = smk.$tool.select
-        this.tool.zoom = smk.$tool.zoom
-
-        self.changedActive( function () {
-            if ( self.active ) {
-                if ( self.featureSet.getPicked() )
-                    smk.$tool[ 'query-feature--' + self.instance ].active = true
-            }
-        } )
-
-        smk.on( this.id, {
-            'previous-panel': function () {
-                self.featureSet.clear()
-            },
-        } )
-
-        self.featureSet.addedFeatures( function ( ev ) {
-            var stat = self.featureSet.getStats()
-
-            self.active = true;
-
-            self.setMessage( '<div>Found ' + SMK.UTIL.grammaticalNumber( stat.featureCount, null, 'a feature', '{} features' ) + '</div>' )
-        } )
-
-    } )
-
-    return QueryResultsTool
+                self.setMessage( '<div>Found ' + SMK.UTIL.grammaticalNumber( stat.featureCount, null, 'a feature', '{} features' ) + '</div>' )
+            } )
+        } 
+    )
 } )

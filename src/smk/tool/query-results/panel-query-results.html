@@ -1,14 +1,23 @@
-<feature-list-panel class="smk-query-panel"
-    v-bind="featureListProps()"
+<tool-panel class="smk-query-panel"
+    v-bind="$$projectProps( 'tool-panel' )"
 >
-    <template slot="command-row" slot-scope="list">
-        <div class="smk-command-row">
-            <span class="smk-command"
-                v-bind:class="{ 'smk-disabled': busy }"
-                v-if="tool.select && list.featureCount > 1"
-                v-on:click="!busy && $$emit( 'add-all' )"
-            >Add all to selection</span>
-        </div>
+    <template slot="header">
+        <slot></slot>
     </template>
 
-</feature-list-panel>
+    <template slot="commands">
+        <command-button class="smk-select"
+            v-bind:disabled="busy"
+            v-if="tool.select && layers.length > 1 && command.select !== false"
+            v-on:click="$$emit( 'add-all' )"
+        >Add all to selection</command-button>
+    </template>
+
+    <feature-list
+        v-bind:layers="layers"
+        v-bind:highlightId="highlightId"
+        v-on:active="$$emit( 'active', $event )"
+        v-on:hover="$$emit( 'hover', $event )"
+    ></feature-list>
+
+</tool-panel>

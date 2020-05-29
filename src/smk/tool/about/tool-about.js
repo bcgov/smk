@@ -1,50 +1,28 @@
-include.module( 'tool-about', [ 'tool', 'widgets', 'tool-about.panel-about-html' ], function ( inc ) {
+include.module( 'tool-about', [ 
+    'tool.tool-base-js', 
+    'tool.tool-widget-js', 
+    'tool.tool-panel-js', 
+    'tool-about.panel-about-html' 
+], function ( inc ) {
     "use strict";
 
     Vue.component( 'about-widget', {
-        extends: inc.widgets.toolButton,
+        extends: SMK.COMPONENT.ToolWidgetBase,
     } )
 
     Vue.component( 'about-panel', {
-        extends: inc.widgets.toolPanel,
+        extends: SMK.COMPONENT.ToolPanelBase,
         template: inc[ 'tool-about.panel-about-html' ],
         props: [ 'content' ]
     } )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
-    function AboutTool( option ) {
-        this.makePropWidget( 'icon', null ) //'help' )
-
-        this.makePropPanel( 'content', null )
-
-        SMK.TYPE.Tool.prototype.constructor.call( this, $.extend( {
-            widgetComponent:'about-widget',
-            panelComponent: 'about-panel',
-            // title:          'About SMK',
-            // position:       'menu'
-            content:        null
-        }, option ) )
-
-    }
-
-    SMK.TYPE.AboutTool = AboutTool
-
-    $.extend( AboutTool.prototype, SMK.TYPE.Tool.prototype )
-    AboutTool.prototype.afterInitialize = []
-    // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
-    //
-    AboutTool.prototype.afterInitialize.push( function ( smk ) {
-        var self = this
-
-        smk.on( this.id, {
-            'activate': function () {
-                if ( !self.enabled ) return
-
-                self.active = !self.active
-            }
-        } )
-
-    } )
-
-    return AboutTool
+    return SMK.TYPE.Tool.define( 'AboutTool', 
+        function () {
+            SMK.TYPE.ToolWidget.call( this, 'about-widget' )
+            SMK.TYPE.ToolPanel.call( this, 'about-panel' )
+        
+            this.defineProp( 'content' )
+        }
+    )
 } )

@@ -1,0 +1,163 @@
+{
+  "smkId": "wfone-public-mobile",
+  "smkRevision": 1,
+  "name": "wfone-public-mobile",
+  "createdBy": "vivid",
+  "published": false,
+  "viewer": {
+    "type": "leaflet",
+    "initialExtent": [
+      -123.97822866216305,
+      48.85118990316143,
+      -122.88096914067867,
+      48.25579824757873
+    ],
+    "baseMap": "Topographic",
+    "minZoom": 4
+  },
+  "tools": [
+    {
+      "type": "bespoke",
+      "title": "Near Me",
+      "instance": "nearme",
+      "position": "shortcut-menu",
+      "enabled": true,
+      "showTitle": false,
+      "icon": "my_location",
+      "order": 80,
+      "showSwipe": false
+    },
+    {
+      "type": "location",
+      "title": "Location",
+      "position": "toolbar",
+      "enabled": false
+    },
+    {
+      "type": "layers",
+      "enabled": true,
+      "showTitle": false,
+      "position": "shortcut-menu",
+      "glyph": {
+        "visible": "check_box",
+        "hidden": "check_box_outline_blank"
+      },
+      "command": {
+        "allVisibility": false,
+        "filter": false
+      }
+    },
+    {
+      "type": "identify",
+      "title": "Identify",
+      "enabled": true,
+      "showTitle": false,
+      "showWidget": false,
+      "position": "shortcut-menu",
+      "tolerance": 10,
+      "command": {
+        "attributeMode": false,
+        "clear": false
+      }
+    },
+    {
+      "type": "pan",
+      "enabled": true
+    },
+    {
+      "type": "zoom",
+      "enabled": true,
+      "mouseWheel": true,
+      "doubleClick": true,
+      "box": true,
+      "control": "desktop"
+    },
+    {
+      "type": "baseMaps",
+      "enabled": true,
+      "showTitle": false,
+      "showPanel": false,
+      "choices": [
+        "Topographic",
+        "Imagery"
+      ],
+      "position": "shortcut-menu",
+      "mapStyle": {
+        "width": "60px",
+        "height": "100px"
+      }
+    },
+    {
+      "type": "menu",
+      "icon": "search",
+      "title": "Search",
+      "position": "toolbar",
+      "enabled": false,
+      "showTitle": "mobile",
+      "order": 80
+    },
+    {
+      "type": "search",
+      "enabled": true,
+      "position": "toolbar",
+      "showDropdown": true
+    },
+    {
+      "type": "search-location",
+      "enabled": false
+    },
+    {
+      "type": "query-place",
+      "icon": "search",
+      "enabled": false,
+      "showTitle": true,
+      "position": "menu",
+      "command": {
+        "attributeMode": false,
+        "clear": false,
+        "zoom": false
+      },
+      "order": 200
+    },
+    {
+      "type": "query",
+      "icon": "search",
+      "instance": "31071--fire",
+      "enabled": false,
+      "showTitle": true,
+      "position": "menu",
+      "command": {
+        "attributeMode": false,
+        "clear": false
+      },
+      "order": 100
+    },
+    {
+      "type": "list-menu",
+      "icon": "more_horiz",
+      "title": "More",
+      "position": "toolbar",
+      "enabled": false,
+      "showTitle": false,
+      "order": 99
+    },
+    {
+      "type": "markup",
+      "enabled": false
+    },
+    {
+      "type": "shortcut-menu",
+      "enabled": "mobile"
+    },
+    {
+      "type": "bespoke",
+      "instance": "menu",
+      "title": "Menu",
+      "enabled": "mobile",
+      "position": "toolbar",
+      "showTitle": false,
+      "icon": "menu",
+      "order": 1
+    }
+  ]
+}

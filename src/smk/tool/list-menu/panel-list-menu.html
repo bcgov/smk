@@ -1,43 +1,15 @@
-<side-panel class="smk-list-menu-panel">
+<tool-panel class="smk-tool-list-panel" 
+    v-bind="$$projectProps( 'tool-panel' )"
+>
     <template slot="header">
+        <slot></slot>
     </template>
 
-    <template slot="commands">
-        <list-menu-previous-panel 
-            id="previous-panel" 
-            type="previous-panel"  
-            icon="arrow_back" 
-            v-bind:title="previousTool && previousTool.title" 
-            visible
-            v-bind:enabled="!!previousTool"
-        ></list-menu-previous-panel>
-
-        <div class="smk-title">
-            <component 
-                v-if="currentTool.titleComponent"
-                v-bind:is="currentTool.titleComponent"
-                v-bind="currentTool.title"
-            ></component>
-            <span
-                v-else
-                v-html="currentTool.panel.title"
-            ></span>
-        </div>
-
-        <list-menu-close
-            id="close" 
-            type="close"  
-            icon="close" 
-            title="Close" 
-            visible
-            enabled
-        ></list-menu-close>
-    </template>
-
-    <component class="smk-panel"
-        v-bind:is="currentTool.panelComponent"
-        v-bind="currentTool.panel"
-        title=""
+    <component class="smk-tool"
+        v-for="w in subWidgets"
+        v-bind:key="w.prop.id"
+        v-bind:is="w.component"
+        v-bind="w.prop"
     ></component>
 
-</side-panel>
+</tool-panel>

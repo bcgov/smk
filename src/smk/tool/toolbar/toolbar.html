@@ -1,0 +1,11 @@
+<div class="smk-toolbar"
+    v-bind:class="{ 'smk-hidden': widgets.length == 0 }"
+>
+    <component
+        v-for="w in widgets"
+        v-bind:key="w.prop.id"
+        v-bind:is="w.component"
+        v-bind="w.prop"
+        v-bind:active="w.prop.group"
+    ></component>
+</div>

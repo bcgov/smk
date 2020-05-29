@@ -2,19 +2,20 @@ include.module( 'check-query', [], function ( inc ) {
     "use strict";
 
     return function ( smk, tool ) {
-        smk.tools.push( {
+        smk.tools.push( Object.assign( {}, tool, {
+            // id: 'query-results--' + tool.instance,
+            id: null,
             type: 'query-results',
-            instance: tool.instance,
             enabled: true,
-            position: tool.position
-        } )
+            parentId: tool.id
+        } ) )
 
-        smk.tools.push( {
+        smk.tools.push( Object.assign( {}, tool, {
+            id: null,
             type: 'query-feature',
-            instance: tool.instance,
             enabled: true,
-            position: tool.position
-        } )
+            parentId: 'query-results--' + tool.instance
+        } ) )
     }
     
 } )

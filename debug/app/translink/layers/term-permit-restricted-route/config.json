@@ -1,0 +1,38 @@
+{
+    "layers": [
+        {
+            "type": "vector",
+            "id": "term-permit-restricted-route",
+            "title": "Restricted Term Permit Route",
+            "dataUrl": "./layers/term-permit-restricted-route/term-permit-restricted-route.geojson",
+            "xxscaleMin": 28505,
+            "attributes": [
+                {
+                    "name": "Municipality",
+                    "title": "Municipality"
+                },
+                {
+                    "title": "Permit",
+                    "format": "asLink(this.feature.properties.TermPermitLink, 'Link')"
+                },
+                {
+                    "name": "TermPermitRestriction",
+                    "title": "Restriction"
+                },
+                {
+                    "name": "TermPermitNotes",
+                    "title": "Notes"
+                }
+            ],
+            "titleAttribute": "Municipality",
+            "style": {
+                "strokeWidth": 3,
+                "strokeColor": "#A3FF73",
+                "strokeOpacity": 1
+            },
+            "legend": {
+                "line": true
+            }
+        }
+   ]
+}

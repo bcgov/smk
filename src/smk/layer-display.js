@@ -3,16 +3,19 @@ include.module( 'layer-display', [ 'jquery', 'util', 'event' ], function () {
 
     function LayerDisplay( option, forceVisible ) {
         Object.assign( this, {
-            id:         null,
+            id:         SMK.UTIL.makeId( option.type, option.title ),
             type:       null,
             // opacity:    1,
-            title:      null,
+            title:      option.id,
             isVisible:  true,
             isActuallyVisible: null,
             isEnabled:  true,
+            isInternal: false,
             inFilter:   true,
             showLegend: false,
-            legends:    null
+            legends:    null,
+            class:      null,
+            metadataUrl: null
         }, option )
 
         if ( forceVisible )
@@ -20,35 +23,77 @@ include.module( 'layer-display', [ 'jquery', 'util', 'event' ], function () {
     }
 
     SMK.TYPE.LayerDisplay = LayerDisplay
+
+    LayerDisplay.prototype.getVisible = function ( viewScale ) {
+        return this.isVisible
+    }
+
+    LayerDisplay.prototype.getConfig = function () {
+        return {
+            id:         this.id,
+            type:       this.type,
+            title:      this.title,
+            isVisible:  this.isVisible,
+            isEnabled:  this.isEnabled,
+            class:      this.class,
+        }
+    }
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
     LayerDisplay.layer = function ( option, layerCatalog, forceVisible ) {
+        var self = this
+
+        if ( option[ '#id' ] ) return
         if ( !option.id )
             throw new Error( 'display layer needs id' )
 
-        if ( !( option.id in layerCatalog ) ) {
-            console.warn( 'layer id "' + option.id + '" isn\'t defined' )
-            option.isEnabled = false
+        function defLayerProperty( prop, def ) {
+            var propVal, gotProp = false
+            Object.defineProperty( self, prop, {
+                get: function () {
+                    if ( gotProp ) return propVal
 
-            if ( !option.title )
-                option.title = option.id
+                    if ( !layerCatalog[ option.id ] ) {
+                        console.warn( 'layer id "' + option.id + '" isn\'t defined' )
+                        self.isEnabled = false
+                        self.isVisible = false
+                        gotProp = true
+                        return def
+                    }
 
-            option.isVisible = false
-        }
-        else {
-            var ly = layerCatalog[ option.id ]
-
-            // if ( !option.opacity )
-            //     option.opacity = ly.config.opacity 
-
-            if ( !option.title )
-                option.title = ly.config.title 
-
-            if ( !( 'isVisible' in option ) )
-                option.isVisible = ly.config.isVisible 
+                    gotProp = true
+                    propVal = layerCatalog[ option.id ].config[ prop ] 
+                    if ( propVal == null ) propVal = def 
+                    return propVal
+                },
+                set: function ( val ) {
+                    gotProp = true
+                    propVal = val
+                    return propVal
+                }
+            } )
         }
 
         LayerDisplay.prototype.constructor.call( this, option, forceVisible )
+
+        if ( !option.title )
+            defLayerProperty( 'title', option.id )
+
+        if ( !( 'isVisible' in option ) )
+            defLayerProperty( 'isVisible', true )
+
+        if ( forceVisible )
+            this.isVisible = true
+
+        defLayerProperty( 'scaleMin' )
+        defLayerProperty( 'scaleMax' )
+
+        if ( !( 'class' in option ) )
+            defLayerProperty( 'class' )
+
+        defLayerProperty( 'legends' )
+
+        defLayerProperty( 'metadataUrl' )
     }
 
     $.extend( LayerDisplay.layer.prototype, LayerDisplay.prototype )
@@ -60,24 +105,40 @@ include.module( 'layer-display', [ 'jquery', 'util', 'event' ], function () {
             callback( this, parents )
     }
 
-    LayerDisplay.layer.prototype.getLegends = function ( layerCatalog, viewer ) {
+    LayerDisplay.layer.prototype.getLegends = function ( layerCatalog, viewer, displayContext ) {
+        var self = this
+
         if ( !this.isEnabled ) return SMK.UTIL.resolved()
 
         return layerCatalog[ this.id ].getLegends( viewer )
+            .then( function ( lgs ) {
+                return lgs.map( function ( lg ) {
+                    lg.isVisible = function () { return displayContext.isItemVisible( self.id ) }
+                    return lg
+                } )
+            } )
     }
 
-    // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+    LayerDisplay.layer.prototype.getVisible = function ( viewScale ) {
+        if ( !viewScale || !this.isVisible ) return this.isVisible
+        if ( !this.isEnabled ) return false
+
+        // console.log( this.id, this.scale.min, viewScale, this.scale.max )
+        if ( this.scaleMin && this.scaleMin < viewScale ) return false
+        if ( this.scaleMax && this.scaleMax > viewScale ) return false
+        return true
+    }
+
+     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
     LayerDisplay.folder = function ( option, layerCatalog, forceVisible ) {
+        var self = this
+
+        if ( option[ '#id' ] ) return
         if ( !option.id )
             option.id = SMK.UTIL.makeId( option.type, option.title ) 
-
-        if ( !option.title )
-            option.title = option.id
-
-        LayerDisplay.prototype.constructor.call( this, option, forceVisible )
-
-        forceVisible = forceVisible || this.type == 'group'
+        
+        LayerDisplay.prototype.constructor.call( this, Object.assign( { isExpanded: false }, option ), forceVisible )
 
         this.items = option.items.map( function ( item ) {
             return createLayerDisplay( item, layerCatalog, forceVisible )
@@ -104,27 +165,28 @@ include.module( 'layer-display', [ 'jquery', 'util', 'event' ], function () {
     LayerDisplay.folder.prototype.getLegends = function ( layerCatalog, viewer ) {
         return SMK.UTIL.resolved()
     }
+
+    LayerDisplay.folder.prototype.getConfig = function () {
+        var cfg = LayerDisplay.prototype.getConfig.call( this )
+        cfg.items = this.items.map( function ( ld ) { return ld.getConfig() } )
+        return cfg
+    }
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
     LayerDisplay.group = function ( option, layerCatalog, forceVisible ) {
-        LayerDisplay.folder.prototype.constructor.call( this, option, layerCatalog, forceVisible )
+        LayerDisplay.prototype.constructor.call( this, Object.assign( option, { isExpanded: true } ), forceVisible )
+
+        this.items = option.items.map( function ( item ) {
+            return createLayerDisplay( item, layerCatalog, true )
+        } )
     }
 
     $.extend( LayerDisplay.group.prototype, LayerDisplay.folder.prototype )
-
-    LayerDisplay.group.prototype.getLegends = function ( layerCatalog, viewer ) {
-        if ( !this.isEnabled ) return
-
-        return SMK.UTIL.waitAll( this.items.map( function ( item ) {
-            return item.getLegends( layerCatalog, viewer )
-        } ) )
-        .then ( function ( legends ) {
-            return legends.reduce( function ( accum, v ) { return accum.concat( v ) }, [] )
-        } )
-    }
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
     function createLayerDisplay( option, layerCatalog, forceVisible ) {
+        if ( option[ '#type' ] ) return
+
         if ( !option.type )
             option.type = 'layer'
 
@@ -189,7 +251,7 @@ include.module( 'layer-display', [ 'jquery', 'util', 'event' ], function () {
         this.changedVisibility( function () {
             self.root.each( function ( item ) {
                 item.isActuallyVisible = self.isItemVisible( item.id )
-            } )
+            } )            
         } )
 
         this.changedVisibility()
@@ -200,6 +262,12 @@ include.module( 'layer-display', [ 'jquery', 'util', 'event' ], function () {
     $.extend( LayerDisplayContext.prototype, LayerDisplayContextEvent.prototype )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
+    LayerDisplayContext.prototype.getItem = function ( id ) {
+        if ( !( id in this.itemId ) ) return 
+
+        return this.itemId[ id ][ 0 ]
+    }
+
     LayerDisplayContext.prototype.getLayerIds = function () {
         return this.layerIds
     }
@@ -228,10 +296,12 @@ include.module( 'layer-display', [ 'jquery', 'util', 'event' ], function () {
     }
 
     LayerDisplayContext.prototype.isItemVisible = function ( id ) {
+        var scale = this.view && this.view.scale
+
         if ( !( id in this.itemId ) ) return false
 
         return this.itemId[ id ].reduce( function ( accum, ld ) {
-            return accum && ld.isVisible && ( ld.type == 'layer' ? ld.isEnabled : true )
+            return accum && ld.getVisible( scale ) 
         }, true )
     }
 
@@ -262,6 +332,8 @@ include.module( 'layer-display', [ 'jquery', 'util', 'event' ], function () {
     }
 
     LayerDisplayContext.prototype.setLegendsVisible = function ( visible, layerCatalog, viewer ) {
+        var self = this
+
         this.root.each( function ( item ) {
             if ( visible ) {
                 if ( item.legends === false ) return
@@ -272,7 +344,7 @@ include.module( 'layer-display', [ 'jquery', 'util', 'event' ], function () {
                 }
 
                 item.showLegend = 'waiting'
-                item.getLegends( layerCatalog, viewer )
+                item.getLegends( layerCatalog, viewer, self )
                     .then( function ( ls ) {
                         item.legends = ls
                         if ( item.showLegend == 'waiting' )
@@ -285,8 +357,6 @@ include.module( 'layer-display', [ 'jquery', 'util', 'event' ], function () {
             else {
                 item.showLegend = false
             }
-
-            if ( item.type == 'group' ) return false 
         } )
     }
 
@@ -303,4 +373,16 @@ include.module( 'layer-display', [ 'jquery', 'util', 'event' ], function () {
             if ( item.type == 'group' ) return false 
         } )
     }
+
+    LayerDisplayContext.prototype.setView = function ( view ) {
+        this.view = view
+        this.changedVisibility()        
+    }
+
+    LayerDisplayContext.prototype.getConfig = function () {
+        return this.root.items.map( function ( ld ) {
+            return ld.getConfig()
+        } )
+    }
+
 } )

@@ -11,6 +11,7 @@
 }
 
 .smk-scale .smk-denom {
+    pointer-events: all;
 }
 
 .smk-scale .smk-ruler {

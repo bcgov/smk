@@ -1,95 +1,114 @@
-include.module( 'tool-menu', [ 'tool', 'widgets', 'tool-menu.panel-menu-html' ], function ( inc ) {
+include.module( 'tool-menu', [ 
+    'tool.tool-base-js', 
+    'tool.tool-widget-js', 
+    'tool.tool-panel-js', 
+    'tool-menu.panel-menu-html' 
+], function ( inc ) {
     "use strict";
 
     Vue.component( 'menu-widget', {
-        extends: inc.widgets.toolButton,
+        extends: SMK.COMPONENT.ToolWidgetBase,
     } )
 
     Vue.component( 'menu-panel', {
-        extends: inc.widgets.toolPanel,
+        extends: SMK.COMPONENT.ToolPanelBase,
         template: inc[ 'tool-menu.panel-menu-html' ],
-        props: [ 'visible', 'enabled', 'active', 'subWidgets', 'subPanels', 'activeToolId' ]
-    } )
-    // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
-    //
-    function MenuTool( option ) {
-        this.makePropWidget( 'icon', 'menu' )
-
-        this.makePropPanel( 'subWidgets', [] )
-        this.makePropPanel( 'subPanels', {} )
-        this.makePropPanel( 'activeToolId', null )
-
-        SMK.TYPE.Tool.prototype.constructor.call( this, $.extend( {
-            title:          null,
-            position:       'toolbar',
-            widgetComponent:'menu-widget',
-            panelComponent: 'menu-panel',
-        }, option ) )
-    }
-
-    SMK.TYPE.MenuTool = MenuTool
-
-    $.extend( MenuTool.prototype, SMK.TYPE.Tool.prototype )
-    MenuTool.prototype.afterInitialize = []
-    // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
-    //
-    MenuTool.prototype.afterInitialize.push( function ( smk ) {
-        var self = this
-
-        smk.on( this.id, {
-            'activate': function () {
-                if ( !self.enabled ) return
-
-                self.active = !self.active
-            }
-        } )
-
-        self.changedActive( function () {
-            if ( self.selectedTool )
-                self.selectedTool.active = self.active
-        } )
-    } )
-    // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
-    //
-    MenuTool.prototype.addTool = function ( tool ) {
-        var self = this
-
-        this.subWidgets.push( {
-            id: tool.id,
-            type: tool.type,
-            widgetComponent: tool.widgetComponent,
-            widget: tool.widget
-        } )
-
-        Vue.set( this.subPanels, tool.id, {
-            panelComponent: tool.panelComponent,
-            panel: tool.panel
-        } )
-
-        if ( !this.selectedTool )
-            this.selectedTool = tool
-
-        tool.changedActive( function () {
-            if ( tool.active ) {
-                if ( self.selectedTool.id != tool.id ) {
-                    var prev = self.selectedTool
-                    self.selectedTool = tool
-                    prev.active = false
+        props: [ 'subWidgets', 'subPanels' ],
+        methods: {
+            isActivePanel: function ( widgetId ) {
+                var p = this.getPanel( widgetId )
+                if ( p.prop.active ) return true
+                while ( p ) {
+                    p = this.getChildPanel( p.prop.id )
+                    if ( p && p.prop.active ) return true
                 }
-                self.active = true
+                return false
+            },
+            getPanel: function ( id ) {
+                return this.subPanels.find( function ( p ) { return p.prop.id == id } )
+            },
+            getChildPanel: function ( id ) {
+                return this.subPanels.find( function ( p ) { return p.prop.parentId == id } )
             }
-            else {
-                if ( self.selectedTool.id == tool.id && self.active )
-                    tool.active = true
-            }
+        }
+    } )
+    // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+    //
+    return SMK.TYPE.Tool.define( 'MenuTool', 
+        function () {
+            SMK.TYPE.ToolWidget.call( this, 'menu-widget' )
+            SMK.TYPE.ToolPanel.call( this, 'menu-panel' )
+        
+            this.defineProp( 'subWidgets' )
+            this.defineProp( 'subPanels' )
 
-            if ( tool.id == self.selectedTool.id )
-                self.activeToolId = tool.active ? tool.id : null
-        } )
+            this.subWidgets = [] 
+            this.subPanels = []             
+            this.icon = 'menu'
+            this.position = 'toolbar'
+        },
+        function ( smk ) {
+            var self = this
 
-        return true
-    }
+            smk.on( this.id, {
+                'previous-panel': function ( ev ) {
+                    smk.$tool[ self.previousId ].active = true
+                },
 
-    return MenuTool
+                'swipe-up': function ( ev ) {                
+                    smk.$sidepanel.setExpand( 2 )
+                },
+
+                'swipe-down': function ( ev ) {
+                    smk.$sidepanel.incrExpand( -1 )
+                }
+            } )
+
+            this.changedActive( function () {
+                if ( self.active ) {
+                    smk.$tool[ self.selectedId ].active = true
+                }
+                else {
+                    self.subPanels.forEach( function ( t ) {
+                        smk.$tool[ t.prop.id ].active = false
+                    } )
+                }
+            } ) 
+        },
+        {
+            addTool: function ( tool, smk, setParentId ) {
+                var self = this
+        
+                if ( !tool.parentId ) {
+                    setParentId( tool, this.id )
+                }
+        
+                if ( tool.makeWidgetComponent ) {          //  && !tool.parentId 
+                    this.subWidgets.push( tool.makeWidgetComponent() )
+        
+                    if ( !this.selectedId )
+                        this.selectedId = tool.id
+                }
+        
+                this.subPanels.push( tool.makePanelComponent() )
+        
+                tool.changedActive( function () {
+                    // console.log('active!',tool.id,tool.active)
+                    if ( tool.active ) {
+                        self.selectedId = tool.id
+                        self.hasPrevious = !tool.widgetComponent
+                        self.previousId = tool.parentId
+                    }
+                    else {                
+                    }
+                } )
+        
+                tool.isToolInGroupActive = function ( toolId ) {
+                    return toolId == tool.id || toolId == self.id
+                }
+        
+                return true
+            }        
+        } 
+    )
 } )
-

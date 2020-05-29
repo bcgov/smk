@@ -1,0 +1,17 @@
+.smk-toggle-button label.smk-command {
+    display: flex;
+    align-items: center;
+}
+
+.smk-toggle-button .smk-toggle {
+    font-size: 30px;
+    line-height: 18px;
+}
+
+.smk-toggle-button.smk-toggle-off .smk-toggle {
+    color: red;
+}
+
+.smk-toggle-button.smk-toggle-on .smk-toggle {
+    color: lightgreen
+}

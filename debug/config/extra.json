@@ -1,0 +1,56 @@
+
+{
+  "tools": [
+    {
+      "type": "query",
+      "icon": "search",
+      "instance": "31079--all",
+      "enabled": true,
+      "showTitle": true,
+      "position": "menu",
+      "command": {
+        "attributeMode": true,
+        "clear": false
+      },
+      "order":200
+    }
+  ],
+  "layers": [
+    {
+      "id": "31079",
+      "isVisible": true,
+      "queries": [
+        {
+          "id": "all",
+          "title": "All",
+          "description": "",
+          "parameters": [
+            {
+              "id": "param1",
+              "type": "constant",
+              "value": 1
+            }
+          ],
+          "predicate": {
+            "operator": "and",
+            "arguments": [
+              {
+                "operator": "equals",
+                "arguments": [
+                  {
+                    "operand": "parameter",
+                    "id": "param1"
+                  },
+                  {
+                    "operand": "parameter",
+                    "id": "param1"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

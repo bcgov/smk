@@ -1,23 +1,57 @@
-<div
-    v-bind:class="{ 'smk-busy': busy }"
->
-    <div class="smk-message" 
-        v-bind:class="'smk-' + ( status || 'summary' )" 
-        v-if="message"
+<div v-bind:class="{ 'smk-busy': busy }">
+    <div class="smk-panel">
+    <transition name="status-message">
+        <div class="smk-message" 
+            v-bind:class="'smk-' + ( status || 'summary' )" 
+            v-show="message"
+        >
+            <div v-html="message"></div>
+            <busy-spinner v-bind:size="16" v-bind:busy="busy"></busy-spinner>
+        </div>            
+    </transition>
+
+    <div class="smk-header" 
+        v-if="showHeader"
+        v-on:touchstart="startSwipe"
+        v-on:touchmove="moveSwipe"
     >
-        <span v-html="message"></span>
-        <busy-spinner v-bind:size="16" v-bind:busy="busy"></busy-spinner>
-    </div>            
-
-    <div class="smk-header" v-if="showHeader">
+        <div class="smk-swipe-handle" v-if="showSwipe"></div>
+        
         <slot name="header"></slot>
-
-        <div class="smk-commands">
-            <slot name="commands"></slot>
-        </div>
     </div>
 
-    <div class="smk-body">
+    <!-- <div class="smk-message-container">
+        <transition name="status-message">
+            <div class="smk-message" 
+                v-bind:class="'smk-' + ( status || 'summary' )" 
+                v-if="message"
+            >
+                <div v-html="message"></div>
+                <busy-spinner v-bind:size="16" v-bind:busy="busy"></busy-spinner>
+            </div>            
+        </transition>
+    </div> -->
+
+    <div class="smk-commands">
+        <slot name="commands"></slot>
+    </div>
+
+    <div class="smk-above-body">
+        <i class="smk-can-scroll-up material-icons" 
+            v-if="canScrollUp"
+        >arrow_drop_up</i>
+    </div>
+
+    <div class="smk-body" ref="body"
+        v-on:scroll="scrollBody"
+    >
         <slot></slot>
     </div>
+
+    <div class="smk-below-body">
+        <i class="smk-can-scroll-down material-icons" 
+            v-if="canScrollDown"
+        >arrow_drop_down</i>
+    </div>
+</div>
 </div>

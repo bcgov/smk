@@ -1,0 +1,53 @@
+.smk-toolbar  {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: var( --toolbar-height );
+    /* min-width: var( --panel-width ); */
+
+    z-index: 10;
+    background-color: white;
+    border-radius: 3px;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65);
+    pointer-events: auto;
+    user-select: none;
+    -ms-user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+/* .smk-toolbar.smk-hidden  {
+    display: none;
+} */
+
+.smk-tool {
+    display: inline-block;
+    opacity: 0.5;
+    border-radius: 3px;
+    border: 1px solid transparent;
+    padding: 0;
+    margin: 1px;
+    cursor: default;
+}
+
+.smk-tool:hover {
+    border: 1px solid rgb(126, 126, 126);
+}
+
+.smk-tool:focus {
+    outline: 0;
+    background-color: white;
+}
+
+/* .smk-tool.smk-tool-visible {
+    display: inline-block;
+} */
+
+.smk-tool.smk-tool-enabled {
+    opacity: 1.0;
+}
+

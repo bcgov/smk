@@ -1,0 +1,38 @@
+{
+    "layers": [
+        {
+            "type": "vector",
+            "id": "major-road-network-high-zoom",
+            "title": "Major Road Network",
+            "dataUrl": "./layers/major-road-network/major-road-network.geojson",
+            "scaleMin": 18897,
+            "isQueryable": false,
+            "style": {
+                "strokeWidth": 7.5,
+                "strokeColor": "#73B2FF",
+                "strokeOpacity": 0.5
+            },
+            "legend": {
+                "line": true
+            }
+        },
+        {
+            "type": "vector",
+            "id": "major-road-network",
+            "title": "Major Road Network",
+            "dataUrl": "./layers/major-road-network/major-road-network.geojson",
+            "scaleMin": 1155582,
+            "scaleMax": 18897,
+            "where": null,
+            "isQueryable": false,
+            "style": {
+                "strokeWidth": 5.25,
+                "strokeColor": "#73B2FF",
+                "strokeOpacity": 0.5
+            },
+            "legend": {
+                "line": true
+            }
+        }
+    ]
+}

@@ -1,0 +1,397 @@
+/* variables.css */
+
+.smk-theme-wf.smk-map-frame {
+    /* --overlay-padding: 7px; */
+    --panel-width: 300px;
+    /* --panel-bottom: 0; */
+    --toolbar-height: 40px;
+}
+
+.smk-device-mobile.smk-theme-wf.smk-map-frame .smk-overlay {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.smk-device-mobile.smk-theme-wf.smk-map-frame .smk-overlay .smk-status {
+    position: static;
+}
+
+.smk-theme-wf .smk-command {
+    display: inline-block;
+    color: white;
+    font-weight: bold;
+    background-color: black;
+    border: 2px solid white;
+    border-radius: 6px;
+    font-size: 13px;
+    padding: 2px 5px;
+    margin-bottom: 1px;
+}
+
+.smk-theme-wf select.smk-command {
+    color: white;
+    font-weight: bold;
+    background-color: black;
+    border: 2px solid white;
+    font-size: 13px;
+    padding: 2px 5px;
+    margin-bottom: 1px;
+}
+
+.smk-theme-wf .smk-command:hover {
+    border: 2px solid white;
+    outline: 1px solid rgb(126, 126, 126);
+}
+
+.smk-theme-wf .smk-command.smk-disabled {
+    color: lightgray;
+    background-color: gray;
+    font-style: italic;
+    cursor: default;
+}
+
+.smk-theme-wf .smk-command.smk-disabled:hover {
+    outline: none;
+    border: 2px solid white;
+}
+
+.smk-theme-wf .smk-command.smk-icon {
+    background-color: transparent;
+    cursor: pointer;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    margin-left: -2px;
+    user-select: none;
+    -ms-user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+
+    color: black;
+    padding: 0;
+    width: 26px;
+    height: 26px;
+    font-size: 24px;
+    font-weight: normal;
+}
+
+.smk-device-mobile.smk-theme-wf .smk-command.smk-icon.smk-panel-go-back,
+.smk-device-mobile.smk-theme-wf .smk-command.smk-icon.smk-panel-close {
+    padding: 4px;
+}
+
+.smk-theme-wf .smk-command.smk-icon:hover {
+    border: 1px solid black;
+    outline: none;
+}
+
+.smk-theme-wf .smk-command.smk-icon.smk-disabled {
+    font-style: normal;
+}
+
+.smk-theme-wf label.smk-command {
+    padding: 2px 5px;
+}
+
+.smk-theme-wf label.smk-command input {
+    padding: 0;
+    margin: 0;
+    margin-right: 4px;
+}
+
+.smk-theme-wf label.smk-command input[type=checkbox] {
+    height: 13px;
+}
+
+.smk-theme-wf .smk-toggle-button .smk-command {
+    color: black;
+    background-color: white;
+    white-space: nowrap;
+}
+
+/* toolbar.css */
+
+.smk-theme-wf .smk-toolbar {
+    padding: 0 4px;
+}
+
+.smk-device-mobile.smk-theme-wf .smk-toolbar {
+    right: 0;
+}
+
+/* widgets.css */
+
+.smk-device-mobile.smk-theme-wf .smk-toolbar .smk-tool {
+    background-color: white;
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.smk-device-mobile.smk-theme-wf .smk-toolbar .smk-tool.smk-tool-title {
+    flex-direction: column;
+}
+
+.smk-device-mobile.smk-theme-wf .smk-toolbar .smk-tool.smk-tool-title span {
+    display: block;
+    font-size: 10px;
+    margin: 0;
+}
+
+/* sidepanel.css */
+
+.smk-theme-wf .smk-sidepanel {
+    width: calc( var( --panel-width ) + 8px );
+}
+
+.smk-device-mobile.smk-theme-wf .smk-sidepanel {
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    width: initial;
+
+    border-bottom: 1px solid #888;
+    background-color: white;
+    opacity: 1;
+
+    top: initial;
+    order: 1;
+    position: static;
+    margin-top: 5px;
+}
+
+.smk-device-mobile.smk-theme-wf .smk-sidepanel.sidepanel-slide-enter-active, 
+.smk-device-mobile.smk-theme-wf .smk-sidepanel.sidepanel-slide-leave-active {
+    transition: all 1s ease-in-out;
+}
+
+.smk-device-mobile.smk-theme-wf .smk-sidepanel.sidepanel-slide-enter, 
+.smk-device-mobile.smk-theme-wf .smk-sidepanel.sidepanel-slide-leave-to {
+    opacity: 0;
+    /* top: 100% */
+    /* height: 0; */
+
+}
+
+.smk-device-mobile.smk-theme-wf .smk-sidepanel.smk-expand-2 {
+    top: 0;
+    right: 0;
+    transition: top 1s ease-in-out;
+}
+
+.smk-device-mobile.smk-theme-wf .smk-sidepanel.smk-expand-2 .smk-elastic-panel {
+    /* max-height: calc( var( --map-height ) - var( --toolbar-height ) ); */
+    max-height: unset;
+    height: 100%;
+    transition: max-height 1s ease-in-out;
+}
+
+.smk-device-mobile.smk-theme-wf .smk-sidepanel .smk-elastic-panel {
+    height: calc( 50vh - var( --toolbar-height ) );
+}
+
+.smk-device-mobile.smk-theme-wf .smk-sidepanel.sidepanel-slide-enter .smk-elastic-panel, 
+.smk-device-mobile.smk-theme-wf .smk-sidepanel.sidepanel-slide-leave-to .smk-elastic-panel {
+    height: 0;
+}
+
+.smk-device-mobile.smk-theme-wf .smk-sidepanel.sidepanel-slide-enter-active .smk-elastic-panel, 
+.smk-device-mobile.smk-theme-wf .smk-sidepanel.sidepanel-slide-leave-active .smk-elastic-panel {
+    transition: all 1s ease-in-out;
+}
+
+.smk-theme-wf .smk-sidepanel .smk-panel .smk-panel-title {
+    font-weight: bold;
+}
+
+.smk-device-mobile.smk-theme-wf .smk-sidepanel .smk-panel .smk-panel-title {
+    padding-top: 2px;
+    padding-left: 4px;
+}
+
+.smk-device-mobile.smk-theme-wf .smk-sidepanel .smk-panel .smk-header {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.smk-device-mobile.smk-theme-wf .smk-sidepanel .smk-panel .smk-body {
+    z-index: 2;
+}
+
+/*.smk-device-mobile*/.smk-theme-wf .smk-sidepanel .smk-message {
+    order: 0;
+    z-index: 99999;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+    padding: 6px;
+    border-radius: 6px;    
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/*.smk-device-mobile*/.smk-theme-wf .smk-sidepanel .smk-message .smk-spinner {
+    position: static;
+}
+
+/*.smk-device-mobile*/.smk-theme-wf .smk-sidepanel .smk-message div {
+    display: inline-block;
+}
+
+/*.smk-device-mobile*/.smk-theme-wf .smk-sidepanel .smk-message.smk-summary {
+    /* display: none; */
+}
+
+/*.smk-device-mobile*/.smk-theme-wf .smk-sidepanel .smk-message.smk-progress {
+    /* display: none; */
+}
+
+/*.smk-device-mobile*/.smk-theme-wf .smk-sidepanel .smk-message.smk-warning {
+    /* display: none; */
+}
+
+/* menu.css */
+
+.smk-device-mobile.smk-theme-wf .smk-sidepanel .smk-panel.smk-menu-panel {
+    border: 0;
+    background-color: transparent;   
+}
+
+.smk-device-mobile.smk-theme-wf .smk-sidepanel .smk-panel.smk-menu-panel > .smk-header {
+    background-color: transparent;
+    box-shadow: none;
+    justify-content: space-between;
+}
+
+.smk-device-mobile.smk-theme-wf .smk-sidepanel .smk-panel.smk-menu-panel > .smk-header .smk-tool-title {
+    flex-grow: 1;
+    justify-content: center;
+}
+
+.smk-device-mobile.smk-theme-wf .smk-sidepanel .smk-panel.smk-menu-panel > .smk-header .smk-tool-title.smk-tool-active {
+    background-color: #003366;
+    color: white;
+}
+
+.smk-device-mobile.smk-theme-wf .smk-sidepanel .smk-panel.smk-menu-panel > .smk-body {
+    background-color: transparent;
+    box-shadow: none;
+    padding-top: 1px;
+    padding-bottom: 2px;
+}
+
+/* panel-feature.css */
+
+.smk-device-mobile.smk-theme-wf .smk-feature-panel .smk-commands {
+    flex-direction: row-reverse;   
+    justify-content: flex-start;
+}
+
+/*.smk-device-mobile*/.smk-theme-wf .smk-feature-panel .smk-commands .smk-navigator {
+    flex-grow: 0;
+    justify-content: flex-end;
+}
+
+/*.smk-device-mobile*/.smk-theme-wf .smk-feature-panel .smk-commands .smk-zoom {
+    order: 70;
+}
+
+
+/* tool-layers.css */
+
+.smk-theme-wf .smk-layers-panel .smk-item {
+    padding: 2px 0;
+}
+
+.smk-theme-wf .smk-layers-panel .smk-legend-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.smk-theme-wf .smk-layers-panel .smk-legend-title {
+    font-size: 12px;
+    margin-left: 5px;
+}
+
+/* tool-query.css */
+
+.smk-theme-wf .smk-sidepanel .smk-query-panel.smk-panel {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.smk-theme-wf .smk-query-panel .smk-commands {
+    order: 1;
+    flex-direction: row-reverse;   
+    justify-content: flex-start;
+
+    order: 3;
+    flex-basis: 1%;
+    align-content: flex-end;
+}
+
+.smk-theme-wf .smk-query-panel .smk-commands .smk-toggle-button {
+    order: 1;
+}
+
+.smk-theme-wf .smk-query-panel .smk-commands .smk-search {
+    flex-basis: 100%;
+    text-align: center;
+    align-self: flex-end;
+}
+
+.smk-theme-wf .smk-query-panel .smk-body {
+    order: 2;
+    flex-basis: 99%;
+}
+
+/* shortcut-menu.css */
+
+.smk-theme-wf .smk-overlay .smk-shortcut-menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.smk-theme-wf .smk-overlay .smk-shortcut-menu .smk-tool {
+    margin: 4px 0;
+}
+
+.smk-theme-wf .smk-overlay .smk-shortcut-menu .smk-bespoke-tool {
+    width: 40px;
+    height: 40px;
+    border-radius: 40px;
+    background-color: #1A5A96;
+    color: white;
+}
+
+.smk-theme-wf .smk-overlay .smk-shortcut-menu .smk-bespoke-tool i {
+    margin-top: 7px;
+}
+
+/* tool-search.css */
+
+.smk-theme-wf .smk-tool.smk-search-tool .smk-search-dropdown {
+    top: calc( var( --toolbar-height ) - 8px );
+}
+
+/* tool-base-maps.css */
+
+.smk-theme-wf .smk-tool.smk-baseMaps-tool.smk-basemap-Topographic {
+    background-color: white;
+    color: black;
+}
+
+.smk-theme-wf .smk-tool.smk-baseMaps-tool.smk-basemap-Imagery {
+    background-color: #1A5A96;
+    color: white;
+}

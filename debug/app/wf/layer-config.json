@@ -1,0 +1,726 @@
+{
+  "layers": [
+    {
+      "type": "esri-feature",
+      "id": 31071,
+      "title": "Active Wildfires",
+      "isVisible": true,
+      "attribution": "Copyright 117 DataBC, Government of British Columbia",
+      "serviceUrl": "https://services6.arcgis.com/ubm4tcTYICKBpist/arcgis/rest/services/BCWS_ActiveFires_PublicView/FeatureServer/0",
+      "metadataUrl": "https://catalogue.data.gov.bc.ca/dataset/diagnostic-facilities",
+      "where": "FIRE_STATUS <> 'Out' AND FIRE_STATUS <> 'Not Active'",
+      "opacity": 1,
+      "scaleMin": 500000,
+      "scaleMax": 0,
+      "drawingInfo": {
+        "renderer": {
+          "type": "uniqueValue",
+          "field1": "FIRE_STATUS",
+          "defaultSymbol": null,
+          "uniqueValueInfos": [
+            {
+              "value": "Fire of Note",
+              "symbol": {
+                "angle": 0,
+                "xoffset": 0,
+                "yoffset": 0,
+                "type": "esriPMS",
+                "url": "fcfb84d5-7117-4125-90d5-ca2ea95bcd35",
+                "width": 12,
+                "height": 17.333333333333336,
+                "imageData": "iVBORw0KGgoAAAANSUhEUgAAABIAAAAaCAYAAAC6nQw6AAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAABcvAAAXLwG1k46fAAAAB3RJTUUH4QQDEzcJAUJuEAAAA19JREFUOMuF1U9sVFUUBvDfu+/NTGemMy102lJoS6VQS6EqCoYqmhiNkiiaQKJbFho3xhW6MLo1rEyMiSsTt7pwR9xowkISWagYiEbcCEqpC1uMBaZO/zwXc6cg4c9N7uLlnPOd7/vOyX2Ju5y5GZDhcXyPq0Pf3j43uPfZhmexfLek7B5s4AWMYuUOOQkq2U0fOdxCvRuHMH8HkBKewmJH2jQatyE2KfGQoGZV8RaQHryLvfihI+0BPIMPbpJEbka3XqsGLKlKNWO8juOx7mU0O4yW8Hpk1gHJJB7Ti8Sg1ECMFPA2juJTzN48tVaczqtII1C/zLRerOkTTMTcF/EmLuHrjq8doGIEPbLOKrdN2bAacsXoxRDekqhJ/CI31xHQAeqNk9sSNcOUbnWVGGkv5WtSe/Uh+NOvWrcCjUkkUdRLGJGY0itRWhe7T+4NQ1J1rMjcf2MuIe7CTmlcgMQEDsnsUI+iy6CqqN8YVpEbXo9EoC2YkmMTajJrjirapR4HvSGua1+87bMj1q4DPYwRedzjESQeUTKqgf7YoBStLqILiWE80VnQgKdRlcWEEVQEFcHGOIZG7N+IftWIjh6J7QUckKMSZWzFcEyuRyldEWhTBO54157kox2gcWK3bkxgEhujnJ5YnGIs2luNYLkePHdjagUMthOSwYz90cZCvCMRYHMEKUbvbpheDHILKrFznUL3uHRiE7sjI0nb5K2oJfQl7VdsYF1eCWmQOy3TDlYJaU1tw2Fhsod+snSzUK0xmSh17xYatbYF1cgyt4BWwOearrneXrQ8X1Uq71Hrf0Wo1JW6phVK90krDdX680Kl2jY9i7JzZ7GaSXyp6RsXHbSNfKmFNeXKjJCUJUlRtjrs3+ZZheKorLjZyuAcPyF32aqvBILEgtyHLpj3IyvnfrN09TvkSuU9il07lcoPqnQ/KQllhdJE+zdwxYqmT1x2DtJjIwguWDbvbxP5teWe5db5dK1yTVZpCGlVkpSkWT+C5YXzWid/vu6sj110XENz6HR8IOZmEAQto+r2GTdlVxgr7BkbL08c2F7aOD0Qsp60tXh+efHkZ2dWTsx+5JQvNDSHTrn9mcOlw8xuEf44pnfuRNfeK7/vf/+f+YPn/jqz/Z3Z9wznmNv5/7r/ALPYw78SkHupAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDE3LTA0LTAzVDE5OjU1OjA5LTA0OjAwnkdlngAAACV0RVh0ZGF0ZTptb2RpZnkAMjAxNy0wNC0wM1QxOTo1NTowOS0wNDowMO8a3SIAAAAZdEVYdFNvZnR3YXJlAHd3dy5pbmtzY2FwZS5vcmeb7jwaAAAAAElFTkSuQmCC",
+                "contentType": "image/png"
+              },
+              "label": "Fires of Note"
+            },
+            {
+              "value": "New",
+              "symbol": {
+                "angle": 0,
+                "xoffset": 0,
+                "yoffset": 0,
+                "type": "esriPMS",
+                "url": "daaeb38b-43b4-47e0-a01d-e2795e9dd863",
+                "width": 10.5,
+                "height": 12.250000000000002,
+                "imageData": "iVBORw0KGgoAAAANSUhEUgAAAAwAAAAOCAYAAAAbvf3sAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3QUQFTcL57VlmQAAAg5JREFUKM99kktIVHEYxX///7137vvOqPPQccZ0EtKEwowWBkFQZEFG1qYHFOVC2kS5skXLCqJ9QUvBpYsea4NArOixiFqMplmmZpQ2zowzd+a2KJUW9Vsdzjl8i48DfzjWE+dfDF5q/ts43bdZzlgRedB0Qkf1mlCnEpLr/u3rGQDEqeMJRkYXALgYTkSb8pVuW6HTUDUseAWMX8h9+QpwYyiDWL8w4MVS7av+UMZx++pVq14rr7GmKfO+7z+YLxVvnijMfwBQAM4ajr3NV6902d7VrnNn3NTePbjTs3iK6tiG2WUh1CNBaHzEzxVl21aLBsVsrq/Sm47Fhdfbg+w9hJ9MgGXiROsIx2LHDcPo6McR6paPQhhqkHJ1vd1Y+k7+/jDCdZB+BRH2ELUR7GqQDL4ttmbxx1VQkIAiBFJVKT9/jYzWQsRD6DpKcxqxkqMIrqQqZDZZDqSUn6rwrkQA8vcnVcdBbWpE62ijZNlLuVJlYYUgkJMzBaiKaR8eFwlQTANRE4GmRtRdO5Cew9xU9sXb5cX3cwSBAjDmr5YPKGY2IvU63TZbzWQqFGqIUymX8zNjTyfGHj66NxwUJqbwS2JwIM2du7MAjOqJdNh1D9thb3fVMNyfhfzkm89zT0bWfjx7SWl5Yw63hlo29Hl0rR8zfBIrvg89EkXT1rP93TWbe7p2uYX/sXO7C8AvIQmfMtfi+ycAAAAASUVORK5CYII=",
+                "contentType": "image/png"
+              },
+              "label": "New Fires (less than 24hrs old - not fires of note)"
+            },
+            {
+              "value": "Active",
+              "symbol": {
+                "angle": 0,
+                "xoffset": 0,
+                "yoffset": 0,
+                "type": "esriPMS",
+                "url": "812d0c00-cfe4-4bff-880a-4e200d27e128",
+                "width": 10.5,
+                "height": 12.250000000000002,
+                "imageData": "iVBORw0KGgoAAAANSUhEUgAAAAwAAAAOCAYAAAAbvf3sAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3QUQFjQDwAUAMQAAAhZJREFUKM99kj9oU1EUxr9z77v59/raxjaxpg1JqoLGogiV1rroZhclVQfdXEQcdCiIKdhJjCCiCEIFwcHBrQ6CjlINVIpah1IVDa1ESZqkxDR9SZOXd69DTIuD/sYf3znD+Q7wh5PH/fgX45fCf4tzY1vhgR2cnR92OS4ccTuO7has5W9P9gMA6GxsO54+W2nKWFt30MtH/AY7qDsIhpPmAcxGb6zmAeBmvB/U2nD/jNG3v1eLR4PtY7wz1ENMQEkrq6zq80ZxOdETzy8BaA5Mjur6UFjEhwZCE57hy0QeHxo/56AsE6puwi6lHzSyH6/7r2aKbM9ODyJdPBzaxk9ogUESwcPQ/FGQ8ABMAzMC4J2hGLm8++6eaiPtUJckp6A+n8H3AkB9+TWICyglQUIHuTrAuSMAJXd9SDdmNakARgBxAeICdjHVDAo34NDBdD9UrQxl1wyNgdjbHCmXhh/Ktj4pq7p5XhI6mKcbvL0XkI2CuV5eyZWlYqnvVTQklpVSL1S9DNLcIKcBcnvBO4KA5oSVmX+XTNU/f8nZigHA6UclM1Oyp6SZeyI3fpnEBEjokBtrldridHLhzfTjh8lq6lveljR+MYg7U2kAQDbhC2rtgVGm+wdBzJCVQur9Qmrm3qvK3MvFemmzh1vxCK4lllptC0bwFNalc2nVrs98tczMmrQA4NiId+ufJq5E8D8ORA0AwG8kgMOYqNPZSgAAAABJRU5ErkJggg==",
+                "contentType": "image/png"
+              },
+              "label": "Active Fires (not fires of note)"
+            },
+            {
+              "value": "Being Held",
+              "symbol": {
+                "angle": 0,
+                "xoffset": 0,
+                "yoffset": 0,
+                "type": "esriPMS",
+                "url": "812d0c00-cfe4-4bff-880a-4e200d27e128",
+                "width": 10.5,
+                "height": 12.250000000000002,
+                "imageData": "iVBORw0KGgoAAAANSUhEUgAAAAwAAAAOCAYAAAAbvf3sAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3QUQFjQDwAUAMQAAAhZJREFUKM99kj9oU1EUxr9z77v59/raxjaxpg1JqoLGogiV1rroZhclVQfdXEQcdCiIKdhJjCCiCEIFwcHBrQ6CjlINVIpah1IVDa1ESZqkxDR9SZOXd69DTIuD/sYf3znD+Q7wh5PH/fgX45fCf4tzY1vhgR2cnR92OS4ccTuO7has5W9P9gMA6GxsO54+W2nKWFt30MtH/AY7qDsIhpPmAcxGb6zmAeBmvB/U2nD/jNG3v1eLR4PtY7wz1ENMQEkrq6zq80ZxOdETzy8BaA5Mjur6UFjEhwZCE57hy0QeHxo/56AsE6puwi6lHzSyH6/7r2aKbM9ODyJdPBzaxk9ogUESwcPQ/FGQ8ABMAzMC4J2hGLm8++6eaiPtUJckp6A+n8H3AkB9+TWICyglQUIHuTrAuSMAJXd9SDdmNakARgBxAeICdjHVDAo34NDBdD9UrQxl1wyNgdjbHCmXhh/Ktj4pq7p5XhI6mKcbvL0XkI2CuV5eyZWlYqnvVTQklpVSL1S9DNLcIKcBcnvBO4KA5oSVmX+XTNU/f8nZigHA6UclM1Oyp6SZeyI3fpnEBEjokBtrldridHLhzfTjh8lq6lveljR+MYg7U2kAQDbhC2rtgVGm+wdBzJCVQur9Qmrm3qvK3MvFemmzh1vxCK4lllptC0bwFNalc2nVrs98tczMmrQA4NiId+ufJq5E8D8ORA0AwG8kgMOYqNPZSgAAAABJRU5ErkJggg==",
+                "contentType": "image/png"
+              },
+              "label": "Active Fires (not fires of note)",
+              "skipLegend": true
+            },
+            {
+              "value": "Under Control",
+              "symbol": {
+                "angle": 0,
+                "xoffset": 0,
+                "yoffset": 0,
+                "type": "esriPMS",
+                "url": "812d0c00-cfe4-4bff-880a-4e200d27e128",
+                "width": 10.5,
+                "height": 12.250000000000002,
+                "imageData": "iVBORw0KGgoAAAANSUhEUgAAAAwAAAAOCAYAAAAbvf3sAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3QUQFjQDwAUAMQAAAhZJREFUKM99kj9oU1EUxr9z77v59/raxjaxpg1JqoLGogiV1rroZhclVQfdXEQcdCiIKdhJjCCiCEIFwcHBrQ6CjlINVIpah1IVDa1ESZqkxDR9SZOXd69DTIuD/sYf3znD+Q7wh5PH/fgX45fCf4tzY1vhgR2cnR92OS4ccTuO7has5W9P9gMA6GxsO54+W2nKWFt30MtH/AY7qDsIhpPmAcxGb6zmAeBmvB/U2nD/jNG3v1eLR4PtY7wz1ENMQEkrq6zq80ZxOdETzy8BaA5Mjur6UFjEhwZCE57hy0QeHxo/56AsE6puwi6lHzSyH6/7r2aKbM9ODyJdPBzaxk9ogUESwcPQ/FGQ8ABMAzMC4J2hGLm8++6eaiPtUJckp6A+n8H3AkB9+TWICyglQUIHuTrAuSMAJXd9SDdmNakARgBxAeICdjHVDAo34NDBdD9UrQxl1wyNgdjbHCmXhh/Ktj4pq7p5XhI6mKcbvL0XkI2CuV5eyZWlYqnvVTQklpVSL1S9DNLcIKcBcnvBO4KA5oSVmX+XTNU/f8nZigHA6UclM1Oyp6SZeyI3fpnEBEjokBtrldridHLhzfTjh8lq6lveljR+MYg7U2kAQDbhC2rtgVGm+wdBzJCVQur9Qmrm3qvK3MvFemmzh1vxCK4lllptC0bwFNalc2nVrs98tczMmrQA4NiId+ufJq5E8D8ORA0AwG8kgMOYqNPZSgAAAABJRU5ErkJggg==",
+                "contentType": "image/png"
+              },
+              "label": "Active Fires (not fires of note)",
+              "skipLegend": true
+            },
+            {
+              "value": "Out of Control",
+              "symbol": {
+                "angle": 0,
+                "xoffset": 0,
+                "yoffset": 0,
+                "type": "esriPMS",
+                "url": "812d0c00-cfe4-4bff-880a-4e200d27e128",
+                "width": 10.5,
+                "height": 12.250000000000002,
+                "imageData": "iVBORw0KGgoAAAANSUhEUgAAAAwAAAAOCAYAAAAbvf3sAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3QUQFjQDwAUAMQAAAhZJREFUKM99kj9oU1EUxr9z77v59/raxjaxpg1JqoLGogiV1rroZhclVQfdXEQcdCiIKdhJjCCiCEIFwcHBrQ6CjlINVIpah1IVDa1ESZqkxDR9SZOXd69DTIuD/sYf3znD+Q7wh5PH/fgX45fCf4tzY1vhgR2cnR92OS4ccTuO7has5W9P9gMA6GxsO54+W2nKWFt30MtH/AY7qDsIhpPmAcxGb6zmAeBmvB/U2nD/jNG3v1eLR4PtY7wz1ENMQEkrq6zq80ZxOdETzy8BaA5Mjur6UFjEhwZCE57hy0QeHxo/56AsE6puwi6lHzSyH6/7r2aKbM9ODyJdPBzaxk9ogUESwcPQ/FGQ8ABMAzMC4J2hGLm8++6eaiPtUJckp6A+n8H3AkB9+TWICyglQUIHuTrAuSMAJXd9SDdmNakARgBxAeICdjHVDAo34NDBdD9UrQxl1wyNgdjbHCmXhh/Ktj4pq7p5XhI6mKcbvL0XkI2CuV5eyZWlYqnvVTQklpVSL1S9DNLcIKcBcnvBO4KA5oSVmX+XTNU/f8nZigHA6UclM1Oyp6SZeyI3fpnEBEjokBtrldridHLhzfTjh8lq6lveljR+MYg7U2kAQDbhC2rtgVGm+wdBzJCVQur9Qmrm3qvK3MvFemmzh1vxCK4lllptC0bwFNalc2nVrs98tczMmrQA4NiId+ufJq5E8D8ORA0AwG8kgMOYqNPZSgAAAABJRU5ErkJggg==",
+                "contentType": "image/png"
+              },
+              "label": "Active Fires (not fires of note)",
+              "skipLegend": true
+            }
+          ]
+        },
+        "transparency": 0
+      },
+      "attributes": [
+        {
+          "name": "FIRE_NUMBER",
+          "title": "Fire Number"
+        },
+        {
+          "name": "IGNITION_DATE",
+          "title": "Date of Discovery",
+          "format": "asLocalDate"
+        },
+        {
+          "name": "FIRE_CAUSE",
+          "title": "Suspected Cause"
+        },
+        {
+          "name": "GEOGRAPHIC_DESCRIPTION",
+          "title": "Approximate Location"
+        },
+        {
+          "name": "CURRENT_SIZE",
+          "title": "Estimated Size",
+          "format": "asUnit('ha')"
+        },
+        {
+          "name": "FIRE_STATUS",
+          "title": "Stage of Control"
+        },
+        {
+          "name": "FIRE_OF_NOTE_NAME",
+          "title": "Fire of Note Information",
+          "format": "asLink(this.feature.properties.FIRE_OF_NOTE_URL)"
+        }
+      ],
+      "popupTemplate": "@wf-feature",
+      "titleAttribute": "FIRE_NUMBER",
+      "queries": [
+        {
+          "id": "fire",
+          "title": "Active Fires",
+          "description": "",
+          "parameters": [
+            {
+              "id": "param1",
+              "type": "input",
+              "title": "Fire Name, Number, Location, or Stage of Control"
+            },
+            {
+              "id": "param2",
+              "type": "constant",
+              "value": "Out"
+            }
+          ],
+          "predicate": {
+            "operator": "and",
+            "arguments": [
+                {
+                    "operator": "or",
+                    "arguments": [              
+                        {
+                            "operator": "contains",
+                            "arguments": [
+                                {
+                                    "operand": "attribute",
+                                    "name": "FIRE_NUMBER"
+                                },
+                                {
+                                    "operand": "parameter",
+                                    "id": "param1"
+                                }
+                            ]
+                        },
+                        {
+                            "operator": "contains",
+                            "arguments": [
+                                {
+                                    "operand": "attribute",
+                                    "name": "FIRE_CAUSE"
+                                },
+                                {
+                                    "operand": "parameter",
+                                    "id": "param1"
+                                }
+                            ]
+                        },
+                        {
+                            "operator": "contains",
+                            "arguments": [
+                                {
+                                    "operand": "attribute",
+                                    "name": "GEOGRAPHIC_DESCRIPTION"
+                                },
+                                {
+                                    "operand": "parameter",
+                                    "id": "param1"
+                                }
+                            ]
+                        },
+                        {
+                            "operator": "contains",
+                            "arguments": [
+                                {
+                                    "operand": "attribute",
+                                    "name": "FIRE_STATUS"
+                                },
+                                {
+                                    "operand": "parameter",
+                                    "id": "param1"
+                                }
+                            ]
+                        },
+                        {
+                            "operator": "contains",
+                            "arguments": [
+                                {
+                                    "operand": "attribute",
+                                    "name": "FIRE_OF_NOTE_NAME"
+                                },
+                                {
+                                    "operand": "parameter",
+                                    "id": "param1"
+                                }
+                            ]
+                        }
+                    ]
+                },
+              {
+                "operator": "not",
+                "arguments": [
+                  {
+                    "operator": "equals",
+                    "arguments": [
+                        {
+                            "operand": "attribute",
+                            "name": "FIRE_STATUS"
+                        },
+                        {
+                            "operand": "parameter",
+                            "id": "param2"
+                        }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "type": "esri-feature",
+      "id": "bcws-activefires-publicview-inactive",
+      "title": "Inactive Wildfires",
+      "isVisible": false,
+      "attribution": "Copyright 117 DataBC, Government of British Columbia",
+      "serviceUrl": "https://services6.arcgis.com/ubm4tcTYICKBpist/arcgis/rest/services/BCWS_ActiveFires_PublicView/FeatureServer/0",
+      "metadataUrl": "https://catalogue.data.gov.bc.ca/dataset/diagnostic-facilities",
+      "where": "FIRE_STATUS = 'Out' OR FIRE_STATUS = 'Not Active'",
+      "opacity": 1,
+      "scaleMin": 500000,
+      "scaleMax": 0,
+      "drawingInfo": {
+        "renderer": {
+          "type": "uniqueValue",
+          "field1": "FIRE_STATUS",
+          "defaultSymbol": null,
+          "uniqueValueInfos": [
+            {
+              "value": "Not Active",
+              "symbol": {
+                "angle": 0,
+                "xoffset": 0,
+                "yoffset": 0,
+                "type": "esriPMS",
+                "url": "d4c0d1aa-5e1b-4b6e-8e3c-4b7a9f544993",
+                "width": 10.5,
+                "height": 12.250000000000002,
+                "imageData": "iVBORw0KGgoAAAANSUhEUgAAAAwAAAAOCAYAAAAbvf3sAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3QUQFTkprFYJ8wAAAiFJREFUKM99kjFrU1EAhc999777XnPfbfIaaUKaQNMEjHbQWiWQpahDq4gl7aS/oLiIdjFSnIoRRHDUX+DoILhIoHYwVAQLEiK2aSOm1bZJi21Sm7y+XAeNxUG/8XA4wzkH+M34WC/+xfSN/r+F6xNH5kAwqJ1JJvm5VIpH43Gtoz+8NwAAINfSATx7vgEAGBsfP+bz+VJCyiHOOQzDeA8g/zib3QKA+5kBkE7ClcnJcDAUyoTD4QnbtoOUUriu+81xnBe1nZ1sdmZmFQAoAFwYHRWBUOhWIpG4fXFkRB6PxaARAiGEJTyeYcMw2FAymZ/P5Q60RMwD2+/vt237aqSvj0QjEQR7e6HrOjRNg1dK9Ph8aY9pDl5OpwkzewYJYywspDwBAMvlMiilUErB0HWYpglKaUgpFV+vVPJMKQVCCCiloJSiur0NQ9eh6zo455BC4KDVwuHhodQ0jWj1rYJijFVc1y06jvOnXs45hBDwer1ot9vVer2+0djbU1rp8w+02+2yUupls9kEZwyGYcBjmrC9XjDGUFlff1deWflY3dxUFAA+LC46p4eHly0p/V1dXXFLCG4JAdd194tLSwuvcrmn87ncwte1tRaZnorg0ZMvAIDM7GzE1919ybKss4QQ2Wg0SoVC4fWbubm3n4rF7wB+DfcgE8Wd7GpnbZ0Q4tmv142dWq21Wio19nZ3HQA4n7KP/nT3ZhT/49RJCQD4Cf/TszxdxDHIAAAAAElFTkSuQmCC",
+                "contentType": "image/png"
+              },
+              "label": "Not Active",
+              "skipLegend": true
+            },
+            {
+              "value": "Out",
+              "symbol": {
+                "angle": 0,
+                "xoffset": 0,
+                "yoffset": 0,
+                "type": "esriPMS",
+                "url": "d4c0d1aa-5e1b-4b6e-8e3c-4b7a9f544993",
+                "width": 10.5,
+                "height": 12.250000000000002,
+                "imageData": "iVBORw0KGgoAAAANSUhEUgAAAAwAAAAOCAYAAAAbvf3sAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3QUQFTkprFYJ8wAAAiFJREFUKM99kjFrU1EAhc999777XnPfbfIaaUKaQNMEjHbQWiWQpahDq4gl7aS/oLiIdjFSnIoRRHDUX+DoILhIoHYwVAQLEiK2aSOm1bZJi21Sm7y+XAeNxUG/8XA4wzkH+M34WC/+xfSN/r+F6xNH5kAwqJ1JJvm5VIpH43Gtoz+8NwAAINfSATx7vgEAGBsfP+bz+VJCyiHOOQzDeA8g/zib3QKA+5kBkE7ClcnJcDAUyoTD4QnbtoOUUriu+81xnBe1nZ1sdmZmFQAoAFwYHRWBUOhWIpG4fXFkRB6PxaARAiGEJTyeYcMw2FAymZ/P5Q60RMwD2+/vt237aqSvj0QjEQR7e6HrOjRNg1dK9Ph8aY9pDl5OpwkzewYJYywspDwBAMvlMiilUErB0HWYpglKaUgpFV+vVPJMKQVCCCiloJSiur0NQ9eh6zo455BC4KDVwuHhodQ0jWj1rYJijFVc1y06jvOnXs45hBDwer1ot9vVer2+0djbU1rp8w+02+2yUupls9kEZwyGYcBjmrC9XjDGUFlff1deWflY3dxUFAA+LC46p4eHly0p/V1dXXFLCG4JAdd194tLSwuvcrmn87ncwte1tRaZnorg0ZMvAIDM7GzE1919ybKss4QQ2Wg0SoVC4fWbubm3n4rF7wB+DfcgE8Wd7GpnbZ0Q4tmv142dWq21Wio19nZ3HQA4n7KP/nT3ZhT/49RJCQD4Cf/TszxdxDHIAAAAAElFTkSuQmCC",
+                "contentType": "image/png"
+              },
+              "label": "Out"
+            }
+          ]
+        },
+        "transparency": 0
+      },
+      "attributes": [
+        {
+          "name": "FIRE_NUMBER",
+          "title": "Fire Number"
+        },
+        {
+          "name": "IGNITION_DATE",
+          "title": "Date of Discovery",
+          "format": "asLocalDate"
+        },
+        {
+          "name": "FIRE_CAUSE",
+          "title": "Suspected Cause"
+        },
+        {
+          "name": "GEOGRAPHIC_DESCRIPTION",
+          "title": "Approximate Location"
+        },
+        {
+          "name": "CURRENT_SIZE",
+          "title": "Estimated Size",
+          "format": "asUnit('ha')"
+        },
+        {
+          "name": "FIRE_STATUS",
+          "title": "Stage of Control"
+        },
+        {
+          "name": "FIRE_OF_NOTE_NAME",
+          "title": "Fire of Note Information",
+          "format": "asLink(this.feature.properties.FIRE_OF_NOTE_URL)"
+        }
+      ],
+      "popupTemplate": "@wf-feature",
+      "titleAttribute": "FIRE_NUMBER"
+    },
+    {
+      "type": "esri-feature",
+      "id": 31072,
+      "title": "Danger Rating",
+      "isVisible": false,
+      "isQueryable": true,
+      "attribution": "Copyright 117 DataBC, Government of British Columbia",
+      "serviceUrl": "https://services6.arcgis.com/ubm4tcTYICKBpist/arcgis/rest/services/British_Columbia_Danger_Rating/FeatureServer/0",
+      "metadataUrl": "https://catalogue.data.gov.bc.ca/dataset/diagnostic-facilities",
+      "where": "",
+      "opacity": 0.25,
+      "scaleMin": 500000,
+      "scaleMax": 0,
+      "popupTemplate": "@wf-feature",
+      "titleAttribute": "LABEL",
+      "attributes": [
+          {
+              "name": "LABEL",
+              "title": "Danger Rating"
+          }
+      ]
+    },
+    {
+      "type": "esri-feature",
+      "id": "evacuation-orders-and-alerts",
+      "title": "Evacuation Orders and Alerts",
+      "isVisible": true,
+      "isQueryable": true,
+      "attribution": "Copyright 117 DataBC, Government of British Columbia",
+      "serviceUrl": "https://services6.arcgis.com/ubm4tcTYICKBpist/ArcGIS/rest/services/Evacuation_Orders_and_Alerts/FeatureServer/0",
+      "metadataUrl": "https://catalogue.data.gov.bc.ca/dataset/diagnostic-facilities",
+      "where": "",
+      "opacity": 0.25,
+      "scaleMin": 500000,
+      "scaleMax": 0,
+      "popupTemplate": "@wf-feature",
+      "titleAttribute": "EVENT_NAME",
+      "attributes": [
+        {
+            "name": "EVENT_NAME",
+            "title": "Name"
+        },
+        {
+            "name": "EVENT_TYPE",
+            "title": "Type"
+        },
+        {
+            "name": "DATE_MODIFIED",
+            "title": "Date",
+            "format": "asLocalDate"
+        },
+        {
+            "name": "ISSUING_AGENCY",
+            "title": "Issuing Agency"
+        },
+        {
+            "name": "ORDER_ALERT_STATUS",
+            "title": "Status"
+        }
+      ]
+    },
+    {
+      "type": "esri-feature",
+      "id": 31073,
+      "title": "Fire Perimeters",
+      "isVisible": true,
+      "attribution": "Copyright 117 DataBC, Government of British Columbia",
+      "serviceUrl": "https://services6.arcgis.com/ubm4tcTYICKBpist/arcgis/rest/services/BCWS_FirePerimeters_PublicView/FeatureServer/0",
+      "metadataUrl": "https://catalogue.data.gov.bc.ca/dataset/diagnostic-facilities",
+      "where": "FIRE_STATUS <> 'Out'",
+      "opacity": 1,
+      "scaleMin": 500000,
+      "scaleMax": 0,
+      "attributes": [
+        {
+          "name": "FIRE_NUMBER",
+          "title": "Fire Perimeter Number"
+        },
+        {
+          "name": "TRACK_DATE",
+          "title": "Track Date",
+          "format": "asLocalDate"
+        },
+        {
+          "name": "FIRE_STATUS",
+          "title": "Stage of Control"
+        },
+        {
+          "name": "FIRE_OF_NOTE_NAME",
+          "title": "Fire of Note Information",
+          "format": "asLink(this.feature.properties.FIRE_OF_NOTE_URL)"
+        }
+      ],
+      "popupTemplate": "@wf-feature",
+      "titleAttribute": "FIRE_NUMBER"
+    },
+    {
+      "type": "esri-tiled",
+      "id": 31074,
+      "title": "BC Fire Centres",
+      "isVisible": true,
+      "isQueryable": false,
+      "attribution": "Copyright 117 DataBC, Government of British Columbia",
+      "serviceUrl": "https://tiles.arcgis.com/tiles/ubm4tcTYICKBpist/arcgis/rest/services/BCWS_FireCenterBdys2/MapServer",
+      "metadataUrl": "https://catalogue.data.gov.bc.ca/dataset/diagnostic-facilities",
+      "opacity": 1,
+      "scaleMin": 500000,
+      "scaleMax": 0,
+      "popupTemplate": "@wf-feature"
+    },
+    {
+      "type": "esri-feature",
+      "id": 31075,
+      "title": "Bans and Prohibitions",
+      "isVisible": false,
+      "attribution": "Copyright 117 DataBC, Government of British Columbia",
+      "attributes": [
+        {
+          "name": "FireCentre",
+          "title": "Fire Centre"
+        },
+        {
+          "name": "Name",
+          "title": "Name"
+        },
+        {
+          "name": "DateActive",
+          "title": "Date Active",
+          "format": "asLocalDate"
+        },
+        {
+          "name": "DateDeactivated",
+          "title": "Date Deactivated",
+          "format": "asLocalDate"
+        },
+        {
+          "name": "Type",
+          "title": "Type"
+        },
+        {
+          "name": "Comments",
+          "title": "Comments"
+        },
+        {
+          "title": "More Information",
+          "value": "See Here",
+          "format": "asLink(this.feature.properties.URL)"
+        }
+      ],
+      "serviceUrl": "https://services6.arcgis.com/ubm4tcTYICKBpist/ArcGIS/rest/services/British_Columbia_Bans_and_Prohibition_Areas/FeatureServer/0",
+      "metadataUrl": "https://catalogue.data.gov.bc.ca/dataset/diagnostic-facilities",
+      "where": "",
+      "scaleMin": 500000,
+      "scaleMax": 0,
+      "popupTemplate": "@wf-feature",
+      "titleAttribute": "FireCentre"
+    },
+    {
+      "type": "esri-feature",
+      "id": 31077,
+      "title": "Area Restrictions",
+      "isVisible": false,
+      "attribution": "Copyright 117 DataBC, Government of British Columbia",
+      "serviceUrl": "https://services6.arcgis.com/ubm4tcTYICKBpist/ArcGIS/rest/services/British_Columbia_Area_Restrictions/FeatureServer/0",
+      "metadataUrl": "https://catalogue.data.gov.bc.ca/dataset/diagnostic-facilities",
+      "where": "",
+      "scaleMin": 500000,
+      "scaleMax": 0,
+      "drawingInfo": {
+        "renderer": {
+          "type": "simple",
+          "symbol": {
+            "type": "esriSFS",
+            "style": "esriSFSSolid",
+            "color": [
+              78,
+              78,
+              78,
+              64
+            ],
+            "outline": {
+              "type": "esriSLS",
+              "style": "esriSLSSolid",
+              "color": [
+                110,
+                110,
+                110,
+                255
+              ],
+              "width": 0.69999999999999996
+            }
+          }
+        },
+        "scaleSymbols": true,
+        "transparency": 0,
+        "labelingInfo": null
+      },
+      "attributes": [
+        {
+          "name": "Name",
+          "title": "Name"
+        },
+        {
+          "name": "DateActive",
+          "title": "Date Active",
+          "format": "asLocalDate"
+        },
+        {
+          "name": "DateDeactivated",
+          "title": "Date Deactivated",
+          "format": "asLocalDate"
+        },
+        {
+          "name": "Type",
+          "title": "Type"
+        },
+        {
+          "name": "Status",
+          "title": "Status"
+        },
+        {
+          "name": "FireCentre",
+          "title": "Fire Centre"
+        },
+        {
+          "title": "More Information",
+          "value": "See Here",
+          "format": "asLink(this.feature.properties.URL)"
+        }
+      ],
+      "popupTemplate": "@wf-feature",
+      "titleAttribute": "Name"
+    },
+    {
+      "type": "wms",
+      "id": "whse-land-and-natural-resource-prot-current-fire-polys-sp",
+      "title": "Fire Perimeters - Current",
+      "serviceUrl": "https://openmaps.gov.bc.ca/geo/pub/wms",
+      "layerName": "WHSE_LAND_AND_NATURAL_RESOURCE.PROT_CURRENT_FIRE_POLYS_SP",
+      "isQueryable": false,
+      "popupTemplate": "@wf-feature",
+      "titleAttribute": "FIRE_NUMBER"
+    },
+    {
+      "type": "esri-feature",
+      "id": 31078,
+      "title": "Prescribed Fire",
+      "isVisible": false,
+      "isQueryable": false,
+      "attribution": "Copyright 117 DataBC, Government of British Columbia",
+      "serviceUrl": "https://services6.arcgis.com/ubm4tcTYICKBpist/ArcGIS/rest/services/British_Columbia_Prescribed_Fire/FeatureServer/0",
+      "metadataUrl": "https://catalogue.data.gov.bc.ca/dataset/diagnostic-facilities",
+      "where": "",
+      "scaleMin": 500000,
+      "scaleMax": 0,
+      "popupTemplate": "@wf-feature",
+      "titleAttribute": "OBJECTID",
+      "attributes": [
+        {
+            "name": "Fire_Centre",
+            "title": "Fire Centre"
+        },
+        {
+            "name": "Fire_Zone",
+            "title": "Fire Zone"
+        },
+        {
+            "name": "ManagementObjective",
+            "title": "Management Objective"
+        },
+        {
+            "name": "Proposed_Area",
+            "title": "Proposed Area",
+            "format": "asUnit('ha')"
+        },
+        {
+            "name": "Status",
+            "title": "Status"
+        },
+        {
+          "title": "More Information",
+          "value": "See Here",
+          "format": "asLink(this.feature.properties.URL)"
+        }
+      ]
+    },
+    {
+      "type": "esri-feature",
+      "id": 31079,
+      "title": "Closed Recreation Sites",
+      "isVisible": false,
+      "attribution": "Copyright 117 DataBC, Government of British Columbia",
+      "attributes": [
+        {
+          "name": "PROJECT_NAME",
+          "title": "Name"
+        },
+        {
+          "name": "SITE_LOCATION",
+          "title": "Site Location"
+        },
+        {
+          "name": "SITE_DESCRIPTION_BRIEF",
+          "title": "Site Description"
+        },
+        {
+          "name": "CLOSURE_IND",
+          "title": "Closure Indicator"
+        },
+        {
+          "name": "CLOSURE_DATE",
+          "title": "Closure Date",
+          "format": "asLocalDate"
+        },
+        {
+          "name": "CLOSURE_TYPE",
+          "title": "Closure Type"
+        },
+        {
+          "name": "CLOSURE_COMMENT",
+          "title": "Closure Comments"
+        }
+      ],
+      "serviceUrl": "https://services6.arcgis.com/ubm4tcTYICKBpist/ArcGIS/rest/services/RecSitesReservesInterpForests_DetailsClosures_publicView/FeatureServer/0",
+      "metadataUrl": "https://catalogue.data.gov.bc.ca/dataset/diagnostic-facilities",
+      "where": "CLOSURE_IND = 'Y'",
+      "scaleMin": 500000,
+      "scaleMax": 0,
+      "popupTemplate": "@wf-feature",
+      "titleAttribute": "PROJECT_NAME",
+      "drawingInfo": {
+        "renderer": {
+          "type": "uniqueValue",
+          "field1": "CLOSURE_IND",
+          "defaultSymbol": null,
+          "uniqueValueInfos": [
+            {
+              "value": "Y",
+              "symbol": {
+                "angle": 0,
+                "xoffset": 0,
+                "yoffset": 0,
+                "type": "esriPMS",
+                "url": "c99abdd1-24c7-47d8-b714-4ad35866dd99",
+                "width": 6.75,
+                "height": 8.620481927710843,
+                "imageData": "iVBORw0KGgoAAAANSUhEUgAAAFMAAABqCAYAAADAx21lAAAAAXNSR0ICQMB9xQAAAAlwSFlzAAAXEgAAFxIBZ5/SUgAAABl0RVh0U29mdHdhcmUATWljcm9zb2Z0IE9mZmljZX/tNXEAAAOsSURBVHja7dwvdOJAEMfxysrKk0gkshKJRFYiK5HIQ1VG8lA1EN7DRCJPIiMjK5GVyF72XtPSHCH/fjM7uztidMvnZRnYb1/vlsvlnfSJ43jiwu8p/hdcr9f3Oeb7fr//pZg9Z7PZzHLMj+12+1sx+x/xP5+Yb4rZD3JoIC9G9HundMyohJkoZsfFk79fnkqYZ8mLSPJTOS1BFjNXzPZb/FCBmSlmizFHuQKymEfFbDjmM+UtzN1u96qYzY/4qebJPOcL6kExG3wPr4H8Nzn4s2LWYyZNMPNJFbN+8ZwbYpoZKWb1UzlvAWkmUsxqzKwl5rv5pqSY/0OOW0IWi2immKUxnx27YJorOsX8eanx0HLxlGeomN8f0p97QJp5Uczv98u0D6b5xiRhEUmAHPV8KouZBo+ZL54VAtNc2QWNWWRc0JP5YfsW3vbimaEgJeRg20f8CMZ8CxLzSsZFzSREzIgIMwkKsyLjosZaDrb1VE6JIK3mYFtb/ECMmQWBmb/QATFkMWPvMesyLmps5GAbR/zE9GSy52DuIz5hgrSSg7kxE05M7hzM9oM6ZFzUjLzDzF/UwgKkWUQrHzEzG5icOZgLcmwJkjUHc121vdrE5MrBHJcaD5YWD3sO5jjicwGQLH+XxIGZSsDkyMHUkCMhTyVLDqZePCtJmNQ5mPQ2HZlxXcjBlLdDM2mQ1DmY8ogfJWKaReQUJmHGFZ2DqTAj4ZiJE5jEGVd0DqZYPE/CIclyMAXmwRHMTDQmY8YVmYOhmFwZV2oORh9x6YuHNAcjj/jUMUj4InI544rLwa5nXFE52OmMKy0Hu55xReVg5zOupByMwNz5gGmuDK1iCsq4InKwLxlXRA72IuNKycE+ZVzrOdibjAt8Og+smJ8Z16fFU54BG6bUjIuarjnYq4yLXEQsmLH8jIuaCQdmFAhmQorpSMaF3cK3zcG+ZlzULCgxXcm4qMlIMGP3Mi5qxhSYLyFitsnBPmdc2CJqmoN9z7iomSMxk8AxUwimBxkXNaPemLHjGRe4iFa9Mc2/BFPMr0V03xkz9iTjAm+TZn0wvci4wKN+7ITpYcZFzbA1ZuxfxkVN1AUzVbir75uVObgK8lHhboI+Ncb0NeMCMQ+NMAPIuKgZ1GL6nnFRcy0HB5dxkYvoJmbs798PUc30FmakQK0muYoZWMaFXX5c5uCQMy5qFtcwQ8u4qMl+YMbhZlzUjC8xg8y4wNl9Yeri6b+IzJWlZlzczDXj4ib9C9b8q5ttvc3dAAAAAElFTkSuQmCC",
+                "contentType": "image/png"
+              },
+              "label": "Closed"
+            }
+          ]
+        },
+        "transparency": 0
+      }
+    },
+    {
+      "type": "wms",
+      "id": "drive-bc-active-events",
+      "title": "Drive BC Active Events",
+      "isVisible": false,
+      "isQueryable": false,
+      "attributes": [],
+      "serviceUrl": "https://maps.th.gov.bc.ca/geoV05/ows",
+      "layerName": "op5:OP5_EVENT511_ACTIVE_V",
+      "metadataUrl": "https://catalogue.data.gov.bc.ca/dataset/diagnostic-facilities",
+      "scaleMin": 500000,
+      "scaleMax": 0,
+      "popupTemplate": "@wf-feature"
+    }
+  ]
+}

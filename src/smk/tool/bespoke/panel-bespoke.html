@@ -1,0 +1,17 @@
+<tool-panel class="smk-bespoke-panel" 
+    v-bind="$$projectProps( 'tool-panel' )"
+>
+    <template slot="header">
+        <slot></slot>
+    </template>
+
+    <div class="smk-bespoke-content" 
+        v-if="content"
+        v-content="content"
+    ></div>
+
+    <div class="smk-bespoke-content" 
+        v-if="component"
+        v-bind:is="component"
+    ></div>
+</tool-panel>

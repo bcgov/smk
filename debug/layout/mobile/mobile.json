@@ -1,0 +1,61 @@
+{
+  "viewer": {
+      "device": "mobile"
+  },
+  "tools": [
+    {
+      "type": "layers",
+      "position": "shortcut-menu"
+    },
+    {
+      "type": "location"
+    },
+    {
+      "type": "identify",
+      "position": "list-menu",
+      "debugView": true
+    },
+    {
+      "type": "measure",
+      "position": "shortcut-menu"
+    },
+    {
+      "type": "directions",
+      "position": "list-menu"
+    },
+    {
+      "type": "about",
+      "position": "list-menu"
+    },
+    {
+      "type": "baseMaps",
+      "position": "list-menu"
+    },
+    {
+      "type": "select",
+      "position": "list-menu"
+    },
+    {
+      "type": "list-menu",
+      "enabled": true,
+      "title": "Mobile App"
+    },
+    {
+      "type": "menu",
+      "enabled": false
+    },
+    {
+      "type": "dropdown",
+      "enabled": false
+    },
+    {
+      "type": "shortcut-menu",
+      "enabled": true
+    },
+    {
+      "type": "query",
+      "position": "list-menu",
+      "order": 10
+    }
+  ]
+}

@@ -1,0 +1,99 @@
+#app {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    margin: 0;
+    padding: 0;
+
+    display: flex;
+    flex-direction: column;                
+}
+
+header {
+    border-bottom: 2px solid black;
+}
+
+header h1 {
+    display: inline-block;
+    padding: 5px;
+    margin: 0;
+    font-size: 15px;
+}
+
+header h1 .title {
+    font-size: 20px;
+}
+
+header ul {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    border-left: 2px solid black;
+}
+
+header ul li {
+    display: inline-block;
+    margin: 0;
+    padding: 5px;
+    border-right: 2px solid black;
+}
+
+header ul li.selected {
+    background-color: yellow;
+}
+
+header ul li:hover {
+    background-color: orange;
+}
+
+article {
+    flex-grow: 1;
+    flex-shrink: 1;
+    min-height: 0;
+    display: flex;                
+}
+
+#source {
+    font-family: monospace;
+    font-size: 12px;
+    max-width: 50%;
+
+    border-right: 2px solid black;
+    display: flex;
+    flex-direction: column;
+}
+
+#source h1 {
+    background-color: #aaa;
+    font-size: 14px;
+    padding: 5px;
+    margin: 0;
+}
+
+#source pre {
+    padding: 5px;
+    color: #ccc;
+    overflow: auto;
+}
+
+#source pre b {
+    color: #000;
+    font-size: 1.1em;
+}
+
+#demo {
+    flex-grow: 1;
+    position: relative;
+}
+
+#demo iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+}

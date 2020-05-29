@@ -156,9 +156,9 @@ if ( !window.include ) { ( function () {
         else throw new Error( 'Can\'t load template' )
     }
 
-    loader.sequence = function ( inc, tag ) {
+    loader.sequence = function ( inc, tag, warnRedefinition ) {
         inc.tags.forEach( function ( t, i, a ) {
-            a[ i ] = _assignAnonTag( t, tag )
+            a[ i ] = _assignAnonTag( t, tag, warnRedefinition )
         } )
 
         // console.group( tag, 'sequence', JSON.stringify( inc.tags ) )
@@ -205,12 +205,15 @@ if ( !window.include ) { ( function () {
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    function include( tags ) {
-        if ( !Array.isArray( tags ) )
-            tags = [].slice.call( arguments )
+    function include( tags, base ) {
+        switch ( type( tags ) ) {
+            case 'object': tags = [ tags ]; break
+            case 'array': break;
+            case 'string': tags = [].slice.call( arguments ); base = null; break
+            default: throw new Error( 'unable to include tags: ' + JSON.stringify( tags ) )
+        }
 
-        // return loader.group( { tags: tags } )
-        return loader.sequence( { tags: tags } )
+        return loader.sequence( { tags: tags }, base, false )
     }
 
     var extLoader = {
@@ -219,7 +222,7 @@ if ( !window.include ) { ( function () {
         html: 'template'
     }
 
-    function _assignAnonTag( tag, base ) {
+    function _assignAnonTag( tag, base, warnRedefinition ) {
         if ( typeof tag == 'string' ) return tag
 
         var anon = tag
@@ -234,7 +237,8 @@ if ( !window.include ) { ( function () {
 
         try {
             var inc = includeTag( newTag )
-            console.warn( 'tag "' + newTag + '" already defined as', inc, ', will be used instead of', tag )
+            if ( warnRedefinition !== false )
+                console.warn( 'tag "' + newTag + '" already defined as', inc, ', will be used instead of', tag )
         }
         catch ( e ) {
             includeTag( newTag, anon )
@@ -253,6 +257,7 @@ if ( !window.include ) { ( function () {
             if ( ext ) inc.loader = extLoader[ ext[ 1 ] ]
         }
 
+        if ( !inc.loader ) throw new Error( 'tag "' + tag + '" has no loader for "' + inc.url + '"' )
         if ( !loader[ inc.loader ] ) throw new Error( 'tag "' + tag + '" has unknown loader "' + inc.loader + '"' )
 
         return ( inc.include = new Promise( function ( res, rej ) {

@@ -1,0 +1,31 @@
+.smk-tool {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.smk-tool i {
+    background-color: transparent;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    outline: 0;
+    width: 26px;
+    height: 26px;
+}
+
+.smk-tool:focus {
+    outline: 0;
+}
+
+.smk-tool.smk-tool-title {
+    width: auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.smk-tool.smk-tool-title span {
+    font-size: 15px;
+    margin-right: 5px;
+    margin-left: 5px;
+}

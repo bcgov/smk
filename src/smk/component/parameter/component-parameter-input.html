@@ -1,0 +1,18 @@
+<div class="smk-parameter">
+    <label>
+        {{ title }}
+        <input
+            ref="in"
+            v-model="input"
+            v-on:input="$emit( 'input', { value: $event.target.value } )"
+            v-on:keyup.down="$emit( 'pickDown' )"
+            v-on:keyup.up="$emit( 'pickUp' )"
+            v-on:keyup.enter="$emit( 'execute' )"
+            v-on:focus="$emit( 'change', { active: true } )"
+            v-on:blur="$emit( 'change', { active: false } )"
+        >
+        <i class="smk-parameter-reset smk-command smk-icon material-icons" title="Reset"
+            v-on:click="$emit( 'reset' )"
+        >cancel</i>
+    </label>
+</div>

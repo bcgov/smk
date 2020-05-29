@@ -28,9 +28,10 @@ include.module( 'util', null, function ( inc ) {
 
         templatePattern: /<%=\s*(.*?)\s*%>/g,
         templateReplace: function ( template, replacer ) {
+            if ( !template ) return template
             if ( !replacer ) return template
 
-            var m = template.match( this.templatePattern );
+            var m = String( template ).match( this.templatePattern );
             if ( !m ) return template;
 
             replacer = ( function ( inner ) {
@@ -45,7 +46,7 @@ include.module( 'util', null, function ( inc ) {
                 return replacer( x[ 1 ], template )
             }
 
-            return template.replace( this.templatePattern, function ( match, parameterName ) {
+            return String( template ).replace( this.templatePattern, function ( match, parameterName ) {
                 return replacer( parameterName, match )
             } )
         },
@@ -106,6 +107,10 @@ include.module( 'util', null, function ( inc ) {
         makeDelayedCall: function ( fn, option ) {
             var timeoutId
 
+            option = Object.assign( {
+                delay: 200,
+            }, option )
+
             function cancel() {
                 if ( timeoutId ) clearTimeout( timeoutId )
                 timeoutId = null
@@ -119,11 +124,17 @@ include.module( 'util', null, function ( inc ) {
 
                 timeoutId = setTimeout( function () {
                     timeoutId = null
-                    fn.apply( ctxt, args )
-                }, option.delay || 200 )
+                    try {
+                        fn.apply( ctxt, args )
+                    }
+                    catch ( e ) {
+                        console.warn( 'during makeDelayedCall: ', e )
+                    }
+                }, option.delay )
             }
 
             delayedCall.cancel = cancel
+            delayedCall.option = option
 
             return delayedCall
         },
@@ -285,6 +296,10 @@ include.module( 'util', null, function ( inc ) {
                     // unitNumberSuffix
                 }
             } )
+            .catch( function ( err ) {
+                console.warn( err.responseText )
+                return location 
+            } )
         },
 
         wrapFunction: function ( obj, fName, outer ) {
@@ -326,6 +341,16 @@ include.module( 'util', null, function ( inc ) {
                 .map( function ( v ) { return ( '' + v ).toLowerCase().replace( /[^a-z0-9]+/g, '-' ).replace( /^[-]|[-]$/g, '' ) } )
                 .map( function ( v ) { return v ? v : '~' } )
                 .join( '=' )
+        },
+
+        makeUUID: function () {
+            /* jshint -W016 */
+            var d = new Date().getTime()
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace( /[xy]/g, function( c ) {
+                var r = ( d + Math.random() * 16 ) % 16 | 0
+                d = Math.floor( d / 16 )
+                return ( c == 'x' ? r : ( r & 0x3 | 0x8 ) ).toString( 16 )
+            } )
         }
 
     } )

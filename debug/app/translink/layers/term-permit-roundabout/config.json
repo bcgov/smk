@@ -1,0 +1,33 @@
+{
+    "layers": [
+        {
+            "type": "vector",
+            "id": "term-permit-roundabout",
+            "title": "Roundabout",
+            "dataUrl": "./layers/term-permit-roundabout/term-permit-roundabout.geojson",
+            "xxxscaleMin": 198647,
+            "attributes": [
+                { "name": "Location", "title": "Location" },
+                { "name": "Municipality", "title": "Municipality" },
+                { "name": "Status", "title": "Status" },
+                { "name": "Description", "title": "Description" },
+                { "name": "Note", "title": "Note" }
+            ],
+            "titleAttribute": "Location",
+            "style": {
+                "markerUrl": "./layers/term-permit-roundabout/images/round-about-ahead-sign.svg",
+                "markerSize": [
+                    22,
+                    22
+                ],
+                "markerOffset": [
+                    11,
+                    11
+                ]
+            },
+            "legend": {
+                "point": true
+            }
+        }
+    ]
+}

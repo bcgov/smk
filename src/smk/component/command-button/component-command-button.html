@@ -1,0 +1,14 @@
+<div class="smk-command-button"
+    v-bind:class="{ 
+        'smk-disabled': disabled,
+        'smk-icon': !!icon,
+    }"
+>
+    <div class="smk-command"
+        v-on:click="clickButton( $event )"
+        v-bind:title="title"
+    >
+        <i class="material-icons" v-if="icon">{{ icon }}</i>
+        <slot></slot>
+    </div>
+</div>

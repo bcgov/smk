@@ -1,6 +1,9 @@
 .smk-overlay .smk-shortcut-menu {
     pointer-events: auto;
     user-select: none;
+    -ms-user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
 }
 
 .smk-overlay .smk-shortcut-menu .smk-tool {
@@ -11,4 +14,5 @@
     padding: 2px;
     height: 26px;
     margin-left: 5px;
+    text-align: center;
 }

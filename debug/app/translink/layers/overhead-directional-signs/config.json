@@ -1,0 +1,40 @@
+{
+    "layers": [
+        {
+            "type": "vector",
+            "id": "overhead-directional-signs",
+            "title": "Overhead Directional Signs",
+            "dataUrl": "./layers/overhead-directional-signs/overhead-directional-signs.geojson",
+            "scaleMin": 207900,
+            "attributes": [
+                {
+                    "name": "Route",
+                    "title": "Route"
+                },
+                {
+                    "name": "Structure_Type",
+                    "title": "Structure Type"
+                },
+                {
+                    "name": "Comments",
+                    "title": "Notes"
+                }
+            ],
+            "titleAttribute": "Route",
+            "style": {
+                "markerUrl": "./layers/overhead-directional-signs/images/directions.svg",
+                "markerSize": [
+                    22,
+                    22
+                ],
+                "markerOffset": [
+                    11,
+                    11
+                ]
+            },
+            "legend": {
+                "point": true
+            }
+        }
+    ]
+}

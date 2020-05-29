@@ -1,0 +1,39 @@
+/* assumes a structure like:
+
+    div.smk-elastic-container - positioned absolute, fixed size
+      div.smk-elastic-frame - sizes to fit content, but constrained by container
+        div.smk-elastic-content - contains variable sized content
+          div.smk-elastic-body - grows with contents up to max size of container, then scrolls vertically
+*/
+
+.smk-elastic-container {
+    position: absolute;
+}
+
+.smk-elastic-container .smk-elastic-frame {
+    display: flex;
+    flex-direction: column;
+
+    background-color: white;
+    border-radius: 3px;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65);
+    pointer-events: auto;
+    max-height: 100%;
+    min-height: 0;
+}
+
+.smk-elastic-container .smk-elastic-frame .smk-elastic-content {
+    /* position: relative; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+    height: 100%;
+    min-height: 0;
+}
+
+.smk-elastic-container .smk-elastic-frame .smk-elastic-content .smk-elastic-body {
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: 100%;
+}

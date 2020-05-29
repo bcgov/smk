@@ -1,0 +1,8 @@
+.smk-activate-tool {
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.smk-activate-tool:hover {
+    text-decoration: underline;
+}

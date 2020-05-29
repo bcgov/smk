@@ -1,75 +1,73 @@
-include.module( 'smk-map', [ 'jquery', 'util', 'theme-base' ], function () {
+include.module( 'smk-map', [ 'jquery', 'util', 'theme-base', 'sidepanel' ], function () {
     "use strict";
 
     function SmkMap( option ) {
         this.$option = option
 
         this.$dispatcher = new Vue()
+
+        this.$group = {}
     }
 
     SMK.TYPE.SmkMap = SmkMap
 
     SmkMap.prototype.initialize = function () {
-        var self = this;
+        var self = this
 
-        console.groupCollapsed( 'SMK initialize ' + this.$option[ 'id' ] )
-
-        console.log( 'options:', JSON.parse( JSON.stringify( this.$option ) ) )
-
-        var container = $( this.$option[ 'container-sel' ] )
+        var container = $( this.$option.containerSel )
         if ( container.length != 1 )
-            throw new Error( 'smk-container-sel "' + this.$option[ 'container-sel' ] + '" doesn\'t match a unique element' )
+            throw new Error( 'smk-container-sel "' + this.$option.containerSel + '" doesn\'t match a unique element' )
+
+        container.addClass( 'smk-map-frame smk-hidden' )
+
+        var p = container.position()
+        var spinner = $( '<img>' )
+            .attr( 'src', this.$option.baseUrl + 'images/spinner.gif' )
+            .insertAfter( container )
+            .css( {
+                zIndex:     99999,
+                visibility: 'visible',
+                position:   'absolute',
+                width:      64,
+                height:     64,            
+                left:       p.left + container.outerWidth() / 2 - 32,
+                top:        p.top + container.outerHeight() / 2 - 32,
+            } )
 
         this.$container = container.get( 0 )
 
-        $( this.$container )
-            .addClass( 'smk-map-frame smk-hidden' )
+        return SMK.UTIL.resolved()
+            .then( loadConfigs )
+            .then( mergeConfigs )
+            // .then( resolveConfig )
+            .then( initMapFrame )
+            .then( resolveDeviceConfig )
+            .then( checkTools )
+            .then( loadViewer )
+            .then( loadTools )
+            .then( initViewer )
+            .then( initTools )
+            .then( showMap )
+            .finally( function () {
+                return ( new Promise( function ( res ) {
+                        container
+                            .hide()
+                            .removeClass( 'smk-hidden' )
+                            .fadeIn( 1000, res )
 
-        var spinner = $( '<img class="smk-startup smk-spinner">' )
-            .attr( 'src', include.option( 'baseUrl' ) + '/images/spinner.gif' )
-            .appendTo( this.$container )
-
-        var status = $( '<div class="smk-startup smk-status">' )
-            .text( 'Reticulating splines...' )
-            .appendTo( this.$container )
-
-        return SMK.UTIL.promiseFinally(
-            SMK.UTIL.resolved()
-                .then( loadConfigs )
-                .then( mergeConfigs )
-                .then( resolveConfig )
-                .then( initMapFrame )
-                .then( checkTools )
-                .then( loadViewer )
-                .then( loadTools )
-                .then( initViewer )
-                .then( initTools )
-                .then( showMap )
-                .catch( function ( e ) {
-                    console.error( e )
-
-                    $( self.$container )
-                        .removeClass( 'smk-hidden' )
-
-                    status.html(
-                        '<h3>SMK initialization failed</h3><br>' +
-                        e + ( e.parseSource ? ',<br>while parsing ' + e.parseSource : '' )
-                    )
-                    spinner.remove()
-
-                    return Promise.reject()
-                } ),
-            function () {
-                console.groupEnd()
-            }
-        )
+                        spinner.fadeOut( 1000 )
+                    } ) )
+                    .then( function () {
+                        spinner.remove()
+                    } )
+            } )
 
         // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
         function loadConfigs() {
-            return SMK.UTIL.waitAll( self.$option.config.map( function ( c ) {
-                if ( !c.url )
-                    return SMK.UTIL.resolved( c )
+            return SMK.UTIL.waitAll( self.$option.parsedConfig.map( function ( c ) {
+                if ( c.obj )
+                    return SMK.UTIL.resolved( c.obj )
 
                 var id = c.url.toLowerCase().replace( /[^a-z0-9]+/g, '-' ).replace( /^[-]|[-]$/g, '' )
                 var tag = 'config-' + id
@@ -83,12 +81,12 @@ include.module( 'smk-map', [ 'jquery', 'util', 'theme-base' ], function () {
                 return include( tag )
                     .then( function ( inc ) {
                         var obj = JSON.parse( inc[ tag ] )
-                        obj.$sources = c.$sources
+                        obj.$source = c.$source
                         return obj
                     } )
                     .catch( function ( e ) {
-                        console.warn( c.$sources[ 0 ] )
-                        e.parseSource = c.$sources[ 0 ]
+                        console.warn( 'failed to load tag "' + tag + '" for ' + c.$source ) 
+                        e.parseSource = c.$source 
                         throw e
                     } )
             } ) )
@@ -96,7 +94,6 @@ include.module( 'smk-map', [ 'jquery', 'util', 'theme-base' ], function () {
 
         function mergeConfigs( configs ) {
             var config = Object.assign( {}, SMK.CONFIG )
-            config.$sources = []
 
             console.log( 'base', JSON.parse( JSON.stringify( config ) ) )
 
@@ -108,9 +105,6 @@ include.module( 'smk-map', [ 'jquery', 'util', 'theme-base' ], function () {
                 mergeViewer( config, c )
                 mergeTools( config, c )
                 mergeLayers( config, c )
-
-                config.$sources = config.$sources.concat( c.$sources || '(unknown)' )
-                delete c.$sources
 
                 Object.assign( config, c )
 
@@ -274,9 +268,6 @@ include.module( 'smk-map', [ 'jquery', 'util', 'theme-base' ], function () {
             $( self.$container )
                 .addClass( 'smk-viewer-' + self.viewer.type )
 
-            if ( self.$option[ 'title-sel' ] )
-                $( self.$option[ 'title-sel' ] ).text( self.name )
-
             var themes = [ 'base' ].concat( self.viewer.themes ).map( function ( th ) { return 'theme-' + th } )
             
             $( self.$container )
@@ -290,12 +281,28 @@ include.module( 'smk-map', [ 'jquery', 'util', 'theme-base' ], function () {
             return include( themes )
         }
 
+        function resolveDeviceConfig() {
+            findProperty( self, 'tools', 'enabled', function ( val ) {
+                if ( typeof val == 'string' ) return val == self.$device
+            } )
+
+            findProperty( self, 'tools', 'showTitle', function ( val ) {
+                if ( typeof val == 'string' ) return val == self.$device
+            } )
+
+            findProperty( self, 'tools', 'control', function ( val ) {
+                if ( typeof val == 'string' ) return val == self.$device
+            } )
+        }
+
         function checkTools() {
             if ( !self.tools ) return
             var enabledTools = self.tools.filter( function ( t ) { return t.enabled !== false } )
             if ( enabledTools.length == 0 ) return
 
             return SMK.UTIL.waitAll( enabledTools.map( function ( t ) {
+                t.id = t.type + ( t.instance ? '--' + t.instance : '' )
+
                 var tag = 'check-' + t.type
                 return include( tag )
                     .then( function ( inc ) {
@@ -333,19 +340,24 @@ include.module( 'smk-map', [ 'jquery', 'util', 'theme-base' ], function () {
                     .then( function ( inc ) {
                         return include( tag + '-' + self.viewer.type )
                             .catch( function () {
-                                console.log( 'tool "' + t.type + '" has no ' + self.viewer.type + ' subclass' )
+                                console.debug( 'tool "' + t.type + '" has no ' + self.viewer.type + ' subclass' )
                             } )
                             .then( function () {
                                 return inc
                             } )
                     } )
                     .then( function ( inc ) {
-                        var id = t.type + ( t.instance ? '--' + t.instance : '' )
-                        self.$tool[ id ] = new inc[ tag ]( t )
-                        self.$tool[ id ].id = id
+                        t.id = t.type + ( t.instance ? '--' + t.instance : '' )
+
+                        if ( !( t.id in self.$tool ) ) {
+                            self.$tool[ t.id ] = ( new inc[ tag ]() ).configure( t )
+                        }
+                        else {
+                            console.warn( 'tool "' + t.id + '" is defined more than once' )
+                        }
                     } )
                     .catch( function ( e ) {
-                        console.warn( 'tool "' + t.type + '" failed to create:', e )
+                        console.warn( 'tool "' + t.id + '" failed to create:', e )
                     } )
             } ) )
         }
@@ -383,15 +395,25 @@ include.module( 'smk-map', [ 'jquery', 'util', 'theme-base' ], function () {
         }
 
         function showMap() {
-            status.remove()
-            spinner.remove()
-            $( self.$container )
-                .hide()
-                .removeClass( 'smk-hidden' )
-                .fadeIn( 1000 )
+            if ( !self.$viewer.isDisplayContext( 'layers' ) )
+                self.$viewer.setDisplayContextItems( 'layers', self.$viewer.defaultLayerDisplay )
 
             if ( self.viewer.activeTool in self.$tool )
                 self.$tool[ self.viewer.activeTool ].active = true
+
+            return SMK.UTIL.resolved()
+                .then( function () {
+                    return self.$viewer.updateLayersVisible()
+                } )
+                .then( function () {
+                    return self.$viewer.waitFinishedLoading()
+                } )
+                .then( function () {
+                    // console.log('all layers loaded')
+                    return self
+                } )
+
+
         }
     }
 
@@ -413,9 +435,73 @@ include.module( 'smk-map', [ 'jquery', 'util', 'theme-base' ], function () {
 
     SmkMap.prototype.addToStatus = function ( html ) {
         if ( !this.$status )
-            this.$status = this.addToOverlay( '<div class="smk-status">' )
+            this.$status = this.addToOverlay( '<div class="smk-status smk-elastic-container">' )
 
         return $( html ).appendTo( this.$status ).get( 0 )
+    }
+
+    SmkMap.prototype.getSidepanel = function () {
+        var self = this
+
+        if ( this.$sidepanel ) return this.$sidepanel
+
+        this.$sidepanel = new SMK.TYPE.Sidepanel( this )
+
+        this.$sidepanel.changedVisible( function () {
+            $( self.$container ).toggleClass( 'smk-sidepanel-active', self.$sidepanel.isPanelVisible() )
+
+            // self.$viewer.mapResized()
+        } )
+
+        this.$sidepanel.changedSize( function () {
+            // console.log( 'changedSize', self.getSidepanelPosition() )
+        } )
+
+        return this.$sidepanel
+    }
+
+    SmkMap.prototype.getSidepanelPosition = function () {
+        if ( !this.$sidepanel || !this.$sidepanel.isPanelVisible() ) 
+            return { left: 0, width: 0, top: 0, height: 0 }
+
+        var overlayEl = this.$overlay
+        var sidepanelEl = this.$sidepanel.vm.$el
+
+        return {
+            left: overlayEl.offsetLeft + sidepanelEl.offsetLeft,
+            top: overlayEl.offsetTop + sidepanelEl.offsetTop,
+            width: sidepanelEl.clientWidth,
+            height: sidepanelEl.clientHeight,
+        }
+    }
+
+    SmkMap.prototype.setEditFocus = function ( focus ) {
+        $( this.$container ).toggleClass( 'smk-edit-focus', focus )
+    }
+
+    SmkMap.prototype.debugMessage = function ( opt ) {
+        if ( !this.debugVm ) {
+            this.debugVm = new Vue( {
+                el: this.addToOverlay( '<div class="smk-debug"><div v-for="k in keys">{{ k }} : {{ status[ k ] }}</div></div>' ),
+                data: {
+                    status: {}
+                },
+                computed: {
+                    keys: {
+                        get: function () {
+                            return Object.keys( this.status )
+                        }
+                    }
+                }
+            } )
+        }
+
+        opt.ts = (new Date()).toLocaleTimeString()
+        var d = this.debugVm.$data
+        Object.keys( opt || {} ).forEach( function ( k ) {
+            Vue.set( d.status, k, opt[ k ] )
+        } )
+
     }
 
     SmkMap.prototype.getVar = function ( cssVar ) {
@@ -426,8 +512,8 @@ include.module( 'smk-map', [ 'jquery', 'util', 'theme-base' ], function () {
         return $( this.$container ).css( '--' + cssVar, value )
     }
 
-    SmkMap.prototype.emit = function ( toolId, event, arg ) {
-        this.$dispatcher.$emit( toolId + '.' + event, arg )
+    SmkMap.prototype.emit = function ( toolId, event, arg, comp ) {
+        this.$dispatcher.$emit( toolId + '.' + event, arg, comp )
 
         return this
     }
@@ -454,8 +540,21 @@ include.module( 'smk-map', [ 'jquery', 'util', 'theme-base' ], function () {
         var dev = this.viewer.device
         if ( dev == 'auto' ) {
             var w =  $( window ).width()
+            // this.debugMessage( {
+            //     width: w,
+            //     height: $( window ).height(),
+            //     iheight: window.innerHeight
+            // } )
             dev = w >= this.viewer.deviceAutoBreakpoint ? 'desktop' : 'mobile'
         }
+
+        // this.setVar( 'map-width', $( this.$container ).width() + 'px' )
+        // this.setVar( 'map-height', $( this.$container ).height() + 'px' )
+
+        // this.debugMessage( {
+            // width: $( this.$container ).width(),
+            // height: $( this.$container ).height(),
+        // } )
 
         if ( dev == this.$device )
             return 
@@ -472,4 +571,75 @@ include.module( 'smk-map', [ 'jquery', 'util', 'theme-base' ], function () {
         return this.$device
     }
 
+    SmkMap.prototype.showFeature = function ( acetate, geometry, opt ) {
+        if ( this.$viewer.temporaryFeature )
+            this.$viewer.temporaryFeature( acetate, geometry, opt )
+    }
+
+    SmkMap.prototype.getToolGroup = function ( rootId ) {
+        return this.$group[ rootId ]
+    }
+
+    SmkMap.prototype.setToolGroup = function ( rootId, ids ) {
+        this.$group[ rootId ] = ids
+    }
+
+    SmkMap.prototype.getToolRootIds = function () {
+        return Object.keys( this.$group )
+    }
+
+    SmkMap.prototype.getConfig = function () {
+        var self = this
+
+        var ks = [ 'name', 'viewer', 'tools' ]
+
+        var cfg = ks.reduce( function ( acc, k ) {
+            acc[ k ] = JSON.parse( JSON.stringify( self[ k ] ) )
+            return acc
+        }, {} )
+
+        cfg.layers = this.$viewer.getLayerConfig()
+
+        cfg.viewer.location = SMK.UTIL.projection( 'center', 'zoom', 'extent' )( this.$viewer.getView() )
+        cfg.viewer.location.center = [ cfg.viewer.location.center.longitude, cfg.viewer.location.center.latitude ]
+
+        cfg.viewer.displayContext = this.$viewer.getDisplayContextConfig()
+
+        cfg.layers.forEach( function ( ly ) {
+            var item = self.$viewer.getDisplayContextItem( ly.id )
+            if ( item ) {
+                ly.isVisible = self.$viewer.isDisplayContextItemVisible( ly.id )
+                ly.class = item.class
+            }
+            else {
+                ly.isVisible = false
+            }
+        } )
+        
+        return cfg
+    }
+
+    SmkMap.prototype.updateMapSize = function () {
+        if ( this.$viewer.mapResized )
+            this.$viewer.mapResized()
+    }
+    
+    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    function findProperty( obj, collectionName, propName, cb ) {
+        if ( !( collectionName in obj ) )
+            throw new Error( collectionName + ' is not in obj' )
+
+        if ( !Array.isArray( obj[ collectionName ] ) )
+            throw new Error( collectionName + ' is not an array' )
+
+        obj[ collectionName ].forEach( function ( item ) {
+            if ( !( propName in item ) ) return
+
+            var res = cb( item[ propName ] )
+            if ( res === undefined ) return
+
+            item[ propName ] = res
+        } )
+    }
 } )

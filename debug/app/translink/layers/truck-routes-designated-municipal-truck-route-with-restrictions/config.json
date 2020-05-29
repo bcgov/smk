@@ -1,0 +1,93 @@
+{
+    "layers": [
+        {
+            "type": "vector",
+            "id": "truck-routes-designated-municipal-truck-route-with-restrictions-high-zoom",
+            "title": "Designated Municipal Truck Route with Restrictions",
+            "dataUrl": "./layers/truck-routes-designated-municipal-truck-route-with-restrictions/truck-routes-designated-municipal-truck-route-with-restrictions.geojson",
+            "scaleMin": 28505,
+            "attributes": [
+                {
+                    "name": "Municipality",
+                    "title": "Municipality"
+                },
+                {
+                    "name": "RouteType",
+                    "title": "Truck Route Type"
+                },
+                {
+                    "name": "AdvisoryDescription",
+                    "title": "Advisory Description"
+                },                
+                {
+                    "name": "Bylaw",
+                    "title": "Bylaw Link",
+                    "format": "asLink(this.feature.properties.BylawLink)"
+                },
+                {
+                    "name": "TruckDefinitionWeight",
+                    "title": "Heavy Truck Definition (LGVW)",
+                    "format": "asUnit('kg')"
+                },
+                {
+                    "name": "Notes",
+                    "title": "Notes"
+                }
+            ],
+            "titleAttribute": "RouteType",
+            "style": {
+                "strokeWidth": 3,
+                "strokeColor": "#A3FF73",
+                "strokeOpacity": 1
+            },
+            "legend": {
+                "line": true
+            }
+        },
+        {
+            "type": "vector",
+            "id": "truck-routes-designated-municipal-truck-route-with-restrictions",
+            "title": "Designated Municipal Truck Route with Restrictions",
+            "dataUrl": "./layers/truck-routes-designated-municipal-truck-route-with-restrictions/truck-routes-designated-municipal-truck-route-with-restrictions.geojson",
+            "scaleMin": 4622325,
+            "scaleMax": 28505,
+            "attributes": [
+                {
+                    "name": "Municipality",
+                    "title": "Municipality"
+                },
+                {
+                    "name": "RouteType",
+                    "title": "Truck Route Type"
+                },
+                {
+                    "name": "AdvisoryDescription",
+                    "title": "Advisory Description"
+                },                
+                {
+                    "name": "Bylaw",
+                    "title": "Bylaw Link",
+                    "format": "asLink(this.feature.properties.BylawLink)"
+                },
+                {
+                    "name": "TruckDefinitionWeight",
+                    "title": "Heavy Truck Definition (LGVW)",
+                    "format": "asUnit('kg')"
+                },
+                {
+                    "name": "Notes",
+                    "title": "Notes"
+                }
+            ],
+            "titleAttribute": "RouteType",
+            "style": {
+                "strokeWidth": 1.5,
+                "strokeColor": "#A3FF73",
+                "strokeOpacity": 1
+            },
+            "legend": {
+                "line": true
+            }
+        }
+    ]
+}

@@ -1,254 +1,171 @@
-include.module( 'tool-query', [ 'feature-list', 'widgets', 'sidepanel', 'tool-query.panel-query-html', 'tool-query.parameter-input-html', 'tool-query.parameter-select-html', 'tool-query.parameter-constant-html' ], function ( inc ) {
+include.module( 'tool-query', [ 
+    'component-toggle-button',
+    'component-parameter',
+    'component-command-button',
+    'tool-query.panel-query-html', 
+], function ( inc ) {
     "use strict";
 
-    Vue.component( 'parameter-constant', {
-        template: inc[ 'tool-query.parameter-constant-html' ],
-        props: [ 'id', 'title', 'value', 'type' ],
-        mounted: function () {
-            this.$emit( 'mounted' )
-        }
-    } )
-
-    Vue.component( 'parameter-input', {
-        template: inc[ 'tool-query.parameter-input-html' ],
-        props: [ 'id', 'title', 'value', 'type' ],
-        data: function () {
-            return {
-                input: this.value || ''
-            }
-        },
-        watch: {
-            value: function ( val ) {
-                this.input = val || ''
-            }
-        },
-        mounted: function () {
-            this.$emit( 'mounted' )
-        }
-    } )
-
-    Vue.component( 'parameter-select', {
-        template: inc[ 'tool-query.parameter-select-html' ],
-        props: [ 'id', 'title', 'choices', 'value', 'type', 'useFallback' ],
-        data: function () {
-            // console.log( 'data', this.value )
-            return {
-                selected: this.value || ''
-            }
-        },
-        watch: {
-            value: function ( val ) {
-                // console.log( 'watch', val )
-                this.selected = val || ''
-            }
-        },
-        mounted: function () {
-            this.$emit( 'mounted' )
-        },
-        computed: {
-            isEmpty: function () {
-                return !this.choices || this.choices.length == 0
-            }
-        }
-    } )
-    // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
-    //
     Vue.component( 'query-widget', {
-        extends: inc.widgets.toolButton,
+        extends: SMK.COMPONENT.ToolWidgetBase,
     } )
 
     Vue.component( 'query-panel', {
-        extends: inc.widgets.toolPanel,
+        extends: SMK.COMPONENT.ToolPanelBase,
         template: inc[ 'tool-query.panel-query-html' ],
-        props: [ 'description', 'parameters', 'config' ],
-        data: function () {
-            return Object.assign( {}, this.config )
-        },
-        watch: {
-            config: function ( val ) {
-                Object.keys( val ).forEach( function ( k ) {
-                    this[ k ] = val[ k ]
-                } )
-            }
-        },
-        methods: {
-            featureListProps: function () {
-                var self = this
-
-                var prop = {}
-                Object.keys( Vue.component( 'feature-list-panel' ).options.props ).forEach( function ( p ) {
-                    prop[ p ] = self[ p ]
-                } )
-                return prop
-            },
-
-            getConfigState: function () {
-                var self = this
-
-                var state = {}
-                Object.keys( this.config ).forEach( function ( k ) {
-                    state[ k ] = self[ k ]
-                } )
-                return state
-            }
-        },
-        computed: {
-            isModified: {
-                get: function () {
-                    return !this.parameters.every( function ( p ) {
-                        return p.prop.value == p.initial
-                    } )
-                }
-            }
-        },
+        props: [ 'description', 'parameters', 'within', 'command' ],
     } )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
-    function QueryTool( option ) {
-        this.makePropWidget( 'icon', 'question_answer' )
+    return SMK.TYPE.Tool.define( 'QueryTool', 
+        function () {
+            SMK.TYPE.ToolWidget.call( this, 'query-widget' )
+            SMK.TYPE.ToolPanel.call( this, 'query-panel' )
+        
+            this.defineProp( 'description' )
+            this.defineProp( 'parameters' )
+            this.defineProp( 'within' )
+            this.defineProp( 'command' )
 
-        this.makePropPanel( 'description', null )
-        this.makePropPanel( 'parameters', null )
-        this.makePropPanel( 'config', {
-            within: true
-        } )
+            this.command = {}
+        },
+        function ( smk ) {
+            var self = this
 
-        SMK.TYPE.PanelTool.prototype.constructor.call( this, $.extend( {
-            order:          4,
-            position:       'menu',
-            title:          'Query',
-            widgetComponent:'query-widget',
-            panelComponent: 'query-panel',
-        }, option ) )
+            if ( !this.instance )
+                throw new Error( 'query tool needs an instance' )
 
-        if ( !this.instance )
-            throw new Error( 'query tool needs an instance' )
-    }
+            if ( !( this.instance in smk.$viewer.query ) )
+                throw new Error( '"' + this.instance + '" is not a defined query' )
 
-    SMK.TYPE.QueryTool = QueryTool
+            this.featureSet = smk.$viewer.queried[ this.instance ]
 
-    $.extend( QueryTool.prototype, SMK.TYPE.PanelTool.prototype )
-    QueryTool.prototype.afterInitialize = SMK.TYPE.Tool.prototype.afterInitialize.concat( [] )
-    // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
-    //
-    QueryTool.prototype.afterInitialize.unshift( function ( smk ) {
-        if ( !( this.instance in smk.$viewer.query ) )
-            throw new Error( '"' + this.instance + '" is not a defined query' )
+            this.query = smk.$viewer.query[ this.instance ]
 
-        this.featureSet = smk.$viewer.queried[ this.instance ]
+            this.title = this.query.title
+            this.description = this.query.description
+            this.parameters = this.query.getParameters( smk.$viewer )
 
-        this.query = smk.$viewer.query[ this.instance ]
+            if ( !this.query.canUseWithExtent( smk.$viewer ) )
+                this.within = null
 
-        this.title = this.query.title
-        this.description = this.query.description
-        this.parameters = this.query.getParameters( smk.$viewer )
+            function focusFirstParameter() {
+                self.parameters[ 0 ].focus()
+            }
+        
+            self.changedActive( function () {
+                if ( self.active ) {
+                    
+                    focusFirstParameter()
+                    SMK.UTIL.makeDelayedCall( function () {
+                        focusFirstParameter()
+                    }, { delay: 100 } )()
 
-        if ( !this.query.canUseWithExtent( smk.$viewer ) )
-            this.config.within = null
-    } )
-
-    QueryTool.prototype.afterInitialize.push( function ( smk ) {
-        var self = this
-
-        self.changedActive( function () {
-            if ( self.active ) {
-                if ( self.onActivate ) {
-                    switch ( self.onActivate ) {
-                    case 'execute':
-                        smk.emit( self.id, 'execute' )
-                        break
+                    if ( self.onActivate ) {
+                        switch ( self.onActivate ) {
+                        case 'execute':
+                            smk.emit( self.id, 'execute' )
+                            break
+                        }
                     }
                 }
-                else {
-                    if ( !self.featureSet.isEmpty() )
-                        smk.$tool[ 'query-results--' + self.instance ].active = true
+            } )
+
+            self.changedGroup( function () {
+                if ( !self.group ) {
+                    // console.log('clear')
+                    self.featureSet.clear()
+                    self.featureSet.pick()
                 }
-            }
-        } )
+            } )
 
-        smk.on( this.id, {
-            'activate': function () {
-                if ( !self.enabled ) return
+            smk.on( this.id, {
+                'parameter-input': function ( ev ) {
+                    self.parameters[ ev.index ].prop.value = ev.value
+                },
 
-                self.active = !self.active
-            },
+                'parameter-mounted': function ( ev ) {
+                    // console.log( 'parameter-mounted', ev.index )
+                    self.parameters[ ev.index ].mounted()
+                },
 
-            'parameter-input': function ( ev ) {
-                self.parameters[ ev.index ].prop.value = ev.value
-            },
+                'parameter-reset': function ( ev ) {
+                    self.parameters[ ev.index ].prop.value = self.query.parameters[ ev.index ].value
+                },
 
-            'parameter-mounted': function ( ev ) {
-                // console.log( 'parameter-mounted', ev.index )
-                self.parameters[ ev.index ].mounted()
-            },
+                'parameter-change': function ( ev ) {
+                    smk.setEditFocus( ev.active )
+                },
+                // 'active', function ( ev ) {
+                //     smk.$viewer[ self.featureSetProperty ].pick( ev.featureId )
+                // } )
 
-            // 'active', function ( ev ) {
-            //     smk.$viewer[ self.featureSetProperty ].pick( ev.featureId )
-            // } )
+                // 'hover', function ( ev ) {
+                //     smk.$viewer[ self.featureSetProperty ].highlight( ev.features && ev.features.map( function ( f ) { return f.id } ) )
+                // } )
 
-            // 'hover', function ( ev ) {
-            //     smk.$viewer[ self.featureSetProperty ].highlight( ev.features && ev.features.map( function ( f ) { return f.id } ) )
-            // } )
+                'reset': function ( ev ) {
+                    self.featureSet.clear()
+                    self.setMessage() 
 
-            'reset': function ( ev ) {
-                self.featureSet.clear()
-                self.setMessage() 
-
-                self.parameters.forEach( function ( p, i ) {
-                    p.prop.value = self.query.parameters[ i ].value
-                } )
-            },
-
-            'execute': function ( ev ) {
-                self.featureSet.clear()
-                self.busy = true
-                self.setMessage( 'Searching for features', 'progress' )
-
-                var param = {}
-                self.parameters.forEach( function ( p, i ) {
-                    param[ p.prop.id ] = $.extend( {}, p.prop )
-                } )
-
-                return SMK.UTIL.promiseFinally( SMK.UTIL.resolved()
-                    .then( function () {
-                        return self.query.queryLayer( param, self.config, smk.$viewer )
+                    self.parameters.forEach( function ( p, i ) {
+                        p.prop.value = self.query.parameters[ i ].value
                     } )
-                    .then( function ( features ) {
-                        self.setMessage()
-                        return asyncIterator(
-                            function () {
-                                return features.length > 0
-                            },
-                            function () {
-                                var chunk = features.splice( 0, 50 )
-                                self.featureSet.add( self.query.layerId, chunk )
-                            },
-                            5
-                        )
-                    } )
-                    .catch( function ( err ) {
-                        console.warn( err )
-                        self.setMessage( 'No features found', 'warning' )
-                    } ), function () {
-                        self.busy = false
+                },
+
+                'execute': function ( ev ) {
+                    self.featureSet.clear()
+                    self.busy = true
+                    self.setMessage( 'Searching for features', 'progress' )
+
+                    var param = {}
+                    self.parameters.forEach( function ( p, i ) {
+                        param[ p.prop.id ] = $.extend( {}, p.prop )
                     } )
 
-            },
+                    return SMK.UTIL.resolved()
+                        .then( function () {
+                            return self.query.queryLayer( param, { within: self.within }, smk.$viewer )
+                        } )
+                        .then( function ( features ) {
+                            self.setMessage()
+                            return asyncIterator(
+                                function () {
+                                    return features.length > 0
+                                },
+                                function () {
+                                    var chunk = features.splice( 0, 50 )
+                                    self.featureSet.add( self.query.layerId, chunk )
+                                },
+                                5
+                            )
+                        } )
+                        .catch( function ( err ) {
+                            console.warn( err )
+                            self.setMessage( 'No features found', 'warning' )
+                        } )
+                        .finally( function () {
+                            self.busy = false
+                        } )
 
-            'config': function ( ev ) {
-                Object.assign( self.config, ev )
-            },
+                },
 
-            'add-all': function ( ev ) {
-                self.layers.forEach( function ( ly ) {
-                    smk.$viewer.selected.add( ly.id, ly.features.map( function ( ft ) {
-                        return self.featureSet.get( ft.id )
-                    } ) )
-                } )
-            }
-        } )
+                'add-all': function ( ev ) {
+                    self.layers.forEach( function ( ly ) {
+                        smk.$viewer.selected.add( ly.id, ly.features.map( function ( ft ) {
+                            return self.featureSet.get( ft.id )
+                        } ) )
+                    } )
+                },
 
-    } )
+                'change': function ( ev, comp ) {
+                    Object.assign( self, ev )
+
+                    comp.$forceUpdate()
+                },
+            } )
+        } 
+    )
 
     function asyncIterator( test, body, delay ) {
         return SMK.UTIL.makePromise( function ( res, rej ) {
@@ -270,6 +187,4 @@ include.module( 'tool-query', [ 'feature-list', 'widgets', 'sidepanel', 'tool-qu
             return asyncIterator( test, body )
         } )
     }
-
-    return QueryTool
 } )

@@ -1,4 +1,10 @@
-include.module( 'tool-search', [ 'tool', 'sidepanel', 'widgets', 'tool-search.widget-search-html', 'tool-search.panel-search-html' ], function ( inc ) {
+include.module( 'tool-search', [
+    'tool.tool-base-js', 
+    'tool.tool-widget-js', 
+    'tool.tool-panel-js', 
+    'tool-search.widget-search-html', 
+    'tool-search.panel-search-html' 
+], function ( inc ) {
     "use strict";
 
     var request
@@ -9,7 +15,7 @@ include.module( 'tool-search', [ 'tool', 'sidepanel', 'widgets', 'tool-search.wi
 
         var query = {
             ver:            1.2,
-            maxResults:     20,
+            maxResults:     10,
             outputSRS:      4326,
             addressString:  text,
             autoComplete:   true
@@ -31,6 +37,21 @@ include.module( 'tool-search', [ 'tool', 'sidepanel', 'widgets', 'tool-search.wi
                     // exclude whole province match
                     if ( feature.properties.fullAddress == 'BC' ) return;
 
+                    if ( feature.properties.intersectionName ) {
+                        feature.title = feature.properties.intersectionName
+                    }
+                    else if ( feature.properties.streetName ) {
+                        feature.title = [
+                            feature.properties.civicNumber,
+                            feature.properties.streetName,
+                            feature.properties.streetQualifier,
+                            feature.properties.streetType
+                        ].filter( function ( x ) { return !!x } ).join( ' ' )
+                    }
+                    else if ( feature.properties.localityName ) {
+                        feature.title = feature.properties.localityName                        
+                    }
+
                     return feature
                 } )
             } )
@@ -38,17 +59,17 @@ include.module( 'tool-search', [ 'tool', 'sidepanel', 'widgets', 'tool-search.wi
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
     Vue.component( 'search-widget', {
-        mixins: [ inc.widgets.emit ],
+        extends: SMK.COMPONENT.ToolWidgetBase,
         template: inc[ 'tool-search.widget-search-html' ],
-        props: [ 'id', 'type', 'title', 'visible', 'enabled', 'active', 'icon', 'type', 'initialSearch' ],
+        props: [ 'initialSearch', 'results', 'highlightId' , 'showPanel' ],
         data: function () {
             return {
                 search: null
             }
         },
         watch: {
-            initialSearch: function () {
-                this.search = null
+            initialSearch: function ( val ) {
+                this.search = val
             }
         },
         computed: {
@@ -63,15 +84,24 @@ include.module( 'tool-search', [ 'tool', 'sidepanel', 'widgets', 'tool-search.wi
             }
         },
         methods: {
+            widgetWidth: function () {
+                return this.$refs.widget.clientWidth
+            },
             focus: function () {
+                var inp = this.$refs[ 'search-input' ]
                 if ( !this.active )
-                    this.$refs[ 'search-input' ].focus()
+                    inp.focus()
+                    inp.setSelectionRange( 0, 0 )
+                    inp.setSelectionRange( 0, inp.value.length )
+            },
+            isEmpty: function () {
+                return !this.results || this.results.length == 0
             }
         }
     } )
 
     Vue.component( 'search-panel', {
-        extends: inc.widgets.toolPanel,
+        extends: SMK.COMPONENT.ToolPanelBase,
         template: inc[ 'tool-search.panel-search-html' ],
         props: [ 'results', 'highlightId' ],
         methods: {
@@ -87,97 +117,86 @@ include.module( 'tool-search', [ 'tool', 'sidepanel', 'widgets', 'tool-search.wi
     } )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
-    function SearchTool( option ) {
-        this.makePropWidget( 'icon' ) //, 'search' )
-        this.makePropWidget( 'initialSearch', 0 )
+    return SMK.TYPE.Tool.define( 'SearchTool', 
+        function () {
+            SMK.TYPE.ToolWidget.call( this, 'search-widget' )
+            SMK.TYPE.ToolPanel.call( this, 'search-panel' )
+        
+            this.defineProp( 'results' )
+            this.defineProp( 'highlightId' )
+            this.defineProp( 'initialSearch' )
 
-        this.makePropPanel( 'results', [] )
-        this.makePropPanel( 'highlightId', null )
+            this.results = []
+        },
+        function ( smk ) {
+            var self = this
 
-        SMK.TYPE.PanelTool.prototype.constructor.call( this, $.extend( {
-            // order:      2,
-            // position:       'toolbar',
-            // title:      'Search for Location',
-            widgetComponent: 'search-widget',
-            panelComponent: 'search-panel',
-        }, option ) )
-    }
-
-    SMK.TYPE.SearchTool = SearchTool
-
-    $.extend( SearchTool.prototype, SMK.TYPE.PanelTool.prototype )
-    SearchTool.prototype.afterInitialize = []
-    // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
-    //
-    SearchTool.prototype.afterInitialize.push( function ( smk ) {
-        var self = this
-
-        smk.on( this.id, {
-            'activate': function ( ev ) {
-                if ( !self.enabled ) return
-
-                if ( ev.toggle )
-                    self.active = !self.active
-                else
-                    self.active = true
-            },
-
-            'input-change': function ( ev ) {
-                smk.$viewer.searched.clear()
-
-                self.busy = true
-                doAddressSearch( ev.text )
-                    .then( function ( features ) {
+            smk.$container.classList.add( 'smk-tool-search' )
+    
+            smk.on( this.id, {
+                'activate': function ( ev ) {
+                    if ( !ev.toggle )
                         self.active = true
-                        smk.$viewer.searched.add( 'search', features, 'fullAddress' )
-                        self.busy = false
+                },
+    
+                'input-change': function ( ev ) {
+                    smk.$viewer.searched.clear()
+    
+                    self.busy = true
+                    //self.title = 'Locations matching <wbr>"' + ev.text + '"'
+                    doAddressSearch( ev.text )
+                        .then( function ( features ) {
+                            self.active = true
+                            smk.$viewer.searched.add( 'search', features, 'fullAddress' )
+                            self.busy = false
+                        } )
+                        .catch( function ( e ) {
+                            console.warn( 'search failure:', e )
+                        } )
+                },
+    
+                'hover': function ( ev ) {
+                    smk.$viewer.searched.highlight( ev.result ? [ ev.result.id ] : [] )
+                },
+    
+                'pick': function ( ev ) {
+                    smk.$viewer.searched.pick( null )
+                    smk.$viewer.searched.pick( ev.result.id )
+                    if ( !self.showPanel ) {
+                        self.active = false
+                        self.initialSearch = ev.result.title
+                    }
+                },
+    
+                'clear': function ( ev ) {
+                    smk.$viewer.searched.clear()
+                    self.initialSearch = ' '
+                    Vue.nextTick( function () {
+                        self.initialSearch = ''
                     } )
-                    .catch( function ( e ) {
-                        console.warn( 'search failure:', e )
-                    } )
-            },
-
-            'hover': function ( ev ) {
-                smk.$viewer.searched.highlight( ev.result ? [ ev.result.id ] : [] )
-            },
-
-            'pick': function ( ev ) {
-                smk.$viewer.searched.pick( null )
-                smk.$viewer.searched.pick( ev.result.id )
-            },
-
-            'clear': function ( ev ) {
-                smk.$viewer.searched.clear()
-                self.initialSearch += 1
-            }
-        } )
-
-        // = : = : = : = : = : = : = : = : = : = : = : = : = : = : = : = : = : = : =
-
-        smk.$viewer.searched.addedFeatures( function ( ev ) {
-            self.results = ev.features
-        } )
-
-        // // smk.$viewer.selected.removedFeatures( function ( ev ) {
-        // // } )
-
-        smk.$viewer.searched.pickedFeature( function ( ev ) {
-            self.highlightId = ev.feature && ev.feature.id
-
-            if ( self.showFeatures == 'search-popup' )
-                self.popupModel.feature = ev.feature
-        } )
-
-        // // smk.$viewer.selected.highlightedFeatures( function ( ev ) {
-        // // } )
-
-        smk.$viewer.searched.clearedFeatures( function ( ev ) {
-            self.results = []
-        } )
-
-    } )
-
-    return SearchTool
-
+                }
+            } )
+    
+            // = : = : = : = : = : = : = : = : = : = : = : = : = : = : = : = : = : = : =
+    
+            smk.$viewer.searched.addedFeatures( function ( ev ) {
+                self.results = ev.features
+            } )
+    
+            // // smk.$viewer.selected.removedFeatures( function ( ev ) {
+            // // } )
+    
+            smk.$viewer.searched.pickedFeature( function ( ev ) {
+                self.highlightId = ev.feature && ev.feature.id
+            } )
+    
+            // // smk.$viewer.selected.highlightedFeatures( function ( ev ) {
+            // // } )
+    
+            smk.$viewer.searched.clearedFeatures( function ( ev ) {
+                self.results = []
+            } )
+        }
+    )
 } )
 

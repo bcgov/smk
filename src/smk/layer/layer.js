@@ -4,6 +4,7 @@ include.module( 'layer.layer-js', [ 'jquery', 'util', 'event' ], function () {
     var LayerEvent = SMK.TYPE.Event.define( [
         'startedLoading',
         'finishedLoading',
+        'changedFeature',
     ] )
 
     function Layer( config ) {
@@ -47,28 +48,41 @@ include.module( 'layer.layer-js', [ 'jquery', 'util', 'event' ], function () {
         // this.parentId = parentId
         // this.index = index
 
-        if ( this.config.attributes ) {
-            this.attribute = {}
+        // seems obsolete
+        // if ( this.config.attributes ) {
+        //     this.attribute = {}
 
-            this.config.attributes.forEach( function ( at ) {
-                if ( at.name in self.attribute )
-                    console.warn( 'attribute ' + at.name + ' is duplicated in ' + self.id )
+        //     this.config.attributes.forEach( function ( at ) {
+        //         if ( at.name in self.attribute )
+        //             console.warn( 'attribute ' + at.name + ' is duplicated in ' + self.id )
 
-                self.attribute[ at.name ] = at
+        //         self.attribute[ at.name ] = at
 
-                if ( self.config.geometryAttribute && self.config.geometryAttribute == at.name )
-                    at.isGeometry = true
+        //         if ( self.config.geometryAttribute && self.config.geometryAttribute == at.name )
+        //             at.isGeometry = true
 
-                if ( self.config.titleAttribute && self.config.titleAttribute == at.name )
-                    at.isTitle = true
-            } )
-        }
+        //         if ( self.config.titleAttribute && self.config.titleAttribute == at.name )
+        //             at.isTitle = true
+        //     } )
+        // }
     }
 
     Layer.prototype.hasChildren = function () { return false }
 
-    Layer.prototype.getLegends = function () {
+    Layer.prototype.initLegends = function () {
         return SMK.UTIL.resolved()
+    }
+
+    Layer.prototype.getLegends = function ( viewer ) {
+        var self = this
+        
+        if ( !this.legendPromise ) {
+            this.legendPromise = SMK.UTIL.makePromise( function ( res, rej ) {
+                res( self.initLegends( viewer ) )
+            } )        
+        }
+
+        return this.legendPromise
     }
 
     Layer.prototype.getFeaturesAtPoint = function ( arg ) {
@@ -86,4 +100,8 @@ include.module( 'layer.layer-js', [ 'jquery', 'util', 'event' ], function () {
         return true
     }
 
+    Layer.prototype.getConfig = function () {
+        return this.config
+    }
+    
 } )
