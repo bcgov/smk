@@ -85,6 +85,13 @@ include.module( 'tool-layers', [ 'tool', 'widgets', 'tool-layers.panel-layers-ht
                 if ( !self.enabled ) return
 
                 self.active = !self.active
+
+                if ( !self.active ) return
+
+                smk.$viewer.layerDisplayContext.setLegendsVisible( true, smk.$viewer.layerId, smk.$viewer )
+                Vue.nextTick( function () {
+                    smk.$viewer.layerDisplayContext.setLegendsVisible( false, smk.$viewer.layerId, smk.$viewer )
+                } )
             },
 
             'config': function ( ev ) {

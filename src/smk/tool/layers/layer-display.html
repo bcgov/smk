@@ -28,7 +28,7 @@
         </div>
 
         <div class="smk-legend" 
-            v-if="item.showLegend && item.legends && item.isActuallyVisible"
+            v-if="item.legends && ( item.showLegend && item.isActuallyVisible || item.alwaysShowLegend )"
         >
             <span v-if="item.showLegend == 'waiting'">Requesting</span>
 
