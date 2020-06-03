@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>minZoom</title>
+        
+        <script src="../../../dist/smk.js"></script>
+        <link rel="stylesheet" type="text/css" href="style.css"/>
+    </head>
+    <body>
+<!--***************************************************************************
+    This example shows a SMK application using the viewer.minZoom configuration.
+
+    Try zooming out beyond zoom level 5. The scale bar shows zoom level.
+    Compare zoom out behaviour with the Default map.
+-->
+        <div id="smk-map-frame"></div>
+        <script>
+            SMK.INIT( {
+                containerSel: "#smk-map-frame",
+                config: [ 
+                    './default-config.json',
+                    {
+                        viewer: {
+                            minZoom: 5
+                        }
+                    }
+                ]
+            } )
+        </script>
+<!--***************************************************************************-->
+    </body>
+</html>
+
