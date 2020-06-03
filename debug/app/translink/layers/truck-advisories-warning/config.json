@@ -17,7 +17,8 @@
                 },
                 {
                     "name": "AdvisoryDescription",
-                    "title": "Advisory Description"
+                    "title": "Advisory Description",
+                    "format": "asHTML(this.feature.properties.AdvisoryDescription)"
                 },
                 {
                     "name": "Bylaw",
@@ -56,7 +57,8 @@
                 },
                 {
                     "name": "AdvisoryDescription",
-                    "title": "Advisory Description"
+                    "title": "Advisory Description",
+                    "format": "asHTML(this.feature.properties.AdvisoryDescription)"
                 },
                 {
                     "name": "Bylaw",

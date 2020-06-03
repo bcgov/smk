@@ -1,0 +1,30 @@
+<form class="feedback-form"
+    method="post"
+    enctype="text/plain"
+    action="mailto:ipme@Translink.ca?subject=TRP Beta App Feedback"
+>
+    <input type="hidden" name="version" v-bind:value="package.version">
+    
+    <label>To submit feedback on this app please fill out our survey:
+        <a target="_blank" href="https://translink.checkbox.ca/CVRP-Feedback.aspx">TRP-Feedback</a>
+        Or use this form to email Translink:
+    </label>
+
+    <label class="name">Your name
+        <input name="name">
+    </label>
+
+    <label class="email">Your email address
+        <input name="email">
+    </label>
+
+    <label class="feedback">Your feedback on this app.
+        <textarea name="feedback" rows=10></textarea>
+    </label>
+
+    <div class="buttons">
+        <button type="submit">Send Feedback</button>
+        <button type="reset">Reset</button>
+    </div>
+
+</form>

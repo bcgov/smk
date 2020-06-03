@@ -5,6 +5,7 @@
             "id": "downtown-vancouver",
             "title": "Downtown Vancouver",
             "dataUrl": "./layers/downtown-vancouver/downtown-vancouver.geojson",
+            "metadataUrl": "https://catalogue.data.gov.bc.ca/dataset/e919fa95-b8e2-4d98-9354-055fe8ecb1a7",
             "isQueryable": false,
             "style": {
                 "strokeWidth": 0,

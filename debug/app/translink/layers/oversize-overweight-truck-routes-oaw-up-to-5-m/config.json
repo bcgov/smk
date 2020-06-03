@@ -5,6 +5,7 @@
             "id": "oversize-overweight-truck-routes-oaw-up-to-5-m",
             "title": "Overall Width up to 5.00 m",
             "dataUrl": "./layers/oversize-overweight-truck-routes-oaw-up-to-5-m/oversize-overweight-truck-routes-oaw-up-to-5-m.geojson",
+            "metadataUrl": "https://catalogue.data.gov.bc.ca/dataset/4798ee98-f87d-400b-9926-704ba96ef6ab",
             "xxxscaleMin": 28505,
             "attributes": [
                 {

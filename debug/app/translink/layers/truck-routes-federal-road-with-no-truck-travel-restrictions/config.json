@@ -5,6 +5,7 @@
             "id": "truck-routes-federal-road-with-no-truck-travel-restrictions-high-zoom",
             "title": "Federal Road with No Truck Travel Restrictions",
             "dataUrl": "./layers/truck-routes-federal-road-with-no-truck-travel-restrictions/truck-routes-federal-road-with-no-truck-travel-restrictions.geojson",
+            "metadataUrl": "https://catalogue.data.gov.bc.ca/dataset/0636a01a-a13f-48f9-94cf-1c0e59b3ba6b",
             "scaleMin": 28505,
             "attributes": [
                 {
@@ -45,6 +46,7 @@
             "id": "truck-routes-federal-road-with-no-truck-travel-restrictions",
             "title": "Federal Road with No Truck Travel Restrictions",
             "dataUrl": "./layers/truck-routes-federal-road-with-no-truck-travel-restrictions/truck-routes-federal-road-with-no-truck-travel-restrictions.geojson",
+            "metadataUrl": "https://catalogue.data.gov.bc.ca/dataset/0636a01a-a13f-48f9-94cf-1c0e59b3ba6b",
             "scaleMin": 4622325,
             "scaleMax": 28505,
             "attributes": [

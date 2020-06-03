@@ -1,0 +1,13 @@
+{
+"type": "FeatureCollection",
+"totalFeatures": 157,
+"numberMatched": 157,
+"numberReturned": 157,
+"timeStamp": "2020-05-15T23:01:55.580Z",
+"name": "covid19-relief-rest-area",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "id": "GM_Covid19Relief.232", "geometry_name": "geom", "properties": { "Name": "Bradner Rest Area", "AmenityType": "Rest Area", "Address": null, "BuildingType": null, "AmenityLocation": "4.5km West of Mt Lehman Exit Westbound", "OpenHours": "Open 24\/7", "ParkingLot": 1, "ParkingLotHours": "Open 24\/7", "CurbsideParking": null, "CurbsideParkingHours": null, "FoodNearby": null, "WashroomNearby": 1, "ShowersNearby": null, "GarbageBinNearby": 1, "TermsOfUse": null, "Comments": "Accommodates all vehicles including large commercial vehicles", "ContactInfo": null, "InformationLink": "http:\/\/www.th.gov.bc.ca\/restareas\/?zoom=14&loc=-122.398668%2C49.066244", "DirectionsToWashroom": null, "DirectionsToShowers": null, "DirectionsToGarbageBin": null, "DirectionsToFood": null, "OtherAmenity": null, "DirectionsToOtherAmenity": null, "StreetviewLink": "https:\/\/www.google.com\/maps?key=AIzaSyDRAv9fM90CwZgth-yuzXdwW2m8Z2SjOd8&cbll=49.077963040000256,-122.43212058999582&cbp=12&layer=c", "DocumentLink": null, "Active": true, "ParkingSpaces": null }, "geometry": { "type": "MultiPoint", "coordinates": [ [ -122.43404, 49.0803 ] ] } },
+{ "type": "Feature", "id": "GM_Covid19Relief.233", "geometry_name": "geom", "properties": { "Name": "Cole Road Rest Area", "AmenityType": "Rest Area", "Address": null, "BuildingType": null, "AmenityLocation": "3.5km East of Whatcom Exit", "OpenHours": "Open 24\/7", "ParkingLot": 1, "ParkingLotHours": "Open 24\/7", "CurbsideParking": null, "CurbsideParkingHours": null, "FoodNearby": null, "WashroomNearby": 1, "ShowersNearby": null, "GarbageBinNearby": 1, "TermsOfUse": null, "Comments": "Accommodates all vehicles including large commercial vehicles", "ContactInfo": null, "InformationLink": "http:\/\/www.th.gov.bc.ca\/restareas\/?zoom=15&loc=-122.178277%2C49.056167", "DirectionsToWashroom": null, "DirectionsToShowers": null, "DirectionsToGarbageBin": null, "DirectionsToFood": null, "OtherAmenity": null, "DirectionsToOtherAmenity": null, "StreetviewLink": "https:\/\/www.google.com\/maps?key=AIzaSyDRAv9fM90CwZgth-yuzXdwW2m8Z2SjOd8&cbll=49.05653668999999,-122.17798078000031&cbp=12&layer=c", "DocumentLink": null, "Active": true, "ParkingSpaces": null }, "geometry": { "type": "MultiPoint", "coordinates": [ [ -122.17902, 49.05625 ] ] } }
+]
+}

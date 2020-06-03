@@ -5,6 +5,7 @@
             "id": "truck-routes-designated-municipal-truck-route-with-restrictions-high-zoom",
             "title": "Designated Municipal Truck Route with Restrictions",
             "dataUrl": "./layers/truck-routes-designated-municipal-truck-route-with-restrictions/truck-routes-designated-municipal-truck-route-with-restrictions.geojson",
+            "metadataUrl": "https://catalogue.data.gov.bc.ca/dataset/0636a01a-a13f-48f9-94cf-1c0e59b3ba6b",
             "scaleMin": 28505,
             "attributes": [
                 {
@@ -49,6 +50,7 @@
             "id": "truck-routes-designated-municipal-truck-route-with-restrictions",
             "title": "Designated Municipal Truck Route with Restrictions",
             "dataUrl": "./layers/truck-routes-designated-municipal-truck-route-with-restrictions/truck-routes-designated-municipal-truck-route-with-restrictions.geojson",
+            "metadataUrl": "https://catalogue.data.gov.bc.ca/dataset/0636a01a-a13f-48f9-94cf-1c0e59b3ba6b",
             "scaleMin": 4622325,
             "scaleMax": 28505,
             "attributes": [

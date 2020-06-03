@@ -1,0 +1,22 @@
+section.trp-about {
+    display: flex;
+    flex-direction: column;
+}
+
+section.trp-about p {
+    margin-top: 0;
+    font-size: 14px;
+}
+
+section.trp-about p a::after {
+    content: 'open_in_new';
+    font-family: 'Material Icons';
+    font-weight: normal;
+    font-style: normal;
+    line-height: 1;
+    letter-spacing: normal;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+}

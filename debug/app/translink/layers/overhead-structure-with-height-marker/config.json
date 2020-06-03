@@ -3,8 +3,9 @@
         {
             "type": "vector",
             "id": "overhead-structure-with-height-marker",
-            "title": "Overhead Structure with Height Marker",
+            "title": "Overhead structure with posted height",
             "dataUrl": "./layers/overhead-structure-with-height-marker/overhead-structure-with-height-marker.geojson",
+            "metadataUrl": "https://catalogue.data.gov.bc.ca/dataset/f3c942c0-7188-4661-82c8-1c46a82f7520",
             "scaleMin": 198647,
             "attributes": [
                 {
