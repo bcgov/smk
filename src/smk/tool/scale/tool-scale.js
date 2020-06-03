@@ -8,9 +8,11 @@ include.module( 'tool-scale', [ 'tool.tool-js', 'tool-scale.scale-html' ], funct
         
             this.defineProp( 'showFactor' )
             this.defineProp( 'showBar' )
+            this.defineProp( 'showZoom' )
 
             this.showFactor = true
             this.showBar = true
+            this.showZoom = false
         },
         function ( smk ) {
             var self = this
@@ -42,6 +44,9 @@ include.module( 'tool-scale', [ 'tool.tool-js', 'tool-scale.scale-html' ], funct
 
                 if ( this.showFactor !== false && view.scale ) {
                     this.model.scaleDenom = view.scale
+                }
+
+                if ( this.showZoom !== false  ) {
                     this.model.zoomLevel = view.zoom
                 }
 

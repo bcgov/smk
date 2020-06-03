@@ -19,6 +19,7 @@ t.sequence( 'libs' )
     .script( 'smk/libs.js' )
     .tag( 'jquery' )
     .tag( 'vue' )
+    .tag( 'vue-config' )
     .tag( 'turf' )
 
 // t.script( 'jquery', 'lib/jquery-3.3.1.min.js' )
