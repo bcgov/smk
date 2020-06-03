@@ -5,6 +5,7 @@
             "id": "truck-parking",
             "title": "Truck Parking",
             "dataUrl": "./layers/truck-parking/truck-parking.geojson",
+            "metadataUrl": "https://catalogue.data.gov.bc.ca/dataset/32e62210-713d-4dcd-8b33-9591d6044cd3",
             "scaleMin": 189394,
             "attributes": [
                 {

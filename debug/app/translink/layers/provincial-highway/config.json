@@ -6,7 +6,7 @@
             "title": "Provincial Highway",
             "isVisible": false,
             "dataUrl": "./layers/provincial-highway/provincial-highway.geojson",
-            "metadataUrl": "https://catalogue.data.gov.bc.ca/dataset/44f64352-7baf-478f-8437-ba97157b142f",
+            "metadataUrl": "https://catalogue.data.gov.bc.ca/dataset/0636a01a-a13f-48f9-94cf-1c0e59b3ba6b",
             "scaleMin": 23167,
             "isQueryable": false,
             "style": {
@@ -24,7 +24,7 @@
             "title": "Provincial Highway",
             "isVisible": false,
             "dataUrl": "./layers/provincial-highway/provincial-highway.geojson",
-            "metadataUrl": "https://catalogue.data.gov.bc.ca/dataset/44f64352-7baf-478f-8437-ba97157b142f",
+            "metadataUrl": "https://catalogue.data.gov.bc.ca/dataset/0636a01a-a13f-48f9-94cf-1c0e59b3ba6b",
             "scaleMax": 23167,
             "isQueryable": false,
             "style": {
@@ -42,7 +42,7 @@
             "title": "Provincial Highway",
             "isVisible": false,
             "dataUrl": "./layers/provincial-highway/provincial-highway.geojson",
-            "metadataUrl": "https://catalogue.data.gov.bc.ca/dataset/44f64352-7baf-478f-8437-ba97157b142f",
+            "metadataUrl": "https://catalogue.data.gov.bc.ca/dataset/0636a01a-a13f-48f9-94cf-1c0e59b3ba6b",
             "scaleMin": 23167,
             "isQueryable": false,
             "style": {
@@ -60,7 +60,7 @@
             "title": "Provincial Highway",
             "isVisible": false,
             "dataUrl": "./layers/provincial-highway/provincial-highway.geojson",
-            "metadataUrl": "https://catalogue.data.gov.bc.ca/dataset/44f64352-7baf-478f-8437-ba97157b142f",
+            "metadataUrl": "https://catalogue.data.gov.bc.ca/dataset/0636a01a-a13f-48f9-94cf-1c0e59b3ba6b",
             "scaleMax": 23167,
             "isQueryable": false,
             "style": {

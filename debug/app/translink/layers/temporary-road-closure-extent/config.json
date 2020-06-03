@@ -1,0 +1,46 @@
+{
+    "layers": [
+        {
+            "type": "vector",
+            "id": "temporary-road-closure-extent",
+            "title": "Temporary Road Closure Extent",
+            "dataUrl": "./layers/temporary-road-closure-extent/temporary-road-closure-extent.geojson",
+            "attributes": [
+                {
+                    "name": "ClosureName",
+                    "title": "Closure Name"
+                },
+                {
+                    "name": "ClosureDescription",
+                    "title": "Closure Description"
+                },
+                {
+                    "name": "StartDate",
+                    "title": "Start Date"
+                },
+                {
+                    "name": "EndDate",
+                    "title": "End Date"
+                },
+                {
+                    "title": "More Information",
+                    "format": "asLink( this.feature.properties.Link, 'Link' )"
+                },
+                {
+                    "name": "Notes",
+                    "title": "Notes"
+                }
+            ],
+            "titleAttribute": "ClosureName",
+            "style": {
+                "strokeWidth": 0,
+                "fill": true,
+                "fillColor": "#ffaa00",
+                "fillOpacity": 0.68
+            },
+            "legend": {
+                "fill": true
+            }
+        }
+    ]
+}

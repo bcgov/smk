@@ -1,0 +1,8 @@
+<div v-if="municipalities.length > 0">
+    <p>
+        Based on the GVW and axle count, your vehicle is not considered to be a heavy truck in the following municipalities: 
+    </p>
+    <ul class="municipalities">
+        <li v-for="muni in municipalities">{{ muni }}</li>
+    </ul> 
+</div>

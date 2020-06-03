@@ -13,7 +13,7 @@
                 },
                 {
                     "title": "Link",
-                    "format": "asLink( this.feature.properties.Link, 'Link' )"
+                    "format": "asHTML( this.feature.properties.Link )"
                 },
                 {
                     "name": "Notes",

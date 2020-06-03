@@ -5,6 +5,13 @@
       "id": "metro-vancouver-boundary",
       "title": "Metro Vancouver Boundary",
       "serviceUrl": "https://services7.arcgis.com/WpS8F3vcmrEQUG8m/arcgis/rest/services/MetroVancouverBoundary_FL_DEV_1/FeatureServer/0",
+      "attributes": [
+        {
+          "value": "This application is only intended to be used within the Metro Vancouver region.",
+          "title": "Note"
+        }
+      ],
+      "xxxtitleAttribute": "AdviseType",
       "drawingInfo": {
         "renderer": {
           "type": "simple",
@@ -29,6 +36,7 @@
       "id": "industrial-area",
       "title": "Industrial Area",
       "serviceUrl": "https://services7.arcgis.com/WpS8F3vcmrEQUG8m/arcgis/rest/services/Land_Use_2011_FL_DEV/FeatureServer/0",
+      "isQueryable": false,
       "drawingInfo": {
         "renderer": {
           "type": "simple",
@@ -58,6 +66,7 @@
       "id": "downtown-vancouver",
       "title": "Downtown Vancouver",
       "serviceUrl": "https://services7.arcgis.com/WpS8F3vcmrEQUG8m/arcgis/rest/services/Vancouver_Downtown_FL_DEV/FeatureServer/0",
+      "isQueryable": false,
       "drawingInfo": {
         "renderer": {
           "type": "simple",
@@ -89,6 +98,7 @@
       "isVisible": false,
       "serviceUrl": "https://services7.arcgis.com/WpS8F3vcmrEQUG8m/arcgis/rest/services/MRN_FL_DEV/FeatureServer/0",
       "scaleMin": 31281,
+      "isQueryable": false,
       "drawingInfo": {
         "renderer": {
           "type": "simple",
@@ -118,6 +128,7 @@
       "scaleMin": 1155582,
       "scaleMax": 18897,
       "where": null,
+      "isQueryable": false,
       "drawingInfo": {
         "renderer": {
           "type": "simple",
@@ -146,6 +157,7 @@
       "serviceUrl": "https://services7.arcgis.com/WpS8F3vcmrEQUG8m/arcgis/rest/services/TruckRoutes_Dissolved_Reduced_FL_DEV/FeatureServer/0",
       "scaleMin": 31281,
       "where": "Type = 'Provincial Highway'",
+      "isQueryable": false,
       "drawingInfo": {
         "renderer": {
           "type": "simple",
@@ -174,6 +186,7 @@
       "serviceUrl": "https://services7.arcgis.com/WpS8F3vcmrEQUG8m/arcgis/rest/services/TruckRoutes_Dissolved_Reduced_FL_DEV/FeatureServer/0",
       "scaleMax": 23167,
       "where": "Type = 'Provincial Highway'",
+      "isQueryable": false,
       "drawingInfo": {
         "renderer": {
           "type": "simple",
@@ -201,6 +214,31 @@
       "serviceUrl": "https://services7.arcgis.com/WpS8F3vcmrEQUG8m/arcgis/rest/services/TruckRoutes_Dissolved_Reduced_FL_DEV/FeatureServer/0",
       "scaleMin": 27437,
       "where": "(Type <> 'Designated Municipal Truck Route with Restrictions') AND (AdviseType = 'Restriction' OR AdviseType = 'Truck Travel Warning')",
+      "attributes": [
+        {
+          "name": "City",
+          "title": "Municipality"
+        },
+        {
+          "name": "AdviseType",
+          "title": "Advisory Type"
+        },
+        {
+          "name": "AdviseDesc",
+          "title": "Advisory Description"
+        },
+        {
+          "name": "Bylaw",
+          "title": "Bylaw Link",
+          "format": "asLink(this.feature.properties.Bylaw_Link)"
+        },
+        {
+          "name": "Notes",
+          "title": "Notes"
+        }
+      ],
+      "xxxpopupTemplate": "@wf-feature",
+      "titleAttribute": "AdviseType",
       "drawingInfo": {
         "renderer": {
           "type": "uniqueValue",
@@ -249,6 +287,31 @@
       "serviceUrl": "https://services7.arcgis.com/WpS8F3vcmrEQUG8m/arcgis/rest/services/TruckRoutes_Dissolved_Reduced_FL_DEV/FeatureServer/0",
       "scaleMax": 28505,
       "where": "(Type <> 'Designated Municipal Truck Route with Restrictions') AND (AdviseType = 'Restriction' OR AdviseType = 'Truck Travel Warning')",
+      "attributes": [
+        {
+          "name": "City",
+          "title": "Municipality"
+        },
+        {
+          "name": "AdviseType",
+          "title": "Advisory Type"
+        },
+        {
+          "name": "AdviseDesc",
+          "title": "Advisory Description"
+        },
+        {
+          "name": "Bylaw",
+          "title": "Bylaw Link",
+          "format": "asLink(this.feature.properties.Bylaw_Link)"
+        },
+        {
+          "name": "Notes",
+          "title": "Notes"
+        }
+      ],
+      "xxxpopupTemplate": "@wf-feature",
+      "titleAttribute": "AdviseType",
       "drawingInfo": {
         "renderer": {
           "type": "uniqueValue",
@@ -292,86 +355,43 @@
 
     {
       "type": "esri-feature",
-      "id": "designated-municipal-truck-routes-with-restrictions-high-zoom",
-      "title": "Designated Municipal Truck Routes with Restrictions - High Zoom",
-      "serviceUrl": "https://services7.arcgis.com/WpS8F3vcmrEQUG8m/arcgis/rest/services/TruckRoutes_Dissolved_Reduced_FL_DEV/FeatureServer/0",
-      "scaleMin": 31281,
-      "where": "Type = 'Designated Municipal Truck Route with Restrictions'",
-      "drawingInfo": {
-        "renderer": {
-          "type": "simple",
-          "symbol": {
-            "color": [
-              163,
-              255,
-              115,
-              255
-            ],
-            "width": 3,
-            "type": "esriSLS",
-            "style": "esriSLSSolid"
-          },
-          "label": "Designated Municipal Truck Route"
-        }
-      }
-    },
-
-
-    {
-      "type": "esri-feature",
-      "id": "designated-municipal-truck-route-with-restrictions",
-      "title": "Designated Municipal Truck Route with Restrictions",
-      "serviceUrl": "https://services7.arcgis.com/WpS8F3vcmrEQUG8m/arcgis/rest/services/TruckRoutes_Dissolved_Reduced_FL_DEV/FeatureServer/0",
-      "scaleMax": 33416,
-      "where": "Type = 'Designated Municipal Truck Route with Restrictions'",
-      "drawingInfo": {
-        "renderer": {
-          "type": "simple",
-          "symbol": {
-            "color": [
-              163,
-              255,
-              115,
-              255
-            ],
-            "width": 1.5,
-            "type": "esriSLS",
-            "style": "esriSLSSolid"
-          },
-          "label": "Designated Municipal Truck Route"
-        }
-      }
-    },
-
-
-    {
-      "type": "esri-feature",
       "id": "truck-routes-high-zoom",
-      "title": "Truck Routes - High Zoom",
+      "title": "Truck Routes",
       "serviceUrl": "https://services7.arcgis.com/WpS8F3vcmrEQUG8m/arcgis/rest/services/TruckRoutes_Dissolved_Reduced_FL_DEV/FeatureServer/0",
       "scaleMin": 28505,
-      "where": "AdviseType = 'N/A'",
+      "where": "AdviseType = 'N/A' or Type = 'Designated Municipal Truck Route with Restrictions'",
+      "attributes": [
+        {
+          "name": "City",
+          "title": "Municipality"
+        },
+        {
+          "name": "Type",
+          "title": "Truck Route Type"
+        },
+        {
+          "name": "Bylaw",
+          "title": "Bylaw Link",
+          "format": "asLink(this.feature.properties.Bylaw_Link)"
+        },
+        {
+          "name": "TruckDefWt",
+          "title": "Heavy Truck Definition (LGVW)",
+          "format": "asUnit('kg')"
+        },
+        {
+          "name": "Notes",
+          "title": "Notes"
+        }
+      ],
+      "xxxpopupTemplate": "@wf-feature",
+      "titleAttribute": "Type",
       "drawingInfo": {
         "renderer": {
           "type": "uniqueValue",
           "field1": "Type",
           "defaultSymbol": null,
           "uniqueValueInfos": [
-            {
-              "value": "Federal Road with No Truck Travel Restrictions",
-              "symbol": {
-                "color": [
-                  230,
-                  230,
-                  0,
-                  255
-                ],
-                "width": 3,
-                "type": "esriSLS",
-                "style": "esriSLSSolid"
-              },
-              "label": "Federal Road with No Truck Travel Restrictions"
-            },
             {
               "value": "Provincial Highway",
               "symbol": {
@@ -403,6 +423,21 @@
               "label": "Designated Municipal Truck Route"
             },
             {
+              "value": "Designated Municipal Truck Route with Restrictions",
+              "symbol": {
+                "color": [
+                    163,
+                    255,
+                    115,
+                    255
+                ],
+                "width": 3,
+                "type": "esriSLS",
+                "style": "esriSLSSolid"
+              },
+              "label": "Designated Municipal Truck Route with Restrictions"
+            },
+            {
               "value": "Municipal Road with No Truck Travel Restriction",
               "symbol": {
                 "color": [
@@ -416,6 +451,21 @@
                 "style": "esriSLSSolid"
               },
               "label": "Municipal Road with No Truck Travel Restriction"
+            },
+            {
+              "value": "Federal Road with No Truck Travel Restrictions",
+              "symbol": {
+                "color": [
+                  230,
+                  230,
+                  0,
+                  255
+                ],
+                "width": 3,
+                "type": "esriSLS",
+                "style": "esriSLSSolid"
+              },
+              "label": "Federal Road with No Truck Travel Restrictions"
             }
           ]
         }
@@ -430,28 +480,39 @@
       "serviceUrl": "https://services7.arcgis.com/WpS8F3vcmrEQUG8m/arcgis/rest/services/TruckRoutes_Dissolved_Reduced_FL_DEV/FeatureServer/0",
       "scaleMin": 4622325,
       "scaleMax": 27437,
-      "where": "AdviseType = 'N/A'",
+      "where": "AdviseType = 'N/A' or Type = 'Designated Municipal Truck Route with Restrictions'",
+      "attributes": [
+        {
+          "name": "City",
+          "title": "Municipality"
+        },
+        {
+          "name": "Type",
+          "title": "Truck Route Type"
+        },
+        {
+          "name": "Bylaw",
+          "title": "Bylaw Link",
+          "format": "asLink(this.feature.properties.Bylaw_Link)"
+        },
+        {
+          "name": "TruckDefWt",
+          "title": "Heavy Truck Definition (LGVW)",
+          "format": "asUnit('kg')"
+        },
+        {
+          "name": "Notes",
+          "title": "Notes"
+        }
+      ],
+      "xxxpopupTemplate": "@wf-feature",
+      "titleAttribute": "Type",
       "drawingInfo": {
         "renderer": {
           "type": "uniqueValue",
           "field1": "Type",
           "defaultSymbol": null,
           "uniqueValueInfos": [
-            {
-              "value": "Federal Road with No Truck Travel Restrictions",
-              "symbol": {
-                "color": [
-                  230,
-                  230,
-                  0,
-                  255
-                ],
-                "width": 1.5,
-                "type": "esriSLS",
-                "style": "esriSLSSolid"
-              },
-              "label": "Federal Road with No Truck Travel Restrictions"
-            },
             {
               "value": "Provincial Highway",
               "symbol": {
@@ -483,6 +544,21 @@
               "label": "Designated Municipal Truck Route"
             },
             {
+              "value": "Designated Municipal Truck Route with Restrictions",
+              "symbol": {
+                "color": [
+                    163,
+                    255,
+                    115,
+                    255
+                ],
+                "width": 1.5,
+                "type": "esriSLS",
+                "style": "esriSLSSolid"
+              },
+              "label": "Designated Municipal Truck Route with Restrictions"
+            },
+            {
               "value": "Municipal Road with No Truck Travel Restriction",
               "symbol": {
                 "color": [
@@ -496,6 +572,21 @@
                 "style": "esriSLSSolid"
               },
               "label": "Municipal Road with No Truck Travel Restriction"
+            },
+            {
+              "value": "Federal Road with No Truck Travel Restrictions",
+              "symbol": {
+                "color": [
+                  230,
+                  230,
+                  0,
+                  255
+                ],
+                "width": 1.5,
+                "type": "esriSLS",
+                "style": "esriSLSSolid"
+              },
+              "label": "Federal Road with No Truck Travel Restrictions"
             }
           ]
         }
@@ -509,6 +600,29 @@
       "title": "Truck Parking",
       "serviceUrl": "https://services7.arcgis.com/WpS8F3vcmrEQUG8m/arcgis/rest/services/MetroVancouver_TruckParking_FL_DEV/FeatureServer/0",
       "scaleMin": 189394,
+      "attributes": [
+        {
+          "name": "Name",
+          "title": "Name"
+        },
+        {
+          "value": "<%= this.feature.properties.Street_Num || '' %> <%= this.feature.properties.Street_Nam %> <%= this.feature.properties.City %>",
+          "title": "Address"
+        },
+        {
+          "name": "Phone_Numb",
+          "title": "Phone"
+        },
+        {
+          "title": "Street View",
+          "format": "asLink( this.feature.properties.Streetview, 'Link' )"
+        },
+        {
+          "name": "Notes",
+          "title": "Notes"
+        }
+      ],
+      "titleAttribute": "Name",
       "drawingInfo": {
         "renderer": {
           "type": "simple",
@@ -532,6 +646,26 @@
       "title": "Port of Vancouver Facilities / Terminals",
       "serviceUrl": "https://services7.arcgis.com/WpS8F3vcmrEQUG8m/arcgis/rest/services/PMV_Facilities_FL_DEV_1/FeatureServer/0",
       "scaleMin": 207900,
+      "attributes": [
+        {
+          "name": "Facility",
+          "title": "Facility"
+        },
+        {
+          "name": "Category",
+          "title": "Category"
+        },
+        {
+          "title": "Data",
+          "format": "asLink( 'https://www.portvancouver.com/port-dashboard', 'Link' )"
+        },
+        {
+          "name": "Desc_",
+          "title": "Notes"
+        }
+      ],
+      "xxxpopupTemplate": "@wf-feature",
+      "titleAttribute": "Facility",
       "drawingInfo": {
         "renderer": {
           "type": "simple",
@@ -558,6 +692,22 @@
       "serviceUrl": "https://services7.arcgis.com/WpS8F3vcmrEQUG8m/arcgis/rest/services/TR_OH_Structures_FL_DEV_1/FeatureServer/0",
       "scaleMin": 207900,
       "where": "(HeightSign <> 'Y') AND (StructType = 'Advertisement Sign' OR StructType = 'Overhead Sign/Signal' OR StructType = 'Scale Sign')",
+      "attributes": [
+        {
+          "name": "Route",
+          "title": "Route"
+        },
+        {
+          "name": "StructType",
+          "title": "Structure Type"
+        },
+        {
+          "name": "Comments",
+          "title": "Notes"
+        }
+      ],
+      "xxxpopupTemplate": "@wf-feature",
+      "titleAttribute": "Route",
       "drawingInfo": {
         "renderer": {
           "type": "simple",
@@ -583,6 +733,31 @@
       "serviceUrl": "https://services7.arcgis.com/WpS8F3vcmrEQUG8m/arcgis/rest/services/TR_OH_Structures_FL_DEV_1/FeatureServer/0",
       "scaleMin": 198647,
       "where": "(HeightSign <> 'Y') AND (StructType <> 'Advertisement Sign' AND StructType <> 'Overhead Sign/Signal' AND StructType <> 'Scale Sign')",
+      "attributes": [
+        {
+          "name": "Route",
+          "title": "Route"
+        },
+        {
+          "name": "StructName",
+          "title": "Structure Name"
+        },
+        {
+          "name": "StructType",
+          "title": "Structure Type"
+        },
+        {
+          "xxname": "",
+          "title": "Street View",
+          "format": "asLink( this.feature.properties.StviewLink, 'Link' )"
+        },
+        {
+          "name": "Comments",
+          "title": "Notes"
+        }
+      ],
+      "xxxpopupTemplate": "@wf-feature",
+      "titleAttribute": "Route",
       "drawingInfo": {
         "renderer": {
           "type": "simple",
@@ -607,6 +782,71 @@
       "serviceUrl": "https://services7.arcgis.com/WpS8F3vcmrEQUG8m/arcgis/rest/services/TR_OH_Structures_FL_DEV_1/FeatureServer/0",
       "scaleMin": 198647,
       "where": "HeightSign = 'Y'",
+      "attributes": [
+        {
+          "name": "Route",
+          "title": "Route"
+        },
+        {
+          "name": "StructName",
+          "title": "Structure Name"
+        },
+        {
+          "name": "StructType",
+          "title": "Structure Type"
+        },
+        {
+          "xxname": "",
+          "title": "Street View",
+          "format": "asLink( this.feature.properties.StviewLink, 'Link' )"
+        },
+        {
+          "name": "HeightL1CO",
+          "title": "<%= this.feature.properties.HeightL1CO ? 'Lane 1 Height, ' + ( this.feature.properties.OCardinal || 'SB/WB' ): '' %>",
+          "format": "asUnit('m')"
+        },
+        {
+          "name": "HeightL1CP",
+          "title": "<%= this.feature.properties.HeightL1CP ? 'Lane 1 Height, ' + ( this.feature.properties.PCardinal || 'NB/EB' ): '' %>",
+          "format": "asUnit('m')"
+        },
+        {
+          "name": "HeightL2O",
+          "title": "<%= this.feature.properties.HeightL2O ? 'Lane 2 Height, ' + ( this.feature.properties.OCardinal || 'SB/WB' ): '' %>",
+          "format": "asUnit('m')"
+        },
+        {
+          "name": "HeightL2P",
+          "title": "<%= this.feature.properties.HeightL2P ? 'Lane 2 Height, ' + ( this.feature.properties.PCardinal || 'NB/EB' ): '' %>",
+          "format": "asUnit('m')"
+        },
+        {
+          "name": "HeightL3O",
+          "title": "<%= this.feature.properties.HeightL3O ? 'Lane 3 Height, ' + ( this.feature.properties.OCardinal || 'SB/WB' ): '' %>",
+          "format": "asUnit('m')"
+        },
+        {
+          "name": "HeightL3P",
+          "title": "<%= this.feature.properties.HeightL3P ? 'Lane 3 Height, ' + ( this.feature.properties.PCardinal || 'NB/EB' ): '' %>",
+          "format": "asUnit('m')"
+        },
+        {
+          "name": "HeightL4O",
+          "title": "<%= this.feature.properties.HeightL4O ? 'Lane 4 Height, ' + ( this.feature.properties.OCardinal || 'SB/WB' ): '' %>",
+          "format": "asUnit('m')"
+        },
+        {
+          "name": "HeightL4P",
+          "title": "<%= this.feature.properties.HeightL4P ? 'Lane 4 Height, ' + ( this.feature.properties.PCardinal || 'NB/EB' ): '' %>",
+          "format": "asUnit('m')"
+        },
+        {
+          "name": "Comments",
+          "title": "Notes"
+        }
+      ],
+      "xxxpopupTemplate": "@wf-feature",
+      "titleAttribute": "Route",
       "drawingInfo": {
         "renderer": {
           "type": "simple",
@@ -631,6 +871,30 @@
       "serviceUrl": "https://services7.arcgis.com/WpS8F3vcmrEQUG8m/arcgis/rest/services/MetroVancouver_Cardlocks_FL_DEV/FeatureServer/0",
       "scaleMin": 198647,
       "where": null,
+      "attributes": [
+        {
+          "name": "Alias",
+          "title": "Cardlock Name"
+        },
+        {
+          "name": "Company",
+          "title": "Company"
+        },
+        {
+          "title": "Street View",
+          "format": "asLink( this.feature.properties.Streetview, 'Link' )"
+        },
+        {
+          "value": "<%= this.feature.properties.Street_Num %> <%= this.feature.properties.Street_Nam %> <%= this.feature.properties.City %>",
+          "title": "Address"
+        },
+        {
+          "name": "Notes",
+          "title": "Notes"
+        }
+      ],
+      "xxxpopupTemplate": "@wf-feature",
+      "titleAttribute": "Alias",
       "drawingInfo": {
         "renderer": {
           "type": "simple",
@@ -655,6 +919,38 @@
       "serviceUrl": "https://services7.arcgis.com/WpS8F3vcmrEQUG8m/arcgis/rest/services/MetroVancouver_InspectionStations_FL_DEV/FeatureServer/0",
       "scaleMin": 178426,
       "where": null,
+      "attributes": [
+        {
+          "name": "Scale",
+          "title": "Scale"
+        },
+        {
+          "title": "Street View",
+          "format": "asLink( this.feature.properties.Streetview, 'Link' )"
+        },
+        {
+          "name": "Open_Hours",
+          "title": "Hours"
+        },
+        {
+          "value": "<%= this.feature.properties.Street_Num %> <%= this.feature.properties.Address_St %> <%= this.feature.properties.City %> <%= this.feature.properties.Post_Code %>",
+          "title": "Address"
+        },
+        {
+          "name": "Phone_Num",
+          "title": "Phone"
+        },
+        {
+          "name": "Fax_Number",
+          "title": "Fax "
+        },
+        {
+          "name": "Notes",
+          "title": "Notes"
+        }
+      ],
+      "xxxpopupTemplate": "@wf-feature",
+      "titleAttribute": "Scale",
       "drawingInfo": {
         "renderer": {
           "type": "simple",

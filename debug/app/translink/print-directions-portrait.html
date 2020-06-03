@@ -3,15 +3,15 @@
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>BETA - CVRP - Translink</title>
+        <title>Trunk Route Planner</title>
         
         <!-- SMK BOOTSTRAP - - - - - - - -->
-        <script src="../../smk.js"></script>
+        <script src="../../../dist/smk.js"></script>
         <!-- - - - - - - - - - - - - - - -->
 
         <style>
             @page {
-                margin: 1em;
+                margin: auto;
                 size: letter portrait;
             }
 
@@ -19,29 +19,17 @@
                 font-family: Helvetica,Arial,sans-serif;
             }
 
-            @media print {
-                header {
-                    background-color: white;
-                }
-
-                header .header-title {
-                    color: black;                    
-                }
-
-                header img {
-                    filter: invert(1);                    
-                }
-            }
-
             article {
-                position: relative;
-                height: 10in;
-                width: 7.5in;
+                /* this change seems to fix the slow print preview */
+                /* position: relative; */
+                overflow: hidden;
+
+                height: 8.5in;
+                width: 6.85in;
                 margin: auto;
 
                 display: flex;
                 flex-direction: column;
-                justify-content: space-between;
                 page-break-after: always;
             }
 
@@ -92,7 +80,7 @@
             section {
                 display: flex;
                 flex-direction: column;
-                justify-content: space-between;
+                flex-basis: 100%;
             }
 
             section.left-side {
@@ -134,6 +122,11 @@
                 font-weight: bold;
             }
 
+            .notifications {
+                font-style: italic;
+                font-size: 14px;
+            }
+
             .directions {
                 height: 100%;
                 padding: 0 0.5em;
@@ -143,15 +136,22 @@
                 margin: 0.5em 0;
                 padding: 2px;
                 border-radius: 4px;
-                padding-left: 30px;
 
                 display: flex;
                 flex-wrap: wrap;
                 justify-content: space-between;
             }
 
+            .direction .prefix {
+                flex-basis: 100%;
+                font-size: 16px;
+                font-weight: bold;
+                margin-bottom: 10px;
+            }
+
             .direction .index {
-                margin-left: -30px;
+                position: absolute;
+                left: 0px;
                 font-size: 12px;
                 font-weight: bold;
                 padding: 0px;
@@ -159,16 +159,30 @@
                 background-color: #fff;
                 border: 1px solid #fff;
                 box-shadow: 0 1px 3px rgba(0,0,0,0.4);
-                flex-basis: 1%;
                 height: 1%;
             }
 
-            .direction .instruction {
+            .direction.isTruckRoute .instruction {
+                color: blue;
+                font-style: normal;
+                font-weight: bold;
+                font-size: 15px;
+            }
+
+            .direction .instruction, .direction.isOversize .instruction {
                 flex-basis: 100%;
+                position: relative;
+                padding-left: 25px;
+
+                color: red;
+                font-style: italic;
+                font-weight: normal;
+                font-size: 12px;
             }
 
             .direction .metric {
                 font-size: 12px;
+                padding-left: 25px;
             }
 
             #route-pages .smk-map-frame .smk-route-tooltip {
@@ -181,6 +195,50 @@
             .page-number {
                 text-align: right;
             }
+
+            article.notifications .notification { 
+                margin-bottom: 1em;
+                font-size: 14px;
+                margin-top: 0;
+                margin-left:18px;
+                margin-right:18px;
+            }
+
+            article.notifications .notification p { 
+                margin-bottom: 0;
+                margin-top: 0;
+            }
+
+            article.notifications .notification ul { 
+                margin-bottom: .5em;
+                margin-top: .5em;
+            }
+
+            article.notifications .notification h2 { 
+                display: block;
+                font-size: 14px;
+                font-weight: bold;
+                margin-top: 0;
+                margin-bottom: 0;
+            }
+
+            article.notifications activate-tool { 
+                display: none;
+            }
+
+            @media print {
+                header {
+                    background-color: white;
+                }
+
+                header .header-title {
+                    color: black;                    
+                }
+
+                header img {
+                    filter: invert(1);                    
+                }
+            }
         </style>
 
     </head>
@@ -190,12 +248,47 @@
 
         <template id="template">
             <div id="route-pages">
+                <article>
+                    <header>
+                        <img src="https://tlweblibs.translink.ca/TransLink-logo-white.svg" alt="TransLink Logo" class="siteLogo">
+                        <div class="header-title">Truck Route Planner</div>
+                        <div class="build-info"></div>
+                    </header>
+                        
+                    <div class="page">
+                        <section>
+                            <div class="waypoints">
+                                <div class="waypoint"
+                                    v-for="w in waypoints"
+                                    v-bind:class="[ w.style || '' ]"
+                                >{{ w.label }} at
+                                    <span class="address" v-if="w.fullAddress">{{ w.fullAddress }}</span>
+                                    <span class="coordinates" v-else>
+                                        <span class="smk-ordinate">
+                                            <label>latitude <span>{{ w.latitude | formatNumber( 6, 3 ) }}</span></label>
+                                        </span>,
+                                        <span class="smk-ordinate">
+                                            <label>longitude <span>{{ w.longitude | formatNumber( 6, 3 ) }}</span></label>
+                                        </span>                    
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="smk-map-frame"
+                                v-content="overview"
+                            ></div>
+
+                            <!-- <div class="page-number">Page 1 of {{ pages.length + 1 }}</div> -->
+                        </section>
+                    </div>
+                </article>            
+
                 <article
                     v-for="page in pages"
                 >
                     <header>
                         <img src="https://tlweblibs.translink.ca/TransLink-logo-white.svg" alt="TransLink Logo" class="siteLogo">
-                        <div class="header-title">Vehicle Route - Commercial Vehicle Route Planner Beta</div>
+                        <div class="header-title">Truck Route Planner</div>
                         <div class="build-info"></div>
                     </header>
                         
@@ -205,7 +298,17 @@
                                 <div class="waypoint"
                                     v-for="w in waypoints"
                                     v-bind:class="[ w.style || '' ]"
-                                >{{ w.label }} at <span class="address">{{ w.fullAddress }}</span></div>
+                                >{{ w.label }} at 
+                                    <span class="address" v-if="w.fullAddress">{{ w.fullAddress }}</span>
+                                    <span class="coordinates" v-else>
+                                        <span class="smk-ordinate">
+                                            <label>latitude <span>{{ w.latitude | formatNumber( 6, 3 ) }}</span></label>
+                                        </span>,
+                                        <span class="smk-ordinate">
+                                            <label>longitude <span>{{ w.longitude | formatNumber( 6, 3 ) }}</span></label>
+                                        </span>                    
+                                    </span>
+                                </div>
                             </div>
 
                             <div class="smk-map-frame"
@@ -217,45 +320,125 @@
                             <div class="directions">
                                 <div class="direction"
                                     v-for="d in page.directions"
-                                    v-bind:class="[ d.waypointStyle || '' ]"
-                                >
-                                    <span class="index">#{{ d.index }}</span>
-                                    <span class="instruction">{{ d.instruction }}</span>
-                                    <span class="metric"
-                                        v-if="d.distance"
-                                    >for {{ d.distance }} ({{ d.time }})</span>
+                                    v-bind:class="d.class"
+                                    xxxv-bind:class="[ d.waypointStyle || '' ]"
+                                >                                  
+                                    <div class="prefix" v-if="d.prefix">{{ d.prefix }}</div>
+
+                                    <span class="instruction" 
+                                    ><span class="index">#{{ d.index }}</span>{{ instructionTypePrefix( d.type, d.heading ) }} {{ d.name || d.text }}</span>
+                                    <span class="metric" v-if="d.distanceUnit"
+                                    >for {{ d.distanceUnit.value | dimensionalNumber( 1, d.distanceUnit.unit, 3 ) }} ({{ d.time | formatTime }})</span>
+
+                                    <div class="notifications" v-if="d.notifications">
+                                        <span class="notification" 
+                                            v-for="n in d.notifications"
+                                            v-bind:class="[ n.type ]"
+                                        >{{ n.message }}</span>
+                                    </div>
                                 </div>
                             </div>
 
-                            <div class="page-number">Page {{ page.index }} of {{ pages.length }}</div>
+                            <!-- <div class="page-number">Page {{ page.index + 1 }} of {{ pages.length + 1 }}</div> -->
                         </section>
                     </div>
-                </article>            
+                </article>     
+
+                <article class="notifications">
+                    <header>
+                        <img src="https://tlweblibs.translink.ca/TransLink-logo-white.svg" alt="TransLink Logo" class="siteLogo">
+                        <div class="header-title">Truck Route Planner</div>
+                        <div class="build-info"></div>
+                    </header>
+
+                    <div class="page">
+                        <section>
+                            <h1>Reports and Notices</h1>
+
+                            <div class="notification" 
+                                v-for="r in reports"
+                                xxv-if="r.message"
+                                v-bind:class="[ r.type ]"
+                                v-bind:is="r.component"
+                                xxv-html="r.message"
+                            ></div>
+
+                            <div class="notification">
+                                <h2>Potential Route (Blue Line)</h2>
+                                A route that based on factors such as the origin and destination, intermediate waypoints, and the default or user-entered vehicle parameters, may comply with municipal truck route bylaws. 
+                                This route is put forward for the driver and/or carrier’s consideration for pre-trip planning purposes without warranty of any kind, whether express or implied. 
+                                The driver and/or carrier is responsible for ensuring the default vehicle parameters or user-entered vehicle parameters are an accurate representation of the actual vehicle, for verifying all clearances and restrictions on the route, and for ensuring the vehicle is operated in compliance with all applicable municipal bylaws and provincial and federal regulations.
+                            </div>
+
+                            <div class="notification">
+                                <h2>Unverified Route (Dotted Red Line)</h2>
+                                A route, or a portion of a route, that may not comply with municipal truck route bylaws and may not be suitable for a vehicle with the default or user-entered vehicle parameters. 
+                                The driver and/or carrier is responsible for ensuring the default vehicle parameters or user-entered vehicle parameters are an accurate representation of the actual vehicle, for verifying all clearances and restrictions on the route, and for ensuring the vehicle is operated in compliance with all applicable municipal bylaws and provincial and federal regulations.                        
+                            </div>
+                        </section>
+                    </div>
+                </article>     
+
+                <article class="disclaimer">
+                    <header>
+                        <img src="https://tlweblibs.translink.ca/TransLink-logo-white.svg" alt="TransLink Logo" class="siteLogo">
+                        <div class="header-title">Truck Route Planner</div>
+                        <div class="build-info"></div>
+                    </header>
+
+                    <div class="page">
+                        <section>
+                            <h1>Disclosure and Limitation of Liabilities</h1>
+
+                            <p>
+                                This website (the Truck Route Planner (TRP)) and all of the information it contains are provided "as is" without warranty of any kind, whether express or implied.
+                                All implied warranties, including, without limitation, implied warranties of merchantability, fitness for a particular purpose, and non-infringement, are hereby expressly disclaimed.
+                            </p>
+                            <p>
+                                Links and references to any other websites are provided for information only and listing shall not be taken as endorsement of any kind.
+                                TransLink or any of its partners or stakeholders (including, without limitation, the Province of BC) are not responsible for the content or reliability of the linked websites and do not endorse the content, products, services or views expressed within them.
+                            </p>
+                            <p>    
+                                Under no circumstances will TransLink or any of its partners or stakeholders (including, without limitation, the Province of BC) be liable to any person or business entity for any direct, indirect, special, incidental, consequential, or other damage based on any use of this website or any other website to which this site is linked, including, without limitation, any lost profits, business interruption, or loss of programs or information, even if TransLink or any of its partners or stakeholders (including, without limitation, the Province of BC) have been specifically advised.
+                            </p>
+                            <p>
+                                TransLink and the Province of BC, in their sole discretion, may at any time without notice revise the content and features of this website and the terms and conditions of its use, or terminate this website at any time, for any reason, without any notice and without any liability to any person or business entity.
+                            </p>
+                            <img src="images/no_mobile_icon.svg" style="width: 150px;" alt="Graphic warning to discourage using mobile devices">
+                            <p>
+                                <em>This website is intended to be used as a pre-trip planner. Do not operate a vehicle while using this website.</em>
+                            </p>
+                        </section>
+                    </div>
+                </article>     
+
             </div>
         </template>
     </body>
 
     <script>
-        var maxDirs = 10, thresholdFactor = 6, smallThresholdFactor = 10
+        var maxDirs = 10, thresholdFactor = 6, smallThresholdFactor = 20
 
-        include.option( { baseUrl: ( new URL( '../..', document.location ) ).toString() } )
+        include.option( { baseUrl: ( new URL( '../../../dist/', document.location ) ).toString() } )
         include( 'vue', 'vue-config', 'turf' ).then( function () {
             var key = location.search.substr( 1 )
             var cfg = JSON.parse( window.sessionStorage.getItem( key ) )
 
             var dirs = cfg.etc.directions
             delete cfg.etc
+            var directions = cfg.tools.find( function ( t ) { return t.id == 'directions' } )
             delete cfg.tools
+            cfg.tools = [ directions ]
             var mapCfg = JSON.stringify( cfg )
 
             var wl = dirs.waypoints.length
             dirs.waypoints[ 0 ].label = 'Start'
-            dirs.waypoints[ 0 ].style = 'start'
+            dirs.waypoints[ 0 ].class = 'start'
             for ( var i = 1; i < ( wl - 1 ); i += 1 ) {
                 dirs.waypoints[ i ].label = 'Waypoint #' + i
             }
             dirs.waypoints[ wl - 1 ].label = 'Finish'
-            dirs.waypoints[ wl - 1 ].style = 'finish'
+            dirs.waypoints[ wl - 1 ].class = 'finish'
 
             function close( p1, p2, min ) { 
                 var d0 = p1[0] - p2[0]
@@ -265,21 +448,53 @@
 
             function getWaypoint( pt ) {
                 return dirs.waypoints.find( function ( wp ) {
-                    return close( pt, [ wp.longitude, wp.latitude ], 0.0001 )
+                    return close( pt, [ wp.longitude, wp.latitude ], 0.00001 )
                 } ) || {}
             }
 
-            var spi = 0, pi = 0, prevDir
+            function segmentPrefix( i ) {
+                var sg = dirs.segments.features[ i ].properties
+
+                if ( sg.isTruckRoute && !sg.isFerry && !sg.isOversize ) {
+                    return 'Starting Potential Truck Route'
+                }
+                else if ( !sg.isTruckRoute && !sg.isFerry && !sg.isOversize ) {
+                    return 'Starting Unverified Route'
+                }
+                else if ( sg.isFerry ) {
+                    return 'Starting Ferry Trip (Unverified)'
+                }
+                else if ( sg.isOversize ) {
+                    return 'Starting Oversized Truck Route'
+                }
+                else {
+                    throw 'dont know how to handle'
+                }
+            }
+
+            function segmentClasses( i ) {
+                var sg = dirs.segments.features[ i ].properties
+                return {
+                    isTruckRoute: !!sg.isTruckRoute,
+                    isFerry: !!sg.isFerry,
+                    isOversize: !!sg.isOversize,
+                }
+            }
+
+            var spi = 0, pi = 0, prevDir, prevPrefix
             dirs.directions.forEach( function ( d, i ) {
                 d.index = i + 1
-                d.waypointStyle = getWaypoint( d.point ).style
+                // d.waypointStyle = getWaypoint( d.point ).style
 
                 if ( !prevDir ) {
+                    prevPrefix = d.prefix = segmentPrefix( d.segmentIndex )
                     prevDir = d
                     return
                 }
 
-                while ( !close( dirs.route[ pi ], d.point, 0.0001 ) ) {
+                if ( !d.name ) d.name = prevDir.name
+
+                while ( !close( dirs.route[ pi ], d.point, 0.00001 ) ) {
                     pi += 1
                 }
                 
@@ -287,6 +502,21 @@
                     start: spi,
                     end: pi,
                     dist: turf.distance( d.point, prevDir.point )
+                }
+
+                // var maxSeg = Math.max.apply( Math, Object.keys( routeAttrs[ spi ].segs ) )
+                prevDir.class = segmentClasses( prevDir.segmentIndex )
+                // prevDir.class[ getWaypoint( prevDir.point ).class || '' ] = true
+
+                // if ( Object.keys( routeAttrs[ spi ].segs ).length == 2 || spi == 0 ) {
+                if ( d.segmentIndex != prevDir.segmentIndex || spi == 0 ) {
+                    // var sgi = Math.max.apply( Math, Object.keys( routeAttrs[ spi ].segs ) )
+
+                    var pfx =  segmentPrefix( d.segmentIndex )
+                    if ( pfx != prevPrefix )
+                        d.prefix = pfx
+
+                    prevPrefix = pfx
                 }
 
                 spi = pi
@@ -345,6 +575,11 @@
 
             var model = {
                 waypoints: dirs.waypoints,
+                reports: dirs.reports.map( function ( r ) {
+                    r.component.data = function () { return r.component.dataObj }
+                    return r
+                } ),
+                overview: {},
                 pages: dirPages.map( function ( dp, i ) {
                     return {
                         index: i + 1,
@@ -352,6 +587,24 @@
                         directions: dp,
                         map: {}
                     }
+                } )
+            }
+
+            model.overview.create = function ( el ) {                    
+                var c = JSON.parse( mapCfg )
+
+                var ls = turf.lineString( dirs.route )
+                var bb = turf.bbox( ls )
+                var diag = turf.distance( [ bb[0], bb[1] ], [ bb[2], bb[3] ] )
+
+                c.viewer.location = {
+                    extent: turf.bbox( turf.buffer( turf.bboxPolygon( bb ), diag * 0.1 ) ).concat( [ [ 0, 0 ], [ 200, 0 ] ] )
+                }
+
+                return SMK.INIT( {
+                    'smk-id':           'overview',
+                    'smk-container-sel': el,
+                    'smk-config':       [ c, 'hide-tool=all', 'show-tool=scale,legend' ]
                 } )
             }
 
@@ -364,37 +617,97 @@
                     } 
                 }
 
-                p.map.create = function ( el ) {
-                    var ls = turf.lineString( p.route )
-                    var bb = turf.bbox( ls )
-                    var diag = turf.distance( [ bb[0], bb[1] ], [ bb[2], bb[3] ] )
-                    
+                p.map.create = function ( el ) {                    
                     var c = JSON.parse( mapCfg )
+
+                    c.viewer.displayContext.print = [ {
+                        type: 'folder',
+                        items: []
+                    } ]
+                    var disp = c.viewer.displayContext.print[ 0 ].items
+
                     c.layers.unshift( {
                         type: 'vector',
                         id: 'route-base',
                         isVisible: true,
                         dataUrl: 'data:application/json,' + JSON.stringify( turf.lineString( dirs.route ) ),
                         style: {
-                            strokeColor: "gray",
-                            strokeWidth: 12,
-                            strokeOpacity: 0.6
+                            strokeColor: "#10dee6",
+                            strokeWidth: 4,
+                            strokeOpacity: 1
                         },
                         legends: false
                     } )
+                    disp.push( { id: 'route-base' } )
 
-                    c.layers.unshift( {
-                        type: 'vector',
-                        id: 'route-segment',
-                        isVisible: true,
-                        dataUrl: 'data:application/json,' + JSON.stringify( turf.lineString( p.route ) ),
-                        style: {
-                            strokeColor: "green",
-                            strokeWidth: 8,
-                            strokeOpacity: 0.8
-                        },
-                        legends: false
-                    } )
+                    if ( dirs.segments ) {
+                        var pageRouteStart = p.directions[ 0 ].route.start
+                        var pageRouteEnd = p.directions[ p.directions.length - 1 ].route.end //- 1
+                        // console.log( 'page range', pageRouteStart, pageRouteEnd )
+                        for ( var si = 0; si < dirs.segments.features.length; si += 1 ) {
+                            var seg = JSON.parse( JSON.stringify( dirs.segments.features[ si ] ) )
+                            var segSt = seg.properties.index
+                            var segEn = segSt + seg.geometry.coordinates.length - 1
+
+                            var pageOffSt = Math.max( 0, pageRouteStart - segSt )
+                            var pageOffEn = Math.min( seg.geometry.coordinates.length, pageRouteEnd - segSt + 1 )
+
+                            // console.log( 'segment', segSt, segEn, seg.properties )
+
+                            if ( pageRouteStart >= segEn ) {
+                                // console.log( 'skip' )
+                                continue
+                            }
+                            else if ( pageRouteEnd <= segSt ) {
+                                // console.log( 'last' )
+                                break
+                            }
+                            else if ( pageRouteStart >= segSt ) {
+                                // console.log( 'overlap start', pageOffSt, pageOffEn )
+                                seg.geometry.coordinates = seg.geometry.coordinates.slice( pageOffSt, pageOffEn )
+                            }
+                            else if ( pageRouteStart < segSt && pageRouteEnd > segEn ) {
+                                // console.log( 'overlap middle')
+                            }
+                            else if ( pageRouteEnd > segSt ) {
+                                // console.log( 'overlap end', pageOffSt, pageOffEn)
+                                seg.geometry.coordinates = seg.geometry.coordinates.slice( pageOffSt, pageOffEn )
+                            }
+                            else {
+                                // dont know
+                                debugger
+                            }
+
+                            var st = seg.style
+                            delete seg.style
+
+                            c.layers.unshift( {
+                                type: 'vector',
+                                id: 'route-segment-' + si,
+                                isVisible: true,
+                                dataUrl: 'data:application/json,' + JSON.stringify( seg ),
+                                style: st,
+                                legends: false
+                            } )
+                            disp.push( { id: 'route-segment-' + si } )
+
+                        }
+                    }
+                    else {
+                        c.layers.unshift( {
+                            type: 'vector',
+                            id: 'route-segment',
+                            isVisible: true,
+                            dataUrl: 'data:application/json,' + JSON.stringify( turf.lineString( p.route ) ),
+                            style: {
+                                strokeColor: "green",
+                                strokeWidth: 8,
+                                strokeOpacity: 0.8
+                            },
+                            legends: false
+                        } )
+                        disp.push( { id: 'route-segment' } )
+                    }
 
                     p.directions.reverse().forEach( function ( d, i ) {
                         c.layers.unshift( {
@@ -415,8 +728,13 @@
                             },
                             legends: false
                         } )
+                        disp.push( { id: 'dir-' + i } )
                     } )
                     p.directions.reverse()
+
+                    var ls = turf.lineString( p.route )
+                    var bb = turf.bbox( ls )
+                    var diag = turf.distance( [ bb[0], bb[1] ], [ bb[2], bb[3] ] )
 
                     c.viewer.location = {
                         extent: turf.bbox( turf.buffer( turf.bboxPolygon( bb ), diag * 0.1 ) )
@@ -425,21 +743,52 @@
                     return SMK.INIT( {
                         'smk-id':           'print-' + pi,
                         'smk-container-sel': el,
-                        'smk-config':       [ c, 'hide-tool=all', 'show-tool=scale,legend' ]
+                        'smk-config':       [ c, 'hide-tool=all', 'show-tool=scale' ]
                     } )
                 }
 
             } )
-            
+
+            var instructionType = {
+                START:              [ 'trip_origin', null,      'Go on' ],
+                START_NORTH:        [ 'trip_origin', null,      'Head north on' ],
+                START_SOUTH:        [ 'trip_origin', null,      'Head south on' ],
+                START_EAST:         [ 'trip_origin', null,      'Head east on' ],
+                START_WEST:         [ 'trip_origin', null,      'Head west on' ],
+                CONTINUE:           [ 'expand_more', null,      'Continue onto'  ],
+                TURN_LEFT:          [ 'arrow_back', null,       'Turn left onto' ],
+                TURN_SLIGHT_LEFT:   [ 'undo', null,             'Slight turn left onto' ],
+                TURN_SHARP_LEFT:    [ 'directions', true,       'Sharp turn left onto' ],
+                TURN_RIGHT:         [ 'arrow_forward', null,    'Turn right onto' ],
+                TURN_SLIGHT_RIGHT:  [ 'undo', true,             'Slight turn right onto' ],
+                TURN_SHARP_RIGHT:   [ 'directions', null,       'Sharp turn right onto' ],
+                FERRY:              [ 'directions_boat', null,  'Board' ],
+                STOPOVER:           [ 'pause', null,            '' ],
+                FINISH:             [ 'stop', null,             '' ],
+            }
+
+            Vue.config.ignoredElements = [
+                'activate-tool'
+            ]
+
             new Vue( {
                 el: '#vue-root',
                 template: '#template',
                 data: model,
                 mounted: function () {
                     SMK.BOOT.then( function () {
-                        window.print()
-                        window.parent.postMessage( 'printed', '*' )
+                        setTimeout( function () {
+                            window.print()
+                            window.parent.postMessage( 'printed', '*' )
+                        }, 2000 ) 
                     } )
+                },
+                methods: {
+                    instructionTypePrefix: function ( type, heading ) {
+                        if ( heading ) type = type + '_' + heading
+                        if ( !instructionType[ type ] ) return ''
+                        return instructionType[ type ][ 2 ] || ''
+                    }
                 }
             } )
         } )

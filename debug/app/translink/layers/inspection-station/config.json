@@ -5,6 +5,7 @@
             "id": "inspection-station",
             "title": "Inspection Station",
             "dataUrl": "./layers/inspection-station/inspection-station.geojson",
+            "metadataUrl": "https://catalogue.data.gov.bc.ca/dataset/b0e1d7f5-a9aa-4c9b-a3d4-6ee36f3027cf",
             "scaleMin": 178426,
             "attributes": [
                 {
@@ -20,7 +21,7 @@
                     "title": "Hours"
                 },
                 {
-                    "value": "<%= this.feature.properties.Mailing_Addr_StNum %> <%= this.feature.properties.Mailing_Addr_St %> <%= this.feature.properties.City %> <%= this.feature.properties.Postal_Code %>",
+                    "value": "<%= this.feature.properties.Street_Num %> <%= this.feature.properties.Address_St %> <%= this.feature.properties.City %> <%= this.feature.properties.Post_Code %>",
                     "title": "Address"
                 },
                 {

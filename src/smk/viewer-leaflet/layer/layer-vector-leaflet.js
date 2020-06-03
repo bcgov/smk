@@ -105,7 +105,7 @@ include.module( 'layer-leaflet.layer-vector-leaflet-js', [ 'layer.layer-vector-j
     VectorLeafletLayer.prototype.getConfig = function ( leafLayer ) {
         var cfg = JSON.parse( JSON.stringify( SMK.TYPE.Layer[ 'vector' ].prototype.getConfig.call( this ) ) )
 
-        if ( cfg.isInternal ) {
+        if ( cfg.isInternal && leafLayer ) {
             var geojson = leafLayer.toGeoJSON()
             if ( geojson ) {
                 cfg.dataUrl = 'data:application/json,' + JSON.stringify( geojson )

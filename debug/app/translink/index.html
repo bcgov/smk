@@ -3,267 +3,59 @@
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>BETA - CVRP - Translink</title>
-        <!-- SMK BOOTSTRAP - - - - - - - -->
+        <title>TRP - Translink</title>
+
+        <link rel="stylesheet" type="text/css" href="lib/dialog-polyfill/dialog-polyfill.css"/>
+        <script src="lib/dialog-polyfill/dialog-polyfill.js"></script>
+
         <script src="../../../dist/smk.js"></script>
-        <!-- - - - - - - - - - - - - - - -->
+        <link rel="stylesheet" type="text/css" href="smk-trp.css"/>
+
         <style>
-            #header {
-                position: absolute;
-                top: 0;
-                left: 0;
-                right: 0;
-                height: 70px;
-
-                border-bottom:      2px solid #fcba19;
-                background-color: #036;
-                font-family:        Helvetica,Arial,sans-serif;
-
-                display:            flex;
-                justify-content:    flex-start;
-                align-items:        center;
-            }
-
-            #build-info {
-                display: flex;
-                flex-direction: column;
-                align-items: flex-end;
-
-                flex-grow: 1;
-                font-size: 12px;
-                color: #ccc;
-                padding-right: 10px;
-            }
-
-            img.siteLogo {
-                margin-left:    10px;
-                margin-bottom:  10px;
-                height: 40px;
-            }
-
-            #header-title {
-                color:          white;
-                margin-left:    20px;
-
-                display:        flex;
-                flex-direction: column;
-                justify-content:center;
-                align-items:    flex-start;
-                font-size:      18px;
-            }
-
-            #smk-map-frame {
-                position: absolute;
-                top: 72px;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                margin: 0;
-                padding: 0;
+            body.hide article {
+                visibility: hidden;
             }
         </style>
 
-        <style>
-            dialog {
-                top: 50%;
-                max-width: 50rem;
-                max-height: calc(100% - 2rem);
-                overflow-y: auto;
-                transform: translateY(-50%);
-                font-family:"Meta W01 Medium", Arial, Helvetica, sans-serif;
-                z-index: 3;
-                padding: 0;
-                border: none;                
-            }
-
-            .PromptPromoHeader {
-                padding-top: 10px;
-                background-color: #00355F;
-            }
-
-            dialog header {
-                align-items:flex-start;
-                box-sizing:border-box;
-                display:flex;
-                font-size:18px;
-                height:72px;
-                justify-content:space-between;
-                line-height:20.7px;
-                margin-left:18px;
-                margin-right:18px;
-                padding-bottom:18px;
-                padding-top:18px;
-            }
-
-            dialog header h2 {
-                font-size:30.0006px;
-                font-weight:800;
-                line-height:36.0007px;
-                margin-block-end:0px;
-                margin-block-start:0px;
-            }
-
-            dialog section {
-                display:flex;
-                flex-direction:column;
-                font-size:18px;
-                line-height:20.7px;
-                margin-left:18px;
-                margin-right:18px;
-                margin-top:18px;
-            }
-
-            dialog section p {
-                margin-bottom: 0;
-            }
-
-            img.warningImage {
-                width: 150px;
-                align-self: center;
-            }
-
-            dialog menu {
-                display:flex;
-                font-size:18px;
-                justify-content:space-around;
-            }
-
-            dialog menu button {
-                align-items:center;
-                background-color:rgb(0, 53, 95);
-                border: none;
-                color:rgb(255, 255, 255);
-                cursor:pointer;
-                display:flex;
-                font-size:18px;
-                justify-content:center;
-                outline: none;
-                padding: 9px;
-            }
-
-            dialog::backdrop, dialog + .backdrop {
-                background-color: black;
-                opacity: 0.8;
-                position: fixed;
-                top: 0px;
-                right: 0px;
-                bottom: 0px;
-                left: 0px;
-            }
-        </style>
+        <link rel="stylesheet" type="text/css" href="style.css"/>       
     </head>
-
-    <body>
-        <dialog id="disclaimer" data-type="flatScrollingDialog" class="DisclaimerDialog CVRPDisclaimerDialogTheme useAllInfinitely">
-            <div class="PromptPromoHeader">
-                <img src="https://tlweblibs.translink.ca/TransLink-logo-white.svg" alt="TransLink Logo" class="siteLogo">
-            </div>
-            <form method="dialog">
-                <header aria-orientation="horizontal">
-                    <h2>Commercial Vehicle Route Planner Beta</h2>
+    
+    <body class="hide">
+        <dialog id="disclaimer">
+            <form>
+                <header>
+                    <h1><span class="translink-logo"></span>Truck Route Planner</h1>
                 </header>
-                <section class="CopyMain flexColumn flexContainer">
+                <section>
                     <p>
-                        This website (the Commercial Vehicle Route Planner (CVRP) Beta) and all of the information it contains are provided "as is" without warranty of any kind, whether express or implied. 
-                        All implied warranties, including, without limitation, implied warranties of merchantability, fitness for a particular purpose, and non-infringement, are hereby expressly disclaimed.
+                        This website requires a more recent web browser.
                     </p>
                     <p>
-                        Links and references to any other websites are provided for information only and listing shall not be taken as endorsement of any kind. 
-                        TransLink is not responsible for the content or reliability of the linked websites and does not endorse the content, products, services or views expressed within them.
+                        Please use Google Chrome, or Microsoft Edge, or Firefox, or Safari.
                     </p>
-                    <p>
-                        Under no circumstances will TransLink be liable to any person or business entity for any direct, indirect, special, incidental, consequential, or other damage based on any use of this website or any other website to which this site is linked, including, without limitation, any lost profits, business interruption, or loss of programs or information, even if TransLink has been specifically advised.
-                    </p>
-                    <img src="images/no_mobile_icon.svg" class="warningImage" alt="Graphic warning to discourage using mobile devices">
-                    <p>
-                        <em>This website is intended to be used as a pre-trip planner. Do not operate a vehicle while using this website.</em>
-                    </p>
-                    <p>
-                        By proceeding, you are accepting this disclaimer, and you are indicating you understand the limitations of this website.
-                    </p>
-                </section>
-                <menu>
-                    <button type="submit" class="acceptButton">I accept the disclaimer and understand the limitations of this website</button>
-                </menu>
+                </section>      
+                <menu></menu>
             </form>
         </dialog>
-        <div class="backdrop"></div>
 
-        <div id="header">
-            <!-- <img src="bc-gov-logo-transparent.png"> -->
-            <img src="https://tlweblibs.translink.ca/TransLink-logo-white.svg" alt="TransLink Logo" class="siteLogo">
-            <div id="header-title">Commercial Vehicle Route Planner Beta</div>
-            <div id="build-info"></div>
-        </div>
-        <div id="smk-map-frame"></div>
-        <iframe id="print-holder"></iframe>
+        <article>
+            <header>
+                <h1 id="logo"><span class="translink-logo"></span>Truck Route Planner</h1>
+                <!-- <h3 id="package-build-date" title="">
+                    <div class="release" id="package-release"></div>
+                    <div class="version" id="package-version"></div>
+                </h3> -->
+            </header>
 
-        <style>
-            .feedback-form  {
-                display: flex;
-                flex-direction: column;
-                align-items: stretch;
-            }
-
-            .feedback-form label {
-                display: flex;
-                flex-direction: column;
-                align-items: stretch;
-                font-size: 12px;
-                margin: 4px 0;
-            }
-
-            .feedback-form label input, .feedback-form label textarea {
-                flex-grow: 1;
-                border: 1px solid #999;
-                outline: none;
-                padding: 2px;
-                border-radius: 4px;
-            }
-
-            .feedback-form .buttons {
-                display: flex;
-                justify-content: space-between;
-            }
-
-            .feedback-form .buttons button[type=submit] {
-                font-size: 15px;
-                font-weight: bold;
-            }
-        </style>
-        
-        <template id="feedback">
-            <form class="feedback-form"
-                method="post"
-                enctype="text/plain"
-                action="mailto:bjubb@vividsolutions.com?subject=Translink app feedback"
-            >
-                <label>You can submit feedback here:
-                    <a target="_blank" href="https://translink.checkbox.ca/CVRP-Feedback.aspx">CVRP-Feedback</a>
-                    Or you use this form:
-                </label>
-
-                <label class="name">Your name
-                    <input name="name">
-                </label>
-
-                <label class="email">Your email address
-                    <input name="email">
-                </label>
-
-                <label class="feedback">Your feedback on this app.
-                    <textarea name="feedback" rows=10></textarea>
-                </label>
-
-                <div class="buttons">
-                    <button type="submit">Send Feedback</button>
-                    <button type="reset">Reset</button>
-                </div>
-
-            </form>
-        </template>
+            <div id="smk-map-frame"></div>
+        </article>
+       
+        <iframe id="print-holder" style="position: absolute; left: 0; top: 0; visibility: hidden;"></iframe>
 
         <style>
+            template { 
+                display: none;
+            }
             .truck-options {
                 display: flex;
                 flex-direction: row;
@@ -331,219 +123,335 @@
                 </div>
             </div>
         </template>
-    </body>
 
-    <script src="vehicle-types.js"></script>
+        <script src="trp-vehicle-definitions.js"></script>
 
-    <script>
-        var dialog = document.getElementById( 'disclaimer' )
-        dialog.showModal()
-
-        SMK.INIT( {
-            'smk-container-sel': "#smk-map-frame",
-            // 'smk-title-sel': "#header-title, head title",
-            'smk-config': [
-                './layers/cardlock/config.json',
-                // './layers/dangerous-goods-routes/config.json',
-                './layers/dangerous-goods-restrictions/config.json',
-                './layers/downtown-vancouver/config.json',
-                './layers/industrial-area/config.json',
-                './layers/inspection-station/config.json',
-                './layers/major-road-network/config.json',
-                './layers/metro-vancouver-boundary/config.json',
-                './layers/overhead-directional-signs/config.json',
-                './layers/overhead-structure-with-height-marker/config.json',
-                './layers/overhead-structure-without-height-marker/config.json',
-                './layers/oversize-overweight-truck-routes-oah-up-to-4-88-m/config.json',
-                './layers/oversize-overweight-truck-routes-oaw-up-to-5-m/config.json',
-                './layers/oversize-overweight-truck-routes-gvw-up-to-80000-kg/config.json',
-                './layers/oversize-overweight-truck-routes-gvw-up-to-85000-kg/config.json',
-                './layers/oversize-overweight-truck-routes-gvw-up-to-125000-kg/config.json',
-                './layers/port-of-vancouver-facilities-terminals/config.json',
-                './layers/provincial-highway/config.json',
-                './layers/term-permit-restricted-route/config.json',
-                './layers/term-permit-restriction/config.json',
-                './layers/term-permit-route/config.json',
-                './layers/term-permit-roundabout/config.json',
-                './layers/truck-advisories-restrictions/config.json',
-                './layers/truck-advisories-warning/config.json',
-                './layers/truck-parking/config.json',
-                './layers/truck-routes-designated-municipal-truck-route-with-restrictions/config.json',
-                './layers/truck-routes-designated-municipal-truck-route/config.json',
-                './layers/truck-routes-federal-road-with-no-truck-travel-restrictions/config.json',
-                './layers/truck-routes-municipal-road-with-no-truck-travel-restriction/config.json',
-
-                './map-config.json', 
-                './layer-display.json', 
-                '?'
-            ]
-            // "./map-config.json|./layer-config.json|./layer-display-config.json|?",
-        } ).then( function () {
-            SMK.HANDLER.set( 'bespoke', 'initialized', function ( smk ) {} )
-
-            SMK.HANDLER.set( 'bespoke', 'activated', function ( smk, tool, el ) {
-                var fm = document.importNode( document.getElementById( 'feedback' ).content, true )
-                $( fm ).find( 'form' )
-                    .append( $( '<input type="hidden">' ).prop( 'name', 'version' ).val( SMK.BUILD.version ) )
-                    .append( $( '<input type="hidden">' ).prop( 'name', 'lastCommit' ).val( SMK.BUILD.lastCommit ) )
-                    .append( $( '<input type="hidden">' ).prop( 'name', 'commit' ).val( SMK.BUILD.commit ) )
-                    .append( $( '<input type="hidden">' ).prop( 'name', 'branch' ).val( SMK.BUILD.branch ) )
-
-                el.appendChild( fm )               
-            } )
-
-            SMK.HANDLER.set( 'directions-route', 'print', function ( smk, tool, key ) {
-                document.getElementById( 'print-holder' ).src = 'print-directions-portrait.html?' + key
-
-                return new Promise( function ( res, rej ) {
-                    var handler = function ( ev ) {
-                        console.log( ev )
-                        if ( ev.data == 'printed' ) {
-                            res()
-                            window.removeEventListener( 'message', handler )
-                        }
-                    }
-
-                    window.addEventListener( 'message', handler, false )
-
-                    setTimeout( function () { rej( new Error( 'timeout' ) ) }, 10 * 1000 )
-                } )
-            } )
-
-            var customVehicle = {
-                id: 'custom',
-                title: 'Custom',
-                image: '',
-                configs: []
+        <script>
+        ( function () {
+            if ( SMK.FAILURE ) {
+                var dialog = document.getElementById( 'disclaimer' )
+                dialogPolyfill.registerDialog(dialog)
+                dialog.showModal()
+                return
             }
 
-            SMK.HANDLER.set( 'directions-options', 'activated', function ( smk, tool, el ) {
-                Vue.nextTick( function () {
-                    var vm = new Vue( {
-                        template: '#truck-selection',
-                        el: el,
-                        data: {
-                            vehicleTypes: JSON.parse( JSON.stringify( window.vehicleTypes.concat( customVehicle ) ) ),
-                            vehicleIndex: null,
-                            configIndex: null,
-                        },
-                        computed: {
-                            vehicleStyle: function () {
-                                if ( this.vehicleIndex == null ) return
-                                return { 
-                                    'background-image': 'url( "' + this.vehicleTypes[ this.vehicleIndex ].image + '" )' 
-                                }
-                            }
-                        },
-                        methods: {               
-                            selectVehicle: function ( vehicleIndex ) {
-                                var self = this
+            var dialog = document.getElementById( 'disclaimer' )
+            include( [ { url: './fragments/disclaimer.html' }, { url: './fragments/disclaimer.css' } ], 'disclaimer' ).then( function ( inc ) {
+                dialog.innerHTML = inc[ 'disclaimer.disclaimer-html' ]
+                dialogPolyfill.registerDialog(dialog)
+                dialog.showModal()
+            } ) 
 
-                                this.vehicleIndex = vehicleIndex
+            var package
+            include( [ { url: './package.json', loader: 'template' } ], 'package' ).then( function ( inc ) {
+                package = JSON.parse( inc[ 'package.package-json' ] )
 
-                                Vue.nextTick( function () {
-                                    var defaultIndex = self.vehicleTypes[ self.vehicleIndex ].configs.findIndex( function ( a ) {
-                                        return a.default
-                                    } )
-
-                                    if ( defaultIndex == -1 ) return 
-
-                                    self.selectConfig( defaultIndex )
-                                } )
-                            },
-
-                            selectConfig: function ( configIndex ) {
-                                this.configIndex = configIndex
-
-                                setVehicleConfig( tool, this.vehicleTypes[ this.vehicleIndex ].configs[ this.configIndex ] )
-                            },
-                        }
-                    } )
-
-                    vm.selectVehicle( 0 )
-
-                    var customVehicleIndex = vm.$data.vehicleTypes.length - 1
-
-                    smk.on( tool.id, {
-                        'change': function ( ev ) {
-                            // if ( vm.$data.vehicleIndex == customVehicleIndex ) return
-
-                            // var config = vm.$data.vehicleTypes[ vm.$data.vehicleIndex ].configs[ vm.$data.configIndex ]
-
-                            // if ( config.height == tool.truckHeight
-                            //     && config.width == tool.truckWidth
-                            //     && config.length == tool.truckLength
-                            //     && config.weight == tool.truckWeight ) return
-
-                            // vm.selectVehicle( customVehicleIndex )
-                            var config = vm.$data.vehicleTypes[ vm.$data.vehicleIndex ].configs[ vm.$data.configIndex ]
-
-                            tool.oversize = config.oversize 
-                                        || config.height < tool.truckHeight
-                                        || config.width < tool.truckWidth
-                                        || config.length < tool.truckLength
-                                        || config.weight < tool.truckWeight
-console.log('oversize',tool.oversize)
-                        }
-                    } )
-                } )
+                // document.getElementById( 'package-build-date' ).title = 'Built: ' + package[ 'build-date' ]
+                // document.getElementById( 'package-release' ).innerText = package.release
+                // document.getElementById( 'package-version' ).innerText = 'Version ' + package.version
             } )
 
-            function setVehicleConfig( tool, config ) {
-                tool.truckHeight = config.height
-                tool.truckWidth = config.width
-                tool.truckLength = config.length
-                tool.truckWeight = config.weight
-                // console.log( vehicle, axle )
+            document.getElementById( 'logo' ).addEventListener( 'click', function () {
+                SMK.MAP[ 1 ].$tool[ 'bespoke--about' ].active = true
+            } )
+
+            SMK.HANDLER.set( 'bespoke--reports', 'initialized', function ( smk, tool ) {
+                tool.status = 'hide'
+            } )
+
+            function formatYesNo( attrName ) {
+                return '<%= this.feature.properties[ "' + attrName + '" ] ? "Yes" : "No" %>'
             }
 
-            SMK.HANDLER.set( 'directions', 'style-route', function ( segments ) {
-                segments.forEach( function ( s ) {
-                    if ( s.properties.isTruckRoute && !s.properties.isOversize && !s.properties.isFerry ) {
-                        s.properties[ '@layer' ] = '@potential'
+            var covid19Layers = [
+                'cardlock',
+                'food-truck',
+                'hotel',
+                'inspection-station',
+                'portable-toilet',
+                'rest-area',
+                'temporary-truck-parking',
+                'tourist-centre',
+            ].reduce( function ( acc, n ) {
+                return acc.concat(
+                    './layers/covid19-relief-' + n + '/config.json',
+                    { layers: [ { id: 'covid19-relief-' + n, titleAttribute: 'Name', attributes: [
+                        /*{ name: "Active", title: "Active" },*/
+                        { title: "Name",                        name: "Name" },
+                        { title: "Amenity Type",                name: "AmenityType" },
+                        { title: "Address",                     name: "Address" },
+                        { title: "Building Type",               name: "BuildingType" },
+                        { title: "Amenity Location",            name: "AmenityLocation" },
+                        { title: "Streetview",                  format: "asLink( this.feature.properties.StreetviewLink, 'Link' )" },
+                        { title: "Information",                 format: "asLink( this.feature.properties.InformationLink, 'Link' )" },
+                        { title: "Document",                    format: "asLink( this.feature.properties.DocumentLink, 'Link' )" },
+                        { title: "Open Hours",                  name: "OpenHours" },
+                        { title: "Parking Lot",                 value: formatYesNo( 'ParkingLot' ) },
+                        { title: "Parking Lot Hours",           name: "ParkingLotHours" },
+                        { title: "Parking Spaces",              name: "ParkingSpaces" },
+                        { title: "Curbside Parking",            value: formatYesNo( 'CurbsideParking' ) },
+                        { title: "Curbside Parking Hours",      name: "CurbsideParkingHours" },
+                        { title: "Food Nearby",                 value: formatYesNo( 'FoodNearby' ) },
+                        { title: "Directions To Food",          format: "asHTML( this.feature.properties.DirectionsToFood )" },
+                        { title: "Washroom Nearby",             value: formatYesNo( 'WashroomNearby' ) },
+                        { title: "Directions To Washroom",      format: "asHTML( this.feature.properties.DirectionsToWashroom )" },
+                        { title: "Showers Nearby",              value: formatYesNo( 'ShowersNearby' ) },
+                        { title: "Directions To Showers",       format: "asHTML( this.feature.properties.DirectionsToShowers )" },
+                        { title: "Garbage Bin Nearby",          value: formatYesNo( 'GarbageBinNearby' ) },
+                        { title: "Directions To Garbage Bin",   format: "asHTML( this.feature.properties.DirectionsToGarbageBin )" },
+                        { title: "Other Amenity",               name: "OtherAmenity" },
+                        { title: "Directions To Other Amenity", format: "asHTML( this.feature.properties.DirectionsToOtherAmenity )" },
+                        { title: "Terms Of Use",                name: "TermsOfUse" },
+                        { title: "Comments",                    format: "asHTML( this.feature.properties.Comments )" },
+                        { title: "Contact Info",                format: "asLink( this.feature.properties.ContactInfo )",                name: "ContactInfo" }
+                    ] } ] }
+                )
+            }, [] )
+
+            var defaultVehicle = TRP.vehicleTypes[ 0 ].configs[ 0 ]
+            SMK.INIT( {
+                'smk-container-sel': "#smk-map-frame",
+                'smk-config': [].concat( [ 
+                    './layers/cardlock/config.json',
+                    // './layers/dangerous-goods-routes/config.json',
+                    './layers/dangerous-goods-restrictions/config.json',
+                    './layers/downtown-vancouver/config.json',
+                    './layers/industrial-area/config.json',
+                    './layers/inspection-station/config.json',
+                    './layers/major-road-network/config.json',
+                    './layers/metro-vancouver-boundary/config.json',
+                    './layers/overhead-directional-signs/config.json',
+                    './layers/overhead-structure-with-height-marker/config.json',
+                    './layers/overhead-structure-without-height-marker/config.json',
+                    './layers/oversize-overweight-truck-routes-oah-up-to-4-88-m/config.json',
+                    './layers/oversize-overweight-truck-routes-oaw-up-to-5-m/config.json',
+                    './layers/oversize-overweight-truck-routes-gvw-up-to-80000-kg/config.json',
+                    './layers/oversize-overweight-truck-routes-gvw-up-to-85000-kg/config.json',
+                    './layers/oversize-overweight-truck-routes-gvw-up-to-125000-kg/config.json',
+                    './layers/port-of-vancouver-facilities-terminals/config.json',
+                    './layers/provincial-highway/config.json',
+                    './layers/term-permit-restricted-route/config.json',
+                    './layers/term-permit-restriction/config.json',
+                    './layers/term-permit-route/config.json',
+                    './layers/term-permit-roundabout/config.json',
+                    './layers/truck-advisories-restrictions/config.json',
+                    './layers/truck-advisories-warning/config.json',
+                    './layers/truck-parking/config.json',
+                    './layers/truck-routes-designated-municipal-truck-route-with-restrictions/config.json',
+                    './layers/truck-routes-designated-municipal-truck-route/config.json',
+                    './layers/truck-routes-federal-road-with-no-truck-travel-restrictions/config.json',
+                    './layers/truck-routes-municipal-road-with-no-truck-travel-restriction/config.json',
+                    './layers/temporary-road-closure/config.json',
+                    './layers/temporary-road-closure-extent/config.json'
+                ], covid19Layers, [
+                    './config/map.json', 
+                    './config/layer-display.json', 
+                    {
+                        tools: [ {
+                            type: 'directions',
+                            truckHeight: defaultVehicle.height,
+                            truckWidth: defaultVehicle.width,
+                            truckLength: defaultVehicle.length,
+                            truckWeight: defaultVehicle.weight,
+                        } ]
+                    },
+                    './config/key/route-planner.json', 
+                    '?' 
+                ] ),
+            } ).then( function () {
+                $( 'body' ).addClass( 'device-' + SMK.MAP[ 1 ].$device )
+
+                SMK.HANDLER.set( 'bespoke--feedback', 'initialized', function ( smk ) {} )
+
+                SMK.HANDLER.set( 'bespoke--feedback', 'activated', function ( smk, tool, el ) {
+                    include( [ { url: './fragments/feedback.html' }, { url: './fragments/feedback.css' } ], 'bespoke--feedback' ).then( function ( inc ) {
+                        el.innerHTML = htmlTemplate( inc[ 'bespoke--feedback.feedback-html' ], {
+                            package: package 
+                        } )
+                    } ) 
+                } )
+
+                SMK.HANDLER.set( 'directions-route', 'print', function ( smk, tool, key, opt ) {
+                    if ( opt.debug ) {
+                        window.open( 'print-directions-portrait.html?' + key, '', [
+                            "location=yes",
+                            "menubar=yes",
+                            "titlebar=yes",
+                            "status=yes",
+                            "toolbar=yes",
+                            "scrollbars=yes",
+                        ].join( ',' ) );
                     }
                     else {
-                        s.properties[ '@layer' ] = '@unverified'
+                        document.getElementById( 'print-holder' ).src = 'print-directions-portrait.html?' + key
                     }
-                    // s.style = { 
-                    //     strokeWidth:    7, 
-                    //     strokeOpacity:  0.7,
-                    //     strokeCap:      'butt',
-                    // }
 
-                    // if ( ( !s.properties.isTruckRoute && !s.properties.isFerry ) || ( s.properties.isTruckRoute && s.properties.isOversize ) ) {
-                    //     s.properties[ '@layer' ] = '@oversize'
-                    //     // s.style.strokeColor     = "#FF0000"
-                    //     // s.style.strokeDashes    = '30,10'
-                    // }
-                    // else if ( ( !s.properties.isTruckRoute && s.properties.isFerry ) || ( s.properties.isTruckRoute && s.properties.isFerry && s.properties.isOversize ) ) {
-                    //     s.properties[ '@layer' ] = '@ferry'
-                    //     // s.style.strokeColor     = "#FF0000"
-                    //     // s.style.strokeDashes    = '10,10'
-                    // }
-                    // else if ( ( s.properties.isTruckRoute && !s.properties.isFerry && !s.properties.isOversize ) ) {
-                    //     s.properties[ '@layer' ] = '@truck'
-                    //     // s.style.strokeColor     = "#0000FF"
-                    // }
-                    // else if ( ( s.properties.isTruckRoute && s.properties.isFerry && !s.properties.isOversize ) ) {
-                    //     s.properties[ '@layer' ] = '@truck-ferry'
-                    //     // s.style.strokeColor     = "#0000FF"
-                    //     // s.style.strokeDashes    = '10,10'
-                    // }
-                    // else {
-                    //     debugger
-                    // }
+                    return new Promise( function ( res, rej ) {
+                        var handler = function ( ev ) {
+                            console.log( ev )
+                            if ( ev.data == 'printed' ) {
+                                res()
+                                window.removeEventListener( 'message', handler )
+                            }
+                        }
+
+                        window.addEventListener( 'message', handler, false )
+
+                        setTimeout( function () { rej( new Error( 'timeout' ) ) }, 30 * 1000 )
+                    } )
                 } )
+
+                SMK.HANDLER.set( 'directions-options', 'activated', function ( smk, tool, el ) {
+                    Vue.nextTick( function () {
+                        var vm = new Vue( {
+                            template: '#truck-selection',
+                            el: el,
+                            data: {
+                                vehicleTypes: JSON.parse( JSON.stringify( TRP.vehicleTypes ) ), 
+                                vehicleIndex: tool.trp && tool.trp.vehicleIndex,
+                                configIndex: tool.trp && tool.trp.configIndex,
+                            },
+                            computed: {
+                                vehicleStyle: function () {
+                                    if ( this.vehicleIndex == null ) return
+                                    return { 
+                                        'background-image': 'url( "' + this.vehicleTypes[ this.vehicleIndex ].image + '" )' 
+                                    }
+                                }
+                            },
+                            methods: {               
+                                selectVehicle: function ( vehicleIndex ) {
+                                    var self = this 
+
+                                    this.vehicleIndex = vehicleIndex
+
+                                    Vue.nextTick( function () {
+                                        var defaultIndex = self.vehicleTypes[ self.vehicleIndex ].configs.findIndex( function ( a ) {
+                                            return a.default
+                                        } )
+
+                                        if ( defaultIndex == -1 ) return 
+
+                                        self.selectConfig( defaultIndex )
+                                    } )
+                                },
+
+                                selectConfig: function ( configIndex ) {
+                                    this.configIndex = configIndex
+                                    
+                                    var config = this.vehicleTypes[ this.vehicleIndex ].configs[ this.configIndex ]
+
+                                    tool.truckHeight = config.height
+                                    tool.truckWidth = config.width
+                                    tool.truckLength = config.length
+                                    tool.truckWeight = config.weight
+                                    tool.oversize = config.oversize 
+
+                                    tool.trp = {
+                                        vehicleIndex: this.vehicleIndex,
+                                        configIndex: this.configIndex
+                                    }
+
+                                    Vue.nextTick( function () {
+                                        smk.$tool[ 'directions' ].findRoute()
+                                    } )
+                                },
+                            }
+                        } )
+
+                        if ( !tool.trp ) {
+                            vm.selectVehicle( 0 )
+                        }
+
+                        smk.on( tool.id, {
+                            'change': function ( ev ) {
+                                var config = vm.$data.vehicleTypes[ vm.$data.vehicleIndex ].configs[ vm.$data.configIndex ]
+                                
+                                tool.oversize = config.oversize 
+                                            || config.height < tool.truckHeight
+                                            || config.width < tool.truckWidth
+                                            || config.length < tool.truckLength
+                                            || config.weight < tool.truckWeight
+
+                                tool.trp = {
+                                    vehicleIndex: vm.$data.vehicleIndex,
+                                    configIndex: vm.$data.configIndex
+                                }
+                            }
+                        } )
+                    } )
+                } )
+
+                var routingReports
+                SMK.HANDLER.set( 'directions', 'route', function ( smk, response ) {
+                    smk.$tool[ 'bespoke--reports' ].status = 'hide'
+                    routingReports = null
+
+                    if ( response ) {
+                        response.segments.features.forEach( function ( s ) {
+                            if ( s.properties.isTruckRoute && !s.properties.isOversize && !s.properties.isFerry ) {
+                                s.properties[ '@layer' ] = '@potential'
+                            }
+                            else {
+                                s.properties[ '@layer' ] = '@unverified'
+                            }
+                        } )
+                        
+                        TRP.makeReports( response ).then( function ( reports ) {
+                            if ( !reports || reports.length == 0 ) return
+
+                            smk.$tool[ 'bespoke--reports' ].status = 'ready'
+                            response.reports = JSON.parse( JSON.stringify( reports ) )
+                            routingReports = reports
+                        } )
+                    }
+                } )
+
+                SMK.HANDLER.set( 'bespoke--about', 'activated', function ( smk, tool, el ) {
+                    include( [ { url: './fragments/about.html' }, { url: './fragments/about.css' } ], 'bespoke--about' ).then( function ( inc ) {
+                        el.innerHTML = htmlTemplate( inc[ 'bespoke--about.about-html' ], {
+                            package: package 
+                        } )
+                    } ) 
+                } )
+
+                SMK.HANDLER.set( 'bespoke--glossary', 'activated', function ( smk, tool, el ) {
+                    include( [ { url: './fragments/glossary.html' }, { url: './fragments/glossary.css' } ], 'bespoke--glossary' ).then( function ( inc ) {
+                        el.innerHTML = inc[ 'bespoke--glossary.glossary-html' ]
+                    } ) 
+                } )
+
+                SMK.HANDLER.set( 'bespoke--contacts', 'activated', function ( smk, tool, el ) {
+                    include( [ { url: './fragments/contacts.html' }, { url: './fragments/contacts.css' } ], 'bespoke--contacts' ).then( function ( inc ) {
+                        el.innerHTML = inc[ 'bespoke--contacts.contacts-html' ]
+                    } ) 
+                } )
+
+                SMK.HANDLER.set( 'bespoke--reports', 'activated', function ( smk, tool, el ) {
+                    // debugger
+                    include( [ { url: './fragments/reports.html' }, { url: './fragments/reports.css' } ], 'bespoke--reports' ).then( function ( inc ) {
+                        tool.component = {
+                            template: inc[ 'bespoke--reports.reports-html' ],
+                            data: function () {
+                                return {
+                                    reports: routingReports.map( function ( r ) {
+                                        r.component.data = function () { return r.component.dataObj }
+                                        return r
+                                    } ) 
+                                }
+                            }
+                        } 
+                    } ) 
+                } )
+
+                $( 'body' ).removeClass( 'hide' )
             } )
 
-            $( '#build-info' ).empty()
-                .append( '<div>Version: ' + SMK.BUILD.version +'</div>' )
-                .append( '<div>Last commit: ' + SMK.BUILD.lastCommit +'</div>' )
-                .append( '<div>Commit ID: ' + SMK.BUILD.commit +'</div>' )
-                .append( '<div>Branch: ' + SMK.BUILD.branch +'</div>' )
+            function htmlTemplate( template, data ) {
+                return ( new Vue( { template: '<div>' + template + '</div>', data: data } ) ).$mount().$el.innerHTML
+            }
+        } )()        
+        </script>
 
-        } )
-    </script>
-
-
+    </body>
 </html>

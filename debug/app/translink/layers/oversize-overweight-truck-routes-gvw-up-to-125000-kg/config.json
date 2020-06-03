@@ -5,6 +5,7 @@
             "id": "oversize-overweight-truck-routes-gvw-up-to-125000-kg",
             "title": "GVW up to 125,000 kg",
             "dataUrl": "./layers/oversize-overweight-truck-routes-gvw-up-to-125000-kg/oversize-overweight-truck-routes-gvw-up-to-125000-kg.geojson",
+            "metadataUrl": "https://catalogue.data.gov.bc.ca/dataset/4798ee98-f87d-400b-9926-704ba96ef6ab",
             "xxxscaleMin": 28505,
             "attributes": [
                 {

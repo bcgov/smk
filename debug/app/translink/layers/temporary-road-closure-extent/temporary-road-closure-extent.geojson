@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "temporary-road-closure-extent",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "Status": "Active", "StartDate": "2020\/02\/18 00:00:00", "EndDate": "2020\/07\/31 00:00:00", "Link": "https:\/\/www.cnv.org\/property-and-development\/projects-and-developments\/major-studies-and-projects\/mosquito-creek-bridge-replacement", "Notes": null, "ClosureName": "Mosquito Creek Bridge Replacement", "ClosureDescription": "A truck detour around the Mosquito Creek Bridge, between Fell Ave and Bewicke Ave in North Vancouver will be in place for approximately five months, beginning February 18, 2020. The bridge replacement project involves lane closures and a reduction of the bridge load rating to maximum 20,000 kg gross vehicle weight (GVW), hence requiring heavy trucks to detour around the bridge. Detour route suggestions and additional information about the project are available on the City of North Vancouver’s website.", "Shape_Length": 1639.816972263251, "Shape_Area": 42541.035244593571 }, "geometry": { "type": "MultiPolygon", "coordinates": [ [ [ [ -123.09138, 49.32032 ], [ -123.09144, 49.3198 ], [ -123.09465, 49.32093 ], [ -123.09834, 49.32214 ], [ -123.10095, 49.32313 ], [ -123.10042, 49.32346 ], [ -123.09694, 49.32226 ], [ -123.09406, 49.32128 ], [ -123.09138, 49.32032 ] ] ] ] } }
+]
+}
