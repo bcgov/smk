@@ -1,0 +1,30 @@
+{
+  "layers": [
+    {
+      "type": "wms",
+      "id": "WAA_TRAPLINE_AREAS_SVW",
+      "title": "Trapline Area",
+      "isVisible": true,
+      "attribution": "Copyright 117 DataBC, Government of British Columbia",
+      "serviceUrl": "https://geo.nrs.gov.bc.ca/pub/geoserver/wms",
+      "opacity": 0.65,
+      "layerName": "WAA_TRAPLINE_AREAS_SVW",
+      "styleName": "WAA_TRAPLINE_AREAS_SVW",
+      "geometryAttribute": "GEOMETRY",
+      "attributes": [
+        {
+          "name": "FEATURE_AREA_SQM",
+          "title": "Area Square Meters"
+        },
+        {
+          "name": "TRAPLINE_AREAS_SP_ID",
+          "title": "Trapline Areas"
+        },
+        {
+          "name": "TRAPLINE_AREA_IDENTIFIER",
+          "title": "Trapline Area Identifier"
+        }
+      ]
+    }
+  ]
+}

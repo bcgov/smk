@@ -1,0 +1,42 @@
+{
+  "layers": [
+    {
+      "type": "wms",
+      "id": "WAA_GUIDE_OUTFITTER_AREA_SVW",
+      "title": "Guide Outfitter Areas",
+      "isVisible": true,
+      "attribution": "Copyright 117 DataBC, Government of British Columbia",
+      "serviceUrl": "https://geo.nrs.gov.bc.ca/pub/geoserver/wms",
+      "opacity": 0.65,
+      "layerName": "WAA_GUIDE_OUTFITTER_AREA_SVW",
+      "styleName": "WAA_GUIDE_OUTFITTER_AREA_SVW",
+      "geometryAttribute": "GEOMETRY",
+      "attributes": [
+        {
+          "name": "FEATURE_AREA_SQM",
+          "title": "Area Square Meters"
+        },
+        {
+          "name": "GUIDING_CERTIFICATE_NO",
+          "title": "Guiding Certificate Number"
+        },
+        {
+          "name": "INTEREST_HOLDER",
+          "title": "Interest Holder Name"
+        },
+        {
+          "name": "ORGANIZATION_NAME",
+          "title": "Organization Name"
+        },
+        {
+          "name": "STATUS",
+          "title": "Area Status"
+        },
+        {
+          "name": "TERRITORY",
+          "title": "Territory"
+        }
+      ]
+    }
+  ]
+}
