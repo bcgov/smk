@@ -37,7 +37,7 @@ if ( !window.include ) { ( function () {
     var loader = {}
 
     loader.$resolveUrl = function ( url ) {
-        if ( /^[.][/]/.test( url ) ) return url
+        if ( /^[.][.]?[/]/.test( url ) ) return url
 
         return ( new URL( url, OPTION.baseUrl ) ).toString()
     }

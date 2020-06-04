@@ -1,0 +1,38 @@
+{
+  "layers": [
+    {
+      "type": "wms",
+      "id": "TRANSPORTATION_CORRIDOR_SVW",
+      "title": "Transportation Corridors",
+      "isVisible": true,
+      "attribution": "Copyright 117 DataBC, Government of British Columbia",
+      "serviceUrl": "https://geo.nrs.gov.bc.ca/pub/geoserver/wms",
+      "opacity": 0.65,
+      "layerName": "TRANSPORTATION_CORRIDOR_SVW",
+      "styleName": "TRANSPORTATION_CORRIDOR_SVW",
+      "geometryAttribute": "GEOMETRY",
+      "attributes": [
+        {
+          "name": "FEATURE_AREA_SQM",
+          "title": "Area Square Meters"
+        },
+        {
+          "name": "SURV_RW_SID",
+          "title": "Object ID"
+        },
+        {
+          "name": "TMP_DESCRIPT_CHR",
+          "title": "Description"
+        },
+        {
+          "name": "TMP_FILE_CHR",
+          "title": "Crown Lands File Number"
+        },
+        {
+          "name": "TMP_PIN_CHR",
+          "title": "PIN - Crown Parcel ID"
+        }
+      ]
+    }
+  ]
+}

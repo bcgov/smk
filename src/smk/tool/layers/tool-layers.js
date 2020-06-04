@@ -54,13 +54,17 @@ include.module( 'tool-layers', [
 
             if ( this.display )
                 smk.$viewer.setDisplayContextItems( this.id, this.display )
-    
+
+            self.changedActive( function () {
+                if ( !self.active ) return
+
+                self.contexts = smk.$viewer.getDisplayContexts()
+            } )
+
             smk.on( this.id, {
                 'activate': function () {
                     if ( !self.enabled ) return
                     if ( !self.active ) return
-    
-                    self.contexts = smk.$viewer.getDisplayContexts()
     
                     smk.$viewer.setDisplayContextLegendsVisible( self.legend )
                 },

@@ -1,0 +1,38 @@
+{
+  "layers": [
+    {
+      "type": "wms",
+      "id": "SURVEY_PARCELS_SVW",
+      "title": "Survey Parcels",
+      "isVisible": true,
+      "attribution": "Copyright 117 DataBC, Government of British Columbia",
+      "serviceUrl": "https://geo.nrs.gov.bc.ca/pub/geoserver/wms",
+      "opacity": 0.65,
+      "layerName": "SURVEY_PARCELS_SVW",
+      "styleName": "SURVEY_PARCELS_SVW",
+      "geometryAttribute": "GEOMETRY",
+      "attributes": [
+        {
+          "name": "FEATURE_AREA_SQM",
+          "title": "Area Square Meters"
+        },
+        {
+          "name": "LEGAL_DSC",
+          "title": "Parcel Legal Description"
+        },
+        {
+          "name": "PARCEL_TYPE",
+          "title": "Parcel Type"
+        },
+        {
+          "name": "PIN_SID",
+          "title": "PIN - Crown Parcel ID"
+        },
+        {
+          "name": "STATUS",
+          "title": "State of Parcel Survey"
+        }
+      ]
+    }
+  ]
+}
