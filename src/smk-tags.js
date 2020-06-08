@@ -31,6 +31,7 @@ t.script( 'vue-config', 'smk/vue-config.js' )
 // t.script( 'turf', 'lib/turf-5.1.6.min.js' )
 
 t.script( 'proj4', 'lib/proj4-2.4.4.min.js' )
+// t.script( 'proj4', 'https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.6.2/proj4.min.js', { external: true } )
 
 t.sequence( 'terraformer' )
     .script( 'lib/terraformer/terraformer-1.0.7.js' )

@@ -694,7 +694,18 @@
                 has: function ( id, method ) {
                     return !!( this.handler[ id ] && this.handler[ id ][ method ] ) 
                 }
-            }
+            },
+
+            PROJECTIONS: [
+                {
+                    name: 'urn:ogc:def:crs:EPSG::3005',
+                    def: '+proj=aea +lat_1=50 +lat_2=58.5 +lat_0=45 +lon_0=-126 +x_0=1000000 +y_0=0 +ellps=GRS80 +datum=NAD83 +units=m +no_defs' 
+                },
+                {
+                    name: 'bc-albers',
+                    alias: 'urn:ogc:def:crs:EPSG::3005',
+                }
+            ]
 
         }, window.SMK ) )
     }

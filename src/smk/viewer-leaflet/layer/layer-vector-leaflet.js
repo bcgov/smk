@@ -126,117 +126,135 @@ include.module( 'layer-leaflet.layer-vector-leaflet-js', [ 'layer.layer-vector-j
 
         var styles = [].concat( layers[ 0 ].config.style )
 
-        var layer = new L.geoJson( null, {
-            pointToLayer: function ( geojson, latlng ) {
-                // return markerForStyle( self, latlng, layers[ 0 ].config.style )
-                return markerForStyle( self, latlng, styles[ 0 ], layers[ 0 ].config )
-                    .on( 'moveend', function ( ev ) {
-                        var ll = ev.target.getLatLng()
-                        layers[ 0 ].changedFeature( { newPt: { latitude: ll.lat, longitude: ll.lng }, geojson: geojson } )
+        return SMK.UTIL.resolved()
+            .then( function () {
+                if ( !layers[ 0 ].config.projection ) 
+                    return L.GeoJSON.coordsToLatLng
+
+                return SMK.UTIL.getProjection( layers[ 0 ].config.projection )
+                    .then( function ( projection ) {
+                        return function ( pt ) {
+                            var projected = projection( pt )
+                            return L.latLng( projected[ 1 ], projected[ 0 ] )
+                        }
                     } )
-            },
-            onEachFeature: function ( feature, layer ) {
-                if ( layer.setStyle )
-                    layer.setStyle( convertStyle( feature.style /* || layers[ 0 ].config.style */, feature.geometry.type ) )
-            },
-            renderer: L.svg(),
-            interactive: false
-        } )
-
-        if ( layers[ 0 ].config.tooltip ) {
-            layer.bindTooltip( layers[ 0 ].config.tooltip.title, Object.assign( { permanent: true }, layers[ 0 ].config.tooltip.option ) )
-        }
-
-        layer.on( {
-            add: function () {
-                if ( layer.options.renderer._container )
-                    layer.options.renderer._container.style.zIndex = zIndex
-            }
-        } )
-
-        var url = this.resolveAttachmentUrl( layers[ 0 ].config.dataUrl, layers[ 0 ].config.id, 'json' )
-
-        if ( !layers[ 0 ].config.CRS )
-            layers[ 0 ].config.CRS = 'EPSG4326'
-
-        layers[ 0 ].loadLayer = function ( data ) {
-            var feats = []
-            turf.featureEach( data, function ( ft ) {
-                styles.forEach( function ( st, i ) {
-                    if ( i > 0 )
-                        ft = turf.clone( ft )
-
-                    ft.style = st
-                    feats.push( ft )
-                } )
             } )
-
-            layer.addData( turf.featureCollection( feats ) )
-        }
-
-        if ( layers[ 0 ].loadCache ) {
-            layers[ 0 ].loadLayer( layers[ 0 ].loadCache )
-            layers[ 0 ].loadCache = null
-        }
-
-        layers[ 0 ].clearLayer = function () {
-            layer.clearLayers()
-        }
-
-        if ( layers[ 0 ].config.isInternal ) 
-            return layer 
-
-        return SMK.UTIL.makePromise( function ( res, rej ) {
-                $.get( url, null, null, 'json' ).then( res, function ( xhr, status, err ) { 
-                    rej( 'Failed requesting ' + url + ': ' + xhr.status + ',' + err ) 
+            .then( function ( projectCoord ) {
+                var layer = new L.geoJson( null, {
+                    coordsToLatLng: projectCoord,
+                    pointToLayer: function ( geojson, latlng ) {
+                        // return markerForStyle( self, latlng, layers[ 0 ].config.style )
+                        return markerForStyle( self, latlng, styles[ 0 ], layers[ 0 ].config )
+                            .on( 'moveend', function ( ev ) {
+                                var ll = ev.target.getLatLng()
+                                layers[ 0 ].changedFeature( { newPt: { latitude: ll.lat, longitude: ll.lng }, geojson: geojson } )
+                            } )
+                    },
+                    onEachFeature: function ( feature, layer ) {
+                        if ( layer.setStyle )
+                            layer.setStyle( convertStyle( feature.style /* || layers[ 0 ].config.style */, feature.geometry.type ) )
+                    },
+                    renderer: L.svg(),
+                    interactive: false
                 } )
-            } )
-            .then( function ( data ) {
-                console.log( 'loaded', url )
+        
+                if ( layers[ 0 ].config.tooltip ) {
+                    layer.bindTooltip( layers[ 0 ].config.tooltip.title, Object.assign( { permanent: true }, layers[ 0 ].config.tooltip.option ) )
+                }
+        
+                layer.on( {
+                    add: function () {
+                        if ( layer.options.renderer._container )
+                            layer.options.renderer._container.style.zIndex = zIndex
+                    }
+                } )
+        
+                if ( !layers[ 0 ].config.CRS )
+                    layers[ 0 ].config.CRS = 'EPSG4326'
+        
+                layers[ 0 ].loadLayer = function ( data ) {
+                    var feats = []
+                    turf.featureEach( data, function ( ft ) {
+                        styles.forEach( function ( st, i ) {
+                            if ( i > 0 )
+                                ft = turf.clone( ft )
+        
+                            ft.style = st
+                            feats.push( ft )
+                        } )
+                    } )
+        
+                    layer.addData( turf.featureCollection( feats ) )
+                }
+        
+                if ( layers[ 0 ].loadCache ) {
+                    layers[ 0 ].loadLayer( layers[ 0 ].loadCache )
+                    layers[ 0 ].loadCache = null
+                }
+        
+                layers[ 0 ].clearLayer = function () {
+                    layer.clearLayers()
+                }
+        
+                if ( layers[ 0 ].config.isInternal ) 
+                    return layer         
 
-                var feats = []
-                turf.featureEach( data, function ( ft ) {                    
-                    styles.forEach( function ( st, i ) {                        
-                        if ( i > 0 )
-                            ft = turf.clone( ft )
-                            
-                        ft.style = st
-                        feats.push( ft )
+                var url = self.resolveAttachmentUrl( layers[ 0 ].config.dataUrl, layers[ 0 ].config.id, 'json' )
+
+                return SMK.UTIL.makePromise( function ( res, rej ) {
+                    $.get( url, null, null, 'json' ).then( res, function ( xhr, status, err ) { 
+                        rej( 'Failed requesting ' + url + ': ' + xhr.status + ',' + err ) 
                     } )
                 } )
+                .then( function ( data ) {
+                    console.log( 'loaded', url )
 
-                layer.addData( turf.featureCollection( feats ) )
+                    var feats = []
+                    turf.featureEach( data, function ( ft ) {                    
+                        styles.forEach( function ( st, i ) {                        
+                            if ( i > 0 )
+                                ft = turf.clone( ft )
+                                
+                            ft.style = st
+                            feats.push( ft )
+                        } )
+                    } )
 
-                return layer
+                    layer.addData( turf.featureCollection( feats ) )
+
+                    return layer
+                } )
+                .then( function ( layer ) {
+                    if ( !layers[ 0 ].config.useClustering ) return layer
+
+                    var cluster = L.markerClusterGroup( self.clusterOption )
+                    cluster.addLayers( [ layer ] )
+
+                    return cluster
+                } )
+                .then( function ( layer ) {
+                    if ( !layers[ 0 ].config.useHeatmap ) return layer
+
+                    var points = [];
+                    var intensity = 100;
+
+                    layer.eachLayer( function ( ly ) {
+                        var centroid = turf.centroid( ly.feature.geometry )
+                        points.push( [ centroid.geometry.coordinates[ 1 ], centroid.geometry.coordinates[ 0 ], intensity ] )
+                    });
+
+                    return L.heatLayer( points, { radius: 25 } )
+                } )
             } )
-            .then( function ( layer ) {
-                if ( !layers[ 0 ].config.useClustering ) return layer
-
-                var cluster = L.markerClusterGroup( self.clusterOption )
-                cluster.addLayers( [ layer ] )
-
-                return cluster
-            } )
-            .then( function ( layer ) {
-                if ( !layers[ 0 ].config.useHeatmap ) return layer
-
-				var points = [];
-				var intensity = 100;
-
-				layer.eachLayer( function ( ly ) {
-					var centroid = turf.centroid( ly.feature.geometry )
-					points.push( [ centroid.geometry.coordinates[ 1 ], centroid.geometry.coordinates[ 0 ], intensity ] )
-				});
-
-				return L.heatLayer( points, { radius: 25 } )
-            } )
-    }
+        }
 
     // SMK.TYPE.Layer[ 'geojson' ].leaflet = SMK.TYPE.Layer[ 'vector' ].leaflet
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     function convertStyle( styleConfig, type ) {
+        if ( !styleConfig ) return {}
+
         if ( type == 'Point' || type == 'MultiPoint' )
             return {
                 radius:      styleConfig.strokeWidth / 2,
