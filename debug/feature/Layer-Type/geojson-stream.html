@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>GeoJSON Stream</title>
+        
+        <script src="../../../dist/smk.js"></script>
+        <link rel="stylesheet" type="text/css" href="style.css"/>
+    </head>
+    <body>
+<!--***************************************************************************
+    This example shows a map with 2 layers that are loaded from a GeoJSON stream.
+    Both layers are return their data in the BC Albers projection, so SMK will
+    need to be told that it needs to reproject the data to lat-long.
+-->
+        <div id="smk-map-frame"></div>
+        <script>
+            SMK.INIT( {
+                containerSel: "#smk-map-frame",
+                config: [ 
+                    './map-config.json',
+                    {
+                        "layers": [
+                            {
+                                "type": "vector",
+                                "id": "test1",
+                                "title": "Test 1",
+                                "projection": "bc-albers",
+                                "dataUrl": "https://openmaps.gov.bc.ca/geo/pub/wms?service=WMS&version=1.3.0&request=GetMap&layers=pub:WHSE_BASEMAPPING.DBM_BC_7H_MIL_BATHYMETRC_POLY&styles=&bbox=273875.663,362346.895,1870571.76,1735670.856&width=512&height=440&crs=EPSG:3005&format=application/json;type=geojson",
+                                "style": {
+                                    "strokeWidth": 3,
+                                    "strokeColor": "red",
+                                    "strokeOpacity": 0.8,
+                                    "fill": true,
+                                    "fillColor": "red",
+                                    "fillOpacity": 0.2
+                                },
+                                "legend": {
+                                    "title": " ",
+                                    "fill": true,
+                                    "line": true
+                                }
+                            },
+                            {
+                                "type": "vector",
+                                "id": "test2",
+                                "title": "Test 2",
+                                "projection": "bc-albers",
+                                "dataUrl": "https://openmaps.gov.bc.ca/geo/pub/wfs?SERVICE=WFS&VERSION=2.0.0&REQUEST=GetFeature&outputFormat=json&typeName=WHSE_ARCHAEOLOGY.RAAD_BORDENGRID,WHSE_TERRESTRIAL_ECOLOGY.BIOT_OCCR_MASKED_SENS_AREA_SP,WHSE_TERRESTRIAL_ECOLOGY.BIOT_OCCR_NON_SENS_AREA_SVW,WHSE_WILDLIFE_INVENTORY.GCPB_CARIBOU_POPULATION_SP,WHSE_CADASTRE.CBM_CADASTRAL_FABRIC_PUB_SVW,WHSE_ADMIN_BOUNDARIES.CLAB_INDIAN_RESERVES,WHSE_ADMIN_BOUNDARIES.CLAB_NATIONAL_PARKS&propertyName=&SRSNAME=EPSG%3A3005&CQL_FILTER=INTERSECTS(GEOMETRY,%20POINT%20(1224584.57951%20469989.94624))",
+                                "style": {
+                                    "strokeWidth": 3,
+                                    "strokeColor": "green",
+                                    "strokeOpacity": 0.8,
+                                    "fill": true,
+                                    "fillColor": "green",
+                                    "fillOpacity": 0.2
+                                },
+                                "legend": {
+                                    "title": " ",
+                                    "fill": true,
+                                    "line": true
+                                }
+                            }
+                        ]
+                    }
+                ]
+            } )
+        </script>
+<!--***************************************************************************-->
+    </body>
+</html>
+

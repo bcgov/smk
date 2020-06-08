@@ -147,93 +147,88 @@ include.module( 'util', null, function ( inc ) {
             throw new Error( 'unable to determine CRS from: ' + JSON.stringify( obj ) )
         },
 
-        reproject: function ( geojson, crs ) {
-            var self = this
+        getProjection: function ( name ) {
+            return include( 'projections' ).then( function () {
+                var proj = proj4( name )
+                if ( !proj ) throw new Error( 'Projection "' + name + '" is not understood' )
 
-            return include( 'projections' ).then( function ( inc ) {
-                var proj = proj4( self.extractCRS( crs ) )
+                return function ( pt ) {
+                    return proj.inverse( pt )
+                }
+            } )
+        },
 
-                return self.traverse.GeoJSON( geojson, {
-                    coordinate: function ( c ) {
-                        return proj.inverse( c )
-                    }
-                } )
+        reprojectGeoJSON: function ( geojson, projection ) {
+            return this.traverse.GeoJSON( geojson, {
+                coordinate: function ( c ) {
+                    return projection( c )
+                }
             } )
         },
 
         traverse: {
             GeoJSON: function ( geojson, cb ) {
-                Object.assign( {
+                cb = Object.assign( {
                     coordinate: function ( c ) { return c }
                 }, cb )
 
-                return this[ geojson.type ]( geojson, cb )
+                this[ geojson.type ]( geojson, cb )
             },
 
             Point: function ( obj, cb ) {
-                return {
-                    type: 'Point',
+                return Object.assign( obj, {
                     coordinates: cb.coordinate( obj.coordinates )
-                }
+                } )
             },
 
             MultiPoint: function ( obj, cb ) {
-                return {
-                    type: 'MultiPoint',
+                return Object.assign( obj, {
                     coordinates: obj.coordinates.map( function ( c ) { return cb.coordinate( c ) } )
-                }
+                } )
             },
 
             LineString: function ( obj, cb ) {
-                return {
-                    type: 'LineString',
+                return Object.assign( obj, {
                     coordinates: obj.coordinates.map( function ( c ) { return cb.coordinate( c ) } )
-                }
+                } )
             },
 
             MultiLineString: function ( obj, cb ) {
-                return {
-                    type: 'MultiLineString',
+                return Object.assign( obj, {
                     coordinates: obj.coordinates.map( function ( ls ) { return ls.map( function ( c ) { return cb.coordinate( c ) } ) } )
-                }
+                } )
             },
 
             Polygon: function ( obj, cb ) {
-                return {
-                    type: 'Polygon',
+                return Object.assign( obj, {
                     coordinates: obj.coordinates.map( function ( ls ) { return ls.map( function ( c ) { return cb.coordinate( c ) } ) } )
-                }
+                } )
             },
 
             MultiPolygon: function ( obj, cb ) {
-                return {
-                    type: 'MultiPolygon',
+                return Object.assign( obj, {
                     coordinates: obj.coordinates.map( function ( ps ) { return ps.map( function ( ls ) { return ls.map( function ( c ) { return cb.coordinate( c ) } ) } ) } )
-                }
+                } )
             },
 
             GeometryCollection: function ( obj, cb ) {
                 var self = this
-                return {
-                    type: 'GeometryCollection',
+                return Object.assign( obj, {
                     geometries: obj.geometries.map( function ( g ) { return self[ g.type ]( g, cb ) } )
-                }
+                } )
             },
 
             FeatureCollection:  function ( obj, cb ) {
                 var self = this
-                return {
-                    type: 'FeatureCollection',
+                return Object.assign( obj, {
                     features: obj.features.map( function ( f ) { return self[ f.type ]( f, cb ) } )
-                }
+                } )
             },
 
             Feature: function( obj, cb ) {
-                return {
-                    type: 'Feature',
+                return Object.assign( obj, {
                     geometry: this[ obj.geometry.type ]( obj.geometry, cb ),
-                    properties: obj.properties
-                }
+                } )
             }
         },
 
