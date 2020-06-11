@@ -1,6 +1,6 @@
 module.exports = function( grunt ) {
 
-    grunt.registerTask( 'build-lib', [
+    grunt.registerTask( 'build-src', [
         'jshint:scripts',
         'copy:scripts',
         'copy:styles',
@@ -50,5 +50,5 @@ module.exports = function( grunt ) {
 
     } )
 
-    grunt.log.ok( 'Task mode-develop/build-lib' )
+    grunt.log.ok( 'Task mode-develop/build-src' )
 }
