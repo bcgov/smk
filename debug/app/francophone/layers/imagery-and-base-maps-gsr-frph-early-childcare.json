@@ -1,15 +1,14 @@
 {
     "layers": [
         {
-            "type": "wms",
-            "id": "imagery-and-base-maps-gsr-frph-tourism",
-            "title": "Sites touristiques / Tourism Sites",
+            "type": "vector",
+            "id": "imagery-and-base-maps-gsr-frph-early-childcare",
+            "title": "Services à la petite enfance / Early Childhood Care - Francophone",
             "isVisible": true,
             "isQueryable": true,
-            "serviceUrl": "https://openmaps.gov.bc.ca/geo/pub/WHSE_IMAGERY_AND_BASE_MAPS.GSR_FRPH_TOURISM_SVW/ows",
-            "layerName": "pub:WHSE_IMAGERY_AND_BASE_MAPS.GSR_FRPH_TOURISM_SVW",
-            "styleName": "3961",
-            "metadataUrl": "https://catalogue.data.gov.bc.ca/dataset/tourism-sites-francophone",
+            "useClustering": true,
+            "dataUrl": "https://openmaps.gov.bc.ca/geo/pub/WHSE_IMAGERY_AND_BASE_MAPS.GSR_FRPH_EARLY_CHILDCARE_SVW/ows?service=WMS&request=GetMap&version=1.1.1&layers=pub%3AWHSE_IMAGERY_AND_BASE_MAPS.GSR_FRPH_EARLY_CHILDCARE_SVW&styles=3601&format=application/json;type=geojson&transparent=true&cql_filter=include&srs=EPSG%3A4326&width=645&height=728&bbox=-131.8579103,46.6645175,-117.6855469,56.547372",
+            "metadataUrl": "",
             "opacity": 0.65,
             "titleAttribute": "OCCUPANT_NAME",
             "attributes": [
@@ -20,45 +19,27 @@
                     "visible": true
                 },
                 {
-                    "id": "OCCUPANT_DESCRIPTION_FRENCH",
-                    "name": "OCCUPANT_DESCRIPTION_FRENCH",
-                    "title": "Description:",
+                    "id": "SERVICE_NAME_FRENCH",
+                    "name": "SERVICE_NAME_FRENCH",
+                    "title": "Catégorie:",
                     "visible": true
                 },
                 {
-                    "id": "DESCRIPTION",
-                    "name": "DESCRIPTION",
-                    "title": "Description:",
-                    "visible": true
-                },
-                {
-                    "id": "CONTACT_NAMES",
-                    "name": "CONTACT_NAMES",
-                    "title": "Contact:",
+                    "id": "SERVICE_NAME",
+                    "name": "SERVICE_NAME",
+                    "title": "Category:",
                     "visible": true
                 },
                 {
                     "id": "STREET_ADDRESS",
                     "name": "STREET_ADDRESS",
-                    "title": "Adressee / Address:",
+                    "title": "Adresse / Address:",
                     "visible": true
                 },
                 {
                     "id": "LOCALITY",
                     "name": "LOCALITY",
-                    "title": "Localité: / Location:",
-                    "visible": true
-                },
-                {
-                    "id": "TOURISM_AREA_FRENCH",
-                    "name": "TOURISM_AREA_FRENCH",
-                    "title": "Région:",
-                    "visible": true
-                },
-                {
-                    "id": "TOURISM_AREA",
-                    "name": "TOURISM_AREA",
-                    "title": "Region:",
+                    "title": "Localité / Locality:",
                     "visible": true
                 },
                 {
@@ -70,7 +51,7 @@
                 {
                     "id": "CONTACT_PHONE",
                     "name": "CONTACT_PHONE",
-                    "title": "Téléphone / Phone:",
+                    "title": "Téléphone / Phone",
                     "visible": true
                 },
                 {
@@ -116,6 +97,18 @@
                     "visible": false
                 },
                 {
+                    "id": "DESCRIPTION",
+                    "name": "DESCRIPTION",
+                    "title": "DESCRIPTION",
+                    "visible": false
+                },
+                {
+                    "id": "PHYSICAL_ADDRESS",
+                    "name": "PHYSICAL_ADDRESS",
+                    "title": "PHYSICAL_ADDRESS",
+                    "visible": false
+                },
+                {
                     "id": "ALIAS_ADDRESS",
                     "name": "ALIAS_ADDRESS",
                     "title": "ALIAS_ADDRESS",
@@ -125,12 +118,6 @@
                     "id": "POSTAL_CODE",
                     "name": "POSTAL_CODE",
                     "title": "POSTAL_CODE",
-                    "visible": false
-                },
-                {
-                    "id": "PHYSICAL_ADDRESS",
-                    "name": "PHYSICAL_ADDRESS",
-                    "title": "PHYSICAL_ADDRESS",
                     "visible": false
                 },
                 {
@@ -173,18 +160,6 @@
                     "id": "SITE_GEOCODED_IND",
                     "name": "SITE_GEOCODED_IND",
                     "title": "SITE_GEOCODED_IND",
-                    "visible": false
-                },
-                {
-                    "id": "SERVICE_NAME",
-                    "name": "SERVICE_NAME",
-                    "title": "SERVICE_NAME",
-                    "visible": false
-                },
-                {
-                    "id": "SERVICE_NAME_FRENCH",
-                    "name": "SERVICE_NAME_FRENCH",
-                    "title": "SERVICE_NAME_FRENCH",
                     "visible": false
                 },
                 {
@@ -243,24 +218,11 @@
                                         "id": "param3"
                                     }
                                 ]
-                            },
-                            {
-                                "operator": "equals",
-                                "arguments": [
-                                    {
-                                        "operand": "attribute",
-                                        "name": "TOURISM_AREA_FRENCH"
-                                    },
-                                    {
-                                        "operand": "parameter",
-                                        "id": "param4"
-                                    }
-                                ]
                             }
                         ]
                     },
-                    "id": "search-sites-touristiques",
-                    "title": "Sites touristiques / Tourism Sites",
+                    "id": "search-services-à-la-petite-enfance",
+                    "title": "Services à la petite enfance / Early Childhood Care - Francophone",
                     "description": "Que cherchez-vous? / Find locations:",
                     "parameters": [
                         {
@@ -286,18 +248,23 @@
                             "value": "",
                             "choices": [],
                             "uniqueAttribute": "LOCALITY"
-                        },
-                        {
-                            "id": "param4",
-                            "type": "select-unique",
-                            "title": "Région/Region:",
-                            "value": "",
-                            "choices": [],
-                            "uniqueAttribute": "TOURISM_AREA_FRENCH"
                         }
                     ]
                 }
-            ]
+            ],
+            "style": {
+                "markerUrl": "./images/pin-green.png",
+                "markerSize": [ 32, 42 ],
+                "markerOffset": [ 16, 42 ]
+            },
+            "clusterStyle": {
+                "markerUrl": "./images/pin-green.png",
+                "markerSize": [ 32, 42 ],
+                "markerOffset": [ 16, 42 ]
+            },
+            "legend": {
+                "point": true
+            }
         }
     ]
 }

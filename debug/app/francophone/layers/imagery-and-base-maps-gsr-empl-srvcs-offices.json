@@ -1,66 +1,17 @@
 {
     "layers": [
         {
-            "type": "wms",
-            "id": "imagery-and-base-maps-gsr-frph-early-childcare",
-            "title": "Services à la petite enfance / Early Childhood Care - Francophone",
+            "type": "vector",
+            "id": "imagery-and-base-maps-gsr-empl-srvcs-offices",
+            "title": "Work BC – centres de services à l’emploi / WorkBC Employment Service Centres",
             "isVisible": true,
             "isQueryable": true,
-            "serviceUrl": "https://openmaps.gov.bc.ca/geo/pub/WHSE_IMAGERY_AND_BASE_MAPS.GSR_FRPH_EARLY_CHILDCARE_SVW/ows",
-            "layerName": "pub:WHSE_IMAGERY_AND_BASE_MAPS.GSR_FRPH_EARLY_CHILDCARE_SVW",
-            "styleName": "3962",
+            "useClustering": true,
+            "dataUrl": "https://openmaps.gov.bc.ca/geo/pub/WHSE_IMAGERY_AND_BASE_MAPS.GSR_EMPL_SRVCS_OFFICES_SVW/ows?service=WMS&request=GetMap&version=1.1.1&layers=pub%3AWHSE_IMAGERY_AND_BASE_MAPS.GSR_EMPL_SRVCS_OFFICES_SVW&styles=3601&format=application/json;type=geojson&transparent=true&cql_filter=include&srs=EPSG%3A4326&width=645&height=728&bbox=-131.8579103,46.6645175,-117.6855469,56.547372",
             "metadataUrl": "",
             "opacity": 0.65,
             "titleAttribute": "OCCUPANT_NAME",
             "attributes": [
-                {
-                    "id": "OCCUPANT_NAME",
-                    "name": "OCCUPANT_NAME",
-                    "title": " ",
-                    "visible": true
-                },
-                {
-                    "id": "SERVICE_NAME_FRENCH",
-                    "name": "SERVICE_NAME_FRENCH",
-                    "title": "Catégorie:",
-                    "visible": true
-                },
-                {
-                    "id": "SERVICE_NAME",
-                    "name": "SERVICE_NAME",
-                    "title": "Category:",
-                    "visible": true
-                },
-                {
-                    "id": "STREET_ADDRESS",
-                    "name": "STREET_ADDRESS",
-                    "title": "Adresse / Address:",
-                    "visible": true
-                },
-                {
-                    "id": "LOCALITY",
-                    "name": "LOCALITY",
-                    "title": "Localité / Locality:",
-                    "visible": true
-                },
-                {
-                    "id": "CONTACT_EMAIL",
-                    "name": "CONTACT_EMAIL",
-                    "title": "Courriel / Email:",
-                    "visible": true
-                },
-                {
-                    "id": "CONTACT_PHONE",
-                    "name": "CONTACT_PHONE",
-                    "title": "Téléphone / Phone",
-                    "visible": true
-                },
-                {
-                    "id": "WEBSITE_URL",
-                    "name": "WEBSITE_URL",
-                    "title": "Site / Website:",
-                    "visible": true
-                },
                 {
                     "id": "CUSTODIAN_ORG_DESCRIPTION",
                     "name": "CUSTODIAN_ORG_DESCRIPTION",
@@ -98,6 +49,12 @@
                     "visible": false
                 },
                 {
+                    "id": "OCCUPANT_NAME",
+                    "name": "OCCUPANT_NAME",
+                    "title": "Nom / Name:",
+                    "visible": true
+                },
+                {
                     "id": "DESCRIPTION",
                     "name": "DESCRIPTION",
                     "title": "DESCRIPTION",
@@ -116,16 +73,46 @@
                     "visible": false
                 },
                 {
+                    "id": "STREET_ADDRESS",
+                    "name": "STREET_ADDRESS",
+                    "title": "Adresse / Address:",
+                    "visible": true
+                },
+                {
                     "id": "POSTAL_CODE",
                     "name": "POSTAL_CODE",
                     "title": "POSTAL_CODE",
                     "visible": false
                 },
                 {
+                    "id": "LOCALITY",
+                    "name": "LOCALITY",
+                    "title": "Localité / Locality:",
+                    "visible": true
+                },
+                {
+                    "id": "CONTACT_EMAIL",
+                    "name": "CONTACT_EMAIL",
+                    "title": "Courriel / Email:",
+                    "visible": true
+                },
+                {
+                    "id": "CONTACT_PHONE",
+                    "name": "CONTACT_PHONE",
+                    "title": "Téléphone / Phone:",
+                    "visible": true
+                },
+                {
                     "id": "CONTACT_FAX",
                     "name": "CONTACT_FAX",
-                    "title": "CONTACT_FAX",
-                    "visible": false
+                    "title": "Fax / Fax:",
+                    "visible": true
+                },
+                {
+                    "id": "WEBSITE_URL",
+                    "name": "WEBSITE_URL",
+                    "title": "Site / Website:",
+                    "visible": true
                 },
                 {
                     "id": "IMAGE_URL",
@@ -164,6 +151,30 @@
                     "visible": false
                 },
                 {
+                    "id": "CATCHMENT_AREA_ID",
+                    "name": "CATCHMENT_AREA_ID",
+                    "title": "CATCHMENT_AREA_ID",
+                    "visible": false
+                },
+                {
+                    "id": "HOURS_OF_OPERATION",
+                    "name": "HOURS_OF_OPERATION",
+                    "title": "HOURS_OF_OPERATION",
+                    "visible": false
+                },
+                {
+                    "id": "LANGUAGES_OFFERED_LIST",
+                    "name": "LANGUAGES_OFFERED_LIST",
+                    "title": "LANGUAGES_OFFERED_LIST",
+                    "visible": false
+                },
+                {
+                    "id": "STORE_FRONT_NUMBER",
+                    "name": "STORE_FRONT_NUMBER",
+                    "title": "STORE_FRONT_NUMBER",
+                    "visible": false
+                },
+                {
                     "id": "SEQUENCE_ID",
                     "name": "SEQUENCE_ID",
                     "title": "SEQUENCE_ID",
@@ -199,31 +210,18 @@
                                 "arguments": [
                                     {
                                         "operand": "attribute",
-                                        "name": "SERVICE_NAME_FRENCH"
+                                        "name": "LOCALITY"
                                     },
                                     {
                                         "operand": "parameter",
                                         "id": "param2"
                                     }
                                 ]
-                            },
-                            {
-                                "operator": "equals",
-                                "arguments": [
-                                    {
-                                        "operand": "attribute",
-                                        "name": "LOCALITY"
-                                    },
-                                    {
-                                        "operand": "parameter",
-                                        "id": "param3"
-                                    }
-                                ]
                             }
                         ]
                     },
-                    "id": "search-services-à-la-petite-enfance",
-                    "title": "Services à la petite enfance / Early Childhood Care - Francophone",
+                    "id": "search-Work-BC–centres-de-services-à-l’emploi",
+                    "title": "WorkBC – centres de services à l’emploi / WorkBC Employment Service Centres",
                     "description": "Que cherchez-vous? / Find locations:",
                     "parameters": [
                         {
@@ -237,14 +235,6 @@
                         {
                             "id": "param2",
                             "type": "select-unique",
-                            "title": "Catégorie/Category:",
-                            "value": "",
-                            "choices": [],
-                            "uniqueAttribute": "SERVICE_NAME_FRENCH"
-                        },
-                        {
-                            "id": "param3",
-                            "type": "select-unique",
                             "title": "Localité/Locality:",
                             "value": "",
                             "choices": [],
@@ -252,7 +242,20 @@
                         }
                     ]
                 }
-            ]
+            ],
+            "style": {
+                "markerUrl": "./images/emp_srvcs.png",
+                "markerSize": [ 30, 40 ],
+                "markerOffset": [ 15, 40 ]
+            },
+            "clusterStyle": {
+                "markerUrl": "./images/emp_srvcs.png",
+                "markerSize": [ 30, 40 ],
+                "markerOffset": [ 15, 40 ]
+            },
+            "legend": {
+                "point": true
+            }
         }
     ]
 }

@@ -2,13 +2,13 @@
     "layers": [
         {
             "type": "wms",
-            "id": "imagery-and-base-maps-gsr-frph-service-directory",
-            "title": "Répertoire des services en français / Service Directory - Francophone",
+            "id": "wms-imagery-and-base-maps-gsr-frph-early-childcare",
+            "title": "Services à la petite enfance / Early Childhood Care - Francophone",
             "isVisible": true,
             "isQueryable": true,
-            "serviceUrl": "https://openmaps.gov.bc.ca/geo/pub/WHSE_IMAGERY_AND_BASE_MAPS.GSR_FRPH_SERVICE_DIRECTORY_SVW/ows",
-            "layerName": "pub:WHSE_IMAGERY_AND_BASE_MAPS.GSR_FRPH_SERVICE_DIRECTORY_SVW",
-            "styleName": "3964",
+            "serviceUrl": "https://openmaps.gov.bc.ca/geo/pub/WHSE_IMAGERY_AND_BASE_MAPS.GSR_FRPH_EARLY_CHILDCARE_SVW/ows",
+            "layerName": "pub:WHSE_IMAGERY_AND_BASE_MAPS.GSR_FRPH_EARLY_CHILDCARE_SVW",
+            "styleName": "3962",
             "metadataUrl": "",
             "opacity": 0.65,
             "titleAttribute": "OCCUPANT_NAME",
@@ -22,19 +22,13 @@
                 {
                     "id": "SERVICE_NAME_FRENCH",
                     "name": "SERVICE_NAME_FRENCH",
-                    "title": "Category:",
+                    "title": "Catégorie:",
                     "visible": true
                 },
                 {
                     "id": "SERVICE_NAME",
                     "name": "SERVICE_NAME",
-                    "title": "Catégorie:",
-                    "visible": true
-                },
-                {
-                    "id": "CONTACT_NAMES",
-                    "name": "CONTACT_NAMES",
-                    "title": "Contact:",
+                    "title": "Category:",
                     "visible": true
                 },
                 {
@@ -58,25 +52,7 @@
                 {
                     "id": "CONTACT_PHONE",
                     "name": "CONTACT_PHONE",
-                    "title": "Téléphone / Phone:",
-                    "visible": true
-                },
-                {
-                    "id": "CONTACT_TELEPHONE_CELL",
-                    "name": "CONTACT_TELEPHONE_CELL",
-                    "title": "Cellulaire / Cell Phone:",
-                    "visible": true
-                },
-                {
-                    "id": "CONTACT_TELEPHONE_DIRECT_DIAL",
-                    "name": "CONTACT_TELEPHONE_DIRECT_DIAL",
-                    "title": "Ligne directe / Direct Line:",
-                    "visible": true
-                },
-                {
-                    "id": "CONTACT_TELEPHONE_TOLL_FREE",
-                    "name": "CONTACT_TELEPHONE_TOLL_FREE",
-                    "title": "Numéro sans frais / Toll-Free:",
+                    "title": "Téléphone / Phone",
                     "visible": true
                 },
                 {
@@ -246,8 +222,8 @@
                             }
                         ]
                     },
-                    "id": "search-répertoire-des-services-en-français",
-                    "title": "Répertoire des services / Service Directory",
+                    "id": "search-services-à-la-petite-enfance",
+                    "title": "Services à la petite enfance / Early Childhood Care - Francophone",
                     "description": "Que cherchez-vous? / Find locations:",
                     "parameters": [
                         {

@@ -2,13 +2,13 @@
     "layers": [
         {
             "type": "wms",
-            "id": "imagery-and-base-maps-gsr-frph-hlth-professional",
-            "title": "Professionnels de la santé parlant français /  Health Professionals - Francophone",
+            "id": "wms-imagery-and-base-maps-gsr-frph-service-directory",
+            "title": "Répertoire des services en français / Service Directory - Francophone",
             "isVisible": true,
             "isQueryable": true,
-            "serviceUrl": "https://openmaps.gov.bc.ca/geo/pub/WHSE_IMAGERY_AND_BASE_MAPS.GSR_FRPH_HLTH_PROFESSIONAL_SVW/ows",
-            "layerName": "pub:WHSE_IMAGERY_AND_BASE_MAPS.GSR_FRPH_HLTH_PROFESSIONAL_SVW",
-            "styleName": "3963",
+            "serviceUrl": "https://openmaps.gov.bc.ca/geo/pub/WHSE_IMAGERY_AND_BASE_MAPS.GSR_FRPH_SERVICE_DIRECTORY_SVW/ows",
+            "layerName": "pub:WHSE_IMAGERY_AND_BASE_MAPS.GSR_FRPH_SERVICE_DIRECTORY_SVW",
+            "styleName": "3964",
             "metadataUrl": "",
             "opacity": 0.65,
             "titleAttribute": "OCCUPANT_NAME",
@@ -40,7 +40,7 @@
                 {
                     "id": "STREET_ADDRESS",
                     "name": "STREET_ADDRESS",
-                    "title": "Adresee / Address:",
+                    "title": "Adresse / Address:",
                     "visible": true
                 },
                 {
@@ -62,9 +62,21 @@
                     "visible": true
                 },
                 {
-                    "id": "CONTACT_FAX",
-                    "name": "CONTACT_FAX",
-                    "title": "Fax:",
+                    "id": "CONTACT_TELEPHONE_CELL",
+                    "name": "CONTACT_TELEPHONE_CELL",
+                    "title": "Cellulaire / Cell Phone:",
+                    "visible": true
+                },
+                {
+                    "id": "CONTACT_TELEPHONE_DIRECT_DIAL",
+                    "name": "CONTACT_TELEPHONE_DIRECT_DIAL",
+                    "title": "Ligne directe / Direct Line:",
+                    "visible": true
+                },
+                {
+                    "id": "CONTACT_TELEPHONE_TOLL_FREE",
+                    "name": "CONTACT_TELEPHONE_TOLL_FREE",
+                    "title": "Numéro sans frais / Toll-Free:",
                     "visible": true
                 },
                 {
@@ -134,6 +146,12 @@
                     "visible": false
                 },
                 {
+                    "id": "CONTACT_FAX",
+                    "name": "CONTACT_FAX",
+                    "title": "CONTACT_FAX",
+                    "visible": false
+                },
+                {
                     "id": "IMAGE_URL",
                     "name": "IMAGE_URL",
                     "title": "IMAGE_URL",
@@ -188,7 +206,7 @@
                         "operator": "and",
                         "arguments": [
                             {
-                                "operator": "equals",
+                                "operator": "contains",
                                 "arguments": [
                                     {
                                         "operand": "attribute",
@@ -228,13 +246,13 @@
                             }
                         ]
                     },
-                    "id": "search-professionnels-de-la-santé-parlant-français",
-                    "title": "Professionnels de la santé parlant français /  Health Professionals - Francophone",
+                    "id": "search-répertoire-des-services-en-français",
+                    "title": "Répertoire des services / Service Directory",
                     "description": "Que cherchez-vous? / Find locations:",
                     "parameters": [
                         {
                             "id": "param1",
-                            "type": "select-unique",
+                            "type": "input",
                             "title": "Nom/Name:",
                             "value": "",
                             "choices": [],
