@@ -227,7 +227,8 @@ include.module( 'layer-leaflet.layer-vector-leaflet-js', [ 'layer.layer-vector-j
                 .then( function ( layer ) {
                     if ( !layers[ 0 ].config.useClustering ) return layer
 
-                    var cluster = L.markerClusterGroup( self.clusterOption )
+                    // var cluster = L.markerClusterGroup( self.clusterOption )
+                    var cluster = L.markerClusterGroup( clusterOptions( layers[ 0 ].config, self ) )
                     cluster.addLayers( [ layer ] )
 
                     return cluster
@@ -282,7 +283,7 @@ include.module( 'layer-leaflet.layer-vector-leaflet-js', [ 'layer.layer-vector-j
     }
 
     function markerForStyle( viewer, latlng, styleConfig, layerConfig ) {
-        if ( styleConfig.markerUrl ) {
+        if ( styleConfig && styleConfig.markerUrl ) {
             return L.marker( latlng, {
                 icon: L.icon( {
                     iconUrl: viewer.resolveAttachmentUrl( styleConfig.markerUrl, null, 'png' ),
@@ -303,4 +304,26 @@ include.module( 'layer-leaflet.layer-vector-leaflet-js', [ 'layer.layer-vector-j
         }
     }
 
+    function clusterOptions( layerConfig, viewer ) {
+        if ( !layerConfig.clusterStyle ) return
+
+        var opt = {}
+        opt.iconCreateFunction = function( cluster ) {
+            var el = $( '<div>' )
+                .append( $( '<img>' )
+                    .attr( 'src', viewer.resolveAttachmentUrl( layerConfig.clusterStyle.markerUrl, null, 'png' ) ) 
+                )
+                .append( $( '<span>' ).text( cluster.getChildCount() ) )
+                .get( 0 ).innerHTML
+
+            return L.divIcon( { 
+                className: 'smk-cluster-icon',
+                html: el,
+                iconSize: layerConfig.clusterStyle.markerSize,
+                iconAnchor: layerConfig.clusterStyle.markerOffset,
+            } );
+        }
+
+        return opt
+    }
 } )
