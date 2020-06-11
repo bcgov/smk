@@ -1,4 +1,4 @@
-include.module( 'vue-config', [ 'vue' ], function ( inc ) {
+include.module( 'vue-config', [ 'vue', 'vue-config.spinner-gif' ], function ( inc ) {
     "use strict";
 
     Vue.filter( 'formatTitle', function ( value ) {
@@ -216,7 +216,7 @@ include.module( 'vue-config', [ 'vue' ], function ( inc ) {
         },
         data: function () {
             return {
-                imageUrl: include.option( 'baseUrl' ) + 'images/spinner.gif'
+                imageUrl: inc[ 'vue-config.spinner-gif' ] 
             }
         }
     } )

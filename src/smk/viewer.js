@@ -132,7 +132,8 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
         this.serviceUrl = smk.$option[ 'service-url' ]
         this.identifyTool = function () { return smk.$tool[ 'identify' ] }
         this.resolveUrl = function ( url ) {
-            return ( new URL( url, smk.$option.baseUrl ) ).toString()
+            return smk.resolveAssetUrl( url )
+            // return ( new URL( url, smk.$option.baseUrl ) ).toString()
         }
         this.clusterOption = smk.viewer.clusterOption
 

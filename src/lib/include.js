@@ -203,6 +203,10 @@ if ( !window.include ) { ( function () {
             } )
     }
 
+    loader.asset = function ( inc ) {
+        return Promise.resolve( this.$resolveUrl( inc.url ) )
+    }
+
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     function include( tags, base ) {

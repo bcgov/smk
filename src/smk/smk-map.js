@@ -1,4 +1,4 @@
-include.module( 'smk-map', [ 'jquery', 'util', 'theme-base', 'sidepanel' ], function () {
+include.module( 'smk-map', [ 'jquery', 'util', 'theme-base', 'sidepanel', 'vue-config.spinner-gif' ], function ( inc ) {
     "use strict";
 
     function SmkMap( option ) {
@@ -11,6 +11,10 @@ include.module( 'smk-map', [ 'jquery', 'util', 'theme-base', 'sidepanel' ], func
 
     SMK.TYPE.SmkMap = SmkMap
 
+    SmkMap.prototype.resolveAssetUrl = function ( url ) {
+        return ( new URL( url, this.$option.baseUrl + 'assets/src/' ) ).toString()
+    }
+
     SmkMap.prototype.initialize = function () {
         var self = this
 
@@ -22,7 +26,7 @@ include.module( 'smk-map', [ 'jquery', 'util', 'theme-base', 'sidepanel' ], func
 
         var p = container.position()
         var spinner = $( '<img>' )
-            .attr( 'src', this.$option.baseUrl + 'images/spinner.gif' )
+            .attr( 'src', inc[ 'vue-config.spinner-gif' ] ) 
             .insertAfter( container )
             .css( {
                 zIndex:     99999,

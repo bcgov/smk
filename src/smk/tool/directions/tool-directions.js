@@ -3,6 +3,10 @@ include.module( 'tool-directions', [
     'tool.tool-widget-js', 
     'tool.tool-panel-js', 
     'tool-directions.panel-directions-html', 
+    'tool-directions.marker-icon-blue-png',
+    'tool-directions.marker-icon-green-png',
+    'tool-directions.marker-icon-red-png',
+    'tool-directions.marker-shadow-png',
     'tool-directions-route', 
     'tool-directions-options',
     'component-address-search',
@@ -17,7 +21,6 @@ include.module( 'tool-directions', [
         return true
     }
 
-    var base = include.option( 'baseUrl' ) + 'images/tool/directions'
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
     Vue.component( 'directions-widget', {
@@ -74,10 +77,10 @@ include.module( 'tool-directions', [
                     id: "@waypoint-start",
                     title: "Starting Route Location",
                     style: {
-                        markerUrl:      base + '/marker-icon-green.png',
+                        markerUrl:      inc[ 'tool-directions.marker-icon-green-png' ],
                         markerSize:     [ 25, 41 ],
                         markerOffset:   [ 12, 41 ],
-                        shadowUrl:      base + '/marker-shadow.png',
+                        shadowUrl:      inc[ 'tool-directions.marker-shadow-png' ],
                         shadowSize:     [ 41, 41 ],
                         popupOffset:    [ 1, -34 ],
                     },
@@ -92,10 +95,10 @@ include.module( 'tool-directions', [
                     id: "@waypoint-end",
                     title: "Ending Route Location",
                     style: {
-                        markerUrl:      base + '/marker-icon-red.png',
+                        markerUrl:      inc[ 'tool-directions.marker-icon-red-png' ],
                         markerSize:     [ 25, 41 ],
                         markerOffset:   [ 12, 41 ],
-                        shadowUrl:      base + '/marker-shadow.png',
+                        shadowUrl:      inc[ 'tool-directions.marker-shadow-png' ],
                         shadowSize:     [ 41, 41 ],
                         popupOffset:    [ 1, -34 ],
                     },
@@ -110,10 +113,10 @@ include.module( 'tool-directions', [
                     id: "@waypoint-middle",
                     title: "Waypoint on Route",
                     style: {
-                        markerUrl:      base + '/marker-icon-blue.png',
+                        markerUrl:      inc[ 'tool-directions.marker-icon-blue-png' ],
                         markerSize:     [ 25, 41 ],
                         markerOffset:   [ 12, 41 ],
-                        shadowUrl:      base + '/marker-shadow.png',
+                        shadowUrl:      inc[ 'tool-directions.marker-shadow-png' ],
                         shadowSize:     [ 41, 41 ],
                         popupOffset:    [ 1, -34 ],
                     },

@@ -1,4 +1,10 @@
-include.module( 'tool-search-leaflet', [ 'leaflet', 'tool-search' ], function ( inc ) {
+include.module( 'tool-search-leaflet', [ 
+    'leaflet', 
+    'tool-search',
+    'tool-search-leaflet.marker-icon-yellow-png',
+    'tool-search-leaflet.marker-shadow-png',
+    'tool-search-leaflet.star-icon-yellow-png',
+], function ( inc ) {
     "use strict";
 
     var precisionZoom = {
@@ -9,11 +15,9 @@ include.module( 'tool-search-leaflet', [ 'leaflet', 'tool-search' ], function ( 
         _OTHER_:        12
     }
 
-    var base = include.option( 'baseUrl' ) + 'images/tool/search'
-
     var yellowMarker = new L.Icon( {
-        iconUrl:        base + '/marker-icon-yellow.png',
-        shadowUrl:      base + '/marker-shadow.png',
+        iconUrl:        inc[ 'tool-search-leaflet.marker-icon-yellow-png' ],
+        shadowUrl:      inc[ 'tool-search-leaflet.marker-shadow-png' ],
         iconSize:       [ 25, 41 ],
         iconAnchor:     [ 12, 41 ],
         popupAnchor:    [ 1, -34 ],
@@ -21,8 +25,8 @@ include.module( 'tool-search-leaflet', [ 'leaflet', 'tool-search' ], function ( 
     } )
 
     var yellowStar = new L.Icon( {
-        iconUrl:        base + '/star-icon-yellow.png',
-        shadowUrl:      base + '/marker-shadow.png',
+        iconUrl:        inc[ 'tool-search-leaflet.star-icon-yellow-png' ],
+        shadowUrl:      inc[ 'tool-search-leaflet.marker-shadow-png' ],
         iconSize:       [ 20, 19 ],
         iconAnchor:     [ 10, 9 ],
         popupAnchor:    [ 1, -24 ],
@@ -30,8 +34,8 @@ include.module( 'tool-search-leaflet', [ 'leaflet', 'tool-search' ], function ( 
     } )
 
     var yellowStarBig = new L.Icon( {
-        iconUrl:        base + '/star-icon-yellow.png',
-        shadowUrl:      base + '/marker-shadow.png',
+        iconUrl:        inc[ 'tool-search-leaflet.star-icon-yellow-png' ],
+        shadowUrl:      inc[ 'tool-search-leaflet.marker-shadow-png' ],
         iconSize:       [ 40, 36 ],
         iconAnchor:     [ 20, 18 ],
         popupAnchor:    [ 1, -24 ],

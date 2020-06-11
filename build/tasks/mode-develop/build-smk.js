@@ -1,19 +1,12 @@
 module.exports = function( grunt ) {
 
     grunt.registerTask( 'build-smk', [
-        'exec:smk-tags',
         'compile-tags:smk',
         'concat:smk',
         'jshint:smk',
     ] )
 
     grunt.config.merge( {
-        'exec': {
-            'smk-tags': {
-                src: '<%= srcPath %>/smk-tags.js',
-                dest: '<%= tempPath %>/smk-tags.json',
-            }
-        },
 
         'compile-tags': {
             smk: {
