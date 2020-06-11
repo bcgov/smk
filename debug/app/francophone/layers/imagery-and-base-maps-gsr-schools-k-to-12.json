@@ -1,0 +1,389 @@
+{
+    "layers": [
+        {
+            "type": "vector",
+            "id": "imagery-and-base-maps-gsr-schools-k-to-12",
+            "title": "Écoles d’immersion/francophones (M-12) / French Immersion/Francophone Schools (K-12)",
+            "isVisible": true,
+            "isQueryable": true,
+            "useClustering": true,
+            "dataUrl": "https://openmaps.gov.bc.ca/geo/pub/WHSE_IMAGERY_AND_BASE_MAPS.GSR_SCHOOLS_K_TO_12_SVW/ows?service=WMS&request=GetMap&version=1.1.1&layers=pub%3AWHSE_IMAGERY_AND_BASE_MAPS.GSR_SCHOOLS_K_TO_12_SVW&styles=3601&format=application/json;type=geojson&transparent=true&cql_filter=include&srs=EPSG%3A4326&width=645&height=728&bbox=-131.8579103,46.6645175,-117.6855469,56.547372",
+            "#layerName": "pub:WHSE_IMAGERY_AND_BASE_MAPS.GSR_SCHOOLS_K_TO_12_SVW",
+            "#styleName": "3601",
+            "metadataUrl": "",
+            "opacity": 0.65,
+            "titleAttribute": "OCCUPANT_NAME",
+            "attributes": [
+                {
+                    "id": "OCCUPANT_NAME",
+                    "name": "OCCUPANT_NAME",
+                    "title": " ",
+                    "visible": true
+                },
+                {
+                    "id": "STREET_ADDRESS",
+                    "name": "STREET_ADDRESS",
+                    "title": " ",
+                    "visible": true
+                },
+                {
+                    "id": "LOCALITY",
+                    "name": "LOCALITY",
+                    "title": "Localité / Locality:",
+                    "visible": true
+                },
+                {
+                    "id": "DISTRICT_NAME",
+                    "name": "DISTRICT_NAME",
+                    "title": "Nom du district / District Name:",
+                    "visible": true
+                },
+                {
+                    "id": "SCHOOL_CATEGORY",
+                    "name": "SCHOOL_CATEGORY",
+                    "title": "Type d'École / School Type:",
+                    "visible": true
+                },
+                {
+                    "id": "SCHOOL_EDUCATION_LEVEL",
+                    "name": "SCHOOL_EDUCATION_LEVEL",
+                    "title": "Niveau de scolarité / Education Level:",
+                    "visible": true
+                },
+                {
+                    "id": "CORE_FRENCH_OFFERED",
+                    "name": "CORE_FRENCH_OFFERED",
+                    "title": "Français de base / Core French Indicator:",
+                    "visible": true
+                },
+                {
+                    "id": "EARLY_FRENCH_IMMERSION_OFFERED",
+                    "name": "EARLY_FRENCH_IMMERSION_OFFERED",
+                    "title": "Immersion précoce en français / Early French Immersion:",
+                    "visible": true
+                },
+                {
+                    "id": "LATE_FRENCH_IMMERSION_OFFERED",
+                    "name": "LATE_FRENCH_IMMERSION_OFFERED",
+                    "title": "Immersion tardive en français / Late French Immersion:",
+                    "visible": true
+                },
+                {
+                    "id": "FRANCOPHONE_PROGRAM_OFFERED",
+                    "name": "FRANCOPHONE_PROGRAM_OFFERED",
+                    "title": "Francophone:",
+                    "visible": true
+                },
+                {
+                    "id": "CUSTODIAN_ORG_DESCRIPTION",
+                    "name": "CUSTODIAN_ORG_DESCRIPTION",
+                    "title": "CUSTODIAN_ORG_DESCRIPTION",
+                    "visible": false
+                },
+                {
+                    "id": "BUSINESS_CATEGORY_CLASS",
+                    "name": "BUSINESS_CATEGORY_CLASS",
+                    "title": "BUSINESS_CATEGORY_CLASS",
+                    "visible": false
+                },
+                {
+                    "id": "BUSINESS_CATEGORY_DESCRIPTION",
+                    "name": "BUSINESS_CATEGORY_DESCRIPTION",
+                    "title": "BUSINESS_CATEGORY_DESCRIPTION",
+                    "visible": false
+                },
+                {
+                    "id": "OCCUPANT_TYPE_DESCRIPTION",
+                    "name": "OCCUPANT_TYPE_DESCRIPTION",
+                    "title": "OCCUPANT_TYPE_DESCRIPTION",
+                    "visible": false
+                },
+                {
+                    "id": "SOURCE_DATA_ID",
+                    "name": "SOURCE_DATA_ID",
+                    "title": "SOURCE_DATA_ID",
+                    "visible": false
+                },
+                {
+                    "id": "SUPPLIED_SOURCE_ID_IND",
+                    "name": "SUPPLIED_SOURCE_ID_IND",
+                    "title": "SUPPLIED_SOURCE_ID_IND",
+                    "visible": false
+                },
+                {
+                    "id": "DESCRIPTION",
+                    "name": "DESCRIPTION",
+                    "title": "DESCRIPTION",
+                    "visible": false
+                },
+                {
+                    "id": "PHYSICAL_ADDRESS",
+                    "name": "PHYSICAL_ADDRESS",
+                    "title": "PHYSICAL_ADDRESS",
+                    "visible": false
+                },
+                {
+                    "id": "ALIAS_ADDRESS",
+                    "name": "ALIAS_ADDRESS",
+                    "title": "ALIAS_ADDRESS",
+                    "visible": false
+                },
+                {
+                    "id": "POSTAL_CODE",
+                    "name": "POSTAL_CODE",
+                    "title": "POSTAL_CODE",
+                    "visible": false
+                },
+                {
+                    "id": "CONTACT_PHONE",
+                    "name": "CONTACT_PHONE",
+                    "title": "CONTACT_PHONE",
+                    "visible": false
+                },
+                {
+                    "id": "CONTACT_EMAIL",
+                    "name": "CONTACT_EMAIL",
+                    "title": "CONTACT_EMAIL",
+                    "visible": false
+                },
+                {
+                    "id": "CONTACT_FAX",
+                    "name": "CONTACT_FAX",
+                    "title": "CONTACT_FAX",
+                    "visible": false
+                },
+                {
+                    "id": "WEBSITE_URL",
+                    "name": "WEBSITE_URL",
+                    "title": "WEBSITE_URL",
+                    "visible": false
+                },
+                {
+                    "id": "IMAGE_URL",
+                    "name": "IMAGE_URL",
+                    "title": "IMAGE_URL",
+                    "visible": false
+                },
+                {
+                    "id": "LATITUDE",
+                    "name": "LATITUDE",
+                    "title": "LATITUDE",
+                    "visible": false
+                },
+                {
+                    "id": "LONGITUDE",
+                    "name": "LONGITUDE",
+                    "title": "LONGITUDE",
+                    "visible": false
+                },
+                {
+                    "id": "KEYWORDS",
+                    "name": "KEYWORDS",
+                    "title": "KEYWORDS",
+                    "visible": false
+                },
+                {
+                    "id": "DATE_UPDATED",
+                    "name": "DATE_UPDATED",
+                    "title": "DATE_UPDATED",
+                    "visible": false
+                },
+                {
+                    "id": "SITE_GEOCODED_IND",
+                    "name": "SITE_GEOCODED_IND",
+                    "title": "SITE_GEOCODED_IND",
+                    "visible": false
+                },
+                {
+                    "id": "DISTRICT_NUMBER",
+                    "name": "DISTRICT_NUMBER",
+                    "title": "DISTRICT_NUMBER",
+                    "visible": false
+                },
+                {
+                    "id": "FACILITY_TYPE",
+                    "name": "FACILITY_TYPE",
+                    "title": "FACILITY_TYPE",
+                    "visible": false
+                },
+                {
+                    "id": "SCHOOL_NUMBER",
+                    "name": "SCHOOL_NUMBER",
+                    "title": "SCHOOL_NUMBER",
+                    "visible": false
+                },
+                {
+                    "id": "SCHOOL_YEAR",
+                    "name": "SCHOOL_YEAR",
+                    "title": "SCHOOL_YEAR",
+                    "visible": false
+                },
+                {
+                    "id": "SEQUENCE_ID",
+                    "name": "SEQUENCE_ID",
+                    "title": "SEQUENCE_ID",
+                    "visible": false
+                },
+                {
+                    "id": "SE_ANNO_CAD_DATA",
+                    "name": "SE_ANNO_CAD_DATA",
+                    "title": "SE_ANNO_CAD_DATA",
+                    "visible": false
+                }
+            ],
+            "queries": [
+                {
+                    "predicate": {
+                        "operator": "and",
+                        "arguments": [
+                            {
+                                "operator": "equals",
+                                "arguments": [
+                                    {
+                                        "operand": "attribute",
+                                        "name": "LOCALITY"
+                                    },
+                                    {
+                                        "operand": "parameter",
+                                        "id": "param1"
+                                    }
+                                ]
+                            },
+                            {
+                                "operator": "equals",
+                                "arguments": [
+                                    {
+                                        "operand": "attribute",
+                                        "name": "SCHOOL_EDUCATION_LEVEL"
+                                    },
+                                    {
+                                        "operand": "parameter",
+                                        "id": "param3"
+                                    }
+                                ]
+                            },
+                            {
+                                "operator": "equals",
+                                "arguments": [
+                                    {
+                                        "operand": "attribute",
+                                        "name": "CORE_FRENCH_OFFERED"
+                                    },
+                                    {
+                                        "operand": "parameter",
+                                        "id": "param4"
+                                    }
+                                ]
+                            },
+                            {
+                                "operator": "equals",
+                                "arguments": [
+                                    {
+                                        "operand": "attribute",
+                                        "name": "EARLY_FRENCH_IMMERSION_OFFERED"
+                                    },
+                                    {
+                                        "operand": "parameter",
+                                        "id": "param5"
+                                    }
+                                ]
+                            },
+                            {
+                                "operator": "equals",
+                                "arguments": [
+                                    {
+                                        "operand": "attribute",
+                                        "name": "LATE_FRENCH_IMMERSION_OFFERED"
+                                    },
+                                    {
+                                        "operand": "parameter",
+                                        "id": "param6"
+                                    }
+                                ]
+                            },
+                            {
+                                "operator": "equals",
+                                "arguments": [
+                                    {
+                                        "operand": "attribute",
+                                        "name": "FRANCOPHONE_PROGRAM_OFFERED"
+                                    },
+                                    {
+                                        "operand": "parameter",
+                                        "id": "param7"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    "id": "search-Écoles-d’immersion-francophones",
+                    "title": "Écoles d’immersion/francophones (M-12) / French Immersion/Francophone Schools (K-12)",
+                    "description": "Que cherchez-vous? / Find locations:",
+                    "parameters": [
+                        {
+                            "id": "param1",
+                            "type": "select-unique",
+                            "title": "Localité/Locality:",
+                            "value": "",
+                            "choices": [],
+                            "uniqueAttribute": "LOCALITY"
+                        },
+                        {
+                            "id": "param3",
+                            "type": "select-unique",
+                            "title": "Niveau scolaire/Education Level:",
+                            "value": "",
+                            "choices": [],
+                            "uniqueAttribute": "SCHOOL_EDUCATION_LEVEL"
+                        },
+                        {
+                            "id": "param4",
+                            "type": "select-unique",
+                            "title": "Français de base/Core French:",
+                            "value": "",
+                            "choices": [],
+                            "uniqueAttribute": "CORE_FRENCH_OFFERED"
+                        },
+                        {
+                            "id": "param5",
+                            "type": "select-unique",
+                            "title": "Immersion précoce/Early Immersion:",
+                            "value": "",
+                            "choices": [],
+                            "uniqueAttribute": "EARLY_FRENCH_IMMERSION_OFFERED"
+                        },
+                        {
+                            "id": "param6",
+                            "type": "select-unique",
+                            "title": "Immersion tardive/Late Immersion:",
+                            "value": "",
+                            "choices": [],
+                            "uniqueAttribute": "LATE_FRENCH_IMMERSION_OFFERED"
+                        },
+                        {
+                            "id": "param7",
+                            "type": "select-unique",
+                            "title": "Programme francophone/Francophone Program:",
+                            "value": "",
+                            "choices": [],
+                            "uniqueAttribute": "FRANCOPHONE_PROGRAM_OFFERED"
+                        }
+                    ]
+                }
+            ],
+            "style": {
+                "markerUrl": "./images/school.png",
+                "markerSize": [ 32, 37 ],
+                "markerOffset": [ 16, 37 ]
+            },
+            "clusterStyle": {
+                "markerUrl": "./images/school.png",
+                "markerSize": [ 32, 37 ],
+                "markerOffset": [ 16, 37 ]
+            },
+            "legend": {
+                "point": true
+            }
+        }
+    ]
+}

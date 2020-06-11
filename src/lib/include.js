@@ -37,7 +37,7 @@ if ( !window.include ) { ( function () {
     var loader = {}
 
     loader.$resolveUrl = function ( url ) {
-        if ( /^[.][.]?[/]/.test( url ) ) return url
+        if ( /^[.][/]/.test( url ) ) return url
 
         return ( new URL( url, OPTION.baseUrl ) ).toString()
     }
@@ -201,6 +201,10 @@ if ( !window.include ) { ( function () {
                 } )
                 return res
             } )
+    }
+
+    loader.asset = function ( inc ) {
+        return Promise.resolve( this.$resolveUrl( inc.url ) )
     }
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

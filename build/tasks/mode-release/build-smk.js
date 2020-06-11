@@ -1,25 +1,17 @@
 module.exports = function( grunt ) {
 
     grunt.registerTask( 'build-smk', [
-        'exec:smk-tags',
         'compile-tags:smk',
         'concat:smk',
     ] )
 
     grunt.config.merge( {
 
-        'exec': {
-            'smk-tags': {
-                src: '<%= srcPath %>/smk-tags.js',
-                dest: '<%= tempPath %>/smk-tags.json',
-            }
-        },
-
         'compile-tags': {
             smk: {
                 options: {
                     inlineLoad: true,
-                    basePath: '<%= tempPath %>',
+                    basePath: '<%= tempPath %>/assets/src',
                     header: '( function ( skip ) {\n"use strict";\nif ( skip ) return;\n\n',
                     footer: '\nwindow.include.SMK = true\n} )( window.include.SMK );\n'
                 },
@@ -40,9 +32,9 @@ module.exports = function( grunt ) {
                     // }
                 },
                 src: [
-                    '<%= tempPath %>/lib/include.js',
+                    '<%= tempPath %>/assets/src/lib/include.js',
                     '<%= tempPath %>/smk-tags.js',
-                    '<%= tempPath %>/smk.js'
+                    '<%= tempPath %>/assets/src/smk.js'
                 ],
                 dest: '<%= distPath %>/smk.js'
             }

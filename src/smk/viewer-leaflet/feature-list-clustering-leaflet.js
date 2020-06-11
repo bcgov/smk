@@ -1,15 +1,15 @@
 include.module( 'feature-list-clustering-leaflet', [ 
     'leaflet', 
     'feature-list-leaflet', 
-    'turf' 
+    'turf',
+    'feature-list-clustering-leaflet.marker-icon-white-png',
+    'feature-list-clustering-leaflet.marker-shadow-png'
 ], function ( inc ) {
     "use strict";
 
-    var base = include.option( 'baseUrl' ) + 'images/viewer-leaflet'
-
     var whiteMarker = new L.Icon( {
-        iconUrl:        base + '/marker-icon-white.png',
-        shadowUrl:      base + '/marker-shadow.png',
+        iconUrl:        inc[ 'feature-list-clustering-leaflet.marker-icon-white-png' ],
+        shadowUrl:      inc[ 'feature-list-clustering-leaflet.marker-shadow-png' ],
         iconSize:       [ 25, 41 ],
         iconAnchor:     [ 12, 41 ],
         popupAnchor:    [ 1, -34 ],

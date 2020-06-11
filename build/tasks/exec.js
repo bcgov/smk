@@ -12,7 +12,7 @@ module.exports = function( grunt ) {
                 grunt.log.write( 'Executing ' + f.src + '...' )
                 
                 var chout = child_process.execSync( 'node ' + fn )
-                grunt.verbose.write( chout )
+                // grunt.verbose.write( chout )
                 out += chout
                 
                 grunt.log.ok()

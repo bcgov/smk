@@ -1,0 +1,249 @@
+{
+    "layers": [
+        {
+            "type": "wms",
+            "id": "wms-imagery-and-base-maps-gsr-empl-srvcs-offices",
+            "title": "Work BC – centres de services à l’emploi / WorkBC Employment Service Centres",
+            "isVisible": true,
+            "isQueryable": true,
+            "serviceUrl": "https://openmaps.gov.bc.ca/geo/pub/WHSE_IMAGERY_AND_BASE_MAPS.GSR_EMPL_SRVCS_OFFICES_SVW/ows",
+            "layerName": "pub:WHSE_IMAGERY_AND_BASE_MAPS.GSR_EMPL_SRVCS_OFFICES_SVW",
+            "styleName": "3958",
+            "metadataUrl": "",
+            "opacity": 0.65,
+            "titleAttribute": "OCCUPANT_NAME",
+            "attributes": [
+                {
+                    "id": "CUSTODIAN_ORG_DESCRIPTION",
+                    "name": "CUSTODIAN_ORG_DESCRIPTION",
+                    "title": "CUSTODIAN_ORG_DESCRIPTION",
+                    "visible": false
+                },
+                {
+                    "id": "BUSINESS_CATEGORY_CLASS",
+                    "name": "BUSINESS_CATEGORY_CLASS",
+                    "title": "BUSINESS_CATEGORY_CLASS",
+                    "visible": false
+                },
+                {
+                    "id": "BUSINESS_CATEGORY_DESCRIPTION",
+                    "name": "BUSINESS_CATEGORY_DESCRIPTION",
+                    "title": "BUSINESS_CATEGORY_DESCRIPTION",
+                    "visible": false
+                },
+                {
+                    "id": "OCCUPANT_TYPE_DESCRIPTION",
+                    "name": "OCCUPANT_TYPE_DESCRIPTION",
+                    "title": "OCCUPANT_TYPE_DESCRIPTION",
+                    "visible": false
+                },
+                {
+                    "id": "SOURCE_DATA_ID",
+                    "name": "SOURCE_DATA_ID",
+                    "title": "SOURCE_DATA_ID",
+                    "visible": false
+                },
+                {
+                    "id": "SUPPLIED_SOURCE_ID_IND",
+                    "name": "SUPPLIED_SOURCE_ID_IND",
+                    "title": "SUPPLIED_SOURCE_ID_IND",
+                    "visible": false
+                },
+                {
+                    "id": "OCCUPANT_NAME",
+                    "name": "OCCUPANT_NAME",
+                    "title": "Nom / Name:",
+                    "visible": true
+                },
+                {
+                    "id": "DESCRIPTION",
+                    "name": "DESCRIPTION",
+                    "title": "DESCRIPTION",
+                    "visible": false
+                },
+                {
+                    "id": "PHYSICAL_ADDRESS",
+                    "name": "PHYSICAL_ADDRESS",
+                    "title": "PHYSICAL_ADDRESS",
+                    "visible": false
+                },
+                {
+                    "id": "ALIAS_ADDRESS",
+                    "name": "ALIAS_ADDRESS",
+                    "title": "ALIAS_ADDRESS",
+                    "visible": false
+                },
+                {
+                    "id": "STREET_ADDRESS",
+                    "name": "STREET_ADDRESS",
+                    "title": "Adresse / Address:",
+                    "visible": true
+                },
+                {
+                    "id": "POSTAL_CODE",
+                    "name": "POSTAL_CODE",
+                    "title": "POSTAL_CODE",
+                    "visible": false
+                },
+                {
+                    "id": "LOCALITY",
+                    "name": "LOCALITY",
+                    "title": "Localité / Locality:",
+                    "visible": true
+                },
+                {
+                    "id": "CONTACT_EMAIL",
+                    "name": "CONTACT_EMAIL",
+                    "title": "Courriel / Email:",
+                    "visible": true
+                },
+                {
+                    "id": "CONTACT_PHONE",
+                    "name": "CONTACT_PHONE",
+                    "title": "Téléphone / Phone:",
+                    "visible": true
+                },
+                {
+                    "id": "CONTACT_FAX",
+                    "name": "CONTACT_FAX",
+                    "title": "Fax / Fax:",
+                    "visible": true
+                },
+                {
+                    "id": "WEBSITE_URL",
+                    "name": "WEBSITE_URL",
+                    "title": "Site / Website:",
+                    "visible": true
+                },
+                {
+                    "id": "IMAGE_URL",
+                    "name": "IMAGE_URL",
+                    "title": "IMAGE_URL",
+                    "visible": false
+                },
+                {
+                    "id": "LATITUDE",
+                    "name": "LATITUDE",
+                    "title": "LATITUDE",
+                    "visible": false
+                },
+                {
+                    "id": "LONGITUDE",
+                    "name": "LONGITUDE",
+                    "title": "LONGITUDE",
+                    "visible": false
+                },
+                {
+                    "id": "KEYWORDS",
+                    "name": "KEYWORDS",
+                    "title": "KEYWORDS",
+                    "visible": false
+                },
+                {
+                    "id": "DATE_UPDATED",
+                    "name": "DATE_UPDATED",
+                    "title": "DATE_UPDATED",
+                    "visible": false
+                },
+                {
+                    "id": "SITE_GEOCODED_IND",
+                    "name": "SITE_GEOCODED_IND",
+                    "title": "SITE_GEOCODED_IND",
+                    "visible": false
+                },
+                {
+                    "id": "CATCHMENT_AREA_ID",
+                    "name": "CATCHMENT_AREA_ID",
+                    "title": "CATCHMENT_AREA_ID",
+                    "visible": false
+                },
+                {
+                    "id": "HOURS_OF_OPERATION",
+                    "name": "HOURS_OF_OPERATION",
+                    "title": "HOURS_OF_OPERATION",
+                    "visible": false
+                },
+                {
+                    "id": "LANGUAGES_OFFERED_LIST",
+                    "name": "LANGUAGES_OFFERED_LIST",
+                    "title": "LANGUAGES_OFFERED_LIST",
+                    "visible": false
+                },
+                {
+                    "id": "STORE_FRONT_NUMBER",
+                    "name": "STORE_FRONT_NUMBER",
+                    "title": "STORE_FRONT_NUMBER",
+                    "visible": false
+                },
+                {
+                    "id": "SEQUENCE_ID",
+                    "name": "SEQUENCE_ID",
+                    "title": "SEQUENCE_ID",
+                    "visible": false
+                },
+                {
+                    "id": "SE_ANNO_CAD_DATA",
+                    "name": "SE_ANNO_CAD_DATA",
+                    "title": "SE_ANNO_CAD_DATA",
+                    "visible": false
+                }
+            ],
+            "queries": [
+                {
+                    "predicate": {
+                        "operator": "and",
+                        "arguments": [
+                            {
+                                "operator": "contains",
+                                "arguments": [
+                                    {
+                                        "operand": "attribute",
+                                        "name": "OCCUPANT_NAME"
+                                    },
+                                    {
+                                        "operand": "parameter",
+                                        "id": "param1"
+                                    }
+                                ]
+                            },
+                            {
+                                "operator": "equals",
+                                "arguments": [
+                                    {
+                                        "operand": "attribute",
+                                        "name": "LOCALITY"
+                                    },
+                                    {
+                                        "operand": "parameter",
+                                        "id": "param2"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    "id": "search-Work-BC–centres-de-services-à-l’emploi",
+                    "title": "WorkBC – centres de services à l’emploi / WorkBC Employment Service Centres",
+                    "description": "Que cherchez-vous? / Find locations:",
+                    "parameters": [
+                        {
+                            "id": "param1",
+                            "type": "input",
+                            "title": "Nom/Name:",
+                            "value": "",
+                            "choices": [],
+                            "uniqueAttribute": "OCCUPANT_NAME"
+                        },
+                        {
+                            "id": "param2",
+                            "type": "select-unique",
+                            "title": "Localité/Locality:",
+                            "value": "",
+                            "choices": [],
+                            "uniqueAttribute": "LOCALITY"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

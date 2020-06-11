@@ -49,8 +49,12 @@ module.exports = function( grunt ) {
             return [ '"' + inc + '"' ]
         },
 
+        asset: function ( tag, inc, basePath, inline ) {
+            return [ '{ loader: "asset", url: "' + inc.url + '" }' ]
+        },
+
         script: function ( tag, inc, basePath, inline ) {
-            if ( !inline || inc.external )
+            if ( !inline || inc.external || inc.inline === false )
                 return [ '{ loader: "script", url: "' + inc.url + '" }' ]
 
             var f = grunt.file.read( path.join( basePath, inc.url ) )
@@ -59,7 +63,7 @@ module.exports = function( grunt ) {
         },
 
         style: function ( tag, inc, basePath, inline ) {
-            if ( !inline || inc.external )
+            if ( !inline || inc.external || inc.inline === false )
                 return [ '{ loader: "style", url: "' + inc.url + '" }' ]
 
             var f = grunt.file.read( path.join( basePath, inc.url ) )

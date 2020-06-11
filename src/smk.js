@@ -175,7 +175,7 @@
         } )
 
         defineAttr( 'baseUrl', 'smk-base-url', function () {
-            return SMK.BASE_URL
+            return SMK.BASE_URL 
         } )
         
         var timer = 'SMK "' + attr.id + '" initialize'
@@ -603,7 +603,7 @@
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
     function initializeSmkMap( attr ) {
-        include.option( { baseUrl: attr.baseUrl } )
+        include.option( { baseUrl: attr.baseUrl + 'assets/src/' } )
 
         if ( attr.id in SMK.MAP )
             throw new Error( 'An SMK map with smk-id "' + attr.id + '" already exists' )

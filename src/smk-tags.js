@@ -22,13 +22,9 @@ t.sequence( 'libs' )
     .tag( 'vue-config' )
     .tag( 'turf' )
 
-// t.script( 'jquery', 'lib/jquery-3.3.1.min.js' )
-
-// t.script( 'vue', 'lib/vue-2.5.11.js' )
-// t.script( 'vue', 'lib/vue-2.5.11.min.js' )
-t.script( 'vue-config', 'smk/vue-config.js' )
-
-// t.script( 'turf', 'lib/turf-5.1.6.min.js' )
+t.group( 'vue-config' )
+    .script( 'smk/vue-config.js' )
+    .asset( 'smk/spinner.gif' )
 
 t.script( 'proj4', 'lib/proj4-2.4.4.min.js' )
 // t.script( 'proj4', 'https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.6.2/proj4.min.js', { external: true } )
@@ -38,7 +34,21 @@ t.sequence( 'terraformer' )
     .script( 'lib/terraformer/terraformer-arcgis-parser-1.0.5.js' )
     // .script( 'lib/terraformer/terraformer-wkt-parser-1.1.2.js' )
 
-t.style( 'material-icons', 'https://fonts.googleapis.com/icon?family=Material+Icons', { external: true } )
+// t.style( 'material-icons', 'https://fonts.googleapis.com/icon?family=Material+Icons', { external: true } )
+
+t.group( 'material-icons' )
+    .style( '../node_modules/material-design-icons-iconfont/dist/material-design-icons.css', { inline: false } )
+    .asset( '../node_modules/material-design-icons-iconfont/dist/fonts/MaterialIcons-Regular.ttf' )
+    .asset( '../node_modules/material-design-icons-iconfont/dist/fonts/MaterialIcons-Regular.woff' )
+    .asset( '../node_modules/material-design-icons-iconfont/dist/fonts/MaterialIcons-Regular.woff2' )
+
+// Thid doesn't work because Google hasn't kept the github repo up-to-date.
+// see https://github.com/google/material-design-icons/issues/786
+// t.group( 'material-icons' )
+//     .style( '../node_modules/material-design-icons/iconfont/material-icons.css' )
+//     .asset( '../node_modules/material-design-icons/iconfont/MaterialIcons-Regular.ttf' )
+//     .asset( '../node_modules/material-design-icons/iconfont/MaterialIcons-Regular.woff' )
+//     .asset( '../node_modules/material-design-icons/iconfont/MaterialIcons-Regular.woff2' )
 
 // ==================================================================================
 // smk base
@@ -206,7 +216,10 @@ t.group( 'layer-leaflet' )
     .script( "lib/leaflet/leaflet-heat.js" )
 
 t.script( 'feature-list-leaflet', 'smk/viewer-leaflet/feature-list-leaflet.js' )
-t.script( 'feature-list-clustering-leaflet', 'smk/viewer-leaflet/feature-list-clustering-leaflet.js' )
+t.group( 'feature-list-clustering-leaflet' )
+    .script( 'smk/viewer-leaflet/feature-list-clustering-leaflet.js' )
+    .asset( 'smk/viewer-leaflet/marker-icon-white.png' )
+    .asset( 'smk/viewer-leaflet/marker-shadow.png' )
 
 t.group( 'viewer-leaflet' )
     .script( 'smk/viewer-leaflet/viewer-leaflet.js' )
