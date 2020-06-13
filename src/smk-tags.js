@@ -233,6 +233,7 @@ t.sequence( 'leaflet' )
     // .script( 'lib/leaflet/esri-leaflet-renderers.js' )
     .script( 'lib/leaflet/esri-leaflet-renderers-2.0.6.js' )
     .script( 'lib/leaflet/esri-leaflet-legend-compat-src-2.0.1.js')
+    .dir( 'lib/leaflet/images/**' )
 
 
 t.group( 'tool-coordinate-leaflet' )
