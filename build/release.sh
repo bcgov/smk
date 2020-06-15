@@ -13,7 +13,8 @@ echo "Has the version number been bumped?"
 read -n1 -r -p "Press Ctrl+C to cancel, or any other key to continue." key
 echo
 
-git checkout -b build
+git checkout -b gh-pages
+# git checkout -b build
 
 npm run build
 
@@ -24,13 +25,16 @@ echo
 git add dist --force --all
 git commit -m "v$VERSION"
 git tag v$VERSION --force
-# git push --tags --force
-
+git push --all --force
+# git checkout gh-pages
+# git merge build
+# read -n1 -r -p "Merge ok? Press Ctrl+C to cancel, or any other key to continue." key
 # echo "Uploading to NPM..."
 # npm publish
+# git commit -m "v$VERSION"
 
 git checkout master
-git branch -D build
+# git branch -D build
 
 echo
 echo "All done."
