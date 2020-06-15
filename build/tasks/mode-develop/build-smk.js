@@ -24,6 +24,12 @@ module.exports = function( grunt ) {
                 options: {
                     banner: '// SMK v<%= package.version %>\n',
                     process: '<%= processTemplate %>',
+                    process: function ( content, src ) {
+                        if ( /smk.js$/.test( src ) )
+                            return grunt.config( 'processTemplate' )( content, src )
+                        else
+                            return content
+                    }
                 },
                 src: [
                     '<%= srcPath %>/lib/include.js',

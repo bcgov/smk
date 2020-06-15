@@ -673,7 +673,7 @@
             BUILD: {
                 commit:     '<%= gitinfo.local.branch.current.SHA %>',
                 branch:     '<%= gitinfo.local.branch.current.name %>',
-                lastCommit: '<%= gitinfo.local.branch.current.lastCommitTime %>'.replace( /^"|"$/g, '' ),
+                lastCommit: '<%= gitinfo.local.branch.current.lastCommitTime %>',
                 origin:     '<%= gitinfo.remote.origin.url %>',
                 version:    '<%= package.version %>',
             },
