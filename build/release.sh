@@ -44,7 +44,7 @@ git commit -m "v$VERSION"
 git tag v$VERSION --force
 
 git push --set-upstream origin gh-pages
-git push --all --force
+git push --tags --force
 
 git checkout master
 
