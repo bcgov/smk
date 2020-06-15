@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VERSION=$(node --eval "console.log(require('./package.json').version);")
+VERSION=$(node --eval "console.log(require('./package.json').version + '.' + (new Date()).toISOString().replace(/[^0-9]/g,'').slice(0,-5) );")
 echo "Ready to build SMK v$VERSION into gh-pages."
 
 echo
