@@ -13,7 +13,7 @@ echo "Has the version number been bumped?"
 read -n1 -r -p "Press Ctrl+C to cancel, or any other key to continue." key
 echo
 
-git checkout -b gh-pages
+git checkout gh-pages
 # git checkout -b build
 
 npm run build
