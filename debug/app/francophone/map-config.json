@@ -34,25 +34,34 @@
 			"showCoverageOnHover": false
 		},
 		"device": "auto",
-		"themes":["alpha"],
+		"#themes":["alpha"],
 		"deviceAutoBreakpoint": 500,
-		"panelWidth": 400
+		"panelWidth": 300
 	},
 	"tools": [
 		{
+			"type": "toolbar",
+			"enabled": true
+		},
+		{
+			"type": "list-menu",
+            "enabled": true,
+            "title": "Menu"
+		},
+		{
+			"type": "pan",
+			"enabled": true
+		},
+		{
+			"type": "zoom",
+			"enabled": true
+		},
+		{
 			"type": "about",
 			"enabled": true,
-			"icon": "map",
+			"#icon": "map",
 			"title": "Sur / About",
 			"content": "<h3>À propos de cette application</h3><span style=\"background-color: initial; color: inherit;\"><p>Cette carte vous permet de repérer les ressources et les services en français offerts en Colombie-Britannique. Cinq domaines y sont affichés sous forme de couches successives et permettent une recherche par sujet, par catégorie et par zone géographique. À partir du menu, vous pouvez utiliser l’outil de la carte pour l’afficher en plans plus rapprochés (zoom) ou pour la voir en mode panoramique.</p><p>Vous pouvez vous concentrer sur une ou plusieurs couches à la fois avec le menu \"domaines de la carte\". Vous pouvez aussi effectuer une recherche à partir du menu \"recherche par catégorie\" ou à l’intérieur d’une zone géographique précise, sous \"chercher à proximité\".</p><p>Une fois que vous aurez trouvé un service, cliquez sur le marqueur de la carte pour obtenir de l’information à son sujet et en connaître l’emplacement. Les lieux offrant plusieurs services s’afficheront avec plusieurs marqueurs.</p><span><h3>About this Application</h3><span style=\"background-color: initial; color: inherit;\"><p>This map allows you to find francophone resources and services in British Columbia. Five sectors are displayed as layers to allow you to do a search by subject, category and area. From the menu, you can use the map tool to zoom and pan around the map.</p></p>You can focus on one layer or a combination of layers using the \"Search by Sector\" menu. You can also search for specific locations and services using the \"Search by Category\" menu or within a specific area under \"Find Nearby\".</p><p>Once you've found a service, click the marker on the map to get information about the resource and its location. Please note that some locations offer many services, and therefore will show many service markers.</p><p>The search box found above the map allows you to quickly navigate to a specific address, city or geographic feature such as 'Mount Douglas'.</p></span><p><a href=\"http://apps.gov.bc.ca/pub/dmf-viewer/?siteid=4645951626552572231\" target=\"new\">Old DMF Site</a></p>"
-		},
-		{
-			"type": "coordinate",
-			"enabled": false
-		},
-		{
-			"type": "attribution",
-			"enabled": false
 		},
 		{
 			"type": "layers",
@@ -98,46 +107,6 @@
 			]
 		},
 		{
-			"type": "pan",
-			"enabled": true
-		},
-		{
-			"type": "zoom",
-			"enabled": true,
-			"mouseWheel": true,
-			"doubleClick": true,
-			"box": true,
-			"control": true
-		},
-		{
-			"type": "measure",
-			"enabled": false
-		},
-		{
-			"type": "markup",
-			"enabled": false
-		},
-		{
-			"type": "scale",
-			"enabled": false,
-			"showFactor": true,
-			"showBar": true
-		},
-		{
-			"type": "minimap",
-			"enabled": false,
-			"baseMap": "Topographic"
-		},
-		{
-			"type": "directions",
-			"enabled": false,
-			"title": "Instructions / Directions"
-		},
-		{
-			"type": "location",
-			"enabled": false
-		},
-		{
 			"type": "baseMaps",
 			"enabled": true,
 			"title": "Cartes de base / Base Maps",
@@ -147,35 +116,16 @@
 				"Imagery",
 				"Oceans",
 				"NationalGeographic",
-				"DarkGray",
 				"Gray"
 			]
 		},
 		{
-			"type": "select",
-			"enabled": false,
-			"title": "Selection Panel",
-			"style": {
-				"strokeStyle": "",
-				"strokeColor": "#000000",
-				"fillColor": "#000000",
-				"markerSize": [
-					20,
-					20
-				],
-				"markerOffset": [
-					10,
-					10
-				]
-			}
-		},
-		{
 			"type": "identify",
-			"widgetComponent":null,
 			"enabled": true,
-			"showPanel": false,
 			"title": "Identifier / Identify",
-			"icon": "place",
+            "showPanel": true,
+            "showWidget": false,
+			"#icon": "place",
 			"style": {
 				"strokeWidth": 1.0,
 				"strokeStyle": "1, 1",
@@ -199,7 +149,7 @@
 			"type": "query",
 			"enabled": true,
 			"icon": "image",
-			"instance": "IMAGERY_AND_BASE_MAPS.GSR_FRPH_TOURISM_SVW-3961--search-sites-touristiques",
+			"instance": "imagery-and-base-maps-gsr-frph-tourism--search-sites-touristiques",
 			"position": "toolbar",
 			"showPanel": true
 		},
@@ -207,7 +157,7 @@
 			"type": "query",
 			"enabled": true,
 			"icon": "room_service",
-			"instance": "IMAGERY_AND_BASE_MAPS.GSR_FRPH_SERVICE_DIRECTORY_SVW-3964--search-répertoire-des-services-en-français",
+			"instance": "imagery-and-base-maps-gsr-frph-service-directory--search-répertoire-des-services-en-français",
 			"position": "toolbar",
 			"showPanel": true
 		},
@@ -216,7 +166,7 @@
 			"enabled": true,
 			"title": "Query",
 			"icon": "local_hospital",
-			"instance": "IMAGERY_AND_BASE_MAPS.GSR_FRPH_HLTH_PROFESSIONAL_SVW-3963--search-professionnels-de-la-santé-parlant-français",
+			"instance": "imagery-and-base-maps-gsr-frph-hlth-professional--search-professionnels-de-la-santé-parlant-français",
 			"position": "toolbar",
 			"showPanel": true
 		},
@@ -225,7 +175,7 @@
 			"enabled": true,
 			"title": "Query",
 			"icon": "child_care",
-			"instance": "IMAGERY_AND_BASE_MAPS.GSR_FRPH_EARLY_CHILDCARE_SVW-3962--search-services-à-la-petite-enfance",
+			"instance": "imagery-and-base-maps-gsr-frph-early-childcare--search-services-à-la-petite-enfance",
 			"position": "toolbar",
 			"showPanel": true
 		},
@@ -234,7 +184,7 @@
 			"enabled": true,
 			"title": "Query",
 			"icon": "people",
-			"instance": "IMAGERY_AND_BASE_MAPS.GSR_EMPL_SRVCS_OFFICES_SVW-3958--search-Work-BC–centres-de-services-à-l’emploi",
+			"instance": "imagery-and-base-maps-gsr-empl-srvcs-offices--search-Work-BC–centres-de-services-à-l’emploi",
 			"position": "toolbar",
 			"showPanel": true
 		},
@@ -243,16 +193,12 @@
 			"enabled": true,
 			"title": "Query",
 			"icon": "school",
-			"instance": "IMAGERY_AND_BASE_MAPS.GSR_SCHOOLS_K_TO_12_SVW-3601--search-Écoles-d’immersion-francophones",
+			"instance": "imagery-and-base-maps-gsr-schools-k-to-12--search-Écoles-d’immersion-francophones",
 			"position": "toolbar",
 			"showPanel": true
 		},		
 		{
-			"type": "list-menu",
-			"enabled": true
-		},
-		{
-			"type": "toolbar",
+			"type": "search",
 			"enabled": true
 		},
 		{
@@ -260,8 +206,40 @@
 			"enabled": false
 		},
 		{
-			"type": "search",
-			"enabled": true
+			"type": "coordinate",
+			"enabled": false
+		},
+		{
+			"type": "attribution",
+			"enabled": false
+		},
+		{
+			"type": "measure",
+			"enabled": false
+		},
+		{
+			"type": "markup",
+			"enabled": false
+		},
+		{
+			"type": "scale",
+			"enabled": false
+		},
+		{
+			"type": "minimap",
+			"enabled": false
+		},
+		{
+			"type": "directions",
+			"enabled": false
+		},
+		{
+			"type": "location",
+			"enabled": false
+		},
+		{
+			"type": "select",
+			"enabled": false
 		}
 	]
 }
