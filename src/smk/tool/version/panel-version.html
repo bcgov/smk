@@ -21,15 +21,15 @@
         <dt>Origin</dt>
         <dd>{{ build.origin }}</dd>
 
-        <template v-if="config.lmfId">
+        <!-- <template v-if="config.lmfId">
             <dt>Map Identifier</dt>
             <dd>{{ config.lmfId }}</dd>
-        </template>
+        </template> -->
 
-        <template v-if="config.lmfRevision">
+        <!-- <template v-if="config.lmfRevision">
             <dt>Map Version</dt>
             <dd>{{ config.lmfRevision }}.{{ config._rev.substr( 0, config._rev.indexOf( '-')) - 1 }}{{ config.published ? ' (Published)' : '' }}</dd>
-        </template>
+        </template> -->
 
         <template v-if="config.createdBy">
             <dt>Map Created By</dt>
