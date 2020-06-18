@@ -9,6 +9,7 @@
     padding: 2px;
     display: flex;
     justify-content: space-around;
+    align-items: center;
     background-color: #bbb;
 }
 

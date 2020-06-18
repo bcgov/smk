@@ -580,12 +580,13 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
         ] )
     }
 
-    Viewer.prototype.identifyFeatures = function ( location ) {
+    Viewer.prototype.identifyFeatures = function ( location, radiusMeters ) {
         var self = this
 
-        var tolerance = this.identifyTool().tolerance || 5
-        var searchArea = this.circleInMap( location.screen, tolerance, 12 )
-        // this.temporaryFeature( 'identify', searchArea )
+        var searchArea = turf.circle( [ location.map.longitude, location.map.latitude ], radiusMeters / 1000, { steps: 16 } )
+        // var tolerance = this.identifyTool().tolerance || 5
+        // var searchArea = this.circleInMap( location.screen, tolerance, 12 )
+        this.temporaryFeature( 'identify', searchArea )
 
         var view = this.getView()
 
@@ -603,13 +604,13 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
             if ( !ly.inScaleRange( view ) ) return
 
             var option = {
-                tolerance: ly.config.tolerance || tolerance,
+                // tolerance: ly.config.tolerance || tolerance,
                 layer: self.visibleLayer[ id ] 
             }
 
             var layerSearchArea = searchArea 
-            if ( option.tolerance != tolerance )
-                layerSearchArea = self.circleInMap( location.screen, option.tolerance, 12 )
+            // if ( option.tolerance != tolerance )
+                // layerSearchArea = self.circleInMap( location.screen, option.tolerance, 12 )
 
             // self.temporaryFeature( 'identify', layerSearchArea )
 
@@ -710,6 +711,14 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
             return pixels / pixPerMillimeter
         }
     } )()
+
+    Viewer.prototype.distanceToMeters = function ( distance, distanceUnit ) {
+        if ( distanceUnit == 'px' ) 
+            return distance * this.getView().metersPerPixel
+            // return this.pixelsToMillimeters( distance ) / 1000
+
+        return distance * SMK.UTIL.getMetersPerUnit( distanceUnit )
+    }
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
     Viewer.prototype.getCurrentLocation = function ( option ) {

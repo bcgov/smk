@@ -54,9 +54,7 @@ t.group( 'material-icons' )
 // smk base
 // ==================================================================================
 
-t.sequence( 'smk-map' )
-    .tag( 'libs' )
-    .script( 'smk/smk-map.js' )
+t.script( 'smk-map', 'smk/smk-map.js' )
 
 t.script( 'util',       'smk/util.js' )
 t.script( 'event',      'smk/event.js' )

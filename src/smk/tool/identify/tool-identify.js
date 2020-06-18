@@ -4,6 +4,7 @@ include.module( 'tool-identify', [
     'tool.tool-feature-list-js', 
     'component-feature-list', 
     'component-command-button',
+    'component-enter-input',
     'tool-identify.panel-identify-html' 
 ], function ( inc ) {
     "use strict";
@@ -15,7 +16,15 @@ include.module( 'tool-identify', [
     Vue.component( 'identify-panel', {
         extends: SMK.COMPONENT.ToolPanelBase,
         template: inc[ 'tool-identify.panel-identify-html' ],
-        props: [ 'tool', 'layers', 'highlightId', 'command' ],
+        props: [ 'tool', 'layers', 'highlightId', 'command', 'radius', 'radiusUnit' ],
+        methods: {
+            formatNumber: function ( value, fractionPlaces ) {
+                var i = Math.floor( value ),
+                    f = value - i
+
+                return i.toString() + f.toFixed( fractionPlaces ).substr( 1 )
+            }
+        }
     } )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
@@ -27,9 +36,13 @@ include.module( 'tool-identify', [
         
             this.defineProp( 'tool' )
             this.defineProp( 'command' )
+            this.defineProp( 'radius' )
+            this.defineProp( 'radiusUnit' )
 
             this.tool = {}
             this.command = {}
+            this.radius = 100
+            this.radiusUnit = 'm'
         },
         function ( smk ) {
             var self = this
@@ -59,8 +72,8 @@ include.module( 'tool-identify', [
     
             var startIdentify = function ( location ) {
                 self.pickedLocation = null
-                return smk.$viewer.identifyFeatures( location )
-                    .then( function () {
+                return smk.$viewer.identifyFeatures( location, smk.$viewer.distanceToMeters( self.radius, self.radiusUnit ) )
+                    .then( function () { 
                         self.pickedLocation = location
                         return true
                     } )
@@ -89,6 +102,15 @@ include.module( 'tool-identify', [
     
                 'swipe-down': function ( ev ) {
                     smk.$sidepanel.incrExpand( -1 )
+                },
+
+                'change': function ( ev, comp ) {
+                    Object.assign( self, ev )
+    
+                    if ( self.pickedLocation )
+                        startIdentify( self.pickedLocation )
+                    // comp.$forceUpdate()
+                    // findRouteDelayed()
                 },
             } )
     

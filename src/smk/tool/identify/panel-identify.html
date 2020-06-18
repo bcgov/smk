@@ -11,6 +11,24 @@
             v-if="tool.select && layers.length > 1 && command.select !== false"
             v-on:click="$$emit( 'add-all' )"
         >Add all to selection</command-button>
+
+        <enter-number class="smk-radius"
+            v-bind:disabled="busy"
+            v-if="command.radius !== false"
+            v-bind:value="formatNumber( radius, 0 )"
+            v-on:change="!busy && $$emit( 'change', { radius: $event } )"
+        >Maximum distance
+            <template slot="after-input">                
+                <select
+                    v-bind:value="radiusUnit"
+                    v-on:change="$$emit( 'change', { radiusUnit: $event.target.value } )"
+                    v-bind:disabled="command.radiusUnit === false"
+                >
+                    <option value="px">pixels</option>
+                    <option value="m">meters</option>
+                </select>
+            </template>
+        </enter-number>
     </template>
 
     <feature-list

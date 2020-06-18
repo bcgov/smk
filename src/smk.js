@@ -647,7 +647,7 @@
                     { type: 'coordinate',   enabled: false, order: 3 },
                     { type: 'directions',   enabled: false, order: 4, position: [ 'shortcut-menu', 'list-menu' ],   icon: 'directions_car', title: 'Route Planner' },
                     // { type: 'dropdown',     enabled: false }, -- so it won't be enabled by show-tools=all, no tools use it by default
-                    { type: 'identify',     enabled: false, order: 5, position: 'list-menu',                        icon: 'info_outline',   title: 'Identify Results' },
+                    { type: 'identify',     enabled: false, order: 5, position: 'list-menu',                        icon: 'info_outline',   title: 'Identify Features' },
                     { type: 'layers',       enabled: false, order: 3, position: [ 'shortcut-menu', 'list-menu' ],   icon: 'layers',         title: 'Layers' },
                     { type: 'list-menu',    enabled: false },
                     { type: 'location',     enabled: true },
