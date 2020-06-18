@@ -1,4 +1,4 @@
-include.module( 'sidepanel', [ 'vue', 'tool', 'sidepanel.sidepanel-html', 'sidepanel.panel-html' ], function ( inc ) {
+include.module( 'sidepanel', [ 'vue', 'tool', 'sidepanel.sidepanel-html' ], function ( inc ) {
     "use strict";
 
     var SidepanelEvent = SMK.TYPE.Event.define( [
