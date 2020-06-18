@@ -50,7 +50,7 @@ include.module( 'tool-identify', [
             this.tool.select = smk.$tool.select
             this.tool.zoom = smk.$tool.zoom
     
-            self.setMessage( 'Click on map to identify features.' )
+            self.showStatusMessage( 'Click on map to identify features.' )
     
             self.changedGroup( function () {
                 if ( !self.group ) {
@@ -93,7 +93,7 @@ include.module( 'tool-identify', [
                 },
     
                 'clear': function ( ev ) {
-                    self.setMessage( 'Click on map to identify features.' )
+                    self.showStatusMessage( 'Click on map to identify features.' )
                 },
     
                 'swipe-up': function ( ev ) {                
@@ -118,7 +118,7 @@ include.module( 'tool-identify', [
                 self.busy = true
                 self.firstId = null
                 // self.active = true
-                self.setMessage( 'Fetching features', 'progress' )
+                self.showStatusMessage( 'Fetching features', 'progress' )
             } )
     
             smk.$viewer.finishedIdentify( function ( ev ) {
@@ -126,7 +126,7 @@ include.module( 'tool-identify', [
     
                 if ( smk.$viewer.identified.isEmpty() ) {
                     smk.$sidepanel.setExpand( 0 )
-                    self.setMessage( 'No features found', 'warning' )
+                    self.showStatusMessage( 'No features found', 'warning' )
                 }
                 else {
                     self.active = true
@@ -135,9 +135,9 @@ include.module( 'tool-identify', [
                     var sub = SMK.UTIL.grammaticalNumber( stat.layerCount, null, null, 'on {} layers' )
                     // if ( stat.vertexCount > stat.featureCount )
                     //     sub += ( sub == '' ? '' : ', ' ) + SMK.UTIL.grammaticalNumber( stat.vertexCount, null, null, 'with {} vertices' )
-                    if ( sub != '' ) sub = '<div class="smk-submessage">' + sub + '</div>'
+                    if ( sub != '' ) sub = '<div>' + sub + '</div>'
     
-                    self.setMessage( '<div>Identified ' + SMK.UTIL.grammaticalNumber( stat.featureCount, null, 'a feature', '{} features' ) + '</div>' + sub )
+                    self.showStatusMessage( '<div>Identified ' + SMK.UTIL.grammaticalNumber( stat.featureCount, null, 'a feature', '{} features' ) + '</div>' + sub )
     
                     if ( stat.featureCount == 1 ) {
                         var id = Object.keys( smk.$viewer.identified.featureSet )[ 0 ]

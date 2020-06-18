@@ -1,0 +1,15 @@
+<div class="smk-status-message-container">
+    <transition name="status-message">
+        <div class="smk-status-message"
+            v-bind:class="'smk-' + ( status || 'summary' )" 
+            v-bind:class="{ 'smk-busy': busy }"
+            v-show="message"
+        >
+            <busy-spinner v-bind:size="16" v-bind:busy="busy"></busy-spinner>
+
+            <span class="smk-message" 
+                v-html="message"
+            ></span>
+        </div>
+    </transition>
+</div>

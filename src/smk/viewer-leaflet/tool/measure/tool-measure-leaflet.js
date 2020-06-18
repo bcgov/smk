@@ -8,7 +8,7 @@ include.module( 'tool-measure-leaflet', [ 'leaflet', 'tool-measure', 'turf' ], f
 
         smk.$viewer.map.createPane( 'hiddenPane', smk.addToContainer( '<div style="display:none"></div>' ) )
 
-        self.setMessage( "Select measurement method" )
+        self.showStatusMessage( "Select measurement method" )
 
         this.control = L.control.measure( {
             position: 'topright',
@@ -86,7 +86,7 @@ include.module( 'tool-measure-leaflet', [ 'leaflet', 'tool-measure', 'turf' ], f
             if ( !res.count ) return
 
             if ( res.count > 2 ) {
-                self.setMessage()
+                self.showStatusMessage()
                 self.results.push( {
                     title:  'Number of edges',
                     value:  res.count,
@@ -108,7 +108,7 @@ include.module( 'tool-measure-leaflet', [ 'leaflet', 'tool-measure', 'turf' ], f
                     } )
             }
             else if ( res.count > 1 ) {
-                self.setMessage()
+                self.showStatusMessage()
                 self.results.push( {
                     title:  'Length',
                     value:  res.length,
@@ -131,7 +131,7 @@ include.module( 'tool-measure-leaflet', [ 'leaflet', 'tool-measure', 'turf' ], f
                 self.busy = true
                 self.control._layer.clearLayers()
                 self.results = []
-                self.setMessage( "Click on map to set first point", 'progress' )
+                self.showStatusMessage( "Click on map to set first point", 'progress' )
 
                 self.minPoints = 3
                 self.maxPoints = null
@@ -143,7 +143,7 @@ include.module( 'tool-measure-leaflet', [ 'leaflet', 'tool-measure', 'turf' ], f
                 self.busy = true
                 self.control._layer.clearLayers()
                 self.results = []
-                self.setMessage( "Click on map to set starting point", 'progress' )
+                self.showStatusMessage( "Click on map to set starting point", 'progress' )
 
                 self.minPoints = 2
                 self.maxPoints = 2
@@ -154,7 +154,7 @@ include.module( 'tool-measure-leaflet', [ 'leaflet', 'tool-measure', 'turf' ], f
             'cancel': function ( ev ) {
                 self.busy = false
                 self.results = []
-                self.setMessage( "Select measurement method" )
+                self.showStatusMessage( "Select measurement method" )
 
                 self.control._finishMeasure()
             },

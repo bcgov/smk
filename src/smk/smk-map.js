@@ -1,4 +1,4 @@
-include.module( 'smk-map', [ 'libs', 'util', 'theme-base', 'sidepanel', 'vue-config.spinner-gif' ], function ( inc ) {
+include.module( 'smk-map', [ 'libs', 'util', 'theme-base', 'sidepanel', 'status-message', 'vue-config.spinner-gif' ], function ( inc ) {
     "use strict";
 
     function SmkMap( option ) {
@@ -626,7 +626,17 @@ include.module( 'smk-map', [ 'libs', 'util', 'theme-base', 'sidepanel', 'vue-con
         if ( this.$viewer.mapResized )
             this.$viewer.mapResized()
     }
-    
+
+    SmkMap.prototype.getStatusMessage = function () {
+        var self = this
+
+        if ( this.$statusMessage ) return this.$statusMessage
+
+        this.$statusMessage = new SMK.TYPE.StatusMessage( this )
+
+        return this.$statusMessage
+    }
+   
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     function findProperty( obj, collectionName, propName, cb ) {

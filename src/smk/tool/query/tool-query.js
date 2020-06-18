@@ -106,7 +106,7 @@ include.module( 'tool-query', [
 
                 'reset': function ( ev ) {
                     self.featureSet.clear()
-                    self.setMessage() 
+                    self.showStatusMessage() 
 
                     self.parameters.forEach( function ( p, i ) {
                         p.prop.value = self.query.parameters[ i ].value
@@ -116,7 +116,7 @@ include.module( 'tool-query', [
                 'execute': function ( ev ) {
                     self.featureSet.clear()
                     self.busy = true
-                    self.setMessage( 'Searching for features', 'progress' )
+                    self.showStatusMessage( 'Searching for features', 'progress' )
 
                     var param = {}
                     self.parameters.forEach( function ( p, i ) {
@@ -128,7 +128,7 @@ include.module( 'tool-query', [
                             return self.query.queryLayer( param, { within: self.within }, smk.$viewer )
                         } )
                         .then( function ( features ) {
-                            self.setMessage()
+                            self.showStatusMessage()
                             return asyncIterator(
                                 function () {
                                     return features.length > 0
@@ -142,7 +142,7 @@ include.module( 'tool-query', [
                         } )
                         .catch( function ( err ) {
                             console.warn( err )
-                            self.setMessage( 'No features found', 'warning' )
+                            self.showStatusMessage( 'No features found', 'warning' )
                         } )
                         .finally( function () {
                             self.busy = false

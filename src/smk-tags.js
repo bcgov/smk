@@ -75,6 +75,9 @@ t.group( 'query' )
 t.group( 'sidepanel' )
     .dir( 'smk/sidepanel/**/*' )
 
+t.group( 'status-message' )
+    .dir( 'smk/status-message/**/*' )
+
 // t.group( 'feature-list' )
     // .dir( 'smk/feature-list/**/*' )
 

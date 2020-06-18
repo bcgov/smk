@@ -14,6 +14,7 @@ include.module( 'tool.tool-base-js', [ 'tool.tool-js' ], function ( inc ) {
         this.defineProp( 'showTitle' )
         this.defineProp( 'icon' )
         this.defineProp( 'order' )
+        this.defineProp( 'busy' )
 
         this.visible = false
         this.enabled = true
@@ -22,6 +23,7 @@ include.module( 'tool.tool-base-js', [ 'tool.tool-js' ], function ( inc ) {
         this.showTitle = false
         this.icon = 'widgets'
         this.order = 1       
+        this.busy = false
 
         this.$propFilter.baseClasses = false
 
@@ -112,7 +114,11 @@ include.module( 'tool.tool-base-js', [ 'tool.tool-js' ], function ( inc ) {
                     else {
                     }
                 } )
-   
+
+            this.showStatusMessage = function ( message, status, delay ) {
+                return smk.getStatusMessage().show( message, status, delay, this.busy )
+            }
+            
         } )
     
         this.isToolInGroupActive = function ( toolId ) {
@@ -122,5 +128,7 @@ include.module( 'tool.tool-base-js', [ 'tool.tool-js' ], function ( inc ) {
         this.addTool = function ( tool, smk ) {
             return false
         }       
+
+
     }
 } )

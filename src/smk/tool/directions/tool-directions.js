@@ -156,12 +156,12 @@ include.module( 'tool-directions', [
             } )
     
             this.getCurrentLocation = function () {
-                self.setMessage( 'Finding current location...', 'progress', null )
+                self.showStatusMessage( 'Finding current location...', 'progress', null )
                 self.busy = true
     
                 smk.$viewer.getCurrentLocation().finally( function () {
                     self.busy = false
-                    self.setMessage()
+                    self.showStatusMessage()
                 } )
             }
     
@@ -277,14 +277,14 @@ include.module( 'tool-directions', [
                 var self = this
         
                 if ( !site ) 
-                    return this.setMessage( 'Unable to get location', 'error', 1000 )
+                    return this.showStatusMessage( 'Unable to get location', 'error', 1000 )
         
                 var top = this.waypoints[ this.waypoints.length - 1 ]
                 if ( top && close( top, site ) ) 
-                    return this.setMessage( 'Location too close to previous one', 'error', 1000 )
+                    return this.showStatusMessage( 'Location too close to previous one', 'error', 1000 )
         
                 if ( !site.fullAddress )
-                    this.setMessage( 'Unable to find address for location', 'error', 1000 )
+                    this.showStatusMessage( 'Unable to find address for location', 'error', 1000 )
         
                 this.waypoints.push( site )
         
@@ -299,7 +299,7 @@ include.module( 'tool-directions', [
                         return self.addWaypoint( res )
                     } )
                     .catch( function () {
-                        return self.setMessage( 'Unable to get current location', 'error', 1000 )
+                        return self.showStatusMessage( 'Unable to get current location', 'error', 1000 )
                     } )
             },
         
@@ -324,7 +324,7 @@ include.module( 'tool-directions', [
             //                     return self.addWaypoint( res )
             //                 } )
             //                 .catch( function () {
-            //                     return self.setMessage( 'Unable to get current location', 'error', 1000 )
+            //                     return self.showStatusMessage( 'Unable to get current location', 'error', 1000 )
             //                 } )
             //         } )
             // }
@@ -344,7 +344,7 @@ include.module( 'tool-directions', [
                 this.directions = []
                 this.directionHighlight = null
                 this.directionPick = null
-                this.setMessage()
+                this.showStatusMessage()
                 this.clearLayers()
         
                 var points = this.waypoints
@@ -353,11 +353,11 @@ include.module( 'tool-directions', [
                 if ( points.length < 2 ) {
                     self.handleRouteData()
                     self.displayWaypoints()
-                    this.setMessage( 'Add a waypoint' )
+                    this.showStatusMessage( 'Add a waypoint' )
                     return SMK.UTIL.resolved()
                 }
         
-                this.setMessage( 'Constructing route...', 'progress', null )
+                this.showStatusMessage( 'Constructing route...', 'progress', null )
                 this.busy = true
                 this.hasRoute = false
               
@@ -391,7 +391,7 @@ include.module( 'tool-directions', [
             
                         self.displayWaypoints()
             
-                        self.setMessage( 'Route travels ' + data.distance + ' km in ' + data.timeText, 'summary' )
+                        self.showStatusMessage( 'Route travels ' + data.distance + ' km in ' + data.timeText, 'summary' )
             
                         self.hasRoute = true
             
@@ -402,7 +402,7 @@ include.module( 'tool-directions', [
                     } )
                     .catch( function ( err ) {
                         console.debug( err )
-                        self.setMessage( 'Unable to find route', 'error' )
+                        self.showStatusMessage( 'Unable to find route', 'error' )
                         self.displayWaypoints()
                     } )
                     .finally( function () {

@@ -44,7 +44,7 @@ include.module( 'tool-query-results', [
 
                 self.active = true;
 
-                self.setMessage( '<div>Found ' + SMK.UTIL.grammaticalNumber( stat.featureCount, null, 'a feature', '{} features' ) + '</div>' )
+                self.showStatusMessage( '<div>Found ' + SMK.UTIL.grammaticalNumber( stat.featureCount, null, 'a feature', '{} features' ) + '</div>' )
             } )
         } 
     )

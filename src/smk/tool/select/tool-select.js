@@ -32,7 +32,7 @@ include.module( 'tool-select', [
         function ( smk ) {
             var self = this
 
-            self.setMessage( 'Click on map to identify features and then add them to the selection.' )
+            self.showStatusMessage( 'Click on map to identify features and then add them to the selection.' )
 
             self.changedActive( function () {
                 if ( self.active ) {
@@ -46,7 +46,7 @@ include.module( 'tool-select', [
 
             smk.on( this.id, {
                 'clear': function ( ev ) {
-                    self.setMessage( 'Click on map to identify features and then add them to the selection.' )
+                    self.showStatusMessage( 'Click on map to identify features and then add them to the selection.' )
                 }
             } )
 
@@ -58,7 +58,7 @@ include.module( 'tool-select', [
                 var stat = smk.$viewer.selected.getStats()
 
                 if ( stat.featureCount == 0 ) {
-                    self.setMessage()
+                    self.showStatusMessage()
                     return
                 }
 
@@ -66,7 +66,7 @@ include.module( 'tool-select', [
                 // if ( stat.vertexCount > stat.featureCount )
                     // sub = '<div class="smk-submessage">' + SMK.UTIL.grammaticalNumber( stat.vertexCount, null, null, 'with {} vertices' ) + '</div>'
 
-                self.setMessage( '<div>Selection contains ' + SMK.UTIL.grammaticalNumber( stat.featureCount, null, 'a feature', '{} features' ) + '</div>' + sub )
+                self.showStatusMessage( '<div>Selection contains ' + SMK.UTIL.grammaticalNumber( stat.featureCount, null, 'a feature', '{} features' ) + '</div>' + sub )
             }
         } 
     )

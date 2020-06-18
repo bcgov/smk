@@ -88,16 +88,16 @@ include.module( 'tool-directions-route', [
                     var key = SMK.UTIL.makeUUID()
                     window.sessionStorage.setItem( key, JSON.stringify( cfg ) )
     
-                    self.setMessage( 'Preparing print...', 'progress', null )
+                    self.showStatusMessage( 'Preparing print...', 'progress', null )
                     self.busy = true
                     SMK.HANDLER.get( self.id, 'print' )( smk, self, key, ev )
                         .then( function () {
                             self.busy = false
-                            return self.setMessage( 'Printing...', 'progress', 2000 )
+                            return self.showStatusMessage( 'Printing...', 'progress', 2000 )
                         } )
                         .catch( function () {
                             self.busy = false
-                            return self.setMessage( 'Print failed', 'error', 2000 )
+                            return self.showStatusMessage( 'Print failed', 'error', 2000 )
                         } )
                 },
             } )
