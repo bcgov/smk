@@ -300,7 +300,10 @@ include.module( 'viewer-leaflet', [ 'viewer', 'leaflet', 'layer-leaflet', /*'fea
             bounds = L.latLngBounds( [ ll, ll ] )
             break;
 
-        // default:
+        default:
+            var bbox = turf.bbox( feature )
+            bounds = L.latLngBounds( [ bbox[ 1 ], bbox[ 0 ] ], [ bbox[ 3 ], bbox[ 2 ] ] )
+
             // if ( self.highlight[ feature.id ] )
                 // bounds = self.highlight[ feature.id ].getBounds()
         }

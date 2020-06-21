@@ -216,11 +216,8 @@ t.group( 'layer-leaflet' )
     .script( 'lib/leaflet/NonTiledLayer-src.js' )
     .script( "lib/leaflet/leaflet-heat.js" )
 
-t.script( 'feature-list-leaflet', 'smk/viewer-leaflet/feature-list-leaflet.js' )
-t.group( 'feature-list-clustering-leaflet' )
-    .script( 'smk/viewer-leaflet/feature-list-clustering-leaflet.js' )
-    .asset( 'smk/viewer-leaflet/marker-icon-white.png' )
-    .asset( 'smk/viewer-leaflet/marker-shadow.png' )
+t.group( 'tool-leaflet' )
+    .dir( 'smk/viewer-leaflet/tool/*' )
 
 t.group( 'viewer-leaflet' )
     .script( 'smk/viewer-leaflet/viewer-leaflet.js' )

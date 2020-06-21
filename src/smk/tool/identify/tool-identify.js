@@ -118,7 +118,7 @@ include.module( 'tool-identify', [
                 self.busy = true
                 self.firstId = null
                 // self.active = true
-                self.showStatusMessage( 'Fetching features', 'progress' )
+                self.showStatusMessage( 'Fetching features', 'progress', null )
             } )
     
             smk.$viewer.finishedIdentify( function ( ev ) {

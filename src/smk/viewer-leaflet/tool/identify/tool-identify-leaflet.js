@@ -1,7 +1,8 @@
 include.module( 'tool-identify-leaflet', [ 
     'leaflet', 
     'tool-identify', 
-    'feature-list-clustering-leaflet' 
+    'tool-leaflet',
+    'tool-leaflet.tool-feature-list-leaflet-js' 
 ], function ( inc ) {
     "use strict";
 
@@ -20,5 +21,5 @@ include.module( 'tool-identify-leaflet', [
         }    
     } )
 
-    SMK.TYPE.IdentifyTool.addInitializer( inc[ 'feature-list-clustering-leaflet' ] )   
+    SMK.TYPE.IdentifyTool.addInitializer( inc[ 'tool-leaflet.tool-feature-list-leaflet-js' ] )   
 } )

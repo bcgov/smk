@@ -1,7 +1,8 @@
 include.module( 'tool-select-leaflet', [ 
     'leaflet', 
     'tool-select', 
-    'feature-list-leaflet' 
+    'tool-leaflet',
+    'tool-leaflet.tool-feature-list-leaflet-js' 
 ], function ( inc ) {
     "use strict";
 
@@ -21,7 +22,7 @@ include.module( 'tool-select-leaflet', [
         }    
     } )
 
-    SMK.TYPE.SelectTool.addInitializer( inc[ 'feature-list-leaflet' ] )   
+    SMK.TYPE.IdentifyTool.addInitializer( inc[ 'tool-leaflet.tool-feature-list-leaflet-js' ] )   
 
     SMK.TYPE.SelectTool.addInitializer( function ( smk ) {
         var self = this

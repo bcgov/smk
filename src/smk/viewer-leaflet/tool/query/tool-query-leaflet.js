@@ -1,7 +1,8 @@
 include.module( 'tool-query-leaflet', [ 
     'leaflet', 
     'tool-query-results', 
-    'feature-list-clustering-leaflet' 
+    'tool-leaflet',
+    'tool-leaflet.tool-feature-list-clustering-leaflet-js' 
 ], function ( inc ) {
     "use strict";
 
@@ -20,5 +21,5 @@ include.module( 'tool-query-leaflet', [
         }    
     } )
 
-    SMK.TYPE.QueryResultsTool.addInitializer( inc[ 'feature-list-clustering-leaflet' ] )   
+    SMK.TYPE.QueryResultsTool.addInitializer( inc[ 'tool-leaflet.tool-feature-list-clustering-leaflet-js' ] )   
 } )
