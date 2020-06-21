@@ -23,6 +23,10 @@
         {
             "type": "location",
             "enabled": false
+        },
+        {
+            "type": "layers",
+            "enabled": true
         }
     ]
 }
