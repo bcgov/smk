@@ -580,13 +580,13 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
         ] )
     }
 
-    Viewer.prototype.identifyFeatures = function ( location, radiusMeters ) {
+    Viewer.prototype.identifyFeatures = function ( location, area ) {
         var self = this
 
-        var searchArea = turf.circle( [ location.map.longitude, location.map.latitude ], radiusMeters / 1000, { steps: 16 } )
+        // var searchArea = turf.circle( [ location.map.longitude, location.map.latitude ], radiusMeters / 1000, { steps: 16 } )
         // var tolerance = this.identifyTool().tolerance || 5
         // var searchArea = this.circleInMap( location.screen, tolerance, 12 )
-        this.temporaryFeature( 'identify', searchArea )
+        // this.temporaryFeature( 'identify', searchArea )
 
         var view = this.getView()
 
@@ -608,13 +608,13 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
                 layer: self.visibleLayer[ id ] 
             }
 
-            var layerSearchArea = searchArea 
+            // var layerSearchArea = searchArea 
             // if ( option.tolerance != tolerance )
                 // layerSearchArea = self.circleInMap( location.screen, option.tolerance, 12 )
 
             // self.temporaryFeature( 'identify', layerSearchArea )
 
-            var p = ly.getFeaturesInArea( layerSearchArea, view, option )
+            var p = ly.getFeaturesInArea( area, view, option )
             if ( !p ) return
 
             promises.push(

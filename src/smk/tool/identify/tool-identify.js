@@ -5,7 +5,8 @@ include.module( 'tool-identify', [
     'component-feature-list', 
     'component-command-button',
     'component-enter-input',
-    'tool-identify.panel-identify-html' 
+    'tool-identify.panel-identify-html',
+    'tool-identify.crosshair-png' 
 ], function ( inc ) {
     "use strict";
 
@@ -43,6 +44,52 @@ include.module( 'tool-identify', [
             this.command = {}
             this.radius = 100
             this.radiusUnit = 'm'
+
+            this.boundaryLayer = {
+                id: "@identify-boundary",
+                title: "Identify Boundary",
+                style: [
+                    {
+                        stroke:             false,
+                        fillColor:          "white",
+                        fillOpacity:        0.5,
+                    },
+                    {
+                        strokeWidth:        6,
+                        strokeColor:        "black",
+                        strokeOpacity:      1,
+                        strokeCap:          "butt",
+                        strokeDashes:       "6,6",
+                        strokeDashOffset:   6,
+                        fill:               false,
+                    },
+                    {
+                        strokeWidth:        6,
+                        strokeColor:        "white",
+                        strokeOpacity:      1,
+                        strokeCap:          "butt",
+                        strokeDashes:       "6,6",
+                        fill:               false,
+                    }
+                ],    
+                legend: {
+                    line: true
+                }
+            }
+
+            this.locationLayer = {
+                id: "@identify-location",
+                title: "Identify Location",
+                style: {
+                    markerUrl: inc[ 'tool-identify.crosshair-png' ],
+                    markerSize: [ 40, 40 ],
+                    markerOffset: [ 20, 20 ]    
+                },
+                legend: {
+                    point: true
+                }
+            }
+
         },
         function ( smk ) {
             var self = this
@@ -53,7 +100,13 @@ include.module( 'tool-identify', [
             self.showStatusMessage( 'Click on map to identify features.' )
     
             self.changedGroup( function () {
-                if ( !self.group ) {
+                if ( self.group ) {
+                    self.displayBoundary()
+                }
+                else {
+                    self.boundary = null
+                    self.setInternalLayerVisible( false )
+
                     smk.$viewer.identified.clear()
                     smk.$viewer.identified.pick()
                 }
@@ -71,12 +124,23 @@ include.module( 'tool-identify', [
             } )
     
             var startIdentify = function ( location ) {
-                self.pickedLocation = null
-                return smk.$viewer.identifyFeatures( location, smk.$viewer.distanceToMeters( self.radius, self.radiusUnit ) )
+                // self.pickedLocation = null
+                self.pickedLocation = location
+
+                self.radiusKM = smk.$viewer.distanceToMeters( self.radius, self.radiusUnit ) / 1000
+                self.boundary = turf.circle( [ location.map.longitude, location.map.latitude ], self.radiusKM, { steps: 64 } )
+                
+                self.displayBoundary()
+
+                return smk.$viewer.identifyFeatures( location, turf.circle( [ location.map.longitude, location.map.latitude ], self.radiusKM, { steps: 16 } ) )
                     .then( function () { 
-                        self.pickedLocation = location
+                        // self.pickedLocation = location
                         return true
                     } )
+            }
+
+            self.restartIdentify = function () {
+                startIdentify( self.pickedLocation )
             }
     
             smk.on( this.id, {  
@@ -109,8 +173,6 @@ include.module( 'tool-identify', [
     
                     if ( self.pickedLocation )
                         startIdentify( self.pickedLocation )
-                    // comp.$forceUpdate()
-                    // findRouteDelayed()
                 },
             } )
     
@@ -126,6 +188,7 @@ include.module( 'tool-identify', [
     
                 if ( smk.$viewer.identified.isEmpty() ) {
                     smk.$sidepanel.setExpand( 0 )
+                    self.setInternalLayerVisible( false )
                     self.showStatusMessage( 'No features found', 'warning' )
                 }
                 else {
@@ -145,11 +208,170 @@ include.module( 'tool-identify', [
                     }
                 }
             } )
+
+            this.layer = {}
+            var groupItems = []
+            var ly = this.boundaryLayer
+            ly.type = 'vector'
+            ly.isVisible = true
+            ly.isQueryable = false
+            ly.isInternal = true
+            var display = smk.$viewer.addLayer( ly )
+            display.class = "smk-inline-legend"            
+
+            groupItems.push( { id: display.id } )
+
+            self.layer[ ly.id ] = smk.$viewer.layerId[ ly.id ]
+
+            ly = this.locationLayer
+            ly.type = 'vector'
+            ly.isVisible = true
+            ly.isQueryable = false
+            ly.isInternal = true
+            display = smk.$viewer.addLayer( ly )
+            display.class = "smk-inline-legend"            
+
+            groupItems.unshift( { id: display.id } )
+
+            self.layer[ ly.id ] = smk.$viewer.layerId[ ly.id ]
+
+            smk.$viewer.setDisplayContextItems( this.id, [ {
+                id: 'tool-' + this.id,
+                type: 'group',
+                title: this.title,
+                isVisible: false,
+                isInternal: true,
+                items: groupItems
+            } ] )
+
+            this.setInternalLayerVisible = function ( visible ) {
+                smk.$viewer.displayContext[ self.id ].setItemVisible( 'tool-' + self.id, visible )
+            }
+
+            var lg = L.layerGroup().addTo( smk.$viewer.map )
+
+            this.addToMap = function ( ly, clear ) {
+                if ( clear !== false )
+                    lg.clearLayers()
+
+                if ( ly )
+                    lg.addLayer( ly )
+            }
+
+            this.bufferDistance = function () {
+                return smk.$viewer.distanceToMeters( 20, 'px' ) / 1000                
+            }
+
+            this.trackMouse = false
+            smk.$viewer.map.on( 'mousemove', function ( ev ) { self.onMouseMove( ev ) } )
         },
         {
             getLocation: function () {
                 return this.pickedLocation.map
+            },
+
+            closestPointOnBoundary: function ( latLng ) {
+                if ( !this.boundary ) return
+
+                var ls = turf.polygonToLine( this.boundary )
+                var pt = turf.nearestPointOnLine( ls, [ latLng.lng, latLng.lat ] )
+
+                return [ pt.geometry.coordinates[ 1 ], pt.geometry.coordinates[ 0 ] ]
+            },
+
+            displayBoundary: function () {
+                var self = this
+        
+                this.trackMouse = false
+                if ( !this.boundary ) return
+
+                this.setInternalLayerVisible( true )
+                
+                this.layer[ '@identify-boundary' ].clear()
+                this.layer[ '@identify-boundary' ].load( this.boundary )
+
+                this.layer[ '@identify-location' ].clear()
+                this.layer[ '@identify-location' ].load( turf.point( [ this.pickedLocation.map.longitude, this.pickedLocation.map.latitude ] ) )
+                
+                this.trackMouse = true
+            },
+
+            onMouseMove: function ( ev ) {
+                var self = this
+
+                if ( !this.trackMouse ) return
+                if ( !this.pickedLocation ) return
+                if ( ev.originalEvent.buttons ) return
+
+                var latLong = ev.target.layerPointToLatLng( ev.layerPoint )
+                var distToLocation = turf.distance( 
+                    [ this.pickedLocation.map.longitude, this.pickedLocation.map.latitude ], 
+                    llToTurf( latLong ) 
+                )
+
+                if ( Math.abs( distToLocation - this.radiusKM ) < this.bufferDistance() ) {
+                    var pos = this.closestPointOnBoundary( latLong )
+                    if ( !this.marker ) {
+                        this.marker = L.marker( pos, {
+                                icon: L.divIcon( {
+                                    className: 'smk-drag-handle',
+                                    iconSize: [ 10, 10 ],
+                                    iconAnchor: [ 5, 5 ]
+                                } ),
+                                bubblingMouseEvents: true,
+                                draggable: true
+                            } )
+                            .on( 'dragstart', function (ev) {
+                                // console.log('dragstart',ev)
+                                self.trackMouse = false
+                                self.newBoundary = L.GeoJSON.geometryToLayer( turf.circle( [ self.pickedLocation.map.longitude, self.pickedLocation.map.latitude ], distToLocation, { steps: 64 } ), {
+                                    color: 'red',
+                                    width: 2,
+                                } )
+                                self.addToMap( self.newBoundary, false )                
+                            } )
+                            .on( 'drag', function ( ev ) {
+                                // console.log('drag',ev)
+                                var rad = turf.distance( 
+                                    [ self.pickedLocation.map.longitude, self.pickedLocation.map.latitude ], 
+                                    llToTurf( ev.latlng )
+                                )
+                                self.newBoundary.remove()
+                
+                                self.newBoundary = L.GeoJSON.geometryToLayer( turf.circle( [ self.pickedLocation.map.longitude, self.pickedLocation.map.latitude ], rad, { steps: 64 } ), {
+                                    color: 'red',
+                                    width: 2,
+                                } )
+                                self.addToMap( self.newBoundary, false )
+                                                
+                            } )
+                            .on( 'dragend', function (ev) {
+                                // console.log('dragend',ev)
+                                self.radius = turf.distance( 
+                                    [ self.pickedLocation.map.longitude, self.pickedLocation.map.latitude ], 
+                                    llToTurf( ev.target.getLatLng() )
+                                ) * 1000
+                                self.addToMap( self.marker )
+                                self.restartIdentify()
+                            } )
+                        
+                        this.addToMap( this.marker, false )
+                    }
+                    else {
+                        this.marker.setLatLng( pos )
+                    }        
+                }
+                else {
+                    if ( this.marker ) {
+                        this.marker.remove()
+                        this.marker = null
+                    }
+                }
             }
         }
     )
+
+    function llToTurf( ll ) {
+        return [ ll.lng, ll.lat ]
+    }
 } )
