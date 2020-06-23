@@ -29,6 +29,13 @@
                 </select>
             </template>
         </enter-number>
+
+        <command-button class="smk-current"
+            title="Use current location"
+            v-bind:disabled="busy"
+            v-on:click="$$emit( 'current-location' )"
+            icon="gps_fixed"
+        ></command-button>
     </template>
 
     <feature-list

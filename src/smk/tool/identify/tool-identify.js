@@ -174,6 +174,17 @@ include.module( 'tool-identify', [
                     if ( self.pickedLocation )
                         startIdentify( self.pickedLocation )
                 },
+
+                'current-location': function () {
+                    self.getCurrentLocation()
+                        .then( function ( res ) {
+                            return startIdentify( { map: res } )
+                        } )
+                        .catch( function () {
+                            return self.showStatusMessage( 'Unable to get current location', 'error', 1000 )
+                        } )
+
+                }
             } )
     
             smk.$viewer.startedIdentify( function ( ev ) {
@@ -264,6 +275,16 @@ include.module( 'tool-identify', [
 
             this.trackMouse = false
             smk.$viewer.map.on( 'mousemove', function ( ev ) { self.onMouseMove( ev ) } )
+
+            this.getCurrentLocation = function () {
+                self.busy = true
+                self.showStatusMessage( 'Finding current location...', 'progress', null )
+    
+                return smk.$viewer.getCurrentLocation().finally( function () {
+                    self.busy = false
+                    self.showStatusMessage()
+                } )
+            }
         },
         {
             getLocation: function () {
