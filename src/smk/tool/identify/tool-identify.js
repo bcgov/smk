@@ -176,14 +176,22 @@ include.module( 'tool-identify', [
                 },
 
                 'current-location': function () {
-                    self.getCurrentLocation()
+                    self.busy = true
+                    self.showStatusMessage( 'Finding current location...', 'progress', null )
+        
+                    return smk.$viewer.getCurrentLocation()
                         .then( function ( res ) {
+                            self.busy = false
+                            self.showStatusMessage()
                             return startIdentify( { map: res } )
+                                .then( function () {
+                                    smk.$viewer.panToFeature( self.boundary, true )
+                                } )
                         } )
                         .catch( function () {
-                            return self.showStatusMessage( 'Unable to get current location', 'error', 1000 )
+                            self.busy = false
+                            return self.showStatusMessage( 'Unable to get current location', 'error' )
                         } )
-
                 }
             } )
     

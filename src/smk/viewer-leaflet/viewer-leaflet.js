@@ -292,7 +292,7 @@ include.module( 'viewer-leaflet', [ 'viewer', 'leaflet', 'layer-leaflet', /*'fea
         }
     }
 
-    ViewerLeaflet.prototype.panToFeature = function ( feature ) {
+    ViewerLeaflet.prototype.panToFeature = function ( feature, zoomIn ) {
         var bounds
         switch ( turf.getType( feature ) ) {
         case 'Point':
@@ -322,7 +322,7 @@ include.module( 'viewer-leaflet', [ 'viewer', 'leaflet', 'layer-leaflet', /*'fea
             .fitBounds( bounds, {
                 paddingTopLeft: padding.topLeft,
                 paddingBottomRight: padding.bottomRight,
-                maxZoom: this.map.getZoom(),        
+                maxZoom: zoomIn !== true ? this.map.getZoom() : undefined,        
                 animate: true
             } )
     } 
