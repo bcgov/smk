@@ -6,8 +6,6 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
         'changedBaseMap',
         'startedLoading',
         'finishedLoading',
-        'startedIdentify',
-        'finishedIdentify',
         'pickedLocation',
         'changedLocation',
         'changedPopup',
@@ -583,14 +581,11 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
     Viewer.prototype.identifyFeatures = function ( location, area ) {
         var self = this
 
-        // var searchArea = turf.circle( [ location.map.longitude, location.map.latitude ], radiusMeters / 1000, { steps: 16 } )
         // var tolerance = this.identifyTool().tolerance || 5
         // var searchArea = this.circleInMap( location.screen, tolerance, 12 )
         // this.temporaryFeature( 'identify', searchArea )
 
         var view = this.getView()
-
-        this.startedIdentify( { location: location.map } )
 
         this.identified.clear()
 
@@ -599,7 +594,6 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
             var ly = self.layerId[ id ]
 
             if ( !self.isDisplayContextItemVisible( id ) ) return
-            // if ( !self.layerDisplayContext.isItemVisible( id ) ) return
             if ( ly.config.isQueryable === false ) return
             if ( !ly.inScaleRange( view ) ) return
 
@@ -608,10 +602,8 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
                 layer: self.visibleLayer[ id ] 
             }
 
-            // var layerSearchArea = searchArea 
             // if ( option.tolerance != tolerance )
                 // layerSearchArea = self.circleInMap( location.screen, option.tolerance, 12 )
-
             // self.temporaryFeature( 'identify', layerSearchArea )
 
             var p = ly.getFeaturesInArea( area, view, option )
@@ -654,15 +646,11 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
                 } )
                 .catch( function ( err ) {
                     console.debug( id, 'identify fail:', err.message )
-                    return SMK.UTIL.resolved()
                 } )
             )
         } )
 
         return SMK.UTIL.waitAll( promises )
-            .then( function () {
-                self.finishedIdentify()
-            } )
     }
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //

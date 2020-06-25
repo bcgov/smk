@@ -110,24 +110,45 @@ include.module( 'tool.tool-js', [
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
     SMK.TYPE.Tool.define = function( name, construct, initialize, methods ) {
+        var option = {
+            construct: construct,
+            initialize: initialize,
+            methods: methods
+        }
+
+        if ( SMK.UTIL.type( construct ) == 'object' ) {
+            Object.assign( option, construct )
+        }
+
         var initializers = []
 
+        var events
+        if ( option.events ) {
+            events = SMK.TYPE.Event.define( option.events )
+        }
+        
         SMK.TYPE[ name ] = function () {
             SMK.TYPE.Tool.prototype.constructor.call( this )
 
+            if ( events )
+                events.prototype.constructor.call( this )
+
             SMK.TYPE.ToolBase.call( this )
 
-            if ( construct ) construct.call( this )
+            if ( option.construct ) option.construct.call( this )
 
-            if ( initialize )
-                this.$initializers.push( initialize )
+            if ( option.initialize )
+                this.$initializers.push( option.initialize )
 
             this.$moreInitializers = initializers
            
-            Object.assign( this, methods )
+            Object.assign( this, option.methods )
         }
     
         Object.assign( SMK.TYPE[ name ].prototype, SMK.TYPE.Tool.prototype )
+
+        if ( events )
+            Object.assign( SMK.TYPE[ name ].prototype, events.prototype )
     
         SMK.TYPE[ name ].addInitializer = function ( initialize ) {
             initializers.push( initialize )

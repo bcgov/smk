@@ -31,7 +31,7 @@ include.module( 'tool-identify-feature', [
                 }
             } )
     
-            smk.$viewer.startedIdentify( function () {
+            smk.$tool.identify.startedIdentify( function () {
                 self.active = false
                 // smk.$sidepanel.popTool( self )
             } )
