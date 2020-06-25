@@ -262,6 +262,8 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
                 whenFinishedLoading = null
             }
         } )
+
+        this.acquireIdentifyMutex = SMK.UTIL.makeMutex( 'identify' )
     }
 
     Viewer.prototype.waitFinishedLoading = function () {
@@ -589,6 +591,16 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
 
         this.identified.clear()
 
+        var lock = this.acquireIdentifyMutex()
+
+        if ( !location || !area ) return
+
+        function IdentifyDiscardedError() {
+            var e = Error( 'Identify results discarded' )
+            e.discarded = true
+            return e
+        }
+
         var promises = []
         this.layerIds.forEach( function ( id, i ) {
             var ly = self.layerId[ id ]
@@ -609,11 +621,15 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
             var p = ly.getFeaturesInArea( area, view, option )
             if ( !p ) return
 
-            promises.push(
+            promises.push( 
                 SMK.UTIL.resolved().then( function () {
+                    if ( !lock.held() ) throw IdentifyDiscardedError()
+
                     return p
                 } )
                 .then( function ( features ) {
+                    if ( !lock.held() ) throw IdentifyDiscardedError()
+
                     features.forEach( function ( f, i ) {
                         if ( ly.config.titleAttribute ) {
                             var m = ly.config.titleAttribute.match( /^(.+?)(:[/](.+)[/])?$/ )
@@ -639,6 +655,8 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
                     return features
                 } )
                 .then( function ( features ) {
+                    if ( !lock.held() ) throw IdentifyDiscardedError()
+
                     features.forEach( function ( f ) {
                         f._identifyPoint = location.map
                     } )
@@ -646,12 +664,16 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
                 } )
                 .catch( function ( err ) {
                     console.debug( id, 'identify fail:', err.message )
+                    if ( err.discarded ) throw err
                 } )
             )
         } )
 
         return SMK.UTIL.waitAll( promises )
-    }
+            .finally( function () {
+                if ( !lock.held() ) throw IdentifyDiscardedError()
+            } )
+}
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
     Viewer.prototype.anyLayersLoading = function () {

@@ -118,11 +118,15 @@ include.module( 'tool-identify', [
             this.changedGroup( function () {
                 if ( self.group ) {
                     self.displaySearchArea()
-                    self.showStatusMessage( 'Click on map to identify features.' )
                 }
                 else {
                     self.searchArea = null
+                    self.searchLocation = null
+                    self.trackMouse = false
+                    self.addToMap()
+
                     self.setInternalLayerVisible( false )
+                    smk.$viewer.identifyFeatures()
 
                     smk.$viewer.identified.clear()
                     smk.$viewer.identified.pick()
@@ -132,12 +136,14 @@ include.module( 'tool-identify', [
             // fallback handler if nothing else uses pick
             smk.$viewer.handlePick( 0, function ( location ) {
                 return self.startIdentify( location )
+                    .then( function () { return true }, function () { return true } )
             } )
     
             smk.$viewer.handlePick( 2, function ( location ) {
                 if ( !self.active ) return
     
                 return self.startIdentify( location )
+                    .then( function () { return true }, function () { return true } )
             } )
     
             this.getRadiusMeters = function () {
@@ -147,7 +153,7 @@ include.module( 'tool-identify', [
             this.startIdentify = function ( location ) {
                 self.busy = true
                 this.searchLocation = location
-                
+                // console.warn('startIdentify')
                 self.showStatusMessage( 'Fetching features', 'progress', null )
                 this.displaySearchArea()
                 this.startedIdentify()
@@ -176,15 +182,21 @@ include.module( 'tool-identify', [
                                 smk.$viewer.identified.pick( self.firstId )
                         }
 
-                        return true
-                    } )
-                    .finally( function () {
                         self.finishedIdentify()
+                    } )
+                    .catch( function ( e ) {
+                        console.warn( 'identify failed', e )
+                        if ( e.discarded ) return 
+
+                        self.setInternalLayerVisible( false )
+                        // self.showStatusMessage( '<div>Failed while finding features:</div><div>' + e + '</div>', 'error' )
+                        self.showStatusMessage( e.toString(), 'error' )
                     } )
             }
 
             this.restartIdentify = function () {
-                this.startIdentify( self.searchLocation )
+                if ( self.searchLocation )
+                    this.startIdentify( self.searchLocation )
             }
     
             smk.on( this.id, {  
@@ -214,9 +226,7 @@ include.module( 'tool-identify', [
 
                 'change': function ( ev, comp ) {
                     Object.assign( self, ev )
-    
-                    if ( self.pickedLocation )
-                        self.startIdentify( self.pickedLocation )
+                    self.restartIdentify()
                 },
 
                 'current-location': function () {

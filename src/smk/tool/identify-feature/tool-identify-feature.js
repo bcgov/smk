@@ -32,8 +32,7 @@ include.module( 'tool-identify-feature', [
             } )
     
             smk.$tool.identify.startedIdentify( function () {
-                self.active = false
-                // smk.$sidepanel.popTool( self )
+                smk.$tool[ self.parentId ].active = true
             } )
     
             smk.on( this.id, {

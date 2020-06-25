@@ -353,8 +353,25 @@ include.module( 'util', null, function ( inc ) {
                 throw new Error( unit + ' is an unknown unit' )
                 
             return metersPerUnit[ unit ]
-        }
+        },
 
+        makeMutex: function ( name ) {
+            var mutex = [];
+            return function acquire () { 
+                for ( var i = 0; i < mutex.length; i += 1 ) delete mutex[ i ]
+                mutex[ i ] = true;
+                // console.log( 'mutex acquire', name, mutex )
+                return {
+                    name: name,
+                    held: function () {
+                        return mutex[ i ]
+                    },
+                    release: function () {
+                        delete mutex[ i ]
+                    }
+                }
+            }
+        }
     } )
 
     var metersPerUnit = {
