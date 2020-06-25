@@ -13,6 +13,7 @@ include.module( 'layer-display', [ 'jquery', 'util', 'event' ], function () {
             isInternal: false,
             inFilter:   true,
             showLegend: false,
+            showItem:   true,
             legends:    null,
             class:      null,
             metadataUrl: null

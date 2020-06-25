@@ -11,7 +11,7 @@
     } 
 ]">
     <div class="smk-item"
-        v-if="display.id != 'root'"
+        v-if="display.id != 'root' && display.showItem"
         v-bind:title="'id: ' + display.id"
         v-on:click="$$emit( display.type + '-click', display )"
     >

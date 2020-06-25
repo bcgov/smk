@@ -2,6 +2,7 @@ include.module( 'tool-identify', [
     'tool.tool-base-js', 
     'tool.tool-widget-js', 
     'tool.tool-feature-list-js', 
+    'tool.tool-internal-layers-js',
     'component-feature-list', 
     'component-command-button',
     'component-enter-input',
@@ -34,6 +35,7 @@ include.module( 'tool-identify', [
             SMK.TYPE.ToolWidget.call( this, 'identify-widget' )
             SMK.TYPE.ToolPanel.call( this, 'identify-panel' )
             SMK.TYPE.ToolFeatureList.call( this, function ( smk ) { return smk.$viewer.identified } )
+            SMK.TYPE.ToolInternalLayers.call( this, [ 'searchAreaLayer', 'locationLayer', 'editSearchAreaLayer' ] )
         
             this.defineProp( 'tool' )
             this.defineProp( 'command' )
@@ -150,7 +152,7 @@ include.module( 'tool-identify', [
                 this.displaySearchArea()
                 this.startedIdentify()
 
-                var area = turf.circle( [ location.map.longitude, location.map.latitude ], this.getRadiusMeters() / 1000, { steps: 16 } )
+                var area = this.makeSearchLocationCircle( null, 16 )
                 return smk.$viewer.identifyFeatures( location, area )
                     .then( function () { 
                         self.busy = false
@@ -237,45 +239,6 @@ include.module( 'tool-identify', [
                 }
             } )
     
-            this.layer = {}
-            var groupItems = []
-            var ly = this.searchAreaLayer
-            ly.type = 'vector'
-            ly.isVisible = true
-            ly.isQueryable = false
-            ly.isInternal = true
-            var display = smk.$viewer.addLayer( ly )
-            display.class = "smk-inline-legend"            
-
-            groupItems.push( { id: display.id } )
-
-            self.layer[ ly.id ] = smk.$viewer.layerId[ ly.id ]
-
-            ly = this.locationLayer
-            ly.type = 'vector'
-            ly.isVisible = true
-            ly.isQueryable = false
-            ly.isInternal = true
-            display = smk.$viewer.addLayer( ly )
-            display.class = "smk-inline-legend"            
-
-            groupItems.unshift( { id: display.id } )
-
-            self.layer[ ly.id ] = smk.$viewer.layerId[ ly.id ]
-
-            smk.$viewer.setDisplayContextItems( this.id, [ {
-                id: 'tool-' + this.id,
-                type: 'group',
-                title: this.title,
-                isVisible: false,
-                isInternal: true,
-                items: groupItems
-            } ] )
-
-            this.setInternalLayerVisible = function ( visible ) {
-                smk.$viewer.displayContext[ self.id ].setItemVisible( 'tool-' + self.id, visible )
-            }
-
             var lg = L.layerGroup().addTo( smk.$viewer.map )
 
             this.addToMap = function ( ly, clear ) {
@@ -287,7 +250,7 @@ include.module( 'tool-identify', [
             }
 
             this.bufferDistance = function () {
-                return smk.$viewer.distanceToMeters( 20, 'px' ) / 1000                
+                return smk.$viewer.distanceToMeters( 20, 'px' )  
             }
 
             this.trackMouse = false
@@ -310,6 +273,14 @@ include.module( 'tool-identify', [
         ],
 
         methods: {
+            makeSearchLocationCircle: function ( radiusMeters, steps ) {
+                return turf.circle( 
+                    [ this.searchLocation.map.longitude, this.searchLocation.map.latitude ], 
+                    ( radiusMeters || this.getRadiusMeters() ) / 1000, 
+                    { steps: steps || 64 } 
+                )
+            },
+
             closestPointOnBoundary: function ( latLng ) {
                 if ( !this.searchArea ) return
 
@@ -324,10 +295,11 @@ include.module( 'tool-identify', [
 
                 if ( !this.searchLocation ) return
 
-                this.searchArea = turf.circle( [ this.searchLocation.map.longitude, this.searchLocation.map.latitude ], this.getRadiusMeters() / 1000, { steps: 64 } )
+                this.searchArea = this.makeSearchLocationCircle()
 
                 this.setInternalLayerVisible( true )
-                
+                this.displayEditSearchArea()
+
                 this.layer[ '@identify-search-area' ].clear()
                 this.layer[ '@identify-search-area' ].load( this.searchArea )
 
@@ -335,6 +307,12 @@ include.module( 'tool-identify', [
                 this.layer[ '@identify-location' ].load( turf.point( [ this.searchLocation.map.longitude, this.searchLocation.map.latitude ] ) )
                 
                 this.trackMouse = true
+            },
+
+            displayEditSearchArea: function ( editArea ) {
+                this.layer[ '@identify-edit-search-area' ].clear()
+                if ( editArea )
+                    this.layer[ '@identify-edit-search-area' ].load( editArea )
             },
 
             onMouseMove: function ( ev ) {
@@ -348,9 +326,9 @@ include.module( 'tool-identify', [
                 var distToLocation = turf.distance( 
                     [ this.searchLocation.map.longitude, this.searchLocation.map.latitude ], 
                     llToTurf( latLong ) 
-                )
+                ) * 1000
 
-                if ( Math.abs( distToLocation - this.radiusKM ) < this.bufferDistance() ) {
+                if ( Math.abs( distToLocation - this.getRadiusMeters() ) < this.bufferDistance() ) {
                     var pos = this.closestPointOnBoundary( latLong )
                     if ( !this.marker ) {
                         this.marker = L.marker( pos, {
@@ -365,25 +343,15 @@ include.module( 'tool-identify', [
                             .on( 'dragstart', function (ev) {
                                 // console.log('dragstart',ev)
                                 self.trackMouse = false
-                                self.newBoundary = L.GeoJSON.geometryToLayer( turf.circle( [ self.searchLocation.map.longitude, self.searchLocation.map.latitude ], distToLocation, { steps: 64 } ), {
-                                    color: 'red',
-                                    width: 2,
-                                } )
-                                self.addToMap( self.newBoundary, false )                
+                                self.displayEditSearchArea( self.makeSearchLocationCircle( distToLocation ) )
                             } )
                             .on( 'drag', function ( ev ) {
                                 // console.log('drag',ev)
                                 var rad = turf.distance( 
                                     [ self.searchLocation.map.longitude, self.searchLocation.map.latitude ], 
                                     llToTurf( ev.latlng )
-                                )
-                                self.newBoundary.remove()
-                
-                                self.newBoundary = L.GeoJSON.geometryToLayer( turf.circle( [ self.searchLocation.map.longitude, self.searchLocation.map.latitude ], rad, { steps: 64 } ), {
-                                    color: 'red',
-                                    width: 2,
-                                } )
-                                self.addToMap( self.newBoundary, false )                                                
+                                ) * 1000
+                                self.displayEditSearchArea( self.makeSearchLocationCircle( rad ) )
                             } )
                             .on( 'dragend', function (ev) {
                                 // console.log('dragend',ev)
