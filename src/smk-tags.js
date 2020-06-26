@@ -97,6 +97,8 @@ tg.forEachDir( 'smk/component/*/', function ( fn, bn ) {
 t.group( 'component' )
     .dir( 'smk/component/*' )
 
+t.script( 'merge-config', 'smk/merge-config.js' )
+
 // ==================================================================================
 // smk tools
 // ==================================================================================
