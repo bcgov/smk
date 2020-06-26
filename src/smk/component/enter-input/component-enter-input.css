@@ -4,6 +4,10 @@
     position: relative;
 }
 
+.smk-enter-input.smk-disabled label {
+    color: #aaa;
+}
+
 .smk-enter-input .smk-input {
     border-radius: 8px;
     padding: 2px;
