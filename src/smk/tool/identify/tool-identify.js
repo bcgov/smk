@@ -123,7 +123,7 @@ include.module( 'tool-identify', [
                     self.searchArea = null
                     self.searchLocation = null
                     self.trackMouse = false
-                    self.addToMap()
+                    self.clearMarker()
 
                     self.setInternalLayerVisible( false )
                     smk.$viewer.identifyFeatures()
@@ -265,32 +265,11 @@ include.module( 'tool-identify', [
                 }
             } )
     
-            var lg = L.layerGroup().addTo( smk.$viewer.map )
-
-            this.addToMap = function ( ly, clear ) {
-                if ( clear !== false )
-                    lg.clearLayers()
-
-                if ( ly )
-                    lg.addLayer( ly )
-            }
-
             this.bufferDistance = function () {
                 return smk.$viewer.distanceToMeters( 20, 'px' )  
             }
 
             this.trackMouse = false
-            smk.$viewer.map.on( 'mousemove', function ( ev ) { self.onMouseMove( ev ) } )
-
-            this.getCurrentLocation = function () {
-                self.busy = true
-                self.showStatusMessage( 'Finding current location...', 'progress', null )
-    
-                return smk.$viewer.getCurrentLocation().finally( function () {
-                    self.busy = false
-                    self.showStatusMessage()
-                } )
-            }
         },
 
         events: [
@@ -339,73 +318,7 @@ include.module( 'tool-identify', [
                 this.layer[ '@identify-edit-search-area' ].clear()
                 if ( editArea )
                     this.layer[ '@identify-edit-search-area' ].load( editArea )
-            },
-
-            onMouseMove: function ( ev ) {
-                var self = this
-
-                if ( !this.trackMouse ) return
-                if ( !this.searchLocation ) return
-                if ( ev.originalEvent.buttons ) return
-
-                var latLong = ev.target.layerPointToLatLng( ev.layerPoint )
-                var distToLocation = turf.distance( 
-                    [ this.searchLocation.map.longitude, this.searchLocation.map.latitude ], 
-                    llToTurf( latLong ) 
-                ) * 1000
-
-                if ( Math.abs( distToLocation - this.getRadiusMeters() ) < this.bufferDistance() ) {
-                    var pos = this.closestPointOnBoundary( latLong )
-                    if ( !this.marker ) {
-                        this.marker = L.marker( pos, {
-                                icon: L.divIcon( {
-                                    className: 'smk-drag-handle',
-                                    iconSize: [ 10, 10 ],
-                                    iconAnchor: [ 5, 5 ]
-                                } ),
-                                bubblingMouseEvents: true,
-                                draggable: true
-                            } )
-                            .on( 'dragstart', function (ev) {
-                                // console.log('dragstart',ev)
-                                self.trackMouse = false
-                                self.displayEditSearchArea( self.makeSearchLocationCircle( distToLocation ) )
-                            } )
-                            .on( 'drag', function ( ev ) {
-                                // console.log('drag',ev)
-                                var rad = turf.distance( 
-                                    [ self.searchLocation.map.longitude, self.searchLocation.map.latitude ], 
-                                    llToTurf( ev.latlng )
-                                ) * 1000
-                                self.displayEditSearchArea( self.makeSearchLocationCircle( rad ) )
-                            } )
-                            .on( 'dragend', function (ev) {
-                                // console.log('dragend',ev)
-                                self.radius = turf.distance( 
-                                    [ self.searchLocation.map.longitude, self.searchLocation.map.latitude ], 
-                                    llToTurf( ev.target.getLatLng() )
-                                ) * 1000
-                                self.addToMap( self.marker )
-                                self.restartIdentify()
-                            } )
-                        
-                        this.addToMap( this.marker, false )
-                    }
-                    else {
-                        this.marker.setLatLng( pos )
-                    }        
-                }
-                else {
-                    if ( this.marker ) {
-                        this.marker.remove()
-                        this.marker = null
-                    }
-                }
             }
         }
     } )
-
-    function llToTurf( ll ) {
-        return [ ll.lng, ll.lat ]
-    }
 } )
