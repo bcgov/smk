@@ -729,6 +729,14 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
 
         return distance * SMK.UTIL.getMetersPerUnit( distanceUnit )
     }
+
+    Viewer.prototype.distanceFromMeters = function ( distanceMeters, distanceUnit ) {
+        if ( distanceUnit == 'px' ) 
+            return distanceMeters / this.getView().metersPerPixel
+            // return this.pixelsToMillimeters( distance ) / 1000
+
+        return distanceMeters / SMK.UTIL.getMetersPerUnit( distanceUnit )
+    }
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
     Viewer.prototype.getCurrentLocation = function ( option ) {

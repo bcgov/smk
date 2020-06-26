@@ -239,6 +239,12 @@ include.module( 'tool-identify', [
                     self.restartIdentify()
                 },
 
+                'changeUnit': function ( ev, comp ) {
+                    var d = self.getRadiusMeters()
+                    Object.assign( self, ev )
+                    self.radius = smk.$viewer.distanceFromMeters( d, self.radiusUnit )
+                },
+
                 'current-location': function () {
                     self.busy = true
                     self.showStatusMessage( 'Finding current location...', 'progress', null )

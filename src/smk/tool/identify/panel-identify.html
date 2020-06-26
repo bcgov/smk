@@ -21,8 +21,8 @@
             <template slot="after-input">                
                 <select
                     v-bind:value="radiusUnit"
-                    v-on:change="$$emit( 'change', { radiusUnit: $event.target.value } )"
-                    v-bind:disabled="command.radiusUnit === false"
+                    v-on:change="$$emit( 'changeUnit', { radiusUnit: $event.target.value } )"
+                    v-bind:disabled="busy || command.radiusUnit === false"
                 >
                     <option value="px">pixels</option>
                     <option value="m">meters</option>
