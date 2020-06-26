@@ -150,12 +150,14 @@ include.module( 'tool-identify', [
                 return smk.$viewer.distanceToMeters( self.radius, self.radiusUnit ) 
             }
 
+            this.identifyStarts = 0
             this.startIdentify = function ( location ) {
                 self.busy = true
                 this.searchLocation = location
                 // console.warn('startIdentify')
                 self.showStatusMessage( 'Fetching features', 'progress', null )
                 this.displaySearchArea()
+                this.identifyStarts += 1
                 this.startedIdentify()
 
                 var area = this.makeSearchLocationCircle( null, 16 )
@@ -186,11 +188,19 @@ include.module( 'tool-identify', [
                     } )
                     .catch( function ( e ) {
                         console.warn( 'identify failed', e )
-                        if ( e.discarded ) return 
+                        if ( e.discarded ) {
+                            if ( self.identifyStarts == 1 )
+                                self.showStatusMessage()
+
+                            return 
+                        }
 
                         self.setInternalLayerVisible( false )
                         // self.showStatusMessage( '<div>Failed while finding features:</div><div>' + e + '</div>', 'error' )
                         self.showStatusMessage( e.toString(), 'error' )
+                    } )
+                    .finally( function () {
+                        self.identifyStarts -= 1
                     } )
             }
 
