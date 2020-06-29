@@ -47,7 +47,7 @@ include.module( 'tool-identify', [
                 select: false,
                 radius: false,
                 radiusUnit: false,
-                current: false
+                nearBy: false
             }
             this.radius = 5
             this.radiusUnit = 'px'
@@ -58,6 +58,7 @@ include.module( 'tool-identify', [
                 style: [
                     {
                         stroke:             false,
+                        fill:               true,
                         fillColor:          "white",
                         fillOpacity:        0.5,
                     },
@@ -67,16 +68,14 @@ include.module( 'tool-identify', [
                         strokeOpacity:      1,
                         strokeCap:          "butt",
                         strokeDashes:       "6,6",
-                        strokeDashOffset:   6,
-                        fill:               false,
+                        strokeDashOffset:   6
                     },
                     {
                         strokeWidth:        6,
                         strokeColor:        "white",
                         strokeOpacity:      1,
                         strokeCap:          "butt",
-                        strokeDashes:       "6,6",
-                        fill:               false,
+                        strokeDashes:       "6,6"
                     }
                 ],    
                 legend: {

@@ -31,9 +31,9 @@
         </enter-number>
 
         <command-button class="smk-current"
-            title="Use current location"
+            title="Identify features near current location"
             v-bind:disabled="busy"
-            v-if="command.current"
+            v-if="command.nearBy"
             v-on:click="$$emit( 'current-location' )"
             icon="gps_fixed"
         ></command-button>
