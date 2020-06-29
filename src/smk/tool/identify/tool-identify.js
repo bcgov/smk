@@ -43,9 +43,14 @@ include.module( 'tool-identify', [
             this.defineProp( 'radiusUnit' )
 
             this.tool = {}
-            this.command = {}
-            this.radius = 100
-            this.radiusUnit = 'm'
+            this.command = {
+                select: false,
+                radius: false,
+                radiusUnit: false,
+                current: false
+            }
+            this.radius = 5
+            this.radiusUnit = 'px'
 
             this.searchAreaLayer = {
                 id: "@identify-search-area",
@@ -120,6 +125,7 @@ include.module( 'tool-identify', [
                     self.displaySearchArea()
                 }
                 else {
+                    self.busy = false
                     self.searchArea = null
                     self.searchLocation = null
                     self.trackMouse = false
