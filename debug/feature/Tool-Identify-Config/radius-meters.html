@@ -7,36 +7,29 @@
         <link rel="stylesheet" type="text/css" href="style.css"/>
     </head>
     <body>
+        <script src="default-config.js"></script>
 <!--***************************************************************************
-    This example shows a SMK application with default layers tool configuration.
+    This example shows configuration for identify tool that sets the default 
+    search radius, and radius unit. As well, the idnetify panel will show the 
+    entry field for search radius.
 -->
-        <div id="smk-map-frame"></div>
-        <script>
-            SMK.INIT( {
-                containerSel: "#smk-map-frame",
-                config: [ 
-                    './default-config.json',
-                    './../../config/victoria.json',
-                    './../../layer/int-land-act-crown-grant.json',
-                    './../../layer/int-land-act-licence.json',
-                    './../../layer/int-land-act-reserve.json',
-                    {
-                        tools: [
-                            {
-                                type: "identify",
-                                enabled: true,
-                                radius: 1000,
-                                radiusUnit: 'm',
-                                command: {
-                                    radius: true,
-                                    radiusUnit: false
-                                }
-                            }
-                        ]
+    <div id="smk-map-frame"></div>
+    <script>
+        SMK.INIT( {
+            containerSel: "#smk-map-frame",
+            config: defaultConfig.concat( {
+                tools: [ {
+                    type: "identify",
+                    enabled: true,
+                    radius: 1000,
+                    radiusUnit: 'm',
+                    command: {
+                        radius: true,
                     }
-                ]
-            } )
-        </script>
+                } ]
+            }, '?' )
+        } )
+    </script>
 <!--***************************************************************************-->
     </body>
 </html>

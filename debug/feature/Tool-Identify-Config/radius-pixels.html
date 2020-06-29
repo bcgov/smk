@@ -7,35 +7,25 @@
         <link rel="stylesheet" type="text/css" href="style.css"/>
     </head>
     <body>
+        <script src="default-config.js"></script>
 <!--***************************************************************************
-    This example shows a SMK application with default layers tool configuration.
+    This example shows configuration for identify tool that sets the default 
+    search radius to a value in pixels.
 -->
-        <div id="smk-map-frame"></div>
-        <script>
-            SMK.INIT( {
-                containerSel: "#smk-map-frame",
-                config: [ 
-                    './default-config.json',
-                    './../../config/victoria.json',
-                    './../../layer/int-land-act-crown-grant.json',
-                    './../../layer/int-land-act-licence.json',
-                    './../../layer/int-land-act-reserve.json',
-                    {
-                        tools: [
-                            {
-                                type: "identify",
-                                enabled: true,
-                                radius: 20,
-                                radiusUnit: 'px',
-                                command: {
-                                    radius: false
-                                }
-                            }
-                        ]
-                    }
-                ]
-            } )
-        </script>
+    <div id="smk-map-frame"></div>
+    <script>
+        SMK.INIT( {
+            containerSel: "#smk-map-frame",
+            config: defaultConfig.concat( {
+                tools: [ {
+                    type: "identify",
+                    enabled: true,
+                    radius: 40,
+                    radiusUnit: 'px',
+                } ]
+            }, '?' )
+        } )
+    </script>
 <!--***************************************************************************-->
     </body>
 </html>
