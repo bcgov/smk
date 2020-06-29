@@ -276,7 +276,7 @@ include.module( 'layer-leaflet.layer-vector-leaflet-js', [ 'layer.layer-vector-j
                 lineJoin:    styleConfig.strokeJoin,
                 dashArray:   styleConfig.strokeDashes,
                 dashOffset:  styleConfig.strokeDashOffset,
-                fill:        styleConfig.fill !== false,
+                fill:        styleConfig.fill,
                 fillColor:   styleConfig.fillColor,
                 fillOpacity: styleConfig.fillOpacity,
                 // fillRule:    styleConfig.,
