@@ -26,8 +26,6 @@ include.module( 'tool-query', [
             this.defineProp( 'parameters' )
             this.defineProp( 'within' )
             this.defineProp( 'command' )
-
-            this.command = {}
         },
         function ( smk ) {
             var self = this

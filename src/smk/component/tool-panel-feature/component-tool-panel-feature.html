@@ -6,7 +6,7 @@
     </template>
 
     <template slot="commands">
-        <span class="smk-navigator" v-if="resultCount > 1 && command.navigator !== false">
+        <span class="smk-navigator" v-if="resultCount > 1 && command.navigator">
             <command-button class="smk-move"
                 v-on:click="$$emit( 'move-previous', { instance: instance } )"
                 icon="navigate_before"
@@ -21,17 +21,17 @@
         </span>
 
         <command-button class="smk-zoom"
-            v-if="tool.zoom && command.zoom !== false"
+            v-if="tool.zoom && command.zoom"
             v-on:click="$$emit( 'zoom', { instance: instance } )"
         >Zoom to</command-button>
 
         <command-button class="smk-select"
-            v-if="tool.select && command.select !== false"
+            v-if="tool.select && command.select"
             v-on:click="$$emit( 'select', { instance: instance } )"
         >Add to selection</command-button>
 
         <select class="smk-command smk-attribute-mode" 
-            v-if="layer && command.attributeMode !== false"
+            v-if="layer && command.attributeMode"
             v-model="attributeView"
         >
             <option value="default">Default View</option>        

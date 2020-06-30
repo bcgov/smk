@@ -1,13 +1,12 @@
-include.module( 'tool-identify', [ 
-    'tool.tool-base-js', 
-    'tool.tool-widget-js', 
-    'tool.tool-feature-list-js', 
+include.module( 'tool-identify', [
+    'tool.tool-base-js',
+    'tool.tool-widget-js',
+    'tool.tool-feature-list-js',
     'tool.tool-internal-layers-js',
-    'component-feature-list', 
+    'component-feature-list',
     'component-command-button',
     'component-enter-input',
     'tool-identify.panel-identify-html',
-    'tool-identify.crosshair-png' 
 ], function ( inc ) {
     "use strict";
 
@@ -29,88 +28,20 @@ include.module( 'tool-identify', [
         }
     } )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
-    //   
+    //
     return SMK.TYPE.Tool.define( 'IdentifyTool', {
         construct: function () {
             SMK.TYPE.ToolWidget.call( this, 'identify-widget' )
             SMK.TYPE.ToolPanel.call( this, 'identify-panel' )
             SMK.TYPE.ToolFeatureList.call( this, function ( smk ) { return smk.$viewer.identified } )
-            SMK.TYPE.ToolInternalLayers.call( this, [ 'searchAreaLayer', 'locationLayer', 'editSearchAreaLayer' ] )
-        
+            SMK.TYPE.ToolInternalLayers.call( this )
+
             this.defineProp( 'tool' )
             this.defineProp( 'command' )
             this.defineProp( 'radius' )
             this.defineProp( 'radiusUnit' )
 
             this.tool = {}
-            this.command = {
-                select: false,
-                radius: false,
-                radiusUnit: false,
-                nearBy: false
-            }
-            this.radius = 5
-            this.radiusUnit = 'px'
-
-            this.searchAreaLayer = {
-                id: "@identify-search-area",
-                title: "Identify Search Area",
-                style: [
-                    {
-                        stroke:             false,
-                        fill:               true,
-                        fillColor:          "white",
-                        fillOpacity:        0.5,
-                    },
-                    {
-                        strokeWidth:        6,
-                        strokeColor:        "black",
-                        strokeOpacity:      1,
-                        strokeCap:          "butt",
-                        strokeDashes:       "6,6",
-                        strokeDashOffset:   6
-                    },
-                    {
-                        strokeWidth:        6,
-                        strokeColor:        "white",
-                        strokeOpacity:      1,
-                        strokeCap:          "butt",
-                        strokeDashes:       "6,6"
-                    }
-                ],    
-                legend: {
-                    line: true
-                }
-            }
-
-            this.locationLayer = {
-                id: "@identify-location",
-                title: "Identify Location",
-                style: {
-                    markerUrl: inc[ 'tool-identify.crosshair-png' ],
-                    markerSize: [ 40, 40 ],
-                    markerOffset: [ 20, 20 ]    
-                },
-                legend: {
-                    point: true
-                }
-            }
-
-            this.editSearchAreaLayer = {
-                id: "@identify-edit-search-area",
-                title: "Identify Edit Search Area",
-                style: [
-                    {
-                        strokeWidth:        3,
-                        strokeColor:        "red",
-                        strokeOpacity:      1,
-                        fill:               false,
-                    }
-                ],    
-                legend: {
-                    line: true
-                }
-            }
         },
 
         initialize: function ( smk ) {
@@ -118,7 +49,7 @@ include.module( 'tool-identify', [
 
             this.tool.select = smk.$tool.select
             this.tool.zoom = smk.$tool.zoom
-    
+
             this.changedGroup( function () {
                 if ( self.group ) {
                     self.displaySearchArea()
@@ -137,22 +68,22 @@ include.module( 'tool-identify', [
                     smk.$viewer.identified.pick()
                 }
             } )
-    
+
             // fallback handler if nothing else uses pick
             smk.$viewer.handlePick( 0, function ( location ) {
                 return self.startIdentify( location )
                     .then( function () { return true }, function () { return true } )
             } )
-    
+
             smk.$viewer.handlePick( 2, function ( location ) {
                 if ( !self.active ) return
-    
+
                 return self.startIdentify( location )
                     .then( function () { return true }, function () { return true } )
             } )
-    
+
             this.getRadiusMeters = function () {
-                return smk.$viewer.distanceToMeters( self.radius, self.radiusUnit ) 
+                return smk.$viewer.distanceToMeters( self.radius, self.radiusUnit )
             }
 
             this.identifyStarts = 0
@@ -167,9 +98,9 @@ include.module( 'tool-identify', [
 
                 var area = this.makeSearchLocationCircle( null, 16 )
                 return smk.$viewer.identifyFeatures( location, area )
-                    .then( function () { 
+                    .then( function () {
                         self.busy = false
-    
+
                         if ( smk.$viewer.identified.isEmpty() ) {
                             smk.$sidepanel.setExpand( 0 )
                             self.setInternalLayerVisible( false )
@@ -184,7 +115,7 @@ include.module( 'tool-identify', [
                             //     sub += ( sub == '' ? '' : ', ' ) + SMK.UTIL.grammaticalNumber( stat.vertexCount, null, null, 'with {} vertices' )
                             if ( sub != '' ) sub = '<div>' + sub + '</div>'
                             self.showStatusMessage( '<div>Identified ' + SMK.UTIL.grammaticalNumber( stat.featureCount, null, 'a feature', '{} features' ) + '</div>' + sub )
-            
+
                             if ( stat.featureCount == 1 )
                                 smk.$viewer.identified.pick( self.firstId )
                         }
@@ -197,7 +128,7 @@ include.module( 'tool-identify', [
                             if ( self.identifyStarts == 1 )
                                 self.showStatusMessage()
 
-                            return 
+                            return
                         }
 
                         self.setInternalLayerVisible( false )
@@ -213,28 +144,28 @@ include.module( 'tool-identify', [
                 if ( self.searchLocation )
                     this.startIdentify( self.searchLocation )
             }
-    
-            smk.on( this.id, {  
+
+            smk.on( this.id, {
                 'add-all': function ( ev ) {
                     var lyfts = self.layers.map( function ( ly ) {
                         return [ ly.id, ly.features.map( function ( ft ) {
                             return smk.$viewer.identified.get( ft.id )
-                        } ) ] 
+                        } ) ]
                     } )
 
                     lyfts.forEach( function ( lf ) {
                         smk.$viewer.selected.add.apply( smk.$viewer.selected, lf )
                     } )
                 },
-    
+
                 'clear': function ( ev ) {
                     self.showStatusMessage( 'Click on map to identify features.' )
                 },
-    
-                'swipe-up': function ( ev ) {                
+
+                'swipe-up': function ( ev ) {
                     smk.$sidepanel.setExpand( 2 )
                 },
-    
+
                 'swipe-down': function ( ev ) {
                     smk.$sidepanel.incrExpand( -1 )
                 },
@@ -253,7 +184,7 @@ include.module( 'tool-identify', [
                 'current-location': function () {
                     self.busy = true
                     self.showStatusMessage( 'Finding current location...', 'progress', null )
-        
+
                     return smk.$viewer.getCurrentLocation()
                         .then( function ( res ) {
                             self.busy = false
@@ -269,9 +200,9 @@ include.module( 'tool-identify', [
                         } )
                 }
             } )
-    
+
             this.bufferDistance = function () {
-                return smk.$viewer.distanceToMeters( 20, 'px' )  
+                return smk.$viewer.distanceToMeters( 20, 'px' )
             }
 
             this.trackMouse = false
@@ -279,15 +210,15 @@ include.module( 'tool-identify', [
 
         events: [
             'startedIdentify',
-            'finishedIdentify'    
+            'finishedIdentify'
         ],
 
         methods: {
             makeSearchLocationCircle: function ( radiusMeters, steps ) {
-                return turf.circle( 
-                    [ this.searchLocation.map.longitude, this.searchLocation.map.latitude ], 
-                    ( radiusMeters || this.getRadiusMeters() ) / 1000, 
-                    { steps: steps || 64 } 
+                return turf.circle(
+                    [ this.searchLocation.map.longitude, this.searchLocation.map.latitude ],
+                    ( radiusMeters || this.getRadiusMeters() ) / 1000,
+                    { steps: steps || 64 }
                 )
             },
 
@@ -310,19 +241,19 @@ include.module( 'tool-identify', [
                 this.setInternalLayerVisible( true )
                 this.displayEditSearchArea()
 
-                this.layer[ '@identify-search-area' ].clear()
-                this.layer[ '@identify-search-area' ].load( this.searchArea )
+                this.internalLayer[ '@identify-search-area' ].clear()
+                this.internalLayer[ '@identify-search-area' ].load( this.searchArea )
 
-                this.layer[ '@identify-location' ].clear()
-                this.layer[ '@identify-location' ].load( turf.point( [ this.searchLocation.map.longitude, this.searchLocation.map.latitude ] ) )
-                
+                this.internalLayer[ '@identify-location' ].clear()
+                this.internalLayer[ '@identify-location' ].load( turf.point( [ this.searchLocation.map.longitude, this.searchLocation.map.latitude ] ) )
+
                 this.trackMouse = true
             },
 
             displayEditSearchArea: function ( editArea ) {
-                this.layer[ '@identify-edit-search-area' ].clear()
+                this.internalLayer[ '@identify-edit-search-area' ].clear()
                 if ( editArea )
-                    this.layer[ '@identify-edit-search-area' ].load( editArea )
+                    this.internalLayer[ '@identify-edit-search-area' ].load( editArea )
             }
         }
     } )

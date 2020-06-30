@@ -64,7 +64,7 @@ t.script( 'projections','smk/projections.js' )
 t.script( 'layer-display','smk/layer-display.js' )
 
 t.group( 'tool' )
-    .dir( 'smk/tool/*' )
+    .dir( 'smk/tool/!(*-config.js)' )
 
 t.group( 'layer' )
     .dir( 'smk/layer/**/*' )
@@ -98,6 +98,17 @@ t.group( 'component' )
     .dir( 'smk/component/*' )
 
 t.script( 'merge-config', 'smk/merge-config.js' )
+
+var g = t.group( 'default-config' )
+tg.forEachDir( 'smk/tool/*/', function ( fn, bn ) {
+    g.push( 'tool-' + bn + '-config' )
+    t.group( 'tool-' + bn + '-config' )
+        .dir( fn + '/config/*' )
+} )
+
+g.push( 'tool-config' )
+t.group( 'tool-config' )
+    .dir( 'smk/tool/*-config.js' )
 
 // ==================================================================================
 // smk tools

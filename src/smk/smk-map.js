@@ -1,4 +1,4 @@
-include.module( 'smk-map', [ 'libs', 'util', 'theme-base', 'sidepanel', 'status-message', 'vue-config.spinner-gif', 'merge-config' ], function ( inc ) {
+include.module( 'smk-map', [ 'libs', 'util', 'theme-base', 'sidepanel', 'status-message', 'vue-config.spinner-gif', 'merge-config', 'default-config' ], function ( inc ) {
     "use strict";
 
     function SmkMap( option ) {
@@ -189,7 +189,7 @@ include.module( 'smk-map', [ 'libs', 'util', 'theme-base', 'sidepanel', 'status-
             self.$tool = {}
 
             if ( !self.tools ) return
-            var enabledTools = self.tools.filter( function ( t ) { return t.enabled !== false } )
+            var enabledTools = self.tools.filter( function ( t ) { return t.enabled !== false && t.instance !== true } )
             if ( enabledTools.length == 0 ) return
 
             return SMK.UTIL.waitAll( enabledTools.map( function ( t ) {

@@ -1,10 +1,10 @@
-include.module( 'tool-select', [ 
-    'tool.tool-base-js', 
-    'tool.tool-widget-js', 
-    'tool.tool-feature-list-js', 
-    'component-feature-list', 
+include.module( 'tool-select', [
+    'tool.tool-base-js',
+    'tool.tool-widget-js',
+    'tool.tool-feature-list-js',
+    'component-feature-list',
     'component-command-button',
-    'tool-select.panel-select-html' 
+    'tool-select.panel-select-html'
 ], function ( inc ) {
     "use strict";
 
@@ -19,15 +19,13 @@ include.module( 'tool-select', [
     } )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
-    return SMK.TYPE.Tool.define( 'SelectTool', 
+    return SMK.TYPE.Tool.define( 'SelectTool',
         function () {
             SMK.TYPE.ToolWidget.call( this, 'select-widget' )
             SMK.TYPE.ToolPanel.call( this, 'select-panel' )
             SMK.TYPE.ToolFeatureList.call( this, function ( smk ) { return smk.$viewer.selected } )
-        
-            this.defineProp( 'command' )
 
-            this.command = {}
+            this.defineProp( 'command' )
         },
         function ( smk ) {
             var self = this
@@ -68,7 +66,7 @@ include.module( 'tool-select', [
 
                 self.showStatusMessage( '<div>Selection contains ' + SMK.UTIL.grammaticalNumber( stat.featureCount, null, 'a feature', '{} features' ) + '</div>' + sub )
             }
-        } 
+        }
     )
 
     // return SelectTool

@@ -20,12 +20,13 @@ include.module( 'merge-config', [ 'util' ], function () {
     addPathMatchStrategy( '/layers<.+?>/attributes',                    assignMerge )
     addPathMatchStrategy( '/layers<.+?>/queries',                       arrayOfObjectMerge( 'id' ) )
     addPathMatchStrategy( '/layers<.+?>/queries<.+?>/parameters',       arrayOfObjectMerge( 'id' ) ) 
-    addPathMatchStrategy( '/tools',                                     arrayOfObjectMerge( [ 'type', 'instance' ] ) )
+    addPathMatchStrategy( '/tools',                                     toolMerge ) 
     addPathMatchStrategy( '/tools<.+?>/type',                           ignoreMerge )
     addPathMatchStrategy( '/tools<.+?>/instance',                       ignoreMerge )
     addPathMatchStrategy( '/tools<.+?>/position',                       assignMerge )
     addPathMatchStrategy( '/tools<layers,.+?>/display',                 arrayOfObjectMerge( 'id' ) )
     addPathMatchStrategy( '/tools<layers,.+?>/display<.+?>(/items<.+?>)*/items',   arrayOfObjectMerge( 'id' ) )    
+    addPathMatchStrategy( '/tools<.+?>/internalLayers',                 arrayOfObjectMerge( 'id' ) )
 
     function getPathStrategy( path ) {
         for ( var i = 0; i < pathMatchers.length; i += 1 ) {
@@ -185,7 +186,7 @@ include.module( 'merge-config', [ 'util' ], function () {
         console.log( path, 'concat', s )
     }
 
-    function arrayOfObjectMerge( keys ) {
+    function arrayOfObjectMerge( key ) {
         return function ( base, source, path ) {
             var b = deref( base ),
                 s = deref( source )
@@ -205,21 +206,13 @@ include.module( 'merge-config', [ 'util' ], function () {
             assertArray( b, 'base', path )
             assertArray( s, 'source', path )    
 
-            function key( o ) {
-                return [].concat( keys ).map( function ( k ) {
-                    if ( o[ k ] == '*' )
-                        return '.*'
-                    return o[ k ]
-                } )
-            }
-
             s.forEach( function ( so, si ) {
                 assertObject( so, 'source', path + '[' + si + ']' )
 
-                var id = new RegExp( '^' + key( so ).join( '--' ) + '$' )
+                var id = new RegExp( '^' + ( so[ key ] == '*' ? '.*' : so[ key ] ) + '$' )
 
                 var bis = b.map( function ( bo, bi ) {
-                    if ( id.test( key( bo ).join( '--' ) ) )
+                    if ( id.test( bo[ key ] ) )
                         return bi
                 } ).filter( function ( i ) {
                     return i != null
@@ -227,7 +220,7 @@ include.module( 'merge-config', [ 'util' ], function () {
 
                 if ( bis.length > 0 ) {
                     bis.forEach( function ( bi ) {
-                        merge( [ b, bi ], [ s, si ], path + '<' + key( b[ bi ] ) + '>' )                
+                        merge( [ b, bi ], [ s, si ], path + '<' + b[ bi ][ key ] + '>' )                
                     } )
                 }
                 else {
@@ -237,7 +230,54 @@ include.module( 'merge-config', [ 'util' ], function () {
             } )
         }
     }
-    
+
+    function toolMerge( base, source, path ) {
+        var b = deref( base ),
+            s = deref( source )
+
+        assertArray( b, 'base', path )
+        assertArray( s, 'source', path )    
+
+        s.forEach( function ( so, si ) {
+            if ( !so.instance ) {
+                arrayOfObjectMerge( 'type' )( base, [ [ [ so ] ], 0 ], path )
+                return
+            }
+
+            if ( so.type == '*' ) {
+                console.warn( 'tool type is *, but instance not null, skipping', so )
+                return
+            }
+
+            var inst = b.find( function ( bo ) {
+                return bo.type == so.type && bo.instance == so.instance
+            } )
+
+            if ( !inst ) {
+                var baseInst = b.find( function ( bo ) {
+                    return bo.type == so.type && bo.instance === true
+                } )
+
+                if ( baseInst ) {                                        
+                    inst = JSON.parse( JSON.stringify( baseInst ) )
+                    inst.instance = so.instance
+                    console.log( 'copied base instance', JSON.parse( JSON.stringify( inst ) ) )
+                }
+                else {
+                    inst = {
+                        type: so.type,
+                        instance: so.instance
+                    }
+                    console.log( 'created base instance', JSON.parse( JSON.stringify( inst ) ) )
+                }
+
+                b.push( inst )
+            }
+
+            merge( [ [ inst ], 0 ], [ [ so ], 0 ], path + '<' + so.type + ',' + so.instance + '>' )
+        } )
+    }
+
     return function mergeConfigs ( configs ) {
         var base = JSON.parse( JSON.stringify( SMK.CONFIG ) )
         var inline = 0

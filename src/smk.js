@@ -8,7 +8,7 @@
             if ( err.parseSource )
                err.message += ', while parsing ' + err.parseSource
 
-            console.error( err )     
+            console.error( err )
 
             var message = document.createElement( 'div' )
             message.classList.add( 'smk-failure' )
@@ -28,7 +28,7 @@
                 style.id = window.SMK.ON_FAILURE.STYLE_ID
                 style.textContent = window.SMK.ON_FAILURE.STYLE
                 document.getElementsByTagName( 'head' )[ 0 ].appendChild( style )
-            }            
+            }
         }
 
     if ( !window.SMK.ON_FAILURE.STYLE_ID )
@@ -54,7 +54,7 @@
             '.smk-failure h1 { margin: 0; }',
             '.smk-failure h2 { margin: 0; font-size: 1.2em; }',
             '.smk-failure p { font-size: 1.1em; }'
-        ].join( '' ) 
+        ].join( '' )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
     if ( navigator.userAgent.indexOf( "MSIE " ) > -1 || navigator.userAgent.indexOf( "Trident/" ) > -1 ) {
@@ -84,7 +84,7 @@
                     break
                 }
         }
-       
+
         window.SMK.INIT = function ( option ) {
             var containerSelector = option[ 'containerSel' ] || option[ 'smk-container-sel' ]
 
@@ -92,8 +92,8 @@
                 window.SMK.ON_FAILURE( err, document.querySelector( containerSelector ) )
             }, 2000 )
         }
-            
-        if ( script && script.attributes && script.attributes[ 'smk-container-sel' ] ) 
+
+        if ( script && script.attributes && script.attributes[ 'smk-container-sel' ] )
             window.SMK.INIT( { containerSel: script.attributes[ 'smk-container-sel' ].value } )
 
         window.SMK.FAILURE = err
@@ -118,8 +118,8 @@
             console.debug( 'Default base path from', scriptEl.src, 'is', SMK.BASE_URL )
         }
 
-        if ( scriptEl && 
-            scriptEl.attributes && 
+        if ( scriptEl &&
+            scriptEl.attributes &&
             scriptEl.attributes[ 'smk-container-sel' ] ) SmkInit( null, scriptEl )
     }
     catch ( e ) {
@@ -138,15 +138,15 @@
             if ( !filterFn ) filterFn = function ( val ) { return val }
             var scriptVal = scriptEl && scriptEl.attributes[ attrName ] && scriptEl.attributes[ attrName ].value
             var optionVal = option && ( option[ attrName ] || option[ name ] )
-            var valFn = function () { 
+            var valFn = function () {
                 if ( optionVal ) {
                     console.debug( 'attr', name, 'from INIT arguments:', optionVal )
-                    return optionVal 
+                    return optionVal
                 }
-                
+
                 if ( scriptVal ) {
                     console.debug( 'attr', name, 'from script element attribute:', scriptVal )
-                    return scriptVal 
+                    return scriptVal
                 }
 
                 var d = defaultFn()
@@ -163,21 +163,21 @@
             } )
         }
 
-        defineAttr( 'id', 'smk-id', function () { 
-            return Object.keys( SMK.MAP ).length + 1 
+        defineAttr( 'id', 'smk-id', function () {
+            return Object.keys( SMK.MAP ).length + 1
         } )
 
         defineAttr( 'containerSel', 'smk-container-sel' )
 
         defineAttr( 'config', 'smk-config', function () { return '?smk-' }, function ( val ) {
-            if ( Array.isArray( val ) ) return val 
+            if ( Array.isArray( val ) ) return val
             return val.split( /\s*[|]\s*/ ).filter( function ( i ) { return !!i } )
         } )
 
         defineAttr( 'baseUrl', 'smk-base-url', function () {
-            return SMK.BASE_URL 
+            return SMK.BASE_URL
         } )
-        
+
         var timer = 'SMK "' + attr.id + '" initialize'
         console.time( timer )
         console.groupCollapsed( timer )
@@ -191,8 +191,8 @@
                 return initializeSmkMap( attr )
             } )
             .catch( function ( e ) {
-                try { 
-                    SMK.ON_FAILURE( e, document.querySelector( attr.containerSel ) ) 
+                try {
+                    SMK.ON_FAILURE( e, document.querySelector( attr.containerSel ) )
                 }
                 catch ( ee ) {
                     console.error( 'failure showing failure:', ee )
@@ -203,8 +203,8 @@
                 console.groupEnd()
                 console.timeEnd( timer )
             } )
-        
-        return SMK.BOOT           
+
+        return SMK.BOOT
     }
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
@@ -243,8 +243,8 @@
     function parseObject( config, addParse ) {
         if ( typeof config != 'object' || Array.isArray( config ) || config === null ) return
 
-        return addParse( 'object', function () { 
-            return { obj: config } 
+        return addParse( 'object', function () {
+            return { obj: config }
         } )
     }
 
@@ -279,9 +279,9 @@
     function parseLiteralJson( config, addParse ) {
         if ( !/^[{].+[}]$/.test( config ) ) return
 
-        return addParse( 'json', function () { 
-            return { obj: JSON.parse( config ) } 
-        } ) 
+        return addParse( 'json', function () {
+            return { obj: JSON.parse( config ) }
+        } )
     }
 
     function parseOption( config, addParse ) {
@@ -307,7 +307,7 @@
 
     var optionHandler = {
         'config': function ( arg, addParse ) {
-            // return 
+            // return
             if ( parseLiteralJson( arg, addParse ) ) return
             if ( parseUrl( arg, addParse ) ) return
         },
@@ -338,7 +338,7 @@
             return {
                 viewer: {
                     location: {
-                        extent: args,                        
+                        extent: args,
                         center: null,
                         zoom: null,
                     }
@@ -359,7 +359,7 @@
 
             return {
                 viewer: {
-                    location: loc 
+                    location: loc
                 }
             }
         },
@@ -625,7 +625,7 @@
             TYPE: {},
             UTIL: {},
             COMPONENT: {},
-            
+
             CONFIG: {
                 name: 'SMK Default Map',
                 viewer: {
@@ -641,30 +641,7 @@
                         showCoverageOnHover: false
                     }
                 },
-                tools: [
-                    { type: 'about',        enabled: false, order: 1, position: 'list-menu',                        icon: 'help',           title: 'About SMK' },
-                    { type: 'baseMaps',     enabled: false, order: 3, position: [ 'shortcut-menu', 'list-menu' ],   icon: 'map',            title: 'Base Maps' },
-                    { type: 'coordinate',   enabled: false, order: 3 },
-                    { type: 'directions',   enabled: false, order: 4, position: [ 'shortcut-menu', 'list-menu' ],   icon: 'directions_car', title: 'Route Planner' },
-                    // { type: 'dropdown',     enabled: false }, -- so it won't be enabled by show-tools=all, no tools use it by default
-                    { type: 'identify',     enabled: false, order: 5, position: 'list-menu',                        icon: 'info_outline',   title: 'Identify Features' },
-                    { type: 'layers',       enabled: false, order: 3, position: [ 'shortcut-menu', 'list-menu' ],   icon: 'layers',         title: 'Layers' },
-                    { type: 'list-menu',    enabled: false },
-                    { type: 'location',     enabled: true },
-                    { type: 'markup',       enabled: true,  order: 3 },
-                    { type: 'measure',      enabled: false, order: 6, position: [ 'shortcut-menu', 'list-menu' ],   icon: 'straighten',     title: 'Measurement' },
-                    // { type: 'menu',         enabled: false }, -- so it won't be enabled by show-tools=all, no tools use it by default
-                    { type: 'minimap',      enabled: false, order: 1 },
-                    { type: 'pan',          enabled: false },
-                    // { type: 'query',        enabled: false }, -- so it won't be enabled by show-tools=all, as it needs an instance
-                    { type: 'scale',        enabled: false, order: 2 },
-                    { type: 'search',       enabled: true,  order: 2, position: 'toolbar',                          icon: 'search',         title: 'Search for Location' },
-                    { type: 'select',       enabled: false, order: 6, position: 'list-menu',                        icon: 'select_all',     title: 'Selected Features' },
-                    { type: 'shortcut-menu',enabled: false, order: 10 },
-                    { type: 'toolbar',      enabled: true },
-                    // { type: 'version',      enabled: false }, -- so it won't be enabled by show-tools=all
-                    { type: 'zoom',         enabled: false, order: 1 }
-                ]
+                tools: []
             },
 
             BOOT: Promise.resolve(),
@@ -682,7 +659,7 @@
                 handler: {},
                 set: function ( id, method, handler ) {
                     if ( !this.handler[ id ] ) this.handler[ id ] = {}
-                    this.handler[ id ][ method ] = handler 
+                    this.handler[ id ][ method ] = handler
                 },
                 get: function ( id, method ) {
                     if ( this.handler[ id ] && this.handler[ id ][ method ] ) return this.handler[ id ][ method ]
@@ -692,14 +669,14 @@
                     }
                 },
                 has: function ( id, method ) {
-                    return !!( this.handler[ id ] && this.handler[ id ][ method ] ) 
+                    return !!( this.handler[ id ] && this.handler[ id ][ method ] )
                 }
             },
 
             PROJECTIONS: [
                 {
                     name: 'urn:ogc:def:crs:EPSG::3005',
-                    def: '+proj=aea +lat_1=50 +lat_2=58.5 +lat_0=45 +lon_0=-126 +x_0=1000000 +y_0=0 +ellps=GRS80 +datum=NAD83 +units=m +no_defs' 
+                    def: '+proj=aea +lat_1=50 +lat_2=58.5 +lat_0=45 +lon_0=-126 +x_0=1000000 +y_0=0 +ellps=GRS80 +datum=NAD83 +units=m +no_defs'
                 },
                 {
                     name: 'bc-albers',

@@ -1,31 +1,31 @@
-include.module( 'tool.tool-internal-layers-js', [ 
+include.module( 'tool.tool-internal-layers-js', [
     'tool.tool-base-js'
 ], function ( inc ) {
     "use strict";
 
-    SMK.TYPE.ToolInternalLayers = function ( layerDefPropNames ) {       
+    SMK.TYPE.ToolInternalLayers = function () {
         var self = this
+
+        this.internalLayers = []
+        this.internalLayer = {}
 
         this.$initializers.push( function ( smk ) {
             var self = this
 
-            this.layer = {}
             var groupItems = []
 
-            layerDefPropNames.forEach( function ( prop ) {
-                [].concat( self[ prop ] ).forEach( function ( ly ) {
-                    ly.type = 'vector'
-                    ly.isVisible = true
-                    ly.isQueryable = false
-                    ly.isInternal = true
+            this.internalLayers.forEach( function ( ly ) {
+                ly.type = 'vector'
+                ly.isVisible = true
+                ly.isQueryable = false
+                ly.isInternal = true
 
-                    var display = smk.$viewer.addLayer( ly )
-                    display.class = "smk-inline-legend"            
-        
-                    groupItems.push( { id: display.id } )
-        
-                    self.layer[ ly.id ] = smk.$viewer.layerId[ ly.id ]    
-                } )
+                var display = smk.$viewer.addLayer( ly )
+                display.class = "smk-inline-legend"
+
+                groupItems.push( { id: display.id } )
+
+                self.internalLayer[ ly.id ] = smk.$viewer.layerId[ ly.id ]
             } )
 
             smk.$viewer.setDisplayContextItems( this.id, [ {
