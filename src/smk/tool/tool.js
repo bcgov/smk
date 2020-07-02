@@ -165,5 +165,14 @@ include.module( 'tool.tool-js', [
             return [ ( new SMK.TYPE[ name ]() ).configure( name, config ) ]
         }
     }
+    // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+    //
+    SMK.TYPE.Tool.defineComposite = function( toolDefs ) {
+        return function ( config ) {
+            return toolDefs.map( function ( t ) {
+                return t( config )[ 0 ]
+            } )
+        }
+    }
 
 } )

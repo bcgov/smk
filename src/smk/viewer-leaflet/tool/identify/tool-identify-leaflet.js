@@ -1,12 +1,12 @@
-include.module( 'tool-identify-leaflet', [ 
-    'leaflet', 
-    'tool-identify', 
+include.module( 'tool-identify-leaflet', [
+    'leaflet',
+    'tool-identify',
     'tool-leaflet',
-    'tool-leaflet.tool-feature-list-leaflet-js' 
+    'tool-leaflet.tool-feature-list-leaflet-js'
 ], function ( inc ) {
     "use strict";
 
-    SMK.TYPE.IdentifyTool.addInitializer( function ( smk ) {
+    SMK.TYPE.IdentifyListTool.addInitializer( function ( smk ) {
         var self = this
 
         inc[ 'tool-leaflet.tool-feature-list-leaflet-js' ].call( this, smk )
@@ -25,9 +25,9 @@ include.module( 'tool-identify-leaflet', [
             if ( ev.originalEvent.buttons ) return
 
             var latLong = ev.target.layerPointToLatLng( ev.layerPoint )
-            var distToLocation = turf.distance( 
-                [ self.searchLocation.map.longitude, self.searchLocation.map.latitude ], 
-                llToTurf( latLong ) 
+            var distToLocation = turf.distance(
+                [ self.searchLocation.map.longitude, self.searchLocation.map.latitude ],
+                llToTurf( latLong )
             ) * 1000
 
             if ( Math.abs( distToLocation - self.getRadiusMeters() ) < self.bufferDistance() ) {
@@ -50,26 +50,26 @@ include.module( 'tool-identify-leaflet', [
                         } )
                         .on( 'drag', function ( ev ) {
                             // console.log('drag',ev)
-                            var rad = turf.distance( 
-                                [ self.searchLocation.map.longitude, self.searchLocation.map.latitude ], 
+                            var rad = turf.distance(
+                                [ self.searchLocation.map.longitude, self.searchLocation.map.latitude ],
                                 llToTurf( ev.latlng )
                             ) * 1000
                             self.displayEditSearchArea( self.makeSearchLocationCircle( rad ) )
                         } )
                         .on( 'dragend', function (ev) {
                             // console.log('dragend',ev)
-                            self.radius = turf.distance( 
-                                [ self.searchLocation.map.longitude, self.searchLocation.map.latitude ], 
+                            self.radius = turf.distance(
+                                [ self.searchLocation.map.longitude, self.searchLocation.map.latitude ],
                                 llToTurf( ev.target.getLatLng() )
                             ) * 1000
                             self.restartIdentify()
                         } )
-                    
+
                     lg.addLayer( marker )
                 }
                 else {
                     marker.setLatLng( pos )
-                }        
+                }
             }
             else {
                 if ( marker ) {

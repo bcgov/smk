@@ -1,4 +1,4 @@
-include.module( 'tool-identify-feature', [
+include.module( 'tool-identify.tool-identify-feature-js', [
     'component-tool-panel-feature',
     'tool.tool-panel-feature-js'
  ], function ( inc ) {
@@ -9,7 +9,7 @@ include.module( 'tool-identify-feature', [
             SMK.TYPE.ToolPanel.call( this, 'tool-panel-feature' )
             SMK.TYPE.ToolPanelFeature.call( this, function ( smk ) { return smk.$viewer.identified } )
 
-            this.parentId = 'identify'
+            this.parentId = 'IdentifyListTool'
         },
         function ( smk ) {
             var self = this
@@ -31,7 +31,8 @@ include.module( 'tool-identify-feature', [
                 }
             } )
 
-            smk.$tool.identify.startedIdentify( function () {
+            // smk.$tool.identify.startedIdentify( function () {
+            smk.getToolById( 'IdentifyListTool' ).startedIdentify( function () {
                 smk.getToolById( self.parentId ).active = true
             } )
 
