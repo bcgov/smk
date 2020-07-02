@@ -14,7 +14,14 @@ include.module( 'tool-search-config', [
             order: 2,
             position: 'toolbar',
             icon: 'search',
-            title: 'Search for Location'
+            title: 'Search for Location',
+            showPanel: true,
+            showLocation: true,
+            command: {
+                identify: true,
+                measure: true,
+                directions: true,
+            }
         } ) ) )
     )
 } )

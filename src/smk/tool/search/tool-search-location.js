@@ -1,33 +1,37 @@
-include.module( 'tool-search-location', [ 
-    'tool.tool-panel-js', 
-    'tool-search-location.panel-search-location-html', 
-    'tool-search-location.location-title-html', 
-    'tool-search-location.location-address-html' 
+include.module( 'tool-search.tool-search-location-js', [
+    'tool.tool-panel-js',
+    'tool-search.panel-search-location-html',
+    'tool-search.location-title-html',
+    'tool-search.location-address-html'
 ], function ( inc ) {
     "use strict";
 
     Vue.component( 'search-location-panel', {
         extends: SMK.COMPONENT.ToolPanelBase,
-        template: inc[ 'tool-search-location.panel-search-location-html' ],
-        props: [ 'feature', 'tool', 'locationComponent' ]
+        template: inc[ 'tool-search.panel-search-location-html' ],
+        props: [ 'feature', 'tool', 'command', 'locationComponent' ]
     } )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
-    return SMK.TYPE.Tool.define( 'SearchLocationTool', 
+    return SMK.TYPE.Tool.define( 'SearchLocationTool',
         function () {
             SMK.TYPE.ToolPanel.call( this, 'search-location-panel' )
-        
+
             this.defineProp( 'feature' )
             this.defineProp( 'tool' )
+            this.defineProp( 'command' )
             this.defineProp( 'locationComponent' )
 
             this.feature = {}
             this.tool = {}
+            this.command = {}
             this.locationComponent = {}
-            this.parentId = 'search'      
+            this.parentId = 'SearchListTool'
         },
         function ( smk ) {
             var self = this
+
+            this.tool = smk.getToolTypesAvailable()
 
             self.changedActive( function () {
                 if ( self.active ) {
@@ -37,14 +41,11 @@ include.module( 'tool-search-location', [
                     smk.$viewer.searched.pick()
                 }
             } )
-    
-            if ( smk.$tool.directions )
-                this.tool.directions = true
-    
+
             smk.on( this.id, {
                 'directions': function () {
                     smk.$tool.directions.active = true
-    
+
                     smk.$tool.directions.activating
                         .then( function () {
                             return smk.$tool.directions.startAtCurrentLocation()
@@ -61,27 +62,27 @@ include.module( 'tool-search-location', [
                         } )
                 }
             } )
-    
+
             smk.$viewer.searched.pickedFeature( function ( ev ) {
                 self.locationComponent = {
                     name: 'location',
-                    template: inc[ 'tool-search-location.location-address-html' ],
-                    data: function () { 
+                    template: inc[ 'tool-search.location-address-html' ],
+                    data: function () {
                         return {
                             feature: ev.feature
                         }
                     }
                 }
-    
+
                 self.titleComp = {
                     name: 'location-title',
-                    template: inc[ 'tool-search-location.location-title-html' ],
-                    data: function () { 
+                    template: inc[ 'tool-search.location-title-html' ],
+                    data: function () {
                         return Object.assign( { intersectionName: null }, ev.feature.properties )
                     }
                 }
-    
-                if ( ev.feature ) {
+
+                if ( ev.feature && self.showLocation ) {
                     self.active = true
                 }
             } )
