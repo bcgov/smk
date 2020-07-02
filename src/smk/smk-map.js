@@ -209,10 +209,12 @@ include.module( 'smk-map', [ 'libs', 'util', 'theme-base', 'sidepanel', 'status-
                         var tools = inc[ tag ]( t )
 
                         tools.forEach( function ( tool ) {
-                            if ( tool.id in self.$tool ) {
-                                console.warn( 'tool "' + tool.id + '" is defined more than once' )
-                                return
-                            }
+                            if ( !tool.id )
+                                throw Error( 'tool with no id' )
+
+                            if ( tool.id in self.$tool )
+                                throw Error( 'tool "' + tool.id + '" is defined more than once' )
+                                // return
 
                             if ( !self.$toolType[ tool.type ] ) self.$toolType[ tool.type ] = []
                             self.$toolType[ tool.type ].push( tool )
@@ -490,14 +492,17 @@ include.module( 'smk-map', [ 'libs', 'util', 'theme-base', 'sidepanel', 'status-
     }
 
     SmkMap.prototype.getToolById = function ( id ) {
+        if ( !id ) return
         return this.$tool[ id ]
     }
 
     SmkMap.prototype.getToolsByType = function ( type ) {
+        if ( !type ) return []
         return this.$toolType[ type ] || []
     }
 
     SmkMap.prototype.hasToolType = function ( type ) {
+        if ( !type ) return false
         return !!this.$toolType[ type ] && this.$toolType[ type ].length > 0
     }
 
@@ -507,6 +512,8 @@ include.module( 'smk-map', [ 'libs', 'util', 'theme-base', 'sidepanel', 'status-
 
     SmkMap.prototype.withTool = function ( toolIdOrType, action, context ) {
         var self = this
+
+        if ( !toolIdOrType ) return 0
 
         var tool = this.getToolById( toolIdOrType )
         if ( tool ) {
