@@ -4,10 +4,10 @@ include.module( 'tool-query-feature', [
  ], function ( inc ) {
     "use strict";
 
-    return SMK.TYPE.Tool.define( 'QueryFeatureTool', 
+    return SMK.TYPE.Tool.define( 'QueryFeatureTool',
         function () {
             SMK.TYPE.ToolPanel.call( this, 'tool-panel-feature' )
-            SMK.TYPE.ToolPanelFeature.call( this, function ( smk ) { return smk.$viewer.queried[ this.instance ] } )       
+            SMK.TYPE.ToolPanelFeature.call( this, function ( smk ) { return smk.$viewer.queried[ this.instance ] } )
         },
         function ( smk ) {
             var self = this
@@ -23,7 +23,7 @@ include.module( 'tool-query-feature', [
                 if ( self.active ) {
                     self.featureSet.highlight()
                     Vue.nextTick( function () {
-                        smk.$tool[ self.parentId ].visible = true
+                        smk.getToolById( self.parentId ).visible = true
 
                         if ( self.command.zoom === false )
                             self.featureSet.zoomTo( featureIds[ self.resultPosition ] )
@@ -90,7 +90,7 @@ include.module( 'tool-query-feature', [
 
                 self.setAttributeComponent( ly, ev.feature )
 
-                self.resultCount = self.featureSet.getStats().featureCount 
+                self.resultCount = self.featureSet.getStats().featureCount
                 self.resultPosition = featureIds.indexOf( ev.feature.id )
 
                 if ( self.command.zoom !== false )
@@ -104,6 +104,6 @@ include.module( 'tool-query-feature', [
             // self.featureSet.clearedFeatures( function ( ev ) {
                 // self.resultCount = 0
             // } )
-        } 
+        }
     )
 } )

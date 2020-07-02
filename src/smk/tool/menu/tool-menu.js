@@ -50,7 +50,7 @@ include.module( 'tool-menu', [
 
             smk.on( this.id, {
                 'previous-panel': function ( ev ) {
-                    smk.$tool[ self.previousId ].active = true
+                    smk.getToolById( self.previousId ).active = true
                 },
 
                 'swipe-up': function ( ev ) {
@@ -64,11 +64,11 @@ include.module( 'tool-menu', [
 
             this.changedActive( function () {
                 if ( self.active ) {
-                    smk.$tool[ self.selectedId ].active = true
+                    smk.getToolById( self.selectedId ).active = true
                 }
                 else {
                     self.subPanels.forEach( function ( t ) {
-                        smk.$tool[ t.prop.id ].active = false
+                        smk.getToolById( t.prop.id ).active = false
                     } )
                 }
             } )

@@ -1,5 +1,5 @@
-include.module( 'tool.tool-js', [ 
-    'event' 
+include.module( 'tool.tool-js', [
+    'event'
 ], function ( inc ) {
     "use strict";
 
@@ -23,8 +23,14 @@ include.module( 'tool.tool-js', [
     Object.assign( Tool.prototype, ToolEvent.prototype )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
-    Tool.prototype.configure = function ( option ) {
+    Tool.prototype.configure = function ( name, option ) {
         Object.assign( this, option )
+
+        if ( this.instance )
+            this.id = name + '--' + this.instance
+        else
+            this.id = name
+
         return this
     }
 
@@ -36,7 +42,8 @@ include.module( 'tool.tool-js', [
                 init.call( self, smk )
             }
             catch ( e ) {
-                console.warn( self.id + ' initializer #' + i + ' failed:', e )
+                console.warn( self.id + ' initializer #' + i + ' failed' )
+                throw e
             }
         } )
     }
@@ -55,7 +62,7 @@ include.module( 'tool.tool-js', [
         prop.onSet = [].concat( prop.onSet )
 
         Object.defineProperty( this, name, {
-            get: function () { 
+            get: function () {
                 return prop.val
             },
             set: function ( val ) {
@@ -69,7 +76,7 @@ include.module( 'tool.tool-js', [
                 } )
             }
         } )
-    }  
+    }
 
     Tool.prototype.getComponentProps = function ( componentName ) {
         var self = this
@@ -97,7 +104,7 @@ include.module( 'tool.tool-js', [
         } )
 
         return this.$componentProp[ componentName ]
-    } 
+    }
 
     Tool.prototype.modifyComponentProp = function ( propName, modify ) {
         var self = this
@@ -126,7 +133,7 @@ include.module( 'tool.tool-js', [
         if ( option.events ) {
             events = SMK.TYPE.Event.define( option.events )
         }
-        
+
         SMK.TYPE[ name ] = function () {
             SMK.TYPE.Tool.prototype.constructor.call( this )
 
@@ -141,20 +148,22 @@ include.module( 'tool.tool-js', [
                 this.$initializers.push( option.initialize )
 
             this.$moreInitializers = initializers
-           
+
             Object.assign( this, option.methods )
         }
-    
+
         Object.assign( SMK.TYPE[ name ].prototype, SMK.TYPE.Tool.prototype )
 
         if ( events )
             Object.assign( SMK.TYPE[ name ].prototype, events.prototype )
-    
+
         SMK.TYPE[ name ].addInitializer = function ( initialize ) {
             initializers.push( initialize )
         }
-    
-        return SMK.TYPE[ name ]
+
+        return function ( config ) {
+            return [ ( new SMK.TYPE[ name ]() ).configure( name, config ) ]
+        }
     }
-    
+
 } )

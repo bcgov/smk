@@ -128,7 +128,6 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
         this.lmfId = smk.lmfId
         this.type = smk.viewer.type
         this.serviceUrl = smk.$option[ 'service-url' ]
-        this.identifyTool = function () { return smk.$tool[ 'identify' ] }
         this.resolveUrl = function ( url ) {
             return smk.resolveAssetUrl( url )
             // return ( new URL( url, smk.$option.baseUrl ) ).toString()
@@ -207,7 +206,7 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
 
         $( window ).resize( SMK.UTIL.makeDelayedCall( function () {
             var dev = smk.detectDevice()
-            if ( dev ) 
+            if ( dev )
                 self.changedDevice( dev )
         }, { delay: 500 } ) )
 
@@ -292,7 +291,7 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
             items: ly.childLayerConfigs().map( function ( childConfig ) {
                 var cly = createLayer( childConfig )
                 registerLayer( cly )
-                return { 
+                return {
                     id: cly.id,
                 }
             } )
@@ -325,7 +324,7 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
                 self.loading = true
             } )
 
-            ly.finishedLoading( function () {   
+            ly.finishedLoading( function () {
                 self.loading = self.anyLayersLoading()
             } )
         }
@@ -349,7 +348,7 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
 
     Viewer.prototype.setDisplayContextItems = function ( context, items ) {
         var self = this
-        
+
         if ( this.isDisplayContext( context ) ) {
             console.warn( 'displayContext ' + context + ' is already defined' )
             return
@@ -359,7 +358,7 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
 
         dc.changedVisibility( function () {
             self.changedLayerVisibility()
-        } ) 
+        } )
 
         this.changedView( function () {
             dc.setView( self.getView() )
@@ -367,7 +366,7 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
     }
 
     Viewer.prototype.eachDisplayContext = function ( cb ) {
-        var self = this 
+        var self = this
 
         Object.keys( this.displayContext ).forEach( function ( context ) {
             cb.call( self, self.displayContext[ context ], context )
@@ -423,13 +422,13 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
         } )
     }
 
-    Viewer.prototype.setDisplayContextLegendsVisible = function ( vis ) {        
+    Viewer.prototype.setDisplayContextLegendsVisible = function ( vis ) {
         this.eachDisplayContext( function ( dc ) {
             dc.setLegendsVisible( vis, this.layerId, this )
         } )
     }
 
-    Viewer.prototype.setDisplayContextFolderExpanded = function ( layerId, expanded ) {        
+    Viewer.prototype.setDisplayContextFolderExpanded = function ( layerId, expanded ) {
         this.eachDisplayContext( function ( dc ) {
             dc.setFolderExpanded( layerId, expanded )
         } )
@@ -447,7 +446,7 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
         var self = this
 
         // if ( !self.layerDisplayContext ) return
-        
+
         var pending = {}
         self.getDisplayContextLayerIds().forEach( function ( id ) {
             pending[ id ] = true
@@ -463,7 +462,7 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
                 // console.log( 'visible',id )
 
             var ly = self.layerId[ id ]
-            if ( !ly ) return 
+            if ( !ly ) return
 
             if ( !merged ) {
                 merged = [ ly ]
@@ -502,7 +501,7 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
                 .catch( function ( e ) {
                     console.warn( 'Failed to create layer ' + cid + ':', e )
                     lys.forEach( function ( ly ) {
-                        self.setDisplayContextItemEnabled( ly.id, false ) 
+                        self.setDisplayContextItemEnabled( ly.id, false )
                     } )
                 } )
 
@@ -572,11 +571,11 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
     Viewer.prototype.circleInMap = function ( screenCenter, pixelRadius, sides ) {
         var self = this
 
-        return turf.polygon( [ 
+        return turf.polygon( [
             SMK.UTIL.circlePoints( screenCenter, pixelRadius, sides )
-                .map( function ( p ) { 
-                    return self.screenToMap( p ) 
-                } ) 
+                .map( function ( p ) {
+                    return self.screenToMap( p )
+                } )
         ] )
     }
 
@@ -611,7 +610,7 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
 
             var option = {
                 // tolerance: ly.config.tolerance || tolerance,
-                layer: self.visibleLayer[ id ] 
+                layer: self.visibleLayer[ id ]
             }
 
             // if ( option.tolerance != tolerance )
@@ -621,7 +620,7 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
             var p = ly.getFeaturesInArea( area, view, option )
             if ( !p ) return
 
-            promises.push( 
+            promises.push(
                 SMK.UTIL.resolved().then( function () {
                     if ( !lock.held() ) throw IdentifyDiscardedError()
 
@@ -723,7 +722,7 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
     } )()
 
     Viewer.prototype.distanceToMeters = function ( distance, distanceUnit ) {
-        if ( distanceUnit == 'px' ) 
+        if ( distanceUnit == 'px' )
             return distance * this.getView().metersPerPixel
             // return this.pixelsToMillimeters( distance ) / 1000
 
@@ -731,7 +730,7 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
     }
 
     Viewer.prototype.distanceFromMeters = function ( distanceMeters, distanceUnit ) {
-        if ( distanceUnit == 'px' ) 
+        if ( distanceUnit == 'px' )
             return distanceMeters / this.getView().metersPerPixel
             // return this.pixelsToMillimeters( distance ) / 1000
 

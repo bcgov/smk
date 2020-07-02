@@ -4,10 +4,10 @@ include.module( 'tool-identify-feature', [
  ], function ( inc ) {
     "use strict";
 
-    return SMK.TYPE.Tool.define( 'IdentifyFeatureTool', 
+    return SMK.TYPE.Tool.define( 'IdentifyFeatureTool',
         function () {
             SMK.TYPE.ToolPanel.call( this, 'tool-panel-feature' )
-            SMK.TYPE.ToolPanelFeature.call( this, function ( smk ) { return smk.$viewer.identified } )       
+            SMK.TYPE.ToolPanelFeature.call( this, function ( smk ) { return smk.$viewer.identified } )
 
             this.parentId = 'identify'
         },
@@ -15,26 +15,26 @@ include.module( 'tool-identify-feature', [
             var self = this
 
             var featureIds
-    
+
             this.tool.select = smk.$tool.select
             this.tool.zoom = smk.$tool.zoom
-    
+
             self.changedActive( function () {
                 if ( self.active ) {
                     self.featureSet.highlight()
                     Vue.nextTick( function () {
-                        smk.$tool[ self.parentId ].visible = true
+                        smk.getToolById( self.parentId ).visible = true
                     } )
                 }
                 else {
                     self.featureSet.pick()
                 }
             } )
-    
+
             smk.$tool.identify.startedIdentify( function () {
-                smk.$tool[ self.parentId ].active = true
+                smk.getToolById( self.parentId ).active = true
             } )
-    
+
             smk.on( this.id, {
                 'zoom': function () {
                     self.featureSet.zoomTo( featureIds[ self.resultPosition ] )
@@ -51,26 +51,26 @@ include.module( 'tool-identify-feature', [
                     self.featureSet.pick( featureIds[ ( self.resultPosition + 1 ) % self.resultCount ] )
                 },
             } )
-    
+
             self.featureSet.addedFeatures( function ( ev ) {
-                self.resultCount = self.featureSet.getStats().featureCount 
-    
+                self.resultCount = self.featureSet.getStats().featureCount
+
                 featureIds =  Object.keys( self.featureSet.featureSet )
             } )
-    
+
             self.featureSet.clearedFeatures( function ( ev ) {
                 self.resultCount = 0
             } )
-    
+
             self.featureSet.pickedFeature( function ( ev ) {
                 if ( !ev.feature ) {
                     self.feature = null
                     self.layer = null
                     return
                 }
-    
+
                 self.active = true
-    
+
                 var ly = smk.$viewer.layerId[ ev.feature.layerId ]
                 self.layer = {
                     id:         ev.feature.layerId,
@@ -85,19 +85,19 @@ include.module( 'tool-identify-feature', [
                         }
                     } )
                 }
-    
+
                 self.feature = {
                     id:         ev.feature.id,
                     title:      ev.feature.title,
                     properties: Object.assign( {}, ev.feature.properties )
                 }
-    
+
                 self.setAttributeComponent( ly, ev.feature )
-    
+
                 self.resultPosition = featureIds.indexOf( ev.feature.id )
-    
+
                 smk.$viewer.panToFeature( ev.feature )
-            } )    
+            } )
         }
     )
 } )

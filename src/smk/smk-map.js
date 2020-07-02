@@ -26,14 +26,14 @@ include.module( 'smk-map', [ 'libs', 'util', 'theme-base', 'sidepanel', 'status-
 
         var p = container.position()
         var spinner = $( '<img>' )
-            .attr( 'src', inc[ 'vue-config.spinner-gif' ] ) 
+            .attr( 'src', inc[ 'vue-config.spinner-gif' ] )
             .insertAfter( container )
             .css( {
                 zIndex:     99999,
                 visibility: 'visible',
                 position:   'absolute',
                 width:      64,
-                height:     64,            
+                height:     64,
                 left:       p.left + container.outerWidth() / 2 - 32,
                 top:        p.top + container.outerHeight() / 2 - 32,
             } )
@@ -89,8 +89,8 @@ include.module( 'smk-map', [ 'libs', 'util', 'theme-base', 'sidepanel', 'status-
                         return obj
                     } )
                     .catch( function ( e ) {
-                        console.warn( 'failed to load tag "' + tag + '" for ' + c.$source ) 
-                        e.parseSource = c.$source 
+                        console.warn( 'failed to load tag "' + tag + '" for ' + c.$source )
+                        e.parseSource = c.$source
                         throw e
                     } )
             } ) )
@@ -127,7 +127,7 @@ include.module( 'smk-map', [ 'libs', 'util', 'theme-base', 'sidepanel', 'status-
                 .addClass( 'smk-viewer-' + self.viewer.type )
 
             var themes = [ 'base' ].concat( self.viewer.themes ).map( function ( th ) { return 'theme-' + th } )
-            
+
             $( self.$container )
                 .addClass( themes.map( function ( th ) { return 'smk-' + th } ).join( ' ' ) )
 
@@ -187,6 +187,7 @@ include.module( 'smk-map', [ 'libs', 'util', 'theme-base', 'sidepanel', 'status-
 
         function loadTools() {
             self.$tool = {}
+            self.$toolType = {}
 
             if ( !self.tools ) return
             var enabledTools = self.tools.filter( function ( t ) { return t.enabled !== false && t.instance !== true } )
@@ -198,24 +199,29 @@ include.module( 'smk-map', [ 'libs', 'util', 'theme-base', 'sidepanel', 'status-
                     .then( function ( inc ) {
                         return include( tag + '-' + self.viewer.type )
                             .catch( function () {
-                                console.debug( 'tool "' + t.type + '" has no ' + self.viewer.type + ' subclass' )
+                                console.debug( tag + ' has no ' + self.viewer.type + ' subclass' )
                             } )
                             .then( function () {
                                 return inc
                             } )
                     } )
                     .then( function ( inc ) {
-                        t.id = t.type + ( t.instance ? '--' + t.instance : '' )
+                        var tools = inc[ tag ]( t )
 
-                        if ( !( t.id in self.$tool ) ) {
-                            self.$tool[ t.id ] = ( new inc[ tag ]() ).configure( t )
-                        }
-                        else {
-                            console.warn( 'tool "' + t.id + '" is defined more than once' )
-                        }
+                        tools.forEach( function ( tool ) {
+                            if ( tool.id in self.$tool ) {
+                                console.warn( 'tool "' + tool.id + '" is defined more than once' )
+                                return
+                            }
+
+                            if ( !self.$toolType[ tool.type ] ) self.$toolType[ tool.type ] = []
+                            self.$toolType[ tool.type ].push( tool )
+
+                            self.$tool[ tool.id ] = tool
+                        } )
                     } )
                     .catch( function ( e ) {
-                        console.warn( 'tool "' + t.id + '" failed to create:', e )
+                        console.warn( 'Failed to create tool:' , e, t )
                     } )
             } ) )
         }
@@ -235,19 +241,19 @@ include.module( 'smk-map', [ 'libs', 'util', 'theme-base', 'sidepanel', 'status-
         }
 
         function initTools() {
-            var ts = Object.keys( self.$tool )
-                .sort( function ( a, b ) { return self.$tool[ a ].order - self.$tool[ b ].order } )
+            var tools = Object.values( self.$tool )
+                .sort( function ( a, b ) { return a.order - b.order } )
 
-            return SMK.UTIL.waitAll( ts.map( function ( t ) {
+            return SMK.UTIL.waitAll( tools.map( function ( t ) {
                 return SMK.UTIL.resolved()
                     .then( function () {
-                        return self.$tool[ t ].initialize( self )
+                        return t.initialize( self )
                     } )
                     .catch( function ( e ) {
-                        console.warn( 'tool "' + t + '" failed to initialize:', e )
+                        console.error( 'tool "' + t.id + '" failed to initialize:', e )
                     } )
                     .then( function ( tool ) {
-                        console.log( 'tool "' + t + '" initialized' )
+                        console.log( 'tool "' + t.id + '" initialized' )
                     } )
             } ) )
         }
@@ -264,9 +270,9 @@ include.module( 'smk-map', [ 'libs', 'util', 'theme-base', 'sidepanel', 'status-
                     return self.$viewer.waitFinishedLoading()
                 } )
                 .then( function () {
-                    if ( self.viewer.activeTool in self.$tool )
-                        self.$tool[ self.viewer.activeTool ].active = true
-                        // console.log('all layers loaded')
+                    self.withTool( self.viewer.activeTool, function ( t ) {
+                        t.active = true
+                    } )
                     return self
                 } )
 
@@ -318,7 +324,7 @@ include.module( 'smk-map', [ 'libs', 'util', 'theme-base', 'sidepanel', 'status-
     }
 
     SmkMap.prototype.getSidepanelPosition = function () {
-        if ( !this.$sidepanel || !this.$sidepanel.isPanelVisible() ) 
+        if ( !this.$sidepanel || !this.$sidepanel.isPanelVisible() )
             return { left: 0, width: 0, top: 0, height: 0 }
 
         var overlayEl = this.$overlay
@@ -385,14 +391,6 @@ include.module( 'smk-map', [ 'libs', 'util', 'theme-base', 'sidepanel', 'status-
         return this
     }
 
-    SmkMap.prototype.withTool = function ( toolId, action ) {
-        var self = this
-
-        if ( !this.$tool[ toolId ] ) return
-
-        return action.call( this.$tool[ toolId ] )
-    }
-
     SmkMap.prototype.detectDevice = function () {
         var dev = this.viewer.device
         if ( dev == 'auto' ) {
@@ -414,14 +412,14 @@ include.module( 'smk-map', [ 'libs', 'util', 'theme-base', 'sidepanel', 'status-
         // } )
 
         if ( dev == this.$device )
-            return 
+            return
 
         if ( this.$device )
             $( this.$container )
                 .removeClass( 'smk-device-' + this.$device )
 
         this.$device = dev
-        
+
         $( this.$container )
             .addClass( 'smk-device-' + this.$device )
 
@@ -472,7 +470,7 @@ include.module( 'smk-map', [ 'libs', 'util', 'theme-base', 'sidepanel', 'status-
                 ly.isVisible = false
             }
         } )
-        
+
         return cfg
     }
 
@@ -490,8 +488,43 @@ include.module( 'smk-map', [ 'libs', 'util', 'theme-base', 'sidepanel', 'status-
 
         return this.$statusMessage
     }
-   
+
+    SmkMap.prototype.getToolById = function ( id ) {
+        return this.$tool[ id ]
+    }
+
+    SmkMap.prototype.getToolsByType = function ( type ) {
+        return this.$toolType[ type ] || []
+    }
+
+    SmkMap.prototype.hasToolType = function ( type ) {
+        return !!this.$toolType[ type ] && this.$toolType[ type ].length > 0
+    }
+
+    SmkMap.prototype.forEachTool = function ( cb ) {
+        return Object.values( this.$tool ).forEach( cb )
+    }
+
+    SmkMap.prototype.withTool = function ( toolIdOrType, action, context ) {
+        var self = this
+
+        var tool = this.getToolById( toolIdOrType )
+        if ( tool ) {
+            action.call( context || tool, tool )
+            return 1
+        }
+
+        var tools = this.getToolsByType( toolIdOrType )
+        if ( tools.length == 0 ) return 0
+
+        tools.forEach( function ( t ) {
+            action.call( context || t, t )
+        } )
+        return tools.length
+    }
+
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 
     function findProperty( obj, collectionName, propName, cb ) {
         if ( !( collectionName in obj ) )

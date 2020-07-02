@@ -36,22 +36,22 @@ include.module( 'tool.tool-base-js', [ 'tool.tool-js' ], function ( inc ) {
                 }
 
                 var group = {}
-                Object.keys( smk.$tool ).forEach( function ( id ) {
-                    var r = smk.$tool[ id ].rootId = findRoot( id )
-                    if ( !group[ r ] )
-                        group[ r ] = []
+                smk.forEachTool( function ( t ) {
+                    var r = t.rootId = findRoot( t.id )
 
-                    group[ r ].push( id )
+                    if ( !group[ r ] ) group[ r ] = []
+                    group[ r ].push( t.id )
                 } )
 
                 smk.$group = group
 
                 function findRoot( toolId ) {
-                    var rootId = toolId
-                    while ( smk.$tool[ rootId ] && smk.$tool[ rootId ].parentId ) {
-                        rootId = smk.$tool[ rootId ].parentId
+                    var tool = smk.getToolById( toolId )
+                    while ( true ) {
+                        var parent = smk.getToolById( tool.parentId )
+                        if ( !parent ) return tool.id
+                        tool = parent
                     }
-                    return rootId
                 }
             }
 
@@ -63,15 +63,25 @@ include.module( 'tool.tool-base-js', [ 'tool.tool-js' ], function ( inc ) {
                 positions.push( 'toolbar' )
 
                 var found = positions.some( function ( p ) {
-                    if ( !( p in smk.$tool ) ) {
+                    if ( p == self.id || p == self.type )
+                        return false
+
+                    if ( !smk.hasToolType( p ) && !smk.getToolById( p ) ) {
                         console.warn( 'position ' + p + ' not available for tool ' + self.id )
                         return false
                     }
 
-                    if ( p == self.id )
-                        return false
-
-                    return smk.$tool[ p ].addTool( self, smk, setParentId )
+                    if ( smk.hasToolType( p ) ) {
+                        var tools = smk.getToolsByType( p )
+                        if ( tools.length > 1 ) {
+                            console.warn( 'position ' + p + ' is ambiguous for tool ' + self.id )
+                            return false
+                        }
+                        return tools[ 0 ].addTool( self, smk, setParentId )
+                    }
+                    else {
+                        return smk.getToolById( p ).addTool( self, smk, setParentId )
+                    }
                 } )
 
                 if ( !found ) {
@@ -82,15 +92,15 @@ include.module( 'tool.tool-base-js', [ 'tool.tool-js' ], function ( inc ) {
             this.changedActive( function () {
                 var ids = smk.getToolGroup( self.rootId )
                 var g = ids.some( function ( id ) {
-                    return smk.$tool[ id ].active
+                    return smk.getToolById( id ).active
                 } )
                 ids.forEach( function ( id ) {
-                    smk.$tool[ id ].group = g
+                    smk.getToolById( id ).group = g
                 } )
 
                 if ( self.active ) {
                     ids.forEach( function ( id ) {
-                        smk.$tool[ id ].active = self.isToolInGroupActive( id )
+                        smk.getToolById( id ).active = self.isToolInGroupActive( id )
                     } )
                 }
                 else {
@@ -104,7 +114,7 @@ include.module( 'tool.tool-base-js', [ 'tool.tool-js' ], function ( inc ) {
                             if ( rootId == self.id ) return
 
                             smk.getToolGroup( rootId ).forEach( function ( id ) {
-                                smk.$tool[ id ].active = false
+                                smk.getToolById( id ).active = false
                             } )
                         } )
                     }
