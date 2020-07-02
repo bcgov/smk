@@ -506,6 +506,18 @@ include.module( 'smk-map', [ 'libs', 'util', 'theme-base', 'sidepanel', 'status-
         return !!this.$toolType[ type ] && this.$toolType[ type ].length > 0
     }
 
+    SmkMap.prototype.getToolTypesAvailable = function ( types ) {
+        var self = this
+
+        if ( !types || !Array.isArray( types ) || types.length == 0 )
+            types = Object.keys( this.$toolType )
+
+        return types.reduce( function ( acc, t ) {
+            acc[ t ] = self.hasToolType( t )
+            return acc
+        }, {} )
+    }
+
     SmkMap.prototype.forEachTool = function ( cb ) {
         return Object.values( this.$tool ).forEach( cb )
     }

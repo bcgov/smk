@@ -16,9 +16,6 @@ include.module( 'tool-identify.tool-identify-feature-js', [
 
             var featureIds
 
-            this.tool.select = smk.$tool.select
-            this.tool.zoom = smk.$tool.zoom
-
             self.changedActive( function () {
                 if ( self.active ) {
                     self.featureSet.highlight()

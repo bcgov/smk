@@ -2,6 +2,7 @@ include.module( 'tool-identify-config', [
     'tool-config.tool-base-config-js',
     'tool-config.tool-widget-config-js',
     'tool-config.tool-panel-config-js',
+    'tool-config.tool-panel-feature-config-js',
     'tool-identify-config.crosshair-png'
 ], function ( inc ) {
     "use strict";
@@ -9,18 +10,19 @@ include.module( 'tool-identify-config', [
     SMK.CONFIG.tools.push(
         inc[ 'tool-config.tool-base-config-js' ](
         inc[ 'tool-config.tool-widget-config-js' ](
-        inc[ 'tool-config.tool-panel-config-js' ]( {    
-            type: 'identify',     
-            enabled: false, 
-            order: 5, 
+        inc[ 'tool-config.tool-panel-config-js' ](
+        inc[ 'tool-config.tool-panel-feature-config-js' ]( {
+            type: 'identify',
+            enabled: false,
+            order: 5,
             position: 'list-menu',
             icon: 'info_outline',
             title: 'Identify Features',
             command: {
-                select: false,
+                select: true,
                 radius: false,
                 radiusUnit: false,
-                nearBy: false
+                nearBy: true
             },
             radius: 5,
             radiusUnit: 'px',
@@ -50,7 +52,7 @@ include.module( 'tool-identify-config', [
                             strokeCap:          "butt",
                             strokeDashes:       "6,6"
                         }
-                    ],    
+                    ],
                     legend: {
                         line: true
                     }
@@ -61,7 +63,7 @@ include.module( 'tool-identify-config', [
                     style: {
                         markerUrl: inc[ 'tool-identify-config.crosshair-png' ],
                         markerSize: [ 40, 40 ],
-                        markerOffset: [ 20, 20 ]    
+                        markerOffset: [ 20, 20 ]
                     },
                     legend: {
                         point: true
@@ -76,12 +78,12 @@ include.module( 'tool-identify-config', [
                             strokeColor:        "red",
                             strokeOpacity:      1
                         }
-                    ],    
+                    ],
                     legend: {
                         line: true
                     }
                 }
             ]
-        } ) ) )
+        } ) ) ) )
     )
 } )

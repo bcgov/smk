@@ -47,8 +47,7 @@ include.module( 'tool-identify.tool-identify-list-js', [
         initialize: function ( smk ) {
             var self = this
 
-            this.tool.select = smk.$tool.select
-            this.tool.zoom = smk.$tool.zoom
+            this.tool = smk.getToolTypesAvailable()
 
             this.changedGroup( function () {
                 if ( self.group ) {

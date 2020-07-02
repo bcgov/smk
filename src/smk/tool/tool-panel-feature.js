@@ -23,6 +23,9 @@ include.module( 'tool.tool-panel-feature-js', [
         this.$initializers.push( function ( smk ) {
             this.featureSet = featureSetCallback.call( this, smk )
 
+            this.tool = smk.getToolTypesAvailable()
+            delete this.tool[ this.type ]
+
             smk.on( this.id, {
                 'swipe-up': function ( ev ) {
                     smk.$sidepanel.setExpand( 2 )
