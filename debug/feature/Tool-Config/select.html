@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Measure</title>
+        <title>Select</title>
 
         <script src="../../../dist/smk.js"></script>
         <link rel="stylesheet" type="text/css" href="style.css"/>
@@ -9,17 +9,23 @@
     <body>
         <script src="default-config.js"></script>
 <!--***************************************************************************
-    This example shows the default configuration for meaasure tool.
+    This example shows the default configuration for select tool.
 -->
     <div id="smk-map-frame"></div>
     <script>
         SMK.INIT( {
             containerSel: "#smk-map-frame",
             config: defaultConfig.concat( {
-                tools: [ {
-                    type: "measure",
-                    enabled: true
-                } ]
+                tools: [
+                    {
+                        type: "select",
+                        enabled: true
+                    },
+                    {
+                        type: "identify",
+                        enabled: true
+                    }
+                ]
             }, '?' )
         } )
     </script>

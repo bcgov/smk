@@ -1,30 +1,28 @@
-include.module( 'tool-select-feature', [
+include.module( 'tool-select.tool-select-feature-js', [
     'component-tool-panel-feature',
     'tool.tool-panel-feature-js'
  ], function ( inc ) {
     "use strict";
 
-    return SMK.TYPE.Tool.define( 'SelectFeatureTool', 
+    return SMK.TYPE.Tool.define( 'SelectFeatureTool',
         function () {
             SMK.TYPE.ToolPanel.call( this, 'tool-panel-feature' )
-            SMK.TYPE.ToolPanelFeature.call( this, function ( smk ) { return smk.$viewer.selected } )       
+            SMK.TYPE.ToolPanelFeature.call( this, function ( smk ) { return smk.$viewer.selected } )
 
-            this.parentId = 'select'
+            this.parentId = 'SelectListTool'
         },
         function ( smk ) {
             var self = this
 
             var featureIds
 
-            this.tool.zoom = smk.$tool.zoom
-
             self.changedActive( function () {
                 if ( self.active ) {
-                    smk.$tool[ 'select' ].visible = true
+                    smk.getToolById( 'SelectListTool' ).visible = true
                     self.featureSet.highlight()
                 }
                 else {
-                    smk.$tool[ 'select' ].visible = false
+                    smk.getToolById( 'SelectListTool' ).visible = false
                 }
             } )
 
@@ -41,13 +39,13 @@ include.module( 'tool-select-feature', [
             } )
 
             self.featureSet.addedFeatures( function ( ev ) {
-                self.resultCount = self.featureSet.getStats().featureCount 
+                self.resultCount = self.featureSet.getStats().featureCount
 
                 featureIds =  Object.keys( self.featureSet.featureSet )
             } )
 
             self.featureSet.removedFeatures( function ( ev ) {
-                self.resultCount = self.featureSet.getStats().featureCount 
+                self.resultCount = self.featureSet.getStats().featureCount
 
                 featureIds =  Object.keys( self.featureSet.featureSet )
             } )
@@ -91,6 +89,6 @@ include.module( 'tool-select-feature', [
                 self.resultPosition = featureIds.indexOf( ev.feature.id )
             } )
 
-        } 
+        }
     )
 } )
