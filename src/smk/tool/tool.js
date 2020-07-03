@@ -26,10 +26,15 @@ include.module( 'tool.tool-js', [
     Tool.prototype.configure = function ( name, option ) {
         Object.assign( this, option )
 
-        if ( this.instance )
+        if ( this.instance ) {
             this.id = name + '--' + this.instance
-        else
+
+            if ( this.parentId )
+                this.parentId = this.parentId + '--' + this.instance
+        }
+        else {
             this.id = name
+        }
 
         return this
     }
