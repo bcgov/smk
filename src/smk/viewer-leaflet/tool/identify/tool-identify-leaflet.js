@@ -58,10 +58,11 @@ include.module( 'tool-identify-leaflet', [
                         } )
                         .on( 'dragend', function (ev) {
                             // console.log('dragend',ev)
-                            self.radius = turf.distance(
+                            self.setRadiusMeters( turf.distance(
                                 [ self.searchLocation.map.longitude, self.searchLocation.map.latitude ],
                                 llToTurf( ev.target.getLatLng() )
-                            ) * 1000
+                            ) * 1000 )
+
                             self.restartIdentify()
                         } )
 

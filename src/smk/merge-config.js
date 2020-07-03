@@ -19,21 +19,22 @@ include.module( 'merge-config', [ 'util' ], function () {
     addPathMatchStrategy( '/layers<.+?>/id',                            ignoreMerge )
     addPathMatchStrategy( '/layers<.+?>/attributes',                    assignMerge )
     addPathMatchStrategy( '/layers<.+?>/queries',                       arrayOfObjectMerge( 'id' ) )
-    addPathMatchStrategy( '/layers<.+?>/queries<.+?>/parameters',       arrayOfObjectMerge( 'id' ) ) 
-    addPathMatchStrategy( '/tools',                                     toolMerge ) 
+    addPathMatchStrategy( '/layers<.+?>/queries<.+?>/parameters',       arrayOfObjectMerge( 'id' ) )
+    addPathMatchStrategy( '/tools',                                     toolMerge )
     addPathMatchStrategy( '/tools<.+?>/type',                           ignoreMerge )
     addPathMatchStrategy( '/tools<.+?>/instance',                       ignoreMerge )
     addPathMatchStrategy( '/tools<.+?>/position',                       assignMerge )
     addPathMatchStrategy( '/tools<layers,.+?>/display',                 arrayOfObjectMerge( 'id' ) )
-    addPathMatchStrategy( '/tools<layers,.+?>/display<.+?>(/items<.+?>)*/items',   arrayOfObjectMerge( 'id' ) )    
+    addPathMatchStrategy( '/tools<layers,.+?>/display<.+?>(/items<.+?>)*/items',   arrayOfObjectMerge( 'id' ) )
     addPathMatchStrategy( '/tools<.+?>/internalLayers',                 arrayOfObjectMerge( 'id' ) )
+    addPathMatchStrategy( '/tools<.+?>/internalLayers<.+?>/style',      assignMerge )
 
     function getPathStrategy( path ) {
         for ( var i = 0; i < pathMatchers.length; i += 1 ) {
             var pm = pathMatchers[ i ]
 
             if ( !pm.regex.test( path ) ) continue
-            
+
             if ( path != pm.path )
                 console.debug( JSON.stringify( path ), '~', JSON.stringify( pm.path ) )
 
@@ -46,7 +47,7 @@ include.module( 'merge-config', [ 'util' ], function () {
         array: arrayMerge,
         boolean: valueMerge,
         number: valueMerge,
-        string: valueMerge,        
+        string: valueMerge,
     }
 
     function deref( objectIndex ) {
@@ -60,15 +61,15 @@ include.module( 'merge-config', [ 'util' ], function () {
         if ( strategy ) {
             return strategy( base, source, path )
         }
-        
-        var btype = SMK.UTIL.type( deref( base ) )        
-        strategy = typeStrategy[ btype ] 
+
+        var btype = SMK.UTIL.type( deref( base ) )
+        strategy = typeStrategy[ btype ]
         if ( strategy ) {
             return strategy( base, source, path )
         }
 
         var stype = SMK.UTIL.type( deref( source ) )
-        strategy = typeStrategy[ stype ] 
+        strategy = typeStrategy[ stype ]
         if ( strategy ) {
             return strategy( base, source, path )
         }
@@ -92,7 +93,7 @@ include.module( 'merge-config', [ 'util' ], function () {
         if ( !b ) {
             base[0][ base[1] ] = s
             console.log( path, '=', JSON.parse( JSON.stringify( s ) ) )
-            return 
+            return
         }
 
         if ( s === null ) {
@@ -125,7 +126,7 @@ include.module( 'merge-config', [ 'util' ], function () {
         if ( !b ) {
             base[0][ base[1] ] = s
             console.log( path, '=', JSON.parse( JSON.stringify( s ) ) )
-            return 
+            return
         }
 
         if ( s === null ) {
@@ -134,7 +135,7 @@ include.module( 'merge-config', [ 'util' ], function () {
             return
         }
 
-        assertValue( s, 'source', path )    
+        assertValue( s, 'source', path )
         base[0][ base[1] ] = s
         console.log( path, '=', JSON.parse( JSON.stringify( s ) ) )
     }
@@ -146,7 +147,7 @@ include.module( 'merge-config', [ 'util' ], function () {
         if ( !b ) {
             base[0][ base[1] ] = s
             console.log( path, '=', s )
-            return 
+            return
         }
 
         if ( s === null ) {
@@ -156,11 +157,11 @@ include.module( 'merge-config', [ 'util' ], function () {
         }
 
         assertObject( b, 'base', path )
-        assertObject( s, 'source', path )    
+        assertObject( s, 'source', path )
 
         Object.keys( s ).forEach( function ( k ) {
             merge( [ b, k ], [ s, k ], path + '/' + k )
-        } )   
+        } )
     }
 
     function arrayMerge( base, source, path ) {
@@ -170,7 +171,7 @@ include.module( 'merge-config', [ 'util' ], function () {
         if ( !b ) {
             base[0][ base[1] ] = s
             console.log( path, '=', s )
-            return 
+            return
         }
 
         if ( s === null ) {
@@ -180,7 +181,7 @@ include.module( 'merge-config', [ 'util' ], function () {
         }
 
         assertArray( b, 'base', path )
-        assertArray( s, 'source', path )    
+        assertArray( s, 'source', path )
 
         base[0][ base[1] ] = b.concat( s )
         console.log( path, 'concat', s )
@@ -194,7 +195,7 @@ include.module( 'merge-config', [ 'util' ], function () {
             if ( !b ) {
                 base[0][ base[1] ] = s
                 console.log( path, '=', JSON.parse( JSON.stringify( s ) ) )
-                return 
+                return
             }
 
             if ( s === null ) {
@@ -204,7 +205,7 @@ include.module( 'merge-config', [ 'util' ], function () {
             }
 
             assertArray( b, 'base', path )
-            assertArray( s, 'source', path )    
+            assertArray( s, 'source', path )
 
             s.forEach( function ( so, si ) {
                 assertObject( so, 'source', path + '[' + si + ']' )
@@ -220,7 +221,7 @@ include.module( 'merge-config', [ 'util' ], function () {
 
                 if ( bis.length > 0 ) {
                     bis.forEach( function ( bi ) {
-                        merge( [ b, bi ], [ s, si ], path + '<' + b[ bi ][ key ] + '>' )                
+                        merge( [ b, bi ], [ s, si ], path + '<' + b[ bi ][ key ] + '>' )
                     } )
                 }
                 else {
@@ -236,7 +237,7 @@ include.module( 'merge-config', [ 'util' ], function () {
             s = deref( source )
 
         assertArray( b, 'base', path )
-        assertArray( s, 'source', path )    
+        assertArray( s, 'source', path )
 
         s.forEach( function ( so, si ) {
             if ( !so.instance ) {
@@ -258,7 +259,7 @@ include.module( 'merge-config', [ 'util' ], function () {
                     return bo.type == so.type && bo.instance === true
                 } )
 
-                if ( baseInst ) {                                        
+                if ( baseInst ) {
                     inst = JSON.parse( JSON.stringify( baseInst ) )
                     inst.instance = so.instance
                     console.log( 'copied base instance', JSON.parse( JSON.stringify( inst ) ) )
@@ -298,12 +299,12 @@ include.module( 'merge-config', [ 'util' ], function () {
 
         return base
     }
-    
+
     // function mergeViewer( base, merge ) {
     //     if ( !merge.viewer ) return
 
     //     if ( base.viewer ) {
-    //         if ( base.viewer.location && merge.viewer.location ) {                        
+    //         if ( base.viewer.location && merge.viewer.location ) {
     //             Object.assign( base.viewer.location, merge.viewer.location )
     //             delete merge.viewer.location
     //         }

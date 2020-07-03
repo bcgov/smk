@@ -85,6 +85,10 @@ include.module( 'tool-identify.tool-identify-list-js', [
                 return smk.$viewer.distanceToMeters( self.radius, self.radiusUnit )
             }
 
+            this.setRadiusMeters = function ( radiusMeters ) {
+                self.radius = smk.$viewer.distanceFromMeters( radiusMeters, self.radiusUnit )
+            }
+
             this.identifyStarts = 0
             this.startIdentify = function ( location ) {
                 self.busy = true
@@ -177,7 +181,7 @@ include.module( 'tool-identify.tool-identify-list-js', [
                 'changeUnit': function ( ev, comp ) {
                     var d = self.getRadiusMeters()
                     Object.assign( self, ev )
-                    self.radius = smk.$viewer.distanceFromMeters( d, self.radiusUnit )
+                    self.setRadiusMeters( d )
                 },
 
                 'current-location': function () {

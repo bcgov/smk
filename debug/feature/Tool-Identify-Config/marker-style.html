@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Marker Style</title>
+
+        <script src="../../../dist/smk.js"></script>
+        <link rel="stylesheet" type="text/css" href="style.css"/>
+    </head>
+    <body>
+        <script src="default-config.js"></script>
+<!--***************************************************************************
+    This example shows how to configure the identify tool with a different
+    style for click location and search radius.
+-->
+    <div id="smk-map-frame"></div>
+    <script>
+        SMK.INIT( {
+            containerSel: "#smk-map-frame",
+            config: defaultConfig.concat( {
+                tools: [ {
+                    type: "identify",
+                    enabled: true,
+                    internalLayers: [
+                        {
+                            id: "@identify-search-area",
+                            title: "Identify Search Area",
+                            style: [
+                                // {
+                                //     stroke:             false,
+                                //     fill:               true,
+                                //     fillColor:          "yellow",
+                                //     fillOpacity:        0.5,
+                                // },
+                                {
+                                    strokeWidth:        6,
+                                    strokeColor:        "red",
+                                    strokeOpacity:      1,
+                                    strokeCap:          "butt",
+                                    strokeDashes:       "6,6",
+                                    strokeDashOffset:   6
+                                },
+                                {
+                                    strokeWidth:        6,
+                                    strokeColor:        "green",
+                                    strokeOpacity:      1,
+                                    strokeCap:          "butt",
+                                    strokeDashes:       "6,6"
+                                }
+                            ],
+                            legend: {
+                                line: true
+                            }
+                        },
+                        {
+                            id: "@identify-location",
+                            title: "Identify Location",
+                            style: {
+                                markerUrl: './reticule.png',
+                                markerSize: [ 56, 56 ],
+                                markerOffset: [ 28, 28 ]
+                            },
+                            legend: {
+                                point: true
+                            }
+                        },
+                        {
+                            id: "@identify-edit-search-area",
+                            title: "Identify Edit Search Area",
+                            style: [
+                                {
+                                    strokeWidth:        5,
+                                    strokeColor:        "blue",
+                                    strokeOpacity:      1
+                                }
+                            ],
+                            legend: {
+                                line: true
+                            }
+                        }
+                    ]
+                } ]
+            }, '?' )
+        } )
+    </script>
+<!--***************************************************************************-->
+    </body>
+</html>
+
