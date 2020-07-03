@@ -28,8 +28,8 @@ include.module( 'tool.tool-internal-layers-js', [
                 self.internalLayer[ ly.id ] = smk.$viewer.layerId[ ly.id ]
             } )
 
-            smk.$viewer.setDisplayContextItems( this.id, [ {
-                id: 'tool-' + this.id,
+            smk.$viewer.setDisplayContextItems( this.type, [ {
+                id: this.id,
                 type: 'group',
                 title: this.title,
                 isVisible: false,
@@ -39,7 +39,7 @@ include.module( 'tool.tool-internal-layers-js', [
             } ] )
 
             this.setInternalLayerVisible = function ( visible ) {
-                smk.$viewer.displayContext[ self.id ].setItemVisible( 'tool-' + self.id, visible )
+                smk.$viewer.displayContext[ self.type ].setItemVisible( self.id, visible )
             }
         } )
     }

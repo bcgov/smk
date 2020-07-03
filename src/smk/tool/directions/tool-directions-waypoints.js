@@ -172,8 +172,8 @@ include.module( 'tool-directions.tool-directions-waypoints-js', [
                     } )
             } )
 
-            smk.$viewer.setDisplayContextItems( this.id, [ {
-                id: 'tool-' + this.id,
+            smk.$viewer.setDisplayContextItems( this.type, [ {
+                id: this.id,
                 type: 'group',
                 title: this.title,
                 isVisible: false,
@@ -183,7 +183,7 @@ include.module( 'tool-directions.tool-directions-waypoints-js', [
 
 
             this.setInternalLayerVisible = function ( visible ) {
-                smk.$viewer.displayContext[ self.id ].setItemVisible( 'tool-' + self.id, visible )
+                smk.$viewer.displayContext[ self.type ].setItemVisible( self.id, visible )
             }
 
             this.handleRouteData = function ( data ) {
