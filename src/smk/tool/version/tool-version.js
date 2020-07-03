@@ -28,7 +28,7 @@ include.module( 'tool-version', [
         function ( smk ) {
             this.config = SMK.UTIL.projection( 'lmfId', 'lmfRevision', 'createdBy', '_rev', 'published' )( smk )
 
-            this.config.enabledTools = Object.keys( smk.$tool ).sort()
+            this.config.enabledTools = Object.keys( smk.$toolType ).sort()
         }
     )
 } )
