@@ -1,18 +1,18 @@
-include.module( 'tool-directions-options', [ 
-    'tool.tool-base-js', 
-    'tool.tool-panel-js', 
+include.module( 'tool-directions.tool-directions-options-js', [
+    'tool.tool-base-js',
+    'tool.tool-panel-js',
     'component-select-option',
-    'tool-directions-options.panel-directions-options-html' 
+    'tool-directions.panel-directions-options-html'
 ], function ( inc ) {
     "use strict";
 
     Vue.component( 'directions-options-panel', {
         extends: SMK.COMPONENT.ToolPanelBase,
-        template: inc[ 'tool-directions-options.panel-directions-options-html' ],
+        template: inc[ 'tool-directions.panel-directions-options-html' ],
         props: {
-            'truck' : Boolean, 
-            'optimal' : Boolean, 
-            'roundTrip' : Boolean, 
+            'truck' : Boolean,
+            'optimal' : Boolean,
+            'roundTrip' : Boolean,
             'criteria': String,
             'truckRoute': Number,
             'truckHeight': Number,
@@ -23,7 +23,7 @@ include.module( 'tool-directions-options', [
             'truckWidthUnit': Number,
             'truckLengthUnit': Number,
             'truckWeightUnit': Number,
-            'oversize' : Boolean, 
+            'oversize' : Boolean,
             'command': Object,
             'bespoke': Object
         },
@@ -44,10 +44,10 @@ include.module( 'tool-directions-options', [
     } )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
-    return SMK.TYPE.Tool.define( 'DirectionsOptionsTool', 
+    return SMK.TYPE.Tool.define( 'DirectionsOptionsTool',
         function () {
             SMK.TYPE.ToolPanel.call( this, 'directions-options-panel' )
-        
+
             this.defineProp( 'truck' )
             this.defineProp( 'optimal' )
             this.defineProp( 'roundTrip' )
@@ -64,7 +64,7 @@ include.module( 'tool-directions-options', [
             this.defineProp( 'oversize' )
             this.defineProp( 'command' )
             this.defineProp( 'bespoke' )
-    
+
             this.truck = false
             this.optimal = false
             this.roundTrip = false
@@ -82,43 +82,45 @@ include.module( 'tool-directions-options', [
             this.command = {}
             this.bespoke = {}
 
+            this.parentId = 'DirectionsWaypointsTool'
+
             function positiveFloat( newVal, oldVal, propName ) {
                 var i = parseFloat( newVal )
                 if ( !newVal || !i ) return null
                 if ( i < 0 ) return oldVal
                 return i
-            }   
+            }
         },
         function ( smk ) {
             var self = this
 
-            var directions = smk.$tool[ 'directions' ]
-    
+            var directions = smk.getToolById( this.parentId )
+
             var findRouteDelayed = SMK.UTIL.makeDelayedCall( function () {
                 directions.findRoute()
             } )
-    
+
             smk.on( this.id, {
                 'change': function ( ev, comp ) {
                     Object.assign( self, ev )
-    
+
                     comp.$forceUpdate()
                     findRouteDelayed()
                 },
             } )
-    
+
             smk.$viewer.handlePick( 3, function ( location ) {
                 if ( !self.active ) return
-    
+
                 directions.active = true
-    
+
                 return false
-            } )        
-    
+            } )
+
             this.bespoke.create = function ( el ) {
                 SMK.HANDLER.get( self.id, 'activated' )( smk, self, el )
             }
         }
-    )    
+    )
 } )
 
