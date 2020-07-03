@@ -1,4 +1,4 @@
-include.module( 'tool-query-feature', [
+include.module( 'tool-query.tool-query-feature-js', [
     'component-tool-panel-feature',
     'tool.tool-panel-feature-js'
  ], function ( inc ) {
@@ -8,6 +8,8 @@ include.module( 'tool-query-feature', [
         function () {
             SMK.TYPE.ToolPanel.call( this, 'tool-panel-feature' )
             SMK.TYPE.ToolPanelFeature.call( this, function ( smk ) { return smk.$viewer.queried[ this.instance ] } )
+
+            this.parentId = 'QueryResultsTool'
         },
         function ( smk ) {
             var self = this
@@ -15,9 +17,6 @@ include.module( 'tool-query-feature', [
             this.title = smk.$viewer.query[ this.instance ].title
 
             var featureIds = []
-
-            this.tool.select = smk.$tool.select
-            this.tool.zoom = smk.$tool.zoom
 
             self.changedActive( function () {
                 if ( self.active ) {
