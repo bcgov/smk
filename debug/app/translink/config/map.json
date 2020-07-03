@@ -16,7 +16,7 @@
     },
     "baseMap": "StamenTonerLight",
     "minZoom": 10,
-    "activeTool": "DirectionsWaypointsTool"
+    "activeTool": "directions"
   },
   "tools": [
     {

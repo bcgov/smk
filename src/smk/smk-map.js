@@ -529,21 +529,30 @@ include.module( 'smk-map', [ 'libs', 'util', 'theme-base', 'sidepanel', 'status-
     SmkMap.prototype.withTool = function ( toolIdOrType, action, context ) {
         var self = this
 
-        if ( !toolIdOrType ) return 0
+        if ( !toolIdOrType ) throw Error( 'no tool id or type' )
 
         var tool = this.getToolById( toolIdOrType )
         if ( tool ) {
             action.call( context || tool, tool )
-            return 1
+            return
         }
 
         var tools = this.getToolsByType( toolIdOrType )
-        if ( tools.length == 0 ) return 0
+        if ( tools.length == 0 ) throw Error( 'tool type not defined' )
+        if ( tools.length == 1 ) {
+            action.call( context || tools[ 0 ], tools[ 0 ] )
+            return
+        }
 
-        tools.forEach( function ( t ) {
-            action.call( context || t, t )
-        } )
-        return tools.length
+        var rootId = tools.reduce( function ( acc, t ) {
+            if ( acc === undefined ) return t.rootId
+            if ( acc == t.rootId ) return acc
+            return null
+        }, undefined )
+        if ( !rootId ) throw Error( 'tool type is ambiguous' )
+
+        tool = this.getToolById( rootId )
+        action.call( context || tool, tool )
     }
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
