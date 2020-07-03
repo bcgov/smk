@@ -274,9 +274,11 @@ include.module( 'smk-map', [ 'libs', 'util', 'theme-base', 'sidepanel', 'status-
                     return self.$viewer.waitFinishedLoading()
                 } )
                 .then( function () {
-                    self.withTool( self.viewer.activeTool, function ( t ) {
-                        t.active = true
-                    } )
+                    if ( self.viewer.activeTool )
+                        self.withTool( self.viewer.activeTool, function ( t ) {
+                            console.log( 'activating tool:', t.id )
+                            t.active = true
+                        } )
                     return self
                 } )
 
