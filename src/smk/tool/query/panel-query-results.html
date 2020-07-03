@@ -8,7 +8,7 @@
     <template slot="commands">
         <command-button class="smk-select"
             v-bind:disabled="busy"
-            v-if="tool.select && layers.length > 1 && command.select !== false"
+            v-if="tool.select && layers.length > 1 && command.select"
             v-on:click="$$emit( 'add-all' )"
         >Add all to selection</command-button>
     </template>
