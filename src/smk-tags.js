@@ -134,8 +134,9 @@ t.group( 'tool-directions' )
     .tag( 'tool-directions-libs' )
     .dir( 'smk/tool/directions/*' )
 
-t.group( 'tool-dropdown' )
-    .dir( 'smk/tool/dropdown/*' )
+// broken
+// t.group( 'tool-dropdown' )
+//     .dir( 'smk/tool/dropdown/*' )
 
 t.group( 'tool-identify' )
     .dir( 'smk/tool/identify/*' )
@@ -170,10 +171,11 @@ t.group( 'tool-pan' )
 t.group( 'tool-query' )
     .dir( 'smk/tool/query/*' )
 
-t.group( 'check-query-place' )
-    .dir( 'smk/tool/query-place/check/*' )
-t.group( 'tool-query-place' )
-    .dir( 'smk/tool/query-place/*' )
+// broken
+// t.group( 'check-query-place' )
+//     .dir( 'smk/tool/query-place/check/*' )
+// t.group( 'tool-query-place' )
+//     .dir( 'smk/tool/query-place/*' )
 
 t.group( 'tool-scale' )
     .dir( 'smk/tool/scale/*' )
@@ -257,8 +259,9 @@ t.group( 'tool-measure-leaflet' )
 t.group( 'tool-query-leaflet' )
     .dir( 'smk/viewer-leaflet/tool/query/**/*' )
 
-t.group( 'tool-query-place-leaflet' )
-    .dir( 'smk/viewer-leaflet/tool/query-place/**/*' )
+// broken
+// t.group( 'tool-query-place-leaflet' )
+    // .dir( 'smk/viewer-leaflet/tool/query-place/**/*' )
 
 t.group( 'tool-scale-leaflet' )
     .dir( 'smk/viewer-leaflet/tool/scale/**/*' )
