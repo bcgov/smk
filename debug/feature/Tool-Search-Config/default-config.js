@@ -25,10 +25,6 @@ var defaultConfig = [
                 "enabled": false
             },
             {
-                "type": "search",
-                "enabled": false
-            },
-            {
                 "type": "location",
                 "enabled": false
             },
@@ -37,5 +33,5 @@ var defaultConfig = [
                 "enabled": true
             }
         ]
-    }    
+    }
 ]
