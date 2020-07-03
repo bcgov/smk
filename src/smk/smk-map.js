@@ -46,7 +46,6 @@ include.module( 'smk-map', [ 'libs', 'util', 'theme-base', 'sidepanel', 'status-
             // .then( resolveConfig )
             .then( initMapFrame )
             .then( resolveDeviceConfig )
-            .then( checkTools )
             .then( loadViewer )
             .then( loadTools )
             .then( initViewer )
@@ -153,29 +152,6 @@ include.module( 'smk-map', [ 'libs', 'util', 'theme-base', 'sidepanel', 'status-
             findProperty( self, 'tools', 'control', function ( val ) {
                 if ( typeof val == 'string' ) return val == self.$device
             } )
-        }
-
-        function checkTools() {
-            if ( !self.tools ) return
-            var enabledTools = self.tools.filter( function ( t ) { return t.enabled !== false } )
-            if ( enabledTools.length == 0 ) return
-
-            return SMK.UTIL.waitAll( enabledTools.map( function ( t ) {
-                t.id = t.type + ( t.instance ? '--' + t.instance : '' )
-
-                var tag = 'check-' + t.type
-                return include( tag )
-                    .then( function ( inc ) {
-                        if ( inc[ tag ] && typeof( inc[ tag ] ) == 'function' )
-                            return inc[ tag ]( self, t )
-                    } )
-                    .then( function () {
-                        console.log( 'checked tool "' + t.type + '"' )
-                    } )
-                    .catch( function ( e ) {
-                        console.debug( 'unable to check tool "' + t.type + '"', e )
-                    } )
-            } ) )
         }
 
         function loadViewer() {
