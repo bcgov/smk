@@ -70,8 +70,10 @@ include.module( 'smk-map', [ 'libs', 'util', 'theme-base', 'sidepanel', 'status-
 
         function loadConfigs() {
             return SMK.UTIL.waitAll( self.$option.parsedConfig.map( function ( c ) {
-                if ( c.obj )
+                if ( c.obj ) {
+                    c.obj.$source = c.$source
                     return SMK.UTIL.resolved( c.obj )
+                }
 
                 var id = c.url.toLowerCase().replace( /[^a-z0-9]+/g, '-' ).replace( /^[-]|[-]$/g, '' )
                 var tag = 'config-' + id
