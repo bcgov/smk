@@ -68,6 +68,19 @@ include.module( 'tool-identify.tool-identify-list-js', [
                 }
             } )
 
+            self.changedActive( function () {
+                if ( self.active ) {
+                    if ( self.onActivate ) {
+                        switch ( self.onActivate ) {
+                        case 'current-location':
+                            smk.emit( self.id, 'current-location' )
+                            break
+                        }
+                    }
+                }
+            } )
+
+
             // fallback handler if nothing else uses pick
             smk.$viewer.handlePick( 0, function ( location ) {
                 return self.startIdentify( location )
