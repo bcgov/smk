@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>showFeature</title>
+
+        <script src="../../../dist/smk.js"></script>
+        <link rel="stylesheet" type="text/css" href="style.css"/>
+    </head>
+    <body>
+        <script src="default-config.js"></script>
+<!--***************************************************************************
+    This example shows how to use the showFeature API to add features to map
+    under application control.
+-->
+    <header>
+        <button type="button" onclick="addMarker()">Add Marker</button>
+        <button type="button" onclick="addLine()">Add Line</button>
+        <button type="button" onclick="clearAll()">Clear All</button>
+    </header>
+    <article><div id="smk-map-frame"></div></article>
+    <script>
+        SMK.INIT( {
+            containerSel: "#smk-map-frame",
+            config: defaultConfig.concat( {
+            }, '?' )
+        } )
+        .then( function ( smk ) {
+            var featureCount = 0
+            function addFeature( geojson, opt ) {
+                smk.showFeature( featureCount, geojson, opt )
+                featureCount += 1
+            }
+            window.clearAll = function () {
+                for ( var i = 0; i < featureCount; i += 1 )
+                    smk.showFeature( i )
+            }
+
+            function randomXY() {
+                var ex = smk.$viewer.getView().extent,
+                    x = ex[ 0 ] + Math.random() * ( ex[ 2 ] - ex[ 0 ] ),
+                    y = ex[ 1 ] + Math.random() * ( ex[ 3 ] - ex[ 1 ] )
+                return [ x, y ]
+            }
+            function randomPoint() {
+                return turf.point( randomXY() )
+            }
+            function randomLine() {
+                return turf.lineString( [ randomXY(), randomXY() ] )
+            }
+            function randomColour() {
+                return [ 'red', 'green', 'blue' ][ Math.round( 3 * Math.random() ) ]
+            }
+
+            window.addMarker = function () {
+                var pt = randomPoint(),
+                    cl = randomColour()
+                addFeature( pt, {
+                    pointToLayer: function ( geojson, ll ) {
+                        return L.marker( ll, {
+                            icon: L.divIcon( {
+                                html: `<div style="border:4px solid ${ randomColour() }; background-color:${ randomColour() }; height: 4px; width: 4px"></div>`,
+                                iconAnchor: [ 4, 4 ]
+                            } ),
+                            interactive: false
+                        } )
+                    }
+                } )
+            }
+
+            window.addLine = function () {
+                var ln = randomLine(),
+                    cl = randomColour()
+                addFeature( ln, {
+                    style: function () {
+                        return {
+                            color: cl,
+                            weight: 4
+                        }
+                    }
+                } )
+            }
+        } )
+
+    </script>
+<!--***************************************************************************-->
+    </body>
+</html>
+
