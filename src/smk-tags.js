@@ -54,9 +54,7 @@ t.group( 'material-icons' )
 // smk base
 // ==================================================================================
 
-t.sequence( 'smk-map' )
-    .tag( 'libs' )
-    .script( 'smk/smk-map.js' )
+t.script( 'smk-map', 'smk/smk-map.js' )
 
 t.script( 'util',       'smk/util.js' )
 t.script( 'event',      'smk/event.js' )
@@ -66,7 +64,7 @@ t.script( 'projections','smk/projections.js' )
 t.script( 'layer-display','smk/layer-display.js' )
 
 t.group( 'tool' )
-    .dir( 'smk/tool/*' )
+    .dir( 'smk/tool/!(*-config.js)' )
 
 t.group( 'layer' )
     .dir( 'smk/layer/**/*' )
@@ -76,6 +74,9 @@ t.group( 'query' )
 
 t.group( 'sidepanel' )
     .dir( 'smk/sidepanel/**/*' )
+
+t.group( 'status-message' )
+    .dir( 'smk/status-message/**/*' )
 
 // t.group( 'feature-list' )
     // .dir( 'smk/feature-list/**/*' )
@@ -96,6 +97,19 @@ tg.forEachDir( 'smk/component/*/', function ( fn, bn ) {
 t.group( 'component' )
     .dir( 'smk/component/*' )
 
+t.script( 'merge-config', 'smk/merge-config.js' )
+
+var g = t.group( 'default-config' )
+tg.forEachDir( 'smk/tool/*/', function ( fn, bn ) {
+    g.push( 'tool-' + bn + '-config' )
+    t.group( 'tool-' + bn + '-config' )
+        .dir( fn + '/config/*' )
+} )
+
+g.push( 'tool-config' )
+t.group( 'tool-config' )
+    .dir( 'smk/tool/*-config.js' )
+
 // ==================================================================================
 // smk tools
 // ==================================================================================
@@ -112,29 +126,21 @@ t.group( 'tool-bespoke' )
 t.group( 'tool-coordinate' )
     .dir( 'smk/tool/coordinate/*' )
 
-t.sequence( 'check-directions' )
-    .script( 'smk/tool/directions/check/lib/sortable-1.7.0.min.js')
-    .script( 'smk/tool/directions/check/lib/vuedraggable-2.16.0.min.js')
-    .dir( 'smk/tool/directions/check/*' )
+t.sequence( 'tool-directions-libs' )
+    .script( 'smk/tool/directions/lib/sortable-1.7.0.min.js')
+    .script( 'smk/tool/directions/lib/vuedraggable-2.16.0.min.js')
+
 t.group( 'tool-directions' )
+    .tag( 'tool-directions-libs' )
     .dir( 'smk/tool/directions/*' )
-t.group( 'tool-directions-route' )
-    .dir( 'smk/tool/directions-route/*' )
-t.group( 'tool-directions-options' )
-    .dir( 'smk/tool/directions-options/*' )
 
-t.group( 'tool-dropdown' )
-    .dir( 'smk/tool/dropdown/*' )
+// broken
+// t.group( 'tool-dropdown' )
+//     .dir( 'smk/tool/dropdown/*' )
 
-t.group( 'check-identify' )
-    .dir( 'smk/tool/identify/check/*' )
 t.group( 'tool-identify' )
     .dir( 'smk/tool/identify/*' )
-t.group( 'tool-identify-feature' )
-    .dir( 'smk/tool/identify-feature/*' )
 
-t.group( 'check-layers' )
-    .dir( 'smk/tool/layers/check/*' )
 t.group( 'tool-layers' )
     .dir( 'smk/tool/layers/*' )
 
@@ -162,36 +168,23 @@ t.group( 'tool-minimap' )
 t.group( 'tool-pan' )
     .dir( 'smk/tool/pan/*' )
 
-t.group( 'check-query' )
-    .dir( 'smk/tool/query/check/*' )
 t.group( 'tool-query' )
     .dir( 'smk/tool/query/*' )
-t.group( 'tool-query-results' )
-    .dir( 'smk/tool/query-results/*' )
-t.group( 'tool-query-feature' )
-    .dir( 'smk/tool/query-feature/*' )
 
-t.group( 'check-query-place' )
-    .dir( 'smk/tool/query-place/check/*' )
-t.group( 'tool-query-place' )
-    .dir( 'smk/tool/query-place/*' )
+// broken
+// t.group( 'check-query-place' )
+//     .dir( 'smk/tool/query-place/check/*' )
+// t.group( 'tool-query-place' )
+//     .dir( 'smk/tool/query-place/*' )
 
 t.group( 'tool-scale' )
     .dir( 'smk/tool/scale/*' )
 
-t.group( 'check-search' )
-    .dir( 'smk/tool/search/check/*' )
 t.group( 'tool-search' )
     .dir( 'smk/tool/search/*' )
-t.group( 'tool-search-location' )
-    .dir( 'smk/tool/search-location/*' )
 
-t.group( 'check-select' )
-    .dir( 'smk/tool/select/check/*' )
 t.group( 'tool-select' )
     .dir( 'smk/tool/select/*' )
-t.group( 'tool-select-feature' )
-    .dir( 'smk/tool/select-feature/*' )
 
 t.group( 'tool-shortcut-menu' )
     .dir( 'smk/tool/shortcut-menu/*' )
@@ -215,19 +208,19 @@ t.group( 'layer-leaflet' )
     .script( 'lib/leaflet/NonTiledLayer-src.js' )
     .script( "lib/leaflet/leaflet-heat.js" )
 
-t.script( 'feature-list-leaflet', 'smk/viewer-leaflet/feature-list-leaflet.js' )
-t.group( 'feature-list-clustering-leaflet' )
-    .script( 'smk/viewer-leaflet/feature-list-clustering-leaflet.js' )
-    .asset( 'smk/viewer-leaflet/marker-icon-white.png' )
-    .asset( 'smk/viewer-leaflet/marker-shadow.png' )
+t.group( 'tool-leaflet' )
+    .dir( 'smk/viewer-leaflet/tool/*' )
 
 t.group( 'viewer-leaflet' )
     .script( 'smk/viewer-leaflet/viewer-leaflet.js' )
     .style( 'smk/viewer-leaflet/viewer-leaflet.css' )
 
 t.sequence( 'leaflet' )
-    .script( 'lib/leaflet/leaflet-1.5.1.min.js' )
-    .style( 'lib/leaflet/leaflet-1.5.1.css' )
+    // .script( 'lib/leaflet/leaflet-1.6.0.min.js' )
+    .script( 'lib/leaflet/leaflet-1.6.0.js' )
+    .style( 'lib/leaflet/leaflet-1.6.0.css' )
+    // .script( 'lib/leaflet/leaflet-1.5.1.min.js' )
+    // .style( 'lib/leaflet/leaflet-1.5.1.css' )
     // .script( 'lib/leaflet/esri-leaflet-2.3.0.min.js' )
     .script( 'lib/leaflet/esri-leaflet-2.3.2.js' )
     // .script( 'lib/leaflet/esri-leaflet-renderers.js' )
@@ -266,8 +259,9 @@ t.group( 'tool-measure-leaflet' )
 t.group( 'tool-query-leaflet' )
     .dir( 'smk/viewer-leaflet/tool/query/**/*' )
 
-t.group( 'tool-query-place-leaflet' )
-    .dir( 'smk/viewer-leaflet/tool/query-place/**/*' )
+// broken
+// t.group( 'tool-query-place-leaflet' )
+    // .dir( 'smk/viewer-leaflet/tool/query-place/**/*' )
 
 t.group( 'tool-scale-leaflet' )
     .dir( 'smk/viewer-leaflet/tool/scale/**/*' )

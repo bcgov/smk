@@ -1,4 +1,4 @@
-<tool-panel class="smk-layers-panel" 
+<tool-panel class="smk-layers-panel"
     v-bind="$$projectProps( 'tool-panel' )"
     xv-bind:message="busy ? 'Loading data' : ( !contexts[ 0 ].items || contexts[ 0 ].items.length == 0 ) ? 'No layers are configured' : ''"
     xv-bind:status="busy ? 'progress' : ( !contexts[ 0 ].items || contexts[ 0 ].items.length == 0 ) ? 'warning' : ''"
@@ -9,26 +9,26 @@
 
     <template slot="commands">
         <i class="smk-all-visibility material-icons smk-command smk-icon"
-            v-if="command.allVisibility !== false"
+            v-if="command.allVisibility"
             v-bind:title="'Toggle visibility of all layers.\nSHIFT-click to toggle visibility on each layer.'"
             v-on:click="$$emit( 'set-all-layers-visible', { visible: !allVisible, deep: $event.shiftKey } )"
-        >{{ allVisible ? glyph.visible || 'visibility' : glyph.hidden || 'visibility_off' }}</i>
+        >{{ allVisible ? glyph.visible : glyph.hidden }}</i>
 
         <enter-input class="smk-filter"
-            placeholder="Filter layers" 
-            v-if="command.filter !== false"
+            placeholder="Filter layers"
+            v-if="command.filter"
             v-bind:value="filter"
             v-on:change="$$emit( 'change', { filter: $event } )"
         ></enter-input>
 
         <toggle-button class="smk-legend-toggle"
-            v-if="command.legend !== false"
+            v-if="command.legend"
             v-bind:value="legend"
             v-on:change="$$emit( 'change', { legend: $event } )"
         >Legend</toggle-button>
     </template>
 
-    <layer-display 
+    <layer-display
         v-for="c, i in contexts"
         v-bind:key="'ctx-' + i"
         v-bind:id="id"

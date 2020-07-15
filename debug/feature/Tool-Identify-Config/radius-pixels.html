@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Radius Pixels</title>
+        
+        <script src="../../../dist/smk.js"></script>
+        <link rel="stylesheet" type="text/css" href="style.css"/>
+    </head>
+    <body>
+        <script src="default-config.js"></script>
+<!--***************************************************************************
+    This example shows configuration for identify tool that sets the default 
+    search radius to a value in pixels.
+-->
+    <div id="smk-map-frame"></div>
+    <script>
+        SMK.INIT( {
+            containerSel: "#smk-map-frame",
+            config: defaultConfig.concat( {
+                tools: [ {
+                    type: "identify",
+                    enabled: true,
+                    radius: 40,
+                    radiusUnit: 'px',
+                } ]
+            }, '?' )
+        } )
+    </script>
+<!--***************************************************************************-->
+    </body>
+</html>
+

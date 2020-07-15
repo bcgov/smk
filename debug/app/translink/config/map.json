@@ -98,7 +98,7 @@
       "enabled": false
     },
     {
-      "icon": "local_shipping",  
+      "icon": "local_shipping",
       "type": "directions",
       "enabled": true,
       "position": "toolbar",

@@ -1,8 +1,8 @@
-include.module( 'tool-list-menu', [ 
-    'tool.tool-base-js', 
-    'tool.tool-widget-js', 
-    'tool.tool-panel-js', 
-    'tool-list-menu.panel-list-menu-html' 
+include.module( 'tool-list-menu', [
+    'tool.tool-base-js',
+    'tool.tool-widget-js',
+    'tool.tool-panel-js',
+    'tool-list-menu.panel-list-menu-html'
 ], function ( inc ) {
     "use strict";
 
@@ -17,23 +17,21 @@ include.module( 'tool-list-menu', [
     } )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
-    return SMK.TYPE.Tool.define( 'ListMenuTool', 
+    return SMK.TYPE.Tool.define( 'ListMenuTool',
         function () {
             SMK.TYPE.ToolWidget.call( this, 'list-menu-widget' )
             SMK.TYPE.ToolPanel.call( this, 'list-menu-panel' )
-        
+
             this.defineProp( 'subWidgets' )
 
             this.subWidgets = []
-            this.icon = 'menu'
-            this.position = 'toolbar'
         },
         function ( smk ) {
             smk.on( this.id, {
-                'swipe-up': function ( ev ) {                
+                'swipe-up': function ( ev ) {
                     smk.$sidepanel.setExpand( 2 )
                 },
-    
+
                 'swipe-down': function ( ev ) {
                     smk.$sidepanel.incrExpand( -1 )
                 }
@@ -41,20 +39,20 @@ include.module( 'tool-list-menu', [
         },
         {
             addTool: function ( tool, smk, setParentId ) {
-                // if ( tool.makeWidgetComponent ) {          //  && !tool.parentId 
+                // if ( tool.makeWidgetComponent ) {          //  && !tool.parentId
                 //     this.model.widgets.push( tool.makeWidgetComponent() )
                 // }
                 if ( !tool.parentId ) {
                     setParentId( tool, this.id )
                     this.subWidgets.push( tool.makeWidgetComponent() )
                 }
-        
+
                 smk.getSidepanel().addTool( tool, smk )
-        
+
                 tool.showTitle = true
-        
+
                 return true
-            }        
+            }
         }
     )
 } )

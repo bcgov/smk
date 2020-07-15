@@ -8,9 +8,35 @@
     <template slot="commands">
         <command-button class="smk-select"
             v-bind:disabled="busy"
-            v-if="tool.select && layers.length > 1 && command.select !== false"
+            v-if="tool.select && layers.length > 1 && command.select"
             v-on:click="$$emit( 'add-all' )"
         >Add all to selection</command-button>
+
+        <enter-number class="smk-radius"
+            v-bind:disabled="busy"
+            v-if="command.radius"
+            v-bind:value="formatNumber( radius, 0 )"
+            v-on:change="!busy && $$emit( 'change', { radius: $event } )"
+        >Maximum distance
+            <template slot="after-input">                
+                <select
+                    v-bind:value="radiusUnit"
+                    v-on:change="$$emit( 'changeUnit', { radiusUnit: $event.target.value } )"
+                    v-bind:disabled="busy || !command.radiusUnit"
+                >
+                    <option value="px">pixels</option>
+                    <option value="m">meters</option>
+                </select>
+            </template>
+        </enter-number>
+
+        <command-button class="smk-current"
+            title="Identify features near current location"
+            v-bind:disabled="busy"
+            v-if="command.nearBy"
+            v-on:click="$$emit( 'current-location' )"
+            icon="gps_fixed"
+        ></command-button>
     </template>
 
     <feature-list

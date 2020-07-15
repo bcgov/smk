@@ -292,7 +292,7 @@ include.module( 'viewer-leaflet', [ 'viewer', 'leaflet', 'layer-leaflet', /*'fea
         }
     }
 
-    ViewerLeaflet.prototype.panToFeature = function ( feature ) {
+    ViewerLeaflet.prototype.panToFeature = function ( feature, zoomIn ) {
         var bounds
         switch ( turf.getType( feature ) ) {
         case 'Point':
@@ -300,7 +300,10 @@ include.module( 'viewer-leaflet', [ 'viewer', 'leaflet', 'layer-leaflet', /*'fea
             bounds = L.latLngBounds( [ ll, ll ] )
             break;
 
-        // default:
+        default:
+            var bbox = turf.bbox( feature )
+            bounds = L.latLngBounds( [ bbox[ 1 ], bbox[ 0 ] ], [ bbox[ 3 ], bbox[ 2 ] ] )
+
             // if ( self.highlight[ feature.id ] )
                 // bounds = self.highlight[ feature.id ].getBounds()
         }
@@ -319,7 +322,7 @@ include.module( 'viewer-leaflet', [ 'viewer', 'leaflet', 'layer-leaflet', /*'fea
             .fitBounds( bounds, {
                 paddingTopLeft: padding.topLeft,
                 paddingBottomRight: padding.bottomRight,
-                maxZoom: this.map.getZoom(),        
+                maxZoom: zoomIn !== true ? this.map.getZoom() : undefined,        
                 animate: true
             } )
     } 

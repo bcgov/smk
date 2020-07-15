@@ -1,4 +1,4 @@
-include.module( 'component', [ 
+include.module( 'component', [
     'component.format-link-html',
     'component.tool-widget-html'
 ], function ( inc ) {
@@ -23,11 +23,11 @@ include.module( 'component', [
 
                 var m = attr.format.match( /^(.+)[(](.+)[)]$/)
                 if ( !m ) {
-                    var value = SMK.UTIL.templateReplace( attr.value, function ( token ) {                    
+                    var value = SMK.UTIL.templateReplace( attr.value, function ( token ) {
                         return ( function () {
                             var e = eval( token )
                             // console.log( 'replace', token, e, this )
-                            return e                        
+                            return e
                         } ).call( self )
                     } )
                     return formatter[ attr.format ]( Object.assign( {}, attr, { value: value } ), this.feature, this.layer )()
@@ -39,14 +39,14 @@ include.module( 'component', [
                 /* jshint evil: true */
                 var self = this
 
-                var title = SMK.UTIL.templateReplace( attr.title, function ( token ) {                    
+                var title = SMK.UTIL.templateReplace( attr.title, function ( token ) {
                     return ( function () {
                         var e = eval( token )
                         // console.log( 'replace', token, e, this )
-                        return e                        
+                        return e
                     } ).call( self )
                 } )
-                
+
                 return this.insertWordBreaks( title )
             }
         }
@@ -80,8 +80,8 @@ include.module( 'component', [
         asLocalTimestamp: makeFormatter( '<span class="smk-value" v-if="attribute.value">{{ ( new Date( attribute.value ) ).toLocaleString() }}</span>' ),
         asLocalDate: makeFormatter( '<span class="smk-value" v-if="attribute.value">{{ ( new Date( attribute.value ) ).toLocaleDateString() }}</span>' ),
         asLocalTime: makeFormatter( '<span class="smk-value" v-if="attribute.value">{{ ( new Date( attribute.value ) ).toLocaleTimeString() }}</span>' ),
-        asUnit: makeFormatter( '<span class="smk-value" v-if="attribute.value">{{ attribute.value }} <span class="smk-unit">{{ unit }}</span></span>', function ( unit ) { 
-            return { unit: unit } 
+        asUnit: makeFormatter( '<span class="smk-value" v-if="attribute.value">{{ attribute.value }} <span class="smk-unit">{{ unit }}</span></span>', function ( unit ) {
+            return { unit: unit }
         } ),
         asLink: makeFormatter( inc[ 'component.format-link-html' ], function ( url, label ) {
             return { url: url, label: label }
@@ -103,7 +103,7 @@ include.module( 'component', [
     //
     SMK.COMPONENT.ToolBase = {
         mixins: [ SMK.COMPONENT.ToolEmit ],
-        props: { 
+        props: {
             id:         String,
             type:       String,
             title:      String,
@@ -129,19 +129,18 @@ include.module( 'component', [
                 return c
             }
         }
-    } 
+    }
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
     var componentProps = {}
 
-    SMK.COMPONENT.ToolPanelBase = { 
+    SMK.COMPONENT.ToolPanelBase = {
         extends: SMK.COMPONENT.ToolBase,
         props: {
             showPanel:      Boolean,
             showHeader:     Boolean,
             showSwipe:      Boolean,
             busy:           Boolean,
-            message:        String,
             expand:         Number,
             hasPrevious:    Boolean,
             parentId:       String,
@@ -154,7 +153,7 @@ include.module( 'component', [
         },
         methods: {
             $$projectProps: function ( componentName ) {
-                if ( !componentProps[ componentName ] ) 
+                if ( !componentProps[ componentName ] )
                     componentProps[ componentName ] = SMK.UTIL.projection.apply( null, Object.keys( ( new ( Vue.component( componentName ) )() )._props ) )
 
                 return componentProps[ componentName ]( this.$props )
@@ -163,10 +162,10 @@ include.module( 'component', [
     }
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
-    SMK.COMPONENT.ToolWidgetBase = { 
+    SMK.COMPONENT.ToolWidgetBase = {
         extends: SMK.COMPONENT.ToolBase,
         template: inc[ 'component.tool-widget-html' ],
-        props: { 
+        props: {
             showWidget: Boolean,
         },
         computed: {
@@ -176,6 +175,6 @@ include.module( 'component', [
                 return c
             }
         }
-    } 
+    }
 
 } )

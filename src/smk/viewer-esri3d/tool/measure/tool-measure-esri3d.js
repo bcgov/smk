@@ -8,7 +8,7 @@ include.module( 'tool-measure-esri3d', [ 'tool-measure', 'esri3d', 'types-esri3d
 
         this.changedActive( function () {
             if ( self.active ) {
-                self.setMessage( "Select measurement method" )
+                self.showStatusMessage( "Select measurement method" )
             }
             else {
             }
@@ -39,7 +39,7 @@ include.module( 'tool-measure-esri3d', [ 'tool-measure', 'esri3d', 'types-esri3d
 
             'start-area': function ( ev ) {
                 destroyWidget()
-                self.setMessage()
+                self.showStatusMessage()
 
                 self.measureWidget = new E.widgets.AreaMeasurement3D( {
                     view:       smk.$viewer.view,
@@ -49,7 +49,7 @@ include.module( 'tool-measure-esri3d', [ 'tool-measure', 'esri3d', 'types-esri3d
 
             'start-distance': function ( ev ) {
                 destroyWidget()
-                self.setMessage()
+                self.showStatusMessage()
 
                 self.measureWidget = new E.widgets.DirectLineMeasurement3D( {
                     view:       smk.$viewer.view,

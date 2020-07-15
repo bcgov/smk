@@ -1,0 +1,19 @@
+{
+    "layers": [
+        {
+            "type": "wms",
+            "id": "imagery-and-base-maps-drp-bctc-transmission-lines",
+            "title": "BC Hydro Transmission Lines Transmission Lines Voltage kV",
+            "isVisible": true,
+            "attribution": "",
+            "metadataUrl": "",
+            "opacity": 0.65,
+            "isQueryable": true,
+            "attributes": [],
+            "serviceUrl": "https://openmaps.gov.bc.ca/geo/pub/ows",
+            "layerName": "pub:WHSE_IMAGERY_AND_BASE_MAPS.DRP_BCTC_TRANSMISSION_LINES_SP",
+            "styleName": "4395",
+            "geometryAttribute": "GEOMETRY"
+        }
+    ]
+}

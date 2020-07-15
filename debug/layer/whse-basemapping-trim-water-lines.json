@@ -1,0 +1,19 @@
+{
+    "layers": [
+        {
+            "type": "wms",
+            "id": "whse-basemapping-trim-water-lines",
+            "title": "TRIM Water Lines Water Rivers Creeks Shorelines etc 1 20000",
+            "isVisible": true,
+            "attribution": "",
+            "metadataUrl": "",
+            "opacity": 0.65,
+            "isQueryable": true,
+            "attributes": [],
+            "serviceUrl": "https://openmaps.gov.bc.ca/geo/pub/ows",
+            "layerName": "pub:WHSE_BASEMAPPING.TRIM_WATER_LINES",
+            "styleName": "3345",
+            "geometryAttribute": "GEOMETRY"
+        }
+    ]
+}

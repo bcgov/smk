@@ -1,9 +1,6 @@
 include.module( 'document-ready', [], function () {
     "use strict";
 
-    // if ( documentReadyPromise ) return documentReadyPromise
-
-    // return ( documentReadyPromise = new Promise( function ( res, rej ) {
     return new Promise( function ( res, rej ) {
         if ( document.readyState != "loading" )
             return res()

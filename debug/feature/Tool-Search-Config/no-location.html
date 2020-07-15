@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>No Location</title>
+
+        <script src="../../../dist/smk.js"></script>
+        <link rel="stylesheet" type="text/css" href="style.css"/>
+    </head>
+    <body>
+        <script src="default-config.js"></script>
+<!--***************************************************************************
+    This example shows the configuration for search tool with the search
+    location result panel hidden.
+-->
+    <div id="smk-map-frame"></div>
+    <script>
+        SMK.INIT( {
+            containerSel: "#smk-map-frame",
+            config: defaultConfig.concat( {
+                tools: [ {
+                    type: "search",
+                    enabled: true,
+                    showLocation: false
+                } ]
+            }, '?' )
+        } )
+    </script>
+<!--***************************************************************************-->
+    </body>
+</html>
+

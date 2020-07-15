@@ -1,17 +1,17 @@
-<div v-bind:class="[ 
-    'smk-display', 
-    'smk-display-' + display.type, 
-    display.class, 
-    { 
+<div v-bind:class="[
+    'smk-display',
+    'smk-display-' + display.type,
+    display.class,
+    {
         'smk-visible':   display.isVisible,
-        'smk-expanded':  display.isExpanded, 
+        'smk-expanded':  display.isExpanded,
         'smk-disabled': !display.isEnabled,
         'smk-obscured': !display.isActuallyVisible,
         'smk-metadata': !!display.metadataUrl
-    } 
+    }
 ]">
     <div class="smk-item"
-        v-if="display.id != 'root'"
+        v-if="display.id != 'root' && display.showItem"
         v-bind:title="'id: ' + display.id"
         v-on:click="$$emit( display.type + '-click', display )"
     >
@@ -25,16 +25,16 @@
             v-bind:title="'Toggle visibility of \'' + display.title + '\'' + ( display.type == 'folder' ? '\nSHIFT-click to toggle visibility on internal layers.' : '' ) "
             v-on:click.stop="!display.isInternal && $$emit( 'set-item-visible', { id: display.id, visible: !display.isVisible, deep: $event.shiftKey } )"
             v-bind:class="{ 'smk-disabled': display.isInternal }"
-        >{{ display.isVisible && display.isEnabled ? glyph.visible || 'visibility' : glyph.hidden || 'visibility_off' }}</i>
+        >{{ display.isVisible && display.isEnabled ? glyph.visible : glyph.hidden }}</i>
 
         <span class="smk-layer-title"
             v-if="!inGroup"
         >{{ display.title }}</span>
 
-        <div class="smk-legend" 
+        <div class="smk-legend"
             v-if="display.showLegend && display.legends && display.isActuallyVisible"
         >
-            <div class="smk-legend-item" 
+            <div class="smk-legend-item"
                 v-for="legend in display.legends"
             >
                 <img v-bind:src="legend.url" v-bind:style="{ width: legend.width + 'px', height: legend.height + 'px' }">
@@ -47,7 +47,7 @@
             v-bind:title="'Link to metadata for \'' + display.title + '\' layer'"
         >open_in_new</i>
     </div>
-    
+
     <layer-display
         v-for="item in display.items"
         v-if="item.inFilter && display.isExpanded"

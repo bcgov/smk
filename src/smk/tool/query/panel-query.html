@@ -9,11 +9,10 @@
         <command-button class="smk-search"
             v-bind:disabled="busy"
             v-on:click="$$emit( 'execute' )"
-            xxstyle="font-size: 15px"
         >Search</command-button>
 
         <toggle-button class="smk-within-extent"
-            v-if="command.within !== false"
+            v-if="command.within"
             v-bind:value="within"
             v-on:change="$$emit( 'change', { within: $event } )"
         >Within View</toggle-button>

@@ -1,7 +1,7 @@
 include.module( 'tool-directions-leaflet', [ 'leaflet', 'tool-directions' ], function ( inc ) {
     "use strict";
 
-    SMK.TYPE.DirectionsTool.addInitializer( function ( smk ) {
+    SMK.TYPE.DirectionsWaypointsTool.addInitializer( function ( smk ) {
         var self = this
 
         this.changedGroup( function () {
@@ -74,7 +74,7 @@ include.module( 'tool-directions-leaflet', [ 'leaflet', 'tool-directions' ], fun
                 .fitBounds( bounds, {
                     paddingTopLeft: padding.topLeft,
                     paddingBottomRight: padding.bottomRight,
-                    maxZoom: maxZoom || 15,        
+                    maxZoom: maxZoom || 15,
                     animate: true
                 } )
         }

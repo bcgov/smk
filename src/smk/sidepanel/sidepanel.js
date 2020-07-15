@@ -1,4 +1,4 @@
-include.module( 'sidepanel', [ 'vue', 'tool', 'sidepanel.sidepanel-html', 'sidepanel.panel-html' ], function ( inc ) {
+include.module( 'sidepanel', [ 'vue', 'tool', 'sidepanel.sidepanel-html' ], function ( inc ) {
     "use strict";
 
     var SidepanelEvent = SMK.TYPE.Event.define( [
@@ -31,13 +31,13 @@ include.module( 'sidepanel', [ 'vue', 'tool', 'sidepanel.sidepanel-html', 'sidep
                     smk.emit( toolId, event, arg, comp )
                 },
 
-                'previousPanel': function ( id ) {     
+                'previousPanel': function ( id ) {
                     var t = getTool( id )
                     if ( t ) {
                         var pt = getTool( t.prop.parentId )
                         if ( pt ) {
-                            smk.$tool[ pt.prop.id ].active = true
-                            smk.$tool[ t.prop.id ].active = false
+                            smk.getToolById( pt.prop.id ).active = true
+                            smk.getToolById( t.prop.id ).active = false
                         }
                     }
 
@@ -77,11 +77,11 @@ include.module( 'sidepanel', [ 'vue', 'tool', 'sidepanel.sidepanel-html', 'sidep
                 self.changedSize()
 
                 self.model.panels.forEach( function ( p ) {
-                    smk.$tool[ p.prop.id ].active = false
+                    smk.getToolById( p.prop.id ).active = false
                 } )
             }
         } )
-    }    
+    }
 
     Sidepanel.prototype.getExpand = function () {
         return this.model.expand
@@ -105,7 +105,7 @@ include.module( 'sidepanel', [ 'vue', 'tool', 'sidepanel.sidepanel-html', 'sidep
     Sidepanel.prototype.isPanelVisible = function () {
         return this.model.visible
     }
-    
+
     Sidepanel.prototype.addTool = function ( tool, smk ) {
         var self = this
 
@@ -138,4 +138,4 @@ include.module( 'sidepanel', [ 'vue', 'tool', 'sidepanel.sidepanel-html', 'sidep
     SMK.TYPE.Sidepanel = Sidepanel
 
     return Sidepanel
-} ) 
+} )

@@ -1,4 +1,6 @@
-<div class="smk-enter-input">
+<div class="smk-enter-input"
+    v-bind:class="{ 'smk-disabled': disabled }"
+>
     <label>
         <slot></slot>
         <div class="smk-input">
@@ -7,6 +9,7 @@
                 v-bind:type="type"
                 v-bind:value="value"
                 v-bind:placeholder="placeholder"
+                v-bind:disabled="disabled"
                 v-bind="option"
                 v-on:input="onChange( $event.target.value, $event.target.selectionStart )"
                 v-on:keyup.down="$emit( 'key-down-arrow' )"

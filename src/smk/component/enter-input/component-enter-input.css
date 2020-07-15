@@ -4,11 +4,16 @@
     position: relative;
 }
 
+.smk-enter-input.smk-disabled label {
+    color: #aaa;
+}
+
 .smk-enter-input .smk-input {
     border-radius: 8px;
     padding: 2px;
     display: flex;
     justify-content: space-around;
+    align-items: center;
     background-color: #bbb;
 }
 

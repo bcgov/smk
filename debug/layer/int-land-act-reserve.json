@@ -11,6 +11,7 @@
       "layerName": "INT_LAND_ACT_RESERVE_SVW",
       "styleName": "INT_LAND_ACT_RESERVE_SVW",
       "geometryAttribute": "GEOMETRY",
+      "titleAttribute": "DOCUMENT_CHR",
       "attributes": [
         {
           "name": "DOCUMENT_CHR",

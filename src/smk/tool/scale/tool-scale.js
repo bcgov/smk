@@ -1,18 +1,11 @@
 include.module( 'tool-scale', [ 'tool.tool-js', 'tool-scale.scale-html' ], function ( inc ) {
     "use strict";
 
-    return SMK.TYPE.Tool.define( 'ScaleTool', 
+    return SMK.TYPE.Tool.define( 'ScaleTool',
         function () {
-            SMK.TYPE.ToolWidget.call( this, 'baseMaps-widget' )
-            SMK.TYPE.ToolPanel.call( this, 'baseMaps-panel' )
-        
             this.defineProp( 'showFactor' )
             this.defineProp( 'showBar' )
             this.defineProp( 'showZoom' )
-
-            this.showFactor = true
-            this.showBar = true
-            this.showZoom = false
         },
         function ( smk ) {
             var self = this
@@ -74,7 +67,7 @@ include.module( 'tool-scale', [ 'tool.tool-js', 'tool-scale.scale-html' ], funct
             }
 
             self.refresh()
-        } 
+        }
     )
 } )
 

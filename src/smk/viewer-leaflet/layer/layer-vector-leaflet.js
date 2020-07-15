@@ -173,18 +173,19 @@ include.module( 'layer-leaflet.layer-vector-leaflet-js', [ 'layer.layer-vector-j
                     layers[ 0 ].config.CRS = 'EPSG4326'
         
                 layers[ 0 ].loadLayer = function ( data ) {
-                    var feats = []
+                    // var feats = []
                     turf.featureEach( data, function ( ft ) {
                         styles.forEach( function ( st, i ) {
                             if ( i > 0 )
                                 ft = turf.clone( ft )
         
                             ft.style = st
-                            feats.push( ft )
+                            // feats.push( ft )
+                            layer.addData( ft )
                         } )
                     } )
         
-                    layer.addData( turf.featureCollection( feats ) )
+                    // layer.addData( turf.featureCollection( feats ) )
                 }
         
                 if ( layers[ 0 ].loadCache ) {
@@ -267,13 +268,13 @@ include.module( 'layer-leaflet.layer-vector-leaflet-js', [ 'layer.layer-vector-j
             }
         else
             return {
-                // stroke:      true,
+                stroke:      styleConfig.stroke !== false,
                 color:       styleConfig.strokeColor,
-                weight:      styleConfig.strokeWidth,
+                weight:      styleConfig.strokeWidth || 0,
                 opacity:     styleConfig.strokeOpacity,
                 lineCap:     styleConfig.strokeCap,
+                lineJoin:    styleConfig.strokeJoin,
                 dashArray:   styleConfig.strokeDashes,
-                // lineJoin:    styleConfig.,
                 dashOffset:  styleConfig.strokeDashOffset,
                 fill:        styleConfig.fill,
                 fillColor:   styleConfig.fillColor,

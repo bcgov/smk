@@ -11,7 +11,7 @@
       "layerName": "INT_LAND_ACT_CROWN_GRANT_SVW",
       "styleName": "INT_LAND_ACT_CROWN_GRANT_SVW",
       "geometryAttribute": "GEOMETRY",
-      "titleAttribute": "LEGAL_DSC",
+      "titleAttribute": "DOCUMENT_CHR",
       "attributes": [
         {
           "name": "DOCUMENT_CHR",

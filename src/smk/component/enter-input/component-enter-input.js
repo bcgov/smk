@@ -17,6 +17,7 @@ include.module( 'component-enter-input', [
             placeholder:{ type: String },
             clear:      { type: Boolean, default: true },
             option:     { type: Object, default: function () { return {} } },
+            disabled:   { type: Boolean, default: false },
         },
         methods: {
             onChange: function ( val ) {
@@ -40,7 +41,8 @@ include.module( 'component-enter-input', [
             value:      { type: [ Number, String ], default: 0 },
             placeholder:{ type: String },
             clear:      { type: Boolean, default: false },
-            option:     { type: Object, default: function () { return {} } }
+            option:     { type: Object, default: function () { return {} } },
+            disabled:   { type: Boolean, default: false },
         },
         methods: {
             onChange: function ( val, pos ) {

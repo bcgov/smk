@@ -1,9 +1,9 @@
-include.module( 'tool-search-leaflet', [ 
-    'leaflet', 
+include.module( 'tool-search-leaflet', [
+    'leaflet',
     'tool-search',
-    'tool-search-leaflet.marker-icon-yellow-png',
-    'tool-search-leaflet.marker-shadow-png',
-    'tool-search-leaflet.star-icon-yellow-png',
+    'tool-search.marker-icon-yellow-png',
+    'tool-search.marker-shadow-png',
+    'tool-search.star-icon-yellow-png',
 ], function ( inc ) {
     "use strict";
 
@@ -16,8 +16,8 @@ include.module( 'tool-search-leaflet', [
     }
 
     var yellowMarker = new L.Icon( {
-        iconUrl:        inc[ 'tool-search-leaflet.marker-icon-yellow-png' ],
-        shadowUrl:      inc[ 'tool-search-leaflet.marker-shadow-png' ],
+        iconUrl:        inc[ 'tool-search.marker-icon-yellow-png' ],
+        shadowUrl:      inc[ 'tool-search.marker-shadow-png' ],
         iconSize:       [ 25, 41 ],
         iconAnchor:     [ 12, 41 ],
         popupAnchor:    [ 1, -34 ],
@@ -25,8 +25,8 @@ include.module( 'tool-search-leaflet', [
     } )
 
     var yellowStar = new L.Icon( {
-        iconUrl:        inc[ 'tool-search-leaflet.star-icon-yellow-png' ],
-        shadowUrl:      inc[ 'tool-search-leaflet.marker-shadow-png' ],
+        iconUrl:        inc[ 'tool-search.star-icon-yellow-png' ],
+        shadowUrl:      inc[ 'tool-search.marker-shadow-png' ],
         iconSize:       [ 20, 19 ],
         iconAnchor:     [ 10, 9 ],
         popupAnchor:    [ 1, -24 ],
@@ -34,15 +34,15 @@ include.module( 'tool-search-leaflet', [
     } )
 
     var yellowStarBig = new L.Icon( {
-        iconUrl:        inc[ 'tool-search-leaflet.star-icon-yellow-png' ],
-        shadowUrl:      inc[ 'tool-search-leaflet.marker-shadow-png' ],
+        iconUrl:        inc[ 'tool-search.star-icon-yellow-png' ],
+        shadowUrl:      inc[ 'tool-search.marker-shadow-png' ],
         iconSize:       [ 40, 36 ],
         iconAnchor:     [ 20, 18 ],
         popupAnchor:    [ 1, -24 ],
         shadowSize:     [ 31, 31 ]
     } )
 
-    SMK.TYPE.SearchTool.addInitializer( function ( smk ) {
+    SMK.TYPE.SearchListTool.addInitializer( function ( smk ) {
         var self = this
 
         var vw = smk.$viewer

@@ -1,4 +1,4 @@
-include.module( 'tool.tool-panel-feature-js', [ 
+include.module( 'tool.tool-panel-feature-js', [
     'tool.tool-panel-js',
     'component-tool-panel-feature'
 ], function ( inc ) {
@@ -17,19 +17,20 @@ include.module( 'tool.tool-panel-feature-js', [
         this.defineProp( 'attributes' )
 
         this.tool = {}
-        this.attributeView = 'default'
-        this.command = {}
 
         this.$propFilter.attributes = false
-       
+
         this.$initializers.push( function ( smk ) {
             this.featureSet = featureSetCallback.call( this, smk )
+
+            this.tool = smk.getToolTypesAvailable()
+            delete this.tool[ this.type ]
 
             smk.on( this.id, {
                 'swipe-up': function ( ev ) {
                     smk.$sidepanel.setExpand( 2 )
                 },
-    
+
                 'swipe-down': function ( ev ) {
                     smk.$sidepanel.incrExpand( -1 )
                 }
@@ -39,7 +40,7 @@ include.module( 'tool.tool-panel-feature-js', [
         this.setAttributeComponent = function ( layer, feature ) {
             if ( layer.config.popupTemplate ) {
                 var template
-    
+
                 if ( layer.config.popupTemplate.startsWith( '@' ) ) {
                     this.attributeComponent = layer.config.popupTemplate.substr( 1 )
                 }
@@ -47,7 +48,7 @@ include.module( 'tool.tool-panel-feature-js', [
                     this.attributeComponent = 'feature-template-' + layer.config.id
                     template = layer.config.popupTemplate
                 }
-    
+
                 if ( !Vue.component( this.attributeComponent ) ) {
                     if ( template ) {
                         try {
@@ -66,22 +67,22 @@ include.module( 'tool.tool-panel-feature-js', [
                         layer.config.popupTemplate = null
                     }
                 }
-    
+
                 if ( Vue.component( this.attributeComponent ) )
                     return
             }
-    
+
             if ( feature.properties.description ) {
                 this.attributeComponent = 'feature-description'
                 return
             }
-    
+
             if ( layer.config.attributes ) {
                 this.attributeComponent = 'feature-attributes'
                 return
             }
-    
+
             this.attributeComponent = 'feature-properties'
-        }   
+        }
     }
 } )

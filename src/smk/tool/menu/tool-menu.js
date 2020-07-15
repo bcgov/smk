@@ -1,8 +1,8 @@
-include.module( 'tool-menu', [ 
-    'tool.tool-base-js', 
-    'tool.tool-widget-js', 
-    'tool.tool-panel-js', 
-    'tool-menu.panel-menu-html' 
+include.module( 'tool-menu', [
+    'tool.tool-base-js',
+    'tool.tool-widget-js',
+    'tool.tool-panel-js',
+    'tool-menu.panel-menu-html'
 ], function ( inc ) {
     "use strict";
 
@@ -34,28 +34,26 @@ include.module( 'tool-menu', [
     } )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
-    return SMK.TYPE.Tool.define( 'MenuTool', 
+    return SMK.TYPE.Tool.define( 'MenuTool',
         function () {
             SMK.TYPE.ToolWidget.call( this, 'menu-widget' )
             SMK.TYPE.ToolPanel.call( this, 'menu-panel' )
-        
+
             this.defineProp( 'subWidgets' )
             this.defineProp( 'subPanels' )
 
-            this.subWidgets = [] 
-            this.subPanels = []             
-            this.icon = 'menu'
-            this.position = 'toolbar'
+            this.subWidgets = []
+            this.subPanels = []
         },
         function ( smk ) {
             var self = this
 
             smk.on( this.id, {
                 'previous-panel': function ( ev ) {
-                    smk.$tool[ self.previousId ].active = true
+                    smk.getToolById( self.previousId ).active = true
                 },
 
-                'swipe-up': function ( ev ) {                
+                'swipe-up': function ( ev ) {
                     smk.$sidepanel.setExpand( 2 )
                 },
 
@@ -66,32 +64,32 @@ include.module( 'tool-menu', [
 
             this.changedActive( function () {
                 if ( self.active ) {
-                    smk.$tool[ self.selectedId ].active = true
+                    smk.getToolById( self.selectedId ).active = true
                 }
                 else {
                     self.subPanels.forEach( function ( t ) {
-                        smk.$tool[ t.prop.id ].active = false
+                        smk.getToolById( t.prop.id ).active = false
                     } )
                 }
-            } ) 
+            } )
         },
         {
             addTool: function ( tool, smk, setParentId ) {
                 var self = this
-        
+
                 if ( !tool.parentId ) {
                     setParentId( tool, this.id )
                 }
-        
-                if ( tool.makeWidgetComponent ) {          //  && !tool.parentId 
+
+                if ( tool.makeWidgetComponent ) {          //  && !tool.parentId
                     this.subWidgets.push( tool.makeWidgetComponent() )
-        
+
                     if ( !this.selectedId )
                         this.selectedId = tool.id
                 }
-        
+
                 this.subPanels.push( tool.makePanelComponent() )
-        
+
                 tool.changedActive( function () {
                     // console.log('active!',tool.id,tool.active)
                     if ( tool.active ) {
@@ -99,16 +97,16 @@ include.module( 'tool-menu', [
                         self.hasPrevious = !tool.widgetComponent
                         self.previousId = tool.parentId
                     }
-                    else {                
+                    else {
                     }
                 } )
-        
+
                 tool.isToolInGroupActive = function ( toolId ) {
                     return toolId == tool.id || toolId == self.id
                 }
-        
+
                 return true
-            }        
-        } 
+            }
+        }
     )
 } )
