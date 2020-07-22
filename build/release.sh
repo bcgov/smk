@@ -13,6 +13,7 @@ read -n1 -r -p "Press Ctrl+C to cancel, or any other key to continue." key
 
 npm version $BUMP
 VERSION=$( node --eval "console.log( require( './package.json' ).version )" )
+git push origin
 
 echo ------------------------------------------------------------------
 echo "Ready to build SMK v$VERSION, deploy to gh-pages, and publish."
