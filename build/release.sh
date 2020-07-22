@@ -1,7 +1,22 @@
 #!/bin/bash
 
-VERSION=$(node --eval "console.log(require('./package.json').version + '.' + (new Date()).toISOString().replace(/[^0-9]/g,'').slice(0,-5) );")
-echo "Ready to build SMK v$VERSION into gh-pages."
+BUMP=${1:-patch}
+
+# VERSION=$(node --eval "console.log(require('./package.json').version + '.' + (new Date()).toISOString().replace(/[^0-9]/g,'').slice(0,-5) );")
+VERSION=$( node --eval "console.log( require( './package.json' ).version )" )
+NEXT=$( semver $VERSION -i $BUMP )
+
+echo ------------------------------------------------------------------
+echo "SMK is now v$VERSION, next will be v$NEXT"
+echo ------------------------------------------------------------------
+read -n1 -r -p "Press Ctrl+C to cancel, or any other key to continue." key
+
+npm version $BUMP
+VERSION=$( node --eval "console.log( require( './package.json' ).version )" )
+
+echo ------------------------------------------------------------------
+echo "Ready to build SMK v$VERSION, deploy to gh-pages, and publish."
+echo ------------------------------------------------------------------
 
 echo
 echo "Existing tags:"
@@ -11,10 +26,10 @@ git status
 echo
 echo "Has the version number been bumped? Is this the master branch?"
 read -n1 -r -p "Press Ctrl+C to cancel, or any other key to continue." key
-echo
 
+echo
 echo "Is gh-pages already present?"
-echo 
+echo
 git branch | grep gh-pages
 git branch -r | grep gh-pages
 
@@ -45,6 +60,14 @@ git tag v$VERSION --force
 
 git push --set-upstream origin gh-pages
 git push --tags --force
+
+echo
+echo "Publish"
+echo
+
+npm publish --access public
+
+echo
 
 git checkout master
 
