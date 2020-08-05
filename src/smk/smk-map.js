@@ -202,7 +202,7 @@ include.module( 'smk-map', [ 'libs', 'util', 'theme-base', 'sidepanel', 'status-
                     } )
                     .catch( function ( e ) {
                         console.warn( 'Failed to create tool:' , e, t )
-                    } )
+                } )
             } ) )
         }
 
@@ -265,6 +265,8 @@ include.module( 'smk-map', [ 'libs', 'util', 'theme-base', 'sidepanel', 'status-
     SmkMap.prototype.destroy = function () {
         if ( this.$viewer )
             this.$viewer.destroy()
+
+        delete SMK.MAP[ this.$option.id ]
     }
 
     SmkMap.prototype.addToContainer = function ( html, attr, prepend ) {

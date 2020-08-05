@@ -119,7 +119,7 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
     Viewer.prototype.destroy = function () {
-        ViewerEvent.prototype.destroy()
+        ViewerEvent.prototype.destroy.call( this )
     }
 
     Viewer.prototype.initialize = function ( smk ) {
