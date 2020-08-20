@@ -33,8 +33,8 @@ include.module( 'viewer-leaflet', [ 'viewer', 'leaflet', 'layer-leaflet', /*'fea
 
         if ( smk.viewer.location.extent ) {
             var bx = smk.viewer.location.extent
-            self.map.fitBounds( [ [ bx[ 1 ], bx[ 0 ] ], [ bx[ 3 ], bx[ 2 ] ] ], { 
-                animate: false, 
+            self.map.fitBounds( [ [ bx[ 1 ], bx[ 0 ] ], [ bx[ 3 ], bx[ 2 ] ] ], {
+                animate: false,
                 duration: 0,
                 paddingTopLeft: bx[ 4 ],
                 paddingBottomRight: bx[ 5 ],
@@ -65,7 +65,7 @@ include.module( 'viewer-leaflet', [ 'viewer', 'leaflet', 'layer-leaflet', /*'fea
             self.changedView()
         }, { delay: 1000 } )
 
-        self.map.on( 'zoomstart', this.changedViewDebounced ) 
+        self.map.on( 'zoomstart', this.changedViewDebounced )
         self.map.on( 'movestart', this.changedViewDebounced )
         self.map.on( 'zoomend', this.changedViewDebounced )
         self.map.on( 'moveend', this.changedViewDebounced )
@@ -79,9 +79,9 @@ include.module( 'viewer-leaflet', [ 'viewer', 'leaflet', 'layer-leaflet', /*'fea
                     self.map.removeLayer( ly )
                     delete self.visibleLayer[ ly._smk_id ]
                     // var ids = []
-                    // self.map.eachLayer( function ( ly ) { 
+                    // self.map.eachLayer( function ( ly ) {
                     //     if ( ly._smk_id )
-                    //         ids.push( ly._smk_id ) 
+                    //         ids.push( ly._smk_id )
                     //     if ( ly.refresh ) ly.refresh()
                     // } )
                     // console.log( 'remove', ly._smk_id, self.map.hasLayer( ly ), ids )
@@ -111,6 +111,13 @@ include.module( 'viewer-leaflet', [ 'viewer', 'leaflet', 'layer-leaflet', /*'fea
 
         self.getVar = function () { return smk.getVar.apply( smk, arguments ) }
     }
+
+    ViewerLeaflet.prototype.destroy = function () {
+        this.map.remove()
+
+        SMK.TYPE.Viewer.prototype.destroy.call( this )
+    }
+
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
     ViewerLeaflet.prototype.getScale = function () {
@@ -183,11 +190,11 @@ include.module( 'viewer-leaflet', [ 'viewer', 'leaflet', 'layer-leaflet', /*'fea
     ViewerLeaflet.prototype.basemap.DarkGray.create = createBasemapEsri
     ViewerLeaflet.prototype.basemap.DarkGray.labels = [ 'DarkGrayLabels' ]
 
-    ViewerLeaflet.prototype.basemap.Gray.create = createBasemapEsri    
+    ViewerLeaflet.prototype.basemap.Gray.create = createBasemapEsri
     ViewerLeaflet.prototype.basemap.Gray.labels = [ 'GrayLabels' ]
 
-    ViewerLeaflet.prototype.basemap.StamenTonerLight.create = createBasemapTiled 
-    ViewerLeaflet.prototype.basemap.StamenTonerLight.url = 'https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}.png'    
+    ViewerLeaflet.prototype.basemap.StamenTonerLight.create = createBasemapTiled
+    ViewerLeaflet.prototype.basemap.StamenTonerLight.url = 'https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}.png'
     ViewerLeaflet.prototype.basemap.StamenTonerLight.attribution = "Map tiles by <a href='http://stamen.com'>Stamen Design</a>, under <a href='http://creativecommons.org/licenses/by/3.0'>CC BY 3.0</a>. Data by <a href='http://openstreetmap.org'>OpenStreetMap</a>, under <a href='http://www.openstreetmap.org/copyright'>ODbL</a>."
 
     function createBasemapEsri( id ) {
@@ -247,7 +254,7 @@ include.module( 'viewer-leaflet', [ 'viewer', 'leaflet', 'layer-leaflet', /*'fea
             rightWidth = size.x - sbp.left - sbp.width
 
         if ( Math.max( aboveHeight, belowHeight ) > Math.max( leftWidth, rightWidth ) ) {
-            if ( aboveHeight > belowHeight ) 
+            if ( aboveHeight > belowHeight )
                 return {
                     topLeft: L.point( 0, 0 ),
                     bottomRight: L.point( 0, size.y - sbp.top )
@@ -259,7 +266,7 @@ include.module( 'viewer-leaflet', [ 'viewer', 'leaflet', 'layer-leaflet', /*'fea
                 }
         }
         else {
-            if ( leftWidth > rightWidth ) 
+            if ( leftWidth > rightWidth )
                 return {
                     topLeft: L.point( 0, 0 ),
                     bottomRight: L.point( size.x - sbp.left, 0 )
@@ -272,12 +279,12 @@ include.module( 'viewer-leaflet', [ 'viewer', 'leaflet', 'layer-leaflet', /*'fea
         }
     }
 
-    // ViewerLeaflet.prototype.mapResized = SMK.UTIL.makeDelayedCall( function () { 
+    // ViewerLeaflet.prototype.mapResized = SMK.UTIL.makeDelayedCall( function () {
 
     // QUESTIONABLE
-    // ViewerLeaflet.prototype.mapResized = function () { 
+    // ViewerLeaflet.prototype.mapResized = function () {
     //     this.resizeToExtent()
-    //     // this.map.invalidateSize() 
+    //     // this.map.invalidateSize()
     //     console.log('resized')
     // } //, { delay: 1000 } )
 
@@ -322,10 +329,10 @@ include.module( 'viewer-leaflet', [ 'viewer', 'leaflet', 'layer-leaflet', /*'fea
             .fitBounds( bounds, {
                 paddingTopLeft: padding.topLeft,
                 paddingBottomRight: padding.bottomRight,
-                maxZoom: zoomIn !== true ? this.map.getZoom() : undefined,        
+                maxZoom: zoomIn !== true ? this.map.getZoom() : undefined,
                 animate: true
             } )
-    } 
+    }
 
     // ViewerLeaflet.prototype.zoomToFeature = function ( layer, feature ) {
     //     this.map.fitBounds( feature.highlightLayer.getBounds(), {
