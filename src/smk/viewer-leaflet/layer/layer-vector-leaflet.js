@@ -128,7 +128,7 @@ include.module( 'layer-leaflet.layer-vector-leaflet-js', [ 'layer.layer-vector-j
 
         return SMK.UTIL.resolved()
             .then( function () {
-                if ( !layers[ 0 ].config.projection ) 
+                if ( !layers[ 0 ].config.projection )
                     return L.GeoJSON.coordsToLatLng
 
                 return SMK.UTIL.getProjection( layers[ 0 ].config.projection )
@@ -157,65 +157,65 @@ include.module( 'layer-leaflet.layer-vector-leaflet-js', [ 'layer.layer-vector-j
                     renderer: L.svg(),
                     interactive: false
                 } )
-        
+
                 if ( layers[ 0 ].config.tooltip ) {
                     layer.bindTooltip( layers[ 0 ].config.tooltip.title, Object.assign( { permanent: true }, layers[ 0 ].config.tooltip.option ) )
                 }
-        
+
                 layer.on( {
                     add: function () {
                         if ( layer.options.renderer._container )
                             layer.options.renderer._container.style.zIndex = zIndex
                     }
                 } )
-        
+
                 if ( !layers[ 0 ].config.CRS )
                     layers[ 0 ].config.CRS = 'EPSG4326'
-        
+
                 layers[ 0 ].loadLayer = function ( data ) {
                     // var feats = []
                     turf.featureEach( data, function ( ft ) {
                         styles.forEach( function ( st, i ) {
                             if ( i > 0 )
                                 ft = turf.clone( ft )
-        
+
                             ft.style = st
                             // feats.push( ft )
                             layer.addData( ft )
                         } )
                     } )
-        
+
                     // layer.addData( turf.featureCollection( feats ) )
                 }
-        
+
                 if ( layers[ 0 ].loadCache ) {
                     layers[ 0 ].loadLayer( layers[ 0 ].loadCache )
                     layers[ 0 ].loadCache = null
                 }
-        
+
                 layers[ 0 ].clearLayer = function () {
                     layer.clearLayers()
                 }
-        
-                if ( layers[ 0 ].config.isInternal ) 
-                    return layer         
+
+                if ( layers[ 0 ].config.isInternal )
+                    return layer
 
                 var url = self.resolveAttachmentUrl( layers[ 0 ].config.dataUrl, layers[ 0 ].config.id, 'json' )
 
                 return SMK.UTIL.makePromise( function ( res, rej ) {
-                    $.get( url, null, null, 'json' ).then( res, function ( xhr, status, err ) { 
-                        rej( 'Failed requesting ' + url + ': ' + xhr.status + ',' + err ) 
+                    $.get( url, null, null, 'json' ).then( res, function ( xhr, status, err ) {
+                        rej( 'Failed requesting ' + url + ': ' + xhr.status + ',' + err )
                     } )
                 } )
                 .then( function ( data ) {
                     console.log( 'loaded', url )
 
                     var feats = []
-                    turf.featureEach( data, function ( ft ) {                    
-                        styles.forEach( function ( st, i ) {                        
+                    turf.featureEach( data, function ( ft ) {
+                        styles.forEach( function ( st, i ) {
                             if ( i > 0 )
                                 ft = turf.clone( ft )
-                                
+
                             ft.style = st
                             feats.push( ft )
                         } )
@@ -265,6 +265,8 @@ include.module( 'layer-leaflet.layer-vector-leaflet-js', [ 'layer.layer-vector-j
                 opacity:     styleConfig.strokeOpacity,
                 fillColor:   styleConfig.fillColor,
                 fillOpacity: styleConfig.fillOpacity,
+                stroke:      styleConfig.stroke !== false,
+                fill:        styleConfig.fill,
             }
         else
             return {
@@ -312,12 +314,12 @@ include.module( 'layer-leaflet.layer-vector-leaflet-js', [ 'layer.layer-vector-j
         opt.iconCreateFunction = function( cluster ) {
             var el = $( '<div>' )
                 .append( $( '<img>' )
-                    .attr( 'src', viewer.resolveAttachmentUrl( layerConfig.clusterStyle.markerUrl, null, 'png' ) ) 
+                    .attr( 'src', viewer.resolveAttachmentUrl( layerConfig.clusterStyle.markerUrl, null, 'png' ) )
                 )
                 .append( $( '<span>' ).text( cluster.getChildCount() ) )
                 .get( 0 ).innerHTML
 
-            return L.divIcon( { 
+            return L.divIcon( {
                 className: 'smk-cluster-icon',
                 html: el,
                 iconSize: layerConfig.clusterStyle.markerSize,
