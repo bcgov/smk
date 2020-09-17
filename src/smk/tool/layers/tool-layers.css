@@ -69,7 +69,7 @@
     font-style: italic;
     color: gray;
     text-decoration: line-through;
-    text-decoration-color: red;    
+    text-decoration-color: red;
 }
 
 .smk-layers-panel .smk-display.smk-disabled .smk-visibility {
@@ -82,7 +82,7 @@
 
 .smk-layers-panel .smk-legend {
     padding-left: 12px;
-    flex-grow: 1;
+    flex-grow: 0;
 }
 
 .smk-layers-panel .smk-legend .smk-legend-item {

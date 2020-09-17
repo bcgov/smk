@@ -18,7 +18,7 @@
             v-bind:value="formatNumber( radius, 0 )"
             v-on:change="!busy && $$emit( 'change', { radius: $event } )"
         >Maximum distance
-            <template slot="after-input">                
+            <template slot="after-input">
                 <select
                     v-bind:value="radiusUnit"
                     v-on:change="$$emit( 'changeUnit', { radiusUnit: $event.target.value } )"
@@ -26,6 +26,7 @@
                 >
                     <option value="px">pixels</option>
                     <option value="m">meters</option>
+                    <option value="km">kilometers</option>
                 </select>
             </template>
         </enter-number>
