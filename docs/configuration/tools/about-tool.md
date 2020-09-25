@@ -1,5 +1,7 @@
 ## About Tool
 
+{% include_relative tool-header.html %}
+
 Add a button to the toolbar, that shows a panel with content that taken from the configuration.
 It can be used to show any content that the application needs.
 
@@ -16,7 +18,7 @@ It can be used to show any content that the application needs.
 </pre>
 
 ### `content` (About Tool)
-`"content"`: *String* *(OPTIONAL)*  
+`"content"`: *String* *(OPTIONAL)*
 The content to show in the panel.
 This is assumed to be formatted in HTML.
 Any styling should be inline in the HTML, or refer to classes that are defined by the enclosing application.
