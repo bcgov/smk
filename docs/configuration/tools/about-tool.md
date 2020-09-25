@@ -16,7 +16,7 @@ It is typically used show a panel of information about the application.
 } ] }
 </pre>
 
-{% include_relative _include/tool-base.html %}
+{% include_relative include/tool-base.html %}
 
 ### content
 `"content"`: *String* *(OPTIONAL)*
