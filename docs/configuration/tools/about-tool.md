@@ -1,23 +1,24 @@
 ## About Tool
 
-{% include_relative tool-header.html %}
 
-Add a button to the toolbar, that shows a panel with content that taken from the configuration.
-It can be used to show any content that the application needs.
+Add a button to the toolbar, that shows a panel with content that is taken from the configuration.
+It is typically used show a panel of information about the application.
 
 <pre>
 { "tools": [ {
-    <a href="#type-tool"     >"type"</a>:     "about",
-    <a href="#title-tool"    >"title"</a>:    "About SMK",
-    <a href="#enabled-tool"  >"enabled"</a>:  false,
-    <a href="#icon-tool"     >"icon"</a>:     <a href="https://material.io/tools/icons/?icon=help" target="material">"help"</a>,
-    <a href="#order-tool"    >"order"</a>:    1,
-    <a href="#position-tool" >"position"</a>: "toolbar",
-    <a href="#content-about-tool">"content"</a>:  null
+    <a href="#type"     >"type"</a>:     "about",
+    <a href="#title"    >"title"</a>:    "About SMK",
+    <a href="#enabled"  >"enabled"</a>:  false,
+    <a href="#icon"     >"icon"</a>:     <a href="https://material.io/tools/icons/?icon=help" target="material">"help"</a>,
+    <a href="#order"    >"order"</a>:    1,
+    <a href="#position" >"position"</a>: "toolbar",
+    <a href="#content"  >"content"</a>:  null
 } ] }
 </pre>
 
-### `content` (About Tool)
+{% include_relative _include/tool-base.html %}
+
+### content
 `"content"`: *String* *(OPTIONAL)*
 The content to show in the panel.
 This is assumed to be formatted in HTML.
