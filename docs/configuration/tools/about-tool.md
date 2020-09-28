@@ -20,8 +20,9 @@ This is default configuration for the About tool (click on a property name for m
 
 {% include_relative include/tool-base.md %}
 
-### `content` Property
+### Content Property
 `"content"`: `String`
+
 The content to show in the panel.
 This is assumed to be formatted in HTML.
 Any styling should be inline in the HTML, or refer to classes that are defined by the enclosing application.
