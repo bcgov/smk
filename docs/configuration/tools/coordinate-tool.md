@@ -11,5 +11,5 @@ This is default configuration for the Coordinate tool (click on a property name 
 } ] }
 </pre>
 
-{% include_relative tool-base-type.md %}
-{% include_relative tool-base-enabled.md %}
+{% include_relative include/tool-base-type.md %}
+{% include_relative include/tool-base-enabled.md %}
