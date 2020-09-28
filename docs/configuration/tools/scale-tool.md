@@ -19,12 +19,15 @@ This is default configuration for the Scale tool (click on a property name for m
 
 ### ShowFactor Property
 `"showFactor"`: `Boolean`
+
 If `true`, then the scale display shows the scale factor.
 
 ### ShowBar Property
 `"showBar"`: `Boolean`
+
 If `true`, then the scale display shows the distance ruler.
 
 ### ShowZoom Property
 `"showZoom"`: `Boolean`
+
 If `true`, then the scale display shows the zoom level.
