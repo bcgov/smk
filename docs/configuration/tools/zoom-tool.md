@@ -14,8 +14,8 @@ This is default configuration for the Zoom tool (click on a property name for mo
 } ] }
 </pre>
 
-{% include_relative include/tool-type.md %}
-{% include_relative include/tool-enabled.md %}
+{% include_relative include/type-property.md %}
+{% include_relative include/enabled-property.md %}
 
 ## MouseWheel Property
 `"mouseWheel"`: `Boolean`

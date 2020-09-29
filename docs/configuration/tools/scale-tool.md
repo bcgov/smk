@@ -14,8 +14,8 @@ This is default configuration for the Scale tool (click on a property name for m
 } ] }
 </pre>
 
-{% include_relative include/tool-type.md %}
-{% include_relative include/tool-enabled.md %}
+{% include_relative include/type-property.md %}
+{% include_relative include/enabled-property.md %}
 
 ## ShowFactor Property
 `"showFactor"`: `Boolean`

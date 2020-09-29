@@ -11,5 +11,5 @@ This is default configuration for the Shortcut Menu tool (click on a property na
 } ] }
 </pre>
 
-{% include_relative include/tool-type.md %}
-{% include_relative include/tool-enabled.md %}
+{% include_relative include/type-property.md %}
+{% include_relative include/enabled-property.md %}

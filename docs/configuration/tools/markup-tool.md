@@ -12,5 +12,5 @@ This is default configuration for the Markup tool (click on a property name for 
 } ] }
 </pre>
 
-{% include_relative include/tool-type.md %}
-{% include_relative include/tool-enabled.md %}
+{% include_relative include/type-property.md %}
+{% include_relative include/enabled-property.md %}

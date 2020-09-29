@@ -49,7 +49,7 @@ Where:
     }
 ```
 
-{% include_relative include/tool-type.md %}
+{% include_relative include/type-property.md %}
 
 
 ## Instance Property
@@ -63,12 +63,12 @@ The [handlers](#handlers) defined for this tool will use the instance id as part
 For example, if the instance is `"foo1"` then the id given to the HANDLER methods would be `"bespoke--foo1"`.
 
 
-{% include_relative include/tool-title.md %}
-{% include_relative include/tool-show-title.md %}
-{% include_relative include/tool-enabled.md %}
-{% include_relative include/tool-icon.md %}
-{% include_relative include/tool-order.md %}
-{% include_relative include/tool-position.md %}
+{% include_relative include/title-property.md %}
+{% include_relative include/show-title-property.md %}
+{% include_relative include/enabled-property.md %}
+{% include_relative include/icon-property.md %}
+{% include_relative include/order-property.md %}
+{% include_relative include/position-property.md %}
 
 
 ## Component Property
