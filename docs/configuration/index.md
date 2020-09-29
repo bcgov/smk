@@ -4,7 +4,7 @@ This section presents a complete, annotated SMK map configuration.
 The configuration is presented as a [JSON](https://www.json.org/) structure, because that is how it is stored, and passed into the SMK client.
 
 This is the toplevel structure of the JSON object.
-Click on a key to get more information.
+Click on a configuration property name to get more information.
 
 <pre>
 {
@@ -15,8 +15,8 @@ Click on a key to get more information.
 
     <a href="viewer.html"  >"viewer"</a>:      { ... },
 
-    <a href="tool.html"    >"tools"</a>:       [ ... ],
+    <a href="tools"   >"tools"</a>:       [ ... ],
 
-    <a href="layer.html"   >"layers"</a>:      [ ... ]
+    <a href="layers"  >"layers"</a>:      [ ... ]
 }
 </pre>
