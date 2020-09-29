@@ -1,6 +1,6 @@
 ## Layers Tool
 
-Add a button to the toolbar, that shows a panel that lists all the layers configured for the map.
+Add a button to the toolbar, that shows a panel that lists all the [`"layers"`](../layers) configured for the map.
 It allows the user to hide or show any layer, and to see the layer legend.
 Use the [display property](#display-property) to organize the layers into folders and groups.
 
@@ -80,6 +80,8 @@ The name of the icon representing a layer that the user wants to be hidden.
 ## Display Property
 `"display"`: `Array`
 
-An array of Display objects (either [DisplayLayer](layers-tool-display#displaylayer-object), [DisplayFolder](layers-tool-display#displayfolder-object), or [DisplayGroup](layers-tool-display#displaygroup-object)) that determines how the layers defined in the `"layers"` section of the configuration are to be organized in the layers panel.
-A Display object either represents a layer ([DisplayLayer](layers-tool-display#displaylayer-object)) or it represents a collection of Display objects ([DisplayFolder](layers-tool-display#displayfolder-object) or [DisplayGroup](layers-tool-display#displaygroup-object)).
+An array of [Layer Display objects](layers-tool-display), that determines how the layers defined in the [`"layers"`](../layers) section of the configuration are to be organized in the layers panel. Each item in the array is an object that is one of these types:
 
+- [`{ "type": "layer" }`](layers-tool-display#displaylayer-object)
+- [`{ "type": "folder" }`](layers-tool-display#displayfolder-object)
+- [`{ "type": "group" }`](layers-tool-display#displaygroup-object)
