@@ -11,5 +11,5 @@ This is default configuration for the Toolbar tool (click on a property name for
 } ] }
 </pre>
 
-{% include_relative include/tool-base-type.md %}
-{% include_relative include/tool-base-enabled.md %}
+{% include_relative include/tool-type.md %}
+{% include_relative include/tool-enabled.md %}

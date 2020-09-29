@@ -1,35 +1,123 @@
 ## Identify Tool
 
 Add a button to the toolbar, that *can* show a panel containing a list of features found on the map.
-When this tool is enabled, clicking on the map will try to identify all features under the click, within [tolerance](#tolerance-identify-tool) pixels.
+When this tool is enabled, clicking on the map will try to identify all features under the click, within [radius](#radius-property) pixels (default [radius unit](#radiusunit-property)).
 The results of this search will be display in the panel, if [showPanel](#showPanel-identify-tool) is true.
 
+This is default configuration for the Identify tool (click on a property name for more information):
 <pre>
 { "tools": [ {
-    <a href="#type-tool"          >"type"</a>:      "identify",
-    <a href="#title-tool"         >"title"</a>:     "Identify",
-    <a href="#enabled-tool"       >"enabled"</a>:   false,
-    <a href="#icon-tool"          >"icon"</a>:      <a href="https://material.io/tools/icons/?icon=info_outline" target="material">"info_outline"</a>,
-    <a href="#order-tool"         >"order"</a>:     4,
-    <a href="#position-tool"      >"position"</a>:  "toolbar",
-    <a href="#showpanel-identify-tool">"showPanel"</a>: false,
-    <a href="#tolerance-identify-tool">"tolerance"</a>: 5,
-    <a href="#style-identify-tool"    >"style"</a>:     { ... }
+    <a href="#type-property"     >"type"</a>:      "identify",
+    <a href="#title-property"    >"title"</a>:     "Identify Features",
+    <a href="#showtitle-property">"showTitle"</a>: false,
+    <a href="#showpanel-property">"showPanel"</a>: true,
+    <a href="#showheader-property">"showHeader"</a>: true,
+    <a href="#enabled-property"  >"enabled"</a>:   false,
+    <a href="#icon-property"     >"icon"</a>:      <a href="https://material.io/tools/icons/?icon=help" target="material">"info_outline"</a>,
+    <a href="#order-property"    >"order"</a>:     5,
+    <a href="#position-property" >"position"</a>:  [ "list-menu", "toolbar" ],
+    <a href="#command-property"  >"command"</a>:   {
+        <a href="#navigator-sub-property"       >"navigator"</a>:     true,
+        <a href="#zoom-sub-property"            >"zoom"</a>:          true,
+        <a href="#select-sub-property"          >"select"</a>:        true,
+        <a href="#attributemode-sub-property"   >"attributeMode"</a>: false,
+        <a href="#radius-sub-property"          >"radius"</a>:        false,
+        <a href="#radiusunit-sub-property"      >"radiusUnit"</a>:    false,
+        <a href="#nearby-sub-property"          >"nearBy"</a>:        true
+    },
+    <a href="#attributeview-property"  >"attributeView"</a>:  "default",
+    <a href="#radius-property"         >"radius"</a>:         5,
+    <a href="#radiusunit-property"     >"radiusUnit"</a>:     "px",
+    <a href="#internallayers-property" >"internalLayers"</a>: [ ... ]
 } ] }
 </pre>
 
-### `showPanel` (Identify Tool)
-`"showPanel"`: *Boolean* *(OPTIONAL)*  
-If `true`, then the identify results will be shown in the panel.
-If `false`, then the panel won't be shown.
-Either way the results are still marked on the map, and clicked on to get a popup with details.
+{% include_relative include/tool-type.md %}
+{% include_relative include/tool-title.md %}
+{% include_relative include/tool-show-title.md %}
+{% include_relative include/tool-show-panel.md %}
+{% include_relative include/tool-show-header.md %}
+{% include_relative include/tool-enabled.md %}
+{% include_relative include/tool-icon.md %}
+{% include_relative include/tool-order.md %}
+{% include_relative include/tool-position.md %}
 
-### `tolerance` (Identify Tool)
-`"tolerance"`: *Number* *(OPTIONAL)*  
-The distance in pixels from the click point that feature must intersect to be found by this tool.
+### Command Property
+`"command"`: `Object`
 
-### `style` (Identify Tool)
-`"style"`: *Object* *(OPTIONAL)*  
-The style used to render the feature markers.
-The object is a [style definition](#style-definition).
+Determines which controls are visible on the panels for this tool.
 
+#### Navigator Sub-Property
+`"command"`: `{ "navigator": Boolean }`
+
+If `true`, shows the navigation controls for selecting among many matched features.
+
+#### Zoom Sub-Property
+`"command"`: `{ "zoom": Boolean }`
+
+If `true`, shows a button for zooming to current feature.
+
+#### Select Sub-Property
+`"command"`: `{ "select": Boolean }`
+
+If `true`, shows a button for adding the current feature to the selection.
+
+#### AttributeMode Sub-Property
+`"command"`: `{ "attributeMode": Boolean }`
+
+If `true`, shows a drop-down list for selecting how the feature attributes should be presented.
+
+#### Radius Sub-Property
+`"command"`: `{ "radius": Boolean }`
+
+If `true`, shows the search radius value.
+
+#### RadiusUnit Sub-Property
+`"command"`: `{ "radiusUnit": Boolean }`
+
+If `true`, shows the search radius units drop-down.
+
+#### NearBy Sub-Property
+`"command"`: `{ "nearBy": Boolean }`
+
+If `true`, shows a button that does the identify query at the devices current location.
+
+
+### AttributeView Property
+`"attributeView"`: `String`
+
+Determines how the attributes are presented for a feature.
+These are the possible modes:
+
+- `"default"`: choose the best mode for the feature
+- `"feature-description"`: show the contents of the `description` attribute as HTML
+- `"feature-attributes"`: show the attributes as defined in the `attributes` configuration for the layer.
+- `"feature-properties"`: show all the attributes for the feature without any further interpretation.
+
+#### Note
+
+One of the modes possible when `attributeView == "default"` is one that uses the feature template defined for the layer.
+This mode is the most preferred one if possible, but it is not possible to force `attributeView` to always use it.
+
+
+### Radius Property
+`"radius"`: `Number`
+
+The distamce to use for the search radius when doing a query for the point that was clicked on the map.
+The value is in the units specified by the [radiusUnit property](#radiusunit-property).
+
+### RadiusUnit Property
+`"radiusUnit"`: `String`
+
+The unit that the [radius property](#radius-property) is using for measurement.
+The allowed values are:
+
+- `"px"`: pixels
+- `"m"`: meters
+- `"km"`: kilometers
+
+
+### InternalLayers Property
+`"internalLayers"`: `Array`
+
+TBD

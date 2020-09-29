@@ -12,10 +12,6 @@ This is default configuration for the Location tool (click on a property name fo
 } ] }
 </pre>
 
-{% include_relative include/tool-base-type.md %}
-{% include_relative include/tool-base-enabled.md %}
-
-### ShowHeader Property
-`"showHeader"`: `Boolean`
-
-If `true`, then the location panel will have a header, showing title and close button.
+{% include_relative include/tool-type.md %}
+{% include_relative include/tool-enabled.md %}
+{% include_relative include/tool-show-header.md %}

@@ -19,13 +19,13 @@ This is default configuration for the BaseMaps tool (click on a property name fo
 } ] }
 </pre>
 
-{% include_relative include/tool-base-type.md %}
-{% include_relative include/tool-base-title.md %}
-{% include_relative include/tool-base-show-title.md %}
-{% include_relative include/tool-base-enabled.md %}
-{% include_relative include/tool-base-icon.md %}
-{% include_relative include/tool-base-order.md %}
-{% include_relative include/tool-base-position.md %}
+{% include_relative include/tool-type.md %}
+{% include_relative include/tool-title.md %}
+{% include_relative include/tool-show-title.md %}
+{% include_relative include/tool-enabled.md %}
+{% include_relative include/tool-icon.md %}
+{% include_relative include/tool-order.md %}
+{% include_relative include/tool-position.md %}
 
 
 ### MapStyle Property
