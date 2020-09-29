@@ -1,4 +1,4 @@
-## Markup Tool
+# Markup Tool
 
 Adds markup tools to the map.
 

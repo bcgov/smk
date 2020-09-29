@@ -1,4 +1,4 @@
-## Shortcut Menu Tool
+# Shortcut Menu Tool
 
 If this tool is enabled, then `"shortcut-menu"` can be used a position for other tools.
 The contained tools are displayed as "quick-access" buttons at the lower-right corner of the map.

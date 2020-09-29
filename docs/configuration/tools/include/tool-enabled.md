@@ -1,4 +1,4 @@
-### Enabled Property
+## Enabled Property
 `"enabled"`: `Boolean`
 
 If `true` then the tool will be available when the map starts.

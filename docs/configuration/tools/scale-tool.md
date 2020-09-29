@@ -1,4 +1,4 @@
-## Scale Tool
+# Scale Tool
 
 Adds a scale display to the bottom-right corner of the map.
 This display shows the current scale, and a ruler showing the real ground distance.
@@ -17,17 +17,17 @@ This is default configuration for the Scale tool (click on a property name for m
 {% include_relative include/tool-type.md %}
 {% include_relative include/tool-enabled.md %}
 
-### ShowFactor Property
+## ShowFactor Property
 `"showFactor"`: `Boolean`
 
 If `true`, then the scale display shows the scale factor.
 
-### ShowBar Property
+## ShowBar Property
 `"showBar"`: `Boolean`
 
 If `true`, then the scale display shows the distance ruler.
 
-### ShowZoom Property
+## ShowZoom Property
 `"showZoom"`: `Boolean`
 
 If `true`, then the scale display shows the zoom level.

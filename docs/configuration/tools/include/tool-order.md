@@ -1,4 +1,4 @@
-### Order Property
+## Order Property
 `"order"`: `Integer`
 
 If the tool adds a button to a toolbar, this property controls the order in which the tools are added to the toolbar.

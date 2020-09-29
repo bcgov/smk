@@ -1,4 +1,4 @@
-## Version Tool
+# Version Tool
 
 Add a button to the toolbar, that shows a panel containing the version of SMK, and build information.
 This is for debugging purposes.

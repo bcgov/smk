@@ -1,4 +1,4 @@
-## List Menu Tool
+# List Menu Tool
 
 If this tool is enabled, then `"list-menu"` can be used a position for other tools.
 This tool adds a button to the toolbar where it is positioned, which opens a panel containing a list of the tools it contains.

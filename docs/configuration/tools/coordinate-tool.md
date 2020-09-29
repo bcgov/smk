@@ -1,4 +1,4 @@
-## Coordinate Tool
+# Coordinate Tool
 
 Adds a coordinate display to the bottom-right corner of the map.
 This display shows the current latitude and longitude of the mouse cursor.

@@ -1,4 +1,4 @@
-### Position Property
+## Position Property
 `"position"`: `String`
 
 Some tools show a button that activates the tool, and that button must be positioned in one of the tool button containers.

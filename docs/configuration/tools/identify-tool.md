@@ -1,4 +1,4 @@
-## Identify Tool
+# Identify Tool
 
 Add a button to the toolbar, that *can* show a panel containing a list of features found on the map.
 When this tool is enabled, clicking on the map will try to identify all features under the click, within [radius](#radius-property) pixels (default [radius unit](#radiusunit-property)).
@@ -42,48 +42,48 @@ This is default configuration for the Identify tool (click on a property name fo
 {% include_relative include/tool-order.md %}
 {% include_relative include/tool-position.md %}
 
-### Command Property
+## Command Property
 `"command"`: `Object`
 
 Determines which controls are visible on the panels for this tool.
 
-#### Navigator Sub-Property
+### Navigator Sub-Property
 `"command"`: `{ "navigator": Boolean }`
 
 If `true`, shows the navigation controls for selecting among many matched features.
 
-#### Zoom Sub-Property
+### Zoom Sub-Property
 `"command"`: `{ "zoom": Boolean }`
 
 If `true`, shows a button for zooming to current feature.
 
-#### Select Sub-Property
+### Select Sub-Property
 `"command"`: `{ "select": Boolean }`
 
 If `true`, shows a button for adding the current feature to the selection.
 
-#### AttributeMode Sub-Property
+### AttributeMode Sub-Property
 `"command"`: `{ "attributeMode": Boolean }`
 
 If `true`, shows a drop-down list for selecting how the feature attributes should be presented.
 
-#### Radius Sub-Property
+### Radius Sub-Property
 `"command"`: `{ "radius": Boolean }`
 
 If `true`, shows the search radius value.
 
-#### RadiusUnit Sub-Property
+### RadiusUnit Sub-Property
 `"command"`: `{ "radiusUnit": Boolean }`
 
 If `true`, shows the search radius units drop-down.
 
-#### NearBy Sub-Property
+### NearBy Sub-Property
 `"command"`: `{ "nearBy": Boolean }`
 
 If `true`, shows a button that does the identify query at the devices current location.
 
 
-### AttributeView Property
+## AttributeView Property
 `"attributeView"`: `String`
 
 Determines how the attributes are presented for a feature.
@@ -100,13 +100,13 @@ One of the modes possible when `attributeView == "default"` is one that uses the
 This mode is the most preferred one if possible, but it is not possible to force `attributeView` to always use it.
 
 
-### Radius Property
+## Radius Property
 `"radius"`: `Number`
 
 The distamce to use for the search radius when doing a query for the point that was clicked on the map.
 The value is in the units specified by the [radiusUnit property](#radiusunit-property).
 
-### RadiusUnit Property
+## RadiusUnit Property
 `"radiusUnit"`: `String`
 
 The unit that the [radius property](#radius-property) is using for measurement.
@@ -117,7 +117,7 @@ The allowed values are:
 - `"km"`: kilometers
 
 
-### InternalLayers Property
+## InternalLayers Property
 `"internalLayers"`: `Array`
 
 TBD

@@ -1,4 +1,4 @@
-### ShowPanel Property
+## ShowPanel Property
 `"showPanel"`: `Boolean`
 
 If `true`, then the tool panel will be shown.

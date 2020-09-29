@@ -1,4 +1,4 @@
-### Type Property
+## Type Property
 `"type"`: `String` *(Required)*
 
 The name of the type of this tool.

@@ -1,4 +1,4 @@
-## BaseMaps Tool
+# BaseMaps Tool
 
 Add a button to the toolbar, that shows a panel which lets the user choose which base map they want the map to use.
 [This is the list](#basemap-viewer) of base maps to choose from.
@@ -28,13 +28,13 @@ This is default configuration for the BaseMaps tool (click on a property name fo
 {% include_relative include/tool-position.md %}
 
 
-### MapStyle Property
+## MapStyle Property
 `"mapStyle"`: `Object`
 
 This is an object containing CSS properties, which is used to style the map sample tiles in the base map chooser panel.
 
 
-### Choices Property
+## Choices Property
 `"choices"`: `Array`
 
 The list of base maps to let the user choose from.

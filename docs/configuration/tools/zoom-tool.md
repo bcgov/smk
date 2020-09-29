@@ -1,4 +1,4 @@
-## Zoom Tool
+# Zoom Tool
 
 If this tool is enabled, then the user is able to change the zoom level of the map.
 
@@ -17,25 +17,25 @@ This is default configuration for the Zoom tool (click on a property name for mo
 {% include_relative include/tool-type.md %}
 {% include_relative include/tool-enabled.md %}
 
-### MouseWheel Property
+## MouseWheel Property
 `"mouseWheel"`: `Boolean`
 
 If `true`, then the map can be zoomed with the mouse wheel.
 
 
-### DoubleClick Property
+## DoubleClick Property
 `"doubleClick"`: `Boolean`
 
 If `true`, then the map will zoom-in on a double-click.
 
 
-### Box Property
+## Box Property
 `"box"`: `Boolean`
 
 If `true`, then the user can hold the **SHIFT** key and drag a box on the map to zoom in.
 
 
-### Control Property
+## Control Property
 `"control"`: `Boolean`
 
 If `true`, then there are zoom-in, zoom-out buttons on the map.

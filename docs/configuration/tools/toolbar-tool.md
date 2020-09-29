@@ -1,4 +1,4 @@
-## Toolbar Tool
+# Toolbar Tool
 
 If this tool is enabled, then `"toolbar"` can be used a position for other tools.
 The contained tools are displayed in a toolbar at the top-left of the map.

@@ -1,4 +1,4 @@
-### Title Property
+## Title Property
 `"title"`: `String`
 
 The title of this tool.

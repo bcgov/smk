@@ -1,4 +1,4 @@
-## About Tool
+# About Tool
 
 Add a button to the toolbar, that shows a panel with content that is taken from the configuration.
 It is typically used show a panel of information about the application.
@@ -25,7 +25,7 @@ This is default configuration for the About tool (click on a property name for m
 {% include_relative include/tool-order.md %}
 {% include_relative include/tool-position.md %}
 
-### Content Property
+## Content Property
 `"content"`: `String`
 
 The content to show in the panel.

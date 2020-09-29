@@ -1,4 +1,4 @@
-## Legend Tool
+# Legend Tool
 
 Adds a legend display to the bottom-right corner of the map.
 This display shows the legend for all the currently visible layers.
