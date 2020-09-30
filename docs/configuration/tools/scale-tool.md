@@ -1,3 +1,5 @@
+{% include_relative include/breadcrumbs.md %}
+
 # Scale Tool
 
 Adds a scale display to the bottom-right corner of the map.

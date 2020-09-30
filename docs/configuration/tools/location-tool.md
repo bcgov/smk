@@ -1,3 +1,5 @@
+{% include_relative include/breadcrumbs.md %}
+
 # Location Tool
 
 If this tool is enabled, then clicking on the map will show a popup giving the clicked point's location.

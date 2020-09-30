@@ -1,3 +1,5 @@
+{% include_relative include/breadcrumbs.md %}
+
 # Bespoke Tool
 
 Add a button to the toolbar, that shows a panel which can be used to display any content that the application needs to show.

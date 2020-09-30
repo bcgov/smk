@@ -1,3 +1,5 @@
+{% include_relative include/breadcrumbs.md %}
+
 # BaseMaps Tool
 
 Add a button to the toolbar, that shows a panel which lets the user choose which base map they want the map to use.

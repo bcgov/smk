@@ -1,3 +1,5 @@
+{% include_relative include/breadcrumbs.md %}
+
 # Search Tool
 
 Add a search input field to the toolbar.

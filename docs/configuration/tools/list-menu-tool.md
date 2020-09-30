@@ -1,3 +1,5 @@
+{% include_relative include/breadcrumbs.md %}
+
 # List Menu Tool
 
 If this tool is enabled, then `"list-menu"` can be used a position for other tools.

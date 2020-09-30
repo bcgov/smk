@@ -1,3 +1,5 @@
+{% include_relative include/breadcrumbs.md %}
+
 # Measure Tool
 
 Add a button to the toolbar, that shows a panel that allows the user to measure distances or areas on the map.

@@ -1,3 +1,5 @@
+{% include_relative include/breadcrumbs.md %}
+
 # Identify Tool
 
 If this tool is enabled, clicking on the map will try to identify all features under the click, within [radius](#radius-property) pixels (default [radius unit](#radiusunit-property)).

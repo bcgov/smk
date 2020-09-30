@@ -1,3 +1,5 @@
+{% include_relative include/breadcrumbs.md %}
+
 # Version Tool
 
 Add a button to the toolbar, that shows a panel containing the version of SMK, and build information.

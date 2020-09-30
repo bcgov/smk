@@ -1,3 +1,5 @@
+{% include_relative include/breadcrumbs.md %}
+
 # Zoom Tool
 
 If this tool is enabled, then the user is able to change the zoom level of the map.

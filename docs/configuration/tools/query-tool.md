@@ -1,3 +1,5 @@
+{% include_relative include/breadcrumbs.md %}
+
 # Query Tool
 
 Add a button to the toolbar, that shows a panel containing an input form.

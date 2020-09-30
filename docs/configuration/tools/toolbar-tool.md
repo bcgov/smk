@@ -1,3 +1,5 @@
+{% include_relative include/breadcrumbs.md %}
+
 # Toolbar Tool
 
 If this tool is enabled, then `"toolbar"` can be used a position for other tools.

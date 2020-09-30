@@ -1,3 +1,5 @@
+{% include_relative include/breadcrumbs.md %}
+
 # Coordinate Tool
 
 Adds a coordinate display to the bottom-right corner of the map.

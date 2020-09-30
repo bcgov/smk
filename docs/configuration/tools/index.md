@@ -1,3 +1,5 @@
+###### [Home](../..) / [Configuration](..)
+
 # Tools
 
 The tools section of configuration controls which tools are available for the user.

@@ -1,3 +1,5 @@
+{% include_relative include/breadcrumbs.md %}
+
 # Legend Tool
 
 Adds a legend display to the bottom-right corner of the map.

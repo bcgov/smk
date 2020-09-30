@@ -1,3 +1,5 @@
+{% include_relative include/breadcrumbs.md %}
+
 # Markup Tool
 
 Adds markup tools to the map.

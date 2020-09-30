@@ -1,3 +1,5 @@
+{% include_relative include/breadcrumbs.md %}
+
 # Layers Tool
 
 Add a button to the toolbar, that shows a panel that lists all the [`"layers"`](../layers) configured for the map.

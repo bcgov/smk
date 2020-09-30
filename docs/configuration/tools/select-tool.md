@@ -1,3 +1,5 @@
+{% include_relative include/breadcrumbs.md %}
+
 # Select Tool
 
 Add a button to the toolbar, that shows a panel containing the current selection set.

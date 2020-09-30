@@ -1,3 +1,5 @@
+{% include_relative include/breadcrumbs.md %}
+
 # Minimap Tool
 
 Adds an overview map ("mini-map") in the bottom-right corner of the map.

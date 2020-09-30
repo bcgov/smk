@@ -1,3 +1,5 @@
+{% include_relative include/breadcrumbs.md %}
+
 # Shortcut Menu Tool
 
 If this tool is enabled, then `"shortcut-menu"` can be used a position for other tools.
