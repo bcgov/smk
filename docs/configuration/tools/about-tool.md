@@ -1,3 +1,5 @@
+{% include_relative include/breadcrumbs.md %}
+
 # About Tool
 
 Add a button to the toolbar, that shows a panel with content that is taken from the configuration.
