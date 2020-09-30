@@ -1,4 +1,4 @@
-## Select Tool
+# Select Tool
 
 Add a button to the toolbar, that shows a panel containing the current selection set.
 When this tool is enabled, the [`"identify"`](identify-tool) tool has an additional action available for features.

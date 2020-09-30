@@ -1,4 +1,4 @@
-## Search Tool
+# Search Tool
 
 Add a search input field to the toolbar.
 The text entered in the input field is used to perform a location search.

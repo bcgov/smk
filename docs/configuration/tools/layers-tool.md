@@ -1,4 +1,4 @@
-## Layers Tool
+# Layers Tool
 
 Add a button to the toolbar, that shows a panel that lists all the [`"layers"`](../layers) configured for the map.
 It allows the user to hide or show any layer, and to see the layer legend.
