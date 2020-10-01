@@ -16,22 +16,25 @@ These values are set when the smk application is created using the `smk create` 
 
 ## Name Property
 `"name": String`
+
 The name of the SMK configuration.
 This name is set when the SMK application is created with the `smk create` tool.
 It is displayed in the `smk edit` tool, and the [`"version"` tool](), but it is otherwise not used by the map.
 
 
-### CreatedBy Property
+## CreatedBy Property
 `"createdBy": String`
+
 The name of the person who created the SMK application using the `smk create` tool.
 It is displayed in the `smk edit` tool, and the [`"version"` tool](), but it is otherwise not used by the map.
 
-### CreatedDate Property
+## CreatedDate Property
 `"createdDate": String`
+
 The timestmap when the SMK application was created using the `smk create` tool.
 It is displayed in the `smk edit` tool, and the [`"version"` tool](), but it is otherwise not used by the map.
 
-### Version Property
+## Version Property
 `"version": String`
 
 The version of the SMK library that this configuration is intended for.
