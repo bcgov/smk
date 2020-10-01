@@ -11,26 +11,24 @@ The `"layers"` and `"tools"` collections can contain a variety of possible objec
 
 <pre>
 {
-    <a href="metadata.html#name-property"        >"name"</a>:        "SMK Demo App",
-    <a href="metadata.html#version-property"     >"version"</a>:     "1.0.0",
-    <a href="metadata.html#createdBy-property"   >"createdBy"</a>:   "smk",
-    <a href="metadata.html#createdDate-property" >"createdDate"</a>: "2020-07-23T19:18:25.876Z",
+    <a href="metadata.html#name-property"        >"name"</a>:         "SMK Demo App",
+    <a href="metadata.html#version-property"     >"version"</a>:      "1.0.0",
+    <a href="metadata.html#createdBy-property"   >"createdBy"</a>:    "smk",
+    <a href="metadata.html#createdDate-property" >"createdDate"</a>:  "2020-07-23T19:18:25.876Z",
 
     <a href="viewer.html"  >"viewer"</a>: {
-        <a href="viewer.html#type-property"          >"type"</a>:          "leaflet",
-        <a href="viewer.html#basemap-property"       >"baseMap"</a>:       "Topographic",
-        <a href="viewer.html#location-property"      >"location"</a>: {
-            <a href="viewer.html#locationextent-property">"extent"</a>: [ -139.1782, 47.6039, -110.3533, 60.5939 ],
-            <a href="viewer.html#locationcenter-property">"center"</a>: [ -124.76575, 54.0989 ],
-            <a href="viewer.html#locationzoom-property"  >"zoom"</a>:   5,
-        }
-        <a href="viewer.html#clusterOption-property" >"clusterOption"</a>: { ... },
+        <a href="viewer.html#type-property"      >"type"</a>:     "leaflet",
+        <a href="viewer.html#device-property"    >"device"</a>:   "auto",
+        <a href="viewer.html#basemap-property"   >"baseMap"</a>:  "Topographic",
+        <a href="viewer.html#location-property"  >"location"</a>: { ... }
     },
+
     <a href="layers"  >"layers"</a>: [
         { "type": <a href="layers/esri-dynamic-layer.html" >"esri-dynamic"</a>  },
         { "type": <a href="layers/wms-layer.html"          >"wms"</a>           },
         { "type": <a href="layers/vector-layer.html"       >"vector"</a>        },
     ],
+
     <a href="tools"   >"tools"</a>: [
         { "type": <a href="tools/about-tool.html"          >"about"</a>         },
         { "type": <a href="tools/basemaps-tool.html"       >"baseMaps"</a>      },
