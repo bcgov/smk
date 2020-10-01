@@ -5,6 +5,7 @@
 The configuration metadata is the name of the project, who created it, and when.
 These values are set when the smk application is created using the `smk create` tool.
 
+Click on a property name for more information.
 <pre>
 {
     <a href="#name-property"        >"name"</a>:        "SMK App",
