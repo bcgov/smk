@@ -1,1 +1,1 @@
-###### [Home](../..) / [Configuration](..) / [Tools](.)
+###### [SMK](../..) / [Configuration](..) / [Tools](.)

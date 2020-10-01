@@ -2,9 +2,9 @@
 title: SMK Usage Guide
 ---
 
-# **S** **M** **K**
+# SMK (Simple Map Kit) Usage Guide
 
-SMK (Simple Map Kit) is a versatile and lightweight toolkit for building a simple web map.
+SMK is a versatile and lightweight toolkit for building a simple web map.
 
 ## Installation
 

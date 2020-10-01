@@ -1,5 +1,6 @@
+###### [SMK](..)
 
-# SMK Configuration
+# Configuration
 
 SMK's behaviour is completely determined by the configuration object that is loaded into it at initialization.
 The configuration is expected to be in [JSON](https://www.json.org/) format.
