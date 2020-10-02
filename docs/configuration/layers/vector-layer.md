@@ -1,55 +1,72 @@
-## Vector Layer
+###### [SMK](../..) / [Configuration](..) / [Layers](.)
 
+# Vector Layer
+
+This is default configuration for the Vector layer.
+Click on a property name for more information:
 <pre>
 { "layers": [ {
-    <a href="#id-layer"           >"id"</a>:            "layer1",
-    <a href="#type-layer"         >"type"</a>:          "vector",
-    <a href="#title-layer"        >"title"</a>:         "Layer 1",
-    <a href="#opacity-layer"      >"opacity"</a>:       0.65,
-    <a href="#isvisible-layer"    >"isVisible"</a>:     true,
-    <a href="#isqueryable-layer"  >"isQueryable"</a>:   true,
-    <a href="#minscale-layer"     >"minScale"</a>:      500000,
-    <a href="#maxscale-layer"     >"maxScale"</a>:      0,
-    <a href="#attribution-layer"  >"attribution"</a>:   "Copyright 2018",
-    <a href="#metadataurl-layer"  >"metadataUrl"</a>:   "http://catalogue/dataset/aca81811-4b08-4382-9af7-204e0b9d2448",
-    <a href="#popuptemplate-layer">"popupTemplate"</a>: "&lt;div class=\"smk-header\">&lt;h3>{{ layer.title }}&lt;/h3>&lt;/div>",    
-    <a href="#titleattribute-layer">"titleAttribute"</a>:"INTRID_SID",
-    <a href="#attributes-layer"   >"attributes"</a>:    [ ... ],
-    <a href="#queries-layer"      >"queries"</a>:       [ ... ],
-    <a href="#useclustering-vector-layer">"useClustering"</a>: false,
-    <a href="#useheatmap-vector-layer"   >"useHeatmap"</a>:    false,
-    <a href="#useraw-vector-layer"       >"useRaw"</a>:        true,
-    <a href="#style-vector-layer"        >"style"</a>:         { ... },
-    <a href="#dataUrl-vector-layer"      >"dataUrl"</a>:       "@layer1",
+    <a href="#type-property"                >"type"</a>:                "vector",
+    <a href="#id-property"                  >"id"</a>:                  null,
+    <a href="#title-property"               >"title"</a>:               null,
+    <a href="#opacity-property"             >"opacity"</a>:             null,
+    <a href="#isvisible-property"           >"isVisible"</a>:           false,
+    <a href="#isqueryable-property"         >"isQueryable"</a>:         true,
+    <a href="#minscale-property"            >"minScale"</a>:            null,
+    <a href="#maxscale-property"            >"maxScale"</a>:            null,
+    <a href="#metadataurl-property"         >"metadataUrl"</a>:         null,
+    <a href="#popuptemplate-property"       >"popupTemplate"</a>:       null,
+    <a href="#titleattribute-property"      >"titleAttribute"</a>:      null,
+    <a href="#attributes-property"          >"attributes"</a>:          null,
+    <a href="#queries-property"             >"queries"</a>:             null,
+    <a href="#useclustering-property"       >"useClustering"</a>:       false,
+    <a href="#useheatmap-property"          >"useHeatmap"</a>:          false,
+    <a href="#style-property"               >"style"</a>:               null,
+    <a href="#dataUrl-property"             >"dataUrl"</a>:             null
 } ] }
 </pre>
 
-### `useClustering` (Vector Layer)
-`"useClustering"`: *Boolean* *(OPTIONAL)*  
-Indicates if the layer should also include point clustering. 
+{% include_relative include/type-property.md %}
+{% include_relative include/id-property.md %}
+{% include_relative include/title-property.md %}
+{% include_relative include/opacity-property.md %}
+{% include_relative include/is-visible-property.md %}
+{% include_relative include/is-queryable-property.md %}
+{% include_relative include/min-scale-property.md %}
+{% include_relative include/max-scale-property.md %}
+{% include_relative include/metadata-url-property.md %}
+{% include_relative include/popup-template-property.md %}
+{% include_relative include/title-attribute-property.md %}
+{% include_relative include/attributes-property.md %}
+{% include_relative include/queries-property.md %}
+
+
+## UseClustering Property
+`"useClustering": Boolean`
+
+If `true`, the layer should use point clustering.
 Only relevant for point geometry layers.
 The default is `false`.
 
-### `useHeatmap` (Vector Layer)
-`"useHeatmap"`: *Boolean* *(OPTIONAL)*  
-Indicates if the layer should also include heatmap clustering. 
+
+## UseHeatmap Property
+`"useHeatmap": Boolean`
+
+If `true`, the layer should use heatmap clustering.
 Only relevant for point geometry layers.
 The default is `false`.
 
-### `useRaw` (Vector Layer)
-`"useRaw"`: *Boolean* *(OPTIONAL)*  
-Indicates if the layer should be displayed in its native form, with no heatmapping or clustering. 
-The default is `true`, unless clustering or heatmapping is enabled.
 
-### `style` (Vector Layer)
-`"style"`: *Object* *(OPTIONAL)*  
-The style used to render the layer.
-The object is a [style definition](#style-definition).
+## Style Property
+`"style": Object | Array`
 
-### `dataUrl` (Vector Layer)
-`"dataUrl"`: *String* *(OPTIONAL)*  
-The URL that points to a GeoJSON file containing the vector data.
-If this property is missing, the [id](#id-layer) of layer identifies an attachment.
+The [style object](layer-style) used to render the layer.
+
+
+## DataUrl Property
+`"dataUrl": String`
+
+The URL that points to a GeoJSON data source.
 
 
 

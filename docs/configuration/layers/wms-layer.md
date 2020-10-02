@@ -6,7 +6,7 @@ This is default configuration for the WMS layer.
 Click on a property name for more information:
 <pre>
 { "layers": [ {
-    <a href="#type-property"                >"type"</a>:                "esri-dynamic",
+    <a href="#type-property"                >"type"</a>:                "wms",
     <a href="#id-property"                  >"id"</a>:                  null,
     <a href="#title-property"               >"title"</a>:               null,
     <a href="#opacity-property"             >"opacity"</a>:             null,
