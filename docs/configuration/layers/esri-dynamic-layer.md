@@ -14,7 +14,6 @@ Click on a property name for more information:
     <a href="#isqueryable-property"     >"isQueryable"</a>:     true,
     <a href="#minscale-property"        >"minScale"</a>:        null,
     <a href="#maxscale-property"        >"maxScale"</a>:        null,
-    <a href="#attribution-property"     >"attribution"</a>:     null,
     <a href="#metadataurl-property"     >"metadataUrl"</a>:     null,
     <a href="#popuptemplate-property"   >"popupTemplate"</a>:   null,
     <a href="#titleattribute-property"  >"titleAttribute"</a>:  null,
@@ -41,25 +40,25 @@ Click on a property name for more information:
 {% include_relative include/attributes-property.md %}
 {% include_relative include/queries-property.md %}
 
-### MpcmId Property
+## MpcmId Property
 `"mpcmId": String`
 
 The ID used for this layer in the DataBC Layer Catalog.
 
 
-### MpcmWorkspace Property
+## MpcmWorkspace Property
 `"mpcmWorkspace": String`
 
 The workspace used for this layer in the DataBC Layer Catalog.
 
 
-### ServiceUrl Property
+## ServiceUrl Property
 `"serviceUrl": String`
 
 The URL for the DataBC Layer Catalog.
 
 
-### DynamicLayers Property
+## DynamicLayers Property
 `"dynamicLayers": Array`
 
 A listing of dynamic layer configurations.

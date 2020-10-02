@@ -2,7 +2,7 @@
 `"attributes": Array`
 
 An array of [attribute objects](layer-attribute).
-Used to control how feature attributes appear in the popup that is used by the [`"identify"` tool](../tools/identify-tool), [`"query" tool`](../tools/query-tool), and [`"select" tool`](../tools/select-tool).
+Used to control how feature attributes appear in the popup that is used by the [`"identify"` tool](../tools/identify-tool), [`"query"` tool](../tools/query-tool), and [`"select"` tool](../tools/select-tool).
 
 ##### Note
 

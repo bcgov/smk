@@ -1,49 +1,78 @@
-## WMS Layer
+###### [SMK](../..) / [Configuration](..) / [Layers](.)
 
+# WMS Layer
+
+This is default configuration for the WMS layer.
+Click on a property name for more information:
 <pre>
 { "layers": [ {
-    <a href="#id-layer"           >"id"</a>:                "layer1",
-    <a href="#type-layer"         >"type"</a>:              "wms",
-    <a href="#title-layer"        >"title"</a>:             "Layer 1",
-    <a href="#opacity-layer"      >"opacity"</a>:           0.65,
-    <a href="#isvisible-layer"    >"isVisible"</a>:         true,
-    <a href="#isqueryable-layer"  >"isQueryable"</a>:       true,
-    <a href="#minscale-layer"     >"minScale"</a>:          500000,
-    <a href="#maxscale-layer"     >"maxScale"</a>:          0,
-    <a href="#attribution-layer"  >"attribution"</a>:       "Copyright 2018",
-    <a href="#metadataurl-layer"  >"metadataUrl"</a>:       "http://catalogue/dataset/aca81811-4b08-4382-9af7-204e0b9d2448",
-    <a href="#popuptemplate-layer">"popupTemplate"</a>:     "&lt;div class=\"smk-header\">&lt;h3>{{ layer.title }}&lt;/h3>&lt;/div>",        
-    <a href="#titleattribute-layer">"titleAttribute"</a>:"INTRID_SID",
-    <a href="#attributes-layer"   >"attributes"</a>:        [ ... ],
-    <a href="#queries-layer"      >"queries"</a>:           [ ... ],
-    <a href="#version-wms-layer"          >"version"</a>:           1.0.0,
-    <a href="#layername-wms-layer"        >"layerName"</a>:         "WHSE_TANTALIS.TA_CROWN_LEASES_SVW",
-    <a href="#stylename-wms-layer"        >"styleName"</a>:         "Lease_Applications_Tantalis_Colour_Filled",
-    <a href="#serviceurl-wms-layer"       >"serviceUrl"</a>:        "https://openmaps.gov.bc.ca/geo/pub/wms",
-    <a href="#geometryattribute-wms-layer">"geometryAttribute"</a>: "SHAPE"
+    <a href="#type-property"                >"type"</a>:                "esri-dynamic",
+    <a href="#id-property"                  >"id"</a>:                  null,
+    <a href="#title-property"               >"title"</a>:               null,
+    <a href="#opacity-property"             >"opacity"</a>:             null,
+    <a href="#isvisible-property"           >"isVisible"</a>:           false,
+    <a href="#isqueryable-property"         >"isQueryable"</a>:         true,
+    <a href="#minscale-property"            >"minScale"</a>:            null,
+    <a href="#maxscale-property"            >"maxScale"</a>:            null,
+    <a href="#metadataurl-property"         >"metadataUrl"</a>:         null,
+    <a href="#popuptemplate-property"       >"popupTemplate"</a>:       null,
+    <a href="#titleattribute-property"      >"titleAttribute"</a>:      null,
+    <a href="#attributes-property"          >"attributes"</a>:          null,
+    <a href="#queries-property"             >"queries"</a>:             null,
+    <a href="#version-property"             >"version"</a>:             '1.1.1',
+    <a href="#layername-property"           >"layerName"</a>:           null,
+    <a href="#stylename-property"           >"styleName"</a>:           null,
+    <a href="#serviceurl-property"          >"serviceUrl"</a>:          null,
+    <a href="#geometryattribute-property"   >"geometryAttribute"</a>:   null
 } ] }
 </pre>
 
-### `version` (WMS Layer)
-`"version"`: *String* *(OPTIONAL)*  
+{% include_relative include/type-property.md %}
+{% include_relative include/id-property.md %}
+{% include_relative include/title-property.md %}
+{% include_relative include/opacity-property.md %}
+{% include_relative include/is-visible-property.md %}
+{% include_relative include/is-queryable-property.md %}
+{% include_relative include/min-scale-property.md %}
+{% include_relative include/max-scale-property.md %}
+{% include_relative include/metadata-url-property.md %}
+{% include_relative include/popup-template-property.md %}
+{% include_relative include/title-attribute-property.md %}
+{% include_relative include/attributes-property.md %}
+{% include_relative include/queries-property.md %}
+
+## Version Property
+`"version": String`
+
 The WMS version used for GetMap, GetFeatureInfo and GetCapabilities WMS requests.
 
-### `layerName` (WMS Layer)
-`"layerName"`: *String* *(REQUIRED)*  
+
+## LayerName Property
+`"layerName": String`
+
 The name of the layer to use when making get map requests for the WMS layer.
 
-### `styleName` (WMS Layer)
-`"styleName"`: *String* *(OPTIONAL)*  
+
+## StyleName Property
+`"styleName": String`
+
 The name of the style to use when making get map requests for the WMS layer.
 
-### `serviceUrl` (WMS Layer)
-`"serviceUrl"`: *String* *(REQUIRED)*  
+
+## ServiceUrl Property
+`"serviceUrl": String`
+
 The URL for the WMS service.
 
-### `geometryAttribute` (WMS Layer)
-`"geometryAttribute"`: *String* *(OPTIONAL)*  
+
+## GeometryAttribute Property
+`"geometryAttribute": String`
+
 The name of the layer attribute that contains the geometry.
-(Needed by the [`"identify"`](#identify-tool) tool).
+
+##### Note
+
+This is needed by the [`"identify"` tool](../tools/identify-tool).
 
 
 
