@@ -12,8 +12,8 @@ These are all the layer types available, click on the layer type to see more inf
 
 <pre>
 { "layers": [
-    { "type": <a href="esri-dynamic-layer.html" >"esri-dynamic"</a>  },
-    { "type": <a href="wms-layer.html"          >"wms"</a>           },
-    { "type": <a href="vector-layer.html"       >"vector"</a>        }
+    { "type": <a href="esri-dynamic-layer" >"esri-dynamic"</a>  },
+    { "type": <a href="wms-layer"          >"wms"</a>           },
+    { "type": <a href="vector-layer"       >"vector"</a>        }
 ] }
 </pre>
