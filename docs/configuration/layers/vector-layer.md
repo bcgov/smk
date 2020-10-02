@@ -60,7 +60,7 @@ The default is `false`.
 ## Style Property
 `"style": Object | Array`
 
-The [style object](layer-style) used to render the layer.
+The [style object](style) used to render the features from this data source.
 
 
 ## DataUrl Property

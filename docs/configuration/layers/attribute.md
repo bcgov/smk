@@ -76,7 +76,7 @@ If `true`, the attribute is visible in the feature panel.
 The default is `true`.
 
 
-### Template expression
+# Template expression
 
 The [`"title"` property](#title-property) and [`"value"` property](#value-property) can contain template expressions.
 These are expressions of the form anywhere within a string value:
@@ -89,3 +89,4 @@ The expression is evaluated in a context that includes the following variables:
 - `this.layer` - the layer object containing the feature
 - `attr` - the attribute being display
 
+If the [`"title"` property](#title-property) and [`"value"` property](#value-property) both resolve after template substitution to empty strings, then the attribute will be hidden.
