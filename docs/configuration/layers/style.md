@@ -1,3 +1,5 @@
+###### [SMK](../..) / [Configuration](..) / [Layers](.)
+
 # Layer Style Objects
 
 This object defines the styling for a [`"vector"` layer](vector-layer).
