@@ -1,43 +1,68 @@
-## ESRI Dynamic Layer
+###### [SMK](../..) / [Configuration](..) / [Layers](.)
 
+# ESRI Dynamic Layer
+
+This is default configuration for the ESRI Dynamic layer.
+Click on a property name for more information:
 <pre>
 { "layers": [ {
-    <a href="#id-layer"           >"id"</a>:            "layer1",
-    <a href="#type-layer"         >"type"</a>:          "esri-dynamic",
-    <a href="#title-layer"        >"title"</a>:         "Layer 1",
-    <a href="#opacity-layer"      >"opacity"</a>:       0.65,
-    <a href="#isvisible-layer"    >"isVisible"</a>:     true,
-    <a href="#isqueryable-layer"  >"isQueryable"</a>:   true,
-    <a href="#minscale-layer"     >"minScale"</a>:      500000,
-    <a href="#maxscale-layer"     >"maxScale"</a>:      0,
-    <a href="#attribution-layer"  >"attribution"</a>:   "Copyright 2018",
-    <a href="#metadataurl-layer"  >"metadataUrl"</a>:   "http://catalogue/dataset/aca81811-4b08-4382-9af7-204e0b9d2448",
-    <a href="#popuptemplate-layer">"popupTemplate"</a>: "&lt;div class=\"smk-header\">&lt;h3>{{ layer.title }}&lt;/h3>&lt;/div>",    
-    <a href="#titleattribute-layer">"titleAttribute"</a>:"INTRID_SID",
-    <a href="#attributes-layer"   >"attributes"</a>:    [ ... ],
-    <a href="#queries-layer"      >"queries"</a>:       [ ... ],
-    <a href="#mpcmid-esri-dynamic-layer"       >"mpcmId"</a>:        123,
-    <a href="#mpcmworkspace-esri-dynamic-layer">"mpcmWorkspace"</a>: "MPCM_ALL_PUB",
-    <a href="#serviceurl-esri-dynamic-layer"   >"serviceUrl"</a>:    "https://maps.gov.bc.ca/arcgis/rest/services/mpcm/bcgw/MapServer",
-    <a href="#dynamiclayers-esri-dynamic-layer">"dynamicLayers"</a>: [ ... ],
+    <a href="#type-property"            >"type"</a>:            "esri-dynamic",
+    <a href="#id-property"              >"id"</a>:              null,
+    <a href="#title-property"           >"title"</a>:           null,
+    <a href="#opacity-property"         >"opacity"</a>:         null,
+    <a href="#isvisible-property"       >"isVisible"</a>:       false,
+    <a href="#isqueryable-property"     >"isQueryable"</a>:     true,
+    <a href="#minscale-property"        >"minScale"</a>:        null,
+    <a href="#maxscale-property"        >"maxScale"</a>:        null,
+    <a href="#attribution-property"     >"attribution"</a>:     null,
+    <a href="#metadataurl-property"     >"metadataUrl"</a>:     null,
+    <a href="#popuptemplate-property"   >"popupTemplate"</a>:   null,
+    <a href="#titleattribute-property"  >"titleAttribute"</a>:  null,
+    <a href="#attributes-property"      >"attributes"</a>:      null,
+    <a href="#queries-property"         >"queries"</a>:         null,
+    <a href="#mpcmid-property"          >"mpcmId"</a>:          null,
+    <a href="#mpcmworkspace-property"   >"mpcmWorkspace"</a>:   null,
+    <a href="#serviceurl-property"      >"serviceUrl"</a>:      null,
+    <a href="#dynamiclayers-property"   >"dynamicLayers"</a>:   null
 } ] }
 </pre>
 
-### `mpcmId` (ESRI Dynamic Layer)
-`"mpcmId"`: *String* *(REQUIRED)*  
+{% include_relative include/type-property.md %}
+{% include_relative include/id-property.md %}
+{% include_relative include/title-property.md %}
+{% include_relative include/opacity-property.md %}
+{% include_relative include/is-visible-property.md %}
+{% include_relative include/is-queryable-property.md %}
+{% include_relative include/min-scale-property.md %}
+{% include_relative include/max-scale-property.md %}
+{% include_relative include/metadata-url-property.md %}
+{% include_relative include/popup-template-property.md %}
+{% include_relative include/title-attribute-property.md %}
+{% include_relative include/attributes-property.md %}
+{% include_relative include/queries-property.md %}
+
+### MpcmId Property
+`"mpcmId": String`
+
 The ID used for this layer in the DataBC Layer Catalog.
 
-### `mpcmWorkspace` (ESRI Dynamic Layer)
-`"mpcmWorkspace"`: *String* *(REQUIRED)*  
+
+### MpcmWorkspace Property
+`"mpcmWorkspace": String`
+
 The workspace used for this layer in the DataBC Layer Catalog.
 
-### `serviceUrl` (ESRI Dynamic Layer)
-`"serviceUrl"`: *String* *(REQUIRED)*  
+
+### ServiceUrl Property
+`"serviceUrl": String`
+
 The URL for the DataBC Layer Catalog.
 
-### `dynamicLayers` (ESRI Dynamic Layer)
-`"dynamicLayers"`: *Array[String]* *(REQUIRED)*  
-A listing of dynamic layer configurations. 
+
+### DynamicLayers Property
+`"dynamicLayers": Array`
+
+A listing of dynamic layer configurations.
 This will typically only contain one dynamic feature, which can be derived from the MPCM Layer Catalog.
 
 
