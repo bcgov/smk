@@ -1,13 +1,16 @@
-## Layer Query Predicate AND Operator
+###### [SMK](../../../..) / [Configuration](../../..) / [Layers](../..) / [Query](..) / [Predicate](.)
+
+# Layer Query Predicate And Operator
 
 The query predicate holds if **ALL** of it's arguments hold.
-There must be at least one argument.
-The arguments are [layer query predicate](#layer-query-predicate) objects.
 
+A predicate object is defined with these properties.
+Click on a property name for more information:
 <pre>
-{ "layers": [ { "id": "fish-points", queries: [ { "id": "species", predicate: {
-    <a href="#operator-layer-query-predicate"   >"operator"</a>:  "and",
-    "arguments": [ ... ],
-} ] } ] } ] }
+{
+    "operator":  "and",
+    <a href="#arguments-property"   >"arguments"</a>: [ ... ],
+}
 </pre>
 
+{% include_relative include/n-arguments-property.md %}
