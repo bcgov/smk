@@ -2,12 +2,12 @@
 
 # Layer Attribute Objects
 
-This object defines the appearance of an attribute from a layer's dataset, when it appears in the details of a feature in the [`"identify"` tool](../tools/identify-tool), [`"query"` tool](../tools/query-tool), or [`"select"` tool](../tools/select-tool).
+This object defines the appearance of an attribute from a layer's dataset, when it appears in the details of a feature in the [`"identify"` tool](../tools/identify), [`"query"` tool](../tools/query), or [`"select"` tool](../tools/select).
 
 The `"attributes"` property of a layer, will have list of these objects.
 This determines the order the attributes will appear in the feature detail panel.
 
-The formatting defined by these properties only applies when the feature is displayed with an ["attributeView" property](../tools/identify-tool#attributeView-property) for the tool that is equal to `"feature-attributes"`.
+The formatting defined by these properties only applies when the feature is displayed with an ["attributeView" property](../tools/identify#attributeView-property) for the tool that is equal to `"feature-attributes"`.
 
 This object is to be defined for each attribute, with the default values.
 Click on a property name for more information:

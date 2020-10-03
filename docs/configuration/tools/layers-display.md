@@ -1,8 +1,8 @@
-###### [SMK](../..) / [Configuration](..) / [Tools](.) / [Layers Tool](layers-tool)
+###### [SMK](../..) / [Configuration](..) / [Tools](.) / [Layers Tool](layers)
 
 # Layer Display Objects
 
-The [layers tool](layers-tool) [display property](layers-tool#display-property) is an array of Display objects.
+The [`"layers"` tool](layers) [`"display"` property](layers#display-property) is an array of Display objects.
 There are 3 types of objects:
 
 - [`{ "type": "layer" }`](#display-layer-object)

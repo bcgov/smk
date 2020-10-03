@@ -35,7 +35,7 @@ This is default configuration for the Search tool (click on a property name for 
 ## ShowLocation Property
 `"showLocation"`: `Boolean`
 
-If `true`, then the selected search result will be shown as a [location panel](location-tool).
+If `true`, then the selected search result will be shown as a [location panel](location).
 
 
 {% include_relative include/enabled-property.md %}

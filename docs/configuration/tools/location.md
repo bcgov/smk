@@ -3,7 +3,7 @@
 # Location Tool
 
 If this tool is enabled, then clicking on the map will show a popup giving the clicked point's location.
-If the [`"identify"`](identify-tool.html) or [`"directions"`](directions-tool.html) tools are enabled, then buttons are visible on this popup with additional actions.
+If the [`"identify"` tool](identify) or [`"directions"` tool](directions) are enabled, then buttons are visible on this popup with additional actions.
 
 This is default configuration for the Location tool (click on a property name for more information):
 <pre>

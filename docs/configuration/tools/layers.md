@@ -82,8 +82,8 @@ The name of the icon representing a layer that the user wants to be hidden.
 ## Display Property
 `"display"`: `Array`
 
-An array of [Layer Display objects](layers-tool-display), that determines how the layers defined in the [`"layers"`](../layers) section of the configuration are to be organized in the layers panel. Each item in the array is an object that is one of these types:
+An array of [Layer Display objects](layers-display), that determines how the layers defined in the [`"layers"`](../layers) section of the configuration are to be organized in the layers panel. Each item in the array is an object that is one of these types:
 
-- [`{ "type": "layer" }`](layers-tool-display#displaylayer-object)
-- [`{ "type": "folder" }`](layers-tool-display#displayfolder-object)
-- [`{ "type": "group" }`](layers-tool-display#displaygroup-object)
+- [`{ "type": "layer" }`](layers-display#displaylayer-object)
+- [`{ "type": "folder" }`](layers-display#displayfolder-object)
+- [`{ "type": "group" }`](layers-display#displaygroup-object)

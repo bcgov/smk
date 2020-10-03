@@ -72,7 +72,7 @@ The name of the layer attribute that contains the geometry.
 
 ##### Note
 
-This is needed by the [`"identify"` tool](../tools/identify-tool).
+This is needed by the [`"identify"` tool](../tools/identify).
 
 
 

@@ -3,9 +3,9 @@
 # Layer Query Object
 
 This object defines a query template for a layer.
-This query object must associated with an instance of the [`"query"` tool](../../tools/query-tool), which will gather the values of parameters (if any) from the user, run the query, and then display the results.
+This query object must associated with an instance of the [`"query"` tool](../../tools/query), which will gather the values of parameters (if any) from the user, run the query, and then display the results.
 
-The [`"id"` property](#id-property) must be unique within the layer, and is used to construct the [`"instance"` property](../../tools/query-tool#instance-property) for the `"query"` tool.
+The [`"id"` property](#id-property) must be unique within the layer, and is used to construct the [`"instance"` property](../../tools/query#instance-property) for the `"query"` tool.
 
 Any parameters required for the query are defined in the [`"parameters"` property](#parameters-property). Any constant values that the query needs are defined here too.
 
@@ -34,7 +34,7 @@ Conventionally it is all lowercase with `-` separating words.
 ## Title Property
 `"title": String`
 
-The title for the query, that will be uses for the [`"query"` tool](../../tools/query-tool).
+The title for the query, that will be uses for the [`"query"` tool](../../tools/query).
 
 
 ## Description Property

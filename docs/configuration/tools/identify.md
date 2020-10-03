@@ -3,7 +3,7 @@
 # Identify Tool
 
 If this tool is enabled, clicking on the map will try to identify all features under the click, within [radius](#radius-property) pixels (default [radius unit](#radiusunit-property)).
-The results of this search will be display in the panel, if [showPanel](#showPanel-identify-tool) is true.
+The results of this search will be display in the panel, if [showPanel](#showPanel-property) is true.
 It also adds a button to the toolbar, that optionally will show a panel containing a list of features found on the map.
 
 This is default configuration for the Identify tool (click on a property name for more information):

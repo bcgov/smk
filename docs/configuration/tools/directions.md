@@ -4,7 +4,7 @@
 
 Add a button to the toolbar, that shows a panel that allows the user to pick locations on the map, and calculate the fastest (or shortest) route between them.
 
-This tool interacts with the [`"identify"`](#identify-tool) and [`"location"`](#location-tool) tools.
+This tool interacts with the [`"identify"` tool](identify) and [`"location"` tool](location).
 When this tool is enabled, the popups for identify and location will contain a button to start a route from that location.
 
 This is default configuration for the Layers tool (click on a property name for more information):

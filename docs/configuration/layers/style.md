@@ -2,8 +2,8 @@
 
 # Layer Style Objects
 
-This object defines the styling for a [`"vector"` layer](vector-layer).
-The [`"style"` property](vector-layer#style-property) can contain one of these objects or an array of many of these objects.
+This object defines the styling for a [`"vector"` layer](vector).
+The [`"style"` property](vector#style-property) can contain one of these objects or an array of many of these objects.
 When multiple styles are defined, then each feature in the layer is rendered in each style successively. This is a way to build more complex styles.
 
 If a point feature is being rendered, the `"marker..."` properties are used. If the [`"markerUrl"` property](#markerurl-property) isn't defined, then a circle is rendered instead, using the `"stroke..."` and `"fill..."` properties. The circle radius will be half of the [`"strokeWidth"` property](#strokewidth-property).
