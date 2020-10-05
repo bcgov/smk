@@ -2,7 +2,10 @@
 `"type": String`
 
 The type of layer object.
-One of these values:
-- `"esri-dynamic"`
-- `"wms"`
-- `"vector"`
+
+Must be one of these values:
+[`"esri-dynamic"`](esri-dynamic),
+[`"vector"`](vector),
+or
+[`"wms"`](wms).
+

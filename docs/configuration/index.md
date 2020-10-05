@@ -16,7 +16,7 @@ The `"layers"` and `"tools"` collections can contain a variety of possible objec
     <a href="metadata#createdBy-property"   >"createdBy"</a>:    "smk",
     <a href="metadata#createdDate-property" >"createdDate"</a>:  "2020-07-23T19:18:25.876Z",
 
-    <a href="viewer.html"  >"viewer"</a>: {
+    <a href="viewer"  >"viewer"</a>: {
         <a href="viewer#type-property"      >"type"</a>:     "leaflet",
         <a href="viewer#device-property"    >"device"</a>:   "auto",
         <a href="viewer#basemap-property"   >"baseMap"</a>:  "Topographic",
