@@ -6,22 +6,12 @@ title: SMK Usage Guide
 
 SMK is a versatile and lightweight toolkit for building a simple web map.
 
-## Installation
+## [Installation](installation)
 
-[Installation](installation)
+## [Initialization](initialization)
 
-## Initialization
+## [Configuration](configuration)
 
-[Initialization](initialization)
+## [Examples](examples)
 
-## Configuration
-
-[Configuration](configuration)
-
-## Examples
-
-[Examples](examples)
-
-## Development
-
-[Development](development)
+## [Development](development)
