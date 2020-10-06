@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Script init</title>
+
+        <script src="../../../dist/smk.js" smk-container-sel="#smk-map-frame" smk-id="2"></script>
+        <link rel="stylesheet" type="text/css" href="style.css"/>
+    </head>
+    <body>
+<!--***************************************************************************
+    This example show that SMK.INIT() will fail if the map is already init'd
+    by the <script> tag that loaded smk.js.
+-->
+        <div id="smk-map-frame"></div>
+        <script>
+            SMK.INIT( {
+                id:             3,
+                containerSel:   '#smk-map-frame',
+                config:         [ 'this-doesnt-exist.json' ]
+            } )
+            .then( function ( smk ) {
+                // this will not be displayed
+                dialog( [ 'SMK is initialized and ready' ] )
+            } )
+            .catch( function ( err ) {
+                dialog( [ 'SMK failed to initialize', err ] )
+            } )
+        </script>
+<!--***************************************************************************-->
+        <script src="../lib/example-util.js"></script>
+    </body>
+</html>
+

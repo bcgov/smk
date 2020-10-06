@@ -120,7 +120,22 @@
 
         if ( scriptEl &&
             scriptEl.attributes &&
-            scriptEl.attributes[ 'smk-container-sel' ] ) SmkInit( null, scriptEl )
+            scriptEl.attributes[ 'smk-container-sel' ] ) {
+                var sel = scriptEl.attributes[ 'smk-container-sel' ].value
+
+                SmkInit( null, scriptEl )
+
+                SMK.INIT = function () {
+                    SMK.BOOT = ( SMK.BOOT || Promise.resolve() )
+                        .then( function () {
+                            var e = Error( 'Cannot call SMK.INIT if script tag initializes map' )
+                            SMK.ON_FAILURE( e, document.querySelector( sel ) )
+                            throw e
+                        } )
+
+                    return SMK.BOOT
+                }
+        }
     }
     catch ( e ) {
         SMK.FAILURE = e
