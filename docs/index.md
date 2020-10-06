@@ -1,11 +1,19 @@
 ---
-title: SMK Client Documentation
+title: SMK Usage Guide
 ---
 
-# smk-client
+# SMK (Simple Map Kit) Usage Guide
 
-Simple Map Kit Client - A versatile and lightweight toolkit for building a simple web map.
+SMK is a versatile and lightweight toolkit for building a simple web map.
 
-[Client API](SMK-Client-API) and [examples](SMK-Client-API-Examples)
+## [Installation](installation)
 
-[Client Configuration](SMK-Client-Configuration)
+## [Initialization](initialization)
+
+## [Configuration](configuration)
+
+## [Examples](examples)
+
+## [Development](development)
+
+[Code of Conduct](code-of-conduct)
