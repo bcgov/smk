@@ -1,6 +1,8 @@
-# SMK Client API Examples
+###### [SMK](..)
 
-## Assumptions 
+# SMK Examples
+
+## Assumptions
 
 For the following examples, the reader should assume the following:
 
@@ -11,8 +13,8 @@ For the following examples, the reader should assume the following:
     |-- index.html
     |-- map-config.json
     |-- victoria.json
-    |-- kamloops.json 
-    |-- wms-layer.json 
+    |-- kamloops.json
+    |-- wms-layer.json
     |-- wms-layer-attributes.json
     |-- wms-layer-query.json
     |-- smk.js
@@ -20,7 +22,7 @@ For the following examples, the reader should assume the following:
         '-- (SMK images)
 </pre>
 
-- `index.html`  
+- `index.html`
   (take careful note of the comment in the code):
 
 ```html
@@ -28,7 +30,7 @@ For the following examples, the reader should assume the following:
     <head>
         <title></title>
         <!-- ------------------------------------------------
-            The examples specify the SMK <script> element 
+            The examples specify the SMK <script> element
             that is to be inserted here.
         ------------------------------------------------- -->
         <style>
@@ -62,11 +64,11 @@ For the following examples, the reader should assume the following:
         "baseMap": "Streets"
     },
     "tools": [
-        { 
+        {
             "type": "markup",
             "enabled": false
         },
-        { 
+        {
             "type": "baseMaps",
             "enabled": true
         }
@@ -74,7 +76,7 @@ For the following examples, the reader should assume the following:
 }
 ```
 
-- `victoria.json` 
+- `victoria.json`
 ```json
 {
     "viewer": {
@@ -200,7 +202,7 @@ For the following examples, the reader should assume the following:
 }
 ```
 
-- `smk.js`  
+- `smk.js`
 The production version of the SMK library.
 [smk.js](https://smk-demo.pathfinder.gov.bc.ca/smk-client/smk.js)
 
@@ -523,7 +525,7 @@ Enabling tools.
 
 - The map fills browser window.
 - The window/tab has title 'SMK Default Map'.
-- These tools are available: about, baseMaps, coordinate, directions, identify, layers, location, markup, measure, menu, minimap, pan, scale, search, select, and zoom. 
+- These tools are available: about, baseMaps, coordinate, directions, identify, layers, location, markup, measure, menu, minimap, pan, scale, search, select, and zoom.
 - The base map is 'Topographic'.
 
 ### Discussion 6
