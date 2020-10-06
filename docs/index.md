@@ -15,3 +15,5 @@ SMK is a versatile and lightweight toolkit for building a simple web map.
 ## [Examples](examples)
 
 ## [Development](development)
+
+[Code of Conduct](code-of-conduct)
