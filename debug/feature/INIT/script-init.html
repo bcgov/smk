@@ -16,13 +16,12 @@
             SMK.INIT( {
                 id:             3,
                 containerSel:   '#smk-map-frame',
-                config:         [ 'this-doesnt-exist.json' ]
             } )
             .then( function ( smk ) {
-                // this will not be displayed
                 dialog( [ 'SMK is initialized and ready' ] )
             } )
             .catch( function ( err ) {
+                // this should be displayed
                 dialog( [ 'SMK failed to initialize', err ] )
             } )
         </script>
