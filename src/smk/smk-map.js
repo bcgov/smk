@@ -22,6 +22,7 @@ include.module( 'smk-map', [ 'libs', 'util', 'theme-base', 'sidepanel', 'status-
         if ( container.length != 1 )
             throw new Error( 'smk-container-sel "' + this.$option.containerSel + '" doesn\'t match a unique element' )
 
+        container.empty()
         container.addClass( 'smk-map-frame smk-hidden' )
 
         var p = container.position()
