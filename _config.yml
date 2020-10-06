@@ -3,3 +3,5 @@ markdown: kramdown
 title: SMK Usage Guide
 description: A versatile and lightweight toolkit for building a simple web map.
 show_downloads: true
+exclude:
+  - README.md

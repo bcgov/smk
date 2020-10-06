@@ -1,4 +1,4 @@
-###### [SMK](../..) / [Configuration](..)
+###### [SMK](../../..) / [Configuration](..)
 
 # Tools
 

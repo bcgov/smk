@@ -1,4 +1,4 @@
-###### [SMK](.)
+###### [SMK](..)
 
 # Contributor Code of Conduct
 
