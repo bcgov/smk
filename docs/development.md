@@ -1,4 +1,6 @@
-## Setting up SMK Development Environment
+###### [SMK](..)
+
+# Setting up SMK Development Environment
 
 Clone this repo, let's say into `projects/smk`.
 
@@ -12,7 +14,7 @@ After NodeJS is installed, open a terminal window, and execute these commands:
     > npm install
 
     # Build smk into dist/
-    > npm run build 
+    > npm run build
 
     # Start a simple web server to serve dist/
     > npm run serve
