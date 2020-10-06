@@ -1,4 +1,4 @@
-###### [SMK](../../../..) / [Configuration](../../..) / [Layers](../..) / [Query](..) / [Parameter](.)
+###### [SMK](../../../../..) / [Configuration](../../..) / [Layers](../..) / [Query](..) / [Parameter](.)
 
 # Input Layer Query Parameter
 

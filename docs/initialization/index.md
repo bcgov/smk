@@ -1,4 +1,4 @@
-###### [SMK](..)
+###### [SMK](../..)
 
 # Initializing SMK
 

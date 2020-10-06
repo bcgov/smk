@@ -1,4 +1,4 @@
-###### [SMK](..) / [Initialization](.)
+###### [SMK](../..) / [Initialization](.)
 
 # Initializing the Configuration Sources
 

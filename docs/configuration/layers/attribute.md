@@ -1,4 +1,4 @@
-###### [SMK](../..) / [Configuration](..) / [Layers](.)
+###### [SMK](../../..) / [Configuration](..) / [Layers](.)
 
 # Layer Attribute Objects
 

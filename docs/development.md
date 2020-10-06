@@ -1,4 +1,4 @@
-###### [SMK](.)
+###### [SMK](..)
 
 # Setting up SMK Development Environment
 

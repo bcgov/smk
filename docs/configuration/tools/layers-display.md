@@ -1,4 +1,4 @@
-###### [SMK](../..) / [Configuration](..) / [Tools](.) / [Layers Tool](layers)
+###### [SMK](../../..) / [Configuration](..) / [Tools](.) / [Layers Tool](layers)
 
 # Layer Display Objects
 
