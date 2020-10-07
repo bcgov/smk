@@ -64,7 +64,11 @@ include.module( 'tool-layers', [
                     if ( !self.enabled ) return
                     if ( !self.active ) return
 
-                    smk.$viewer.setDisplayContextLegendsVisible( self.legend )
+                    smk.$viewer.setDisplayContextLegendsVisible( true )
+
+                    if ( !self.legend ) Vue.nextTick( function () {
+                        smk.$viewer.setDisplayContextLegendsVisible( false )
+                    } )
                 },
 
                 'change': function ( ev ) {
