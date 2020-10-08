@@ -2,7 +2,6 @@
 
 BUMP=${1:-patch}
 
-# VERSION=$(node --eval "console.log(require('./package.json').version + '.' + (new Date()).toISOString().replace(/[^0-9]/g,'').slice(0,-5) );")
 VERSION=$( node --eval "console.log( require( './package.json' ).version )" )
 NEXT=$( semver $VERSION -i $BUMP )
 
@@ -11,12 +10,18 @@ echo "SMK is now v$VERSION, next will be v$NEXT"
 echo ------------------------------------------------------------------
 read -n1 -r -p "Press Ctrl+C to cancel, or any other key to continue." key
 
-npm version $BUMP
+if npm version $BUMP ; then
+    echo "Set version to v$NEXT"
+else
+    echo "Failed to set version to v$NEXT"
+    exit 1
+fi
+
 VERSION=$( node --eval "console.log( require( './package.json' ).version )" )
 git push origin
 
 echo ------------------------------------------------------------------
-echo "Ready to build SMK v$VERSION, deploy to gh-pages, and publish."
+echo "Ready to build, branch, tag, and publish SMK v$VERSION."
 echo ------------------------------------------------------------------
 
 echo
@@ -29,27 +34,29 @@ echo "Has the version number been bumped? Is this the master branch?"
 read -n1 -r -p "Press Ctrl+C to cancel, or any other key to continue." key
 
 echo
-echo "Is gh-pages already present?"
+echo "Is branch v$VERSION already present?"
 echo
-git branch | grep gh-pages
-git branch -r | grep gh-pages
+git branch | grep v$VERSION
+git branch -r | grep v$VERSION
 
-read -n1 -r -p "Ok to delete gh-pages? Press Ctrl+C to cancel, or any other key to continue." key
+read -n1 -r -p "If branch v$VERSION is present, hit Ctrl+C now. Any other key to continue." key
 
 echo
-echo "Recreating gh-pages branch..."
+echo "Checkout v$VERSION branch..."
 echo
 
-git branch -D gh-pages
-git push origin --delete gh-pages
-
-git checkout -b gh-pages
+git checkout -b v$VERSION
 
 echo
 echo "Building..."
 echo
 
-npm run build
+if npm run build ; then
+    echo "Build was successful"
+else
+    echo "Build failed"
+    exit 1
+fi
 
 echo
 echo "Creating git tag v$VERSION..."
@@ -59,7 +66,7 @@ git add dist --force --all
 git commit -m "v$VERSION"
 git tag v$VERSION --force
 
-git push --set-upstream origin gh-pages
+git push --set-upstream origin v$NEXT
 git push --tags --force
 
 echo
