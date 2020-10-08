@@ -33,19 +33,21 @@ echo
 echo "Has the version number been bumped? Is this the master branch?"
 read -n1 -r -p "Press Ctrl+C to cancel, or any other key to continue." key
 
-echo
-echo "Is branch v$VERSION already present?"
-echo
-git branch | grep v$VERSION
-git branch -r | grep v$VERSION
-
-read -n1 -r -p "If branch v$VERSION is present, hit Ctrl+C now. Any other key to continue." key
+BRANCH=release/v$VERSION
 
 echo
-echo "Checkout v$VERSION branch..."
+echo "Existing branches:"
+git branch | grep $BRANCH
+git branch -r | grep $BRANCH
+
+echo
+read -n1 -r -p "If branch $BRANCH is present, hit Ctrl+C now. Any other key to continue." key
+
+echo
+echo "Checkout branch $BRANCH..."
 echo
 
-git checkout -b v$VERSION
+git checkout -b $BRANCH
 
 echo
 echo "Building..."
@@ -66,16 +68,17 @@ git add dist --force --all
 git commit -m "v$VERSION"
 git tag v$VERSION --force
 
-git push --set-upstream origin v$NEXT
+git push --set-upstream origin $BRANCH
 git push --tags --force
 
 echo
-echo "Publish"
+echo "Publish v$VERSION..."
 echo
 
 npm publish --access public
 
 echo
+echo "Checkout master..."
 
 git checkout master
 
