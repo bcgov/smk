@@ -1,5 +1,5 @@
 {
-  "version": "1.0.0-beta.3",
+  "version": "1.0.0-beta.4",
   "name": "smk",
   "title": "Simple Map Kit",
   "description": "A simple way to add a map your application.",
@@ -16,8 +16,7 @@
     "debug": "grunt develop connect",
     "serve": "grunt connect"
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "connect-livereload": "^0.6.0",
     "jshint-stylish": "^2.2.1",
