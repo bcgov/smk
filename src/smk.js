@@ -120,7 +120,22 @@
 
         if ( scriptEl &&
             scriptEl.attributes &&
-            scriptEl.attributes[ 'smk-container-sel' ] ) SmkInit( null, scriptEl )
+            scriptEl.attributes[ 'smk-container-sel' ] ) {
+                var sel = scriptEl.attributes[ 'smk-container-sel' ].value
+
+                SMK.INIT = function () {
+                    SMK.BOOT = ( SMK.BOOT || Promise.resolve() )
+                        .then( function () {
+                            var e = Error( 'Cannot call SMK.INIT if map initialized from <script> element' )
+                            SMK.ON_FAILURE( e, document.querySelector( sel ) )
+                            throw e
+                        } )
+
+                    return SMK.BOOT
+                }
+
+                SmkInit( null, scriptEl )
+        }
     }
     catch ( e ) {
         SMK.FAILURE = e
@@ -389,22 +404,84 @@
 
         'query': function ( arg ) {
             var args = arg.split( ',' )
-            if ( args.length < 3 ) throw new Error( '-query needs at least 3 arguments' )
+            if ( args.length < 3 && args.length != 1 ) throw new Error( '-query needs at least 3 arguments, or exactly 1' )
 
-            var queryId = 'query-' + arg.replace( /[^a-z0-9]+/ig, '-' ).replace( /(^[-]+)|([-]+$)/g, '' ).toLowerCase()
+            var queryId = 'makeshift'
 
             var layerId = args[ 0 ]
+            if ( args.length == 1 )
+                return {
+                    viewer: {
+                        activeTool: 'QueryParametersTool--' + layerId + '--' + queryId,
+                    },
+                    tools: [
+                        {
+                            type: 'query',
+                            instance: layerId + '--' + queryId,
+                            xonActivate: 'execute',
+                            enabled: true,
+                            position: 'toolbar',
+                            command: { attributeMode: true }
+                        },
+                        {
+                            type: 'toolbar',
+                            enabled: true,
+                        }
+                    ],
+                    layers: [ {
+                        id: layerId,
+                        queries: [ {
+                            id: queryId,
+                            title: 'Querying ' + layerId,
+                            description: 'Created using: ' + arg,
+                            parameters: [ { id: 'p1', type: 'constant', value: 1 } ],
+                            predicate: {
+                                operator: 'equals',
+                                arguments: [ { operand: 'parameter', id: 'p1' }, { operand: 'parameter', id: 'p1' } ]
+                            }
+                        } ]
+                    } ]
+                }
+
             var conj = args[ 1 ].trim().toLowerCase()
             if ( conj != 'and' && conj != 'or' ) throw new Error( '-query conjunction must be one of: AND, OR' )
 
             var parameters = []
-            function constant( value ) {
-                var id = 'constant' + ( parameters.length + 1 )
-                parameters.push( {
-                    id: id,
-                    type: 'constant',
-                    value: JSON.parse( value )
-                } )
+            var opName = {
+                '~':  ' contains',
+                '^~': ' starts with',
+                '$~': ' ends with',
+                '=':  ' is equal to',
+                '>':  ' is greater than',
+                '<':  ' is less than',
+                '>=': ' is greater than or equal to',
+                '<=': ' is less than or equal to',
+            }
+            function parameter( value, op, field ) {
+                var id = 'p' + ( parameters.length + 1 )
+                if ( value == '?' ) {
+                    parameters.push( {
+                        id: id,
+                        type: 'input',
+                        title: field + opName[ op ]
+                    } )
+                }
+                else if ( value == '@' ) {
+                    parameters.push( {
+                        id: id,
+                        type: 'select-unique',
+                        title: field + opName[ op ],
+                        uniqueAttribute: field
+                    } )
+                }
+                else {
+                    parameters.push( {
+                        id: id,
+                        type: 'constant',
+                        value: JSON.parse( value )
+                    } )
+                }
+
                 return id
             }
 
@@ -414,7 +491,7 @@
 
                 var args = [
                     { operand: 'attribute', name: m[ 1 ] },
-                    { operand: 'parameter', id: constant( m[ 3 ] ) }
+                    { operand: 'parameter', id: parameter( m[ 3 ], m[ 2 ], m[ 1 ] ) }
                 ]
 
                 switch ( m[ 2 ].toLowerCase() ) {
@@ -431,17 +508,28 @@
 
             return {
                 viewer: {
-                    activeTool: 'query--' + layerId + '--' + queryId,
+                    activeTool: 'QueryParametersTool--' + layerId + '--' + queryId
                 },
-                tools: [ {
-                    type: 'query',
-                    instance: layerId + '--' + queryId,
-                    onActivate: 'execute'
-                } ],
+                tools: [
+                    {
+                        type: 'query',
+                        instance: layerId + '--' + queryId,
+                        xonActivate: 'execute',
+                        enabled: true,
+                        position: 'toolbar',
+                        command: { attributeMode: true }
+                    },
+                    {
+                        type: 'toolbar',
+                        enabled: true,
+                    }
+                ],
                 layers: [ {
                     id: layerId,
                     queries: [ {
                         id: queryId,
+                        title: 'Querying ' + layerId,
+                        description: 'Created using: ' + arg,
                         parameters: parameters,
                         predicate: {
                             operator: conj,

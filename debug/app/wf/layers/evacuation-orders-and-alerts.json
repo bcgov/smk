@@ -50,8 +50,8 @@
       "metadataUrl": "https://catalogue.data.gov.bc.ca/dataset/diagnostic-facilities",
       "where": "ORDER_ALERT_STATUS <> 'All Clear' and EVENT_TYPE = 'Fire'",
       "opacity": 0.25,
-      "scaleMin": 500000,
-      "scaleMax": 0,
+      "#scaleMin": 500000,
+      "#scaleMax": 0,
       "popupTemplate": "@wf-feature",
       "titleAttribute": "EVENT_NAME",
       "attributes": [

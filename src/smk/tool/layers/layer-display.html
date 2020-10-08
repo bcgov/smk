@@ -32,7 +32,7 @@
         >{{ display.title }}</span>
 
         <div class="smk-legend"
-            v-if="display.showLegend && display.legends && display.isActuallyVisible"
+            v-if="display.legends && ( display.showLegend && display.isActuallyVisible || display.alwaysShowLegend )"
         >
             <div class="smk-legend-item"
                 v-for="legend in display.legends"
@@ -43,7 +43,7 @@
         </div>
 
         <i class="material-icons smk-metadata"
-            v-if="display.metadataUrl && ( !inGroup || ( display.showLegend && display.legends && display.isActuallyVisible ) )"
+            v-if="display.metadataUrl && ( !inGroup || ( display.legends && ( display.showLegend && display.isActuallyVisible || display.alwaysShowLegend ) ) )"
             v-bind:title="'Link to metadata for \'' + display.title + '\' layer'"
         >open_in_new</i>
     </div>

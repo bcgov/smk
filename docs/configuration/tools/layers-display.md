@@ -30,9 +30,10 @@ This object represents a layer from the [`"layers"`](../layers) section of the c
 <pre>
 {
     "type":      "layer",
-    <a href="#display-layer-id-property"        >"id"</a>:        "layer1",
-    <a href="#display-layer-title-property"     >"title"</a>:     "Layer 1",
-    <a href="#display-layer-isvisible-property" >"isVisible"</a>: true,
+    <a href="#display-layer-id-property"                >"id"</a>:              "layer1",
+    <a href="#display-layer-title-property"             >"title"</a>:           "Layer 1",
+    <a href="#display-layer-isvisible-property"         >"isVisible"</a>:       true,
+    <a href="#display-layer-alwaysshowlegend-property"  >"alwaysShowLegend"</a>:false,
 }
 </pre>
 
@@ -55,6 +56,13 @@ If this property is missing, the title is taken from the layer object refered to
 
 Determines initial visibility of the layer.
 If this property is missing, then the initial visibility is taken from the `"isVisible"` is taken from the layer object refered to by `"id"`.
+
+
+### Display Layer AlwaysShowLegend Property
+`"alwaysShowLegend"`: `Boolean`
+
+If `true`, then the legend for the layer is always shown in the layers panel, regardless of the legend toggle.
+The default value is `false`.
 
 
 ## Display Folder Object
