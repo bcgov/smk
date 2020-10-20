@@ -49,7 +49,7 @@ echo
 echo "Building..."
 echo
 
-npm run build
+npm run release
 
 echo
 echo "Creating git tag v$VERSION..."
