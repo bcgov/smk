@@ -1,5 +1,6 @@
 include.module( 'query.query-vector-js', [ 'query.query-js' ], function () {
     "use strict";
+    /* jshint -W014 */ // Misleading line break before '?'
 
     function VectorQuery() {
         SMK.TYPE.Query.prototype.constructor.apply( this, arguments )
@@ -35,12 +36,15 @@ include.module( 'query.query-vector-js', [ 'query.query-js' ], function () {
         var layerConfig = viewer.layerId[ this.layerId ].config
 
         var test = makeTest( this.predicate, param )
-
         if ( !test ) throw new Error( 'test is empty' )
+
+        var testGeometry = config.within
+            ? function ( geometry ) { return overlapsExtent( viewer.getView().extent, geometry ) }
+            : function () { return true }
 
         var features = []
         viewer.visibleLayer[ this.layerId ].eachLayer( function ( ly ) {
-            if ( test( ly.feature.properties ) )
+            if ( test( ly.feature.properties ) && testGeometry( ly.feature.geometry ) )
                 features.push( ly.feature )
         } )
 
@@ -105,7 +109,7 @@ include.module( 'query.query-vector-js', [ 'query.query-js' ], function () {
                     return !!t
                 } )
 
-            if ( tests.length == 0 ) return 
+            if ( tests.length == 0 ) return
 
             return function ( properties ) {
                 return tests.some( function ( t ) {
@@ -120,7 +124,7 @@ include.module( 'query.query-vector-js', [ 'query.query-js' ], function () {
             var a = makeTestOperand( args[ 0 ], param )
             var b = makeTestOperand( args[ 1 ], param )
 
-            if ( !a || !b ) return 
+            if ( !a || !b ) return
 
             return function ( properties ) {
                 return a( properties ) == b( properties )
@@ -133,7 +137,7 @@ include.module( 'query.query-vector-js', [ 'query.query-js' ], function () {
             var a = makeTestOperand( args[ 0 ], param )
             var b = makeTestOperand( args[ 1 ], param )
 
-            if ( !a || !b ) return 
+            if ( !a || !b ) return
 
             return function ( properties ) {
                 return a( properties ) < b( properties )
@@ -146,7 +150,7 @@ include.module( 'query.query-vector-js', [ 'query.query-js' ], function () {
             var a = makeTestOperand( args[ 0 ], param )
             var b = makeTestOperand( args[ 1 ], param )
 
-            if ( !a || !b ) return 
+            if ( !a || !b ) return
 
             return function ( properties ) {
                 return a( properties ) > b( properties )
@@ -159,7 +163,7 @@ include.module( 'query.query-vector-js', [ 'query.query-js' ], function () {
             var a = makeTestOperand( args[ 0 ], param )
             var b = makeTestOperand( args[ 1 ], param )
 
-            if ( !a || !b ) return 
+            if ( !a || !b ) return
 
             return function ( properties ) {
                 return ( new RegExp( b( properties ), 'i' ) ).test( a( properties ) )
@@ -172,7 +176,7 @@ include.module( 'query.query-vector-js', [ 'query.query-js' ], function () {
             var a = makeTestOperand( args[ 0 ], param )
             var b = makeTestOperand( args[ 1 ], param )
 
-            if ( !a || !b ) return 
+            if ( !a || !b ) return
 
             return function ( properties ) {
                 return ( new RegExp( '^' + b( properties ), 'i' ) ).test( a( properties ) )
@@ -185,7 +189,7 @@ include.module( 'query.query-vector-js', [ 'query.query-js' ], function () {
             var a = makeTestOperand( args[ 0 ], param )
             var b = makeTestOperand( args[ 1 ], param )
 
-            if ( !a || !b ) return 
+            if ( !a || !b ) return
 
             return function ( properties ) {
                 return ( new RegExp( b( properties ) + '$', 'i' ) ).test( a( properties ) )
@@ -196,8 +200,8 @@ include.module( 'query.query-vector-js', [ 'query.query-js' ], function () {
             if ( args.length != 1 ) throw new Error( 'NOT needs exactly 1 argument' )
 
             var a = makeTestOperator( args[ 0 ], param )
-            
-            if ( !a ) return 
+
+            if ( !a ) return
 
             return function ( properties ) {
                 return ! a( properties )
@@ -223,7 +227,7 @@ include.module( 'query.query-vector-js', [ 'query.query-js' ], function () {
         'parameter': function ( arg, param, quote ) {
             if ( !( arg.id in param ) ) throw new Error( '"' + arg.id + '" is not a valid parameter' )
 
-            var v = param[ arg.id ].value 
+            var v = param[ arg.id ].value
 
             if ( v == null || v === '' ) return
 
@@ -233,4 +237,31 @@ include.module( 'query.query-vector-js', [ 'query.query-js' ], function () {
         }
     }
 
+    function overlapsExtent( extent, geom ) {
+        var extentGeom = turf.bboxPolygon( extent )
+
+        switch ( geom.type ) {
+            case 'Polygon':
+            case 'MultiPolygon':
+                return turf.booleanOverlap( geom, extentGeom )
+                    || turf.booleanCrosses( extentGeom, geom )
+                    || turf.booleanContains( extentGeom, geom )
+                    || turf.booleanContains( geom, extentGeom )
+
+            case 'LineString':
+            case 'MultiLineString':
+                return turf.booleanCrosses( extentGeom, geom )
+                    || turf.booleanContains( extentGeom, geom )
+
+            case 'Point':
+            case 'MultiPoint':
+                return turf.coordReduce( geom, function ( accum, coord ) {
+                    return accum || turf.booleanPointInPolygon( coord, extentGeom )
+                }, false )
+
+            default:
+                console.warn( 'skip', geom.type )
+                return false
+        }
+    }
 } )

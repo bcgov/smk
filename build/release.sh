@@ -53,7 +53,7 @@ echo
 echo "Building..."
 echo
 
-if npm run build ; then
+if npm run release ; then
     echo "Build was successful"
 else
     echo "Build failed"

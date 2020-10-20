@@ -40,7 +40,6 @@ module.exports = function( grunt ) {
         jshint: {
             options: {
                 reporter: jshintStylish,
-                // reporter: 'checkstyle',
 
                 // unused: true,
                 // latedef: true,
@@ -81,54 +80,31 @@ module.exports = function( grunt ) {
             options: {
                 debounceDelay:  2000,
                 spawn:          false,
-                livereload: {
-                    host:   '<%= serverHost %>',
-                    key:    grunt.file.read( 'node_modules/grunt-contrib-connect/tasks/certs/server.key' ),
-                    cert:   grunt.file.read( 'node_modules/grunt-contrib-connect/tasks/certs/server.crt' )
-                },
-                // livereloadOnError: false,
-                // interrupt: true,
             },
 
             src: {
-                files: [ 
-                    '<%= srcPath %>/*.js', 
-                    '<%= srcPath %>/smk/**', 
-                    '<%= srcPath %>/theme/**', 
+                files: [
+                    '<%= srcPath %>/*.js',
+                    '<%= srcPath %>/smk/**',
+                    '<%= srcPath %>/theme/**',
                 ],
                 tasks: [ 'build' ]
             },
 
             debug: {
-                files: [ 
-                    'debug/*/**', 
+                files: [
+                    'debug/*/**',
                 ]
             }
         },
-
-        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-        connect: {
-            https: {
-                options: {
-                    protocol:   'https',
-                    hostname:   '*',
-                    port:       8443,
-                    base:       '.',
-                    livereload: true,
-                    keepalive:  true,
-                    // debug: true
-                }
-            }    
-        }
 
     } )
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    require( 'load-grunt-tasks' )( grunt, { 
-        config: 'package.json', 
-        requireResolution: true 
+    require( 'load-grunt-tasks' )( grunt, {
+        config: 'package.json',
+        requireResolution: true
     } )
 
     grunt.loadTasks( 'build/tasks' )
@@ -142,8 +118,6 @@ module.exports = function( grunt ) {
         'build-tags',
         'build-src',
         'build-smk',
-        // 'build-pom',
-        // 'clean:temp',
     ] )
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
