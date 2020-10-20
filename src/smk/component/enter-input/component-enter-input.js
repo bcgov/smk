@@ -1,6 +1,6 @@
-include.module( 'component-enter-input', [ 
+include.module( 'component-enter-input', [
     'component',
-    'component-enter-input.component-enter-input-html' 
+    'component-enter-input.component-enter-input-html'
 ], function ( inc ) {
     "use strict";
 
@@ -11,7 +11,7 @@ include.module( 'component-enter-input', [
                 position: null
             }
         },
-        props: { 
+        props: {
             value:      { type: String, default: '' },
             type:       { type: String, default: 'text' },
             placeholder:{ type: String },
@@ -37,7 +37,7 @@ include.module( 'component-enter-input', [
                 position: null
             }
         },
-        props: { 
+        props: {
             value:      { type: [ Number, String ], default: 0 },
             placeholder:{ type: String },
             clear:      { type: Boolean, default: false },
@@ -46,17 +46,17 @@ include.module( 'component-enter-input', [
         },
         methods: {
             onChange: function ( val, pos ) {
-                this.position = pos; 
-                this.$emit( 'change', parseFloat( val ) )
+                this.position = pos;
+                this.$emit( 'change', parseFloat( val || '0' ) )
             }
         },
         directives: {
             position: function ( el, binding, vnode ) {
                 var pos = el.dataset.position
-                if ( pos == null ) return 
+                if ( pos == null ) return
 
                 el.selectionStart = pos
-                el.selectionEnd = pos 
+                el.selectionEnd = pos
             }
         }
     } )
