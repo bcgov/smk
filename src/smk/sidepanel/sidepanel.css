@@ -93,7 +93,7 @@
     flex-shrink: 0;
 
     display: flex;
-    justify-content: space-between;    
+    justify-content: space-between;
     align-items: center;
     margin-top: 1px;
     margin-left: 1px;
@@ -142,9 +142,14 @@
 }
 
 .smk-sidepanel .smk-panel .smk-can-scroll-up {
+    display: none;
     position: absolute;
     top: 0;
     right: 0;
+}
+
+.smk-device-mobile .smk-sidepanel .smk-panel .smk-can-scroll-up {
+    display: block;
 }
 
 .smk-sidepanel .smk-panel .smk-below-body {
@@ -152,8 +157,12 @@
 }
 
 .smk-sidepanel .smk-panel .smk-can-scroll-down {
+    display: none;
     position: absolute;
     right: 0;
     bottom: 0;
 }
 
+.smk-device-mobile .smk-sidepanel .smk-panel .smk-can-scroll-down {
+    display: block;
+}

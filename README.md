@@ -29,19 +29,19 @@ Here is an example of a complete HTML page that uses SMK to show a map:
 </html>
 ```
 
-## [Documentation](https://qqnluaq.github.io/smk/)
+## [Documentation](https://bcgov.github.io/smk/)
 
-### [Installation](https://qqnluaq.github.io/smk/docs/installation)
-### [Initialization](https://qqnluaq.github.io/smk/docs/initialization)
-### [Configuration](https://qqnluaq.github.io/smk/docs/configuration)
-### [Examples](https://qqnluaq.github.io/smk/docs/examples)
-### [Development](https://qqnluaq.github.io/smk/docs/development)
+### [Installation](https://bcgov.github.io/smk/docs/installation)
+### [Initialization](https://bcgov.github.io/smk/docs/initialization)
+### [Configuration](https://bcgov.github.io/smk/docs/configuration)
+### [Examples](https://bcgov.github.io/smk/docs/examples)
+### [Development](https://bcgov.github.io/smk/docs/development)
 
 Creating the configuration by hand is possible, but an easier way to create a simple SMK application is to use the command-line development tool [SMK CLI](https://github.com/bcgov/smk-cli).
 This tool lets you initialize a new SMK map application project by answering a few questions.
 It also gives you an interactive web-based UI to do more detailed configuration of your map.
 
-To see some samples of SMK in action, you can look at the [debug folder](https://qqnluaq.github.io/smk/debug).
+To see some samples of SMK in action, you can look at the [debug folder](https://bcgov.github.io/smk/debug).
 
 # License
 ```

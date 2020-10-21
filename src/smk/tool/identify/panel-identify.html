@@ -15,7 +15,7 @@
         <enter-number class="smk-radius"
             v-bind:disabled="busy"
             v-if="command.radius"
-            v-bind:value="formatNumber( radius, 0 )"
+            v-bind:value="formatNumber( radius, 3 )"
             v-on:change="!busy && $$emit( 'change', { radius: $event } )"
         >Maximum distance
             <template slot="after-input">

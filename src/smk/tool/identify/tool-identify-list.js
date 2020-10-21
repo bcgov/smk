@@ -104,6 +104,23 @@ include.module( 'tool-identify.tool-identify-list-js', [
 
             this.identifyStarts = 0
             this.startIdentify = function ( location ) {
+                if ( this.getRadiusMeters() < 0.1 ) {
+                    self.showStatusMessage( 'Identify radius must be > 0', 'warning' )
+
+                    this.busy = false
+                    this.searchArea = null
+                    this.searchLocation = null
+                    this.trackMouse = false
+                    this.clearMarker()
+
+                    this.setInternalLayerVisible( false )
+                    smk.$viewer.identifyFeatures()
+
+                    smk.$viewer.identified.clear()
+                    smk.$viewer.identified.pick()
+                    return Promise.resolve()
+                }
+
                 self.busy = true
                 this.searchLocation = location
                 // console.warn('startIdentify')

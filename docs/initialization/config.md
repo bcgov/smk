@@ -168,11 +168,16 @@ The *`NAME`* is one of:
 
 #### `query` Alias
 
+- `query=`*`LAYER-ID`*
+
+    Configures a [query object](../configuration/layers/query) that finds all features on the layer, and a matching [`"query"` tool](../configuration/tools/query), and sets the tool automatically active at startup.
+
 - `query=`*`LAYER-ID`*`,and,`*`CLAUSE`*[`,`*`CLAUSE`*]*
 - `query=`*`LAYER-ID`*`,or,`*`CLAUSE`*[`,`*`CLAUSE`*]*
 
     *`LAYER-ID`* must refer to a layer defined in the [`"layers"` configuration](../configuration/layers).
-    *`CLAUSE`* is one or more expressions of one of these forms (*`ATTRIBUTE`* is an attribute name valid for the layer, and *`VALUE`* is a JSON-encoded literal):
+
+    *`CLAUSE`* is one or more expressions of one of these forms:
     - *`ATTRIBUTE`* `=`  *`VALUE`* (equals)
     - *`ATTRIBUTE`* `~`  *`VALUE`* (contains)
     - *`ATTRIBUTE`* `^~` *`VALUE`* (starts with)
@@ -182,9 +187,16 @@ The *`NAME`* is one of:
     - *`ATTRIBUTE`* `>=` *`VALUE`* (greater than or equal)
     - *`ATTRIBUTE`* `<=` *`VALUE`* (less than or equal)
 
+    *`ATTRIBUTE`* is an attribute name valid for the layer.
+
+    *`VALUE`* is either:
+    - a JSON-encoded literal (like `123`, `123.456`, `"abc"`, `true`, `false`, or `null`)
+    - `?` (get this value from user)
+    - `@` (let user select from unique values for this attribute)
+
     Mulitple clauses are joined with either `and` or `or`.
 
-    Configures a [query object](../configuration/layers/query) for the layer, and a matching [`"query"` tool](../configuration/tools/query) with the auto-execute flag, and sets the tool automatically active at startup.
+    Configures a [query object](../configuration/layers/query) for the layer, and a matching [`"query"` tool](../configuration/tools/query), and sets the tool automatically active at startup.
 
 
 #### `layer` Alias
