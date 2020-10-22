@@ -7,7 +7,9 @@ Add a button to the toolbar, that shows a panel that allows the user to pick loc
 This tool interacts with the [`"identify"` tool](identify) and [`"location"` tool](location).
 When this tool is enabled, the popups for identify and location will contain a button to start a route from that location.
 
-This is default configuration for the Layers tool (click on a property name for more information):
+The application developer will need to acquire and provide a value for the `"apiKey"` in the [`"routePlannerService"` property](#routeplannerservice-property) in order to use this tool.
+
+This is default configuration for the Directions tool (click on a property name for more information):
 <pre>
 { "tools": [ {
     <a href="#type-property"     >"type"</a>:      "directions",
