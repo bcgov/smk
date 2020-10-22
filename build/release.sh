@@ -61,7 +61,7 @@ else
 fi
 
 echo
-echo "Creating git tag v$VERSION..."
+echo "Pushing to branch $BRANCH..."
 echo
 
 git add dist --force --all
@@ -72,6 +72,16 @@ git push --set-upstream origin $BRANCH
 git push --tags --force
 
 echo
+echo "Updating branch release/current..."
+echo
+
+git branch --delete --force release/current
+git push origin --delete release/current
+
+git checkout -b release/current
+git push --set-upstream origin release/current
+
+echo
 echo "Publish v$VERSION..."
 echo
 
@@ -79,6 +89,7 @@ npm publish --access public
 
 echo
 echo "Checkout master..."
+echo
 
 git checkout master
 
