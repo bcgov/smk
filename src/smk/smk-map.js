@@ -19,8 +19,11 @@ include.module( 'smk-map', [ 'jquery', 'util', 'theme-base', 'sidepanel' ], func
         console.log( 'options:', JSON.parse( JSON.stringify( this.$option ) ) )
 
         var container = $( this.$option[ 'container-sel' ] )
+
         if ( container.length != 1 )
             throw new Error( 'smk-container-sel "' + this.$option[ 'container-sel' ] + '" doesn\'t match a unique element' )
+
+        container.empty()
 
         this.$container = container.get( 0 )
 
