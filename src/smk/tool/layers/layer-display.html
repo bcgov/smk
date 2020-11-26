@@ -1,7 +1,7 @@
 <div class="smk-folder">
     <template
         v-for="item in items"
-        v-if="item.inFilter"
+        v-if="item.inFilter && item.showInList"
     >
         <div class="smk-item"
             v-bind:class="{ 
