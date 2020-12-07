@@ -1,0 +1,39 @@
+{
+    "tools": [
+        {
+            "type": "*",
+            "enabled": false
+        },
+        {
+            "type": "toolbar",
+            "enabled": true
+        },
+        {
+            "type": "bespoke",
+            "instance": "content",
+            "title": "Content",
+            "enabled": true,
+            "position": "toolbar",
+            "icon": "extension"
+        },
+        {
+            "type": "bespoke",
+            "instance": "component",
+            "title": "Component",
+            "enabled": true,
+            "position": "toolbar",
+            "icon": "commute",
+            "component": {
+                "template": "<div>Hi!</div>"
+            }
+        },
+        {
+            "type": "baseMaps",
+            "enabled": true,
+            "mapStyle": {
+                "width": "70px",
+                "height": "70px"
+            }
+        }
+     ]
+}

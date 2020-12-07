@@ -1,0 +1,45 @@
+{
+    "layers": [
+        {
+            "type": "vector",
+            "id": "port-of-vancouver-facilities-terminals",
+            "title": "Port of Vancouver Facilities / Terminals",
+            "dataUrl": "./layers/port-of-vancouver-facilities-terminals/port-of-vancouver-facilities-terminals.geojson",
+            "metadataUrl": "https://catalogue.data.gov.bc.ca/dataset/67e381f5-0ee3-437b-ba55-15789842f4db",
+            "scaleMin": 207900,
+            "attributes": [
+                {
+                    "name": "Name",
+                    "title": "Facility"
+                },
+                {
+                    "name": "Category",
+                    "title": "Category"
+                },
+                {
+                    "title": "Data",
+                    "format": "asLink( 'https://www.portvancouver.com/port-dashboard', 'Link' )"
+                },
+                {
+                    "name": "Description",
+                    "title": "Notes"
+                }
+            ],
+            "titleAttribute": "Name",
+            "style": {
+                "markerUrl": "./layers/port-of-vancouver-facilities-terminals/images/port.svg",
+                "markerSize": [
+                    22,
+                    22
+                ],
+                "markerOffset": [
+                    11,
+                    11
+                ]
+            },
+            "legend": {
+                "point": true
+            }
+        }
+    ]
+}

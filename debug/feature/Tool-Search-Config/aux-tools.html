@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Aux. Tools</title>
+
+        <script src="../../../dist/smk.js"></script>
+        <link rel="stylesheet" type="text/css" href="style.css"/>
+    </head>
+    <body>
+        <script src="default-config.js"></script>
+<!--***************************************************************************
+    This example shows the default configuration for search tool and its links
+    to other tools.
+    NOTE: not functional at moement
+-->
+    <div id="smk-map-frame"></div>
+    <script>
+        SMK.INIT( {
+            containerSel: "#smk-map-frame",
+            config: defaultConfig.concat( {
+                tools: [
+                    {
+                        type: "search",
+                        enabled: true,
+                        command: {
+                            identify: false,
+                            measure: false,
+                            directions: false,
+                        }
+                    },
+                    {
+                        type: "identify",
+                        enabled: true
+                    },
+                    {
+                        type: "measure",
+                        enabled: true
+                    },
+                    {
+                        type: "directions",
+                        enabled: true
+                    }
+                ]
+            }, '?' )
+        } )
+    </script>
+<!--***************************************************************************-->
+    </body>
+</html>
+

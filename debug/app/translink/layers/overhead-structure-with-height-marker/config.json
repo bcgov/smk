@@ -1,0 +1,89 @@
+{
+    "layers": [
+        {
+            "type": "vector",
+            "id": "overhead-structure-with-height-marker",
+            "title": "Overhead structure with posted height",
+            "dataUrl": "./layers/overhead-structure-with-height-marker/overhead-structure-with-height-marker.geojson",
+            "metadataUrl": "https://catalogue.data.gov.bc.ca/dataset/f3c942c0-7188-4661-82c8-1c46a82f7520",
+            "scaleMin": 198647,
+            "attributes": [
+                {
+                    "name": "Route",
+                    "title": "Route"
+                },
+                {
+                    "name": "Structure_Name",
+                    "title": "Structure Name"
+                },
+                {
+                    "name": "Structure_Type",
+                    "title": "Structure Type"
+                },
+                {
+                    "title": "Street View",
+                    "format": "asLink( this.feature.properties.Streetview_Link, 'Link' )"
+                },
+                {
+                    "name": "Height_Lane1centre_O",
+                    "title": "<%= this.feature.properties.Height_Lane1centre_O ? 'Lane 1 Height, ' + ( this.feature.properties.O_Cardinality || 'SB/WB' ): '' %>",
+                    "format": "asUnit('m')"
+                },
+                {
+                    "name": "Height_Lane1centre_P",
+                    "title": "<%= this.feature.properties.Height_Lane1centre_P ? 'Lane 1 Height, ' + ( this.feature.properties.P_Cardinality || 'NB/EB' ): '' %>",
+                    "format": "asUnit('m')"
+                },
+                {
+                    "name": "Height_Lane2_O",
+                    "title": "<%= this.feature.properties.Height_Lane2_O ? 'Lane 2 Height, ' + ( this.feature.properties.O_Cardinality || 'SB/WB' ): '' %>",
+                    "format": "asUnit('m')"
+                },
+                {
+                    "name": "Height_Lane2_P",
+                    "title": "<%= this.feature.properties.Height_Lane2_P ? 'Lane 2 Height, ' + ( this.feature.properties.P_Cardinality || 'NB/EB' ): '' %>",
+                    "format": "asUnit('m')"
+                },
+                {
+                    "name": "Height_Lane3_O",
+                    "title": "<%= this.feature.properties.Height_Lane3_O ? 'Lane 3 Height, ' + ( this.feature.properties.O_Cardinality || 'SB/WB' ): '' %>",
+                    "format": "asUnit('m')"
+                },
+                {
+                    "name": "Height_Lane3_P",
+                    "title": "<%= this.feature.properties.Height_Lane3_P ? 'Lane 3 Height, ' + ( this.feature.properties.P_Cardinality || 'NB/EB' ): '' %>",
+                    "format": "asUnit('m')"
+                },
+                {
+                    "name": "Height_Lane4_O",
+                    "title": "<%= this.feature.properties.Height_Lane4_O ? 'Lane 4 Height, ' + ( this.feature.properties.O_Cardinality || 'SB/WB' ): '' %>",
+                    "format": "asUnit('m')"
+                },
+                {
+                    "name": "Height_Lane4_P",
+                    "title": "<%= this.feature.properties.Height_Lane4_P ? 'Lane 4 Height, ' + ( this.feature.properties.P_Cardinality || 'NB/EB' ): '' %>",
+                    "format": "asUnit('m')"
+                },
+                {
+                    "name": "Comments",
+                    "title": "Notes"
+                }
+            ],
+            "titleAttribute": "Route",
+            "style": {
+                "markerUrl": "./layers/overhead-structure-with-height-marker/images/overhead_2.svg",
+                "markerSize": [
+                    22,
+                    22
+                ],
+                "markerOffset": [
+                    11,
+                    11
+                ]
+            },
+            "legend": {
+                "point": true
+            }
+        }
+    ]
+}

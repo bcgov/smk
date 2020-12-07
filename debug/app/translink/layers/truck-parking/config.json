@@ -1,0 +1,49 @@
+{
+    "layers": [
+        {
+            "type": "vector",
+            "id": "truck-parking",
+            "title": "Truck Parking",
+            "dataUrl": "./layers/truck-parking/truck-parking.geojson",
+            "metadataUrl": "https://catalogue.data.gov.bc.ca/dataset/32e62210-713d-4dcd-8b33-9591d6044cd3",
+            "scaleMin": 189394,
+            "attributes": [
+                {
+                    "name": "Name",
+                    "title": "Name"
+                },
+                {
+                    "value": "<%= this.feature.properties.Street_Number || '' %> <%= this.feature.properties.Street_Name %> <%= this.feature.properties.City %>",
+                    "title": "Address"
+                },
+                {
+                    "name": "Phone_Number",
+                    "title": "Phone"
+                },
+                {
+                    "title": "Street View",
+                    "format": "asLink( this.feature.properties.Streetview_Link, 'Link' )"
+                },
+                {
+                    "name": "Notes",
+                    "title": "Notes"
+                }
+            ],
+            "titleAttribute": "Name",
+            "style": {
+                "markerUrl": "./layers/truck-parking/images/parking.png",
+                "markerSize": [
+                    22,
+                    22
+                ],
+                "markerOffset": [
+                    11,
+                    11
+                ]
+            },
+            "legend": {
+                "point": true
+            }
+        }
+    ]
+}

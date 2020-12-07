@@ -1,0 +1,129 @@
+{
+    "tools": [
+        {
+            "type": "layers",
+            "display": [
+                {
+                    "type": "group",
+                    "title": "COVID 19 Relief",
+                    "isVisible": true,
+                    "items": [
+                        { "id": "covid19-relief-cardlock" },
+                        { "id": "covid19-relief-food-truck" },
+                        { "id": "covid19-relief-hotel" },
+                        { "id": "covid19-relief-inspection-station" },
+                        { "id": "covid19-relief-portable-toilet" },
+                        { "id": "covid19-relief-rest-area" },
+                        { "id": "covid19-relief-temporary-truck-parking" },
+                        { "id": "covid19-relief-tourist-centre" }
+                    ]
+                },
+                { 
+                    "type": "group",
+                    "title": "Truck Routes",
+                    "isVisible": true,
+                    "items": [
+                        { "id": "truck-routes-provincial-highway-high-zoom" },
+                        { "id": "truck-routes-provincial-highway" },
+
+                        { "id": "truck-routes-designated-municipal-truck-route" },
+                        { "id": "truck-routes-designated-municipal-truck-route-high-zoom" },
+
+                        { "id": "truck-routes-designated-municipal-truck-route-with-restrictions" },
+                        { "id": "truck-routes-designated-municipal-truck-route-with-restrictions-high-zoom" },
+
+                        { "id": "truck-routes-municipal-road-with-no-truck-travel-restriction" },
+                        { "id": "truck-routes-municipal-road-with-no-truck-travel-restriction-high-zoom" },
+
+                        { "id": "truck-routes-federal-road-with-no-truck-travel-restrictions" },
+                        { "id": "truck-routes-federal-road-with-no-truck-travel-restrictions-high-zoom" }
+                    ]
+                },
+                {
+                    "type": "group",
+                    "title": "Truck Advisories & Restrictions",
+                    "isVisible": true,
+                    "items": [
+                        { "id": "truck-advisories-restrictions-high-zoom" },
+                        { "id": "truck-advisories-restrictions" },
+                        { "id": "truck-advisories-warning-high-zoom" },
+                        { "id": "truck-advisories-warning" }
+                    ]
+                },
+                {
+                    "id": "dangerous-goods-restrictions",
+                    "class": "smk-inline-legend",
+                    "isVisible": false
+                },
+                {
+                    "type": "group",
+                    "title": "Temporary Road Closures",
+                    "isVisible": true,
+                    "items": [
+                        { "id": "temporary-road-closure-extent" },
+                        { "id": "temporary-road-closure" }
+                    ]
+                },
+                {
+                    "type": "folder",
+                    "title": "Pre-screened Oversize-Overweight (OS-OW) Truck Routes",
+                    "isVisible": false,
+                    "items": [
+                        { "id": "oversize-overweight-truck-routes-oah-up-to-4-88-m", "class": "smk-inline-legend" },
+                        { "id": "oversize-overweight-truck-routes-oaw-up-to-5-m", "class": "smk-inline-legend" },
+                        { "id": "oversize-overweight-truck-routes-gvw-up-to-80000-kg", "class": "smk-inline-legend" },
+                        { "id": "oversize-overweight-truck-routes-gvw-up-to-85000-kg", "class": "smk-inline-legend" },
+                        { "id": "oversize-overweight-truck-routes-gvw-up-to-125000-kg", "class": "smk-inline-legend" }
+                    ]
+                },
+                { 
+                    "type": "folder",
+                    "title": "Height Restrictions",
+                    "isVisible": true,
+                    "isExpanded": true,
+                    "items": [                
+                        { "id": "overhead-structure-with-height-marker", "isVisible": true, "class": "smk-inline-legend" },
+                        { "id": "overhead-structure-without-height-marker", "isVisible": false, "class": "smk-inline-legend" },
+                        { "id": "overhead-directional-signs", "isVisible": false, "class": "smk-inline-legend" }
+                    ]
+                },
+                { 
+                    "type": "folder",
+                    "title": "Special Areas & POIs",
+                    "isVisible": true,
+                    "isExpanded": true,
+                    "items": [                
+
+                        { "id": "inspection-station", "isVisible": true, "class": "smk-inline-legend" },
+                        { "id": "cardlock", "isVisible": false, "class": "smk-inline-legend" },
+                        { "id": "truck-parking", "isVisible": false, "class": "smk-inline-legend" },
+                        { "id": "port-of-vancouver-facilities-terminals", "isVisible": false, "class": "smk-inline-legend" },
+                        { "id": "industrial-area", "isVisible": true, "class": "smk-inline-legend" },
+                        { "id": "downtown-vancouver", "isVisible": false, "class": "smk-inline-legend" },
+                        {
+                            "type": "group",
+                            "title": "Major Road Network",
+                            "isVisible": false,
+                            "class": "smk-inline-legend",
+                            "items": [
+                                { "id": "major-road-network-high-zoom" },
+                                { "id": "major-road-network" }
+                            ]
+                        },
+                        {
+                            "type": "group",
+                            "title": "Provincial Highway",
+                            "isVisible": false,
+                            "class": "smk-inline-legend",
+                            "items": [
+                                { "id": "provincial-highway-high-zoom" },
+                                { "id": "provincial-highway" }
+                            ]
+                        },
+                        { "id": "metro-vancouver-boundary", "isVisible": true, "class": "smk-inline-legend" }
+                    ]
+                }
+            ]
+        }
+    ]
+}

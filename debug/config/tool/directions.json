@@ -1,0 +1,77 @@
+{
+    "tools": [
+        {
+            "type": "*",
+            "enabled": false
+        },
+        {
+            "type": "toolbar",
+            "enabled": true
+        },
+        {
+            "type": "directions",
+            "enabled": true,
+            "position": "toolbar",
+            "order": 1,
+            "command": {
+                "criteria": false,
+                "optimal": false
+            },
+            "routePlannerService": {
+                "url": "https://router.api.gov.bc.ca/",
+                "# url": "https://ssl.refractions.net/ols/router/",
+                "# url": "https://routertst.pathfinder.gov.bc.ca/",
+                "apiKey": "11dd756f680c47b5aef5093d95543738"
+            },
+            "geocoderService": {
+                "#url": "https://geocodertst.api.gov.bc.ca/",
+                "url": "https://geocoder.api.gov.bc.ca/",
+                "parameter": {
+                    "maxDistance": 50,
+                    "locationMode": "input"
+                }
+            },
+            "xtruck": true,
+            "xsegmentLayers": [
+                {
+                    "id": "@potential",
+                    "title": "Potential Route",
+                    "style": {
+                        "strokeColor": "blue",
+                        "strokeWidth": 6,
+                        "strokeOpacity": 0.7,
+                        "strokeCap": "butt"
+                    },
+                    "legend": {
+                        "title": "Potential Route",
+                        "line": true
+                    }
+                },
+                {
+                    "id": "@unverified",
+                    "title": "Unverified Route",
+                    "style": {
+                        "strokeColor": "red",
+                        "strokeWidth": 6,
+                        "strokeOpacity": 0.7,
+                        "strokeCap": "butt",
+                        "strokeDashes": "5,5"
+                    },
+                    "legend": {
+                        "title": "Unverified Route",
+                        "line": true
+                    }
+                }
+            ]
+        },
+        {
+            "type": "pan",
+            "enabled": true
+        },
+        {
+            "type": "zoom",
+            "enabled": true
+        }
+    ]
+}
+    

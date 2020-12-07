@@ -1,0 +1,87 @@
+{
+    "layers": [
+        {
+            "type": "vector",
+            "id": "truck-routes-municipal-road-with-no-truck-travel-restriction-high-zoom",
+            "title": "Municipal Road with No Truck Travel Restriction",
+            "dataUrl": "./layers/truck-routes-municipal-road-with-no-truck-travel-restriction/truck-routes-municipal-road-with-no-truck-travel-restriction.geojson",
+            "metadataUrl": "https://catalogue.data.gov.bc.ca/dataset/0636a01a-a13f-48f9-94cf-1c0e59b3ba6b",
+            "scaleMin": 28505,
+            "attributes": [
+                {
+                    "name": "Municipality",
+                    "title": "Municipality"
+                },
+                {
+                    "name": "RouteType",
+                    "title": "Truck Route Type"
+                },
+                {
+                    "name": "Bylaw",
+                    "title": "Bylaw Link",
+                    "format": "asLink(this.feature.properties.BylawLink)"
+                },
+                {
+                    "name": "TruckDefinitionWeight",
+                    "title": "Heavy Truck Definition (LGVW)",
+                    "format": "asUnit('kg')"
+                },
+                {
+                    "name": "Notes",
+                    "title": "Notes"
+                }
+            ],
+            "titleAttribute": "RouteType",
+            "style": {
+                "strokeWidth": 3,
+                "strokeColor": "#E6E600",
+                "strokeOpacity": 1
+            },
+            "legend": {
+                "line": true
+            }
+        },
+        {
+            "type": "vector",
+            "id": "truck-routes-municipal-road-with-no-truck-travel-restriction",
+            "title": "Municipal Road with No Truck Travel Restriction",
+            "dataUrl": "./layers/truck-routes-municipal-road-with-no-truck-travel-restriction/truck-routes-municipal-road-with-no-truck-travel-restriction.geojson",
+            "metadataUrl": "https://catalogue.data.gov.bc.ca/dataset/0636a01a-a13f-48f9-94cf-1c0e59b3ba6b",
+            "scaleMin": 4622325,
+            "scaleMax": 28505,
+            "attributes": [
+                {
+                    "name": "Municipality",
+                    "title": "Municipality"
+                },
+                {
+                    "name": "RouteType",
+                    "title": "Truck Route Type"
+                },
+                {
+                    "name": "Bylaw",
+                    "title": "Bylaw Link",
+                    "format": "asLink(this.feature.properties.BylawLink)"
+                },
+                {
+                    "name": "TruckDefinitionWeight",
+                    "title": "Heavy Truck Definition (LGVW)",
+                    "format": "asUnit('kg')"
+                },
+                {
+                    "name": "Notes",
+                    "title": "Notes"
+                }
+            ],
+            "titleAttribute": "RouteType",
+            "style": {
+                "strokeWidth": 1.5,
+                "strokeColor": "#E6E600",
+                "strokeOpacity": 1
+            },
+            "legend": {
+                "line": true
+            }
+        }
+    ]
+}

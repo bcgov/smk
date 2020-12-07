@@ -1,0 +1,40 @@
+{
+    "layers": [
+        {
+            "type": "vector",
+            "id": "dangerous-goods-restrictions",
+            "title": "Dangerous Goods Restrictions",
+            "dataUrl": "./layers/dangerous-goods-restrictions/dangerous-goods-restrictions.geojson",
+            "xxscaleMin": 189394,
+            "attributes": [
+                {
+                    "name": "Restrictions",
+                    "title": "Restrictions"
+                },
+                {
+                    "title": "Link",
+                    "format": "asHTML( this.feature.properties.Link )"
+                },
+                {
+                    "name": "Notes",
+                    "title": "Notes"
+                }
+            ],
+            "xxtitleAttribute": "Name",
+            "style": {
+                "markerUrl": "./layers/dangerous-goods-restrictions/images/dangerous-goods.png",
+                "markerSize": [
+                    22,
+                    22
+                ],
+                "markerOffset": [
+                    11,
+                    11
+                ]
+            },
+            "legend": {
+                "point": true
+            }
+        }
+    ]
+}

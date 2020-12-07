@@ -1,0 +1,17 @@
+{
+    "tools": [
+        {
+            "type": "*",
+            "enabled": false
+        },
+        {
+            "type": "toolbar",
+            "enabled": true
+        },
+        {
+            "type": "layers",
+            "enabled": true,
+            "position": "toolbar"
+        }
+     ]
+}

@@ -1,0 +1,71 @@
+{
+  "layers": [
+    {
+      "type": "wms",
+      "id": "INT_LAND_ACT_LICENCE_SVW",
+      "title": "Crown Land Licence",
+      "isVisible": true,
+      "attribution": "Copyright 117 DataBC, Government of British Columbia",
+      "serviceUrl": "https://geo.nrs.gov.bc.ca/pub/geoserver/wms",
+      "opacity": 0.65,
+      "layerName": "INT_LAND_ACT_LICENCE_SVW",
+      "styleName": "INT_LAND_ACT_LICENCE_SVW",
+      "geometryAttribute": "GEOMETRY",
+      "titleAttribute": "DOCUMENT_CHR",
+      "attributes": [
+        {
+          "name": "DOCUMENT_CHR",
+          "title": "Tenure Document"
+        },
+        {
+          "name": "FILE_CHR",
+          "title": "Crown Lands File Number"
+        },
+        {
+          "name": "INTERESTED_PARTIES",
+          "title": "Interested Parties"
+        },
+        {
+          "name": "INTEREST_AREA_HECTARES",
+          "title": "Area Hectares"
+        },
+        {
+          "name": "INTEREST_AREA_SQM",
+          "title": "Area Square Meters"
+        },
+        {
+          "name": "LEGAL_DSC",
+          "title": "Tenure Legal Description"
+        },
+        {
+          "name": "LOCATION_DSC",
+          "title": "Tenure Location"
+        },
+        {
+          "name": "PURPOSE_NME",
+          "title": "Tenure Purpose"
+        },
+        {
+          "name": "STATUS",
+          "title": "Tenure Status"
+        },
+        {
+          "name": "SUBPURPOSE_NME",
+          "title": "Tenure Subpurpose"
+        },
+        {
+          "name": "SUBTYPE_NME",
+          "title": "Tenure Subtype"
+        },
+        {
+          "name": "TERM_END_DATE",
+          "title": "Tenure Expiry Date"
+        },
+        {
+          "name": "TYPE_NME",
+          "title": "Tenure Type"
+        }
+      ]
+    }
+  ]
+}

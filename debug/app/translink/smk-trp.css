@@ -1,0 +1,52 @@
+.smk-map-frame .smk-toolbar .smk-bespoke--reports-tool {
+    color: red;
+}
+
+.smk-map-frame .smk-toolbar .smk-bespoke--reports-tool.smk-hide {
+    display: none;
+}
+
+.smk-map-frame .smk-layers-panel .smk-display-group.smk-inline-legend {
+    position: relative;
+}
+
+.smk-map-frame .smk-layers-panel .smk-display-group.smk-inline-legend.smk-visible .smk-item .smk-layer-title {
+    margin-left: 29px;
+}
+
+.smk-map-frame .smk-layers-panel .smk-display-group.smk-inline-legend.smk-obscured .smk-item .smk-layer-title {
+    margin-left: 5px;
+}
+
+.smk-map-frame .smk-layers-panel .smk-display-group.smk-inline-legend .smk-display {
+    position: absolute;
+    left: 40px;
+    top: 0;
+}
+
+.smk-map-frame .smk-legend-status .smk-display.smk-inline-legend.smk-display-group .smk-legend .smk-legend-title {
+    display: block;
+}
+
+.smk-map-frame .smk-feature .smk-attributes .smk-attribute .smk-value a[target="_blank"]::after {
+    content: 'open_in_new';
+    font-family: 'Material Icons';
+    font-weight: normal;
+    font-style: normal;
+    line-height: 1;
+    letter-spacing: normal;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+}
+
+.smk-map-frame .smk-feature .smk-attributes .smk-attribute .smk-value a[target="_blank"] i {
+    display: none;
+}
+
+.smk-map-frame .smk-sidepanel .smk-panel .smk-can-scroll-up,
+.smk-map-frame .smk-sidepanel .smk-panel .smk-can-scroll-down {
+    display: none;
+}
+

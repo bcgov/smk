@@ -1,0 +1,19 @@
+{
+    "layers": [
+        {
+            "type": "wms",
+            "id": "whse-basemapping-gba-railway-tracks-skytrain-line-names",
+            "title": "Railway Track Line Skytrain Line Names",
+            "isVisible": true,
+            "attribution": "",
+            "metadataUrl": "",
+            "opacity": 0.65,
+            "isQueryable": true,
+            "attributes": [],
+            "serviceUrl": "https://openmaps.gov.bc.ca/geo/pub/ows",
+            "layerName": "pub:WHSE_BASEMAPPING.GBA_RAILWAY_TRACKS_SP",
+            "styleName": "5234",
+            "geometryAttribute": "SHAPE"
+        }
+    ]
+}

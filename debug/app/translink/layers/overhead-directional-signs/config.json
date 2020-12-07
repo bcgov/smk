@@ -1,0 +1,41 @@
+{
+    "layers": [
+        {
+            "type": "vector",
+            "id": "overhead-directional-signs",
+            "title": "Overhead Directional Signs",
+            "dataUrl": "./layers/overhead-directional-signs/overhead-directional-signs.geojson",
+            "metadataUrl": "https://catalogue.data.gov.bc.ca/dataset/f3c942c0-7188-4661-82c8-1c46a82f7520",
+            "scaleMin": 207900,
+            "attributes": [
+                {
+                    "name": "Route",
+                    "title": "Route"
+                },
+                {
+                    "name": "Structure_Type",
+                    "title": "Structure Type"
+                },
+                {
+                    "name": "Comments",
+                    "title": "Notes"
+                }
+            ],
+            "titleAttribute": "Route",
+            "style": {
+                "markerUrl": "./layers/overhead-directional-signs/images/directions.svg",
+                "markerSize": [
+                    22,
+                    22
+                ],
+                "markerOffset": [
+                    11,
+                    11
+                ]
+            },
+            "legend": {
+                "point": true
+            }
+        }
+    ]
+}

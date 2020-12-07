@@ -1,0 +1,51 @@
+{
+    "layers": [
+        {
+            "type": "vector",
+            "id": "dangerous-goods-routes",
+            "title": "Dangerous Goods Eligible Routes",
+            "dataUrl": "./layers/dangerous-goods-routes/dangerous-goods-routes.geojson",
+            "metadataUrl": "https://catalogue.data.gov.bc.ca/dataset/9e5c73cf-b0cc-4ed7-b703-1b15e3489712",
+            "xxxscaleMin": 28505,
+            "attributes": [
+                {
+                    "name": "DangerousGoodsType",
+                    "title": "Route Type"
+                },
+                {
+                    "name": "Municipality",
+                    "title": "Municipality"
+                },
+                {
+                    "title": "Link",
+                    "format": "asLink(this.feature.properties.DangerousGoodsLink, 'Link')"
+                },
+                {
+                    "name": "DangerousGoodsNotes",
+                    "title": "Notes"
+                }
+            ],
+            "titleAttribute": "DangerousGoodsType",
+            "style": [
+                {
+                    "strokeWidth": 5,
+                    "strokeColor": "#FFFF00",
+                    "strokeOpacity": 0.5,
+                    "strokeCap": "butt",
+                    "strokeDashes": "5,5"
+                },
+                {
+                    "strokeWidth": 5,
+                    "strokeColor": "#000000",
+                    "strokeOpacity": 0.5,
+                    "strokeCap": "butt",
+                    "strokeDashes": "5,5",
+                    "strokeDashOffset": 5
+                }
+            ],
+            "legend": {
+                "line": true
+            }
+        }
+    ]
+}

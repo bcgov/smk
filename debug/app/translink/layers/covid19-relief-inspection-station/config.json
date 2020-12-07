@@ -1,0 +1,134 @@
+{
+    "layers": [
+        {
+            "type": "vector",
+            "id": "covid19-relief-inspection-station",
+            "title": "Inspection Station",
+            "dataUrl": "./layers/covid19-relief-inspection-station/covid19-relief-inspection-station.geojson",
+            "metadataUrl": "https://catalogue.data.gov.bc.ca/dataset/0e8f256a-8b2d-48d0-aea3-4398e61dc829",
+            "attributes": [
+                {
+                    "name": "Active",
+                    "title": "Active"
+                },
+                {
+                    "name": "Address",
+                    "title": "Address"
+                },
+                {
+                    "name": "AmenityLocation",
+                    "title": "Amenity Location"
+                },
+                {
+                    "name": "AmenityType",
+                    "title": "Amenity Type"
+                },
+                {
+                    "name": "BuildingType",
+                    "title": "Building Type"
+                },
+                {
+                    "name": "Comments",
+                    "title": "Comments"
+                },
+                {
+                    "name": "ContactInfo",
+                    "title": "Contact Info"
+                },
+                {
+                    "name": "CurbsideParking",
+                    "title": "Curbside Parking"
+                },
+                {
+                    "name": "CurbsideParkingHours",
+                    "title": "Curbside Parking Hours"
+                },
+                {
+                    "name": "DirectionsToFood",
+                    "title": "Directions To Food"
+                },
+                {
+                    "name": "DirectionsToGarbageBin",
+                    "title": "Directions To Garbage Bin"
+                },
+                {
+                    "name": "DirectionsToOtherAmenity",
+                    "title": "Directions To Other Amenity"
+                },
+                {
+                    "name": "DirectionsToShowers",
+                    "title": "Directions To Showers"
+                },
+                {
+                    "name": "DirectionsToWashroom",
+                    "title": "Directions To Washroom"
+                },
+                {
+                    "name": "DocumentLink",
+                    "title": "Document Link"
+                },
+                {
+                    "name": "FoodNearby",
+                    "title": "Food Nearby"
+                },
+                {
+                    "name": "GarbageBinNearby",
+                    "title": "Garbage Bin Nearby"
+                },
+                {
+                    "name": "InformationLink",
+                    "title": "Information Link"
+                },
+                {
+                    "name": "Name",
+                    "title": "Name"
+                },
+                {
+                    "name": "OpenHours",
+                    "title": "Open Hours"
+                },
+                {
+                    "name": "OtherAmenity",
+                    "title": "Other Amenity"
+                },
+                {
+                    "name": "ParkingLot",
+                    "title": "Parking Lot"
+                },
+                {
+                    "name": "ParkingLotHours",
+                    "title": "Parking Lot Hours"
+                },
+                {
+                    "name": "ParkingSpaces",
+                    "title": "Parking Spaces"
+                },
+                {
+                    "name": "ShowersNearby",
+                    "title": "Showers Nearby"
+                },
+                {
+                    "name": "StreetviewLink",
+                    "title": "Streetview Link"
+                },
+                {
+                    "name": "TermsOfUse",
+                    "title": "Terms Of Use"
+                },
+                {
+                    "name": "WashroomNearby",
+                    "title": "Washroom Nearby"
+                }
+            ],
+            "titleAttribute": "Name",
+            "style": {
+                "markerUrl": "./layers/covid19-relief-inspection-station/images/inspection-station.png",
+                "markerSize": [ 22, 22 ],
+                "markerOffset": [ 11, 11 ]
+            },
+            "legend": {
+                "point": true
+            }
+        }
+    ]
+}

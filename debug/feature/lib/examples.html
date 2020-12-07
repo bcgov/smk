@@ -1,0 +1,30 @@
+<div id="app">
+    <header>
+        <h1>
+            <div><a href="..">SMK Feature</a></div>
+            <div class="title">{{ title }}</div>
+        </h1>
+        <ul>
+            <li v-for="ex in examples"
+                v-bind:key="ex.id"
+                v-on:click="selectExample(ex)"
+                v-bind:class="{ 'selected': selectedExample && selectedExample.id == ex.id }"
+            >{{ ex.title }}</li>
+        </ul>
+    </header>
+
+    <article>
+        <section id="source">
+            <h1 v-if="selectedExample"><a v-bind:href="selectedExampleURL" target="_blank">{{ selectedExample.url }}</a></h1>
+            <pre v-if="selectedExample" v-html="selectedExample.doc"></pre>
+        </section>
+
+        <section id="demo">
+            <iframe 
+                v-if="selectedExample" 
+                v-bind:src="selectedExampleURL"
+            ></iframe>
+        </section>
+    </article>
+</div>
+

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Visibility Glyph</title>
+        
+        <script src="../../../dist/smk.js"></script>
+        <link rel="stylesheet" type="text/css" href="style.css"/>
+    </head>
+    <body>
+<!--***************************************************************************
+    This example shows a SMK application, with the glyph configuration for the 
+    layer tool.
+-->
+        <div id="smk-map-frame"></div>
+        <script>
+            SMK.INIT( {
+                containerSel: "#smk-map-frame",
+                config: [ 
+                    './default-config.json',
+                    './../../config/victoria.json',
+                    './../../layer/int-land-act-crown-grant.json',
+                    './../../layer/int-land-act-licence.json',
+                    './../../layer/int-land-act-reserve.json',
+                    {
+                        tools: [
+                            {
+                                type: "layers",
+                                enabled: true,
+                                glyph: {
+                                    visible: "check_box",
+                                    hidden: "check_box_outline_blank"
+                                }
+                            }
+                        ],
+                        viewer: {
+                            activeTool: 'layers'
+                        }
+                    }
+                ]
+            } )
+        </script>
+<!--***************************************************************************-->
+    </body>
+</html>
+

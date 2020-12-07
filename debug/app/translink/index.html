@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>TRP - Translink</title>
+
+        <link rel="stylesheet" type="text/css" href="lib/dialog-polyfill/dialog-polyfill.css"/>
+        <script src="lib/dialog-polyfill/dialog-polyfill.js"></script>
+
+        <script src="../../../dist/smk.js"></script>
+        <link rel="stylesheet" type="text/css" href="smk-trp.css"/>
+
+        <style>
+            body.hide article {
+                visibility: hidden;
+            }
+        </style>
+
+        <link rel="stylesheet" type="text/css" href="style.css"/>       
+    </head>
+    
+    <body class="hide">
+        <dialog id="disclaimer">
+            <form>
+                <header>
+                    <h1><span class="translink-logo"></span>Truck Route Planner</h1>
+                </header>
+                <section>
+                    <p>
+                        This website requires a more recent web browser.
+                    </p>
+                    <p>
+                        Please use Google Chrome, or Microsoft Edge, or Firefox, or Safari.
+                    </p>
+                </section>      
+                <menu></menu>
+            </form>
+        </dialog>
+
+        <article>
+            <header>
+                <h1 id="logo"><span class="translink-logo"></span>Truck Route Planner</h1>
+                <!-- <h3 id="package-build-date" title="">
+                    <div class="release" id="package-release"></div>
+                    <div class="version" id="package-version"></div>
+                </h3> -->
+            </header>
+
+            <div id="smk-map-frame"></div>
+        </article>
+       
+        <iframe id="print-holder" style="position: absolute; left: 0; top: 0; visibility: hidden;"></iframe>
+
+        <style>
+            template { 
+                display: none;
+            }
+            .truck-options {
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+                flex-grow: 1;
+            }
+
+            .truck-options .truck-image {
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: contain;
+                height: 50px;
+                margin-top: 10px;
+                flex-basis: 100%;
+            }
+
+            .truck-options .smk-enter-input.truck-type {
+                flex-grow: 1;
+            }
+
+            .truck-options .smk-enter-input.truck-axles {
+                flex-basis: unset;
+            }
+
+            .truck-options .smk-enter-input .smk-input select {
+                flex-grow: 1;
+                border-radius: 6px;
+            }
+
+        </style>
+
+        <template id="truck-selection">
+            <div class="truck-options">
+                <div class="truck-image" v-bind:style="vehicleStyle"></div>
+                <div class="smk-enter-input truck-type">
+                    <label id="truck-type">Vehicle Type
+                        <div class="smk-input">
+                            <select
+                                v-on:change="selectVehicle( $event.target.value )"
+                            >
+                                <option
+                                    v-for="vehicle, i in vehicleTypes"
+                                    v-bind:value="i"
+                                    v-bind:selected="vehicleIndex == i"
+                                >{{ vehicle.title }}</option>
+                            </select>
+                        </div>
+                    </label>
+                </div>
+                <div class="smk-enter-input truck-axles">
+                    <label id="truck-axles">Axles
+                        <div class="smk-input">
+                            <select
+                                v-if="vehicleIndex != null"
+                                v-on:change="selectConfig( $event.target.value )"
+                            >
+                                <option
+                                    v-for="config, i in vehicleTypes[ vehicleIndex ].configs"
+                                    v-bind:value="i"
+                                    v-bind:selected="configIndex == i"
+                                >{{ config.axles }}</option>
+                            </select>
+                        </div>
+                    </label>
+                </div>
+            </div>
+        </template>
+
+        <script src="trp-vehicle-definitions.js"></script>
+
+        <script>
+        ( function () {
+            if ( SMK.FAILURE ) {
+                var dialog = document.getElementById( 'disclaimer' )
+                dialogPolyfill.registerDialog(dialog)
+                dialog.showModal()
+                return
+            }
+
+            var dialog = document.getElementById( 'disclaimer' )
+            include( [ { url: './fragments/disclaimer.html' }, { url: './fragments/disclaimer.css' } ], 'disclaimer' ).then( function ( inc ) {
+                dialog.innerHTML = inc[ 'disclaimer.disclaimer-html' ]
+                dialogPolyfill.registerDialog(dialog)
+                dialog.showModal()
+            } ) 
+
+            var package
+            include( [ { url: './package.json', loader: 'template' } ], 'package' ).then( function ( inc ) {
+                package = JSON.parse( inc[ 'package.package-json' ] )
+
+                // document.getElementById( 'package-build-date' ).title = 'Built: ' + package[ 'build-date' ]
+                // document.getElementById( 'package-release' ).innerText = package.release
+                // document.getElementById( 'package-version' ).innerText = 'Version ' + package.version
+            } )
+
+            document.getElementById( 'logo' ).addEventListener( 'click', function () {
+                SMK.MAP[ 1 ].$tool[ 'bespoke--about' ].active = true
+            } )
+
+            SMK.HANDLER.set( 'bespoke--reports', 'initialized', function ( smk, tool ) {
+                tool.status = 'hide'
+            } )
+
+            function formatYesNo( attrName ) {
+                return '<%= this.feature.properties[ "' + attrName + '" ] ? "Yes" : "No" %>'
+            }
+
+            var covid19Layers = [
+                'cardlock',
+                'food-truck',
+                'hotel',
+                'inspection-station',
+                'portable-toilet',
+                'rest-area',
+                'temporary-truck-parking',
+                'tourist-centre',
+            ].reduce( function ( acc, n ) {
+                return acc.concat(
+                    './layers/covid19-relief-' + n + '/config.json',
+                    { layers: [ { id: 'covid19-relief-' + n, titleAttribute: 'Name', attributes: [
+                        /*{ name: "Active", title: "Active" },*/
+                        { title: "Name",                        name: "Name" },
+                        { title: "Amenity Type",                name: "AmenityType" },
+                        { title: "Address",                     name: "Address" },
+                        { title: "Building Type",               name: "BuildingType" },
+                        { title: "Amenity Location",            name: "AmenityLocation" },
+                        { title: "Streetview",                  format: "asLink( this.feature.properties.StreetviewLink, 'Link' )" },
+                        { title: "Information",                 format: "asLink( this.feature.properties.InformationLink, 'Link' )" },
+                        { title: "Document",                    format: "asLink( this.feature.properties.DocumentLink, 'Link' )" },
+                        { title: "Open Hours",                  name: "OpenHours" },
+                        { title: "Parking Lot",                 value: formatYesNo( 'ParkingLot' ) },
+                        { title: "Parking Lot Hours",           name: "ParkingLotHours" },
+                        { title: "Parking Spaces",              name: "ParkingSpaces" },
+                        { title: "Curbside Parking",            value: formatYesNo( 'CurbsideParking' ) },
+                        { title: "Curbside Parking Hours",      name: "CurbsideParkingHours" },
+                        { title: "Food Nearby",                 value: formatYesNo( 'FoodNearby' ) },
+                        { title: "Directions To Food",          format: "asHTML( this.feature.properties.DirectionsToFood )" },
+                        { title: "Washroom Nearby",             value: formatYesNo( 'WashroomNearby' ) },
+                        { title: "Directions To Washroom",      format: "asHTML( this.feature.properties.DirectionsToWashroom )" },
+                        { title: "Showers Nearby",              value: formatYesNo( 'ShowersNearby' ) },
+                        { title: "Directions To Showers",       format: "asHTML( this.feature.properties.DirectionsToShowers )" },
+                        { title: "Garbage Bin Nearby",          value: formatYesNo( 'GarbageBinNearby' ) },
+                        { title: "Directions To Garbage Bin",   format: "asHTML( this.feature.properties.DirectionsToGarbageBin )" },
+                        { title: "Other Amenity",               name: "OtherAmenity" },
+                        { title: "Directions To Other Amenity", format: "asHTML( this.feature.properties.DirectionsToOtherAmenity )" },
+                        { title: "Terms Of Use",                name: "TermsOfUse" },
+                        { title: "Comments",                    format: "asHTML( this.feature.properties.Comments )" },
+                        { title: "Contact Info",                format: "asLink( this.feature.properties.ContactInfo )",                name: "ContactInfo" }
+                    ] } ] }
+                )
+            }, [] )
+
+            var defaultVehicle = TRP.vehicleTypes[ 0 ].configs[ 0 ]
+            SMK.INIT( {
+                'smk-container-sel': "#smk-map-frame",
+                'smk-config': [].concat( [ 
+                    './layers/cardlock/config.json',
+                    // './layers/dangerous-goods-routes/config.json',
+                    './layers/dangerous-goods-restrictions/config.json',
+                    './layers/downtown-vancouver/config.json',
+                    './layers/industrial-area/config.json',
+                    './layers/inspection-station/config.json',
+                    './layers/major-road-network/config.json',
+                    './layers/metro-vancouver-boundary/config.json',
+                    './layers/overhead-directional-signs/config.json',
+                    './layers/overhead-structure-with-height-marker/config.json',
+                    './layers/overhead-structure-without-height-marker/config.json',
+                    './layers/oversize-overweight-truck-routes-oah-up-to-4-88-m/config.json',
+                    './layers/oversize-overweight-truck-routes-oaw-up-to-5-m/config.json',
+                    './layers/oversize-overweight-truck-routes-gvw-up-to-80000-kg/config.json',
+                    './layers/oversize-overweight-truck-routes-gvw-up-to-85000-kg/config.json',
+                    './layers/oversize-overweight-truck-routes-gvw-up-to-125000-kg/config.json',
+                    './layers/port-of-vancouver-facilities-terminals/config.json',
+                    './layers/provincial-highway/config.json',
+                    './layers/term-permit-restricted-route/config.json',
+                    './layers/term-permit-restriction/config.json',
+                    './layers/term-permit-route/config.json',
+                    './layers/term-permit-roundabout/config.json',
+                    './layers/truck-advisories-restrictions/config.json',
+                    './layers/truck-advisories-warning/config.json',
+                    './layers/truck-parking/config.json',
+                    './layers/truck-routes-designated-municipal-truck-route-with-restrictions/config.json',
+                    './layers/truck-routes-designated-municipal-truck-route/config.json',
+                    './layers/truck-routes-federal-road-with-no-truck-travel-restrictions/config.json',
+                    './layers/truck-routes-municipal-road-with-no-truck-travel-restriction/config.json',
+                    './layers/temporary-road-closure/config.json',
+                    './layers/temporary-road-closure-extent/config.json'
+                ], covid19Layers, [
+                    './config/map.json', 
+                    './config/layer-display.json', 
+                    {
+                        tools: [ {
+                            type: 'directions',
+                            truckHeight: defaultVehicle.height,
+                            truckWidth: defaultVehicle.width,
+                            truckLength: defaultVehicle.length,
+                            truckWeight: defaultVehicle.weight,
+                        } ]
+                    },
+                    // './config/etc/route-planner.json', 
+                    '?' 
+                ] ),
+            } ).then( function () {
+                $( 'body' ).addClass( 'device-' + SMK.MAP[ 1 ].$device )
+
+                SMK.HANDLER.set( 'bespoke--feedback', 'initialized', function ( smk ) {} )
+
+                SMK.HANDLER.set( 'bespoke--feedback', 'activated', function ( smk, tool, el ) {
+                    include( [ { url: './fragments/feedback.html' }, { url: './fragments/feedback.css' } ], 'bespoke--feedback' ).then( function ( inc ) {
+                        el.innerHTML = htmlTemplate( inc[ 'bespoke--feedback.feedback-html' ], {
+                            package: package 
+                        } )
+                    } ) 
+                } )
+
+                SMK.HANDLER.set( 'directions-route', 'print', function ( smk, tool, key, opt ) {
+                    if ( opt.debug ) {
+                        window.open( 'print-directions-portrait.html?' + key, '', [
+                            "location=yes",
+                            "menubar=yes",
+                            "titlebar=yes",
+                            "status=yes",
+                            "toolbar=yes",
+                            "scrollbars=yes",
+                        ].join( ',' ) );
+                    }
+                    else {
+                        document.getElementById( 'print-holder' ).src = 'print-directions-portrait.html?' + key
+                    }
+
+                    return new Promise( function ( res, rej ) {
+                        var handler = function ( ev ) {
+                            console.log( ev )
+                            if ( ev.data == 'printed' ) {
+                                res()
+                                window.removeEventListener( 'message', handler )
+                            }
+                        }
+
+                        window.addEventListener( 'message', handler, false )
+
+                        setTimeout( function () { rej( new Error( 'timeout' ) ) }, 30 * 1000 )
+                    } )
+                } )
+
+                SMK.HANDLER.set( 'directions-options', 'activated', function ( smk, tool, el ) {
+                    Vue.nextTick( function () {
+                        var vm = new Vue( {
+                            template: '#truck-selection',
+                            el: el,
+                            data: {
+                                vehicleTypes: JSON.parse( JSON.stringify( TRP.vehicleTypes ) ), 
+                                vehicleIndex: tool.trp && tool.trp.vehicleIndex,
+                                configIndex: tool.trp && tool.trp.configIndex,
+                            },
+                            computed: {
+                                vehicleStyle: function () {
+                                    if ( this.vehicleIndex == null ) return
+                                    return { 
+                                        'background-image': 'url( "' + this.vehicleTypes[ this.vehicleIndex ].image + '" )' 
+                                    }
+                                }
+                            },
+                            methods: {               
+                                selectVehicle: function ( vehicleIndex ) {
+                                    var self = this 
+
+                                    this.vehicleIndex = vehicleIndex
+
+                                    Vue.nextTick( function () {
+                                        var defaultIndex = self.vehicleTypes[ self.vehicleIndex ].configs.findIndex( function ( a ) {
+                                            return a.default
+                                        } )
+
+                                        if ( defaultIndex == -1 ) return 
+
+                                        self.selectConfig( defaultIndex )
+                                    } )
+                                },
+
+                                selectConfig: function ( configIndex ) {
+                                    this.configIndex = configIndex
+                                    
+                                    var config = this.vehicleTypes[ this.vehicleIndex ].configs[ this.configIndex ]
+
+                                    tool.truckHeight = config.height
+                                    tool.truckWidth = config.width
+                                    tool.truckLength = config.length
+                                    tool.truckWeight = config.weight
+                                    tool.oversize = config.oversize 
+
+                                    tool.trp = {
+                                        vehicleIndex: this.vehicleIndex,
+                                        configIndex: this.configIndex
+                                    }
+
+                                    Vue.nextTick( function () {
+                                        smk.$tool[ 'directions' ].findRoute()
+                                    } )
+                                },
+                            }
+                        } )
+
+                        if ( !tool.trp ) {
+                            vm.selectVehicle( 0 )
+                        }
+
+                        smk.on( tool.id, {
+                            'change': function ( ev ) {
+                                var config = vm.$data.vehicleTypes[ vm.$data.vehicleIndex ].configs[ vm.$data.configIndex ]
+                                
+                                tool.oversize = config.oversize 
+                                            || config.height < tool.truckHeight
+                                            || config.width < tool.truckWidth
+                                            || config.length < tool.truckLength
+                                            || config.weight < tool.truckWeight
+
+                                tool.trp = {
+                                    vehicleIndex: vm.$data.vehicleIndex,
+                                    configIndex: vm.$data.configIndex
+                                }
+                            }
+                        } )
+                    } )
+                } )
+
+                var routingReports
+                SMK.HANDLER.set( 'directions', 'route', function ( smk, response ) {
+                    smk.$tool[ 'bespoke--reports' ].status = 'hide'
+                    routingReports = null
+
+                    if ( response ) {
+                        response.segments.features.forEach( function ( s ) {
+                            if ( s.properties.isTruckRoute && !s.properties.isOversize && !s.properties.isFerry ) {
+                                s.properties[ '@layer' ] = '@potential'
+                            }
+                            else {
+                                s.properties[ '@layer' ] = '@unverified'
+                            }
+                        } )
+                        
+                        TRP.makeReports( response ).then( function ( reports ) {
+                            if ( !reports || reports.length == 0 ) return
+
+                            smk.$tool[ 'bespoke--reports' ].status = 'ready'
+                            response.reports = JSON.parse( JSON.stringify( reports ) )
+                            routingReports = reports
+                        } )
+                    }
+                } )
+
+                SMK.HANDLER.set( 'bespoke--about', 'activated', function ( smk, tool, el ) {
+                    include( [ { url: './fragments/about.html' }, { url: './fragments/about.css' } ], 'bespoke--about' ).then( function ( inc ) {
+                        el.innerHTML = htmlTemplate( inc[ 'bespoke--about.about-html' ], {
+                            package: package 
+                        } )
+                    } ) 
+                } )
+
+                SMK.HANDLER.set( 'bespoke--glossary', 'activated', function ( smk, tool, el ) {
+                    include( [ { url: './fragments/glossary.html' }, { url: './fragments/glossary.css' } ], 'bespoke--glossary' ).then( function ( inc ) {
+                        el.innerHTML = inc[ 'bespoke--glossary.glossary-html' ]
+                    } ) 
+                } )
+
+                SMK.HANDLER.set( 'bespoke--contacts', 'activated', function ( smk, tool, el ) {
+                    include( [ { url: './fragments/contacts.html' }, { url: './fragments/contacts.css' } ], 'bespoke--contacts' ).then( function ( inc ) {
+                        el.innerHTML = inc[ 'bespoke--contacts.contacts-html' ]
+                    } ) 
+                } )
+
+                SMK.HANDLER.set( 'bespoke--reports', 'activated', function ( smk, tool, el ) {
+                    // debugger
+                    include( [ { url: './fragments/reports.html' }, { url: './fragments/reports.css' } ], 'bespoke--reports' ).then( function ( inc ) {
+                        tool.component = {
+                            template: inc[ 'bespoke--reports.reports-html' ],
+                            data: function () {
+                                return {
+                                    reports: routingReports.map( function ( r ) {
+                                        r.component.data = function () { return r.component.dataObj }
+                                        return r
+                                    } ) 
+                                }
+                            }
+                        } 
+                    } ) 
+                } )
+
+                $( 'body' ).removeClass( 'hide' )
+            } )
+
+            function htmlTemplate( template, data ) {
+                return ( new Vue( { template: '<div>' + template + '</div>', data: data } ) ).$mount().$el.innerHTML
+            }
+        } )()        
+        </script>
+
+    </body>
+</html>

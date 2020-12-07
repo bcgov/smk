@@ -1,0 +1,58 @@
+body {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: 0;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+    align-items: stretch;
+
+    font-family: Helvetica,Arial,sans-serif;
+}
+
+header {
+    flex-shrink: 0;
+    border-bottom: 2px solid #fcba19;
+    background-color: #036;
+
+    /* background-image: url( 'bc-gov-logo-transparent.png' ); */
+    /* background-position: left top; */
+    /* background-repeat: no-repeat; */
+    /* background-size: 80px 40px; */
+    /* padding-left: 100px; */
+
+    color: white;
+    font-size: 30px;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+}
+
+article {
+    flex-grow: 1;
+    flex-basis: 100%;
+    position: relative;
+    height: auto;
+    min-height: 0px;
+}
+
+footer {
+    flex-shrink: 0;
+    border-top: 2px solid #fcba19;
+    background-color: #036;
+    color: white;
+}
+
+#smk-map-frame {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: 0;
+    padding: 0;
+}

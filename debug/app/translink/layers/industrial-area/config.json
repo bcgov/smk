@@ -1,0 +1,21 @@
+{
+    "layers": [
+        {
+            "type": "vector",
+            "id": "industrial-area",
+            "title": "Industrial Area",
+            "dataUrl": "./layers/industrial-area/industrial-area.geojson",
+            "metadataUrl": "https://catalogue.data.gov.bc.ca/dataset/5e590c8e-af1b-4217-b84b-ee6f3cbc911f",
+            "isQueryable": false,
+            "style": {
+                "strokeWidth": 0,
+                "fill": true,
+                "fillColor": "#CE8CC7",
+                "fillOpacity": 0.5
+            },
+            "legend": {
+                "fill": true
+            }
+        }
+    ]
+}

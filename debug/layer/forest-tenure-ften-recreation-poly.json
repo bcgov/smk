@@ -1,0 +1,19 @@
+{
+    "layers": [
+        {
+            "type": "wms",
+            "id": "forest-tenure-ften-recreation-poly",
+            "title": "Recreation Polygons ...All FTEN",
+            "isVisible": true,
+            "attribution": "",
+            "metadataUrl": "",
+            "opacity": 0.65,
+            "isQueryable": true,
+            "attributes": [],
+            "serviceUrl": "https://openmaps.gov.bc.ca/geo/pub/ows",
+            "layerName": "pub:WHSE_FOREST_TENURE.FTEN_RECREATION_POLY_SVW",
+            "styleName": "3213_3214",
+            "geometryAttribute": "GEOMETRY"
+        }
+    ]
+}

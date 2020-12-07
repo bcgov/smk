@@ -1,0 +1,29 @@
+section.trp-reports {
+    font-size: 12px;
+}
+
+section.trp-reports p, section.trp-reports ul {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+section.trp-reports p + *, section.trp-reports ul + * {
+    margin-top: 5px;
+}
+
+section.trp-reports p a::after {
+    content: 'open_in_new';
+    font-family: 'Material Icons';
+    font-weight: normal;
+    font-style: normal;
+    line-height: 1;
+    letter-spacing: normal;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+}
+
+section.trp-reports .trp-report + * {
+    margin-top: 10px;
+}

@@ -1,0 +1,84 @@
+{
+    "layers": [
+        {
+            "type": "vector",
+            "id": "truck-advisories-restrictions-high-zoom",
+            "title": "Restrictions",
+            "dataUrl": "./layers/truck-advisories-restrictions/truck-advisories-restrictions.geojson",
+            "scaleMin": 27437,
+            "attributes": [
+                {
+                    "name": "Municipality",
+                    "title": "Municipality"
+                },
+                {
+                    "name": "AdvisoryType",
+                    "title": "Advisory Type"
+                },
+                {
+                    "name": "AdvisoryDescription",
+                    "title": "Advisory Description",
+                    "format": "asHTML(this.feature.properties.AdvisoryDescription)"
+                },
+                {
+                    "name": "Bylaw",
+                    "title": "Bylaw Link",
+                    "format": "asLink(this.feature.properties.BylawLink)"
+                },
+                {
+                    "name": "Notes",
+                    "title": "Notes"
+                }
+            ],
+            "titleAttribute": "AdvisoryType",
+            "style": {
+                "strokeWidth": 3,
+                "strokeColor": "#FF0000",
+                "strokeOpacity": 1
+            },
+            "legend": {
+                "line": true
+            }
+        },
+        {
+            "type": "vector",
+            "id": "truck-advisories-restrictions",
+            "title": "Restrictions",
+            "dataUrl": "./layers/truck-advisories-restrictions/truck-advisories-restrictions.geojson",
+            "scaleMax": 28505,
+            "attributes": [
+                {
+                    "name": "Municipality",
+                    "title": "Municipality"
+                },
+                {
+                    "name": "AdvisoryType",
+                    "title": "Advisory Type"
+                },
+                {
+                    "name": "AdvisoryDescription",
+                    "title": "Advisory Description",
+                    "format": "asHTML(this.feature.properties.AdvisoryDescription)"
+                },
+                {
+                    "name": "Bylaw",
+                    "title": "Bylaw Link",
+                    "format": "asLink(this.feature.properties.BylawLink)"
+                },
+                {
+                    "name": "Notes",
+                    "title": "Notes"
+                }
+            ],
+            "titleAttribute": "AdvisoryType",
+            "style": {
+                "strokeWidth": 1.5,
+                "strokeColor": "#FF0000",
+                "strokeOpacity": 1
+            },
+            "legend": {
+                "line": true
+            }
+        }
+    ]
+}

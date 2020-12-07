@@ -1,0 +1,11 @@
+{
+"type": "FeatureCollection",
+"name": "dangerous-goods-restrictions",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "Notes": null, "Restrictions": "Transport of Dangerous Goods is prohibited in the George Massey Tunnel when placard requirements under section 4.15 of the Transportation of Dangerous Goods (TDG) Regulations apply.", "Link": "<a href=\"http:\/\/www.bclaws.ca\/EPLibraries\/bclaws_new\/document\/ID\/freeside\/14_275_2006\">BC Tunnel Transportation of Dangerous Goods Regulation<\/a>" }, "geometry": { "type": "Point", "coordinates": [ -123.06621, 49.11422 ] } },
+{ "type": "Feature", "properties": { "Notes": null, "Restrictions": "Transport of Dangerous Goods is prohibited in the George Massey Tunnel when placard requirements under section 4.15 of the Transportation of Dangerous Goods (TDG) Regulations apply.", "Link": "<a href=\"http:\/\/www.bclaws.ca\/EPLibraries\/bclaws_new\/document\/ID\/freeside\/14_275_2006\">BC Tunnel Transportation of Dangerous Goods Regulation<\/a>" }, "geometry": { "type": "Point", "coordinates": [ -123.08492, 49.1294 ] } },
+{ "type": "Feature", "properties": { "Notes": null, "Restrictions": "Transport of Dangerous Goods is prohibited in the Cassiar Connector Tunnel when placard requirements under the section 4.15 of the Transportation of Dangerous Goods (TDG) Regulations apply.", "Link": "<a href=\"http:\/\/www.bclaws.ca\/EPLibraries\/bclaws_new\/document\/ID\/freeside\/14_275_2006\">BC Tunnel Transportation of Dangerous Goods Regulation<\/a>" }, "geometry": { "type": "Point", "coordinates": [ -123.03186, 49.28405 ] } },
+{ "type": "Feature", "properties": { "Notes": null, "Restrictions": "Transport of Dangerous Goods is prohibited in the Cassiar Connector Tunnel when placard requirements under the section 4.15 of the Transportation of Dangerous Goods (TDG) Regulations apply.", "Link": "<a href=\"http:\/\/www.bclaws.ca\/EPLibraries\/bclaws_new\/document\/ID\/freeside\/14_275_2006\">BC Tunnel Transportation of Dangerous Goods Regulation<\/a>" }, "geometry": { "type": "Point", "coordinates": [ -123.03157, 49.27929 ] } }
+]
+}

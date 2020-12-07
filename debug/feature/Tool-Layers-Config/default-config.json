@@ -1,0 +1,24 @@
+{
+    "tools": [
+        {
+            "type": "toolbar",
+            "enabled": true
+        },
+        {
+            "type": "zoom",
+            "enabled": true
+        },
+        {
+            "type": "pan",
+            "enabled": true
+        },
+        {
+            "type": "markup",
+            "enabled": false
+        },
+        {
+            "type": "search",
+            "enabled": false
+        }
+    ]
+}

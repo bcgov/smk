@@ -1,0 +1,245 @@
+
+{
+	"lmfId": "Ressources et services francophones de la Colombie-Britannique / Francophone Resources and Services in British Columbia",
+	"lmfRevision": 1,
+	"version": "0.8.1-MVP",
+	"name": "Ressources et services francophones de la Colombie-Britannique / Francophone Resources and Services in British Columbia",
+	"createdBy": "User",
+	"createdDate": "26-02-2019 21:25:18",
+	"modifiedBy": "",
+	"modifiedDate": "27-02-2019 19:48:40",
+	"published": true,
+	"surround": {
+		"type": "default",
+		"title": ""
+	},
+	"viewer": {
+		"type": "leaflet",
+		"location": {
+			"extent": [
+				-140.80078125000004,
+				61.62728646147466,
+				-108.72070312500002,
+				46.13417004624326
+			],
+			"center": [
+				-124.76074218750003,
+				51.88072825385896
+			],
+			"zoom": 6.0
+		},
+		"baseMap": "Imagery",
+		"activeTool": "about",
+		"clusterOption": {
+			"showCoverageOnHover": false
+		},
+		"device": "auto",
+		"#themes":["alpha"],
+		"deviceAutoBreakpoint": 500,
+		"panelWidth": 300
+	},
+	"tools": [
+		{
+			"type": "toolbar",
+			"enabled": true
+		},
+		{
+			"type": "list-menu",
+            "enabled": true,
+            "title": "Menu"
+		},
+		{
+			"type": "pan",
+			"enabled": true
+		},
+		{
+			"type": "zoom",
+			"enabled": true
+		},
+		{
+			"type": "about",
+			"enabled": true,
+			"#icon": "map",
+			"title": "Sur / About",
+			"content": "<h3>À propos de cette application</h3><span style=\"background-color: initial; color: inherit;\"><p>Cette carte vous permet de repérer les ressources et les services en français offerts en Colombie-Britannique. Cinq domaines y sont affichés sous forme de couches successives et permettent une recherche par sujet, par catégorie et par zone géographique. À partir du menu, vous pouvez utiliser l’outil de la carte pour l’afficher en plans plus rapprochés (zoom) ou pour la voir en mode panoramique.</p><p>Vous pouvez vous concentrer sur une ou plusieurs couches à la fois avec le menu \"domaines de la carte\". Vous pouvez aussi effectuer une recherche à partir du menu \"recherche par catégorie\" ou à l’intérieur d’une zone géographique précise, sous \"chercher à proximité\".</p><p>Une fois que vous aurez trouvé un service, cliquez sur le marqueur de la carte pour obtenir de l’information à son sujet et en connaître l’emplacement. Les lieux offrant plusieurs services s’afficheront avec plusieurs marqueurs.</p><span><h3>About this Application</h3><span style=\"background-color: initial; color: inherit;\"><p>This map allows you to find francophone resources and services in British Columbia. Five sectors are displayed as layers to allow you to do a search by subject, category and area. From the menu, you can use the map tool to zoom and pan around the map.</p></p>You can focus on one layer or a combination of layers using the \"Search by Sector\" menu. You can also search for specific locations and services using the \"Search by Category\" menu or within a specific area under \"Find Nearby\".</p><p>Once you've found a service, click the marker on the map to get information about the resource and its location. Please note that some locations offer many services, and therefore will show many service markers.</p><p>The search box found above the map allows you to quickly navigate to a specific address, city or geographic feature such as 'Mount Douglas'.</p></span><p><a href=\"http://apps.gov.bc.ca/pub/dmf-viewer/?siteid=4645951626552572231\" target=\"new\">Old DMF Site</a></p>"
+		},
+		{
+			"type": "layers",
+			"enabled": true,
+			"title": "Couches / Layers",
+			"display": [
+				{
+					"id": "imagery-and-base-maps-gsr-frph-tourism",
+					"type": "layer",
+					"title": "Sites touristiques / Tourism Sites",
+					"isVisible": true
+				},
+				{
+					"id": "imagery-and-base-maps-gsr-frph-service-directory",
+					"type": "layer",
+					"title": "Répertoire des services en français / Service Directory - Francophone",
+					"isVisible": true
+				},
+				{
+					"id": "imagery-and-base-maps-gsr-frph-hlth-professional",
+					"type": "layer",
+					"title": "Professionnels de la santé parlant français /  Health Professionals - Francophone",
+					"isVisible": true
+				},
+				{
+					"id": "imagery-and-base-maps-gsr-frph-early-childcare",
+					"type": "layer",
+					"title": "Services à la petite enfance / Early Childhood Care - Francophone",
+					"isVisible": true
+				},
+				{
+					"id": "imagery-and-base-maps-gsr-empl-srvcs-offices",
+					"type": "layer",
+					"title": "Work BC – centres de services à l’emploi / WorkBC Employment Service Centres",
+					"isVisible": true
+				},
+				{
+					"id": "imagery-and-base-maps-gsr-schools-k-to-12",
+					"type": "layer",
+					"title": "Écoles d’immersion/francophones (M-12) / French Immersion/Francophone Schools (K-12)",
+					"isVisible": true
+				}
+			]
+		},
+		{
+			"type": "baseMaps",
+			"enabled": true,
+			"title": "Cartes de base / Base Maps",
+			"choices": [
+				"Topographic",
+				"Streets",
+				"Imagery",
+				"Oceans",
+				"NationalGeographic",
+				"Gray"
+			]
+		},
+		{
+			"type": "identify",
+			"enabled": true,
+			"title": "Identifier / Identify",
+            "showPanel": true,
+            "showWidget": false,
+			"#icon": "place",
+			"style": {
+				"strokeWidth": 1.0,
+				"strokeStyle": "1, 1",
+				"strokeColor": "#000000",
+				"strokeOpacity": 0.8,
+				"fillColor": "#000000",
+				"fillOpacity": 0.5,
+				"markerSize": [
+					20,
+					20
+				],
+				"markerOffset": [
+					10,
+					0
+				]
+			},
+			"styleOpacity": 1.0,
+			"tolerance": 5
+		},
+		{
+			"type": "query",
+			"enabled": true,
+			"icon": "image",
+			"instance": "imagery-and-base-maps-gsr-frph-tourism--search-sites-touristiques",
+			"position": "toolbar",
+			"showPanel": true
+		},
+		{
+			"type": "query",
+			"enabled": true,
+			"icon": "room_service",
+			"instance": "imagery-and-base-maps-gsr-frph-service-directory--search-répertoire-des-services-en-français",
+			"position": "toolbar",
+			"showPanel": true
+		},
+		{
+			"type": "query",
+			"enabled": true,
+			"title": "Query",
+			"icon": "local_hospital",
+			"instance": "imagery-and-base-maps-gsr-frph-hlth-professional--search-professionnels-de-la-santé-parlant-français",
+			"position": "toolbar",
+			"showPanel": true
+		},
+		{
+			"type": "query",
+			"enabled": true,
+			"title": "Query",
+			"icon": "child_care",
+			"instance": "imagery-and-base-maps-gsr-frph-early-childcare--search-services-à-la-petite-enfance",
+			"position": "toolbar",
+			"showPanel": true
+		},
+		{
+			"type": "query",
+			"enabled": true,
+			"title": "Query",
+			"icon": "people",
+			"instance": "imagery-and-base-maps-gsr-empl-srvcs-offices--search-Work-BC–centres-de-services-à-l’emploi",
+			"position": "toolbar",
+			"showPanel": true
+		},
+		{
+			"type": "query",
+			"enabled": true,
+			"title": "Query",
+			"icon": "school",
+			"instance": "imagery-and-base-maps-gsr-schools-k-to-12--search-Écoles-d’immersion-francophones",
+			"position": "toolbar",
+			"showPanel": true
+		},		
+		{
+			"type": "search",
+			"enabled": true
+		},
+		{
+			"type": "shortcut-menu",
+			"enabled": false
+		},
+		{
+			"type": "coordinate",
+			"enabled": false
+		},
+		{
+			"type": "attribution",
+			"enabled": false
+		},
+		{
+			"type": "measure",
+			"enabled": false
+		},
+		{
+			"type": "markup",
+			"enabled": false
+		},
+		{
+			"type": "scale",
+			"enabled": false
+		},
+		{
+			"type": "minimap",
+			"enabled": false
+		},
+		{
+			"type": "directions",
+			"enabled": false
+		},
+		{
+			"type": "location",
+			"enabled": false
+		},
+		{
+			"type": "select",
+			"enabled": false
+		}
+	]
+}

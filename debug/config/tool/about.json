@@ -1,0 +1,17 @@
+{
+    "tools": [
+        {
+            "type": "*",
+            "enabled": false
+        },
+        {
+            "type": "toolbar",
+            "enabled": true
+        },
+        {
+            "type": "about",
+            "enabled": true,
+            "content": "about this app"
+        }
+    ]
+}

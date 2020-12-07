@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Everything</title>
+
+        <script src="../../../dist/smk.js"></script>
+        <link rel="stylesheet" type="text/css" href="style.css"/>
+    </head>
+    <body>
+<!--***************************************************************************
+    This example shows all the parameters that can be passed to SMK.INIT().
+
+    - `id` sets identifier that will be for this instance of map in SMK.MAP[].
+    - `containerSel` is the selector for element that will contain the map.
+    - `baseUrl` is base path for resources used by smk.js, it defaults to the 
+        path from where smk.js was loaded.
+    - `config` is an array consisting any of 
+        - SMK configuration objects
+        - URLs pointing to JSON blobs containing configuration
+        - SMK commands
+        - a prefix to use when parsing URL parameters for SMK commands 
+        All configuration objects are merged together to produce final
+        configuration object.
+-->
+        <div id="smk-map-frame"></div>
+        <script>
+            SMK.INIT( {
+                id:             'map',
+                containerSel:   '#smk-map-frame',
+                baseUrl:        SMK.BASE_URL + '../dist/',
+                config: [ 
+                    // literal configuration
+                    { tools: [ { type: 'markup', enabled: false } ] },
+                    // URL to JSON object
+                    './map-config.json', 
+                    // SMK command
+                    'theme=alpha',
+                    // prefix for URL parameter commands
+                    '?smk-' 
+                ],
+            } )
+        </script>
+<!--***************************************************************************-->
+    </body>
+</html>
+
