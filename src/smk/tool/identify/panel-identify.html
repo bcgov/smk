@@ -1,24 +1,53 @@
-<feature-list-panel class="smk-identify-panel"
-    v-bind="$props"
-    canClear="true"
-    v-bind:showSwipe="true"
+<tool-panel class="smk-identify-panel"
+    v-bind="$$projectProps( 'tool-panel' )"
 >
     <template slot="header">
         <slot></slot>
     </template>
 
     <template slot="commands">
-        <div class="smk-separator" v-if="command.clear !== false"></div>
-
-        <span class="smk-command"
-            v-bind:class="{ 'smk-disabled': busy }"
-            v-if="tool.select && list.featureCount > 1 && command.select !== false"
+        <command-button class="smk-select"
+            v-bind:disabled="busy"
+            v-if="tool.select && layers.length > 1 && command.select"
             v-on:click="$$emit( 'add-all' )"
-        >Add all to selection</span>
+        >Add all to selection</command-button>
+
+        <enter-number class="smk-radius"
+            v-bind:disabled="busy"
+            v-if="command.radius"
+            v-bind:value="formatNumber( radius, 3 )"
+            v-on:change="!busy && $$emit( 'change', { radius: $event } )"
+        >Maximum distance
+            <template slot="after-input">
+                <select
+                    v-bind:value="radiusUnit"
+                    v-on:change="$$emit( 'changeUnit', { radiusUnit: $event.target.value } )"
+                    v-bind:disabled="busy || !command.radiusUnit"
+                >
+                    <option value="px">pixels</option>
+                    <option value="m">meters</option>
+                    <option value="km">kilometers</option>
+                </select>
+            </template>
+        </enter-number>
+
+        <command-button class="smk-current"
+            title="Identify features near current location"
+            v-bind:disabled="busy"
+            v-if="command.nearBy"
+            v-on:click="$$emit( 'current-location' )"
+            icon="gps_fixed"
+        ></command-button>
     </template>
+
+    <feature-list
+        v-bind:layers="layers"
+        v-bind:highlightId="highlightId"
+        v-on:active="$$emit( 'active', $event )"
+        v-on:hover="$$emit( 'hover', $event )"
+    ></feature-list>
 
     <div v-if="layers.length == 0">
         Click on the map to identify features under the clicked point.
     </div>
-
-</feature-list-panel>
+</tool-panel>

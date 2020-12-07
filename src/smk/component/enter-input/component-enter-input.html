@@ -1,0 +1,30 @@
+<div class="smk-enter-input"
+    v-bind:class="{ 'smk-disabled': disabled }"
+>
+    <label>
+        <slot></slot>
+        <div class="smk-input">
+            <slot name="before-input"></slot>
+            <input
+                v-bind:type="type"
+                v-bind:value="value"
+                v-bind:placeholder="placeholder"
+                v-bind:disabled="disabled"
+                v-bind="option"
+                v-on:input="onChange( $event.target.value, $event.target.selectionStart )"
+                v-on:keyup.down="$emit( 'key-down-arrow' )"
+                v-on:keyup.up="$emit( 'key-up-arrow' )"
+                v-on:keyup.enter="$emit( 'key-enter' )"
+                v-bind:data-position="position"
+                v-position
+            >
+            <i class="smk-reset smk-command smk-icon material-icons" 
+                v-if="clear"
+                v-bind:class="{ 'smk-disabled': !value }"
+                title="Reset"
+                v-on:click="$emit( 'change', '' )"
+            >cancel</i>
+            <slot name="after-input"></slot>
+        </div>
+    </label>
+</div>

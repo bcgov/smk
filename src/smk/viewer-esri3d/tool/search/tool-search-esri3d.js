@@ -11,7 +11,7 @@ include.module( 'tool-search-esri3d', [ 'esri3d', 'types-esri3d', 'util-esri3d',
 
     var E = SMK.TYPE.Esri3d
 
-    var base = include.option( 'baseUrl' ) + '/images/tool/search'
+    var base = include.option( 'baseUrl' ) + 'images/tool/search'
 
     var yellowMarkerSymbol = {
         type: 'point-3d',

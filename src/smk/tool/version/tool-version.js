@@ -1,56 +1,34 @@
-include.module( 'tool-version', [ 'tool', 'widgets', 'tool-version.panel-version-html' ], function ( inc ) {
+include.module( 'tool-version', [
+    'tool.tool-base-js',
+    'tool.tool-widget-js',
+    'tool.tool-panel-js',
+    'tool-version.panel-version-html'
+], function ( inc ) {
     "use strict";
 
     Vue.component( 'version-widget', {
-        extends: inc.widgets.toolButton,
+        extends: SMK.COMPONENT.ToolWidgetBase,
     } )
 
     Vue.component( 'version-panel', {
-        extends: inc.widgets.toolPanel,
+        extends: SMK.COMPONENT.ToolPanelBase,
         template: inc[ 'tool-version.panel-version-html' ],
         props: [ 'build', 'config' ]
     } )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
-    function VersionTool( option ) {
-        this.makePropWidget( 'icon', null )
+    return SMK.TYPE.Tool.define( 'VersionTool',
+        function () {
+            SMK.TYPE.ToolWidget.call( this, 'version-widget' )
+            SMK.TYPE.ToolPanel.call( this, 'version-panel' )
 
-        this.makePropPanel( 'build', SMK.BUILD )
-        this.makePropPanel( 'config', null )
+            this.defineProp( 'build' )
+            this.defineProp( 'config' )
+        },
+        function ( smk ) {
+            this.config = SMK.UTIL.projection( 'lmfId', 'lmfRevision', 'createdBy', '_rev', 'published' )( smk )
 
-        SMK.TYPE.Tool.prototype.constructor.call( this, $.extend( {
-            widgetComponent:'version-widget',
-            panelComponent: 'version-panel',
-            title:          'Version Info',
-            position:       'list-menu',
-            order:          99,
-            icon:           'build'
-        }, option ) )
-
-    }
-
-    SMK.TYPE.versionTool = VersionTool
-
-    $.extend( VersionTool.prototype, SMK.TYPE.Tool.prototype )
-    VersionTool.prototype.afterInitialize = []
-    // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
-    //
-    VersionTool.prototype.afterInitialize.push( function ( smk ) {
-        var self = this
-
-        this.config = SMK.UTIL.projection( 'lmfId', 'lmfRevision', 'createdBy', '_rev', 'published' )( smk )
-
-        this.config.enabledTools = Object.keys( smk.$tool ).sort()
-
-        smk.on( this.id, {
-            'activate': function () {
-                if ( !self.enabled ) return
-
-                self.active = !self.active
-            }
-        } )
-
-    } )
-
-    return VersionTool
+            this.config.enabledTools = Object.keys( smk.$toolType ).sort()
+        }
+    )
 } )

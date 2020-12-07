@@ -71,6 +71,11 @@ tl.prototype.template = function ( url, option ) {
     return this
 }
 
+tl.prototype.asset = function ( url, option ) {
+    this.push( Object.assign( option || {}, { url: url, loader: 'asset' } ) )
+    return this
+}
+
 var extTemplate = {
     js: 'script',
     css: 'style',
@@ -83,11 +88,24 @@ tl.prototype.dir = function ( pattern, option ) {
     var files = glob.sync( pattern, Object.assign( globOption, option ) )
     files.forEach( function ( f ) {
         var ext = path.extname( f ).substr( 1 )
-        var loader = extTemplate[ ext ]
+
+        var loader = extTemplate[ ext ] || 'asset'
         // console.log( f, ext, loader )
         if ( loader )
             self.push( { url: f, loader: loader } )
     } )
 
     return this
+}
+
+exports.forEachDir = function ( pattern, cb, option ) {
+    option = Object.assign( {}, globOption, { nodir: false }, option )
+    // console.log( 'forEachDir ' + pattern + ', ' + JSON.stringify( option ) )
+
+    var files = glob.sync( pattern, option )
+    // console.log( 'forEachDir ' + JSON.stringify( files ) )
+
+    files.forEach( function ( f ) {
+        cb( f, path.basename( f, path.extname( f ) ) )
+    } )
 }

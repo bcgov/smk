@@ -123,7 +123,7 @@ include.module( 'feature-set', [ 'jquery', 'util', 'event', 'turf' ], function (
         if ( featureIds )
             features = featureIds.map( function ( id ) {
                 if ( !self.has( id ) )
-                    throw new Error( 'feature id ' + featureId + ' not present' )
+                    throw new Error( 'feature id ' + id + ' not present' )
 
                 self.highlightedFeatureId[ id ] = true
 

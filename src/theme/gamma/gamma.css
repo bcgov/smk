@@ -46,6 +46,10 @@
     border-radius: 5px;
     margin-left: -2px;
     user-select: none;
+    -ms-user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+
     color: black;
     padding: 0;
     width: 26px;

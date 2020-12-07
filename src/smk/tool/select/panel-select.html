@@ -1,9 +1,36 @@
-<feature-list-panel class="smk-selected-panel"
-    v-bind="$props"
-    canRemove="true"
-    canClear="true"
+<tool-panel class="smk-selected-panel"
+    v-bind="$$projectProps( 'tool-panel' )"
 >
-    <!-- <template slot="header">
-        <h1>{{ title }}</h1>
-    </template> -->
-</feature-list-panel>
+    <template slot="header">
+        <slot></slot>
+    </template>
+
+    <template slot="commands">
+        <command-button class="smk-clear"
+            v-if="command.clear"
+            v-bind:disabled="layers.length == 0"
+            v-on:click="$$emit( 'clear' )"
+        >Clear</command-button>
+    </template>
+
+    <feature-list
+        v-bind:layers="layers"
+        v-bind:highlightId="highlightId"
+        v-on:active="$$emit( 'active', $event )"
+        v-on:hover="$$emit( 'hover', $event )"
+    >
+        <template slot="item" slot-scope="item">
+            <command-button class="smk-remove"
+                v-bind:key="item.feature.id"
+                title="Remove item"
+                icon="delete"
+                v-if="command.remove"
+                v-on:click="$$emit( 'remove', { layerId: item.layer.id, featureId: item.feature.id } )"
+            ></command-button>
+        </template>
+    </feature-list>
+
+    <div v-if="layers.length == 0">
+        Click on the map to select features under the clicked point.
+    </div>
+</tool-panel>

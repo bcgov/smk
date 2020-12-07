@@ -1,8 +1,9 @@
 .smk-map-frame {
     font-family: Helvetica,Arial,sans-serif;
+    position: relative;
 }
 
-.smk-map-frame.smk-hidden {
+.smk-map-frame.smk-hidden, .smk-map-frame .smk-hidden {
     visibility: hidden;
 }
 
@@ -35,6 +36,7 @@
     position: absolute;
     right: 0;
     bottom: 10px;
+    top: 0;
 
     display: flex;
     flex-direction: column-reverse;
@@ -74,7 +76,8 @@
     font-size: 12px;
 }
 
-.smk-map-frame .smk-address .smk-precision-locality .smk-locality {
+.smk-map-frame .smk-address .smk-precision-locality .smk-locality,
+.smk-map-frame .smk-address.smk-precision-locality .smk-locality {
     font-size: 15px;
 }
 
@@ -82,6 +85,25 @@
     font-size: 10px;
 }
 
+.smk-map-frame .smk-address .smk-precision-site .smk-site,
+.smk-map-frame .smk-address.smk-precision-site .smk-site {
+    font-size: 15px;
+}
+
+.smk-map-frame .smk-address .smk-precision-site .smk-street,
+.smk-map-frame .smk-address .smk-precision-site .smk-locality,
+.smk-map-frame .smk-address.smk-precision-site .smk-street,
+.smk-map-frame .smk-address.smk-precision-site .smk-locality {
+    display: inline-block;
+    font-size: 12px;
+}
+
+.smk-map-frame .smk-address .smk-precision-site .smk-street::after,
+.smk-map-frame .smk-address.smk-precision-site .smk-street::after {
+    content: ", ";
+}
+
+/*************************************************************/
 
 .smk-map-frame .smk-overlay .smk-debug {
     display: none;

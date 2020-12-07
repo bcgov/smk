@@ -15,22 +15,29 @@ include.module( 'layer-leaflet.layer-esri-feature-leaflet-js', [ 'layer.layer-es
 
         if ( layers.length != 1 ) throw new Error( 'only 1 config allowed' )
 
-        var serviceUrl  = layers[ 0 ].config.serviceUrl
-        var opacity     = layers[ 0 ].config.opacity
+        // var opacity     = layers[ 0 ].config.opacity
 
-        var minZoom
-        if ( layers[ 0 ].config.minScale )
-            minZoom = this.getZoomBracketForScale( layers[ 0 ].config.minScale )[ 1 ]
+        var cfg = {
+            url: layers[ 0 ].config.serviceUrl
+        }
 
-        var maxZoom
-        if ( layers[ 0 ].config.maxScale )
-            maxZoom = this.getZoomBracketForScale( layers[ 0 ].config.maxScale )[ 1 ]
+        if ( layers[ 0 ].config.scaleMin )
+            cfg.minZoom = this.getZoomBracketForScale( layers[ 0 ].config.scaleMin )[ 1 ]
 
-        var layer = L.esri.featureLayer( {
-            url:    serviceUrl,
-            where:  layers[ 0 ].config.where,
-            drawingInfo: layers[ 0 ].config.drawingInfo
-        } )
+        if ( layers[ 0 ].config.scaleMax )
+            cfg.maxZoom = this.getZoomBracketForScale( layers[ 0 ].config.scaleMax )[ 1 ]
+
+        if ( layers[ 0 ].config.where )
+            cfg.where = layers[ 0 ].config.where
+
+        if ( layers[ 0 ].config.drawingInfo ) {
+            cfg.drawingInfo = layers[ 0 ].config.drawingInfo
+            if ( cfg.drawingInfo.renderer && cfg.drawingInfo.renderer.symbol && cfg.drawingInfo.renderer.symbol.url )
+                // cfg.drawingInfo.renderer.symbol.url = this.resolveUrl( cfg.drawingInfo.renderer.symbol.url )
+                cfg.drawingInfo.renderer.symbol.url = ( new URL( cfg.drawingInfo.renderer.symbol.url, document.location ) ).toString()
+        }
+        
+        var layer = L.esri.featureLayer( cfg )
         
         if ( layers[ 0 ].legendCacheResolve ) {
             layer.legend( function ( err, leg ) {

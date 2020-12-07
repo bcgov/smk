@@ -1,0 +1,9 @@
+<div class="smk-tool"
+    v-bind:class="classes"
+    v-on:click="$$emit( 'activate' )"
+    v-bind:title="title"
+    v-if="showWidget !== false"
+>
+    <i class="material-icons">{{ icon }}</i>
+    <span v-if="showTitle && title">{{ title }}</span>
+</div>

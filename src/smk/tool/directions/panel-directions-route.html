@@ -1,0 +1,40 @@
+<tool-panel class="smk-directions-route-panel" 
+    v-bind="$$projectProps( 'tool-panel' )"
+>
+    <template slot="header">
+        <slot></slot>
+    </template>
+
+    <template slot="commands">
+        <command-button class="smk-print-route"
+            v-bind:disabled="busy"
+            v-on:click="$$emit( 'print', { debug: $event.shiftKey } )"
+        >Print</command-button>
+    </template>
+
+    <div class="smk-directions">
+        <div class="smk-direction"
+            v-for="( direction, i ) in directions"
+            v-if="direction.name"
+            v-on:mouseenter="$$emit( 'hover-direction', { highlight: i } )"
+            v-on:mouseleave="$$emit( 'hover-direction', { highlight: null } )"
+            v-on:click="$$emit( 'pick-direction', { pick: i } )"
+            v-bind:class="{ 'smk-highlight': i == directionHighlight, 'smk-pick': i == directionPick }"
+        >
+            <i class="smk-instruction-type material-icons"
+                v-bind:class="[ instructionTypeClass( direction.type ) ]"
+                v-bind:title="direction.type"
+            >{{ instructionTypeIcon( direction.type ) }}</i>
+            <span class="smk-instruction">{{ instructionTypePrefix( direction.type, direction.heading ) }} {{ direction.name }}</span>
+            <!-- <span class="smk-instruction" v-else>{{ direction.instruction }}</span> TODO remove -->
+            <span class="smk-metric"
+                v-if="direction.distance"
+            >for {{ direction.distanceUnit.value | dimensionalNumber( 1, direction.distanceUnit.unit, 3 ) }} ({{ direction.time | formatTime }})</span>
+            <i class="material-icons smk-instruction-notification"
+                v-if="direction.notifications && direction.notifications.length > 0"
+                v-bind:title="direction.notifications[0].message"
+            >warning</i>
+        </div>
+    </div>
+
+</tool-panel>

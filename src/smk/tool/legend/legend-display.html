@@ -1,0 +1,37 @@
+<div v-bind:class="[ 
+    'smk-display', 
+    'smk-display-' + display.type, 
+    display.class, 
+    { 
+        'smk-visible':   display.isVisible,
+        'smk-expanded':  display.isExpanded, 
+        'smk-disabled': !display.isEnabled,
+        'smk-obscured': !display.isActuallyVisible,
+    } 
+]">
+    <div class="smk-item"
+        v-if="display.id != 'root'"
+    >
+        <span class="smk-legend-title"
+            v-if="!inGroup && display.class && display.legends && display.isActuallyVisible"
+        >{{ display.title }}</span>
+
+        <div class="smk-legend" 
+            v-if="display.legends && display.isActuallyVisible"
+        >
+            <div class="smk-legend-item" 
+                v-for="legend in display.legends"
+            >
+                <img v-bind:src="legend.url" v-bind:style="{ width: legend.width + 'px', height: legend.height + 'px' }">
+                <span class="smk-legend-title">{{ legend.title }}</span>
+            </div>
+        </div>
+    </div>
+    
+    <legend-display
+        v-for="item in display.items"
+        v-bind:key="item.id"
+        v-bind:display="item"
+        v-bind:inGroup="inGroup || display.type == 'group'"
+    ></legend-display>
+</div>

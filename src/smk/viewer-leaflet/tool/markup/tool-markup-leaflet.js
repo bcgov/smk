@@ -1,7 +1,7 @@
 include.module( 'tool-markup-leaflet', [ 'leaflet', 'tool-markup' ], function () {
     "use strict";
 
-    SMK.TYPE.MarkupTool.prototype.afterInitialize.push( function ( smk ) {
+    SMK.TYPE.MarkupTool.addInitializer( function ( smk ) {
         if ( smk.$device == 'mobile' ) return
 
         smk.$viewer.map.pm.addControls( {
@@ -14,5 +14,4 @@ include.module( 'tool-markup-leaflet', [ 'leaflet', 'tool-markup' ], function ()
             deleteLayer: true   // adds a button to delete layers
         } )
     } )
-
 } )

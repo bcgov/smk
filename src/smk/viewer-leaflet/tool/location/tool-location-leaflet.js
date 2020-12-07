@@ -1,18 +1,21 @@
-include.module( 'tool-location-leaflet', [ 'leaflet', 'tool-location' ], function ( inc ) {
+include.module( 'tool-location-leaflet', [ 
+    'leaflet', 
+    'tool-location',
+    'tool-location-leaflet.marker-icon-blue-png',
+    'tool-location-leaflet.marker-shadow-png'
+], function ( inc ) {
     "use strict";
 
-    var base = include.option( 'baseUrl' ) + '/images/tool/location'
-
     var blueIcon = new L.Icon( {
-        iconUrl:        base + '/marker-icon-blue.png',
-        shadowUrl:      base + '/marker-shadow.png',
+        iconUrl:        inc[ 'tool-location-leaflet.marker-icon-blue-png' ],
+        shadowUrl:      inc[ 'tool-location-leaflet.marker-shadow-png' ],
         iconSize:       [ 25, 41 ],
         iconAnchor:     [ 12, 41 ],
         popupAnchor:    [ 1, -34 ],
         shadowSize:     [ 41, 41 ]
     } )
 
-    SMK.TYPE.LocationTool.prototype.afterInitialize.push( function ( smk ) {
+    SMK.TYPE.LocationTool.addInitializer( function ( smk ) {
         var self = this
 
         this.locationMarker = L.marker( null, { icon: blueIcon } )
@@ -31,6 +34,4 @@ include.module( 'tool-location-leaflet', [ 'leaflet', 'tool-location' ], functio
                 .addTo( smk.$viewer.map )
         } 
     } )
-
-
 } )

@@ -1,0 +1,46 @@
+.smk-legend-status {
+    max-width: 200px;
+}
+
+.smk-legend-status .smk-display .smk-legend-item {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.smk-legend-status .smk-display .smk-legend-item img {
+    margin: 2px;
+}
+
+.smk-legend-status .smk-display .smk-legend-title {
+    font-size: 11px;
+}
+
+.smk-legend-status .smk-display .smk-item {
+    display: flex;
+    align-items: center;
+    position: relative;
+    margin: 0;
+}
+
+.smk-legend-status .smk-display .smk-folder-expand:hover {
+    border: 1px solid transparent;
+}
+
+.smk-legend-status .smk-display.smk-inline-legend .smk-visibility {
+    order: 0;
+}
+
+.smk-legend-status .smk-display.smk-inline-legend .smk-legend {
+    order: 1;
+    padding-left: 0;
+}
+
+.smk-legend-status .smk-display.smk-inline-legend .smk-legend-title {
+    order: 2;
+}
+
+.smk-legend-status .smk-display.smk-inline-legend .smk-legend .smk-legend-title {
+    display: none;
+}
+

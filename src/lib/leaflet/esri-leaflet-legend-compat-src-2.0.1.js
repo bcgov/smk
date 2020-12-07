@@ -383,7 +383,7 @@ EsriLeaflet.Legend.SymbolRenderer = L.Class.extend({
         throw new Error('Unknown SFS style: ' + symbol.style);
     }
 
-    if (symbol.outline) {
+    if (symbol.outline && symbol.outline.style != 'esriSLSNull' ) {
       ctx.strokeStyle = this._formatColor(symbol.outline.color);
       ctx.lineWidth = symbol.outline.width;
       ctx.fillStyle = this._formatColor([0, 0, 0, 0]);
@@ -509,7 +509,7 @@ EsriLeaflet.Legend.SymbolRenderer = L.Class.extend({
       callback(null, ctx.toDataURL());
     } else {
       this._loadImage(symbol.url, function(err, image) {
-        ctx.drawImage(image, 0, 0);
+        ctx.drawImage(image, 0, 0, symbol.width, symbol.height );
         callback(null, ctx.canvas.toDataURL());
       }, this);
     }
@@ -628,7 +628,7 @@ EsriLeaflet.Legend.SymbolRenderer = L.Class.extend({
 
   _loadImage: function(url, callback, context) {
     var image = new Image();
-    image.crossOrigin = '';
+    // image.crossOrigin = '';
     image.onload = function() {
       callback.call(context, null, this);
     };

@@ -1,4 +1,4 @@
-include.module( 'viewer-leaflet', [ 'viewer', 'leaflet', 'layer-leaflet', 'feature-list-leaflet', 'turf' ], function () {
+include.module( 'viewer-leaflet', [ 'viewer', 'leaflet', 'layer-leaflet', /*'feature-list-leaflet',*/ 'turf' ], function () {
     "use strict";
 
     function ViewerLeaflet() {
@@ -33,8 +33,20 @@ include.module( 'viewer-leaflet', [ 'viewer', 'leaflet', 'layer-leaflet', 'featu
 
         if ( smk.viewer.location.extent ) {
             var bx = smk.viewer.location.extent
-            self.map.fitBounds( [ [ bx[ 1 ], bx[ 0 ] ], [ bx[ 3 ], bx[ 2 ] ] ] )
+            self.map.fitBounds( [ [ bx[ 1 ], bx[ 0 ] ], [ bx[ 3 ], bx[ 2 ] ] ], {
+                animate: false,
+                duration: 0,
+                paddingTopLeft: bx[ 4 ],
+                paddingBottomRight: bx[ 5 ],
+            } )
         }
+
+        // NOT SURE PURPOSE
+        // self.resizeToExtent = function () {
+        //     var bx = smk.viewer.location.extent
+        //     self.map.fitBounds( [ [ bx[ 1 ], bx[ 0 ] ], [ bx[ 3 ], bx[ 2 ] ] ],  { animate: false, duration: 0 } )
+        //     console.log('resizeToExtent')
+        // }
 
         if ( smk.viewer.location.zoom ) {
             self.map.setZoom( smk.viewer.location.zoom, { animate: false } )
@@ -48,17 +60,16 @@ include.module( 'viewer-leaflet', [ 'viewer', 'leaflet', 'layer-leaflet', 'featu
             self.setBasemap( smk.viewer.baseMap )
         }
 
-        function changedView( ev) {
-            return function () {
-                self.changedView( ev )
-            }
-        }
+        this.changedViewDebounced = SMK.UTIL.makeDelayedCall( function () {
+            // console.log('changedView')
+            self.changedView()
+        }, { delay: 1000 } )
 
-        self.map.on( 'zoomstart', changedView( { operation: 'zoom', after: 'start' } ) )
-        self.map.on( 'movestart', changedView( { operation: 'move', after: 'start' } ) )
-        self.map.on( 'zoomend', changedView( { operation: 'zoom', after: 'end' } ) )
-        self.map.on( 'moveend', changedView( { operation: 'move', after: 'end' } ) )
-        changedView()()
+        self.map.on( 'zoomstart', this.changedViewDebounced )
+        self.map.on( 'movestart', this.changedViewDebounced )
+        self.map.on( 'zoomend', this.changedViewDebounced )
+        self.map.on( 'moveend', this.changedViewDebounced )
+        this.changedViewDebounced()
 
         self.finishedLoading( function () {
             self.map.eachLayer( function ( ly ) {
@@ -67,7 +78,13 @@ include.module( 'viewer-leaflet', [ 'viewer', 'leaflet', 'layer-leaflet', 'featu
                 if ( self.deadViewerLayer[ ly._smk_id ] ) {
                     self.map.removeLayer( ly )
                     delete self.visibleLayer[ ly._smk_id ]
-                    // console.log( 'remove', ly._smk_id )
+                    // var ids = []
+                    // self.map.eachLayer( function ( ly ) {
+                    //     if ( ly._smk_id )
+                    //         ids.push( ly._smk_id )
+                    //     if ( ly.refresh ) ly.refresh()
+                    // } )
+                    // console.log( 'remove', ly._smk_id, self.map.hasLayer( ly ), ids )
                 }
             } )
 
@@ -94,6 +111,13 @@ include.module( 'viewer-leaflet', [ 'viewer', 'leaflet', 'layer-leaflet', 'featu
 
         self.getVar = function () { return smk.getVar.apply( smk, arguments ) }
     }
+
+    ViewerLeaflet.prototype.destroy = function () {
+        this.map.remove()
+
+        SMK.TYPE.Viewer.prototype.destroy.call( this )
+    }
+
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
     ViewerLeaflet.prototype.getScale = function () {
@@ -148,12 +172,48 @@ include.module( 'viewer-leaflet', [ 'viewer', 'leaflet', 'layer-leaflet', 'featu
     }
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
-    ViewerLeaflet.prototype.basemap.ShadedRelief.labels = [ 'ShadedReliefLabels' ]
-    ViewerLeaflet.prototype.basemap.Gray.labels = [ 'GrayLabels' ]
-    ViewerLeaflet.prototype.basemap.DarkGray.labels = [ 'DarkGrayLabels' ]
+    ViewerLeaflet.prototype.basemap.Topographic.create = createBasemapEsri
+
+    ViewerLeaflet.prototype.basemap.Streets.create = createBasemapEsri
+
+    ViewerLeaflet.prototype.basemap.Imagery.create = createBasemapEsri
     ViewerLeaflet.prototype.basemap.Imagery.labels = [ 'ImageryTransportation', 'ImageryLabels' ]
+
+    ViewerLeaflet.prototype.basemap.Oceans.create = createBasemapEsri
     ViewerLeaflet.prototype.basemap.Oceans.labels = [ 'OceansLabels' ]
-    // ViewerLeaflet.prototype.basemap.Terrain.labels = [ 'TerrainLabels' ]
+
+    ViewerLeaflet.prototype.basemap.NationalGeographic.create = createBasemapEsri
+
+    ViewerLeaflet.prototype.basemap.ShadedRelief.create = createBasemapEsri
+    ViewerLeaflet.prototype.basemap.ShadedRelief.labels = [ 'ShadedReliefLabels' ]
+
+    ViewerLeaflet.prototype.basemap.DarkGray.create = createBasemapEsri
+    ViewerLeaflet.prototype.basemap.DarkGray.labels = [ 'DarkGrayLabels' ]
+
+    ViewerLeaflet.prototype.basemap.Gray.create = createBasemapEsri
+    ViewerLeaflet.prototype.basemap.Gray.labels = [ 'GrayLabels' ]
+
+    ViewerLeaflet.prototype.basemap.StamenTonerLight.create = createBasemapTiled
+    ViewerLeaflet.prototype.basemap.StamenTonerLight.url = 'https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}.png'
+    ViewerLeaflet.prototype.basemap.StamenTonerLight.attribution = "Map tiles by <a href='http://stamen.com'>Stamen Design</a>, under <a href='http://creativecommons.org/licenses/by/3.0'>CC BY 3.0</a>. Data by <a href='http://openstreetmap.org'>OpenStreetMap</a>, under <a href='http://www.openstreetmap.org/copyright'>ODbL</a>."
+
+    function createBasemapEsri( id ) {
+        /* jshint -W040 */
+        var lys = []
+        lys.push( L.esri.basemapLayer( id, { detectRetina: true } ) )
+
+        if ( this.labels )
+            this.labels.forEach( function ( lid ) {
+                lys.push( L.esri.basemapLayer( lid, { detectRetina: true } ) )
+            } )
+
+        return lys
+    }
+
+    function createBasemapTiled( id ) {
+        /* jshint -W040 */
+        return [ L.tileLayer( this.url, { attribution: this.attribution } ) ]
+    }
 
     ViewerLeaflet.prototype.setBasemap = function ( basemapId ) {
         var self = this
@@ -176,17 +236,7 @@ include.module( 'viewer-leaflet', [ 'viewer', 'leaflet', 'layer-leaflet', 'featu
     }
 
     ViewerLeaflet.prototype.createBasemapLayer = function ( basemapId ) {
-        var opt = Object.assign( { detectRetina: true }, this.basemap[ basemapId ].option )
-
-        var lys = []
-        lys.push( L.esri.basemapLayer( basemapId, opt ) )
-
-        if ( this.basemap[ basemapId ].labels )
-            this.basemap[ basemapId ].labels.forEach( function ( id ) {
-                lys.push( L.esri.basemapLayer( id, opt ) )
-            } )
-
-        return lys
+        return this.basemap[ basemapId ].create( basemapId )
     }
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
@@ -204,7 +254,7 @@ include.module( 'viewer-leaflet', [ 'viewer', 'leaflet', 'layer-leaflet', 'featu
             rightWidth = size.x - sbp.left - sbp.width
 
         if ( Math.max( aboveHeight, belowHeight ) > Math.max( leftWidth, rightWidth ) ) {
-            if ( aboveHeight > belowHeight ) 
+            if ( aboveHeight > belowHeight )
                 return {
                     topLeft: L.point( 0, 0 ),
                     bottomRight: L.point( 0, size.y - sbp.top )
@@ -216,7 +266,7 @@ include.module( 'viewer-leaflet', [ 'viewer', 'leaflet', 'layer-leaflet', 'featu
                 }
         }
         else {
-            if ( leftWidth > rightWidth ) 
+            if ( leftWidth > rightWidth )
                 return {
                     topLeft: L.point( 0, 0 ),
                     bottomRight: L.point( size.x - sbp.left, 0 )
@@ -229,9 +279,14 @@ include.module( 'viewer-leaflet', [ 'viewer', 'leaflet', 'layer-leaflet', 'featu
         }
     }
 
-    ViewerLeaflet.prototype.mapResized = SMK.UTIL.makeDelayedCall( function () { 
-        this.map.invalidateSize() 
-    }, { delay: 50 } )
+    // ViewerLeaflet.prototype.mapResized = SMK.UTIL.makeDelayedCall( function () {
+
+    // QUESTIONABLE
+    // ViewerLeaflet.prototype.mapResized = function () {
+    //     this.resizeToExtent()
+    //     // this.map.invalidateSize()
+    //     console.log('resized')
+    // } //, { delay: 1000 } )
 
     ViewerLeaflet.prototype.temporaryFeature = function ( acetate, geometry, opt ) {
         if ( !this.acetate ) this.acetate = {}
@@ -244,7 +299,7 @@ include.module( 'viewer-leaflet', [ 'viewer', 'leaflet', 'layer-leaflet', 'featu
         }
     }
 
-    ViewerLeaflet.prototype.panToFeature = function ( feature ) {
+    ViewerLeaflet.prototype.panToFeature = function ( feature, zoomIn ) {
         var bounds
         switch ( turf.getType( feature ) ) {
         case 'Point':
@@ -252,7 +307,10 @@ include.module( 'viewer-leaflet', [ 'viewer', 'leaflet', 'layer-leaflet', 'featu
             bounds = L.latLngBounds( [ ll, ll ] )
             break;
 
-        // default:
+        default:
+            var bbox = turf.bbox( feature )
+            bounds = L.latLngBounds( [ bbox[ 1 ], bbox[ 0 ] ], [ bbox[ 3 ], bbox[ 2 ] ] )
+
             // if ( self.highlight[ feature.id ] )
                 // bounds = self.highlight[ feature.id ].getBounds()
         }
@@ -271,10 +329,10 @@ include.module( 'viewer-leaflet', [ 'viewer', 'leaflet', 'layer-leaflet', 'featu
             .fitBounds( bounds, {
                 paddingTopLeft: padding.topLeft,
                 paddingBottomRight: padding.bottomRight,
-                maxZoom: this.map.getZoom(),        
+                maxZoom: zoomIn !== true ? this.map.getZoom() : undefined,
                 animate: true
             } )
-    } 
+    }
 
     // ViewerLeaflet.prototype.zoomToFeature = function ( layer, feature ) {
     //     this.map.fitBounds( feature.highlightLayer.getBounds(), {

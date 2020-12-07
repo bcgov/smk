@@ -3,6 +3,7 @@ include.module( 'check-query-place', [], function ( inc ) {
 
     return function ( smk, tool ) {
         smk.tools.push( Object.assign( {}, tool, {
+            id: 'query-results--place',
             type: 'query-results',
             instance: 'place',
             enabled: true,
@@ -10,6 +11,7 @@ include.module( 'check-query-place', [], function ( inc ) {
         } ) )
 
         smk.tools.push( Object.assign( {}, tool, {
+            id: 'query-feature--place',
             type: 'query-feature',
             instance: 'place',
             enabled: true,

@@ -98,7 +98,15 @@ include.module( 'layer.layer-wms-js', [ 'layer.layer-js' ], function () {
 
             if ( !geojson.crs ) return geojson
 
-            return SMK.UTIL.reproject( geojson, geojson.crs )
+            if ( geojson.crs.properties )
+                if ( !geojson.crs.properties.name )
+                    throw new Error( 'unable to determine CRS from: ' + JSON.stringify( geojson.crs ) )
+
+            return SMK.UTIL.getProjection( geojson.crs.properties.name )
+                .then( function ( projection ) {
+                    return SMK.UTIL.reprojectGeoJSON( geojson, projection )
+                } ) 
+            // return SMK.UTIL.reproject( geojson, geojson.crs )
         } )
         .then( function ( geojson ) {
             return geojson.features

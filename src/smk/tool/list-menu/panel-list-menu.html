@@ -1,0 +1,15 @@
+<tool-panel class="smk-tool-list-panel" 
+    v-bind="$$projectProps( 'tool-panel' )"
+>
+    <template slot="header">
+        <slot></slot>
+    </template>
+
+    <component class="smk-tool"
+        v-for="w in subWidgets"
+        v-bind:key="w.prop.id"
+        v-bind:is="w.component"
+        v-bind="w.prop"
+    ></component>
+
+</tool-panel>

@@ -1,0 +1,44 @@
+.smk-enter-input label {
+    font-size: 12px;
+    display: block;
+    position: relative;
+}
+
+.smk-enter-input.smk-disabled label {
+    color: #aaa;
+}
+
+.smk-enter-input .smk-input {
+    border-radius: 8px;
+    padding: 2px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #bbb;
+}
+
+.smk-enter-input input {
+    display: block;
+    flex-grow: 1;
+    /* flex-basis: 100%; */
+    border: 0;
+    font-size: 14px;
+    padding: 3px;
+    background-color: white;
+    border-radius: 6px;
+    width: 1px;
+}
+
+/* .smk-enter-input input[type="number"] {
+    text-align: right;
+} */
+
+.smk-enter-input input:focus {
+    outline: 0;
+}
+
+.smk-enter-input .smk-reset.smk-command.smk-icon {
+    width: 20px;
+    height: 20px;
+    font-size: 20px;
+} 

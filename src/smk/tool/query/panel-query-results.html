@@ -1,0 +1,23 @@
+<tool-panel class="smk-query-panel"
+    v-bind="$$projectProps( 'tool-panel' )"
+>
+    <template slot="header">
+        <slot></slot>
+    </template>
+
+    <template slot="commands">
+        <command-button class="smk-select"
+            v-bind:disabled="busy"
+            v-if="tool.select && layers.length > 1 && command.select"
+            v-on:click="$$emit( 'add-all' )"
+        >Add all to selection</command-button>
+    </template>
+
+    <feature-list
+        v-bind:layers="layers"
+        v-bind:highlightId="highlightId"
+        v-on:active="$$emit( 'active', $event )"
+        v-on:hover="$$emit( 'hover', $event )"
+    ></feature-list>
+
+</tool-panel>

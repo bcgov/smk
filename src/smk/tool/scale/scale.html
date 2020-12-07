@@ -2,7 +2,7 @@
 
     <div class="smk-denom"
         v-if="scaleDenom"
-    >1 : {{ scaleDenom | formatNumber( 3 ) }}</div>
+    >1 : {{ scaleDenom | formatNumber( 3 ) }}<span v-if="zoomLevel"> ({{ zoomLevel.toFixed( 1 ) }})</span></div>
 
     <div class="smk-ruler">
         <div

@@ -1,209 +1,333 @@
 ( function () {
     "use strict";
 
-    function isIE() {
-        return navigator.userAgent.indexOf( "MSIE " ) > -1 || navigator.userAgent.indexOf( "Trident/" ) > -1;
-    }
+    if ( !window.SMK ) window.SMK = {}
 
-    var documentReadyPromise
+    if ( !window.SMK.ON_FAILURE )
+        window.SMK.ON_FAILURE = function ( err, el ) {
+            if ( err.parseSource )
+               err.message += ', while parsing ' + err.parseSource
 
-    var bootstrapScriptEl = document.currentScript
+            console.error( err )
 
-    try {
-        if ( isIE() )
-            throw new Error( 'SMK will not function in Internet Explorer 11. Use Google Chrome, or Microsoft Edge, or Firefox, or Safari.' )
+            var message = document.createElement( 'div' )
+            message.classList.add( 'smk-failure' )
 
-        var util = {}
-        installPolyfills( util )
-        setupGlobalSMK( util )
-    }
-    catch ( e ) {
-        setTimeout( function () {
-            document.querySelector( 'body' ).appendChild( failureMessage( e ) )
-        }, 1000 )
-    }
+            message.innerHTML =
+                '<h1>Simple Map Kit</h1>' +
+                '<h2>Initialization of SMK failed</h2>' +
+                '<p>' + err + '</p>'
 
-    SMK.INIT = function ( option ) {
-        if ( option ) {
-            bootstrapScriptEl = {
-                src: bootstrapScriptEl.src,
-                attributes: Object.keys( option ).reduce( function ( acc, key ) {
-                    acc[ key ] = { value: option[ key ] }
-                    return acc
-                }, {} )
+            if ( !el )
+                el = document.querySelector( 'body' )
+
+            el.appendChild( message )
+
+            if ( !document.getElementById( window.SMK.ON_FAILURE.STYLE_ID ) ) {
+                var style = document.createElement( 'style' )
+                style.id = window.SMK.ON_FAILURE.STYLE_ID
+                style.textContent = window.SMK.ON_FAILURE.STYLE
+                document.getElementsByTagName( 'head' )[ 0 ].appendChild( style )
             }
         }
 
-        try {
-            var timer
-            SMK.BOOT = SMK.BOOT
-                .then( parseScriptElement )
-                .then( function ( attr ) {
-                    timer = 'SMK initialize ' + attr.id
-                    console.time( timer )
-                    return attr
-                } )
-                .then( resolveConfig )
-                .then( initializeSmkMap )
-                .catch( SMK.ON_FAILURE )
+    if ( !window.SMK.ON_FAILURE.STYLE_ID )
+        window.SMK.ON_FAILURE.STYLE_ID = 'smk-on-failure-style'
 
-            util.promiseFinally( SMK.BOOT, function () {
+    if ( !window.SMK.ON_FAILURE.STYLE )
+        window.SMK.ON_FAILURE.STYLE = [
+            '.smk-failure {',
+                'box-shadow: inset 0px 0px 25px -1px #cc0000;',
+                'background-color: white;',
+                'font-family: sans-serif;',
+                'position: absolute;',
+                'top: 0;',
+                'left: 0;',
+                'right: 0;',
+                'bottom: 0;',
+                'padding: 20px;',
+                'display: flex;',
+                'flex-direction: column;',
+                'align-items: stretch;',
+                'justify-content: center;',
+            '}',
+            '.smk-failure h1 { margin: 0; }',
+            '.smk-failure h2 { margin: 0; font-size: 1.2em; }',
+            '.smk-failure p { font-size: 1.1em; }'
+        ].join( '' )
+    // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+    //
+    if ( navigator.userAgent.indexOf( "MSIE " ) > -1 || navigator.userAgent.indexOf( "Trident/" ) > -1 ) {
+        var err = new Error( 'SMK will not function in Internet Explorer 11.' )
+
+        var scripts = document.getElementsByTagName( 'script' )
+        var script
+
+        var stack
+        try {
+            /* jshint -W030 */ // Expected an assignment or function call and instead saw an expression.
+            /* jshint -W117 */ // omgwtf is not defined
+            omgwtf
+        } catch( e ) {
+            stack = e.stack
+        }
+
+        if ( stack ) {
+            var entries = stack.split( /\s+at\s+/ )
+            var last = entries[ entries.length - 1 ]
+            var m = last.match( /[(](.+?)(?:[:]\d+)+[)]/ )
+            if ( m )
+                for ( var i = 0; i < scripts.length; i += 1 ) {
+                    if ( scripts[ i ].src != m[ 1 ] ) continue
+
+                    script = scripts[ i ]
+                    break
+                }
+        }
+
+        window.SMK.INIT = function ( option ) {
+            var containerSelector = option[ 'containerSel' ] || option[ 'smk-container-sel' ]
+
+            setTimeout( function () {
+                window.SMK.ON_FAILURE( err, document.querySelector( containerSelector ) )
+            }, 2000 )
+        }
+
+        if ( script && script.attributes && script.attributes[ 'smk-container-sel' ] )
+            window.SMK.INIT( { containerSel: script.attributes[ 'smk-container-sel' ].value } )
+
+        window.SMK.FAILURE = err
+        throw err
+    }
+    // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+    //
+    try {
+        setupGlobalSMK()
+
+        // for esri3d
+        window.dojoConfig = {
+            has: {
+                "esri-promise-compatibility": 1
+            }
+        }
+
+        var scriptEl = document.currentScript
+        if ( !SMK.BASE_URL ) {
+            var path = scriptEl.src.replace( /([/]?)[^/?]+([?].+)?$/, function ( m, a ) { return a } )
+            SMK.BASE_URL = ( new URL( path, document.location ) ).toString()
+            console.debug( 'Default base path from', scriptEl.src, 'is', SMK.BASE_URL )
+        }
+
+        if ( scriptEl &&
+            scriptEl.attributes &&
+            scriptEl.attributes[ 'smk-container-sel' ] ) {
+                var sel = scriptEl.attributes[ 'smk-container-sel' ].value
+
+                SMK.INIT = function () {
+                    SMK.BOOT = ( SMK.BOOT || Promise.resolve() )
+                        .then( function () {
+                            var e = Error( 'Cannot call SMK.INIT if map initialized from <script> element' )
+                            SMK.ON_FAILURE( e, document.querySelector( sel ) )
+                            throw e
+                        } )
+
+                    return SMK.BOOT
+                }
+
+                SmkInit( null, scriptEl )
+        }
+    }
+    catch ( e ) {
+        SMK.FAILURE = e
+        throw e
+    }
+    // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+    //
+    function SmkInit( option, scriptEl ) {
+        if ( SMK.FAILURE ) throw SMK.FAILURE
+
+        var attr = {}
+
+        function defineAttr( name, attrName, defaultFn, filterFn ) {
+            if ( !defaultFn ) defaultFn = function () {}
+            if ( !filterFn ) filterFn = function ( val ) { return val }
+            var scriptVal = scriptEl && scriptEl.attributes[ attrName ] && scriptEl.attributes[ attrName ].value
+            var optionVal = option && ( option[ attrName ] || option[ name ] )
+            var valFn = function () {
+                if ( optionVal ) {
+                    console.debug( 'attr', name, 'from INIT arguments:', optionVal )
+                    return optionVal
+                }
+
+                if ( scriptVal ) {
+                    console.debug( 'attr', name, 'from script element attribute:', scriptVal )
+                    return scriptVal
+                }
+
+                var d = defaultFn()
+                console.debug( 'attr', name, 'from default:', d )
+                return d
+            }
+            var val
+            Object.defineProperty( attr, name, {
+                get: function () {
+                    if ( valFn ) val = filterFn( valFn() )
+                    valFn = null
+                    return val
+                }
+            } )
+        }
+
+        defineAttr( 'id', 'smk-id', function () {
+            return Object.keys( SMK.MAP ).length + 1
+        } )
+
+        defineAttr( 'containerSel', 'smk-container-sel' )
+
+        defineAttr( 'config', 'smk-config', function () { return '?smk-' }, function ( val ) {
+            if ( Array.isArray( val ) ) return val
+            return val.split( /\s*[|]\s*/ ).filter( function ( i ) { return !!i } )
+        } )
+
+        defineAttr( 'baseUrl', 'smk-base-url', function () {
+            return SMK.BASE_URL
+        } )
+
+        var timer = 'SMK "' + attr.id + '" initialize'
+        console.time( timer )
+        console.groupCollapsed( timer )
+
+        SMK.BOOT = ( SMK.BOOT || Promise.resolve() )
+            .then( function () {
+                return parseConfig( attr.config )
+            } )
+            .then( function ( parsedConfig ) {
+                attr.parsedConfig = parsedConfig
+                return initializeSmkMap( attr )
+            } )
+            .catch( function ( e ) {
+                try {
+                    SMK.ON_FAILURE( e, document.querySelector( attr.containerSel ) )
+                }
+                catch ( ee ) {
+                    console.error( 'failure showing failure:', ee )
+                }
+                throw e
+            } )
+            .finally( function () {
+                console.groupEnd()
                 console.timeEnd( timer )
             } )
 
-            return SMK.BOOT
-        }
-        catch ( e ) {
-            setTimeout( function () {
-                document.querySelector( 'body' ).appendChild( failureMessage( e ) )
-            }, 1000 )
-        }
+        return SMK.BOOT
+    }
+    // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+    //
+    function parseConfig( config ) {
+        return config.reduce( function ( acc, c, i ) {
+            var addParse = function ( source, getParse ) {
+                source += ' in config[' + i + ']'
+
+                try {
+                    var parse = getParse()
+                    if ( !parse ) return true
+
+                    parse.$source = source
+                    acc.push( parse )
+
+                    return true
+                }
+                catch ( e ) {
+                    if ( !e.parseSource)
+                        e.parseSource = source
+
+                    throw e
+                }
+            }
+
+            if ( parseObject( c, addParse ) ) return acc
+            if ( parseDocumentArguments( c, addParse ) ) return acc
+            if ( parseLiteralJson( c, addParse ) ) return acc
+            if ( parseOption( c, addParse ) ) return acc
+            if ( parseUrl( c, addParse ) ) return acc
+
+            return acc
+        }, [] )
     }
 
-// = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+    function parseObject( config, addParse ) {
+        if ( typeof config != 'object' || Array.isArray( config ) || config === null ) return
 
-    function parseScriptElement() {
-
-        var smkAttr = {
-            'id':           attrString( '1' ),
-            'container-sel':attrString( '#smk-map-frame' ),
-            // 'title-sel':    attrString( 'head title' ),
-            'config':       attrList( '?smk-' ),
-            'base-url':     attrString( ( new URL( bootstrapScriptEl.src.replace( 'smk.js', '' ), document.location ) ).toString() ),
-            'service-url':  attrString( null, null ),
-        }
-
-        Object.keys( smkAttr ).forEach( function ( k ) {
-            smkAttr[ k ] = smkAttr[ k ]( 'smk-' + k, bootstrapScriptEl )
+        return addParse( 'object', function () {
+            return { obj: config }
         } )
-
-        console.log( 'SMK attributes', JSON.parse( JSON.stringify( smkAttr ) ) )
-
-        return Promise.resolve( smkAttr )
-
-        // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-        function attrString( missingKey, missingValue ) {
-            if ( missingValue === undefined )
-                missingValue = missingKey
-
-            return function( key, el ) {
-                var val = el.attributes[ key ]
-                if ( val == null ) return missingKey
-                if ( !val.value ) return missingValue
-                return val.value
-            }
-        }
-
-        function attrList( Default ) {
-            return function( key, el ) {
-                var val = attrString( Default )( key, el )
-                if ( Array.isArray( val ) ) return val 
-                return val.split( /\s*[|]\s*/ ).filter( function ( i ) { return !!i } )
-            }
-        }
-
-        function attrBoolean( missingKey, missingValue ) {
-            /* jshint evil: true */
-
-            return function( key, el ) {
-                var val = attrString( missingKey, missingValue )( key, el )
-                return !!eval( val )
-            }
-        }
     }
 
-// = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
-
-    function resolveConfig( attr ) {
-        var configs = []
-        attr.config.forEach( function ( c, i ) {
-            var source = 'attr[' + i + ']'
-            configs = configs.concat( parseDocumentArguments( c, source ) || parseLiteralJson( c, source ) || parseOption( c, source ) || parseUrl( c, source ) )
-        } )
-
-        attr.config = configs
-
-        return attr
-    }
-
-    function parseDocumentArguments( config, source ) {
+    function parseDocumentArguments( config, addParse ) {
         if ( !/^[?]/.test( config ) ) return
 
         var paramPattern = new RegExp( '^' + config.substr( 1 ) + '(.+)$', 'i' )
 
         var params = location.search.substr( 1 ).split( '&' )
-        var configs = []
-        params.forEach( function ( p, i ) {
-            var source1 = source + ' -> arg[' + config + ',' + i + ']'
-            try {
-                var m = decodeURIComponent( p ).match( paramPattern )
-                if ( !m ) return
 
-                configs = configs.concat( parseOption( m[ 1 ], source1 ) || [] )
+        params.forEach( function ( p, i ) {
+            var addParamParse = function ( source, getParse ) {
+                return addParse( source + ' in arg[' + config + ',' + i + ']', getParse )
+            }
+
+            var m
+            try {
+                var d = decodeURIComponent( p )
+                m = d.match( paramPattern )
             }
             catch ( e ) {
-                if ( !e.parseSource ) e.parseSource = source1
-                throw e
+                return
             }
+            if ( !m ) return
+
+            parseOption( m[ 1 ], addParamParse )
         } )
 
-        return configs
+        return true
     }
 
-    function parseLiteralJson( config, source ) {
+    function parseLiteralJson( config, addParse ) {
         if ( !/^[{].+[}]$/.test( config ) ) return
 
-        source += ' -> json'
-        try {
-            var obj = JSON.parse( config )
-            obj.$sources = [ source ]
-
-            return obj
-        }
-        catch ( e ) {
-            if ( !e.parseSource ) e.parseSource = source
-            throw e
-        }
+        return addParse( 'json', function () {
+            return { obj: JSON.parse( config ) }
+        } )
     }
 
-    function parseOption( config, source ) {
+    function parseOption( config, addParse ) {
         var m = config.match( /^(.+?)([=](.+))?$/ )
         if ( !m ) return
 
         var option = m[ 1 ].toLowerCase()
         if ( !( option in optionHandler ) ) return
 
-        source += ' -> option[' + option + ']'
-        try {
-            var obj = optionHandler[ option ]( m[ 3 ], source )
-            if ( !obj.$sources )
-                obj.$sources = [ source ]
-
-            return obj
-        }
-        catch ( e ) {
-            if ( !e.parseSource ) e.parseSource = source
-            throw e
-        }
+        return addParse( 'option[' + option + ']', function () {
+            var res = optionHandler[ option ]( m[ 3 ], function ( source, getParse ) {
+                return addParse( source + ' in option[' + option + ']', getParse )
+            } )
+            if ( res ) return { obj: res }
+        } )
     }
 
-    function parseUrl( config, source ) {
-        source += ' -> url[' + config + ']'
-        var obj = {
-            url: config,
-            $sources: [ source ]
-        }
-
-        return obj
+    function parseUrl( config, addParse ) {
+        return addParse( 'url[' + config + ']', function () {
+            return { url: config }
+        } )
     }
 
     var optionHandler = {
-        'config': function ( arg, source ) {
-            return parseLiteralJson( arg, source ) || parseUrl( arg, source )
+        'config': function ( arg, addParse ) {
+            // return
+            if ( parseLiteralJson( arg, addParse ) ) return
+            if ( parseUrl( arg, addParse ) ) return
         },
 
-        'theme': function ( arg, source ) {
+        'theme': function ( arg ) {
             var args = arg.split( ',' )
             if ( args.length != 1 ) throw new Error( '-theme needs at least 1 argument' )
             return {
@@ -213,7 +337,7 @@
             }
         },
 
-        'device': function ( arg, source ) {
+        'device': function ( arg ) {
             var args = arg.split( ',' )
             if ( args.length != 1 ) throw new Error( '-device needs 1 argument' )
             return {
@@ -229,7 +353,7 @@
             return {
                 viewer: {
                     location: {
-                        extent: args,                        
+                        extent: args,
                         center: null,
                         zoom: null,
                     }
@@ -250,7 +374,7 @@
 
             return {
                 viewer: {
-                    location: loc 
+                    location: loc
                 }
             }
         },
@@ -280,22 +404,84 @@
 
         'query': function ( arg ) {
             var args = arg.split( ',' )
-            if ( args.length < 3 ) throw new Error( '-query needs at least 3 arguments' )
+            if ( args.length < 3 && args.length != 1 ) throw new Error( '-query needs at least 3 arguments, or exactly 1' )
 
-            var queryId = 'query-' + arg.replace( /[^a-z0-9]+/ig, '-' ).replace( /(^[-]+)|([-]+$)/g, '' ).toLowerCase()
+            var queryId = 'makeshift'
 
             var layerId = args[ 0 ]
+            if ( args.length == 1 )
+                return {
+                    viewer: {
+                        activeTool: 'QueryParametersTool--' + layerId + '--' + queryId,
+                    },
+                    tools: [
+                        {
+                            type: 'query',
+                            instance: layerId + '--' + queryId,
+                            enabled: true,
+                            position: 'toolbar',
+                            command: { attributeMode: true },
+                            onActivate: 'execute'
+                        },
+                        {
+                            type: 'toolbar',
+                            enabled: true,
+                        }
+                    ],
+                    layers: [ {
+                        id: layerId,
+                        queries: [ {
+                            id: queryId,
+                            title: 'Querying ' + layerId,
+                            description: 'Created using: ' + arg,
+                            parameters: [ { id: 'p1', type: 'constant', value: 1 } ],
+                            predicate: {
+                                operator: 'equals',
+                                arguments: [ { operand: 'parameter', id: 'p1' }, { operand: 'parameter', id: 'p1' } ]
+                            }
+                        } ]
+                    } ]
+                }
+
             var conj = args[ 1 ].trim().toLowerCase()
             if ( conj != 'and' && conj != 'or' ) throw new Error( '-query conjunction must be one of: AND, OR' )
 
             var parameters = []
-            function constant( value ) {
-                var id = 'constant' + ( parameters.length + 1 )
-                parameters.push( {
-                    id: id,
-                    type: 'constant',
-                    value: JSON.parse( value )
-                } )
+            var opName = {
+                '~':  ' contains',
+                '^~': ' starts with',
+                '$~': ' ends with',
+                '=':  ' is equal to',
+                '>':  ' is greater than',
+                '<':  ' is less than',
+                '>=': ' is greater than or equal to',
+                '<=': ' is less than or equal to',
+            }
+            function parameter( value, op, field ) {
+                var id = 'p' + ( parameters.length + 1 )
+                if ( value == '?' ) {
+                    parameters.push( {
+                        id: id,
+                        type: 'input',
+                        title: field + opName[ op ]
+                    } )
+                }
+                else if ( value == '@' ) {
+                    parameters.push( {
+                        id: id,
+                        type: 'select-unique',
+                        title: field + opName[ op ],
+                        uniqueAttribute: field
+                    } )
+                }
+                else {
+                    parameters.push( {
+                        id: id,
+                        type: 'constant',
+                        value: JSON.parse( value )
+                    } )
+                }
+
                 return id
             }
 
@@ -305,7 +491,7 @@
 
                 var args = [
                     { operand: 'attribute', name: m[ 1 ] },
-                    { operand: 'parameter', id: constant( m[ 3 ] ) }
+                    { operand: 'parameter', id: parameter( m[ 3 ], m[ 2 ], m[ 1 ] ) }
                 ]
 
                 switch ( m[ 2 ].toLowerCase() ) {
@@ -322,17 +508,28 @@
 
             return {
                 viewer: {
-                    activeTool: 'query--' + layerId + '--' + queryId,
+                    activeTool: 'QueryParametersTool--' + layerId + '--' + queryId
                 },
-                tools: [ {
-                    type: 'query',
-                    instance: layerId + '--' + queryId,
-                    onActivate: 'execute'
-                } ],
+                tools: [
+                    {
+                        type: 'query',
+                        instance: layerId + '--' + queryId,
+                        enabled: true,
+                        position: 'toolbar',
+                        command: { attributeMode: true },
+                        onActivate: 'execute'
+                    },
+                    {
+                        type: 'toolbar',
+                        enabled: true,
+                    }
+                ],
                 layers: [ {
                     id: layerId,
                     queries: [ {
                         id: queryId,
+                        title: 'Querying ' + layerId,
+                        description: 'Created using: ' + arg,
                         parameters: parameters,
                         predicate: {
                             operator: conj,
@@ -343,7 +540,7 @@
             }
         },
 
-        'layer': function ( arg, source ) {
+        'layer': function ( arg ) {
             var args = arg.split( ',' )
             if ( args.length < 2 ) throw new Error( '-layer needs at least 2 arguments' )
 
@@ -453,6 +650,15 @@
             }
         },
 
+        'storage': function ( arg ) {
+            var args = arg.split( ',' )
+            if ( args.length < 1 ) throw new Error( '-storage needs at least 1 argument' )
+
+            return args.map( function ( key ) {
+                return JSON.parse( window.sessionStorage.getItem( key ) )
+            } )
+        },
+
         // Options below are for backward compatibility with DMF
 
         'll': function ( arg ) {
@@ -482,153 +688,31 @@
         },
 
     }
-
-// = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
-
+    // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+    //
     function initializeSmkMap( attr ) {
-        include.option( { baseUrl: attr[ 'base-url' ] } )
+        include.option( { baseUrl: attr.baseUrl + 'assets/src/' } )
 
-        return whenDocumentReady()
-            .then( function () {
-                if ( window.jQuery ) {
-                    include.tag( 'jquery' ).include = Promise.resolve( window.jQuery )
-                    return
-                }
+        if ( attr.id in SMK.MAP )
+            throw new Error( 'An SMK map with smk-id "' + attr.id + '" already exists' )
 
-                return include( 'jquery' )
-            } )
-            .then( function () {
-                if ( window.Vue ) {
-                    include.tag( 'vue' ).include = Promise.resolve( window.Vue )
-                    return
-                }
+        return include( 'smk-map' ).then( function () {
+            console.log( 'Creating map "' + attr.id + '":', JSON.parse( JSON.stringify( attr ) ) )
 
-                return include( 'vue' )
-            } )
-            .then( function () {
-                return include( 'vue-config' )
-            } )
-            .then( function () {
-                if ( window.turf ) {
-                    include.tag( 'turf' ).include = Promise.resolve( window.turf )
-                    return
-                }
-
-                return include( 'turf' )
-            } )
-            .then( function () {
-                return include( 'smk-map' ).then( function ( inc ) {
-                    if ( attr[ 'id' ] in SMK.MAP )
-                        throw new Error( 'An SMK map with smk-id "' + attr[ 'id' ] + '" already exists' )
-
-                    var map = SMK.MAP[ attr[ 'id' ] ] = new SMK.TYPE.SmkMap( attr )
-                    return map.initialize()
-                } )
-            } )
+            var map = SMK.MAP[ attr.id ] = new SMK.TYPE.SmkMap( attr )
+            return map.initialize()
+        } )
     }
-
-// = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
-
-    function whenDocumentReady() {
-        if ( documentReadyPromise ) return documentReadyPromise
-
-        return ( documentReadyPromise = new Promise( function ( res, rej ) {
-            if ( document.readyState != "loading" )
-                return res()
-
-            document.addEventListener( "DOMContentLoaded", function( ev ) {
-                clearTimeout( id )
-                res()
-            } )
-
-            var id = setTimeout( function () {
-                console.error( 'timeout waiting for document ready' )
-                rej()
-            }, 20000 )
-        } ) )
-    }
-
-// = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
-
-    function installPolyfills( util ) {
-        window.dojoConfig = {
-            has: {
-                "esri-promise-compatibility": 1
-            }
-        }
-
-        // - - - - - - - - - - - - - - - - - - - - -
-        // document.currentScript polyfill for IE11
-        // - - - - - - - - - - - - - - - - - - - - -
-        if ( !document.currentScript ) ( function() {
-            var scripts = document.getElementsByTagName( 'script' )
-            // document._currentScript = document.currentScript
-
-            // return script object based off of src
-            var getScriptFromURL = function( url ) {
-                // console.log( url )
-                for ( var i = 0; i < scripts.length; i += 1 )
-                    if ( scripts[ i ].src == url ) {
-                        // console.log( scripts[ i ] )
-                        return scripts[ i ]
-                    }
-            }
-
-            var actualScript = document.actualScript = function() {
-                /* jshint -W030 */ // Expected an assignment or function call and instead saw an expression.
-                /* jshint -W117 */ // omgwtf is not defined
-
-                var stack
-                try {
-                    omgwtf
-                } catch( e ) {
-                    stack = e.stack
-                }
-
-                if ( !stack ) return
-
-                var entries = stack.split( /\s+at\s+/ )
-                var last = entries[ entries.length - 1 ]
-
-                var m = last.match( /[(](.+?)(?:[:]\d+)+[)]/ )
-                if ( m )
-                    return getScriptFromURL( m[ 1 ] )
-            }
-
-            if ( document.__defineGetter__ )
-                document.__defineGetter__( 'currentScript', actualScript )
-        } )()
-
-
-        if ( Promise.prototype.finally )
-            util.promiseFinally = function ( promise, onFinally ) {
-                return promise.finally( onFinally )
-            }
-        else
-            util.promiseFinally = function ( promise, onFinally ) {
-                var onThen = function ( arg ) {
-                    onFinally()
-                    return arg
-                }
-
-                var onFail = function ( arg ) {
-                    onFinally()
-                    return Promise.reject( arg )
-                }
-
-                return promise.then( onThen, onFail )
-            }
-
-    }
-
-// = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
-
-    function setupGlobalSMK( util ) {
+    // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+    //
+    function setupGlobalSMK() {
         return ( window.SMK = Object.assign( {
+            INIT: SmkInit,
             MAP: {},
             VIEWER: {},
             TYPE: {},
-            UTIL: util,
+            UTIL: {},
+            COMPONENT: {},
 
             CONFIG: {
                 name: 'SMK Default Map',
@@ -645,44 +729,16 @@
                         showCoverageOnHover: false
                     }
                 },
-                tools: [
-                    { type: 'about',        enabled: false, order: 1, position: 'list-menu',                        icon: 'help',           title: 'About SMK' },
-                    { type: 'baseMaps',     enabled: false, order: 3, position: [ 'shortcut-menu', 'list-menu' ],   icon: 'map',            title: 'Base Maps' },
-                    { type: 'coordinate',   enabled: false, order: 3 },
-                    { type: 'directions',   enabled: false, order: 4, position: [ 'shortcut-menu', 'list-menu' ],   icon: 'directions_car', title: 'Route Planner' },
-                    // { type: 'dropdown',     enabled: false }, -- so it won't be enabled by show-tools=all, no tools use it by default
-                    { type: 'identify',     enabled: false, order: 5, position: 'list-menu',                        icon: 'info_outline',   title: 'Identify Results' },
-                    { type: 'layers',       enabled: false, order: 3, position: [ 'shortcut-menu', 'list-menu' ],   icon: 'layers',         title: 'Layers' },
-                    { type: 'list-menu',    enabled: false },
-                    { type: 'location',     enabled: true },
-                    { type: 'markup',       enabled: true,  order: 3 },
-                    { type: 'measure',      enabled: false, order: 6, position: [ 'shortcut-menu', 'list-menu' ],   icon: 'straighten',     title: 'Measurement' },
-                    // { type: 'menu',         enabled: false }, -- so it won't be enabled by show-tools=all, no tools use it by default
-                    { type: 'minimap',      enabled: false, order: 1 },
-                    { type: 'pan',          enabled: false },
-                    // { type: 'query',        enabled: false }, -- so it won't be enabled by show-tools=all, as it needs an instance
-                    { type: 'scale',        enabled: false, order: 2 },
-                    { type: 'search',       enabled: true,  order: 2, position: 'toolbar',                          icon: 'search',         title: 'Search for Location' },
-                    { type: 'select',       enabled: false, order: 6, position: 'list-menu',                        icon: 'select_all',     title: 'Selected Features' },
-                    { type: 'shortcut-menu',enabled: false, order: 10 },
-                    { type: 'toolbar',      enabled: true },
-                    // { type: 'version',      enabled: false }, -- so it won't be enabled by show-tools=all
-                    { type: 'zoom',         enabled: false, order: 1 }
-                ]
+                tools: []
             },
 
             BOOT: Promise.resolve(),
             TAGS_DEFINED: false,
-            ON_FAILURE: function ( e ) {
-                whenDocumentReady().then( function () {
-                    document.querySelector( 'body' ).appendChild( failureMessage( e ) )
-                } )
-            },
 
             BUILD: {
                 commit:     '<%= gitinfo.local.branch.current.SHA %>',
                 branch:     '<%= gitinfo.local.branch.current.name %>',
-                lastCommit: '<%= gitinfo.local.branch.current.lastCommitTime %>'.replace( /^"|"$/g, '' ),
+                lastCommit: '<%= gitinfo.local.branch.current.lastCommitTime %>',
                 origin:     '<%= gitinfo.remote.origin.url %>',
                 version:    '<%= package.version %>',
             },
@@ -691,7 +747,7 @@
                 handler: {},
                 set: function ( id, method, handler ) {
                     if ( !this.handler[ id ] ) this.handler[ id ] = {}
-                    this.handler[ id ][ method ] = handler 
+                    this.handler[ id ][ method ] = handler
                 },
                 get: function ( id, method ) {
                     if ( this.handler[ id ] && this.handler[ id ][ method ] ) return this.handler[ id ][ method ]
@@ -703,40 +759,20 @@
                 has: function ( id, method ) {
                     return !!( this.handler[ id ] && this.handler[ id ][ method ] )
                 }
-            }
+            },
+
+            PROJECTIONS: [
+                {
+                    name: 'urn:ogc:def:crs:EPSG::3005',
+                    def: '+proj=aea +lat_1=50 +lat_2=58.5 +lat_0=45 +lon_0=-126 +x_0=1000000 +y_0=0 +ellps=GRS80 +datum=NAD83 +units=m +no_defs'
+                },
+                {
+                    name: 'bc-albers',
+                    alias: 'urn:ogc:def:crs:EPSG::3005',
+                }
+            ]
 
         }, window.SMK ) )
-    }
-
-    function failureMessage( e ) {
-        if ( e.parseSource )
-            e.message += ',\n  while parsing ' + e.parseSource
-
-        console.error( e )
-
-        var message = document.createElement( 'div' )
-        message.innerHTML = '\
-            <div style="\
-                display:flex;\
-                flex-direction:column;\
-                justify-content:center;\
-                align-items:center;\
-                border: 5px solid red;\
-                padding: 20px;\
-                margin: 20px;\
-                position: absolute;\
-                top: 0;\
-                left: 0;\
-                right: 0;\
-                bottom: 0;\
-            ">\
-                <h1>SMK Client</h1>\
-                <h2>Initialization failed</h2>\
-                <pre style="white-space: normal">{}</pre>\
-            </div>\
-        '.replace( /\s+/g, ' ' ).replace( '{}', e || '' )
-
-        return message
     }
 
 } )();

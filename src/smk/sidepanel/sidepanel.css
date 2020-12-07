@@ -27,6 +27,7 @@
 }
 
 .smk-sidepanel .smk-panel {
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -56,6 +57,11 @@
     justify-content: space-between;
     align-items: center;
     align-content: flex-start;
+    margin-bottom: 5px;
+}
+
+.smk-panel .smk-commands > * {
+    margin: 0px 4px;
 }
 
 .smk-panel .smk-panel-go-back {
@@ -87,7 +93,7 @@
     flex-shrink: 0;
 
     display: flex;
-    justify-content: space-between;    
+    justify-content: space-between;
     align-items: center;
     margin-top: 1px;
     margin-left: 1px;
@@ -136,9 +142,14 @@
 }
 
 .smk-sidepanel .smk-panel .smk-can-scroll-up {
+    display: none;
     position: absolute;
     top: 0;
     right: 0;
+}
+
+.smk-device-mobile .smk-sidepanel .smk-panel .smk-can-scroll-up {
+    display: block;
 }
 
 .smk-sidepanel .smk-panel .smk-below-body {
@@ -146,56 +157,12 @@
 }
 
 .smk-sidepanel .smk-panel .smk-can-scroll-down {
+    display: none;
     position: absolute;
     right: 0;
     bottom: 0;
 }
 
-.smk-panel .smk-spinner {
-    position:   absolute;
-    top:        4px;
-    right:      10px;
+.smk-device-mobile .smk-sidepanel .smk-panel .smk-can-scroll-down {
+    display: block;
 }
-
-
-.smk-panel div.smk-message {
-    position: relative;
-    flex-shrink: 0;
-
-    font-size: 14px;
-    padding: 4px 0;
-    text-align: center;
-    background-color: rgb(87.8%, 100%, 88.6%);
-
-    display: none;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-.smk-panel .smk-message.smk-error {
-    display: flex;
-    color: red;
-    background-color: rgb(100%, 87.8%, 87.8%);
-}
-
-.smk-panel .smk-message.smk-summary {
-    display: flex;
-}
-
-.smk-panel .smk-message.smk-progress {
-    display: flex;
-    color: blue;
-    background-color: rgb(87%, 96.5%, 99.1%);
-}
-
-.smk-panel .smk-message.smk-warning {
-    display: flex;
-    color: orange;
-    background-color: rgb(100%, 94.4%, 87.8%);
-}
-
-.smk-panel .smk-submessage {
-    font-size: 12px;
-}
-

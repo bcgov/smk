@@ -1,0 +1,8 @@
+.smk-identify-panel .smk-radius .smk-input input {
+    min-width: 5em;
+}
+
+.smk-identify-panel .smk-radius .smk-input select {
+    background-color: transparent;
+    border: none;
+}

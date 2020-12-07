@@ -1,0 +1,37 @@
+<div v-bind:class="{ 'smk-busy': busy }">
+    <div class="smk-panel">
+        <div class="smk-header" 
+            v-if="showHeader"
+            v-on:touchstart="startSwipe"
+            v-on:touchmove="moveSwipe"
+        >
+            <div class="smk-swipe-handle" v-if="showSwipe"></div>
+            
+            <slot name="header"></slot>
+        </div>
+
+        <div class="smk-commands"
+            v-if="$slots.commands"
+        >
+            <slot name="commands"></slot>
+        </div>
+
+        <div class="smk-above-body">
+            <i class="smk-can-scroll-up material-icons" 
+                v-if="canScrollUp"
+            >arrow_drop_up</i>
+        </div>
+
+        <div class="smk-body" ref="body"
+            v-on:scroll="scrollBody"
+        >
+            <slot></slot>
+        </div>
+
+        <div class="smk-below-body">
+            <i class="smk-can-scroll-down material-icons" 
+                v-if="canScrollDown"
+            >arrow_drop_down</i>
+        </div>
+    </div>
+</div>

@@ -1,4 +1,6 @@
-<div v-bind:class="classes" ref="widget">
+<div class="smk-tool" ref="widget"
+    v-bind:class="classes" 
+>
     <input type="text" placeholder="Search for location" ref="search-input"
         v-model.trim="search"
         v-on:keyup="$$emit( 'input-change', { text: search } )"
@@ -22,7 +24,7 @@
     </div>
 
     <div class="smk-search-dropdown"
-        v-if="showDropdown && active"
+        v-if="!showPanel && active"
         v-bind:style="{ width: widgetWidth() + 'px' }"
     >
         <div class="smk-search-result smk-item"
