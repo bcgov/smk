@@ -25,8 +25,8 @@ include.module( 'tool-search.tool-search-list-js', [
             .then( function () {
                 return ( request = $.ajax( {
                     timeout:    10 * 1000,
-                    dataType:   'jsonp',
-                    url:        'https://apps.gov.bc.ca/pub/geocoder/addresses.geojsonp',
+                    dataType:   'json',
+                    url:        'https://geocoder.api.gov.bc.ca/addresses.geojson',
                     data:       query,
                 } ) )
             } )
