@@ -18,7 +18,7 @@
 
                 { "id": "bans-and-prohibitions", "isVisible": false },
 
-                { "id": "bans-and-prohibitions-highlight", "isVisible": false, "showInList": false },
+                { "id": "bans-and-prohibitions-highlight", "isVisible": false, "showItem": false },
 
                 { "id": "area-restrictions", "isVisible": false },
 

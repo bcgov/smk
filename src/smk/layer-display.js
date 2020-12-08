@@ -12,7 +12,6 @@ include.module( 'layer-display', [ 'jquery', 'util', 'event' ], function () {
             isEnabled:  true,
             isInternal: false,
             inFilter:   true,
-            showInList: true,
             showLegend: false,
             showItem:   true,
             legends:    null,
