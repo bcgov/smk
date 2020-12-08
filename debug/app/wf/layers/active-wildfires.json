@@ -9,8 +9,8 @@
       "metadataUrl": "https://catalogue.data.gov.bc.ca/dataset/diagnostic-facilities",
       "where": "FIRE_STATUS <> 'Out'",
       "opacity": 1,
-      "xscaleMin": 500000,
-      "xscaleMax": 0,
+      "scaleMin": 500000,
+      "scaleMax": 0,
       "drawingInfo": {
         "renderer": {
           "type": "uniqueValue",
