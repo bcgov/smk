@@ -1,6 +1,10 @@
+**Simple Map Kit**
+
+![img](https://img.shields.io/badge/Lifecycle-Stable-97ca00)
+
 *A versatile and lightweight toolkit for building a simple web map.*
 
-**SMK** is designed to make it easy to integrate a map into a web application.
+*SMK* is designed to make it easy to integrate a map into a web application.
 
 The application needs to include one `<script>` tag to load the library, define a single `<div>` tag to contain the map, and call one method to initialize the map.
 There is no other code for the application to write, the map functionality is defined completely by a JSON configuration structure.
