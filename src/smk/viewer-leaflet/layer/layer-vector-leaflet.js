@@ -327,13 +327,13 @@ include.module( 'layer-leaflet.layer-vector-leaflet-js', [ 'layer.layer-vector-j
             } );
         }
 
+        // Fix for issue: https://github.com/bcgov/smk/issues/104.
         if (viewer &&
             viewer.clusterOption &&
             viewer.clusterOption.showCoverageOnHover !== undefined) {
             opt.showCoverageOnHover = viewer.clusterOption.showCoverageOnHover;
         }
         
-
         return opt
     }
 } )
