@@ -308,32 +308,33 @@ include.module( 'layer-leaflet.layer-vector-leaflet-js', [ 'layer.layer-vector-j
     }
 
     function clusterOptions( layerConfig, viewer ) {
-        if ( !layerConfig.clusterStyle ) return
-
         var opt = {}
-        opt.iconCreateFunction = function( cluster ) {
-            var el = $( '<div>' )
-                .append( $( '<img>' )
-                    .attr( 'src', viewer.resolveAttachmentUrl( layerConfig.clusterStyle.markerUrl, null, 'png' ) )
-                )
-                .append( $( '<span>' ).text( cluster.getChildCount() ) )
-                .get( 0 ).innerHTML
 
-            return L.divIcon( {
-                className: 'smk-cluster-icon',
-                html: el,
-                iconSize: layerConfig.clusterStyle.markerSize,
-                iconAnchor: layerConfig.clusterStyle.markerOffset,
-            } );
-        }
-
-        // Fix for issue: https://github.com/bcgov/smk/issues/104.
-        if (viewer &&
+        // Fix for issue: https://github.com/bcgov/smk/issues/104
+        if ( viewer &&
             viewer.clusterOption &&
-            viewer.clusterOption.showCoverageOnHover !== undefined) {
+            viewer.clusterOption.showCoverageOnHover !== undefined ) {
             opt.showCoverageOnHover = viewer.clusterOption.showCoverageOnHover;
         }
-        
+
+        if ( layerConfig && layerConfig.clusterStyle ) {
+            opt.iconCreateFunction = function( cluster ) {
+                var el = $( '<div>' )
+                    .append( $( '<img>' )
+                        .attr( 'src', viewer.resolveAttachmentUrl( layerConfig.clusterStyle.markerUrl, null, 'png' ) )
+                    )
+                    .append( $( '<span>' ).text( cluster.getChildCount() ) )
+                    .get( 0 ).innerHTML
+    
+                return L.divIcon( {
+                    className: 'smk-cluster-icon',
+                    html: el,
+                    iconSize: layerConfig.clusterStyle.markerSize,
+                    iconAnchor: layerConfig.clusterStyle.markerOffset,
+                } );
+            }
+        }
+
         return opt
     }
 } )
