@@ -11,7 +11,7 @@ For the following examples, the reader should assume the following:
 <pre>
     demo
     |-- index.html
-    |-- map-config.json
+    |-- smk-config.json
     |-- victoria.json
     |-- kamloops.json
     |-- wms-layer.json
@@ -51,14 +51,13 @@ For the following examples, the reader should assume the following:
 </html>
 ```
 
-- `map-config.json`
+- `smk-config.json`
 ```json
 {
-    "smkId": "test-app",
-    "smkRevision": 1,
+    "version": 1.0.4,
     "name": "Test App",
     "createdBy": "vivid",
-    "published": false,
+    "createdDate": "2021-08-06T17:12:57.858Z",
     "viewer": {
         "type": "leaflet",
         "baseMap": "Streets"
@@ -72,7 +71,8 @@ For the following examples, the reader should assume the following:
             "type": "baseMaps",
             "enabled": true
         }
-    ]
+    ],
+    "layers: []
 }
 ```
 
@@ -204,7 +204,7 @@ For the following examples, the reader should assume the following:
 
 - `smk.js`
 The production version of the SMK library.
-[smk.js](https://smk-demo.pathfinder.gov.bc.ca/smk-client/smk.js)
+[smk.js](https://bcgov.github.io/smk/dist/smk.js)
 
 The examples will provide a setup that gives the `<script>` element and the parameters for URL that is being requested.
 The URL parameters (if any) are presented in a list for ease of reading, and the [`URL`]() is linked to the properly formatted URL.
