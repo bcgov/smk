@@ -135,12 +135,11 @@ EsriLeaflet.Legend.include({
       if (error) {
         return callback.call(context, error);
       }
-      
-      var ls = response.layers || [ response ]
+
       var layers = [];
-      for (var i = 0, len = ls.length; i < len; i++) {
-        if (!ls[i].subLayerIds) {
-          layers.push(ls[i]);
+      for (var i = 0, len = response.layers.length; i < len; i++) {
+        if (!response.layers[i].subLayerIds) {
+          layers.push(response.layers[i]);
         }
       }
 
@@ -175,14 +174,6 @@ EsriLeaflet.Legend.include({
   },
 
   _getLayerLegend: function(layer, callback, context) {
-    if ( this.options.drawingInfo ) {
-      layer.drawingInfo = JSON.parse( JSON.stringify( this.options.drawingInfo ) )
-      return callback( null, layer )
-    }
-
-    if ( layer.drawingInfo )
-      return callback( null, layer )
-
     this._service.request(layer.id, {
       f: 'json'
     }, callback, context);
@@ -239,7 +230,6 @@ EsriLeaflet.Legend.include({
     EsriLeaflet.Util.reduce(
       this._getRendererSymbols(drawingInfo.renderer), [],
       function(curr, symbol, cb) {
-        if (symbol.skipLegend) return cb(null,curr)
         self._renderSymbol(symbol, function(err, image) {
           if (err) {
             return cb(err, curr);
@@ -292,8 +282,8 @@ EsriLeaflet.Legend.SymbolRenderer = L.Class.extend({
         callback.call(context, error);
       } else {
         callback.call(context, null, {
-          width: canvas.width || EsriLeaflet.Legend.SymbolRenderer.DEFAULT_SIZE,
-          height: canvas.height || EsriLeaflet.Legend.SymbolRenderer.DEFAULT_SIZE,
+          width: canvas.width || EsriLeaflet.Tasks.Legend.SymbolRenderer.DEFAULT_SIZE,
+          height: canvas.height || EsriLeaflet.Tasks.Legend.SymbolRenderer.DEFAULT_SIZE,
           imageData: imageData.replace('data:image/png;base64,', ''),
           url: null,
           contentType: 'image/png'
@@ -334,7 +324,7 @@ EsriLeaflet.Legend.SymbolRenderer = L.Class.extend({
   },
 
   _renderFill: function(ctx, symbol, callback) {
-    var size = EsriLeaflet.Legend.SymbolRenderer.DEFAULT_SIZE;
+    var size = EsriLeaflet.Tasks.Legend.SymbolRenderer.DEFAULT_SIZE;
     var lineWidth = symbol.outline ? symbol.outline.width : 1;
     var lineOffset = Math.max(5, lineWidth * 3);
     switch (symbol.style) {
@@ -383,7 +373,7 @@ EsriLeaflet.Legend.SymbolRenderer = L.Class.extend({
         throw new Error('Unknown SFS style: ' + symbol.style);
     }
 
-    if (symbol.outline && symbol.outline.style != 'esriSLSNull' ) {
+    if (symbol.outline) {
       ctx.strokeStyle = this._formatColor(symbol.outline.color);
       ctx.lineWidth = symbol.outline.width;
       ctx.fillStyle = this._formatColor([0, 0, 0, 0]);
@@ -509,7 +499,7 @@ EsriLeaflet.Legend.SymbolRenderer = L.Class.extend({
       callback(null, ctx.toDataURL());
     } else {
       this._loadImage(symbol.url, function(err, image) {
-        ctx.drawImage(image, 0, 0, symbol.width, symbol.height );
+        ctx.drawImage(image, 0, 0);
         callback(null, ctx.canvas.toDataURL());
       }, this);
     }
@@ -522,8 +512,8 @@ EsriLeaflet.Legend.SymbolRenderer = L.Class.extend({
       symbol.type === 'esriSFS') {
       ctx.width = ctx.height = EsriLeaflet.Legend.SymbolRenderer.DEFAULT_SIZE;
     } else {
-      ctx.width = Math.round( 0.5 + symbol.width );
-      ctx.height = Math.round( 0.5 + symbol.height );
+      ctx.width = symbol.width;
+      ctx.height = symbol.height;
     }
   },
 
@@ -628,7 +618,7 @@ EsriLeaflet.Legend.SymbolRenderer = L.Class.extend({
 
   _loadImage: function(url, callback, context) {
     var image = new Image();
-    // image.crossOrigin = '';
+    image.crossOrigin = '';
     image.onload = function() {
       callback.call(context, null, this);
     };
