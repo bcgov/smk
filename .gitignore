@@ -7,6 +7,9 @@
 **/.vscode/**
 **/.settings/**
 
+# Generated files
+package-lock.json
+
 # Generated dirs
 **/node_modules/**
 **/target/**
