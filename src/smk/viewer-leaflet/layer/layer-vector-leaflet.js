@@ -310,19 +310,19 @@ include.module( 'layer-leaflet.layer-vector-leaflet-js', [ 'layer.layer-vector-j
     function clusterOptions( layerConfig, viewer ) {
         var opt = {}
 
-        // Set showCoverageOnHover from the layer if a value exists
-        if ( layerConfig && 
-            layerConfig.clusterOption &&
-            layerConfig.clusterOption.showCoverageOnHover !== undefined) {
-                opt.showCoverageOnHover = layerConfig.clusterOption.showCoverageOnHover;
-        }
-
-        // For backwards compatibility, override showCoverageOnHover with
+        // For backwards compatibility, set showCoverageOnHover with
         // a 'true' value from the viewer.
         if ( viewer &&
             viewer.clusterOption &&
             !!viewer.clusterOption.showCoverageOnHover ) { 
                 opt.showCoverageOnHover = viewer.clusterOption.showCoverageOnHover;
+        }
+
+        // Override showCoverageOnHover with a value from the layer if one exists
+        if ( layerConfig && 
+            layerConfig.clusterOption &&
+            layerConfig.clusterOption.showCoverageOnHover !== undefined) {
+                opt.showCoverageOnHover = layerConfig.clusterOption.showCoverageOnHover;
         }
 
         // If no value has been set, set to a default of 'false'.
