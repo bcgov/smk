@@ -1,0 +1,23 @@
+<tool-panel class="smk-geomark-panel"
+    v-bind="$$projectProps( 'tool-panel' )"
+>
+    <template slot="header">
+        <slot></slot>
+    </template>
+
+    <h1>Geomark</h1>
+
+    <p><i>(This is a work in progress; functionality is yet to be added.)</i></p>
+
+    <p>Create a Geomark by drawing your an area on the map.</p>    
+    
+    <p>Geomarks can also be loaded by geomark URL.</p>
+    
+    <p>*Note: A valid geomark must include a portion of British Columbia.</p>
+
+    <ul>
+        <li>Save Drawing as Geomark</li>
+        <li>Load an Existing Geomark</li>
+        <li>Create a Geomark from File</li>
+    </ul>
+</tool-panel>
