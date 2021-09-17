@@ -8,7 +8,7 @@ When multiple styles are defined, then each feature in the layer is rendered in 
 
 If a point feature is being rendered, the `"marker..."` properties are used. If the [`"markerUrl"` property](#markerurl-property) isn't defined, then a circle is rendered instead, using the `"stroke..."` and `"fill..."` properties. The circle radius will be half of the [`"strokeWidth"` property](#strokewidth-property).
 
-A style object contains is defined with these properties, which have these default values.
+A style object contains these properties, which have these default values. 
 Click on a property name for more information:
 <pre>
 {

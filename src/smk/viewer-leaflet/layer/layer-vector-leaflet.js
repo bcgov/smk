@@ -310,11 +310,24 @@ include.module( 'layer-leaflet.layer-vector-leaflet-js', [ 'layer.layer-vector-j
     function clusterOptions( layerConfig, viewer ) {
         var opt = {}
 
-        // Fix for issue: https://github.com/bcgov/smk/issues/104
+        // For backwards compatibility, set showCoverageOnHover with
+        // a 'true' value from the viewer.
         if ( viewer &&
             viewer.clusterOption &&
-            viewer.clusterOption.showCoverageOnHover !== undefined ) {
-            opt.showCoverageOnHover = viewer.clusterOption.showCoverageOnHover;
+            !!viewer.clusterOption.showCoverageOnHover ) { 
+                opt.showCoverageOnHover = viewer.clusterOption.showCoverageOnHover;
+        }
+
+        // Override showCoverageOnHover with a value from the layer if one exists
+        if ( layerConfig && 
+            layerConfig.clusterOption &&
+            layerConfig.clusterOption.showCoverageOnHover !== undefined) {
+                opt.showCoverageOnHover = layerConfig.clusterOption.showCoverageOnHover;
+        }
+
+        // If no value has been set, set to a default of 'false'.
+        if (opt.showCoverageOnHover === undefined) {
+            opt.showCoverageOnHover = false;
         }
 
         if ( layerConfig && layerConfig.clusterStyle ) {

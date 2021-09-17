@@ -20,6 +20,7 @@ Click on a property name for more information:
     <a href="#attributes-property"          >"attributes"</a>:          null,
     <a href="#queries-property"             >"queries"</a>:             null,
     <a href="#useclustering-property"       >"useClustering"</a>:       false,
+    <a href="#clusteroption-property"       >"clusterOption"</a>:       null,
     <a href="#useheatmap-property"          >"useHeatmap"</a>:          false,
     <a href="#style-property"               >"style"</a>:               null,
     <a href="#dataUrl-property"             >"dataUrl"</a>:             null
@@ -48,6 +49,11 @@ If `true`, the layer should use point clustering.
 Only relevant for point geometry layers.
 The default is `false`.
 
+
+## ClusterOption Property
+`"clusterOption": Object`
+
+The [cluster option](cluster-option) object used to influence the rendering of clusters of points.
 
 ## UseHeatmap Property
 `"useHeatmap": Boolean`
