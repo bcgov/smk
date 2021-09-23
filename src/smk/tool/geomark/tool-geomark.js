@@ -1,4 +1,5 @@
 include.module( 'tool-geomark', [ 
+    'geomark',
     'tool.tool-base-js',
     'tool.tool-widget-js',
     'tool.tool-panel-js',
@@ -57,6 +58,52 @@ include.module( 'tool-geomark', [
 
                 editableLayers.addLayer(layer);
             });
+
+            var baseUrl = 'https://apps.gov.bc.ca/pub/geomark';
+            var client = new window.GeomarkClient(baseUrl);
+
+            smk.on( this.id, {
+                'create-geomark': function () {
+                    if (editableLayers.getLayers().length == 0) {
+                        alert('No drawings were found.');
+                        return;
+                    }
+                    var geoJson = editableLayers.toGeoJSON();
+                    // var geoJsonStr = JSON.stringify(geoJson);
+                    var lngLatCoords = '';
+                    editableLayers.getLayers().forEach(function(layer, index, array) {
+                        var latLngs = layer.getLatLngs();
+                        layer.getLatLngs().forEach(function(pointArray) {
+                            var firstPointStr = '';
+                            lngLatCoords += '(';
+                            pointArray.forEach(function(point, index, array){
+                                var lngLatCoord = point.lng + ' ' + point.lat;
+                                if (index == 0) {
+                                    firstPointStr = lngLatCoord;
+                                }
+                                lngLatCoords += lngLatCoord + ', ';
+                            });
+                            lngLatCoords += firstPointStr + ')'; // close the polygon
+                            if (index != (array.length - 1)) {
+                                lngLatCoords += ', ';
+                            }
+                        });
+                    });
+                    client.createGeomark({
+                        'body': 'SRID=4326;POLYGON(' + lngLatCoords + ')',
+                        // 'format': 'geojson',
+                        'format': 'wkt',
+                        'callback': function(geomarkInfo) {
+                            var geomarkId = geomarkInfo.id;
+                            if (geomarkId) { 
+                                alert('Created geomark: ' + geomarkInfo.url);
+                            } else {
+                                alert('Error creating geomark: ' + geomarkInfo.error);
+                            }
+                        }
+                    });
+                }
+            })
         }
     )
 } )

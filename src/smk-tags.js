@@ -13,6 +13,7 @@ t.script( 'document-ready', 'smk/document-ready.js' )
 t.script( 'jquery', 'lib/jquery-3.3.1.min.js' )
 t.script( 'vue', 'lib/vue-2.5.11.min.js' )
 t.script( 'turf', 'lib/turf-5.1.6.min.js' )
+t.script( 'geomark', 'https://apps.gov.bc.ca/pub/geomark/js/geomark.js', { external: true }  )
 
 t.script( 'libs', 'smk/libs.js' )
 // t.sequence( 'libs' )
