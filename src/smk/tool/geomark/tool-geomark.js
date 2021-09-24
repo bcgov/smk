@@ -33,25 +33,12 @@ include.module( 'tool-geomark', [
             var editableLayers = new L.FeatureGroup();
             smk.$viewer.map.addLayer(editableLayers);
 
-            var drawPluginOptions = {
-                position: 'topright',
-                draw: {
-                    // disable other toolbar shape widgets
-                    polyline: false,
-                    circle: false, 
-                    circlemarker: false,
-                    rectangle: false,
-                    marker: false
-                },
-                edit: {
-                    featureGroup: editableLayers
-                }
-            };
+            smk.$viewermap.pm.addControls({  
+                position: 'topright',  
+                drawCircle: false,  
+            }); 
 
-            var drawControl = new L.Control.Draw(drawPluginOptions);
-            smk.$viewer.map.addControl(drawControl);
-
-            smk.$viewer.map.on('draw:created', function(e) {
+            smk.$viewer.map.on('pm:create', function(e) {
                 var type = e.layerType,
                     layer = e.layer;
 
