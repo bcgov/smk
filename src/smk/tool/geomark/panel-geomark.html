@@ -20,4 +20,15 @@
         <li>Load an Existing Geomark</li>
         <li>Create a Geomark from File</li>
     </ul>
+
+    <h2>Loaded Geomarks</h2>
+
+    <div id="geomarks-container">
+        <ul>
+            <li v-for="geomark in geomarks">
+                <input type="checkbox" checked v-bind:id="geomark.id" v-on:click="$$emit( 'toggle-geomark', { id: geomark.id } )">
+                <a v-bind:href="geomark.url">{{ geomark.id}}</a>
+            </li>
+        </ul>
+    </div>
 </tool-panel>
