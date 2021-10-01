@@ -26,17 +26,25 @@ include.module( 'tool-geomark', [
             this.defineProp( 'config' )
         },
         function ( smk ) {
+            var self = this
+
             this.config = SMK.UTIL.projection( 'lmfId', 'lmfRevision', 'createdBy', '_rev', 'published' )( smk )
 
             this.config.enabledTools = Object.keys( smk.$toolType ).sort()
 
+            this.changedActive( function () {
+                if ( self.active ) {
+                    smk.$viewer.map.pm.enableDraw('Polygon', {
+                        continueDrawing: true
+                    });
+                }
+                else {
+                    smk.$viewer.map.pm.disableDraw();
+                }
+            } )
+
             var editableLayers = new L.FeatureGroup();
             smk.$viewer.map.addLayer(editableLayers);
-
-            smk.$viewermap.pm.addControls({  
-                position: 'topright',  
-                drawCircle: false,  
-            }); 
 
             smk.$viewer.map.on('pm:create', function(e) {
                 var type = e.layerType,
