@@ -12,8 +12,7 @@ include.module( 'tool-geomark', [
 
     Vue.component( 'geomark-panel', {
         extends: SMK.COMPONENT.ToolPanelBase,
-        template: inc[ 'tool-geomark.panel-geomark-html' ],
-        props: [ 'build', 'config' ]
+        template: inc[ 'tool-geomark.panel-geomark-html' ]
     } )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
@@ -21,16 +20,9 @@ include.module( 'tool-geomark', [
         function () {
             SMK.TYPE.ToolWidget.call( this, 'geomark-widget' )
             SMK.TYPE.ToolPanel.call( this, 'geomark-panel' )
-
-            this.defineProp( 'build' )
-            this.defineProp( 'config' )
         },
         function ( smk ) {
             var self = this
-
-            this.config = SMK.UTIL.projection( 'lmfId', 'lmfRevision', 'createdBy', '_rev', 'published' )( smk )
-
-            this.config.enabledTools = Object.keys( smk.$toolType ).sort()
 
             this.changedActive( function () {
                 if ( self.active ) {
