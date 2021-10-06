@@ -35,14 +35,14 @@ include.module( 'tool-geomark', [
                 }
             } )
 
-            var editableLayers = new L.FeatureGroup();
-            smk.$viewer.map.addLayer(editableLayers);
+            var geomarkLayers = new L.FeatureGroup();
+            smk.$viewer.map.addLayer(geomarkLayers);
 
             smk.$viewer.map.on('pm:create', function(e) {
-                var type = e.layerType,
-                    layer = e.layer;
+                var type = e.layerType;
+                var layer = e.layer;
 
-                editableLayers.addLayer(layer);
+                geomarkLayers.addLayer(layer);
             });
         }
     )
