@@ -139,6 +139,9 @@ t.group( 'tool-directions' )
 // t.group( 'tool-dropdown' )
 //     .dir( 'smk/tool/dropdown/*' )
 
+t.group( 'tool-geomark' )
+    .dir( 'smk/tool/geomark/*' )
+
 t.group( 'tool-identify' )
     .dir( 'smk/tool/identify/*' )
 
@@ -219,6 +222,8 @@ t.group( 'viewer-leaflet' )
 t.sequence( 'leaflet' )
     .script( 'lib/leaflet/leaflet-1.7.1.js' )
     .style( 'lib/leaflet/leaflet-1.7.1.css', { inline: false } )
+    .script( 'lib/leaflet/leaflet-geoman-2.11.2.min.js' )
+    .style( 'lib/leaflet/leaflet-geoman-2.11.2.css', { inline: false } )
     .script( 'lib/leaflet/esri-leaflet-3.0.2.js' )
     .script( 'lib/leaflet/esri-leaflet-renderers-2.1.2.js' )
     .script( 'lib/leaflet/esri-leaflet-legend-compat-src-2.0.1.js')
