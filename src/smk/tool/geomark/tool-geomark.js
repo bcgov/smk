@@ -21,9 +21,16 @@ include.module( 'tool-geomark', [
         function () {
             SMK.TYPE.ToolWidget.call( this, 'geomark-widget' )
             SMK.TYPE.ToolPanel.call( this, 'geomark-panel' )
+
+            this.defineProp( 'geomarkService' )
         },
         function ( smk ) {
             var self = this
+
+            if (!self.geomarkService) {
+                self.showStatusMessage('No value for "geomarkService" was found in configuration. Geomark tool functionality is disabled.', 'error', 5000);
+                return;
+            }
 
             this.buildLngLatCoords = function(layerGroup) {
                 var lngLatCoords = '';
@@ -68,13 +75,12 @@ include.module( 'tool-geomark', [
                 geomarkLayers.addLayer(layer);
             });
 
-            var baseUrl = 'https://apps.gov.bc.ca/pub/geomark';
-            var client = new window.GeomarkClient(baseUrl);
+            var client = new window.GeomarkClient(self.geomarkService.url);
 
             smk.on( this.id, {
                 'create-geomark': function () {
                     if (geomarkLayers.getLayers().length == 0) {
-                        alert('No drawings were found.');
+                        self.showStatusMessage('No drawings were found. Draw one or more polygons before creating a geomark.', 'warning');
                         return;
                     }
                     var lngLatCoords = self.buildLngLatCoords(geomarkLayers);
@@ -84,9 +90,10 @@ include.module( 'tool-geomark', [
                         'callback': function(geomarkInfo) {
                             var geomarkId = geomarkInfo.id;
                             if (geomarkId) { 
-                                alert('Created geomark: ' + geomarkInfo.url);
+                                alert('Created geomark: ' + geomarkInfo.url + 
+                                '. Save this URL to access your geomark later.');
                             } else {
-                                alert('Error creating geomark: ' + geomarkInfo.error);
+                                self.showStatusMessage('Error creating geomark: ' + geomarkInfo.error, 'error', 5000);
                             }
                         }
                     });
