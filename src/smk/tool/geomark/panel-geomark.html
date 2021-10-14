@@ -23,6 +23,8 @@
 
     <h2>Loaded Geomarks</h2>
 
+    <p v-if="geomarks.length === 0">No geomarks have been loaded.</p>
+
     <div id="geomarks-container">
         <ul>
             <li v-for="geomark in geomarks">
