@@ -21,11 +21,8 @@
         <li>Create a Geomark from File</li>
     </ul>
 
-    <h2>Loaded Geomarks</h2>
-
-    <p v-if="geomarks.length === 0">No geomarks have been loaded.</p>
-
-    <div id="geomarks-container">
+    <div v-if="geomarks.length != 0" id="geomarks-container">
+        <h2>Loaded Geomarks</h2>
         <ul>
             <li v-for="geomark in geomarks">
                 <input type="checkbox" checked v-bind:id="geomark.id" v-on:click="$$emit( 'toggle-geomark', { id: geomark.id } )">

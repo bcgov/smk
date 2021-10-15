@@ -92,10 +92,7 @@ include.module( 'tool-geomark', [
             }
 
             smk.$viewer.map.on('pm:create', function(e) {
-                var type = e.layerType;
-                var layer = e.layer;
-
-                currentDrawingLayer.addLayer(layer);
+                currentDrawingLayer.addLayer(e.layer);
             });
 
             var client = new window.GeomarkClient(self.geomarkService.url);
