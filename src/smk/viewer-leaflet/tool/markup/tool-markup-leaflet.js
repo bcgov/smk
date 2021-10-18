@@ -5,13 +5,13 @@ include.module( 'tool-markup-leaflet', [ 'leaflet', 'tool-markup' ], function ()
         if ( smk.$device == 'mobile' ) return
 
         smk.$viewer.map.pm.addControls( {
-            position: 'topright', // toolbar position, options are 'topleft', 'topright', 'bottomleft', 'bottomright'
-            drawMarker: true,  // adds button to draw markers
-            drawPolygon: true,  // adds button to draw a polygon
-            drawPolyline: true,  // adds button to draw a polyline
-            drawCircle: true,  // adds button to draw a cricle
-            editPolygon: true,  // adds button to toggle global edit mode
-            deleteLayer: true   // adds a button to delete layers
+            // Options are defined in https://github.com/geoman-io/leaflet-geoman#leaflet-geoman-toolbar
+            position: 'topright', 
+            drawRectangle: false,  
+            drawCircleMarker: false,
+            dragMode: false,
+            cutPolygon: false,
+            rotateMode: false
         } )
     } )
 } )
