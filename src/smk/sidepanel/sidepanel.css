@@ -166,3 +166,14 @@
 .smk-device-mobile .smk-sidepanel .smk-panel .smk-can-scroll-down {
     display: block;
 }
+
+.smk-sidepanel .smk-no-list-style {
+    list-style-type: none;
+    padding-inline-start: 0px;
+}
+
+.smk-sidepanel .smk-truncate-with-ellipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
