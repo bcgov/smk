@@ -73,7 +73,7 @@ include.module( 'tool-geomark', [
 
             this.tidyUrl = function(url) {
                 url = url.trim();
-                if (url.endsWith('/') && url.length > 0) {
+                if (url.endsWith('/')) {
                     url = url.substring(0, (url.length - 1));
                 }
                 url = url.split('?')[0];
