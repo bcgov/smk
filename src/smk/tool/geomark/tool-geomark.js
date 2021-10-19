@@ -71,12 +71,23 @@ include.module( 'tool-geomark', [
                 return wktCoords + ')';
             }
 
+            this.tidyUrl = function(url) {
+                url = url.trim();
+                if (url.endsWith('/') && url.length > 0) {
+                    url = url.substring(0, (url.length - 1));
+                }
+                url = url.split('?')[0];
+                url = encodeURI(url);
+                return url;
+            }
+
             this.extractGeomarkId = function(geomarkUrl){
-                if (!geomarkUrl) return;
-                var trimmedUrl = geomarkUrl.trim();
-                var lastSlashIdx = trimmedUrl.lastIndexOf('/');
-                if (lastSlashIdx > 0) {
-                    return trimmedUrl.substring(lastSlashIdx + 1);
+                if (!geomarkUrl) {
+                    return;
+                }
+                var lastSlashIndex = geomarkUrl.lastIndexOf('/');
+                if (lastSlashIndex > 0) {
+                    return geomarkUrl.substring(lastSlashIndex + 1);
                 }
             } 
 
@@ -137,24 +148,24 @@ include.module( 'tool-geomark', [
                     });
                 },
                 'load-geomark': function() {
-                    var geomarkUrl = prompt('Enter the URL of a geomark to load:');
+                    var enteredUrl = prompt('Enter the URL of a geomark to load:');
+                    var geomarkUrl = self.tidyUrl(enteredUrl);
                     var geomarkId = self.extractGeomarkId(geomarkUrl);
                     if (!geomarkId) {
                         self.showStatusMessage('Could not discern a geomark ID within "' + geomarkUrl + '"', 'warning', 5000);
                         return;
                     }
                     if (self.getGeomarkById(geomarkId)) {
-                        self.showStatusMessage('Geomark ' + geomarkId + ' is already loaded.', 'warning');
+                        self.showStatusMessage('Geomark ' + geomarkId + ' is already loaded.', 'warning', 5000);
                         return;
                     }
                     $.ajax({
                         url: geomarkUrl + '/feature.geojson',
                         dataType: 'json',
-                        cache: false,
                         traditional: true,
                         success: function(geomarkFeature) {
-                            var polygon = L.geoJSON(geomarkFeature.geometry).addTo(smk.$viewer.map);
-                            self.geomarks.push(self.toGeomark(geomarkFeature, polygon));
+                            var geometryLayer = L.geoJSON(geomarkFeature.geometry).addTo(smk.$viewer.map);
+                            self.geomarks.push(self.toGeomark(geomarkFeature, geometryLayer));
                         },
                         error: function(jqXHR, textStatus, errorThrown) {
                             self.showStatusMessage('Error retrieving geomark from URL ' + geomarkUrl + ': ' + errorThrown, 'error', 5000);

@@ -26,7 +26,7 @@
         <ul class="smk-no-list-style">
             <li class="smk-truncate-with-ellipsis" v-for="geomark in geomarks">
                 <input type="checkbox" checked v-bind:id="geomark.id" v-on:click="$$emit( 'toggle-geomark', { id: geomark.id } )">
-                <a v-bind:href="geomark.url">{{ geomark.id}}</a>
+                <a v-bind:href="geomark.url" target="_blank">{{ geomark.id}}</a>
             </li>
         </ul>
     </div>
