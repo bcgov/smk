@@ -98,7 +98,7 @@ include.module( 'tool-geomark', [
             var client = new window.GeomarkClient(self.geomarkService.url);
 
             smk.on( this.id, {
-                'create-geomark': function () {
+                'create-geomark-from-drawing': function () {
                     if (currentDrawingLayer.getLayers().length == 0) {
                         self.showStatusMessage('No drawings were found. Draw one or more polygons before creating a geomark.', 'warning', 5000);
                         return;
@@ -119,6 +119,10 @@ include.module( 'tool-geomark', [
                             }
                         }
                     });
+                },
+                'create-geomark-from-file': function () {
+                    window.open(self.geomarkService.url + '/geomarks#file');
+                    alert('Upload your file using the form in the new window. Once you have a Geomark URL, load it using "Load an Existing Geomark".');
                 },
                 'toggle-geomark': function(idObj) {
                     var geomark = self.getGeomarkById(idObj.id);
