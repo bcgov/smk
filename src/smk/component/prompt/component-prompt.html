@@ -1,0 +1,18 @@
+<div class="modal-mask">
+  <div class="modal-wrapper">
+    <div class="modal-container">
+      <div class="modal-body">
+        <slot name="promptBody"></slot>
+      </div>
+      <div class="modal-body">
+        <input type="text" v-bind:value="value" @input="$emit('input', $event.target.value)">
+      </div>
+      <div class="modal-footer">
+        &nbsp;
+        <button class="modal-default-button" @click="$emit('cancel')">Cancel</button>
+        &nbsp;
+        <button class="modal-default-button" @click="$emit('close', value)">OK</button>
+      </div>
+    </div>
+  </div>
+</div>

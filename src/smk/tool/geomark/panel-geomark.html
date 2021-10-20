@@ -29,4 +29,16 @@
             </li>
         </ul>
     </div>
+
+    <alert v-if="showAlert === true" @close="$$emit( 'close-alert' )">
+        <div slot="alertBody" v-html="alertBody"></div>
+    </alert>
+
+    <prompt 
+        v-if="showPrompt === true" 
+        v-model="promptReply" 
+        @cancel="$$emit( 'cancel-prompt' )" 
+        @close="$$emit( 'close-prompt', $event )">
+        <div slot="promptBody" v-html="promptBody"></div>
+    </prompt>
 </tool-panel>
