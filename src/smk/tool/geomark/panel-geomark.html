@@ -17,7 +17,7 @@
 
     <ul>
         <li><a href="#" v-on:click="$$emit( 'create-geomark' )">Save Drawing as Geomark</a></li>
-        <li>Load an Existing Geomark</li>
+        <li><a href="#" v-on:click="$$emit( 'load-geomark' )">Load an Existing Geomark</a></li>
         <li>Create a Geomark from File</li>
     </ul>
 
@@ -26,7 +26,7 @@
         <ul class="smk-no-list-style">
             <li class="smk-truncate-with-ellipsis" v-for="geomark in geomarks">
                 <input type="checkbox" checked v-bind:id="geomark.id" v-on:click="$$emit( 'toggle-geomark', { id: geomark.id } )">
-                <a v-bind:href="geomark.url">{{ geomark.id}}</a>
+                <a v-bind:href="geomark.url" target="_blank">{{ geomark.id}}</a>
             </li>
         </ul>
     </div>
