@@ -125,6 +125,9 @@ include.module( 'tool-geomark', [
             var client = new window.GeomarkClient(self.geomarkService.url);
 
             smk.on( this.id, {
+                'clear-drawing': function() {
+                    currentDrawingLayer.clearLayers();
+                },
                 'create-geomark': function () {
                     if (currentDrawingLayer.getLayers().length == 0) {
                         self.showStatusMessage('No drawings were found. Draw one or more polygons before creating a geomark.', 'warning', 5000);
