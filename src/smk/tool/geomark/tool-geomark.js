@@ -121,8 +121,8 @@ include.module( 'tool-geomark', [
                     });
                 },
                 'create-geomark-from-file': function () {
-                    window.open(self.geomarkService.url + '/geomarks#file');
                     alert('Upload your file using the form in the new window. Once you have a Geomark URL, load it using "Load an Existing Geomark".');
+                    window.open(self.geomarkService.url + '/geomarks#file');
                 },
                 'toggle-geomark': function(idObj) {
                     var geomark = self.getGeomarkById(idObj.id);
