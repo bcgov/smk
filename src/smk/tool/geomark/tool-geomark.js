@@ -153,7 +153,7 @@ include.module( 'tool-geomark', [
                 'create-geomark-from-file': function () {
                     alert('Upload your file using the form in the new window. Once you have a Geomark URL, load it using "Load an Existing Geomark".');
                     window.open(self.geomarkService.url + '/geomarks#file');
-                }
+                },
                 'load-geomark': function() {
                     var enteredUrl = prompt('Enter the URL of a geomark to load:');
                     var geomarkUrl = self.tidyUrl(enteredUrl);
