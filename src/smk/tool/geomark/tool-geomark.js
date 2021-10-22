@@ -128,7 +128,7 @@ include.module( 'tool-geomark', [
                 'clear-drawing': function() {
                     currentDrawingLayer.clearLayers();
                 },
-                'create-geomark': function () {
+                'create-geomark-from-drawing': function () {
                     if (currentDrawingLayer.getLayers().length == 0) {
                         self.showStatusMessage('No drawings were found. Draw one or more polygons before creating a geomark.', 'warning', 5000);
                         return;
@@ -150,6 +150,10 @@ include.module( 'tool-geomark', [
                         }
                     });
                 },
+                'create-geomark-from-file': function () {
+                    alert('Upload your file using the form in the new window. Once you have a Geomark URL, load it using "Load an Existing Geomark".');
+                    window.open(self.geomarkService.url + '/geomarks#file');
+                }
                 'load-geomark': function() {
                     var enteredUrl = prompt('Enter the URL of a geomark to load:');
                     var geomarkUrl = self.tidyUrl(enteredUrl);

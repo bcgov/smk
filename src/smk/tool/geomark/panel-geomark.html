@@ -16,10 +16,10 @@
     <p>*Note: A valid geomark must include a portion of British Columbia.</p>
 
     <ul>
-        <li><a href="#" v-on:click="$$emit( 'create-geomark' )">Save Drawing as Geomark</a></li>
+        <li><a href="#" v-on:click="$$emit( 'create-geomark-from-drawing' )">Save Drawing as Geomark</a></li>
         <li><a href="#" v-on:click="$$emit( 'clear-drawing' )">Clear Current Drawing</a></li>
         <li><a href="#" v-on:click="$$emit( 'load-geomark' )">Load an Existing Geomark</a></li>
-        <li>Create a Geomark from File</li>
+        <li><a href="#" v-on:click="$$emit( 'create-geomark-from-file' )">Create a Geomark from File</a></li>
     </ul>
 
     <div v-if="geomarks.length != 0" id="geomarks-container">
