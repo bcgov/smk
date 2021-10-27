@@ -19,7 +19,7 @@ This is default configuration for the Geomark tool (click on a property name for
     <a href="#enabled-property">"enabled"</a>:        false,
     <a href="#icon-property"     >"icon"</a>:           <a href="https://material.io/tools/icons/?icon=build" target="material">"build"</a>,
     <a href="#order-property"    >"order"</a>:          1,
-    <a href="#position-property" >"position"</a>:       "toolbar"
+    <a href="#position-property" >"position"</a>:       "list-menu"
 } ] }
 </pre>
 
