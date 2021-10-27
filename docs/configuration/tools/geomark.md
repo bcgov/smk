@@ -2,9 +2,9 @@
 
 # Geomark Tool
 
-Adds a button to the toolbar that shows a panel that allows drawing, creating, and loading geomarks.
+This tool shows a panel that allows drawing, creating, and loading geomarks.
 
-A geomark (https://apps.gov.bc.ca/pub/geomark/geomarks) is a shape that is stored in a geomark web service and can be shared by a URL.
+A geomark (https://apps.gov.bc.ca/pub/geomark/geomarks) is a geographic area of interest that is stored in a geomark web service and can be shared by a URL.
 
 This is default configuration for the Geomark tool (click on a property name for more information):
 <pre>
@@ -29,4 +29,4 @@ Contains properties of the geomark web service.
 ### URL Sub-Property
 `"geomarkService"`: `{ "url": String }`
 
-The Uniform Resource Locator (URL) of the geomark web service used.
+The URL of the geomark web service used.
