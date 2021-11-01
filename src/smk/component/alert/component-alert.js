@@ -7,8 +7,7 @@ include.module( 'component-alert', [
     Vue.component('alert', {
         template: inc[ 'component-alert.component-alert-html' ],
         data: {
-            alertBody: '',
-            showAlert: false
+            alertBody: ''
         }  
     });
 } );

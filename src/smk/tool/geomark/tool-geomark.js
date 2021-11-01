@@ -120,7 +120,7 @@ include.module( 'tool-geomark', [
                 }
             } )
 
-            this.createAndShowAlert = function(alertBodyArg) {
+            this.updateAndShowAlert = function(alertBodyArg) {
                 self.alertBody = alertBodyArg;
                 self.showAlert = true;
             }
@@ -144,7 +144,7 @@ include.module( 'tool-geomark', [
             }
 
             this.loadGeomark = function(promptValue) {
-                if (promptValue.length === 0) {
+                if (!promptValue || promptValue.length === 0) {
                     return;
                 }
                 var geomarkUrl = self.tidyUrl(promptValue);
@@ -193,7 +193,7 @@ include.module( 'tool-geomark', [
                         'callback': function(geomarkInfo) {
                             var geomarkId = geomarkInfo.id;
                             if (geomarkId) { 
-                                self.createAndShowAlert('Created geomark: <a href="' + geomarkInfo.url + 
+                                self.updateAndShowAlert('Created geomark: <a href="' + geomarkInfo.url + 
                                 '" target="_new">' + geomarkInfo.url +
                                 '</a>. Save this URL to access your geomark later.');
                                 self.geomarks.push(self.toGeomark(geomarkInfo, currentDrawingLayer));
@@ -205,7 +205,7 @@ include.module( 'tool-geomark', [
                     });
                 },
                 'create-geomark-from-file': function () {
-                    self.createAndShowAlert('Upload your file using the form in the new window. Once you have a Geomark URL, load it using "Load an Existing Geomark".');
+                    self.updateAndShowAlert('Upload your file using the form in the new window. Once you have a Geomark URL, add it to the map using "Load an Existing Geomark".');
                     window.open(self.geomarkService.url + '/geomarks#file');
                 },
                 'load-geomark': function() {

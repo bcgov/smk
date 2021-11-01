@@ -29,3 +29,46 @@
     margin-right: 5px;
     margin-left: 5px;
 }
+
+.smk-modal-mask {
+    position: fixed;
+    z-index: 99999;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: table;
+}
+
+.smk-modal-wrapper {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.smk-modal-container {
+    font-size: 12px;
+    width: 400px;
+    max-width: 90%;
+    margin: 0px auto;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 2px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
+}
+
+.smk-modal-body {
+    margin: 10px 0;
+}
+
+.smk-modal-footer {
+    margin: 5px 0;
+}
+
+.smk-modal-button-wrapper {
+    float: right;
+}
+
+.smk-modal-default-button {
+    margin-left: 5px;
+}
