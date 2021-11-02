@@ -125,8 +125,6 @@ include.module( 'tool-geomark', [
                 self.showAlert = true;
             }
 
-            this.handlePrompt = function(promptValue) {};
-
             var currentDrawingLayer = self.createCurrentDrawingLayer();
 
             this.toGeomark = function(geomarkInfo, drawingLayer) {
@@ -210,7 +208,6 @@ include.module( 'tool-geomark', [
                 },
                 'load-geomark': function() {
                     self.promptBody = 'Enter the URL of a geomark to load:';
-                    self.handlePrompt = self.loadGeomark;
                     self.showPrompt = true;
                 },
                 'toggle-geomark': function(idObj) {
@@ -233,7 +230,7 @@ include.module( 'tool-geomark', [
                 },
                 'close-prompt': function(promptValue) {
                     self.showPrompt = false;
-                    self.handlePrompt(promptValue);
+                    self.loadGeomark(promptValue);
                  }
             })
         }

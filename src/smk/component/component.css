@@ -47,7 +47,6 @@
 }
 
 .smk-modal-container {
-    font-size: 12px;
     width: 400px;
     max-width: 90%;
     margin: 0px auto;
@@ -62,6 +61,7 @@
 }
 
 .smk-modal-footer {
+    min-height: 15px;
     margin: 5px 0;
 }
 
