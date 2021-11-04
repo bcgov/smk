@@ -125,7 +125,8 @@ include.module( 'tool-geomark', [
                 self.showAlert = true;
             }
 
-            this.handleAlert = function() {};
+            // Used to specify action(s) to be executed when an alert is confirmed
+            this.handleAlert = undefined;
 
             var currentDrawingLayer = self.createCurrentDrawingLayer();
 
@@ -230,7 +231,7 @@ include.module( 'tool-geomark', [
                 'close-alert': function() {
                     self.showAlert = false;
                     self.handleAlert();
-                    self.handleAlert = function() {};
+                    self.handleAlert = undefined;
                 },
                 'cancel-prompt': function() {
                     self.showPrompt = false;
