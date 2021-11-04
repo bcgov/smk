@@ -109,14 +109,24 @@ include.module( 'tool-geomark', [
                 }
             } 
 
+            this.defaultTemplineStyle = undefined;
+            this.defaultHintlineStyle = undefined;
             this.changedActive( function () {
                 if ( self.active ) {
+                    if (!this.defaultTemplineStyle) {
+                        this.defaultTemplineStyle = JSON.parse(JSON.stringify(smk.$viewer.map.pm.getGlobalOptions().templineStyle));
+                    }
+                    if (!this.defaultHintlineStyle) {
+                        this.defaultHintlineStyle = JSON.parse(JSON.stringify(smk.$viewer.map.pm.getGlobalOptions().hintlineStyle));
+                    }
+                    smk.$viewer.map.pm.setGlobalOptions({ templineStyle: { color: 'black' }, hintlineStyle: { color: 'green' } });
                     smk.$viewer.map.pm.enableDraw('Polygon', {
                         continueDrawing: true
                     });
                 }
                 else {
                     smk.$viewer.map.pm.disableDraw();
+                    smk.$viewer.map.pm.setGlobalOptions({ templineStyle: this.defaultTemplineStyle, hintlineStyle: this.defaultHintlineStyle });
                 }
             } )
 
