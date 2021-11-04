@@ -3,6 +3,8 @@ include.module( 'tool-geomark', [
     'tool.tool-base-js',
     'tool.tool-widget-js',
     'tool.tool-panel-js',
+    'component-alert',
+    'component-prompt',
     'tool-geomark.panel-geomark-html'
 ], function ( inc ) {
     "use strict";
@@ -14,7 +16,14 @@ include.module( 'tool-geomark', [
     Vue.component( 'geomark-panel', {
         extends: SMK.COMPONENT.ToolPanelBase,
         template: inc[ 'tool-geomark.panel-geomark-html' ],
-        props: [ 'geomarks' ]
+        props: [ 
+            'geomarks', 
+            'showAlert', 
+            'showPrompt', 
+            'alertBody',
+            'promptBody',
+            'promptReply'
+         ]
     } );
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
@@ -25,8 +34,17 @@ include.module( 'tool-geomark', [
 
             this.defineProp( 'geomarkService' );
             this.defineProp( 'geomarks' );
+            this.defineProp( 'showAlert');
+            this.defineProp( 'showPrompt');
+            this.defineProp( 'alertBody' );
+            this.defineProp( 'promptBody' );
 
             this.geomarks = [];
+            this.showAlert = false;
+            this.showPrompt = false;
+            this.alertBody = '';
+            this.promptBody = '';
+            this.promptReply = '';
         },
         function ( smk ) {
             var self = this;
@@ -102,6 +120,14 @@ include.module( 'tool-geomark', [
                 }
             } )
 
+            this.updateAndShowAlert = function(alertBodyArg) {
+                self.alertBody = alertBodyArg;
+                self.showAlert = true;
+            }
+
+            // Used to specify action(s) to be executed when an alert is confirmed
+            this.handleAlert = undefined;
+
             var currentDrawingLayer = self.createCurrentDrawingLayer();
 
             this.toGeomark = function(geomarkInfo, drawingLayer) {
@@ -116,6 +142,38 @@ include.module( 'tool-geomark', [
                 return self.geomarks.find(function(item) {
                     return item.id === geomarkId;
                 });
+            }
+
+            this.loadGeomark = function(promptValue) {
+                if (!promptValue || promptValue.length === 0) {
+                    return;
+                }
+                var geomarkUrl = self.tidyUrl(promptValue);
+                var geomarkId = self.extractGeomarkId(geomarkUrl);
+                if (!geomarkId) {
+                    self.showStatusMessage('Could not discern a geomark ID within "' + geomarkUrl + '"', 'warning', 5000);
+                    return;
+                }
+                if (self.getGeomarkById(geomarkId)) {
+                    self.showStatusMessage('Geomark ' + geomarkId + ' is already loaded.', 'warning', 5000);
+                    return;
+                }
+                $.ajax({
+                    url: geomarkUrl + '/feature.geojson',
+                    dataType: 'json',
+                    traditional: true,
+                    success: function(geomarkFeature) {
+                        var geometryLayer = L.geoJSON(geomarkFeature.geometry).addTo(smk.$viewer.map);
+                        self.geomarks.push(self.toGeomark(geomarkFeature, geometryLayer));
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        self.showStatusMessage('Error retrieving geomark from URL ' + geomarkUrl + ': ' + errorThrown, 'error', 5000);
+                    }
+                });
+            }
+
+            this.openGeomarkFileWindow = function() {
+                window.open(self.geomarkService.url + '/geomarks#file');
             }
 
             smk.$viewer.map.on('pm:create', function(e) {
@@ -140,8 +198,9 @@ include.module( 'tool-geomark', [
                         'callback': function(geomarkInfo) {
                             var geomarkId = geomarkInfo.id;
                             if (geomarkId) { 
-                                alert('Created geomark: ' + geomarkInfo.url + 
-                                '. Save this URL to access your geomark later.');
+                                self.updateAndShowAlert('Created geomark: <a href="' + geomarkInfo.url + 
+                                '" target="_new">' + geomarkInfo.url +
+                                '</a>. Save this URL to access your geomark later.');
                                 self.geomarks.push(self.toGeomark(geomarkInfo, currentDrawingLayer));
                                 currentDrawingLayer = self.createCurrentDrawingLayer();
                             } else {
@@ -151,33 +210,12 @@ include.module( 'tool-geomark', [
                     });
                 },
                 'create-geomark-from-file': function () {
-                    alert('Upload your file using the form in the new window. Once you have a Geomark URL, load it using "Load an Existing Geomark".');
-                    window.open(self.geomarkService.url + '/geomarks#file');
+                    self.handleAlert = self.openGeomarkFileWindow;
+                    self.updateAndShowAlert('Upload your file using the form in the new window. Once you have a Geomark URL, add it to the map using "Load an Existing Geomark".');
                 },
                 'load-geomark': function() {
-                    var enteredUrl = prompt('Enter the URL of a geomark to load:');
-                    var geomarkUrl = self.tidyUrl(enteredUrl);
-                    var geomarkId = self.extractGeomarkId(geomarkUrl);
-                    if (!geomarkId) {
-                        self.showStatusMessage('Could not discern a geomark ID within "' + geomarkUrl + '"', 'warning', 5000);
-                        return;
-                    }
-                    if (self.getGeomarkById(geomarkId)) {
-                        self.showStatusMessage('Geomark ' + geomarkId + ' is already loaded.', 'warning', 5000);
-                        return;
-                    }
-                    $.ajax({
-                        url: geomarkUrl + '/feature.geojson',
-                        dataType: 'json',
-                        traditional: true,
-                        success: function(geomarkFeature) {
-                            var geometryLayer = L.geoJSON(geomarkFeature.geometry).addTo(smk.$viewer.map);
-                            self.geomarks.push(self.toGeomark(geomarkFeature, geometryLayer));
-                        },
-                        error: function(jqXHR, textStatus, errorThrown) {
-                            self.showStatusMessage('Error retrieving geomark from URL ' + geomarkUrl + ': ' + errorThrown, 'error', 5000);
-                        }
-                    });
+                    self.promptBody = 'Enter the URL of a geomark to load:';
+                    self.showPrompt = true;
                 },
                 'toggle-geomark': function(idObj) {
                     var geomark = self.getGeomarkById(idObj.id);
@@ -189,7 +227,20 @@ include.module( 'tool-geomark', [
                     } else {
                         smk.$viewer.map.addLayer(geomark.drawingLayer);
                     }
-                }
+                },
+                'close-alert': function() {
+                    self.showAlert = false;
+                    self.handleAlert();
+                    self.handleAlert = undefined;
+                },
+                'cancel-prompt': function() {
+                    self.showPrompt = false;
+                    self.promptReply = '';
+                },
+                'close-prompt': function(promptValue) {
+                    self.showPrompt = false;
+                    self.loadGeomark(promptValue);
+                 }
             })
         }
     )
