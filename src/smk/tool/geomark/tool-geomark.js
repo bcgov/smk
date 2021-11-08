@@ -18,6 +18,7 @@ include.module( 'tool-geomark', [
         template: inc[ 'tool-geomark.panel-geomark-html' ],
         props: [ 
             'geomarks', 
+            'enableCreateFromFile', 
             'showAlert', 
             'showPrompt', 
             'alertBody',
@@ -33,6 +34,7 @@ include.module( 'tool-geomark', [
             SMK.TYPE.ToolPanel.call( this, 'geomark-panel' );
 
             this.defineProp( 'geomarkService' );
+            this.defineProp( 'enableCreateFromFile' );
             this.defineProp( 'geomarks' );
             this.defineProp( 'showAlert');
             this.defineProp( 'showPrompt');
