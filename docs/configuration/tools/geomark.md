@@ -45,4 +45,4 @@ The URL of the geomark web service used.
 ## Enable Create From File Property
 `"enableCreateFromFile"`: `Boolean`
 
-When set to true, a link will be added to the panel that opens a new browser tab to the page of the geomark service where a file can be uploaded to create a new geomark. The geomark's link can then be used to load a geomark.
+When true, the panel will contain a link to the Geomark service where a file can be uploaded to create a new geomark. The geomark can then be added to the map by loading it.
