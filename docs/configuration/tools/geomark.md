@@ -16,6 +16,7 @@ This is default configuration for the Geomark tool (click on a property name for
     <a href="#geomark-service-property">"geomarkService"</a>: {
         <a href="#url-sub-property">"url"</a>:            "https://apps.gov.bc.ca/pub/geomark"
     },
+    <a href="#enable-create-from-file-property">"enableCreateFromFile"</a>: false,
     <a href="#enabled-property">"enabled"</a>:        false,
     <a href="#icon-property"     >"icon"</a>:           <a href="https://material.io/tools/icons/?icon=build" target="material">"build"</a>,
     <a href="#order-property"    >"order"</a>:          1,
@@ -40,3 +41,8 @@ Contains properties of the geomark web service.
 `"geomarkService"`: `{ "url": String }`
 
 The URL of the geomark web service used.
+
+## Enable Create From File Property
+`"enableCreateFromFile"`: `Boolean`
+
+When set to true, a link will be added to the panel that opens a new browser tab to the page of the geomark service where a file can be uploaded to create a new geomark. The geomark's link can then be used to load a geomark.
