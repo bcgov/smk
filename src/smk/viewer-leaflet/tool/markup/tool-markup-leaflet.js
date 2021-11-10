@@ -4,7 +4,20 @@ include.module( 'tool-markup-leaflet', [ 'leaflet', 'tool-markup' ], function ()
     SMK.TYPE.MarkupTool.addInitializer( function ( smk ) {
         if ( smk.$device == 'mobile' ) return
 
-        smk.$viewer.map.pm.setGlobalOptions({ templineStyle: { color: 'purple' }, hintlineStyle: { color: 'orange', dashArray: [15, 5] } });
+        smk.$viewer.map.pm.setGlobalOptions({ 
+            templineStyle: { 
+                color: 'red',
+                fill: false
+            }, 
+            hintlineStyle: { 
+                color: 'red',
+                fill: false,
+                dashArray: [5, 5] 
+            },
+            pathOptions: {
+                color: '#3388ff'
+            } 
+        });
 
         smk.$viewer.map.pm.addControls( {
             // Options are defined in https://github.com/geoman-io/leaflet-geoman#leaflet-geoman-toolbar

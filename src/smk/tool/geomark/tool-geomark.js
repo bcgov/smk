@@ -109,8 +109,13 @@ include.module( 'tool-geomark', [
                 }
             } 
 
+            this.setCurrentDrawingLayer = function(e) {
+                currentDrawingLayer.addLayer(e.layer);
+            }
+
             this.defaultTemplineStyle = undefined;
             this.defaultHintlineStyle = undefined;
+            this.defaultPathOptions = undefined;
             this.changedActive( function () {
                 if ( self.active ) {
                     if (!this.defaultTemplineStyle) {
@@ -119,14 +124,35 @@ include.module( 'tool-geomark', [
                     if (!this.defaultHintlineStyle) {
                         this.defaultHintlineStyle = JSON.parse(JSON.stringify(smk.$viewer.map.pm.getGlobalOptions().hintlineStyle));
                     }
-                    smk.$viewer.map.pm.setGlobalOptions({ templineStyle: { color: 'black' }, hintlineStyle: { color: 'green' } });
+                    if (!this.defaultPathOptions) {
+                        this.defaultPathOptions = JSON.parse(JSON.stringify(smk.$viewer.map.pm.getGlobalOptions().pathOptions));
+                    }
+                    smk.$viewer.map.pm.setGlobalOptions({ 
+                        templineStyle: { 
+                            color: '#003366' 
+                        }, 
+                        hintlineStyle: { 
+                            color: '#003366',
+                            fill: false,
+                            dashArray: [5, 5] 
+                        },
+                        pathOptions: {
+                            color: '#003366'
+                        } 
+                    });
+                    smk.$viewer.map.on('pm:create', self.setCurrentDrawingLayer);
                     smk.$viewer.map.pm.enableDraw('Polygon', {
                         continueDrawing: true
                     });
                 }
                 else {
                     smk.$viewer.map.pm.disableDraw();
-                    smk.$viewer.map.pm.setGlobalOptions({ templineStyle: this.defaultTemplineStyle, hintlineStyle: this.defaultHintlineStyle });
+                    smk.$viewer.map.on('pm:create', undefined); // FIXME polygons drawn by Markup still trigger self.setCurrentDrawingLayer 
+                    smk.$viewer.map.pm.setGlobalOptions({ 
+                        templineStyle: this.defaultTemplineStyle, 
+                        hintlineStyle: this.defaultHintlineStyle,
+                        pathOptions: this.defaultPathOptions
+                    });
                 }
             } )
 
@@ -185,10 +211,6 @@ include.module( 'tool-geomark', [
             this.openGeomarkFileWindow = function() {
                 window.open(self.geomarkService.url + '/geomarks#file');
             }
-
-            smk.$viewer.map.on('pm:create', function(e) {
-                currentDrawingLayer.addLayer(e.layer);
-            });
 
             var client = new window.GeomarkClient(self.geomarkService.url);
 
