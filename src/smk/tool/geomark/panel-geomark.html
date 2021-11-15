@@ -7,17 +7,13 @@
 
     <h1>Geomark</h1>
 
-    <p>Create a Geomark by drawing an area on the map.</p>    
+    <p>Use geomarks to create and share areas of interest. Create a geomark by drawing a shape on the map and saving it, or load an existing geomark by its link.</p>    
     
-    <p>Geomarks can also be loaded by geomark URL.</p>
-    
-    <p>*Note: A valid geomark must include a portion of British Columbia.</p>
-
     <ul>
-        <li><a href="#" v-on:click="$$emit( 'create-geomark-from-drawing' )">Save Drawing as Geomark</a></li>
-        <li><a href="#" v-on:click="$$emit( 'clear-drawing' )">Clear Current Drawing</a></li>
-        <li><a href="#" v-on:click="$$emit( 'load-geomark' )">Load an Existing Geomark</a></li>
-        <li v-if="enableCreateFromFile === true"><a href="#" v-on:click="$$emit( 'create-geomark-from-file' )">Create a Geomark from File</a></li>
+        <li><a href="#" v-on:click="$$emit( 'create-geomark-from-drawing' )">Save current drawing as a geomark</a></li>
+        <li><a href="#" v-on:click="$$emit( 'clear-drawing' )">Clear current drawing</a></li>
+        <li><a href="#" v-on:click="$$emit( 'load-geomark' )">Load a geomark from a link</a></li>
+        <li v-if="enableCreateFromFile === true"><a href="#" v-on:click="$$emit( 'create-geomark-from-file' )">Upload a file to create a new geomark</a></li>
     </ul>
 
     <div v-if="geomarks.length != 0" id="geomarks-container">
