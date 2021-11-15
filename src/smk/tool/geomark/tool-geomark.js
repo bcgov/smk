@@ -111,14 +111,39 @@ include.module( 'tool-geomark', [
                 }
             } 
 
+            this.setCurrentDrawingLayer = function(e) {
+                var eventLayer = e.layer;
+                eventLayer.pm.setOptions( {
+                    'allowEditing': false,
+                    'allowRemoval': false
+                } );
+                currentDrawingLayer.addLayer(eventLayer);
+            }
+
             this.changedActive( function () {
                 if ( self.active ) {
+                    smk.$viewer.map.pm.setGlobalOptions({ 
+                        templineStyle: { 
+                            color: '#ee0077' 
+                        }, 
+                        hintlineStyle: { 
+                            color: '#ee0077',
+                            fill: false,
+                            dashArray: [5, 5] 
+                        },
+                        pathOptions: {
+                            color: '#ee0077'
+                        } 
+                    });
+                    smk.$viewer.map.on('pm:create', self.setCurrentDrawingLayer);
                     smk.$viewer.map.pm.enableDraw('Polygon', {
                         continueDrawing: true
                     });
                 }
                 else {
                     smk.$viewer.map.pm.disableDraw();
+                    smk.$viewer.map.off('pm:create', self.setCurrentDrawingLayer);
+                    self.setDefaultDrawStyle();
                 }
             } )
 
@@ -177,10 +202,6 @@ include.module( 'tool-geomark', [
             this.openGeomarkFileWindow = function() {
                 window.open(self.geomarkService.url + '/geomarks#file');
             }
-
-            smk.$viewer.map.on('pm:create', function(e) {
-                currentDrawingLayer.addLayer(e.layer);
-            });
 
             var client = new window.GeomarkClient(self.geomarkService.url);
 
