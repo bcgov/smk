@@ -122,15 +122,15 @@ include.module( 'tool-geomark', [
                 if ( self.active ) {
                     smk.$viewer.map.pm.setGlobalOptions({ 
                         templineStyle: { 
-                            color: '#003366' 
+                            color: '#ee0077' 
                         }, 
                         hintlineStyle: { 
-                            color: '#003366',
+                            color: '#ee0077',
                             fill: false,
                             dashArray: [5, 5] 
                         },
                         pathOptions: {
-                            color: '#003366'
+                            color: '#ee0077'
                         } 
                     });
                     smk.$viewer.map.on('pm:create', self.setCurrentDrawingLayer);
