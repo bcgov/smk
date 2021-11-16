@@ -142,18 +142,6 @@ include.module( 'tool.tool-base-js', [ 'tool.tool-js' ], function ( inc ) {
                     } 
                 });
             }
-
-            this.addMarkupToolbar = function() {
-                smk.$viewer.map.pm.addControls( {
-                    // Options are defined in https://github.com/geoman-io/leaflet-geoman#leaflet-geoman-toolbar
-                    position: 'topright', 
-                    drawRectangle: false,  
-                    drawCircleMarker: false,
-                    dragMode: false,
-                    cutPolygon: false,
-                    rotateMode: false
-                } );
-            }
         } )
 
         this.isToolInGroupActive = function ( toolId ) {

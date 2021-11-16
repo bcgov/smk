@@ -120,9 +120,14 @@ include.module( 'tool-geomark', [
                 currentDrawingLayer.addLayer(eventLayer);
             }
 
+            this.toggleMarkupToolbarControls = function() {
+                if (smk.$tool.MarkupTool) {
+                    smk.$viewer.map.pm.toggleControls();
+                }
+            }
+
             this.changedActive( function () {
                 if ( self.active ) {
-                    smk.$viewer.map.pm.removeControls(); // remove Markup toolbar
                     smk.$viewer.map.pm.setGlobalOptions({ 
                         templineStyle: { 
                             color: '#ee0077' 
@@ -137,17 +142,16 @@ include.module( 'tool-geomark', [
                         } 
                     });
                     smk.$viewer.map.on('pm:create', self.setCurrentDrawingLayer);
+                    self.toggleMarkupToolbarControls();
                     smk.$viewer.map.pm.enableDraw('Polygon', {
                         continueDrawing: true
                     });
                 }
                 else {
                     smk.$viewer.map.pm.disableDraw();
+                    self.toggleMarkupToolbarControls();
                     smk.$viewer.map.off('pm:create', self.setCurrentDrawingLayer);
                     self.setDefaultDrawStyle();
-                    if (smk.$tool.MarkupTool) {
-                        self.addMarkupToolbar();
-                    }
                 }
             } )
 

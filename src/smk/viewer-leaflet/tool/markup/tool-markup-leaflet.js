@@ -5,6 +5,15 @@ include.module( 'tool-markup-leaflet', [ 'leaflet', 'tool-markup' ], function ()
         if ( smk.$device == 'mobile' ) return
 
         this.setDefaultDrawStyle();
-        this.addMarkupToolbar();
+
+        smk.$viewer.map.pm.addControls( {
+            // Options are defined in https://github.com/geoman-io/leaflet-geoman#leaflet-geoman-toolbar
+            position: 'topright', 
+            drawRectangle: false,  
+            drawCircleMarker: false,
+            dragMode: false,
+            cutPolygon: false,
+            rotateMode: false
+        } );
     } )
 } )
