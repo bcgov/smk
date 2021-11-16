@@ -9,8 +9,8 @@
       </div>
       <div class="smk-modal-footer">
         <div class="smk-modal-button-wrapper">
-          <button class="smk-modal-default-button" @click="$emit('prompt-cancel')">Cancel</button>
           <button class="smk-modal-default-button" @click="$emit('prompt-close', value)">OK</button>
+          <button class="smk-modal-default-button" @click="$emit('prompt-cancel')">Cancel</button>
         </div>
       </div>
     </div>
