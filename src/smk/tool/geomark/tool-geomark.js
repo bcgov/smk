@@ -253,7 +253,9 @@ include.module( 'tool-geomark', [
                 },
                 'close-alert': function() {
                     self.showAlert = false;
-                    self.handleAlert();
+                    if (self.handleAlert) {
+                        self.handleAlert();
+                    }
                     self.handleAlert = undefined;
                 },
                 'cancel-prompt': function() {
