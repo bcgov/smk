@@ -7,14 +7,14 @@
 
     <p>Use geomarks to create and share areas of interest. Create a geomark by drawing a shape on the map and saving it, or load an existing geomark by its link.</p>    
     
-    <ul>
-        <li><a href="#" v-on:click="$$emit( 'create-geomark-from-drawing' )">Save current drawing as a geomark</a></li>
-        <li><a href="#" v-on:click="$$emit( 'clear-drawing' )">Clear current drawing</a></li>
-        <li><a href="#" v-on:click="$$emit( 'load-geomark' )">Load a geomark from a link</a></li>
-        <li v-if="enableCreateFromFile === true"><a href="#" v-on:click="$$emit( 'create-geomark-from-file' )">Upload a file to create a new geomark</a></li>
-    </ul>
+    <div>
+        <button v-on:click="$$emit( 'create-geomark-from-drawing' )" :disabled="shapeIsDrawn === false">Save</button>
+        <button v-on:click="$$emit( 'clear-drawing' )" :disabled="shapeIsDrawn === false">Clear</button>
+        <button v-on:click="$$emit( 'load-geomark' )">Load URL</button>
+        <button v-if="enableCreateFromFile === true" v-on:click="$$emit( 'create-geomark-from-file' )">Load File</button>
+    </div>
 
-    <div v-if="geomarks.length != 0" id="geomarks-container">
+    <div v-if="geomarks.length !== 0" id="geomarks-container">
         <h2>Loaded Geomarks</h2>
         <ul class="smk-no-list-style">
             <li class="smk-truncate-with-ellipsis" v-for="geomark in geomarks">
