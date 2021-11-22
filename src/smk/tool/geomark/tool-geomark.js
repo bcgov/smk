@@ -131,7 +131,6 @@ include.module( 'tool-geomark', [
 
             this.changedActive( function () {
                 if ( self.active ) {
-                    self.shapeIsDrawn = false;
                     smk.$viewer.map.pm.setGlobalOptions({ 
                         templineStyle: { 
                             color: '#ee0077' 
