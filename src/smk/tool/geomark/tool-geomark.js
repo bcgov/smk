@@ -52,6 +52,10 @@ include.module( 'tool-geomark', [
             this.promptReply = '';
         },
         function ( smk ) {
+            if ( smk.$device == 'mobile' ) {
+                return;
+            }
+
             var self = this;
 
             // Check for "geomarkService" configuration. Example:
