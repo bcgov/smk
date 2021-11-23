@@ -19,6 +19,7 @@ include.module( 'tool-geomark', [
         props: [ 
             'geomarks', 
             'enableCreateFromFile', 
+            'shapeIsDrawn',
             'showAlert', 
             'showPrompt', 
             'alertBody',
@@ -36,12 +37,14 @@ include.module( 'tool-geomark', [
             this.defineProp( 'geomarkService' );
             this.defineProp( 'enableCreateFromFile' );
             this.defineProp( 'geomarks' );
+            this.defineProp( 'shapeIsDrawn' );
             this.defineProp( 'showAlert');
             this.defineProp( 'showPrompt');
             this.defineProp( 'alertBody' );
             this.defineProp( 'promptBody' );
 
             this.geomarks = [];
+            this.shapeIsDrawn = false;
             this.showAlert = false;
             this.showPrompt = false;
             this.alertBody = '';
@@ -83,7 +86,7 @@ include.module( 'tool-geomark', [
                             wktCoords += lngLatCoord + ', ';
                         });
                         wktCoords += firstPointStr + closeCoords; // close the polygon
-                        if (layerIndex != (layerArray.length - 1)) {
+                        if (layerIndex !== (layerArray.length - 1)) {
                             wktCoords += ', ';
                         }
                     });
@@ -140,6 +143,9 @@ include.module( 'tool-geomark', [
                         pathOptions: {
                             color: '#ee0077'
                         } 
+                    });
+                    smk.$viewer.map.on('pm:drawend', function(e) {
+                        self.shapeIsDrawn = true;
                     });
                     smk.$viewer.map.on('pm:create', self.setCurrentDrawingLayer);
                     self.toggleMarkupToolbarControls();
@@ -216,6 +222,7 @@ include.module( 'tool-geomark', [
             smk.on( this.id, {
                 'clear-drawing': function() {
                     currentDrawingLayer.clearLayers();
+                    self.shapeIsDrawn = false;
                 },
                 'create-geomark-from-drawing': function () {
                     if (currentDrawingLayer.getLayers().length == 0) {
@@ -234,6 +241,7 @@ include.module( 'tool-geomark', [
                                 '</a>. Save this URL to access your geomark later.');
                                 self.geomarks.push(self.toGeomark(geomarkInfo, currentDrawingLayer));
                                 currentDrawingLayer = self.createCurrentDrawingLayer();
+                                self.shapeIsDrawn = false;
                             } else {
                                 self.showStatusMessage('Error creating geomark: ' + geomarkInfo.error, 'error', 5000);
                             }
@@ -242,7 +250,7 @@ include.module( 'tool-geomark', [
                 },
                 'create-geomark-from-file': function () {
                     self.handleAlert = self.openGeomarkFileWindow;
-                    self.updateAndShowAlert('Upload your file using the form in the new window. Once you have a Geomark URL, add it to the map using "Load an Existing Geomark".');
+                    self.updateAndShowAlert('Upload your file using the form in the new window. Once you have a Geomark URL, add it to the map using "Load URL".');
                 },
                 'load-geomark': function() {
                     self.promptBody = 'Enter the URL of a geomark to load:';
