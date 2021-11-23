@@ -19,7 +19,8 @@ include.module( 'tool-geomark', [
         props: [ 
             'geomarks', 
             'enableCreateFromFile', 
-            'shapeIsDrawn',
+            'canSave',
+            'canClear',
             'showAlert', 
             'showPrompt', 
             'alertBody',
@@ -37,14 +38,16 @@ include.module( 'tool-geomark', [
             this.defineProp( 'geomarkService' );
             this.defineProp( 'enableCreateFromFile' );
             this.defineProp( 'geomarks' );
-            this.defineProp( 'shapeIsDrawn' );
+            this.defineProp( 'canSave' );
+            this.defineProp( 'canClear' );
             this.defineProp( 'showAlert');
             this.defineProp( 'showPrompt');
             this.defineProp( 'alertBody' );
             this.defineProp( 'promptBody' );
 
             this.geomarks = [];
-            this.shapeIsDrawn = false;
+            this.canSave = false;
+            this.canClear = false;
             this.showAlert = false;
             this.showPrompt = false;
             this.alertBody = '';
@@ -147,10 +150,15 @@ include.module( 'tool-geomark', [
                         } 
                     });
                     smk.$viewer.map.on('pm:drawend', function(e) {
-                        self.shapeIsDrawn = true;
+                        self.canSave = true;
                     });
                     smk.$viewer.map.on('pm:create', self.setCurrentDrawingLayer);
                     self.toggleMarkupToolbarControls();
+                    smk.$viewer.map.on('pm:drawstart', function(e1) {
+                        e1.workingLayer.on('pm:vertexadded', function(e2) {
+                            self.canClear = true;
+                        });
+                    });
                     smk.$viewer.map.pm.enableDraw('Polygon', {
                         continueDrawing: true
                     });
@@ -228,7 +236,10 @@ include.module( 'tool-geomark', [
             smk.on( this.id, {
                 'clear-drawing': function() {
                     currentDrawingLayer.clearLayers();
-                    self.shapeIsDrawn = false;
+                    smk.$viewer.map.pm.disableDraw();
+                    smk.$viewer.map.pm.enableDraw();
+                    self.canSave = false;
+                    self.canClear = false;
                 },
                 'create-geomark-from-drawing': function () {
                     if (currentDrawingLayer.getLayers().length == 0) {
@@ -247,7 +258,8 @@ include.module( 'tool-geomark', [
                                 '</a>. Save this URL to access your geomark later.');
                                 self.geomarks.push(self.toGeomark(geomarkInfo, currentDrawingLayer));
                                 currentDrawingLayer = self.createCurrentDrawingLayer();
-                                self.shapeIsDrawn = false;
+                                self.canSave = false;
+                                self.canClear = false;
                             } else {
                                 self.showStatusMessage('Error creating geomark: ' + geomarkInfo.error, 'error', 5000);
                             }
