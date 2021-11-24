@@ -24,7 +24,8 @@ include.module( 'tool-geomark', [
             'showPrompt', 
             'alertBody',
             'promptBody',
-            'promptReply'
+            'promptReply',
+            'isMobile'
          ]
     } );
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
@@ -42,6 +43,7 @@ include.module( 'tool-geomark', [
             this.defineProp( 'showPrompt');
             this.defineProp( 'alertBody' );
             this.defineProp( 'promptBody' );
+            this.defineProp( 'isMobile' );
 
             this.geomarks = [];
             this.shapeIsDrawn = false;
@@ -50,13 +52,14 @@ include.module( 'tool-geomark', [
             this.alertBody = '';
             this.promptBody = '';
             this.promptReply = '';
+            this.isMobile = false;
         },
         function ( smk ) {
-            if ( smk.$device == 'mobile' ) {
-                return;
+            if ( smk.$device === 'mobile' ) {
+                this.isMobile = true;
             }
-
-            var self = this;
+            else {
+                var self = this;
 
             // Check for "geomarkService" configuration. Example:
             // "geomarkService": {
@@ -287,6 +290,7 @@ include.module( 'tool-geomark', [
                     self.loadGeomark(promptValue);
                  }
             })
+            }
         }
     )
 } )
