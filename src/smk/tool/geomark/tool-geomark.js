@@ -54,6 +54,8 @@ include.module( 'tool-geomark', [
         function ( smk ) {
             var self = this;
 
+            var CUSTOM_COLOUR = '#ee0077';
+
             // Check for "geomarkService" configuration. Example:
             // "geomarkService": {
             //     "url": "https://apps.gov.bc.ca/pub/geomark"
@@ -133,15 +135,15 @@ include.module( 'tool-geomark', [
                 if ( self.active ) {
                     smk.$viewer.map.pm.setGlobalOptions({ 
                         templineStyle: { 
-                            color: '#ee0077' 
+                            color: CUSTOM_COLOUR 
                         }, 
                         hintlineStyle: { 
-                            color: '#ee0077',
+                            color: CUSTOM_COLOUR,
                             fill: false,
                             dashArray: [5, 5] 
                         },
                         pathOptions: {
-                            color: '#ee0077'
+                            color: CUSTOM_COLOUR
                         } 
                     });
                     smk.$viewer.map.on('pm:drawend', function(e) {
@@ -204,7 +206,11 @@ include.module( 'tool-geomark', [
                     dataType: 'json',
                     traditional: true,
                     success: function(geomarkFeature) {
-                        var geometryLayer = L.geoJSON(geomarkFeature.geometry).addTo(smk.$viewer.map);
+                        var geometryLayer = L.geoJSON(geomarkFeature.geometry, {
+                            style: function (feature) {
+                                return {color: CUSTOM_COLOUR};
+                            }
+                        }).addTo(smk.$viewer.map);
                         self.geomarks.push(self.toGeomark(geomarkFeature, geometryLayer));
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
