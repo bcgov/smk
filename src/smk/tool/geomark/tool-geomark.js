@@ -19,7 +19,8 @@ include.module( 'tool-geomark', [
         props: [ 
             'geomarks', 
             'enableCreateFromFile', 
-            'shapeIsDrawn',
+            'canSave',
+            'canClear',
             'showAlert', 
             'showPrompt', 
             'alertBody',
@@ -38,7 +39,8 @@ include.module( 'tool-geomark', [
             this.defineProp( 'geomarkService' );
             this.defineProp( 'enableCreateFromFile' );
             this.defineProp( 'geomarks' );
-            this.defineProp( 'shapeIsDrawn' );
+            this.defineProp( 'canSave' );
+            this.defineProp( 'canClear' );
             this.defineProp( 'showAlert');
             this.defineProp( 'showPrompt');
             this.defineProp( 'alertBody' );
@@ -46,7 +48,8 @@ include.module( 'tool-geomark', [
             this.defineProp( 'isMobile' );
 
             this.geomarks = [];
-            this.shapeIsDrawn = false;
+            this.canSave = false;
+            this.canClear = false;
             this.showAlert = false;
             this.showPrompt = false;
             this.alertBody = '';
@@ -61,6 +64,8 @@ include.module( 'tool-geomark', [
             }
 
             var self = this;
+
+            var CUSTOM_COLOUR = '#ee0077';
 
             // Check for "geomarkService" configuration. Example:
             // "geomarkService": {
@@ -122,12 +127,16 @@ include.module( 'tool-geomark', [
                 }
             } 
 
-            this.setCurrentDrawingLayer = function(e) {
-                var eventLayer = e.layer;
-                eventLayer.pm.setOptions( {
+            this.freezeLayer = function(layer) {
+                layer.pm.setOptions( {
                     'allowEditing': false,
                     'allowRemoval': false
                 } );
+            }
+
+            this.setCurrentDrawingLayer = function(e) {
+                var eventLayer = e.layer;
+                self.freezeLayer(eventLayer);
                 currentDrawingLayer.addLayer(eventLayer);
             }
 
@@ -141,22 +150,27 @@ include.module( 'tool-geomark', [
                 if ( self.active ) {
                     smk.$viewer.map.pm.setGlobalOptions({ 
                         templineStyle: { 
-                            color: '#ee0077' 
+                            color: CUSTOM_COLOUR 
                         }, 
                         hintlineStyle: { 
-                            color: '#ee0077',
+                            color: CUSTOM_COLOUR,
                             fill: false,
                             dashArray: [5, 5] 
                         },
                         pathOptions: {
-                            color: '#ee0077'
+                            color: CUSTOM_COLOUR
                         } 
                     });
                     smk.$viewer.map.on('pm:drawend', function(e) {
-                        self.shapeIsDrawn = true;
+                        self.canSave = true;
                     });
                     smk.$viewer.map.on('pm:create', self.setCurrentDrawingLayer);
                     self.toggleMarkupToolbarControls();
+                    smk.$viewer.map.on('pm:drawstart', function(e1) {
+                        e1.workingLayer.on('pm:vertexadded', function(e2) {
+                            self.canClear = true;
+                        });
+                    });
                     smk.$viewer.map.pm.enableDraw('Polygon', {
                         continueDrawing: true
                     });
@@ -212,7 +226,13 @@ include.module( 'tool-geomark', [
                     dataType: 'json',
                     traditional: true,
                     success: function(geomarkFeature) {
-                        var geometryLayer = L.geoJSON(geomarkFeature.geometry).addTo(smk.$viewer.map);
+                        var geometryLayer = L.geoJSON(geomarkFeature.geometry, {
+                            style: function (feature) {
+                                return {color: CUSTOM_COLOUR};
+                            }
+                        });
+                        self.freezeLayer(geometryLayer);
+                        geometryLayer.addTo(smk.$viewer.map);
                         self.geomarks.push(self.toGeomark(geomarkFeature, geometryLayer));
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
@@ -230,7 +250,10 @@ include.module( 'tool-geomark', [
             smk.on( this.id, {
                 'clear-drawing': function() {
                     currentDrawingLayer.clearLayers();
-                    self.shapeIsDrawn = false;
+                    smk.$viewer.map.pm.disableDraw();
+                    smk.$viewer.map.pm.enableDraw();
+                    self.canSave = false;
+                    self.canClear = false;
                 },
                 'create-geomark-from-drawing': function () {
                     if (currentDrawingLayer.getLayers().length == 0) {
@@ -249,7 +272,8 @@ include.module( 'tool-geomark', [
                                 '</a>. Save this URL to access your geomark later.');
                                 self.geomarks.push(self.toGeomark(geomarkInfo, currentDrawingLayer));
                                 currentDrawingLayer = self.createCurrentDrawingLayer();
-                                self.shapeIsDrawn = false;
+                                self.canSave = false;
+                                self.canClear = false;
                             } else {
                                 self.showStatusMessage('Error creating geomark: ' + geomarkInfo.error, 'error', 5000);
                             }

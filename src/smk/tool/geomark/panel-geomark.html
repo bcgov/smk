@@ -13,8 +13,8 @@
         <p>Use geomarks to create and share areas of interest. Create a geomark by drawing a shape on the map and saving it, or load an existing geomark by its link.</p>    
     
         <div>
-            <button v-on:click="$$emit( 'create-geomark-from-drawing' )" :disabled="shapeIsDrawn === false">Save</button>
-            <button v-on:click="$$emit( 'clear-drawing' )" :disabled="shapeIsDrawn === false">Clear</button>
+            <button v-on:click="$$emit( 'create-geomark-from-drawing' )" :disabled="canSave === false">Save</button>
+            <button v-on:click="$$emit( 'clear-drawing' )" :disabled="canClear === false">Clear</button>
             <button v-on:click="$$emit( 'load-geomark' )">Load URL</button>
             <button v-if="enableCreateFromFile === true" v-on:click="$$emit( 'create-geomark-from-file' )">Load File</button>
         </div>
