@@ -5,34 +5,40 @@
         <slot></slot>
     </template>
 
-    <p>Use geomarks to create and share areas of interest. Create a geomark by drawing a shape on the map and saving it, or load an existing geomark by its link.</p>    
+    <div v-if="isMobile === true">
+        The Geomark tool is not available on mobile devices.
+    </div>
+
+    <div v-if="isMobile === false">
+        <p>Use geomarks to create and share areas of interest. Create a geomark by drawing a shape on the map and saving it, or load an existing geomark by its link.</p>    
     
-    <div>
-        <button v-on:click="$$emit( 'create-geomark-from-drawing' )" :disabled="canSave === false">Save</button>
-        <button v-on:click="$$emit( 'clear-drawing' )" :disabled="canClear === false">Clear</button>
-        <button v-on:click="$$emit( 'load-geomark' )">Load URL</button>
-        <button v-if="enableCreateFromFile === true" v-on:click="$$emit( 'create-geomark-from-file' )">Load File</button>
+        <div>
+            <button v-on:click="$$emit( 'create-geomark-from-drawing' )" :disabled="canSave === false">Save</button>
+            <button v-on:click="$$emit( 'clear-drawing' )" :disabled="canClear === false">Clear</button>
+            <button v-on:click="$$emit( 'load-geomark' )">Load URL</button>
+            <button v-if="enableCreateFromFile === true" v-on:click="$$emit( 'create-geomark-from-file' )">Load File</button>
+        </div>
+    
+        <div v-if="geomarks.length !== 0" id="geomarks-container">
+            <h2>Loaded Geomarks</h2>
+            <ul class="smk-no-list-style">
+                <li class="smk-truncate-with-ellipsis" v-for="geomark in geomarks">
+                    <input type="checkbox" checked v-bind:id="geomark.id" v-on:click="$$emit( 'toggle-geomark', { id: geomark.id } )">
+                    <a v-bind:href="geomark.url" target="_blank">{{ geomark.id}}</a>
+                </li>
+            </ul>
+        </div>
+
+        <alert v-if="showAlert === true" @alert-close="$$emit( 'close-alert' )">
+            <div slot="alertBody" v-html="alertBody"></div>
+        </alert>
+    
+        <prompt 
+            v-if="showPrompt === true" 
+            v-model="promptReply" 
+            @prompt-cancel="$$emit( 'cancel-prompt' )" 
+            @prompt-close="$$emit( 'close-prompt', $event )">
+            <div slot="promptBody" v-html="promptBody"></div>
+        </prompt>
     </div>
-
-    <div v-if="geomarks.length !== 0" id="geomarks-container">
-        <h2>Loaded Geomarks</h2>
-        <ul class="smk-no-list-style">
-            <li class="smk-truncate-with-ellipsis" v-for="geomark in geomarks">
-                <input type="checkbox" checked v-bind:id="geomark.id" v-on:click="$$emit( 'toggle-geomark', { id: geomark.id } )">
-                <a v-bind:href="geomark.url" target="_blank">{{ geomark.id}}</a>
-            </li>
-        </ul>
-    </div>
-
-    <alert v-if="showAlert === true" @alert-close="$$emit( 'close-alert' )">
-        <div slot="alertBody" v-html="alertBody"></div>
-    </alert>
-
-    <prompt 
-        v-if="showPrompt === true" 
-        v-model="promptReply" 
-        @prompt-cancel="$$emit( 'cancel-prompt' )" 
-        @prompt-close="$$emit( 'close-prompt', $event )">
-        <div slot="promptBody" v-html="promptBody"></div>
-    </prompt>
 </tool-panel>

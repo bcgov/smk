@@ -25,7 +25,8 @@ include.module( 'tool-geomark', [
             'showPrompt', 
             'alertBody',
             'promptBody',
-            'promptReply'
+            'promptReply',
+            'isMobile'
          ]
     } );
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
@@ -44,6 +45,7 @@ include.module( 'tool-geomark', [
             this.defineProp( 'showPrompt');
             this.defineProp( 'alertBody' );
             this.defineProp( 'promptBody' );
+            this.defineProp( 'isMobile' );
 
             this.geomarks = [];
             this.canSave = false;
@@ -53,8 +55,14 @@ include.module( 'tool-geomark', [
             this.alertBody = '';
             this.promptBody = '';
             this.promptReply = '';
+            this.isMobile = false;
         },
         function ( smk ) {
+            if ( smk.$device === 'mobile' ) {
+                this.isMobile = true;
+                return;
+            }
+
             var self = this;
 
             var CUSTOM_COLOUR = '#ee0077';
