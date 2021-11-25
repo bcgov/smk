@@ -119,12 +119,16 @@ include.module( 'tool-geomark', [
                 }
             } 
 
-            this.setCurrentDrawingLayer = function(e) {
-                var eventLayer = e.layer;
-                eventLayer.pm.setOptions( {
+            this.freezeLayer = function(layer) {
+                layer.pm.setOptions( {
                     'allowEditing': false,
                     'allowRemoval': false
                 } );
+            }
+
+            this.setCurrentDrawingLayer = function(e) {
+                var eventLayer = e.layer;
+                self.freezeLayer(eventLayer);
                 currentDrawingLayer.addLayer(eventLayer);
             }
 
@@ -218,7 +222,9 @@ include.module( 'tool-geomark', [
                             style: function (feature) {
                                 return {color: CUSTOM_COLOUR};
                             }
-                        }).addTo(smk.$viewer.map);
+                        });
+                        self.freezeLayer(geometryLayer);
+                        geometryLayer.addTo(smk.$viewer.map);
                         self.geomarks.push(self.toGeomark(geomarkFeature, geometryLayer));
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
