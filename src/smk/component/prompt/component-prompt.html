@@ -1,0 +1,18 @@
+<div class="smk-modal-mask">
+  <div class="smk-modal-wrapper">
+    <div class="smk-modal-container">
+      <div class="smk-modal-body">
+        <slot name="promptBody"></slot>
+      </div>
+      <div class="smk-modal-body">
+        <input type="text" class="smk-prompt-input" v-model="value">
+      </div>
+      <div class="smk-modal-footer">
+        <div class="smk-modal-button-wrapper">
+          <button class="smk-modal-default-button" @click="$emit('prompt-close', value)">OK</button>
+          <button class="smk-modal-default-button" @click="$emit('prompt-cancel')">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

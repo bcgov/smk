@@ -1,0 +1,14 @@
+<div class="smk-modal-mask">
+  <div class="smk-modal-wrapper">
+    <div class="smk-modal-container">
+      <div class="smk-modal-body">
+        <slot name="alertBody"></slot>
+      </div>
+      <div class="smk-modal-footer">
+        <div class="smk-modal-button-wrapper">
+          <button class="smk-modal-default-button" @click="$emit('alert-close')">OK</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -14,6 +14,7 @@ These are all the tool types available, click on the tool type to see more infor
     { "type": <a href="bespoke"       >"bespoke"</a>       },
     { "type": <a href="coordinate"    >"coordinate"</a>    },
     { "type": <a href="directions"    >"directions"</a>    },
+    { "type": <a href="geomark"       >"geomark"</a>       },
     { "type": <a href="identify"      >"identify"</a>      },
     { "type": <a href="layers"        >"layers"</a>        },
     { "type": <a href="legend"        >"legend"</a>        },

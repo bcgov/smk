@@ -1,0 +1,320 @@
+include.module( 'tool-geomark', [ 
+    'geomark',
+    'tool.tool-base-js',
+    'tool.tool-widget-js',
+    'tool.tool-panel-js',
+    'component-alert',
+    'component-prompt',
+    'tool-geomark.panel-geomark-html'
+], function ( inc ) {
+    "use strict";
+
+    Vue.component( 'geomark-widget', {
+        extends: SMK.COMPONENT.ToolWidgetBase,
+    } );
+
+    Vue.component( 'geomark-panel', {
+        extends: SMK.COMPONENT.ToolPanelBase,
+        template: inc[ 'tool-geomark.panel-geomark-html' ],
+        props: [ 
+            'geomarks', 
+            'enableCreateFromFile', 
+            'canSave',
+            'canClear',
+            'showAlert', 
+            'showPrompt', 
+            'alertBody',
+            'promptBody',
+            'promptReply',
+            'isMobile'
+         ]
+    } );
+    // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+    //
+    return SMK.TYPE.Tool.define( 'GeomarkTool',
+        function () {
+            SMK.TYPE.ToolWidget.call( this, 'geomark-widget' );
+            SMK.TYPE.ToolPanel.call( this, 'geomark-panel' );
+
+            this.defineProp( 'geomarkService' );
+            this.defineProp( 'enableCreateFromFile' );
+            this.defineProp( 'geomarks' );
+            this.defineProp( 'canSave' );
+            this.defineProp( 'canClear' );
+            this.defineProp( 'showAlert');
+            this.defineProp( 'showPrompt');
+            this.defineProp( 'alertBody' );
+            this.defineProp( 'promptBody' );
+            this.defineProp( 'isMobile' );
+
+            this.geomarks = [];
+            this.canSave = false;
+            this.canClear = false;
+            this.showAlert = false;
+            this.showPrompt = false;
+            this.alertBody = '';
+            this.promptBody = '';
+            this.promptReply = '';
+            this.isMobile = false;
+        },
+        function ( smk ) {
+            if ( smk.$device === 'mobile' ) {
+                this.isMobile = true;
+                return;
+            }
+
+            var self = this;
+
+            var CUSTOM_COLOUR = '#ee0077';
+
+            // Check for "geomarkService" configuration. Example:
+            // "geomarkService": {
+            //     "url": "https://apps.gov.bc.ca/pub/geomark"
+            // }
+            if (!self.geomarkService) {
+                self.showStatusMessage('No value for "geomarkService" was found in configuration. Geomark tool functionality is disabled.', 'error', 5000);
+                return;
+            }
+
+            this.createCurrentDrawingLayer = function() {
+                var drawingLayer = new L.FeatureGroup();
+                smk.$viewer.map.addLayer(drawingLayer);
+                return drawingLayer;
+            }
+
+            this.buildWktCoords = function(layerGroup) {
+                var isMultiPolygon = layerGroup.getLayers().length > 1;
+                var wktCoords = isMultiPolygon ? "MULTIPOLYGON(" : "POLYGON(";
+                var openCoords = isMultiPolygon ? '((' : '(';
+                var closeCoords = isMultiPolygon ? '))' : ')';
+                layerGroup.getLayers().forEach(function(layer, layerIndex, layerArray) {
+                    layer.getLatLngs().forEach(function(pointArray) {
+                        var firstPointStr = '';
+                        wktCoords += openCoords;
+                        pointArray.forEach(function(point, pointIndex){
+                            var lngLatCoord = point.lng + ' ' + point.lat;
+                            if (pointIndex == 0) {
+                                firstPointStr = lngLatCoord;
+                            }
+                            wktCoords += lngLatCoord + ', ';
+                        });
+                        wktCoords += firstPointStr + closeCoords; // close the polygon
+                        if (layerIndex !== (layerArray.length - 1)) {
+                            wktCoords += ', ';
+                        }
+                    });
+                });
+                return wktCoords + ')';
+            }
+
+            this.tidyUrl = function(url) {
+                url = url.trim();
+                if (url.endsWith('/')) {
+                    url = url.substring(0, (url.length - 1));
+                }
+                url = url.split('?')[0];
+                url = encodeURI(url);
+                return url;
+            }
+
+            this.extractGeomarkId = function(geomarkUrl){
+                if (!geomarkUrl) {
+                    return;
+                }
+                var lastSlashIndex = geomarkUrl.lastIndexOf('/');
+                if (lastSlashIndex > 0) {
+                    return geomarkUrl.substring(lastSlashIndex + 1);
+                }
+            } 
+
+            this.freezeLayer = function(layer) {
+                layer.pm.setOptions( {
+                    'allowEditing': false,
+                    'allowRemoval': false
+                } );
+            }
+
+            this.setCurrentDrawingLayer = function(e) {
+                var eventLayer = e.layer;
+                self.freezeLayer(eventLayer);
+                currentDrawingLayer.addLayer(eventLayer);
+            }
+
+            this.toggleMarkupToolbarControls = function() {
+                if (smk.$tool.MarkupTool) {
+                    smk.$viewer.map.pm.toggleControls();
+                }
+            }
+
+            this.changedActive( function () {
+                if ( self.active ) {
+                    smk.$viewer.map.pm.setGlobalOptions({ 
+                        templineStyle: { 
+                            color: CUSTOM_COLOUR 
+                        }, 
+                        hintlineStyle: { 
+                            color: CUSTOM_COLOUR,
+                            fill: false,
+                            dashArray: [5, 5] 
+                        },
+                        pathOptions: {
+                            color: CUSTOM_COLOUR
+                        } 
+                    });
+                    smk.$viewer.map.on('pm:drawend', function(e) {
+                        self.canSave = true;
+                    });
+                    smk.$viewer.map.on('pm:create', self.setCurrentDrawingLayer);
+                    self.toggleMarkupToolbarControls();
+                    smk.$viewer.map.on('pm:drawstart', function(e1) {
+                        e1.workingLayer.on('pm:vertexadded', function(e2) {
+                            self.canClear = true;
+                        });
+                    });
+                    smk.$viewer.map.pm.enableDraw('Polygon', {
+                        continueDrawing: true
+                    });
+                }
+                else {
+                    smk.$viewer.map.pm.disableDraw();
+                    self.toggleMarkupToolbarControls();
+                    smk.$viewer.map.off('pm:create', self.setCurrentDrawingLayer);
+                    self.setDefaultDrawStyle();
+                }
+            } )
+
+            this.updateAndShowAlert = function(alertBodyArg) {
+                self.alertBody = alertBodyArg;
+                self.showAlert = true;
+            }
+
+            // Used to specify action(s) to be executed when an alert is confirmed
+            this.handleAlert = undefined;
+
+            var currentDrawingLayer = self.createCurrentDrawingLayer();
+
+            this.toGeomark = function(geomarkInfo, drawingLayer) {
+                return {
+                    id: geomarkInfo.id || geomarkInfo.properties.id,
+                    url: geomarkInfo.url || geomarkInfo.properties.url,
+                    drawingLayer: drawingLayer
+                };
+            }
+
+            this.getGeomarkById = function(geomarkId) {
+                return self.geomarks.find(function(item) {
+                    return item.id === geomarkId;
+                });
+            }
+
+            this.loadGeomark = function(promptValue) {
+                if (!promptValue || promptValue.length === 0) {
+                    return;
+                }
+                var geomarkUrl = self.tidyUrl(promptValue);
+                var geomarkId = self.extractGeomarkId(geomarkUrl);
+                if (!geomarkId) {
+                    self.showStatusMessage('Could not discern a geomark ID within "' + geomarkUrl + '"', 'warning', 5000);
+                    return;
+                }
+                if (self.getGeomarkById(geomarkId)) {
+                    self.showStatusMessage('Geomark ' + geomarkId + ' is already loaded.', 'warning', 5000);
+                    return;
+                }
+                $.ajax({
+                    url: geomarkUrl + '/feature.geojson',
+                    dataType: 'json',
+                    traditional: true,
+                    success: function(geomarkFeature) {
+                        var geometryLayer = L.geoJSON(geomarkFeature.geometry, {
+                            style: function (feature) {
+                                return {color: CUSTOM_COLOUR};
+                            }
+                        });
+                        self.freezeLayer(geometryLayer);
+                        geometryLayer.addTo(smk.$viewer.map);
+                        self.geomarks.push(self.toGeomark(geomarkFeature, geometryLayer));
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        self.showStatusMessage('Error retrieving geomark from URL ' + geomarkUrl + ': ' + errorThrown, 'error', 5000);
+                    }
+                });
+            }
+
+            this.openGeomarkFileWindow = function() {
+                window.open(self.geomarkService.url + '/geomarks#file');
+            }
+
+            var client = new window.GeomarkClient(self.geomarkService.url);
+
+            smk.on( this.id, {
+                'clear-drawing': function() {
+                    currentDrawingLayer.clearLayers();
+                    smk.$viewer.map.pm.disableDraw();
+                    smk.$viewer.map.pm.enableDraw();
+                    self.canSave = false;
+                    self.canClear = false;
+                },
+                'create-geomark-from-drawing': function () {
+                    if (currentDrawingLayer.getLayers().length == 0) {
+                        self.showStatusMessage('No drawings were found. Draw one or more polygons before creating a geomark.', 'warning', 5000);
+                        return;
+                    }
+                    var wktCoords = self.buildWktCoords(currentDrawingLayer);
+                    client.createGeomark({
+                        'body': 'SRID=4326;' + wktCoords,
+                        'format': 'wkt',
+                        'callback': function(geomarkInfo) {
+                            var geomarkId = geomarkInfo.id;
+                            if (geomarkId) { 
+                                self.updateAndShowAlert('Created geomark: <a href="' + geomarkInfo.url + 
+                                '" target="_new">' + geomarkInfo.url +
+                                '</a>. Save this URL to access your geomark later.');
+                                self.geomarks.push(self.toGeomark(geomarkInfo, currentDrawingLayer));
+                                currentDrawingLayer = self.createCurrentDrawingLayer();
+                                self.canSave = false;
+                                self.canClear = false;
+                            } else {
+                                self.showStatusMessage('Error creating geomark: ' + geomarkInfo.error, 'error', 5000);
+                            }
+                        }
+                    });
+                },
+                'create-geomark-from-file': function () {
+                    self.handleAlert = self.openGeomarkFileWindow;
+                    self.updateAndShowAlert('Upload your file using the form in the new window. Once you have a Geomark URL, add it to the map using "Load URL".');
+                },
+                'load-geomark': function() {
+                    self.promptBody = 'Enter the URL of a geomark to load:';
+                    self.showPrompt = true;
+                },
+                'toggle-geomark': function(idObj) {
+                    var geomark = self.getGeomarkById(idObj.id);
+                    if (!geomark) {
+                        return;
+                    }
+                    if (smk.$viewer.map.hasLayer(geomark.drawingLayer)) {
+                        smk.$viewer.map.removeLayer(geomark.drawingLayer);
+                    } else {
+                        smk.$viewer.map.addLayer(geomark.drawingLayer);
+                    }
+                },
+                'close-alert': function() {
+                    self.showAlert = false;
+                    if (self.handleAlert) {
+                        self.handleAlert();
+                    }
+                    self.handleAlert = undefined;
+                },
+                'cancel-prompt': function() {
+                    self.showPrompt = false;
+                    self.promptReply = '';
+                },
+                'close-prompt': function(promptValue) {
+                    self.showPrompt = false;
+                    self.loadGeomark(promptValue);
+                 }
+            })
+        }
+    )
+} )

@@ -126,6 +126,22 @@ include.module( 'tool.tool-base-js', [ 'tool.tool-js' ], function ( inc ) {
                 return smk.getStatusMessage().show( message, status, delay, this.busy )
             }
 
+            this.setDefaultDrawStyle = function() {
+                smk.$viewer.map.pm.setGlobalOptions({ 
+                    templineStyle: { 
+                        color: 'red',
+                        fill: false
+                    }, 
+                    hintlineStyle: { 
+                        color: 'red',
+                        fill: false,
+                        dashArray: [5, 5] 
+                    },
+                    pathOptions: {
+                        color: '#3388ff'
+                    } 
+                });
+            }
         } )
 
         this.isToolInGroupActive = function ( toolId ) {
