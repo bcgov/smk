@@ -140,6 +140,18 @@ include.module( 'tool-geomark', [
                 currentDrawingLayer.addLayer(eventLayer);
             }
 
+            this.drawStart = function(e1) {
+                e1.workingLayer.on('pm:vertexadded', function(e2) {
+                    self.canClear = true;
+                });
+            }
+
+            this.drawEnd = function(e) {
+                if (currentDrawingLayer.getLayers().length > 0) {
+                    self.canSave = true;
+                }
+            }
+
             this.toggleMarkupToolbarControls = function() {
                 if (smk.$tool.MarkupTool) {
                     smk.$viewer.map.pm.toggleControls();
@@ -161,16 +173,10 @@ include.module( 'tool-geomark', [
                             color: CUSTOM_COLOUR
                         } 
                     });
-                    smk.$viewer.map.on('pm:drawend', function(e) {
-                        self.canSave = true;
-                    });
+                    smk.$viewer.map.on('pm:drawstart', self.drawStart);
+                    smk.$viewer.map.on('pm:drawend', self.drawEnd);
                     smk.$viewer.map.on('pm:create', self.setCurrentDrawingLayer);
                     self.toggleMarkupToolbarControls();
-                    smk.$viewer.map.on('pm:drawstart', function(e1) {
-                        e1.workingLayer.on('pm:vertexadded', function(e2) {
-                            self.canClear = true;
-                        });
-                    });
                     smk.$viewer.map.pm.enableDraw('Polygon', {
                         continueDrawing: true
                     });
@@ -179,6 +185,8 @@ include.module( 'tool-geomark', [
                     smk.$viewer.map.pm.disableDraw();
                     self.toggleMarkupToolbarControls();
                     smk.$viewer.map.off('pm:create', self.setCurrentDrawingLayer);
+                    smk.$viewer.map.off('pm:drawend', self.drawEnd);
+                    smk.$viewer.map.off('pm:drawstart', self.drawStart);
                     self.setDefaultDrawStyle();
                 }
             } )
