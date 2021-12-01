@@ -58,14 +58,12 @@ include.module( 'tool-geomark', [
             this.isMobile = false;
         },
         function ( smk ) {
-            if ( smk.$device === 'mobile' ) {
-                this.isMobile = true;
-                return;
-            }
-
             var self = this;
 
-            var CUSTOM_COLOUR = '#ee0077';
+            if ( smk.$device === 'mobile' ) {
+                self.isMobile = true;
+                return;
+            }
 
             // Check for "geomarkService" configuration. Example:
             // "geomarkService": {
@@ -76,11 +74,20 @@ include.module( 'tool-geomark', [
                 return;
             }
 
-            this.createCurrentDrawingLayer = function() {
-                var drawingLayer = new L.FeatureGroup();
-                smk.$viewer.map.addLayer(drawingLayer);
-                return drawingLayer;
+            var CUSTOM_COLOUR = '#ee0077';
+
+            // Used to specify action(s) to be executed when an alert is confirmed
+            this.handleAlert = undefined;
+
+            this.createCurrentLayerGroup = function() {
+                var layerGroup = new L.FeatureGroup();
+                smk.$viewer.map.addLayer(layerGroup);
+                return layerGroup;
             }
+
+            var currentLayerGroup = self.createCurrentLayerGroup();
+
+            var currentLayer;
 
             this.buildWktCoords = function(layerGroup) {
                 var isMultiPolygon = layerGroup.getLayers().length > 1;
@@ -134,22 +141,26 @@ include.module( 'tool-geomark', [
                 } );
             }
 
-            this.setCurrentDrawingLayer = function(e) {
+            this.setCurrentLayerGroup = function(e) {
                 var eventLayer = e.layer;
                 self.freezeLayer(eventLayer);
-                currentDrawingLayer.addLayer(eventLayer);
+                currentLayerGroup.addLayer(eventLayer);
+            }
+
+            this.setCanClear = function(e) {
+                self.canClear = true;
             }
 
             this.drawStart = function(e1) {
-                e1.workingLayer.on('pm:vertexadded', function(e2) {
-                    self.canClear = true;
-                });
+                e1.workingLayer.on('pm:vertexadded', self.setCanClear);
+                currentLayer = e1.workingLayer;
             }
 
             this.drawEnd = function(e) {
-                if (currentDrawingLayer.getLayers().length > 0) {
+                if (currentLayerGroup.getLayers().length > 0) {
                     self.canSave = true;
                 }
+                currentLayer.off('pm:vertexadded', self.setCanClear);
             }
 
             this.toggleMarkupToolbarControls = function() {
@@ -175,7 +186,7 @@ include.module( 'tool-geomark', [
                     });
                     smk.$viewer.map.on('pm:drawstart', self.drawStart);
                     smk.$viewer.map.on('pm:drawend', self.drawEnd);
-                    smk.$viewer.map.on('pm:create', self.setCurrentDrawingLayer);
+                    smk.$viewer.map.on('pm:create', self.setCurrentLayerGroup);
                     self.toggleMarkupToolbarControls();
                     smk.$viewer.map.pm.enableDraw('Polygon', {
                         continueDrawing: true
@@ -184,7 +195,7 @@ include.module( 'tool-geomark', [
                 else {
                     smk.$viewer.map.pm.disableDraw();
                     self.toggleMarkupToolbarControls();
-                    smk.$viewer.map.off('pm:create', self.setCurrentDrawingLayer);
+                    smk.$viewer.map.off('pm:create', self.setCurrentLayerGroup);
                     smk.$viewer.map.off('pm:drawend', self.drawEnd);
                     smk.$viewer.map.off('pm:drawstart', self.drawStart);
                     self.setDefaultDrawStyle();
@@ -195,11 +206,6 @@ include.module( 'tool-geomark', [
                 self.alertBody = alertBodyArg;
                 self.showAlert = true;
             }
-
-            // Used to specify action(s) to be executed when an alert is confirmed
-            this.handleAlert = undefined;
-
-            var currentDrawingLayer = self.createCurrentDrawingLayer();
 
             this.toGeomark = function(geomarkInfo, drawingLayer) {
                 return {
@@ -257,18 +263,18 @@ include.module( 'tool-geomark', [
 
             smk.on( this.id, {
                 'clear-drawing': function() {
-                    currentDrawingLayer.clearLayers();
+                    currentLayerGroup.clearLayers();
                     smk.$viewer.map.pm.disableDraw();
                     smk.$viewer.map.pm.enableDraw();
                     self.canSave = false;
                     self.canClear = false;
                 },
                 'create-geomark-from-drawing': function () {
-                    if (currentDrawingLayer.getLayers().length == 0) {
+                    if (currentLayerGroup.getLayers().length == 0) {
                         self.showStatusMessage('No drawings were found. Draw one or more polygons before creating a geomark.', 'warning', 5000);
                         return;
                     }
-                    var wktCoords = self.buildWktCoords(currentDrawingLayer);
+                    var wktCoords = self.buildWktCoords(currentLayerGroup);
                     client.createGeomark({
                         'body': 'SRID=4326;' + wktCoords,
                         'format': 'wkt',
@@ -278,8 +284,8 @@ include.module( 'tool-geomark', [
                                 self.updateAndShowAlert('Created geomark: <a href="' + geomarkInfo.url + 
                                 '" target="_new">' + geomarkInfo.url +
                                 '</a>. Save this URL to access your geomark later.');
-                                self.geomarks.push(self.toGeomark(geomarkInfo, currentDrawingLayer));
-                                currentDrawingLayer = self.createCurrentDrawingLayer();
+                                self.geomarks.push(self.toGeomark(geomarkInfo, currentLayerGroup));
+                                currentLayerGroup = self.createCurrentLayerGroup();
                                 self.canSave = false;
                                 self.canClear = false;
                             } else {
