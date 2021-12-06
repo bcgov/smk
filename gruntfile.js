@@ -45,6 +45,7 @@ module.exports = function( grunt ) {
                 // latedef: true,
                 // curly: true,
                 // eqeqeq: true,
+                esversion:  6,
                 bitwise:    true,
                 strict:     true,
                 undef:      true,

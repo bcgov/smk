@@ -74,7 +74,7 @@ include.module( 'tool-geomark', [
                 return;
             }
 
-            var CUSTOM_COLOUR = '#ee0077';
+            const CUSTOM_COLOUR = '#ee0077';
 
             // Used to specify action(s) to be executed when an alert is confirmed
             this.handleAlert = undefined;
