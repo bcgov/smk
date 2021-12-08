@@ -202,6 +202,14 @@ include.module( 'tool-geomark', [
                 }
             } )
 
+            // Override default handling in Identify tool
+            smk.$viewer.handlePick( 1, function ( location ) {
+                if ( !self.active ) {
+                    return;
+                }
+                return true;
+            } )
+
             this.updateAndShowAlert = function(alertBodyArg) {
                 self.alertBody = alertBodyArg;
                 self.showAlert = true;
