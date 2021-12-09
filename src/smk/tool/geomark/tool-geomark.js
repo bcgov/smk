@@ -207,7 +207,7 @@ include.module( 'tool-geomark', [
                 if ( !self.active ) {
                     return;
                 }
-                return true;
+                return Promise.resolve(true);
             } )
 
             this.updateAndShowAlert = function(alertBodyArg) {
