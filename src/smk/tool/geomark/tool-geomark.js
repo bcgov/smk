@@ -203,7 +203,7 @@ include.module( 'tool-geomark', [
             } )
 
             // Override default handling in Identify tool
-            smk.$viewer.handlePick( 1, function ( location ) {
+            smk.$viewer.handlePick( 4, function ( location ) {
                 if ( !self.active ) {
                     return;
                 }
