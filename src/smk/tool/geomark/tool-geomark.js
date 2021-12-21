@@ -219,7 +219,8 @@ include.module( 'tool-geomark', [
                 return {
                     id: geomarkInfo.id || geomarkInfo.properties.id,
                     url: geomarkInfo.url || geomarkInfo.properties.url,
-                    drawingLayer: drawingLayer
+                    drawingLayer: drawingLayer,
+                    isVisible: true
                 };
             }
 
@@ -320,6 +321,7 @@ include.module( 'tool-geomark', [
                     } else {
                         smk.$viewer.map.addLayer(geomark.drawingLayer);
                     }
+                    geomark.isVisible = !geomark.isVisible;
                 },
                 'close-alert': function() {
                     self.showAlert = false;
