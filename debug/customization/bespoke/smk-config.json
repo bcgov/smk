@@ -1,0 +1,138 @@
+{
+    "name": "Bespoke1",
+    "viewer": {
+        "type": "leaflet",
+        "location": {
+            "center": [
+                -124.97187974331459,
+                51.821895387033834
+            ],
+            "extent": [
+                -133.3683520649526,
+                46.021881710514336,
+                -116.57540742167657,
+                56.96082045105082
+            ],
+            "zoom": 5.662861104534402
+        },
+        "baseMap": "Streets"
+    },
+    "layers": [],
+    "tools": [
+        {
+            "type": "toolbar",
+            "enabled": true
+        },
+        {
+            "type": "list-menu",
+            "enabled": true,
+            "title": "My SMK Application"
+        },
+        {
+            "type": "pan",
+            "enabled": true
+        },
+        {
+            "type": "zoom",
+            "enabled": true
+        },
+        {
+            "type": "about",
+            "enabled": false,
+            "title": "About My SMK Application",
+            "position": "list-menu",
+            "content": "<p>Welcome to SMK!</p><p>My Simple Map Kit application.</p>"
+        },
+        {
+            "type": "layers",
+            "enabled": false
+        },
+        {
+            "type": "baseMaps",
+            "enabled": false
+        },
+        {
+            "type": "identify",
+            "enabled": false,
+            "showPanel": true,
+            "showWidget": true,
+            "style": {
+                "strokeWidth": 1,
+                "strokeStyle": "1, 1",
+                "strokeColor": "#000000",
+                "strokeOpacity": 0.8,
+                "fillColor": "#000000",
+                "fillOpacity": 0.5,
+                "markerSize": [
+                    20,
+                    20
+                ],
+                "markerOffset": [
+                    10,
+                    0
+                ]
+            }
+        },
+        {
+            "order": 2,
+            "position": "toolbar",
+            "icon": "search",
+            "title": "Search for Location",
+            "showPanel": true,
+            "showLocation": true,
+            "command": {
+                "identify": true,
+                "measure": true,
+                "directions": true
+            },
+            "type": "search",
+            "enabled": false
+        },
+        {
+            "type": "coordinate",
+            "enabled": false
+        },
+        {
+            "type": "measure",
+            "enabled": false
+        },
+        {
+            "type": "markup",
+            "enabled": false
+        },
+        {
+            "type": "scale",
+            "enabled": false
+        },
+        {
+            "type": "minimap",
+            "enabled": false
+        },
+        {
+            "type": "directions",
+            "enabled": false
+        },
+        {
+            "type": "location",
+            "enabled": false
+        },
+        {
+            "type": "select",
+            "enabled": false
+        },
+        {
+            "order": 1,
+            "position": "toolbar",
+            "icon": "now_widgets",
+            "title": "Example Bespoke Tool",
+            "useComponent": true,
+            "type": "bespoke",
+            "instance": "101",
+            "enabled": true,
+            "showTitle": true
+        }
+    ],
+    "version": "1.0.7",
+    "createdBy": "SMK Developer",
+    "createdDate": "2021-11-24T23:12:44.973Z"
+}
