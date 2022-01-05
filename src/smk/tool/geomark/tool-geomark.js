@@ -18,7 +18,6 @@ include.module( 'tool-geomark', [
         template: inc[ 'tool-geomark.panel-geomark-html' ],
         props: [ 
             'geomarks', 
-            'enableCreateFromFile', 
             'canSave',
             'canClear',
             'showAlert', 
@@ -37,7 +36,6 @@ include.module( 'tool-geomark', [
             SMK.TYPE.ToolPanel.call( this, 'geomark-panel' );
 
             this.defineProp( 'geomarkService' );
-            this.defineProp( 'enableCreateFromFile' );
             this.defineProp( 'geomarks' );
             this.defineProp( 'canSave' );
             this.defineProp( 'canClear' );
@@ -75,9 +73,6 @@ include.module( 'tool-geomark', [
             }
 
             const CUSTOM_COLOUR = '#ee0077';
-
-            // Used to specify action(s) to be executed when an alert is confirmed
-            this.handleAlert = undefined;
 
             this.createCurrentLayerGroup = function() {
                 var layerGroup = new L.FeatureGroup();
@@ -264,10 +259,6 @@ include.module( 'tool-geomark', [
                 });
             }
 
-            this.openGeomarkFileWindow = function() {
-                window.open(self.geomarkService.url + '/geomarks#file');
-            }
-
             var client = new window.GeomarkClient(self.geomarkService.url);
 
             smk.on( this.id, {
@@ -278,7 +269,7 @@ include.module( 'tool-geomark', [
                     self.canSave = false;
                     self.canClear = false;
                 },
-                'create-geomark-from-drawing': function () {
+                'create-geomark': function () {
                     if (currentLayerGroup.getLayers().length == 0) {
                         self.showStatusMessage('No drawings were found. Draw one or more polygons before creating a geomark.', 'warning', 5000);
                         return;
@@ -303,10 +294,6 @@ include.module( 'tool-geomark', [
                         }
                     });
                 },
-                'create-geomark-from-file': function () {
-                    self.handleAlert = self.openGeomarkFileWindow;
-                    self.updateAndShowAlert('Upload your file using the form in the new window. Once you have a Geomark URL, add it to the map using "Load URL".');
-                },
                 'load-geomark': function() {
                     self.promptBody = 'Enter the URL of a geomark to load:';
                     self.showPrompt = true;
@@ -325,10 +312,6 @@ include.module( 'tool-geomark', [
                 },
                 'close-alert': function() {
                     self.showAlert = false;
-                    if (self.handleAlert) {
-                        self.handleAlert();
-                    }
-                    self.handleAlert = undefined;
                 },
                 'cancel-prompt': function() {
                     self.showPrompt = false;
