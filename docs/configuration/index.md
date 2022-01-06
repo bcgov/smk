@@ -35,6 +35,7 @@ The `"layers"` and `"tools"` collections can contain a variety of possible objec
         { "type": <a href="tools/bespoke"        >"bespoke"</a>       },
         { "type": <a href="tools/coordinate"     >"coordinate"</a>    },
         { "type": <a href="tools/directions"     >"directions"</a>    },
+        { "type": <a href="tools/geomark"        >"geomark"</a>       },
         { "type": <a href="tools/identify"       >"identify"</a>      },
         { "type": <a href="tools/layers"         >"layers"</a>        },
         { "type": <a href="tools/legend"         >"legend"</a>        },
