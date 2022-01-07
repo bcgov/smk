@@ -5,6 +5,7 @@
         <slot></slot>
     </template>
 
+    <!--
     <template slot="commands">
         <command-button class="smk-identify"
             v-if="command.identify && tool.identify"
@@ -21,6 +22,7 @@
             v-on:click="$$emit( 'directions' )"
         >Directions to here</command-button>
     </template>
+    -->
 
     <component class="smk-address"
         v-bind:is="locationComponent"

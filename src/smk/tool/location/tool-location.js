@@ -31,20 +31,20 @@ include.module( 'tool-location', [
             this.geocoder = new SMK.TYPE.Geocoder( this.geocoderService )
 
             this.setIdentifyHandler = function ( handler ) {
-                if ( !smk.$tool.identify ) return
+                // if ( !smk.$tool.identify ) return
 
-                self.tool.identify = !!handler
+                // self.tool.identify = !!handler
 
-                self.identifyHandler = handler || function () {}
+                // self.identifyHandler = handler || function () {}
             }
             self.identifyHandler = function () {}
 
             this.setDirectionsHandler = function ( handler ) {
-                if ( !smk.$tool.directions ) return
+                // if ( !smk.$tool.directions ) return
 
-                self.tool.directions = !!handler
+                // self.tool.directions = !!handler
 
-                self.directionsHandler = handler || function () {}
+                // self.directionsHandler = handler || function () {}
             }
             self.directionsHandler = function () {}
 
@@ -81,15 +81,15 @@ include.module( 'tool-location', [
 
                         self.setDirectionsHandler( function () {
                             self.reset()
-                            smk.$tool.directions.active = true
+                            // smk.$tool.directions.active = true
 
-                            smk.$tool.directions.activating
-                                .then( function () {
-                                    return smk.$tool.directions.startAtCurrentLocation()
-                                } )
-                                .then( function () {
-                                    return smk.$tool.directions.addWaypoint( site )
-                                } )
+                            // smk.$tool.directions.activating
+                            //     .then( function () {
+                            //         return smk.$tool.directions.startAtCurrentLocation()
+                            //     } )
+                            //     .then( function () {
+                            //         return smk.$tool.directions.addWaypoint( site )
+                            //     } )
                         } )
 
                         return true
