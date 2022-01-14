@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Bespoke</title>
+
+        <script src="../../../dist/smk.js"></script>
+        <link rel="stylesheet" type="text/css" href="style.css"/>
+    </head>
+    <body>
+        <script src="default-config.js"></script>
+<!--***************************************************************************
+    This example shows a simple Bespoke tool configured with custom HTML and Javascript.
+-->
+    <div id="smk-map-frame"></div>
+    <script>
+        SMK.INIT( {
+            containerSel: "#smk-map-frame",
+            config: defaultConfig.concat( {
+                tools: [
+                    {
+                        "order": 1,
+                        "position": "toolbar",
+                        "icon": "now_widgets",
+                        "title": "Bespoke Tool",
+                        "useComponent": true,
+                        "component": {
+                            "template": 
+                            `
+                            <div>
+                                <p>
+                                    The Bespoke tool allows you to create your own 
+                                    custom panels in SMK apps. You can add HTML, CSS, 
+                                    and Javascript to provide unique functionality.
+                                </p>
+                                <button onclick='fly()'>Fly to Kelowna</button>
+                            </div>
+                            `
+                        },
+                        "type": "bespoke",
+                        "instance": "101",
+                        "enabled": true
+                    }
+                ]
+            }, '?' )
+        } )
+
+        function fly() {
+            const newCenter = new L.LatLng(49.89,-119.51);
+            SMK.MAP[1].$viewer.map.flyTo(newCenter, 13);
+        }
+    </script>
+<!--***************************************************************************-->
+    </body>
+</html>
+
