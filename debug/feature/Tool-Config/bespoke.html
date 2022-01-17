@@ -9,7 +9,9 @@
     <body>
         <script src="default-config.js"></script>
 <!--***************************************************************************
-    This example shows a simple Bespoke tool configured with custom HTML and Javascript.
+    This example shows a simple Bespoke tool configuration. A template has 
+    custom HTML. This also includes a Javascript function that is called by
+    a button in the custom HTML.
 -->
     <div id="smk-map-frame"></div>
     <script>
@@ -26,6 +28,8 @@
                         "component": {
                             "template": 
                             `
+                            <!-- All of a template's content must be inside a 
+                            pair of <div> tags. -->
                             <div>
                                 <p>
                                     The Bespoke tool allows you to create your own 
@@ -45,7 +49,13 @@
         } )
 
         function fly() {
+            // First we use Leaflet API to store latitude and longitude coordinates.
+            // 'L' is the global Leaflet object, and LatLng is an object that 
+            // can store coordinates. (https://leafletjs.com/reference.html#latlng)
             const newCenter = new L.LatLng(49.89,-119.51);
+            // Then we call the Leaflet Map's flyTo() method 
+            // (https://leafletjs.com/reference.html#latlng). The map object is in 
+            // a tree of objects initialized by SMK in the 'SMK' global object.
             SMK.MAP[1].$viewer.map.flyTo(newCenter, 13);
         }
     </script>
