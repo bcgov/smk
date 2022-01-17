@@ -28,7 +28,6 @@ include.module( 'tool-identify.tool-identify-feature-js', [
                 }
             } )
 
-            // smk.$tool.identify.startedIdentify( function () {
             smk.getToolById( 'IdentifyListTool' ).startedIdentify( function () {
                 smk.getToolById( self.parentId ).active = true
             } )
