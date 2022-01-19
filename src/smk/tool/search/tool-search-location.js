@@ -42,27 +42,6 @@ include.module( 'tool-search.tool-search-location-js', [
                 }
             } )
 
-            smk.on( this.id, {
-                'directions': function () {
-                    smk.$tool.directions.active = true
-
-                    smk.$tool.directions.activating
-                        .then( function () {
-                            return smk.$tool.directions.startAtCurrentLocation()
-                        } )
-                        .then( function () {
-                            return SMK.UTIL.findNearestSite( { latitude: self.feature.geometry.coordinates[ 1 ], longitude: self.feature.geometry.coordinates[ 0 ] } )
-                                .then( function ( site ) {
-                                    return smk.$tool.directions.addWaypoint( site )
-                                } )
-                                .catch( function ( err ) {
-                                    console.warn( err )
-                                    return smk.$tool.directions.addWaypoint()
-                                } )
-                        } )
-                }
-            } )
-
             smk.$viewer.searched.pickedFeature( function ( ev ) {
                 self.locationComponent = {
                     name: 'location',

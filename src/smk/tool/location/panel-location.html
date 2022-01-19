@@ -5,12 +5,6 @@
         <slot></slot>
     </template>
 
-    <template slot="commands">
-        <span class="smk-command" v-if="tool.identify" v-on:click="$$emit( 'identify' )">Identify features</span>
-        <span class="smk-command" v-if="tool.measure" v-on:click="$$emit( 'measure' )">Start measurement</span>
-        <span class="smk-command" v-if="tool.directions" v-on:click="$$emit( 'directions' )">Directions to here</span>
-    </template>    
-
     <div class="smk-address">
         <div class="smk-street">
             <span class="smk-civic-number">{{ site.civicNumber }}</span>

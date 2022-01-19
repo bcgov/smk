@@ -30,67 +30,14 @@ include.module( 'tool-location', [
 
             this.geocoder = new SMK.TYPE.Geocoder( this.geocoderService )
 
-            this.setIdentifyHandler = function ( handler ) {
-                if ( !smk.$tool.identify ) return
-
-                self.tool.identify = !!handler
-
-                self.identifyHandler = handler || function () {}
-            }
-            self.identifyHandler = function () {}
-
-            this.setDirectionsHandler = function ( handler ) {
-                if ( !smk.$tool.directions ) return
-
-                self.tool.directions = !!handler
-
-                self.directionsHandler = handler || function () {}
-            }
-            self.directionsHandler = function () {}
-
-            // if ( smk.$tool.measure )
-            //     this.tool.measure = true
-
-            smk.on( this.id, {
-                'identify': function () {
-                    self.identifyHandler()
-                },
-
-                'measure': function () {
-                },
-
-                'directions': function () {
-                    self.directionsHandler()
-                }
-            } )
-
             smk.$viewer.handlePick( 1, function ( location ) {
                 self.active = true
                 self.site = location.map
                 self.pickLocation( location )
 
-                self.setDirectionsHandler()
-                self.setIdentifyHandler( function () {
-                    self.reset()
-                    smk.$viewer.identifyFeatures( location )
-                } )
-
                 return self.geocoder.fetchNearestSite( location.map )
                     .then( function ( site ) {
                         self.site = site
-
-                        self.setDirectionsHandler( function () {
-                            self.reset()
-                            smk.$tool.directions.active = true
-
-                            smk.$tool.directions.activating
-                                .then( function () {
-                                    return smk.$tool.directions.startAtCurrentLocation()
-                                } )
-                                .then( function () {
-                                    return smk.$tool.directions.addWaypoint( site )
-                                } )
-                        } )
 
                         return true
                     } )
@@ -104,8 +51,6 @@ include.module( 'tool-location', [
             this.reset = function () {
                 this.site = {}
                 this.active = false
-                self.setDirectionsHandler()
-                self.setIdentifyHandler()
             }
 
             smk.$viewer.changedView( function () {

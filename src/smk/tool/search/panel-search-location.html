@@ -5,23 +5,6 @@
         <slot></slot>
     </template>
 
-    <template slot="commands">
-        <command-button class="smk-identify"
-            v-if="command.identify && tool.identify"
-            v-on:click="$$emit( 'identify' )"
-        >Identify features</command-button>
-
-        <command-button class="smk-measure"
-            v-if="command.measure && tool.measure"
-            v-on:click="$$emit( 'measure' )"
-        >Start measurement</command-button>
-
-        <command-button class="smk-directions"
-            v-if="command.directions && tool.directions"
-            v-on:click="$$emit( 'directions' )"
-        >Directions to here</command-button>
-    </template>
-
     <component class="smk-address"
         v-bind:is="locationComponent"
     ></component>
