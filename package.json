@@ -35,5 +35,9 @@
     "jshint-stylish": "^2.2.1",
     "load-grunt-tasks": "~4.0.0",
     "material-design-icons-iconfont": "^5.0.1"
+  },
+  "overrides": {
+    "getobject": ">=1.0.0",
+    "shelljs": ">=0.8.5"
   }
 }
