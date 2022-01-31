@@ -1,0 +1,124 @@
+{
+    "name": "vector_layer_demo",
+    "viewer": {
+        "type": "leaflet",
+        "location": {
+            "extent": [
+                -140.80078125000003,
+                61.62728646147466,
+                -108.72070312500001,
+                46.13417004624326
+            ],
+            "center": [
+                -124.76074218750003,
+                51.88072825385896
+            ],
+            "zoom": 6
+        },
+        "baseMap": "StamenTonerLight"
+    },
+    "layers": [],
+    "tools": [
+        {
+            "type": "toolbar",
+            "enabled": true
+        },
+        {
+            "type": "list-menu",
+            "enabled": true,
+            "title": "Vector Layer Demo!"
+        },
+        {
+            "type": "pan",
+            "enabled": true
+        },
+        {
+            "type": "zoom",
+            "enabled": true
+        },
+        {
+            "type": "about",
+            "enabled": true,
+            "title": "About Vector Layer Demo!",
+            "position": "list-menu",
+            "content": "<p>Welcome to SMK!</p><p>My Simple Map Kit application.</p>"
+        },
+        {
+            "type": "layers",
+            "enabled": true
+        },
+        {
+            "type": "baseMaps",
+            "enabled": false
+        },
+        {
+            "type": "identify",
+            "enabled": false,
+            "showPanel": true,
+            "showWidget": true,
+            "style": {
+                "strokeWidth": 1,
+                "strokeStyle": "1, 1",
+                "strokeColor": "#000000",
+                "strokeOpacity": 0.8,
+                "fillColor": "#000000",
+                "fillOpacity": 0.5,
+                "markerSize": [
+                    20,
+                    20
+                ],
+                "markerOffset": [
+                    10,
+                    0
+                ]
+            }
+        },
+        {
+            "type": "search",
+            "enabled": true
+        },
+        {
+            "type": "coordinate",
+            "enabled": true
+        },
+        {
+            "type": "measure",
+            "enabled": false
+        },
+        {
+            "type": "markup",
+            "enabled": false
+        },
+        {
+            "type": "scale",
+            "enabled": true
+        },
+        {
+            "type": "minimap",
+            "enabled": true
+        },
+        {
+            "type": "directions",
+            "enabled": false
+        },
+        {
+            "type": "location",
+            "enabled": false
+        },
+        {
+            "type": "select",
+            "enabled": false
+        },
+        {
+            "type": "geomark",
+            "geomarkService": {
+                "url": "https://apps.gov.bc.ca/pub/geomark"
+            },
+            "position": "list-menu",
+            "enabled": false
+        }
+    ],
+    "version": "1.0.8",
+    "createdBy": "Michael Nelson",
+    "createdDate": "2022-01-24T19:49:23.423Z"
+}
