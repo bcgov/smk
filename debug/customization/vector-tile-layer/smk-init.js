@@ -6,10 +6,12 @@ SMK.INIT( {
     // SMK initialized
 
     include([
+		// Load Leaflet VectorGrid
         {
             url: "https://unpkg.com/leaflet.vectorgrid@1.2.0",
             loader: "script"
         },
+		// Load EU countries JSON as 'euCountries'
         {
             url: "https://leaflet.github.io/Leaflet.VectorGrid/eu-countries.js",
             loader: "script"
@@ -17,12 +19,12 @@ SMK.INIT( {
             function() {
                 const leafletMap = smk.$viewer.map;
 
-            // Protobuf code copied from:
-            // https://leaflet.github.io/Leaflet.VectorGrid/demo-vectortiles.html
+				// Protobuf code copied from:
+				// https://leaflet.github.io/Leaflet.VectorGrid/demo-vectortiles.html
 
-            // Shared tile layer styling setup
+				// Shared tile layer styling setup
 
-            var vectorTileStyling = {
+				var vectorTileStyling = {
                     water: {
                         fill: true,
                         weight: 1,
@@ -83,44 +85,19 @@ SMK.INIT( {
                         fillOpacity: 0.2,
                         opacity: 0.4
                     },
-                    road: {	// mapbox & nextzen only
+                    road: {	
                         weight: 1,
                         fillColor: '#f2b648',
                         color: '#f2b648',
                         fillOpacity: 0.2,
                         opacity: 0.4
                     },
-                    tunnel: {	// mapbox only
+                    transit: {
                         weight: 0.5,
                         fillColor: '#f2b648',
                         color: '#f2b648',
                         fillOpacity: 0.2,
                         opacity: 0.4,
-        // 					dashArray: [4, 4]
-                    },
-                    bridge: {	// mapbox only
-                        weight: 0.5,
-                        fillColor: '#f2b648',
-                        color: '#f2b648',
-                        fillOpacity: 0.2,
-                        opacity: 0.4,
-        // 					dashArray: [4, 4]
-                    },
-                    transportation: {	// openmaptiles only
-                        weight: 0.5,
-                        fillColor: '#f2b648',
-                        color: '#f2b648',
-                        fillOpacity: 0.2,
-                        opacity: 0.4,
-        // 					dashArray: [4, 4]
-                    },
-                    transit: {	// nextzen only
-                        weight: 0.5,
-                        fillColor: '#f2b648',
-                        color: '#f2b648',
-                        fillOpacity: 0.2,
-                        opacity: 0.4,
-        // 					dashArray: [4, 4]
                     },
                     building: {
                         fill: true,
@@ -165,36 +142,14 @@ SMK.INIT( {
                         fillOpacity: 0.2,
                         opacity: 0.4
                     },
-                    earth: {	// nextzen only
+                    earth: {
                         fill: true,
                         weight: 1,
                         fillColor: '#c0c0c0',
                         color: '#c0c0c0',
                         fillOpacity: 0.2,
                         opacity: 0.4
-                    },
-
-
-                    // Do not symbolize some stuff for mapbox
-                    country_label: [],
-                    marine_label: [],
-                    state_label: [],
-                    place_label: [],
-                    waterway_label: [],
-                    poi_label: [],
-                    road_label: [],
-                    housenum_label: [],
-
-
-                    // Do not symbolize some stuff for openmaptiles
-                    country_name: [],
-                    marine_name: [],
-                    state_name: [],
-                    place_name: [],
-                    waterway_name: [],
-                    poi_name: [],
-                    road_name: [],
-                    housenum_name: [],
+                    }
                 };
 
                 // Monkey-patch some properties for nextzen layer names, because
@@ -205,7 +160,7 @@ SMK.INIT( {
                 vectorTileStyling.pois       = vectorTileStyling.poi;
                 vectorTileStyling.roads      = vectorTileStyling.road;
 
-            // Nextzen tiles PBF layer setup
+            	// Nextzen tiles PBF layer setup
 
                 // Assumes layers = "all", and format = "mvt"
                 var nextzenTilesUrl = "https://tile.nextzen.org/tilezen/vector/v1/512/all/{z}/{x}/{y}.mvt?api_key={apikey}";
@@ -219,7 +174,7 @@ SMK.INIT( {
 
                 var nextzenTilesPbfLayer = L.vectorGrid.protobuf(nextzenTilesUrl, nextzenVectorTileOptions);
 
-            // ESRI tiles PBF layer setup
+            	// ESRI tiles PBF layer setup
                 var esriStyle = {};
                 esriStyle.Continent  = vectorTileStyling.earth;
                 esriStyle.Bathymetry = vectorTileStyling.water;
@@ -293,7 +248,6 @@ SMK.INIT( {
                 esriStyle["Park or farming/label"        ] = [];
                 esriStyle["Building/label"               ] = [];
 
-
                 var esriTilesUrl = "https://basemaps.arcgis.com/v1/arcgis/rest/services/World_Basemap/VectorTileServer/tile/{z}/{y}/{x}.pbf";
 
                 var esriVectorTileOptions = {
@@ -304,94 +258,41 @@ SMK.INIT( {
 
                 var esriTilesPbfLayer = L.vectorGrid.protobuf(esriTilesUrl, esriVectorTileOptions);
 
-            // Sliced GeoJSON code copied from:
-            // https://leaflet.github.io/Leaflet.VectorGrid/demo-geojson.html
+				// Sliced GeoJSON code copied from:
+				// https://leaflet.github.io/Leaflet.VectorGrid/demo-geojson.html
 
-            var cartodbAttribution = '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>';
-
-            var euTileLayer = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png', {
-            attribution: cartodbAttribution,
-            opacity: 1
-            });
-            // }).addTo(leafletMap);
-
-            var highlight;
-            var clearHighlight = function() {
-            if (highlight) {
-                euJsonLayer.resetFeatureStyle(highlight);
+				var euJsonLayer = L.vectorGrid.slicer( euCountries, {
+				rendererFactory: L.svg.tile,
+				vectorTileLayerStyles: {
+					sliced: function(properties, zoom) {
+						var p = properties.mapcolor7 % 5;
+						return {
+							fillColor: p === 0 ? '#800026' :
+								p === 1 ? '#E31A1C' :
+								p === 2 ? '#FEB24C' :
+								p === 3 ? '#B2FE4C' : '#FFEDA0',
+							fillOpacity: 0.5,
+							stroke: true,
+							fill: true,
+							color: 'black',
+							weight: 0,
+						}
+					}
+				},
+				getFeatureId: function(f) {
+					return f.properties.wb_a3;
+				}
             }
-            highlight = null;
-            };
+		);
 
-            // "euCountries" is loaded as a script in smk.js, from
-            // https://leaflet.github.io/Leaflet.VectorGrid/eu-countries.js
-            var euJsonLayer = L.vectorGrid.slicer( euCountries, {
-            rendererFactory: L.svg.tile,
-            vectorTileLayerStyles: {
-                sliced: function(properties, zoom) {
-                var p = properties.mapcolor7 % 5;
-                return {
-                    fillColor: p === 0 ? '#800026' :
-                        p === 1 ? '#E31A1C' :
-                        p === 2 ? '#FEB24C' :
-                        p === 3 ? '#B2FE4C' : '#FFEDA0',
-                    fillOpacity: 0.5,
-                    //fillOpacity: 1,
-                    stroke: true,
-                    fill: true,
-                    color: 'black',
-                    //opacity: 0.2,
-                    weight: 0,
-                }
-                }
-            },
-            // interactive: true,
-            getFeatureId: function(f) {
-                return f.properties.wb_a3;
-            }
-            });
-            // .on('mouseover', function(e) {
-            //   var properties = e.layer.properties;
-            //   L.popup()
-            //     .setContent(properties.name || properties.type)
-            //     .setLatLng(e.latlng)
-            //     .openOn(leafletMap);
-            //
-            //   clearHighlight();
-            //   highlight = properties.wb_a3;
-            //
-            //   var p = properties.mapcolor7 % 5;
-            //   var style = {
-            //     fillColor: p === 0 ? '#800026' :
-            //         p === 1 ? '#E31A1C' :
-            //         p === 2 ? '#FEB24C' :
-            //         p === 3 ? '#B2FE4C' : '#FFEDA0',
-            //     fillOpacity: 0.5,
-            //     fillOpacity: 1,
-            //     stroke: true,
-            //     fill: true,
-            //     color: 'red',
-            //     opacity: 1,
-            //     weight: 2,
-            //   };
-            //
-            //   euJsonLayer.setFeatureStyle(properties.wb_a3, style);
-            // });
-            // .addTo(leafletMap);
+		// Set an extent that includes BC as well as Europe
+		leafletMap.setView({ lat: 48, lng: -40 }, 3);
 
-            // leafletMap.on('click', clearHighlight);
-
-            // View includes BC as well as western Europe
-                leafletMap.setView({ lat: 48, lng: -40 }, 3);
-
-            // Add toggling of layers
-                L.control.layers({}, {
-                    "NextZen vector tiles (Protobuf)": nextzenTilesPbfLayer,
-                    "ESRI basemap vector tiles (Protobuf)": esriTilesPbfLayer,
-            "EU JSON (Sliced GeoJSON)": euJsonLayer
-                }, {collapsed: false}).addTo(leafletMap);
-                    }
-                );
-
-    
-  } )
+		// Add toggling of layers
+		L.control.layers({}, {
+			"NextZen vector tiles (Protobuf)": nextzenTilesPbfLayer,
+			"ESRI basemap vector tiles (Protobuf)": esriTilesPbfLayer,
+			"EU JSON (Sliced GeoJSON)": euJsonLayer
+		}, {collapsed: false}).addTo(leafletMap);
+	});
+} )
