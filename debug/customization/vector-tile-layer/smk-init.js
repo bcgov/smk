@@ -19,12 +19,12 @@ SMK.INIT( {
             function() {
                 const leafletMap = smk.$viewer.map;
 
-				// Protobuf code copied from:
+				// Protobuf code copied and updated from:
 				// https://leaflet.github.io/Leaflet.VectorGrid/demo-vectortiles.html
 
 				// Shared tile layer styling setup
 
-				var vectorTileStyling = {
+				let vectorTileStyling = {
                     water: {
                         fill: true,
                         weight: 1,
@@ -163,19 +163,19 @@ SMK.INIT( {
             	// Nextzen tiles PBF layer setup
 
                 // Assumes layers = "all", and format = "mvt"
-                var nextzenTilesUrl = "https://tile.nextzen.org/tilezen/vector/v1/512/all/{z}/{x}/{y}.mvt?api_key={apikey}";
+                const nextzenTilesUrl = "https://tile.nextzen.org/tilezen/vector/v1/512/all/{z}/{x}/{y}.mvt?api_key={apikey}";
 
-                var nextzenVectorTileOptions = {
+                const nextzenVectorTileOptions = {
                     rendererFactory: L.canvas.tile,
                     attribution: '<a href="https://nextzen.com/">&copy; NextZen</a>, <a href="http://www.openstreetmap.org/copyright">&copy; OpenStreetMap</a> contributors',
                     vectorTileLayerStyles: vectorTileStyling,
                     apikey: 'gCZXZglvRQa6sB2z7JzL1w',
                 };
 
-                var nextzenTilesPbfLayer = L.vectorGrid.protobuf(nextzenTilesUrl, nextzenVectorTileOptions);
+                let nextzenTilesPbfLayer = L.vectorGrid.protobuf(nextzenTilesUrl, nextzenVectorTileOptions);
 
             	// ESRI tiles PBF layer setup
-                var esriStyle = {};
+                let esriStyle = {};
                 esriStyle.Continent  = vectorTileStyling.earth;
                 esriStyle.Bathymetry = vectorTileStyling.water;
                 esriStyle["Vegetation small scale"] = vectorTileStyling.landuse;
@@ -248,24 +248,24 @@ SMK.INIT( {
                 esriStyle["Park or farming/label"        ] = [];
                 esriStyle["Building/label"               ] = [];
 
-                var esriTilesUrl = "https://basemaps.arcgis.com/v1/arcgis/rest/services/World_Basemap/VectorTileServer/tile/{z}/{y}/{x}.pbf";
+                const esriTilesUrl = "https://basemaps.arcgis.com/v1/arcgis/rest/services/World_Basemap/VectorTileServer/tile/{z}/{y}/{x}.pbf";
 
-                var esriVectorTileOptions = {
+                const esriVectorTileOptions = {
                     rendererFactory: L.canvas.tile,
                     attribution: '© ESRI',
                     vectorTileLayerStyles: esriStyle,
                 };
 
-                var esriTilesPbfLayer = L.vectorGrid.protobuf(esriTilesUrl, esriVectorTileOptions);
+                let esriTilesPbfLayer = L.vectorGrid.protobuf(esriTilesUrl, esriVectorTileOptions);
 
-				// Sliced GeoJSON code copied from:
+				// Sliced GeoJSON code copied and updated from:
 				// https://leaflet.github.io/Leaflet.VectorGrid/demo-geojson.html
 
-				var euJsonLayer = L.vectorGrid.slicer( euCountries, {
+				let euJsonLayer = L.vectorGrid.slicer( euCountries, {
 				rendererFactory: L.svg.tile,
 				vectorTileLayerStyles: {
 					sliced: function(properties, zoom) {
-						var p = properties.mapcolor7 % 5;
+						let p = properties.mapcolor7 % 5;
 						return {
 							fillColor: p === 0 ? '#800026' :
 								p === 1 ? '#E31A1C' :

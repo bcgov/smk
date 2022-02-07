@@ -26,7 +26,7 @@
         {
             "type": "list-menu",
             "enabled": true,
-            "title": "Vector Layer Demo!"
+            "title": "Vector Tile Layer Demo"
         },
         {
             "type": "pan",
@@ -39,13 +39,13 @@
         {
             "type": "about",
             "enabled": true,
-            "title": "About Vector Layer Demo!",
+            "title": "About",
             "position": "list-menu",
-            "content": "<p>Welcome to SMK!</p><p>My Simple Map Kit application.</p>"
+            "content": "<p>This demonstrates the use of vector tile layers of multiple types (<a href=\"https://docs.mapbox.com/data/tilesets/guides/vector-tiles-standards/\">Protobufs</a> and sliced <a href=\"https://geojson.org/\">GeoJSON</a>) in SMK using the <a href=\"https://github.com/Leaflet/Leaflet.VectorGrid\">Leaflet.VectorGrid</a> library.</p><p>While not yet supported in the Layers tool, vector tile layers can be added to SMK apps with custom javascript.</p>"
         },
         {
             "type": "layers",
-            "enabled": true
+            "enabled": false
         },
         {
             "type": "baseMaps",
@@ -75,11 +75,11 @@
         },
         {
             "type": "search",
-            "enabled": true
+            "enabled": false
         },
         {
             "type": "coordinate",
-            "enabled": true
+            "enabled": false
         },
         {
             "type": "measure",
@@ -91,11 +91,11 @@
         },
         {
             "type": "scale",
-            "enabled": true
+            "enabled": false
         },
         {
             "type": "minimap",
-            "enabled": true
+            "enabled": false
         },
         {
             "type": "directions",
@@ -119,6 +119,6 @@
         }
     ],
     "version": "1.0.8",
-    "createdBy": "Michael Nelson",
+    "createdBy": "SMK Developer",
     "createdDate": "2022-01-24T19:49:23.423Z"
 }
