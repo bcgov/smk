@@ -41,7 +41,7 @@
             "enabled": true,
             "title": "About",
             "position": "list-menu",
-            "content": "<p>This demonstrates the use of vector tile layers of multiple types (<a href=\"https://docs.mapbox.com/data/tilesets/guides/vector-tiles-standards/\">Protobufs</a> and sliced <a href=\"https://geojson.org/\">GeoJSON</a>) in SMK using the <a href=\"https://github.com/Leaflet/Leaflet.VectorGrid\">Leaflet.VectorGrid</a> library.</p><p>While not yet supported in the Layers tool, vector tile layers can be added to SMK apps with custom javascript.</p>"
+            "content": "<p>This demonstrates the use of vector tile layers of multiple types (<a href=\"https://docs.mapbox.com/data/tilesets/guides/vector-tiles-standards/\">Protobufs</a> and sliced <a href=\"https://geojson.org/\">GeoJSON</a>) in SMK using the <a href=\"https://github.com/Leaflet/Leaflet.VectorGrid\">Leaflet.VectorGrid</a> library.</p><p>While not yet supported in the Layers tool, vector tile layers can be added to SMK apps with custom JavaScript.</p>"
         },
         {
             "type": "layers",
