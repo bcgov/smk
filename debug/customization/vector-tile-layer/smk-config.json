@@ -1,0 +1,124 @@
+{
+    "name": "vector_layer_demo",
+    "viewer": {
+        "type": "leaflet",
+        "location": {
+            "center": [
+                -41.22070312500001,
+                46.800059446787316
+            ],
+            "extent": [
+                -98.43750000000001,
+                -0.17578097424708533,
+                15.996093750000002,
+                72.23551372557404
+            ],
+            "zoom": 3
+        },
+        "baseMap": "StamenTonerLight"
+    },
+    "layers": [],
+    "tools": [
+        {
+            "type": "toolbar",
+            "enabled": true
+        },
+        {
+            "type": "list-menu",
+            "enabled": true,
+            "title": "Vector Tile Layer Demo"
+        },
+        {
+            "type": "pan",
+            "enabled": true
+        },
+        {
+            "type": "zoom",
+            "enabled": true
+        },
+        {
+            "type": "about",
+            "enabled": true,
+            "title": "About",
+            "position": "list-menu",
+            "content": "<p>This demonstrates the use of vector tile layers of multiple types (<a href=\"https://docs.mapbox.com/data/tilesets/guides/vector-tiles-standards/\">Protobufs</a> and sliced <a href=\"https://geojson.org/\">GeoJSON</a>) in SMK using the <a href=\"https://github.com/Leaflet/Leaflet.VectorGrid\">Leaflet.VectorGrid</a> library.</p><p>While not yet supported in the Layers tool, vector tile layers can be added to SMK apps with custom JavaScript.</p>"
+        },
+        {
+            "type": "layers",
+            "enabled": false
+        },
+        {
+            "type": "baseMaps",
+            "enabled": false
+        },
+        {
+            "type": "identify",
+            "enabled": false,
+            "showPanel": true,
+            "showWidget": true,
+            "style": {
+                "strokeWidth": 1,
+                "strokeStyle": "1, 1",
+                "strokeColor": "#000000",
+                "strokeOpacity": 0.8,
+                "fillColor": "#000000",
+                "fillOpacity": 0.5,
+                "markerSize": [
+                    20,
+                    20
+                ],
+                "markerOffset": [
+                    10,
+                    0
+                ]
+            }
+        },
+        {
+            "type": "search",
+            "enabled": false
+        },
+        {
+            "type": "coordinate",
+            "enabled": false
+        },
+        {
+            "type": "measure",
+            "enabled": false
+        },
+        {
+            "type": "markup",
+            "enabled": false
+        },
+        {
+            "type": "scale",
+            "enabled": false
+        },
+        {
+            "type": "minimap",
+            "enabled": false
+        },
+        {
+            "type": "directions",
+            "enabled": false
+        },
+        {
+            "type": "location",
+            "enabled": false
+        },
+        {
+            "type": "select",
+            "enabled": false
+        },
+        {
+            "type": "geomark",
+            "geomarkService": {
+                "url": "https://apps.gov.bc.ca/pub/geomark"
+            },
+            "position": "list-menu",
+            "enabled": false
+        }
+    ],
+    "version": "1.0.8",
+    "createdBy": "SMK Developer",
+    "createdDate": "2022-01-24T19:49:23.423Z"
+}
