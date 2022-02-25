@@ -213,8 +213,8 @@ include.module( 'tool-geomark', [
             this.toGeomark = function(geomarkInfo, drawingLayer) {
                 const geomarkProperties = this.getGeomarkProperties(geomarkInfo);
                 return {
-                    id: geomarkInfo.id || geomarkProperties.id,
-                    url: geomarkInfo.url || geomarkProperties.url,
+                    id: geomarkInfo.id || geomarkProperties.id || this.showCouldNotLoadMessage(),
+                    url: geomarkInfo.url || geomarkProperties.url || this.showCouldNotLoadMessage(),
                     drawingLayer: drawingLayer,
                     isVisible: true
                 };
@@ -229,20 +229,6 @@ include.module( 'tool-geomark', [
                 if (geomarkInfo.features && geomarkInfo.features[0] && geomarkInfo.features[0].properties) {
                     return geomarkInfo.features[0].properties;
                 } 
-                self.showCouldNotLoadMessage();
-                return {};
-            }
-
-            this.getGeometry = function(geomarkGeoJson) {
-                // polygon
-                if (geomarkGeoJson.geometry) {
-                    return geomarkGeoJson.geometry;
-                }
-                // multi-polygon
-                if (geomarkGeoJson.features && geomarkGeoJson.features[0] && geomarkGeoJson.features[0].geometry) {
-                    return geomarkGeoJson.features[0].geometry;
-                }
-                self.showCouldNotLoadMessage();
                 return {};
             }
 
@@ -275,8 +261,7 @@ include.module( 'tool-geomark', [
                     dataType: 'json',
                     traditional: true,
                     success: function(geomarkGeoJson) {
-                        const geometry = self.getGeometry(geomarkGeoJson);
-                        const geometryLayer = L.geoJSON(geometry, {
+                        const geometryLayer = L.geoJSON(geomarkGeoJson, {
                             style: function (feature) {
                                 return {color: CUSTOM_COLOUR};
                             }
