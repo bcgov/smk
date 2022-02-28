@@ -212,12 +212,17 @@ include.module( 'tool-geomark', [
 
             this.toGeomark = function(geomarkInfo, drawingLayer) {
                 const geomarkProperties = this.getGeomarkProperties(geomarkInfo);
-                return {
-                    id: geomarkInfo.id || geomarkProperties.id || this.showCouldNotLoadMessage(),
-                    url: geomarkInfo.url || geomarkProperties.url || this.showCouldNotLoadMessage(),
-                    drawingLayer: drawingLayer,
-                    isVisible: true
-                };
+                const id = geomarkInfo.id || geomarkProperties.id;
+                const url = geomarkInfo.url || geomarkProperties.url;
+                if (id && url) {
+                    return {
+                        id,
+                        url,
+                        drawingLayer,
+                        isVisible: true
+                    };
+                }
+                return undefined;
             }
 
             this.getGeomarkProperties = function(geomarkInfo) {
@@ -230,10 +235,6 @@ include.module( 'tool-geomark', [
                     return geomarkInfo.features[0].properties;
                 } 
                 return {};
-            }
-
-            this.showCouldNotLoadMessage = function() {
-                self.showStatusMessage('Could not load Geomark: expected values not found in response.', 'error', 5000);
             }
 
             this.getGeomarkById = function(geomarkId) {
@@ -266,9 +267,14 @@ include.module( 'tool-geomark', [
                                 return {color: CUSTOM_COLOUR};
                             }
                         });
+                        const geomark = self.toGeomark(geomarkGeoJson, geometryLayer);
+                        if (!geomark) {
+                            self.showStatusMessage('Could not load Geomark: expected values not found in response.', 'error', 5000);
+                            return;
+                        }
                         self.freezeLayer(geometryLayer);
                         geometryLayer.addTo(smk.$viewer.map);
-                        self.geomarks.push(self.toGeomark(geomarkGeoJson, geometryLayer));
+                        self.geomarks.push(geomark);
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
                         self.showStatusMessage('Error retrieving geomark from URL ' + geomarkUrl + ': ' + errorThrown, 'error', 5000);
@@ -296,12 +302,12 @@ include.module( 'tool-geomark', [
                         'body': 'SRID=4326;' + wktCoords,
                         'format': 'wkt',
                         'callback': function(geomarkInfo) {
-                            const geomarkId = geomarkInfo.id;
-                            if (geomarkId) { 
+                            const geomark = self.toGeomark(geomarkInfo, currentLayerGroup);
+                            if (geomark) { 
                                 self.updateAndShowAlert('Created geomark: <a href="' + geomarkInfo.url + 
                                 '" target="_new">' + geomarkInfo.url +
                                 '</a>. Save this URL to access your geomark later.');
-                                self.geomarks.push(self.toGeomark(geomarkInfo, currentLayerGroup));
+                                self.geomarks.push(geomark);
                                 currentLayerGroup = self.createCurrentLayerGroup();
                                 self.canSave = false;
                                 self.canClear = false;
