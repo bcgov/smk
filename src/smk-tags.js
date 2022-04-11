@@ -228,6 +228,7 @@ t.sequence( 'leaflet' )
     .script( 'lib/leaflet/esri-leaflet-3.0.2.js' )
     .script( 'lib/leaflet/esri-leaflet-renderers-2.1.2.js' )
     .script( 'lib/leaflet/esri-leaflet-legend-compat-src-2.0.1.js')
+    .script( 'lib/leaflet/esri-leaflet-vector-3.1.3.js' )
     .dir( 'lib/leaflet/images/**' )
 
 

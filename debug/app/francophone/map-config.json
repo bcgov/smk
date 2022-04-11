@@ -28,7 +28,7 @@
 			],
 			"zoom": 6.0
 		},
-		"baseMap": "Imagery",
+		"baseMap": "StamenTonerLight",
 		"activeTool": "about",
 		"clusterOption": {
 			"showCoverageOnHover": false
@@ -104,19 +104,6 @@
 					"title": "Écoles d’immersion/francophones (M-12) / French Immersion/Francophone Schools (K-12)",
 					"isVisible": true
 				}
-			]
-		},
-		{
-			"type": "baseMaps",
-			"enabled": true,
-			"title": "Cartes de base / Base Maps",
-			"choices": [
-				"Topographic",
-				"Streets",
-				"Imagery",
-				"Oceans",
-				"NationalGeographic",
-				"Gray"
 			]
 		},
 		{

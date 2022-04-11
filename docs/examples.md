@@ -60,7 +60,8 @@ For the following examples, the reader should assume the following:
     "createdDate": "2021-08-06T17:12:57.858Z",
     "viewer": {
         "type": "leaflet",
-        "baseMap": "Streets"
+        "baseMap": "Streets",
+        "esriApiKey": "<your-ESRI-API-key>"
     },
     "tools": [
         {

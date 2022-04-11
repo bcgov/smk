@@ -71,25 +71,6 @@
       "control": "desktop"
     },
     {
-      "type": "baseMaps",
-      "enabled": true,
-      "xxxshowTitle": "mobile",
-      "choices": [
-        "Topographic",
-        "Streets",
-        "Imagery",
-        "StamenTonerLight",
-        "DarkGray",
-        "Gray"
-      ],
-      "position": "list-menu",
-      "mapStyle": {
-        "width": "120px",
-        "height": "120px"
-      },
-      "order": 4
-    },
-    {
       "type": "search",
       "enabled": false
     },
