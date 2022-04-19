@@ -61,9 +61,11 @@ The URL for the DataBC Layer Catalog.
 ## DynamicLayers Property
 `"dynamicLayers": Array`
 
-A listing of dynamic layer configurations.
-This will typically only contain one dynamic feature, which can be derived from the MPCM Layer Catalog.
+A listing of dynamic layer configurations in JSON format. This will typically only contain one dynamic feature. This configuration comes from the MPCM Layer Catalog.
 
+### DrawingInfo Property
+`"drawingInfo": Object`
 
+Each `dynamicLayers` property includes a `drawingInfo` property. This is an object in JSON format that is included in SMK requests for layer tiles. `drawingInfo` can be manually edited to configure aspects of layer display. For more information, see <a href="https://developers.arcgis.com/web-map-specification/objects/drawingInfo">`drawingInfo` documentation</a>.
 
-
+If a value exists for `drawingInfo`'s `labelingInfo` property in an ESRI dynamic layer, SMK-CLI's panel for editing the layer will include a "Show labels" check box. This toggles the value of the `showLabels` property of `drawingInfo`. 
