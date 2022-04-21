@@ -61,9 +61,9 @@ The URL for the DataBC Layer Catalog.
 ## DynamicLayers Property
 `"dynamicLayers": Array`
 
-A listing of dynamic layer configurations.
-This will typically only contain one dynamic feature, which can be derived from the MPCM Layer Catalog.
+A listing of dynamic layer configurations. This will typically contain configuration for a single layer. The default configuration comes from the MPCM Layer Catalog.
 
+### DrawingInfo Property
+`"drawingInfo": Object`
 
-
-
+Each `dynamicLayers` property includes a `drawingInfo` property which defines the appearance of the layer on the map. `drawingInfo` can be manually edited to configure aspects of layer display. For more information, see <a href="https://developers.arcgis.com/web-map-specification/objects/drawingInfo">`drawingInfo` documentation</a>.
