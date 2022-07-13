@@ -6,7 +6,7 @@ include.module( 'tool-minimap-leaflet', [ 'leaflet', 'tool-minimap' ], function 
 
         smk.addToStatus( $( '<div class="smk-spacer">' ).height( 170 ).get( 0 ) )
 
-        var ly = smk.$viewer.createBasemapLayer( smk.viewer.esriApiKey, this.baseMap || "Topographic" );
+        var ly = smk.$viewer.createBasemapLayer( this.baseMap || "Topographic", smk.viewer.esriApiKey );
 
         ( new L.Control.MiniMap( ly[ 0 ], { toggleDisplay: true } ) )
             .addTo( smk.$viewer.map );

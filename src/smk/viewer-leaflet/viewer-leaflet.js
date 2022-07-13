@@ -1,6 +1,8 @@
 include.module( 'viewer-leaflet', [ 'viewer', 'leaflet', 'layer-leaflet', /*'feature-list-leaflet',*/ 'turf' ], function () {
     "use strict";
 
+    const BASEMAP_PANE = 'basemaps';
+
     function ViewerLeaflet() {
         SMK.TYPE.Viewer.prototype.constructor.apply( this, arguments )
     }
@@ -29,8 +31,9 @@ include.module( 'viewer-leaflet', [ 'viewer', 'leaflet', 'layer-leaflet', /*'fea
             minZoom:            smk.viewer.minZoom
         } )
 
-        self.map.createPane('basemaps');
-        self.map.getPane('basemaps').style.zIndex = 100;
+        // Create a panel for basemaps with a low z-index to ensure they draw below layers
+        self.map.createPane(BASEMAP_PANE);
+        self.map.getPane(BASEMAP_PANE).style.zIndex = 100;
 
         self.map.scrollWheelZoom.disable()
 
@@ -60,7 +63,7 @@ include.module( 'viewer-leaflet', [ 'viewer', 'leaflet', 'layer-leaflet', /*'fea
         }
 
         if ( smk.viewer.baseMap ) {
-            self.setBasemap( smk.viewer.esriApiKey, smk.viewer.baseMap )
+            self.setBasemap( smk.viewer.baseMap, smk.viewer.esriApiKey )
         }
 
         this.changedViewDebounced = SMK.UTIL.makeDelayedCall( function () {
@@ -200,26 +203,18 @@ include.module( 'viewer-leaflet', [ 'viewer', 'leaflet', 'layer-leaflet', /*'fea
 
         /* jshint -W040 */
         var opt = Object.assign( { detectRetina: true }, this.option );
-        opt.pane = 'basemaps';
+        opt.pane = BASEMAP_PANE;
         opt.apikey = esriApiKey;
 
-        var lys = []
-        lys.push( L.esri.Vector.vectorBasemapLayer( apiId, opt ) )
-
-        if ( this.labels )
-            this.labels.forEach( function ( lid ) {
-                lys.push( L.esri.Vector.vectorBasemapLayer( lid, opt ) )
-            } )
-
-        return lys
+        return [ L.esri.Vector.vectorBasemapLayer( apiId, opt ) ];
     }
 
     function createBasemapTiled( id ) {
         /* jshint -W040 */
-        return [ L.tileLayer( this.url, { attribution: this.attribution, pane: 'basemaps' } ) ]
+        return [ L.tileLayer( this.url, { attribution: this.attribution, pane: BASEMAP_PANE } ) ]
     }
 
-    ViewerLeaflet.prototype.setBasemap = function ( esriApiKey, basemapId ) {
+    ViewerLeaflet.prototype.setBasemap = function ( basemapId, esriApiKey ) {
         var self = this
 
         if( this.currentBasemap ) {
@@ -228,7 +223,7 @@ include.module( 'viewer-leaflet', [ 'viewer', 'leaflet', 'layer-leaflet', /*'fea
             } )
         }
 
-        this.currentBasemap = this.createBasemapLayer( esriApiKey, basemapId );
+        this.currentBasemap = this.createBasemapLayer( basemapId, esriApiKey );
 
         this.map.addLayer( this.currentBasemap[ 0 ] );
 
@@ -238,7 +233,7 @@ include.module( 'viewer-leaflet', [ 'viewer', 'leaflet', 'layer-leaflet', /*'fea
         this.changedBaseMap( { baseMap: basemapId } )
     }
 
-    ViewerLeaflet.prototype.createBasemapLayer = function ( esriApiKey, basemapId ) {
+    ViewerLeaflet.prototype.createBasemapLayer = function ( basemapId, esriApiKey ) {
         const basemap = this.basemap[basemapId];
         return basemap.create( esriApiKey, basemap.apiId || basemap.id )
     }
