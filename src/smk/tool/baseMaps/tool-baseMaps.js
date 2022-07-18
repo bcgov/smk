@@ -60,7 +60,7 @@ include.module( 'tool-baseMaps', [
                         m.createPane('basemaps');
                         m.getPane('basemaps').style.zIndex = 100;
 
-                        var bmLayers = smk.$viewer.createBasemapLayer( bm.id, smk.viewer.esriApiKey )
+                        var bmLayers = smk.$viewer.createBasemapLayer( bm.id )
                         m.addLayer( bmLayers[ 0 ] )
                     }
 
@@ -113,7 +113,7 @@ include.module( 'tool-baseMaps', [
             } )
 
             function setBasemap( basemap ) {
-                smk.$viewer.setBasemap( basemap.id, smk.viewer.esriApiKey )
+                smk.$viewer.setBasemap( basemap.id )
             }
 
             smk.$viewer.changedBaseMap( function ( ev ) {
@@ -133,7 +133,7 @@ include.module( 'tool-baseMaps', [
                 } )
             } )
 
-            smk.$viewer.setBasemap( smk.viewer.baseMap, smk.viewer.esriApiKey )
+            smk.$viewer.setBasemap( smk.viewer.baseMap )
         }
     )
 } )

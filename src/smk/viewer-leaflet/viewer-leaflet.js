@@ -63,7 +63,7 @@ include.module( 'viewer-leaflet', [ 'viewer', 'leaflet', 'layer-leaflet', /*'fea
         }
 
         if ( smk.viewer.baseMap ) {
-            self.setBasemap( smk.viewer.baseMap, smk.viewer.esriApiKey )
+            self.setBasemap( smk.viewer.baseMap )
         }
 
         this.changedViewDebounced = SMK.UTIL.makeDelayedCall( function () {
@@ -196,15 +196,18 @@ include.module( 'viewer-leaflet', [ 'viewer', 'leaflet', 'layer-leaflet', /*'fea
     ViewerLeaflet.prototype.basemap.StamenTonerLight.url = 'https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}.png'
     ViewerLeaflet.prototype.basemap.StamenTonerLight.attribution = "Map tiles by <a href='http://stamen.com'>Stamen Design</a>, under <a href='http://creativecommons.org/licenses/by/3.0'>CC BY 3.0</a>. Data by <a href='http://openstreetmap.org'>OpenStreetMap</a>, under <a href='http://www.openstreetmap.org/copyright'>ODbL</a>."
 
-    function createBasemapEsri( esriApiKey, apiId ) {
-        if (!esriApiKey) {
-            throw new Error('No value was found for "esriApiKey" while creating an ESRI vector basemap. As a result, no basemap will appear. Please confirm there is a value for "esriApiKey" in the "viewer" section of smk-config.json, or use a non-ESRI basemap.');
+    function createBasemapEsri( apiId ) {
+        const apiKey = SMK.MAP[1].viewer.esriApiKey;
+        if (!apiKey) {
+            const errorMessage = 'No value was found for "esriApiKey" while creating an ESRI vector basemap. As a result, no basemap will appear. Please confirm there is a value for "esriApiKey" in the "viewer" section of smk-config.json, or use a non-ESRI basemap. For details, see documentation: https://bcgov.github.io/smk/docs/configuration/viewer.'
+            alert(errorMessage);
+            throw new Error(errorMessage);
         }
 
         /* jshint -W040 */
         var opt = Object.assign( { detectRetina: true }, this.option );
         opt.pane = BASEMAP_PANE;
-        opt.apikey = esriApiKey;
+        opt.apikey = apiKey;
 
         return [ L.esri.Vector.vectorBasemapLayer( apiId, opt ) ];
     }
@@ -214,7 +217,7 @@ include.module( 'viewer-leaflet', [ 'viewer', 'leaflet', 'layer-leaflet', /*'fea
         return [ L.tileLayer( this.url, { attribution: this.attribution, pane: BASEMAP_PANE } ) ]
     }
 
-    ViewerLeaflet.prototype.setBasemap = function ( basemapId, esriApiKey ) {
+    ViewerLeaflet.prototype.setBasemap = function ( basemapId ) {
         var self = this
 
         if( this.currentBasemap ) {
@@ -223,7 +226,7 @@ include.module( 'viewer-leaflet', [ 'viewer', 'leaflet', 'layer-leaflet', /*'fea
             } )
         }
 
-        this.currentBasemap = this.createBasemapLayer( basemapId, esriApiKey );
+        this.currentBasemap = this.createBasemapLayer( basemapId );
 
         this.map.addLayer( this.currentBasemap[ 0 ] );
 
@@ -233,9 +236,9 @@ include.module( 'viewer-leaflet', [ 'viewer', 'leaflet', 'layer-leaflet', /*'fea
         this.changedBaseMap( { baseMap: basemapId } )
     }
 
-    ViewerLeaflet.prototype.createBasemapLayer = function ( basemapId, esriApiKey ) {
+    ViewerLeaflet.prototype.createBasemapLayer = function ( basemapId ) {
         const basemap = this.basemap[basemapId];
-        return basemap.create( esriApiKey, basemap.apiId || basemap.id )
+        return basemap.create( basemap.apiId || basemap.id )
     }
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
