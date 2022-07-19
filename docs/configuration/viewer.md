@@ -15,6 +15,7 @@ Click on a property name for more information:
     <a href="#themes-property"                  >"themes"</a>:      null
     <a href="#panelwidth-property"              >"panelWidth"</a>:  300,
     <a href="#basemap-property"                 >"baseMap"</a>:     "Topographic",
+    <a href="#esriapikey-property"              >"esriApiKey"</a>:  null,
     <a href="#activeTool-property"              >"activeTool"</a>:  null,
     <a href="#location-property"                >"location"</a>: {
         <a href="#extent-sub-property"          >"extent"</a>:  [ -139.1782, 47.6039, -110.3533, 60.5939 ],
@@ -83,11 +84,20 @@ These are the possible values:
 - `"Streets"`
 - `"Imagery"`
 - `"Oceans"`
-- `"NationalGeographic"`
 - `"ShadedRelief"`
 - `"DarkGray"`
 - `"Gray"`
 - `"StamenTonerLight"`
+
+
+## EsriApiKey Property
+`"esriApiKey": String`
+
+An ESRI API key to use with ESRI's [vector basemap service](https://developers.arcgis.com/documentation/mapping-apis-and-services/maps/services/basemap-layer-service), which is used for all basemaps except *StamenTonerLight*.
+
+To provide an ESRI API key, you can create an [ArcGIS Developer account](https://developers.arcgis.com/sign-up/) for free or use an [ArcGIS Online account](https://www.esri.com/en-us/arcgis/products/arcgis-online/trial) and then create an [API key](https://developers.arcgis.com/documentation/mapping-apis-and-services/security/api-keys/) in the [developer dashboard](https://developers.arcgis.com/dashboard/).
+
+If you are not using an ESRI basemap, this value can be empty. If you use an empty value with an ESRI basemap, no basemap will display.
 
 
 ## ActiveTool Property

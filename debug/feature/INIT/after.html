@@ -17,6 +17,9 @@
         <script>
             SMK.INIT( {
                 containerSel:   '#smk-map-frame',
+                config: [ 
+                    { viewer: { baseMap: "StamenTonerLight" } }
+                ]
             } )
             .then( function ( smk ) {
                 dialog( [ 'SMK is initialized and ready' ] )

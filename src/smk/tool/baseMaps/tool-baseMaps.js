@@ -57,6 +57,9 @@ include.module( 'tool-baseMaps', [
                             zoomSnap: 0
                         } );
 
+                        m.createPane('basemaps');
+                        m.getPane('basemaps').style.zIndex = 100;
+
                         var bmLayers = smk.$viewer.createBasemapLayer( bm.id )
                         m.addLayer( bmLayers[ 0 ] )
                     }
