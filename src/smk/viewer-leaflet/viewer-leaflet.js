@@ -238,7 +238,7 @@ include.module( 'viewer-leaflet', [ 'viewer', 'leaflet', 'layer-leaflet', /*'fea
 
     ViewerLeaflet.prototype.createBasemapLayer = function ( basemapId ) {
         const basemap = this.basemap[basemapId];
-        return basemap.create( basemap.apiId || basemap.id )
+        return basemap.create( basemap.apiId || basemapId )
     }
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
