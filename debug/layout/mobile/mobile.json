@@ -1,6 +1,7 @@
 {
   "viewer": {
-      "device": "mobile"
+      "device": "mobile",
+      "baseMap": "StamenTonerLight"
   },
   "tools": [
     {

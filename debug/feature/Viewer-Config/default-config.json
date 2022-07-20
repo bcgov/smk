@@ -1,4 +1,7 @@
 {
+    "viewer": {
+        "baseMap": "StamenTonerLight"
+    },
     "tools": [
         {
             "type": "toolbar",

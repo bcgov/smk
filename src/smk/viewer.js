@@ -41,50 +41,43 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
     Viewer.prototype.basemap = {
         Topographic: {
             order: 1,
-            title: 'Topographic',
-            option: {
-                maxNativeZoom: 16
-            }
+            apiId: 'ArcGIS:Topographic',
+            title: 'Topographic'
         },
         Streets: {
             order: 2,
+            apiId: 'ArcGIS:Streets',
             title: 'Streets'
         },
         Imagery: {
             order: 3,
-            title: 'Imagery',
-            option: {
-                maxNativeZoom: 14
-            }
+            apiId: 'ArcGIS:Imagery',
+            title: 'Imagery'
         },
         Oceans: {
             order: 4,
+            apiId: 'ArcGIS:Oceans',
             title: 'Oceans'
-        },
-        NationalGeographic: {
-            order: 5,
-            title: 'National Geographic'
         },
         ShadedRelief: {
             order: 6,
+            apiId: 'ArcGIS:Hillshade:Light', 
             title: 'Shaded Relief'
         },
         DarkGray: {
             order: 7,
+            apiId: 'ArcGIS:DarkGray',
             title: 'Dark Gray'
         },
         Gray: {
             order: 8,
+            apiId: 'ArcGIS:LightGray',
             title: 'Gray'
         },
         StamenTonerLight: {
             order: 9,
             title: 'Stamen Toner Light'
-        },
-        // Terrain: {
-        //     order: 9,
-        //     title: 'Terrain'
-        // },
+        }
     }
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //

@@ -1,6 +1,7 @@
 {
     "viewer": {
-        "activeTool": "layers"
+        "activeTool": "layers",
+        "baseMap": "StamenTonerLight"
     },
     "tools": [
         {
