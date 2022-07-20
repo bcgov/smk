@@ -93,11 +93,11 @@ These are the possible values:
 ## EsriApiKey Property
 `"esriApiKey": String`
 
-An ESRI API key to use with ESRI's [vector basemap service](https://developers.arcgis.com/documentation/mapping-apis-and-services/maps/services/basemap-layer-service), which is used for all basemaps except *StamenTonerLight*.
+An Esri API key to use with Esri's [vector basemap service](https://developers.arcgis.com/documentation/mapping-apis-and-services/maps/services/basemap-layer-service), which is used for all basemaps except *StamenTonerLight*.
 
-To provide an ESRI API key, you can create an [ArcGIS Developer account](https://developers.arcgis.com/sign-up/) for free or use an [ArcGIS Online account](https://www.esri.com/en-us/arcgis/products/arcgis-online/trial) and then create an [API key](https://developers.arcgis.com/documentation/mapping-apis-and-services/security/api-keys/) in the [developer dashboard](https://developers.arcgis.com/dashboard/).
+To provide an Esri API key, you can create an [ArcGIS Developer account](https://developers.arcgis.com/sign-up/) for free or use an [ArcGIS Online account](https://www.esri.com/en-us/arcgis/products/arcgis-online/trial) and then create an [API key](https://developers.arcgis.com/documentation/mapping-apis-and-services/security/api-keys/) in the [developer dashboard](https://developers.arcgis.com/dashboard/).
 
-If you are not using an ESRI basemap, this value can be empty. If you use an empty value with an ESRI basemap, no basemap will display.
+If you are not using an Esri basemap, this value can be empty. If you use an empty value with an Esri basemap, no basemap will display.
 
 
 ## ActiveTool Property
