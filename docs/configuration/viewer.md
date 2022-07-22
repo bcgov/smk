@@ -17,6 +17,8 @@ Click on a property name for more information:
     <a href="#basemap-property"                 >"baseMap"</a>:     "Topographic",
     <a href="#esriapikey-property"              >"esriApiKey"</a>:  null,
     <a href="#activeTool-property"              >"activeTool"</a>:  null,
+    <a href="#minZoom-property"                 >"minZoom"</a>:  null,
+    <a href="#maxZoom-property"                 >"maxZoom"</a>:  null,
     <a href="#location-property"                >"location"</a>: {
         <a href="#extent-sub-property"          >"extent"</a>:  [ -139.1782, 47.6039, -110.3533, 60.5939 ],
         <a href="#center-sub-property"          >"center"</a>:  [ -124.76575, 54.0989 ],
@@ -105,6 +107,15 @@ If you are not using an Esri basemap, this value can be empty. If you use an emp
 
 If this property is set to the id of a tool, then this tool will be active when the map is finished initialization.
 
+## MinZoom Property
+`"minZoom": Number`
+
+The map's minimum zoom level. Set a value to override the default value of 1.
+
+## MaxZoom Property
+`"maxZoom": String`
+
+The map's maximum zoom level. Set a value to override the default value of 22.
 
 ## Location Property
 `"location": String`
