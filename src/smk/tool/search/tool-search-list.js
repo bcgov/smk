@@ -14,7 +14,6 @@ include.module( 'tool-search.tool-search-list-js', [
             request.abort()
 
         var query = {
-            ver:            1.2,
             maxResults:     10,
             outputSRS:      4326,
             addressString:  text,
