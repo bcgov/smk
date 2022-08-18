@@ -25,7 +25,6 @@ include.module( 'query.query-place-js', [ 'query.query-js' ], function () {
         var self = this
 
         var query = {
-            ver:            1.2,
             maxResults:     20,
             outputSRS:      4326,
             addressString:  param.param1.value,
