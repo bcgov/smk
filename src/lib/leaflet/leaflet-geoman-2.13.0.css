@@ -25,11 +25,11 @@
 .cursor-marker {
   cursor: crosshair;
   pointer-events: none;
-  display: none;
+  opacity: 0;
 }
 
 .cursor-marker.visible {
-  display: block !important;
+  opacity: 1 !important;
 }
 
 .leaflet-pm-invalid {
@@ -47,12 +47,47 @@
   opacity: 1 !important;
 }
 
-.hidden {
-  display: none;
-}
-
 .vertexmarker-disabled {
   opacity: 0.7;
+}
+
+.pm-text-marker {
+  width: 0;
+  height: 0;
+}
+
+.pm-textarea {
+    background-color: #fff;
+    color: #000;
+    resize: none;
+    border: none;
+    outline: 0;
+    cursor: pointer;
+    border-radius: 3px;
+    padding-left: 7px;
+    padding-bottom: 0;
+    padding-top: 4px;
+}
+
+.leaflet-pm-draggable .pm-textarea {
+  cursor: move;
+}
+
+.pm-textarea:focus,
+.pm-textarea:focus-within,
+.pm-textarea:focus-visible,
+.pm-textarea:active {
+  border: 2px solid #000;
+  outline: 0;
+}
+
+.pm-textarea.pm-disabled {
+  border: none;
+  user-select: none;
+}
+
+.pm-textarea.pm-hasfocus {
+  cursor: auto;
 }
 
 .leaflet-pm-toolbar {
@@ -145,6 +180,9 @@
 }
 .leaflet-pm-toolbar .leaflet-pm-icon-rotate {
   background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCI+CiAgICA8ZGVmcz4KICAgICAgICA8cGF0aCBpZD0icm90YXRlIiBkPSJNMjEuMiw1LjhjLTAuMS0wLjItMC4yLTAuMy0wLjMtMC41bC0wLjEtMC4yYy0wLjEtMC4yLTAuMi0wLjMtMC4zLTAuNWwtMC4xLTAuMmMtMC4xLTAuMi0wLjItMC4zLTAuNC0wLjVsLTAuMi0wLjNsMi44LTMuMUwxOCwwLjZsLTQuNiwwLjFsMC41LDQuNWwwLjUsNC41bDMuMi0zLjZ2MC4xbDAuMSwwLjJjMC4xLDAuMSwwLjEsMC4yLDAuMiwwLjJsMC4xLDAuMkMxOCw3LDE4LDcuMSwxOC4xLDcuMmMwLjMsMC43LDAuNiwxLjQsMC43LDIuMWMwLjIsMS40LDAsMi45LTAuNiw0LjJMMTgsMTMuOUwxNy45LDE0bC0wLjMsMC41bC0wLjEsMC4yYy0wLjIsMC4yLTAuNCwwLjUtMC42LDAuN2MtMC41LDAuNS0xLjEsMS0xLjcsMS4zYy0wLjYsMC40LTEuMywwLjYtMi4xLDAuOGMtMC43LDAuMS0xLjUsMC4yLTIuMiwwLjFjLTAuOC0wLjEtMS41LTAuMy0yLjItMC41Yy0wLjctMC4zLTEuMy0wLjctMS45LTEuMmwtMC40LTAuNGwtMC4yLTAuM0w2LDE1Yy0wLjEtMC4xLTAuMi0wLjItMC4yLTAuM2wtMC4zLTAuNGwtMC4xLTAuMWwtMC4yLTAuNGMwLTAuMS0wLjEtMC4xLTAuMS0wLjJsLTAuMy0wLjVsLTAuMS0wLjJjLTAuMS0wLjMtMC4yLTAuNi0wLjMtMC45Yy0wLjItMC44LTAuMy0xLjYtMC4zLTIuNGMwLTAuMiwwLTAuMywwLTAuNVY4LjljMC0wLjIsMC0wLjMsMC4xLTAuNGwwLjEtMC42bDAuMi0wLjZjMC4zLTAuOCwwLjctMS41LDEuMi0yLjJjMC41LTAuNywxLjEtMS4zLDEuOC0xLjhjMC4yLTAuMSwwLjMtMC40LDAuMS0wLjZDNy41LDIuNiw3LjQsMi41LDcuMywyLjVINy4xTDcsMi42QzYuMSwzLDUuNCwzLjYsNC43LDQuMkM0LDQuOSwzLjUsNS43LDMsNi42Yy0wLjksMS44LTEuMiwzLjgtMC44LDUuOGMwLjEsMC41LDAuMiwwLjksMC4zLDEuNGwwLjMsMC44QzIuOSwxNC43LDMsMTQuOCwzLDE1bDAuMiwwLjRjMCwwLjEsMC4xLDAuMiwwLjEsMC4ybDAuMywwLjVjMC4xLDAuMiwwLjIsMC4zLDAuMywwLjVsMC4xLDAuMmMwLjEsMC4xLDAuMiwwLjMsMC4zLDAuNEw1LDE3LjhjMC43LDAuNywxLjYsMS4zLDIuNSwxLjhjMC45LDAuNSwxLjksMC44LDMsMC45YzAuNSwwLjEsMSwwLjEsMS41LDAuMWMwLjYsMCwxLjEsMCwxLjYtMC4xYzEtMC4yLDIuMS0wLjUsMy0xbDAuMi0wLjFjMC4yLTAuMSwwLjMtMC4yLDAuNS0wLjNsMC43LTAuNGMwLjItMC4xLDAuMy0wLjIsMC40LTAuM2wwLjItMC4yYzAuMi0wLjEsMC40LTAuMywwLjUtMC41bDAuMS0wLjFjMC4zLTAuMywwLjctMC43LDAuOS0xbDAuNi0wLjlsMC40LTAuNmMxLTEuOSwxLjQtNC4xLDEuMS02LjJDMjIsNy44LDIxLjcsNi43LDIxLjIsNS44eiIvPgogICAgPC9kZWZzPgogICAgPGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwIDIpIj4KICAgICAgICA8bWFzayBpZD0icm90YXRlLWIiIGZpbGw9IiNmZmYiPgogICAgICAgICAgICA8dXNlIHhsaW5rOmhyZWY9IiNyb3RhdGUiLz4KICAgICAgICA8L21hc2s+CiAgICAgICAgPHVzZSBmaWxsPSIjNUI1QjVCIiBmaWxsLXJ1bGU9Im5vbnplcm8iIHhsaW5rOmhyZWY9IiNyb3RhdGUiLz4KICAgICAgICA8ZyBmaWxsPSIjNUI1QjVCIiBtYXNrPSJ1cmwoI3JvdGF0ZS1iKSI+CiAgICAgICAgICAgIDxyZWN0IHdpZHRoPSIzMCIgaGVpZ2h0PSIzMCIvPgogICAgICAgIDwvZz4KICAgIDwvZz4KPC9zdmc+Cg==);
+}
+.leaflet-pm-toolbar .leaflet-pm-icon-text {
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PGRlZnM+PHN0eWxlPi5jbHMtMXtmaWxsOm5vbmU7c3Ryb2tlOiM1YjViNWI7c3Ryb2tlLWxpbmVjYXA6cm91bmQ7c3Ryb2tlLWxpbmVqb2luOnJvdW5kO3N0cm9rZS13aWR0aDoyLjVweDt9PC9zdHlsZT48L2RlZnM+PHRpdGxlPlRleHQ8L3RpdGxlPjxnIGlkPSJFYmVuZV8yIiBkYXRhLW5hbWU9IkViZW5lIDIiPjxwb2x5bGluZSBjbGFzcz0iY2xzLTEiIHBvaW50cz0iMTkuNjQgNy4yNyAxOS42NCA0IDEyIDQgMTIgMjAgMTUuOTEgMjAgOC4wOSAyMCAxMiAyMCAxMiA0IDQuMzYgNCA0LjM2IDcuMjciLz48L2c+PC9zdmc+);
 }
 
 .leaflet-buttons-control-button:hover,
@@ -240,7 +278,7 @@
   background-color: #f4f4f4;
 }
 
-.control-icon.pm-disabled {
+.leaflet-buttons-control-button.pm-disabled > .control-icon {
   filter: opacity(0.6);
 }
 
