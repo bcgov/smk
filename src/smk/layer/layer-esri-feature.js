@@ -69,6 +69,7 @@ include.module( 'layer.layer-esri-feature-js', [ 'layer.layer-js', 'terraformer'
 
             return data.features.map( function ( r, i ) {
                 var f = {}
+                f.type = 'Feature';
 
                 if ( r.displayFieldName )
                     f.title = r.attributes[ r.displayFieldName ]
