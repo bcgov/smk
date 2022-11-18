@@ -339,7 +339,7 @@ include.module( 'tool-geomark', [
                 },
                 'toggle-geomark': function(idObj) {
                     const geomarkInfo = self.getGeomarkById(idObj.id);
-                    if (!geomarkInfo) {
+                    if (!(geomarkInfo && smk.$viewer.map.getPane(geomarkInfo.layerUUID))) {
                         return;
                     }
                     if (geomarkInfo.isVisible) {
