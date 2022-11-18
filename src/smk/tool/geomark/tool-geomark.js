@@ -74,13 +74,20 @@ include.module( 'tool-geomark', [
 
             const CUSTOM_COLOUR = '#ee0077';
 
-            this.createCurrentLayerGroup = function() {
-                const layerGroup = new L.FeatureGroup();
-                smk.$viewer.map.addLayer(layerGroup);
-                return layerGroup;
+            this.createCurrentLayerGroupInfo = function() {
+                const layerUUID = SMK.UTIL.makeUUID();
+                const overlayPane = smk.$viewer.map.getPane('overlayPane');
+                smk.$viewer.map.createPane(layerUUID, overlayPane);
+                const layerGroup = L.featureGroup(null, {
+                    pane: layerUUID
+                }).addTo(smk.$viewer.map);
+                return { 
+                    layerUUID, 
+                    layerGroup 
+                };
             }
 
-            var currentLayerGroup = self.createCurrentLayerGroup();
+            var currentLayerGroupInfo = self.createCurrentLayerGroupInfo();
 
             var currentLayer;
 
@@ -136,23 +143,23 @@ include.module( 'tool-geomark', [
                 } );
             }
 
-            this.setCurrentLayerGroup = function(e) {
+            this.addEventLayerToLayerGroup = function(e) {
                 const eventLayer = e.layer;
                 self.freezeLayer(eventLayer);
-                currentLayerGroup.addLayer(eventLayer);
+                currentLayerGroupInfo.layerGroup.addLayer(eventLayer);
             }
 
             this.setCanClear = function(e) {
                 self.canClear = true;
             }
 
-            this.drawStart = function(e1) {
-                e1.workingLayer.on('pm:vertexadded', self.setCanClear);
-                currentLayer = e1.workingLayer;
+            this.drawStart = function(e) {
+                e.workingLayer.on('pm:vertexadded', self.setCanClear);
+                currentLayer = e.workingLayer;
             }
 
             this.drawEnd = function(e) {
-                if (currentLayerGroup.getLayers().length > 0) {
+                if (currentLayerGroupInfo.layerGroup.getLayers().length > 0) {
                     self.canSave = true;
                 }
                 currentLayer.off('pm:vertexadded', self.setCanClear);
@@ -181,7 +188,7 @@ include.module( 'tool-geomark', [
                     });
                     smk.$viewer.map.on('pm:drawstart', self.drawStart);
                     smk.$viewer.map.on('pm:drawend', self.drawEnd);
-                    smk.$viewer.map.on('pm:create', self.setCurrentLayerGroup);
+                    smk.$viewer.map.on('pm:create', self.addEventLayerToLayerGroup);
                     self.toggleMarkupToolbarControls();
                     smk.$viewer.map.pm.enableDraw('Polygon', {
                         continueDrawing: true
@@ -190,7 +197,7 @@ include.module( 'tool-geomark', [
                 else {
                     smk.$viewer.map.pm.disableDraw();
                     self.toggleMarkupToolbarControls();
-                    smk.$viewer.map.off('pm:create', self.setCurrentLayerGroup);
+                    smk.$viewer.map.off('pm:create', self.addEventLayerToLayerGroup);
                     smk.$viewer.map.off('pm:drawend', self.drawEnd);
                     smk.$viewer.map.off('pm:drawstart', self.drawStart);
                     self.setDefaultDrawStyle();
@@ -210,29 +217,29 @@ include.module( 'tool-geomark', [
                 self.showAlert = true;
             }
 
-            this.toGeomark = function(geomarkInfo, drawingLayer) {
-                const geomarkProperties = this.getGeomarkProperties(geomarkInfo);
-                const id = geomarkInfo.id || geomarkProperties.id;
-                const url = geomarkInfo.url || geomarkProperties.url;
+            this.toGeomarkInfo = function(geomarkJson, layerUUID) {
+                const geomarkProperties = this.getGeomarkProperties(geomarkJson);
+                const id = geomarkJson.id || geomarkProperties.id;
+                const url = geomarkJson.url || geomarkProperties.url;
                 if (id && url) {
                     return {
                         id,
                         url,
-                        drawingLayer,
+                        layerUUID,
                         isVisible: true
                     };
                 }
                 return undefined;
             }
 
-            this.getGeomarkProperties = function(geomarkInfo) {
+            this.getGeomarkProperties = function(geomarkJson) {
                 // polygon
-                if (geomarkInfo.properties) {
-                    return geomarkInfo.properties;
+                if (geomarkJson.properties) {
+                    return geomarkJson.properties;
                 }
                 // multi-polygon
-                if (geomarkInfo.features && geomarkInfo.features[0] && geomarkInfo.features[0].properties) {
-                    return geomarkInfo.features[0].properties;
+                if (geomarkJson.features && geomarkJson.features[0] && geomarkJson.features[0].properties) {
+                    return geomarkJson.features[0].properties;
                 } 
                 return {};
             }
@@ -262,19 +269,23 @@ include.module( 'tool-geomark', [
                     dataType: 'json',
                     traditional: true,
                     success: function(geomarkGeoJson) {
+                        const layerUUID = SMK.UTIL.makeUUID();
+                        const overlayPane = smk.$viewer.map.getPane('overlayPane');
+                        smk.$viewer.map.createPane(layerUUID, overlayPane);
                         const geometryLayer = L.geoJSON(geomarkGeoJson, {
                             style: function (feature) {
                                 return {color: CUSTOM_COLOUR};
-                            }
+                            }, 
+                            pane: layerUUID
                         });
-                        const geomark = self.toGeomark(geomarkGeoJson, geometryLayer);
-                        if (!geomark) {
+                        const geomarkInfo = self.toGeomarkInfo(geomarkGeoJson, layerUUID);
+                        if (!geomarkInfo) {
                             self.showStatusMessage('Could not load Geomark: expected values not found in response.', 'error', 5000);
                             return;
                         }
                         self.freezeLayer(geometryLayer);
                         geometryLayer.addTo(smk.$viewer.map);
-                        self.geomarks.push(geomark);
+                        self.geomarks.push(geomarkInfo);
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
                         self.showStatusMessage('Error retrieving geomark from URL ' + geomarkUrl + ': ' + errorThrown, 'error', 5000);
@@ -286,33 +297,38 @@ include.module( 'tool-geomark', [
 
             smk.on( this.id, {
                 'clear-drawing': function() {
-                    currentLayerGroup.clearLayers();
+                    currentLayerGroupInfo.layerGroup.clearLayers();
                     smk.$viewer.map.pm.disableDraw();
                     smk.$viewer.map.pm.enableDraw();
                     self.canSave = false;
                     self.canClear = false;
                 },
                 'create-geomark': function () {
-                    if (currentLayerGroup.getLayers().length == 0) {
+                    if (currentLayerGroupInfo.layerGroup.getLayers().length == 0) {
                         self.showStatusMessage('No drawings were found. Draw one or more polygons before creating a geomark.', 'warning', 5000);
                         return;
                     }
-                    const wktCoords = self.buildWktCoords(currentLayerGroup);
+                    const wktCoords = self.buildWktCoords(currentLayerGroupInfo.layerGroup);
                     client.createGeomark({
                         'body': 'SRID=4326;' + wktCoords,
                         'format': 'wkt',
-                        'callback': function(geomarkInfo) {
-                            const geomark = self.toGeomark(geomarkInfo, currentLayerGroup);
-                            if (geomark) { 
-                                self.updateAndShowAlert('Created geomark: <a href="' + geomarkInfo.url + 
-                                '" target="_new">' + geomarkInfo.url +
-                                '</a>. Save this URL to access your geomark later.');
-                                self.geomarks.push(geomark);
-                                currentLayerGroup = self.createCurrentLayerGroup();
+                        'callback': function(geomarkJson) {
+                            const geomarkInfo = self.toGeomarkInfo(geomarkJson, currentLayerGroupInfo.layerUUID);
+                            if (geomarkInfo) { 
+                                // Layer group must be removed from map before we can reassign its pane, then added back
+                                smk.$viewer.map.removeLayer(currentLayerGroupInfo.layerGroup);
+                                currentLayerGroupInfo.layerGroup.setStyle({ pane: currentLayerGroupInfo.layerUUID });
+                                smk.$viewer.map.addLayer(currentLayerGroupInfo.layerGroup);
+
+                                self.geomarks.push(geomarkInfo);
+                                currentLayerGroupInfo = self.createCurrentLayerGroupInfo();
+                                self.updateAndShowAlert('Created geomark: <a href="' + geomarkJson.url + 
+                                    '" target="_new">' + geomarkJson.url +
+                                    '</a>. Save this URL to access your geomark later.');
                                 self.canSave = false;
                                 self.canClear = false;
                             } else {
-                                self.showStatusMessage('Error creating geomark: ' + geomarkInfo.error, 'error', 5000);
+                                self.showStatusMessage('Error creating geomark: ' + geomarkJson.error, 'error', 5000);
                             }
                         }
                     });
@@ -322,16 +338,16 @@ include.module( 'tool-geomark', [
                     self.showPrompt = true;
                 },
                 'toggle-geomark': function(idObj) {
-                    const geomark = self.getGeomarkById(idObj.id);
-                    if (!geomark) {
+                    const geomarkInfo = self.getGeomarkById(idObj.id);
+                    if (!(geomarkInfo && smk.$viewer.map.getPane(geomarkInfo.layerUUID))) {
                         return;
                     }
-                    if (smk.$viewer.map.hasLayer(geomark.drawingLayer)) {
-                        smk.$viewer.map.removeLayer(geomark.drawingLayer);
+                    if (geomarkInfo.isVisible) {
+                        smk.$viewer.map.getPane(geomarkInfo.layerUUID).style.display = 'none';
                     } else {
-                        smk.$viewer.map.addLayer(geomark.drawingLayer);
+                        smk.$viewer.map.getPane(geomarkInfo.layerUUID).style.display = 'block'; 
                     }
-                    geomark.isVisible = !geomark.isVisible;
+                    geomarkInfo.isVisible = !geomarkInfo.isVisible;
                 },
                 'close-alert': function() {
                     self.showAlert = false;
