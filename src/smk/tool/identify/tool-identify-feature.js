@@ -86,6 +86,7 @@ include.module( 'tool-identify.tool-identify-feature-js', [
                 self.feature = {
                     id:         ev.feature.id,
                     title:      ev.feature.title,
+                    geometry:   ev.feature.geometry,
                     properties: Object.assign( {}, ev.feature.properties )
                 }
 
