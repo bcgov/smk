@@ -44,3 +44,10 @@
     margin: 4px;
     width: calc( 100% - 46px );
 }
+
+.smk-directions-panel .smk-route-stats {
+    font-size: 12px;
+    font-style: italic;
+    margin-left: 5px;
+    margin-bottom: 5px;
+}
