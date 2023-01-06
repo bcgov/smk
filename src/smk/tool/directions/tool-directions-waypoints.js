@@ -24,7 +24,7 @@ include.module( 'tool-directions.tool-directions-waypoints-js', [
     Vue.component( 'directions-panel', {
         extends: SMK.COMPONENT.ToolPanelBase,
         template: inc[ 'tool-directions.panel-directions-html' ],
-        props: [ 'waypoints', 'hasRoute', 'optimal', 'geocoderService' ],
+        props: [ 'waypoints', 'hasRoute', 'routeStats', 'optimal', 'geocoderService' ],
     } )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
@@ -35,6 +35,7 @@ include.module( 'tool-directions.tool-directions-waypoints-js', [
 
             this.defineProp( 'waypoints' )
             this.defineProp( 'hasRoute' )
+            this.defineProp( 'routeStats' )
             this.defineProp( 'optimal' )
             this.defineProp( 'geocoderService' )
             this.defineProp( 'routePlannerService' )
@@ -310,7 +311,9 @@ include.module( 'tool-directions.tool-directions-waypoints-js', [
 
                         self.displayWaypoints()
 
-                        self.showStatusMessage( 'Route travels ' + data.distance + ' km in ' + data.timeText, 'summary' )
+                        self.routeStats = data.distance + ' km in ' + data.timeText;
+
+                        self.showStatusMessage( 'Route travels ' + self.routeStats, 'summary' )
 
                         self.hasRoute = true
 

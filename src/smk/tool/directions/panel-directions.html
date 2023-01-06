@@ -47,6 +47,8 @@
         ></command-button>
     </template>
 
+    <div v-if="hasRoute" class="smk-route-stats">{{ routeStats }}</div>
+
     <draggable class="smk-waypoints"
         v-bind:list="waypoints"
         v-bind:options="{ handle: '.smk-handle', disabled: optimal }"
