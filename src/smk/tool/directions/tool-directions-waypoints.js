@@ -311,7 +311,8 @@ include.module( 'tool-directions.tool-directions-waypoints-js', [
 
                         self.displayWaypoints()
 
-                        self.routeStats = data.distance + ' km in ' + data.timeText;
+                        const distanceRounded = Number.isNaN(data.distance) ? data.distance : data.distance.toFixed(1);
+                        self.routeStats = `${distanceRounded} ${data.distanceUnit}  (${data.timeText})`;
 
                         self.showStatusMessage( 'Route travels ' + self.routeStats, 'summary' )
 
