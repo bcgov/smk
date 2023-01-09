@@ -19,7 +19,7 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "browser-sync": "~2.27.7",
+    "browser-sync": "~2.27.11",
     "concurrently": "~7.0.0",
     "glob": "7.1.2",
     "grunt": "1.5.3",
