@@ -79,7 +79,7 @@ include.module( 'tool-directions.tool-directions-waypoints-js', [
                 self.showStatusMessage( 'Finding current location...', 'progress', null )
                 self.busy = true
 
-                smk.$viewer.getCurrentLocation().finally( function () {
+                return smk.$viewer.getCurrentLocation().finally( function () {
                     self.busy = false
                     self.showStatusMessage()
                 } )
