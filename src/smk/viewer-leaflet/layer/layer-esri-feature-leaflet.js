@@ -36,12 +36,14 @@ include.module( 'layer-leaflet.layer-esri-feature-leaflet-js', [ 'layer.layer-es
                 // cfg.drawingInfo.renderer.symbol.url = this.resolveUrl( cfg.drawingInfo.renderer.symbol.url )
                 cfg.drawingInfo.renderer.symbol.url = ( new URL( cfg.drawingInfo.renderer.symbol.url, document.location ) ).toString()
         }
-        
+
         var layer = L.esri.featureLayer( cfg )
         
         if ( layers[ 0 ].legendCacheResolve ) {
+            const hideLegend = layers[0].config.hideLegend ? layers[0].config.hideLegend : "";
             layer.legend( function ( err, leg ) {
-                layers[ 0 ].legendCacheResolve( err ? null : leg.layers[ 0 ].legend )
+                layers[0].legendCacheResolve(err ? null : 
+                    leg.layers[0].legend.filter(lg => lg.values.every(v => !hideLegend.includes(v))));
                 layers[ 0 ].legendCacheResolve = null
             } )
         }
