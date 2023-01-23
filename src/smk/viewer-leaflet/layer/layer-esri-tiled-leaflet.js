@@ -13,6 +13,11 @@ include.module( 'layer-leaflet.layer-esri-tiled-leaflet-js', [ 'layer.layer-esri
     SMK.TYPE.Layer[ 'esri-tiled' ][ 'leaflet' ].create = function ( layers, zIndex ) {
         if ( layers.length != 1 ) throw new Error( 'only 1 config allowed' )
 
+        var self = this;
+        const layerPane = self.map.getPane(SMK.TYPE.Viewer.leaflet.prototype.layerPane);
+        const thisLayerPane = self.map.createPane(String(layers[0].config.id), layerPane);
+        thisLayerPane.style.zIndex = zIndex;
+
         var serviceUrl  = layers[ 0 ].config.serviceUrl
         var opacity     = layers[ 0 ].config.opacity
 
@@ -25,13 +30,11 @@ include.module( 'layer-leaflet.layer-esri-tiled-leaflet-js', [ 'layer.layer-esri
             maxZoom = this.getZoomBracketForScale( layers[ 0 ].config.maxScale )[ 1 ]
 
         var layer = L.esri.tiledMapLayer({
-            url: serviceUrl
+            url: serviceUrl,
+            pane: thisLayerPane
         } );
         
         layer.on( 'load', function ( ev ) {
-            if ( layer._currentImage )
-                layer._currentImage.setZIndex( zIndex )
-
             layers[ 0 ].loading = false
         } )
 

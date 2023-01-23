@@ -2,6 +2,7 @@ include.module( 'viewer-leaflet', [ 'viewer', 'leaflet', 'layer-leaflet', /*'fea
     "use strict";
 
     const BASEMAP_PANE = 'basemaps';
+    const LAYER_PANE = 'layers';
 
     function ViewerLeaflet() {
         SMK.TYPE.Viewer.prototype.constructor.apply( this, arguments )
@@ -13,6 +14,8 @@ include.module( 'viewer-leaflet', [ 'viewer', 'leaflet', 'layer-leaflet', /*'fea
     $.extend( ViewerLeaflet.prototype, SMK.TYPE.Viewer.prototype )
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
+    ViewerLeaflet.prototype.layerPane = LAYER_PANE;
+
     ViewerLeaflet.prototype.initialize = function ( smk ) {
         var self = this
 
@@ -35,6 +38,11 @@ include.module( 'viewer-leaflet', [ 'viewer', 'leaflet', 'layer-leaflet', /*'fea
         // Create a panel for basemaps with a low z-index to ensure they draw below layers
         self.map.createPane(BASEMAP_PANE);
         self.map.getPane(BASEMAP_PANE).style.zIndex = 100;
+
+        // Create a panel for layers with a z-index that doesn't interfere with other Leaflet pane z-indices
+        // (https://leafletjs.com/reference.html#map-pane)
+        self.map.createPane(LAYER_PANE);
+        self.map.getPane(LAYER_PANE).style.zIndex = 300;
 
         self.map.scrollWheelZoom.disable()
 

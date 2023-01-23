@@ -37,6 +37,11 @@ include.module( 'layer-leaflet.layer-esri-feature-leaflet-js', [ 'layer.layer-es
                 cfg.drawingInfo.renderer.symbol.url = ( new URL( cfg.drawingInfo.renderer.symbol.url, document.location ) ).toString()
         }
 
+        const layerPane = self.map.getPane(SMK.TYPE.Viewer.leaflet.prototype.layerPane);
+        const thisLayerPane = self.map.createPane(layers[0].config.id, layerPane);
+        thisLayerPane.style.zIndex = zIndex;
+        cfg.pane = thisLayerPane;
+        
         var layer = L.esri.featureLayer( cfg )
         
         if ( layers[ 0 ].legendCacheResolve ) {
@@ -52,9 +57,6 @@ include.module( 'layer-leaflet.layer-esri-feature-leaflet-js', [ 'layer.layer-es
         }
 
         layer.on( 'load', function ( ev ) {
-            if ( layer._currentImage )
-                layer._currentImage.setZIndex( zIndex )
-
             layers[ 0 ].loading = false
         } )
 
