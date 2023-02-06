@@ -474,20 +474,22 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
             visibleLayers.push( merged )
 
         var promises = []
-        var maxZOrder = visibleLayers.length - 1
-        visibleLayers.forEach( function ( lys, i ) {
+        var maxZOrder = visibleLayers.length
+        var zIndex = 0;
+        visibleLayers.forEach( function (lys) {
+            zIndex += 1;
             var cid = lys.map( function ( ly ) { return ly.id } ).join( '##' )
 
             delete pending[ cid ]
             if ( self.visibleLayer[ cid ] ) {
-                self.positionViewerLayer( self.visibleLayer[ cid ], maxZOrder - i )
+                self.positionViewerLayer( self.visibleLayer[ cid ], zIndex )
                 return
             }
 
-            var p = self.createViewerLayer( cid, lys, maxZOrder - i )
+            var p = self.createViewerLayer( cid, lys, zIndex )
                 .then( function ( ly ) {
                     self.addViewerLayer( ly )
-                    self.positionViewerLayer( ly, maxZOrder - i )
+                    self.positionViewerLayer( ly, zIndex )
                     self.visibleLayer[ cid ] = ly
                     return ly
                 } )

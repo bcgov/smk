@@ -140,6 +140,10 @@ include.module( 'layer-leaflet.layer-vector-leaflet-js', [ 'layer.layer-vector-j
                     } )
             } )
             .then( function ( projectCoord ) {
+                const overlayPane = self.map.getPane('overlayPane');
+                const layerPane = self.map.createPane(layers[0].config.id, overlayPane);
+                layerPane.style.zIndex = zIndex;
+                
                 var layer = new L.geoJson( null, {
                     coordsToLatLng: projectCoord,
                     pointToLayer: function ( geojson, latlng ) {
@@ -155,19 +159,13 @@ include.module( 'layer-leaflet.layer-vector-leaflet-js', [ 'layer.layer-vector-j
                             layer.setStyle( convertStyle( feature.style /* || layers[ 0 ].config.style */, feature.geometry.type ) )
                     },
                     renderer: L.svg(),
-                    interactive: false
+                    interactive: false,
+                    pane: layerPane
                 } )
 
                 if ( layers[ 0 ].config.tooltip ) {
                     layer.bindTooltip( layers[ 0 ].config.tooltip.title, Object.assign( { permanent: true }, layers[ 0 ].config.tooltip.option ) )
                 }
-
-                layer.on( {
-                    add: function () {
-                        if ( layer.options.renderer._container )
-                            layer.options.renderer._container.style.zIndex = zIndex
-                    }
-                } )
 
                 if ( !layers[ 0 ].config.CRS )
                     layers[ 0 ].config.CRS = 'EPSG4326'
@@ -197,8 +195,9 @@ include.module( 'layer-leaflet.layer-vector-leaflet-js', [ 'layer.layer-vector-j
                     layer.clearLayers()
                 }
 
-                if ( layers[ 0 ].config.isInternal )
+                if ( layers[ 0 ].config.isInternal ){
                     return layer
+                }
 
                 var url = self.resolveAttachmentUrl( layers[ 0 ].config.dataUrl, layers[ 0 ].config.id, 'json' )
 

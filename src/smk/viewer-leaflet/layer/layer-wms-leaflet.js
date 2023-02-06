@@ -11,6 +11,8 @@ include.module( 'layer-leaflet.layer-wms-leaflet-js', [ 'layer.layer-wms-js' ], 
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
     SMK.TYPE.Layer[ 'wms' ][ 'leaflet' ].create = function ( layers, zIndex ) {
+        var self = this;
+
         var serviceUrl  = layers[ 0 ].config.serviceUrl
         var layerNames  = layers.map( function ( c ) { return c.config.layerName } ).join( ',' )
         var styleNames  = layers.map( function ( c ) { return c.config.styleName } ).join( ',' )
@@ -20,6 +22,10 @@ include.module( 'layer-leaflet.layer-wms-leaflet-js', [ 'layer.layer-wms-js' ], 
         var where       = layers.map( function ( c ) { return c.config.where || 'include' } ).join( ';' )
 
         return resolveSLD( this, layers[ 0 ].config.sld ).then( function ( sld ) {
+            const overlayPane = self.map.getPane('overlayPane');
+            const layerPane = self.map.createPane(layers[0].config.id, overlayPane);
+            layerPane.style.zIndex = zIndex;
+
             var layer = L.nonTiledLayer.wms( serviceUrl, {
                 layers:         layerNames,
                 styles:         styleNames,
@@ -28,8 +34,8 @@ include.module( 'layer-leaflet.layer-wms-leaflet-js', [ 'layer.layer-wms-js' ], 
                 opacity:        opacity,
                 format:         'image/png',
                 transparent:    true,
-                zIndex:         zIndex,
-                cql_filter:     where
+                cql_filter:     where,
+                pane:           layerPane
             } )
     
             if ( sld ) {

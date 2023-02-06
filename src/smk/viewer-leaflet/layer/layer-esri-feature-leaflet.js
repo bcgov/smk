@@ -37,6 +37,11 @@ include.module( 'layer-leaflet.layer-esri-feature-leaflet-js', [ 'layer.layer-es
                 cfg.drawingInfo.renderer.symbol.url = ( new URL( cfg.drawingInfo.renderer.symbol.url, document.location ) ).toString()
         }
 
+        const overlayPane = self.map.getPane('overlayPane');
+        const layerPane = self.map.createPane(layers[0].config.id, overlayPane);
+        layerPane.style.zIndex = zIndex;
+        cfg.pane = layerPane;
+        
         var layer = L.esri.featureLayer( cfg )
         
         if ( layers[ 0 ].legendCacheResolve ) {
@@ -52,9 +57,6 @@ include.module( 'layer-leaflet.layer-esri-feature-leaflet-js', [ 'layer.layer-es
         }
 
         layer.on( 'load', function ( ev ) {
-            if ( layer._currentImage )
-                layer._currentImage.setZIndex( zIndex )
-
             layers[ 0 ].loading = false
         } )
 
