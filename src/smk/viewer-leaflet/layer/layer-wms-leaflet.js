@@ -22,9 +22,9 @@ include.module( 'layer-leaflet.layer-wms-leaflet-js', [ 'layer.layer-wms-js' ], 
         var where       = layers.map( function ( c ) { return c.config.where || 'include' } ).join( ';' )
 
         return resolveSLD( this, layers[ 0 ].config.sld ).then( function ( sld ) {
-            const layerPane = self.map.getPane(SMK.TYPE.Viewer.leaflet.prototype.layerPane);
-            const thisLayerPane = self.map.createPane(layers[0].config.id, layerPane);
-            thisLayerPane.style.zIndex = zIndex;
+            const overlayPane = self.map.getPane('overlayPane');
+            const layerPane = self.map.createPane(layers[0].config.id, overlayPane);
+            layerPane.style.zIndex = zIndex;
 
             var layer = L.nonTiledLayer.wms( serviceUrl, {
                 layers:         layerNames,
@@ -35,7 +35,7 @@ include.module( 'layer-leaflet.layer-wms-leaflet-js', [ 'layer.layer-wms-js' ], 
                 format:         'image/png',
                 transparent:    true,
                 cql_filter:     where,
-                pane:           thisLayerPane
+                pane:           layerPane
             } )
     
             if ( sld ) {

@@ -37,10 +37,10 @@ include.module( 'layer-leaflet.layer-esri-feature-leaflet-js', [ 'layer.layer-es
                 cfg.drawingInfo.renderer.symbol.url = ( new URL( cfg.drawingInfo.renderer.symbol.url, document.location ) ).toString()
         }
 
-        const layerPane = self.map.getPane(SMK.TYPE.Viewer.leaflet.prototype.layerPane);
-        const thisLayerPane = self.map.createPane(layers[0].config.id, layerPane);
-        thisLayerPane.style.zIndex = zIndex;
-        cfg.pane = thisLayerPane;
+        const overlayPane = self.map.getPane('overlayPane');
+        const layerPane = self.map.createPane(layers[0].config.id, overlayPane);
+        layerPane.style.zIndex = zIndex;
+        cfg.pane = layerPane;
         
         var layer = L.esri.featureLayer( cfg )
         

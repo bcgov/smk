@@ -140,9 +140,9 @@ include.module( 'layer-leaflet.layer-vector-leaflet-js', [ 'layer.layer-vector-j
                     } )
             } )
             .then( function ( projectCoord ) {
-                const layerPane = self.map.getPane(SMK.TYPE.Viewer.leaflet.prototype.layerPane);
-                const thisLayerPane = self.map.createPane(layers[0].config.id, layerPane);
-                thisLayerPane.style.zIndex = zIndex;
+                const overlayPane = self.map.getPane('overlayPane');
+                const layerPane = self.map.createPane(layers[0].config.id, overlayPane);
+                layerPane.style.zIndex = zIndex;
                 
                 var layer = new L.geoJson( null, {
                     coordsToLatLng: projectCoord,
@@ -160,7 +160,7 @@ include.module( 'layer-leaflet.layer-vector-leaflet-js', [ 'layer.layer-vector-j
                     },
                     renderer: L.svg(),
                     interactive: false,
-                    pane: thisLayerPane
+                    pane: layerPane
                 } )
 
                 if ( layers[ 0 ].config.tooltip ) {

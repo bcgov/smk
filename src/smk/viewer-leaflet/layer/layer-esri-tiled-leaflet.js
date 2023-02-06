@@ -14,9 +14,9 @@ include.module( 'layer-leaflet.layer-esri-tiled-leaflet-js', [ 'layer.layer-esri
         if ( layers.length != 1 ) throw new Error( 'only 1 config allowed' )
 
         var self = this;
-        const layerPane = self.map.getPane(SMK.TYPE.Viewer.leaflet.prototype.layerPane);
-        const thisLayerPane = self.map.createPane(String(layers[0].config.id), layerPane);
-        thisLayerPane.style.zIndex = zIndex;
+        const tilePane = self.map.getPane('tilePane');
+        const layerPane = self.map.createPane(String(layers[0].config.id), tilePane);
+        layerPane.style.zIndex = zIndex;
 
         var serviceUrl  = layers[ 0 ].config.serviceUrl
         var opacity     = layers[ 0 ].config.opacity
@@ -31,7 +31,7 @@ include.module( 'layer-leaflet.layer-esri-tiled-leaflet-js', [ 'layer.layer-esri
 
         var layer = L.esri.tiledMapLayer({
             url: serviceUrl,
-            pane: thisLayerPane
+            pane: layerPane
         } );
         
         layer.on( 'load', function ( ev ) {

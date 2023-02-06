@@ -29,9 +29,9 @@ include.module( 'layer-leaflet.layer-esri-dynamic-leaflet-js', [ 'layer.layer-es
         if ( layers[ 0 ].config.maxScale )
             maxZoom = this.getZoomBracketForScale( layers[ 0 ].config.maxScale )[ 1 ]
 
-        const layerPane = self.map.getPane(SMK.TYPE.Viewer.leaflet.prototype.layerPane);
-        const thisLayerPane = self.map.createPane(String(layers[0].config.id), layerPane);
-        thisLayerPane.style.zIndex = zIndex;
+        const overlayPane = self.map.getPane('overlayPane');
+        const layerPane = self.map.createPane(String(layers[0].config.id), overlayPane);
+        layerPane.style.zIndex = zIndex;
     
         var layer;
         if ( dynamicLayers ) {
