@@ -8,6 +8,9 @@ There are a variety of ways to install SMK into your application.
 ## Use `smk create`
 
 If you want to create a new application using SMK, then the easiest way is with the `smk-cli`.
+
+`smk-cli` makes use of the Node.js JavaScript runtime and the Node Package Manager (NPM). If this is not already installed, please [download](https://nodejs.org/en/download/) and install it.
+
 First make sure that the `smk-cli` is installed globally in your machine:
 
     > npm install --global @bcgov/smk-cli
@@ -26,6 +29,11 @@ Change to the a directory where you keep your projects, and create a new SMK app
 You will be asked some questions about your new application.
 Once they are answered you will have a new skeleton application at `projects/my-new-app`.
 
+You will also be asked whether you want to run the app. You can choose yes to launch the app immediately. 
+
+You can also run the app at a later time by navigating to the app directory and launching it with NPM:
+
+    > npm run view
 
 ## Install from NPM
 
