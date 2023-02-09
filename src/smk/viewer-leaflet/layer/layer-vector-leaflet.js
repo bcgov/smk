@@ -168,11 +168,8 @@ include.module( 'layer-leaflet.layer-vector-leaflet-js', [ 'layer.layer-vector-j
                                 console.debug(`The feature property ${conditionalStyle.property} was not found; conditional styling will not be applied for this property.`);
                                 return convertStyle(combinedStyle, feature.geometry.type);
                             }
-                            conditionalStyle.conditions.forEach(condition => {
-                                if (condition.value === feature.properties[conditionalStyle.property]) {
-                                    Object.assign(combinedStyle, condition.style);
-                                    return;
-                                }
+                            conditionalStyle.conditions.filter(condition => condition.value === feature.properties[conditionalStyle.property]).forEach(condition => {
+                                Object.assign(combinedStyle, condition.style);
                             });
                         });
                         return convertStyle(combinedStyle, feature.geometry.type);
