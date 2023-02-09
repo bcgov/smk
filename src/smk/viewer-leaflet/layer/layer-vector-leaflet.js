@@ -143,8 +143,8 @@ include.module( 'layer-leaflet.layer-vector-leaflet-js', [ 'layer.layer-vector-j
                 const overlayPane = self.map.getPane('overlayPane');
                 const layerPane = self.map.createPane(layers[0].config.id, overlayPane);
                 layerPane.style.zIndex = zIndex;
-                
-                var layer = new L.geoJson( null, {
+
+                var layerOptions = {
                     coordsToLatLng: projectCoord,
                     pointToLayer: function ( geojson, latlng ) {
                         // return markerForStyle( self, latlng, layers[ 0 ].config.style )
@@ -154,14 +154,36 @@ include.module( 'layer-leaflet.layer-vector-leaflet-js', [ 'layer.layer-vector-j
                                 layers[ 0 ].changedFeature( { newPt: { latitude: ll.lat, longitude: ll.lng }, geojson: geojson } )
                             } )
                     },
-                    onEachFeature: function ( feature, layer ) {
-                        if ( layer.setStyle )
-                            layer.setStyle( convertStyle( feature.style /* || layers[ 0 ].config.style */, feature.geometry.type ) )
-                    },
                     renderer: L.svg(),
                     interactive: false,
                     pane: layerPane
-                } )
+                };
+                
+                if (layers[0].config.conditionalStyles) {
+                    const defaultStyle = layers[0].config.style ? layers[0].config.style : {};
+                    layerOptions.style = function(feature) {
+                        var combinedStyle = Object.assign({}, defaultStyle);
+                        layers[0].config.conditionalStyles.forEach(conditionalStyle => {
+                            if (!Object.keys(feature.properties).includes(conditionalStyle.property)) {
+                                console.debug(`The feature property ${conditionalStyle.property} was not found; conditional styling will not be applied for this property.`);
+                                return convertStyle(combinedStyle, feature.geometry.type);
+                            }
+                            conditionalStyle.conditions.forEach(condition => {
+                                if (condition.value === feature.properties[conditionalStyle.property]) {
+                                    Object.assign(combinedStyle, condition.style);
+                                    return;
+                                }
+                            });
+                        });
+                        return convertStyle(combinedStyle, feature.geometry.type);
+                    };
+                } else {
+                    layerOptions.style = function(feature) {
+                        return convertStyle(layers[0].config.style, feature.geometry.type);
+                    }
+                }
+
+                var layer = new L.geoJson(null, layerOptions);
 
                 if ( layers[ 0 ].config.tooltip ) {
                     layer.bindTooltip( layers[ 0 ].config.tooltip.title, Object.assign( { permanent: true }, layers[ 0 ].config.tooltip.option ) )
