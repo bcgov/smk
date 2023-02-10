@@ -8,6 +8,8 @@
     <template slot="commands">
     </template>
 
+    <enter-input v-bind:value="rangeKm" v-on:change="!busy && $$emit('change', {rangeKm: $event});">Range (km)</enter-input>
+
     <select-option class="smk-directions-optimal"
         v-if="command.optimal !== false"
         v-bind:value="optimal"

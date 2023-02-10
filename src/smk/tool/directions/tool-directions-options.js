@@ -1,6 +1,7 @@
 include.module( 'tool-directions.tool-directions-options-js', [
     'tool.tool-base-js',
     'tool.tool-panel-js',
+    'component-enter-input', 
     'component-select-option',
     'tool-directions.panel-directions-options-html'
 ], function ( inc ) {
@@ -10,6 +11,7 @@ include.module( 'tool-directions.tool-directions-options-js', [
         extends: SMK.COMPONENT.ToolPanelBase,
         template: inc[ 'tool-directions.panel-directions-options-html' ],
         props: {
+            'rangeKm': Number,
             'truck' : Boolean,
             'optimal' : Boolean,
             'roundTrip' : Boolean,
@@ -48,6 +50,7 @@ include.module( 'tool-directions.tool-directions-options-js', [
         function () {
             SMK.TYPE.ToolPanel.call( this, 'directions-options-panel' )
 
+            this.defineProp( 'rangeKm', { validate: positiveInteger } )
             this.defineProp( 'truck' )
             this.defineProp( 'optimal' )
             this.defineProp( 'roundTrip' )
@@ -65,6 +68,7 @@ include.module( 'tool-directions.tool-directions-options-js', [
             this.defineProp( 'command' )
             this.defineProp( 'bespoke' )
 
+            this.rangeKm = null
             this.truck = false
             this.optimal = false
             this.roundTrip = false
@@ -84,11 +88,18 @@ include.module( 'tool-directions.tool-directions-options-js', [
 
             this.parentId = 'DirectionsWaypointsTool'
 
-            function positiveFloat( newVal, oldVal, propName ) {
-                var i = parseFloat( newVal )
-                if ( !newVal || !i ) return null
-                if ( i < 0 ) return oldVal
-                return i
+            function positiveFloat( newVal, oldVal ) {
+                return positiveNumber(newVal, oldVal, parseFloat(newVal));
+            }
+
+            function positiveInteger( newVal, oldVal ) {
+                return positiveNumber(newVal, oldVal, parseInt(newVal));
+            }
+
+            function positiveNumber(newVal, oldVal, parsedVal) {
+                if ( !newVal || !parsedVal ) return null;
+                if ( parsedVal < 0 ) return oldVal;
+                return parsedVal;
             }
         },
         function ( smk ) {
