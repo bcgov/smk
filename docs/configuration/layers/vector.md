@@ -23,6 +23,7 @@ Click on a property name for more information:
     <a href="#clusteroption-property"       >"clusterOption"</a>:       null,
     <a href="#useheatmap-property"          >"useHeatmap"</a>:          false,
     <a href="#style-property"               >"style"</a>:               null,
+    <a href="#conditionalstyles-property"  >"conditionalStyles"</a>:   null,
     <a href="#dataUrl-property"             >"dataUrl"</a>:             null
 } ] }
 </pre>
@@ -68,6 +69,38 @@ The default is `false`.
 
 The [style object](style) used to render the features from this data source.
 
+## ConditionalStyles Property
+`"conditionalStyles": Array`
+
+Style attributes applied to features based on feature attribute values. These style attributes override style attributes with the same name in the `style` property.
+
+Each conditional style has a `property`, which is the name of a feature attribute, and `conditions`, an array of objects containing a `value`, which is the value of the `property` attribute, and a `style` object. 
+
+In this sample configuration, features having a `Station_Type` value of `Public` will be styled as blue, and features where `Station_Type` is `Private` will be styled as green.
+
+``` 
+"conditionalStyles": [
+    {
+        "property": "Station_Type",
+        "conditions": [
+            {
+                "value": "Public",
+                "style": {
+                    "strokeColor": "#0000ff",
+                    "fillColor": "#0000ff"
+                }
+            },
+            {
+                "value": "Private",
+                "style": {
+                    "strokeColor": "#00ff00",
+                    "fillColor": "#00ff00"
+                }
+            }
+        ]
+    }
+]
+```
 
 ## DataUrl Property
 `"dataUrl": String`
