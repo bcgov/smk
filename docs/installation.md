@@ -2,7 +2,7 @@
 
 # Installing SMK
 
-There are a variety of ways to install SMK into your application.
+There are a variety of ways to install Simple Map Kit (SMK) into your application.
 
 
 ## Use `smk create`
