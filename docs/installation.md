@@ -22,7 +22,7 @@ Test that this worked:
 
     > smk help
 
-You should see the help information for `smk-cli`. If you don't and are using Windows, then it's likely your npm folder (`%APPDATA%\npm`) is not part of the system PATH variable. The simplest way to add it is with via the [Control Panel](https://docs.oracle.com/en/database/oracle/machine-learning/oml4r/1.5.1/oread/creating-and-modifying-environment-variables-on-windows.html). After adding the npm folder to path, `smk help` should work.
+You should see the help information for `smk-cli`. If you don't and are using Windows, then it's likely your npm folder (`%APPDATA%\npm`) is not part of the system PATH variable. The simplest way to add it is with via the [Control Panel](https://www.computerhope.com/issues/ch000549.htm). After adding the npm folder to path, `smk help` should work.
 
 ### Creating a project
 Change to the a directory where you keep your projects, and create a new SMK application (change `my-new-app` to whatever you like).
