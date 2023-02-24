@@ -140,8 +140,9 @@ include.module( 'layer-leaflet.layer-vector-leaflet-js', [ 'layer.layer-vector-j
                     } )
             } )
             .then( function ( projectCoord ) {
+                const layerPaneId = layers[0].config.id;
                 const overlayPane = self.map.getPane('overlayPane');
-                const layerPane = self.map.createPane(layers[0].config.id, overlayPane);
+                const layerPane = self.map.createPane(layerPaneId, overlayPane);
                 layerPane.style.zIndex = zIndex;
 
                 var layerOptions = {
@@ -166,17 +167,17 @@ include.module( 'layer-leaflet.layer-vector-leaflet-js', [ 'layer.layer-vector-j
                         layers[0].config.conditionalStyles.forEach(conditionalStyle => {
                             if (!Object.keys(feature.properties).includes(conditionalStyle.property)) {
                                 console.debug(`The feature property ${conditionalStyle.property} was not found; conditional styling will not be applied for this property.`);
-                                return convertStyle(combinedStyle, feature.geometry.type);
+                                return convertStyle(combinedStyle, feature.geometry.type, layerPaneId);
                             }
                             conditionalStyle.conditions.filter(condition => condition.value === feature.properties[conditionalStyle.property]).forEach(condition => {
                                 Object.assign(combinedStyle, condition.style);
                             });
                         });
-                        return convertStyle(combinedStyle, feature.geometry.type);
+                        return convertStyle(combinedStyle, feature.geometry.type, layerPaneId);
                     };
                 } else {
                     layerOptions.style = function(feature) {
-                        return convertStyle(layers[0].config.style, feature.geometry.type);
+                        return convertStyle(layers[0].config.style, feature.geometry.type, layerPaneId);
                     }
                 }
 
@@ -272,7 +273,7 @@ include.module( 'layer-leaflet.layer-vector-leaflet-js', [ 'layer.layer-vector-j
 
     // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    function convertStyle( styleConfig, type ) {
+    function convertStyle( styleConfig, type, layerPaneId ) {
         if ( !styleConfig ) return {}
 
         if ( type == 'Point' || type == 'MultiPoint' )
@@ -285,6 +286,7 @@ include.module( 'layer-leaflet.layer-vector-leaflet-js', [ 'layer.layer-vector-j
                 fillOpacity: styleConfig.fillOpacity,
                 stroke:      styleConfig.stroke !== false,
                 fill:        styleConfig.fill,
+                pane:        layerPaneId
             }
         else
             return {
@@ -299,6 +301,7 @@ include.module( 'layer-leaflet.layer-vector-leaflet-js', [ 'layer.layer-vector-j
                 fill:        styleConfig.fill,
                 fillColor:   styleConfig.fillColor,
                 fillOpacity: styleConfig.fillOpacity,
+                pane:        layerPaneId
                 // fillRule:    styleConfig.,
             }
     }
