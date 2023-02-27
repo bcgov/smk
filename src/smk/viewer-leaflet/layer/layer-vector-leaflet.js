@@ -156,8 +156,7 @@ include.module( 'layer-leaflet.layer-vector-leaflet-js', [ 'layer.layer-vector-j
                             } )
                     },
                     renderer: L.svg(),
-                    interactive: false,
-                    pane: layerPane
+                    interactive: false
                 };
                 
                 if (layers[0].config.conditionalStyles) {
