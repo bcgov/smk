@@ -168,7 +168,7 @@ include.module( 'layer-leaflet.layer-vector-leaflet-js', [ 'layer.layer-vector-j
                                 console.debug(`The feature property ${conditionalStyle.property} was not found; conditional styling will not be applied for this property.`);
                                 return convertStyle(combinedStyle, feature.geometry.type, layerPaneId);
                             }
-                            conditionalStyle.conditions.filter(condition => condition.value === feature.properties[conditionalStyle.property]).forEach(condition => {
+                            conditionalStyle.conditions.filter(condition => matches(feature.properties[conditionalStyle.property], condition)).forEach(condition => {
                                 Object.assign(combinedStyle, condition.style);
                             });
                         });
@@ -303,6 +303,19 @@ include.module( 'layer-leaflet.layer-vector-leaflet-js', [ 'layer.layer-vector-j
                 pane:        layerPaneId
                 // fillRule:    styleConfig.,
             }
+    }
+
+    function matches(value, condition) {
+        switch(condition.operator) {
+            case '>': return !Number.isNaN(value) && value > condition.value;
+            case '>=': return !Number.isNaN(value) && value >= condition.value;
+            case '<': return !Number.isNaN(value) && value < condition.value;
+            case '<=': return !Number.isNaN(value) && value <= condition.value;
+            case '!=': return value !== condition.value;
+            case 'exists': return value !== null && value !== undefined;
+            case '=': return value === condition.value;
+            default: return value === condition.value;
+        }
     }
 
     function markerForStyle( viewer, latlng, styleConfig, layerConfig ) {

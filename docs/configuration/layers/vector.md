@@ -74,7 +74,18 @@ The [style object](style) used to render the features from this data source.
 
 Style attributes applied to features based on feature attribute values. These style attributes override style attributes with the same name in the `style` property.
 
-Each conditional style has a `property`, which is the name of a feature attribute, and `conditions`, an array of objects containing a `value`, which is the value of the `property` attribute, and a `style` object. 
+Each conditional style has a `property`, which is the name of a feature attribute, and `conditions`, an array of objects containing: 
+
+- `value`: the value of the feature's `property` attribute
+- `style`: an object of style properties and values
+- `operator`: an optional operator to use to compare the condition value to the feature's property value. Operators are:
+    - `>` greater than, for number values 
+    - `>=` greater than or equal to, for number values 
+    - `<` less than, for number values 
+    - `<=` less than or equal to, for number values 
+    - `exists` a value exists (is not null or undefined)
+    - `!=` not equal to 
+    - `=` equal. This is also the default if no operator is given.
 
 In this sample configuration, features having a `Station_Type` value of `Public` will be styled as blue, and features where `Station_Type` is `Private` will be styled as green.
 
@@ -101,6 +112,24 @@ In this sample configuration, features having a `Station_Type` value of `Public`
     }
 ]
 ```
+
+This sample configuration styles features having a `Charging_Level` value of 2 or higher with a white stroke color:
+
+``` 
+"conditionalStyles": [
+    {
+        "property": "Charging_Level",
+        "conditions": [
+            {
+                "operator": ">=",
+                "value": 2,
+                "style": {
+                    "strokeColor": "#ffffff"
+                }
+            }
+        ]
+    }
+]
 
 ## DataUrl Property
 `"dataUrl": String`
