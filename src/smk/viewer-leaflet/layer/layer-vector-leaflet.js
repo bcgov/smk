@@ -165,7 +165,7 @@ include.module( 'layer-leaflet.layer-vector-leaflet-js', [ 'layer.layer-vector-j
                         var combinedStyle = Object.assign({}, defaultStyle);
                         layers[0].config.conditionalStyles.forEach(conditionalStyle => {
                             if (!Object.keys(feature.properties).includes(conditionalStyle.property)) {
-                                console.debug(`The feature property ${conditionalStyle.property} was not found; conditional styling will not be applied for this property.`);
+                                console.warn(`The feature property ${conditionalStyle.property} was not found; conditional styling will not be applied for this property.`);
                                 return convertStyle(combinedStyle, feature.geometry.type, layerPaneId);
                             }
                             conditionalStyle.conditions.filter(condition => matches(feature.properties[conditionalStyle.property], condition)).forEach(condition => {
@@ -307,15 +307,23 @@ include.module( 'layer-leaflet.layer-vector-leaflet-js', [ 'layer.layer-vector-j
 
     function matches(value, condition) {
         switch(condition.operator) {
-            case '>': return !Number.isNaN(value) && value > condition.value;
-            case '>=': return !Number.isNaN(value) && value >= condition.value;
-            case '<': return !Number.isNaN(value) && value < condition.value;
-            case '<=': return !Number.isNaN(value) && value <= condition.value;
+            case '>': return validateNumber(value) && value > condition.value;
+            case '>=': return validateNumber(value) && value >= condition.value;
+            case '<': return validateNumber(value) && value < condition.value;
+            case '<=': return validateNumber(value) && value <= condition.value;
             case '!=': return value !== condition.value;
             case 'exists': return value !== null && value !== undefined;
             case '=': return value === condition.value;
             default: return value === condition.value;
         }
+    }
+
+    function validateNumber(value) {
+        if (Number.isNaN(parseFloat(value))) {
+            console.warn(`The feature value ${value} is not a number and cannot be used in a numerical comparison. This comparison will be ignored.`);
+            return false;
+        }
+        return true;
     }
 
     function markerForStyle( viewer, latlng, styleConfig, layerConfig ) {
