@@ -130,6 +130,7 @@ This sample configuration styles features having a `Charging_Level` value of 2 o
         ]
     }
 ]
+```
 
 ## DataUrl Property
 `"dataUrl": String`
