@@ -21,54 +21,82 @@ include.module( 'layer.layer-vector-js', [ 'layer.layer-js' ], function () {
         var cv = $( '<canvas width="' + width * mult + '" height="' + height + '">' ).get( 0 )
         var ctx = cv.getContext( '2d' )
 
-        var styles = [].concat( self.config.style )
+        const legendData = [];
+        legendData.push({
+            title: self.config.legend.title || self.config.title,
+            style: self.config.style
+        });
+
+        if (self.config.conditionalStyles) {
+            self.config.conditionalStyles.forEach(cs => {
+                const defaultStyle = self.config.style ? self.config.style : {};
+                self.config.conditionalStyles.forEach(conditionalStyle => {
+                    conditionalStyle.conditions.forEach(condition => {
+                        const combinedStyle = Object.assign({}, defaultStyle);
+                        Object.assign(combinedStyle, condition.style);
+                        legendData.push({
+                            title: condition.label || condition.value,
+                            style: combinedStyle,
+                            indent: true
+                        });
+                    });
+                });
+            });
+        }
 
         return SMK.UTIL.resolved( 0 )
             .then( drawPoint )
             .then( drawLine )
             .then( drawFill )
             .then( function () {
-                return [ {
-                    url: cv.toDataURL( 'image/png' ),
-                    title: self.config.legend.title || self.config.title
-                } ]
+                return legendData;
             } )
 
         function drawPoint( offset ) {
             if ( !self.config.legend.point ) return offset 
 
-            return SMK.UTIL.makePromise( function ( res, rej ) {
-                if ( styles[ 0 ].markerUrl ) {
-                    var img = $( '<img>' )
-                        .on( 'load', function () {
-                            var r = img.width / img.height
-                            if ( r > 1 ) r = 1 / r
-                            ctx.drawImage( img, offset, 0, height * r, height )
-                            res( offset + width )
-                        } )
-                        .on( 'error', res )
-                        .attr( 'src', viewer.resolveAttachmentUrl( styles[ 0 ].markerUrl, null, 'png' ) )
-                        .get( 0 )
-                }
-                else {
+            if (legendData.length === 1 && legendData[0].style.markerUrl) {
+                loadMarkerImage(offset)
+                .then((offset) => {
+                    legendData[0].url = cv.toDataURL( 'image/png' );
+                    return offset;
+                });
+            } else {
+                legendData.forEach(leg => {
+                    const st = leg.style;
                     ctx.beginPath()
-                    ctx.arc( offset + width / 2, height / 2, styles[ 0 ].strokeWidth / 2, 0, 2 * Math.PI )
+                    ctx.arc( offset + width / 2, height / 2, st.strokeWidth / 2, 0, 2 * Math.PI )
                     ctx.lineWidth = 2
-                    ctx.strokeStyle = cssColorAsRGBA( styles[ 0 ].strokeColor, styles[ 0 ].strokeOpacity )
-                    ctx.fillStyle = cssColorAsRGBA( styles[ 0 ].fillColor, styles[ 0 ].fillOpacity )
+                    ctx.strokeStyle = cssColorAsRGBA( st.strokeColor, st.strokeOpacity )
+                    ctx.fillStyle = cssColorAsRGBA( st.fillColor, st.fillOpacity )
                     ctx.fill()
                     ctx.stroke()
 
-                    res( offset + width )
-                }
-            } )
+                    leg.url = cv.toDataURL( 'image/png' );
+                });
+            }
+        }
 
+        function loadMarkerImage(offset) {
+            return SMK.UTIL.makePromise( function ( res, rej ) {
+                var img = $( '<img>' )
+                .on( 'load', function () {
+                    var r = img.width / img.height
+                    if ( r > 1 ) r = 1 / r
+                    ctx.drawImage( img, offset, 0, height * r, height )
+                    res( offset + width )
+                } )
+                .on( 'error', res )
+                .attr( 'src', viewer.resolveAttachmentUrl( legendData[0].style.markerUrl, null, 'png' ) )
+                .get( 0 );
+            });
         }
 
         function drawLine( offset ) {
             if ( !self.config.legend.line ) return offset 
         
-            styles.forEach( function ( st ) {
+            legendData.forEach( function ( leg ) {
+                const st = leg.style;
                 ctx.lineWidth = st.strokeWidth
                 ctx.strokeStyle = cssColorAsRGBA( st.strokeColor, st.strokeOpacity )
                 ctx.lineCap = st.strokeCap
@@ -82,6 +110,7 @@ include.module( 'layer.layer-vector-js', [ 'layer.layer-js' ], function () {
                 ctx.moveTo( offset, height / 2 )
                 ctx.quadraticCurveTo( offset + width - hw, 0, offset + width - hw, height )
                 ctx.stroke()
+                leg.url = cv.toDataURL( 'image/png' );
             } )
 
             return offset + width
@@ -90,7 +119,8 @@ include.module( 'layer.layer-vector-js', [ 'layer.layer-js' ], function () {
         function drawFill( offset ) {
             if ( !self.config.legend.fill ) return offset 
 
-            styles.forEach( function ( st ) {
+            legendData.forEach( function ( leg ) {
+                const st = leg.style;
                 // var w = self.config.style.strokeWidth
                 // ctx.lineWidth = w
                 // ctx.strokeStyle = self.config.style.strokeColor + alpha( self.config.style.strokeOpacity )
@@ -98,6 +128,7 @@ include.module( 'layer.layer-vector-js', [ 'layer.layer-js' ], function () {
 
                 ctx.fillRect( 0, 0, width, height )
                 // ctx.strokeRect( w / 2, w / 2, width - w , height - w )
+                leg.url = cv.toDataURL( 'image/png' );
             } )
 
             return offset + width
