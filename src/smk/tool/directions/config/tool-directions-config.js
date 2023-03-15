@@ -5,7 +5,9 @@ include.module( 'tool-directions-config', [
     'tool-directions-config.marker-icon-blue-png',
     'tool-directions-config.marker-icon-green-png',
     'tool-directions-config.marker-icon-red-png',
+    'tool-directions-config.range-limit-png',
     'tool-directions-config.marker-shadow-png',
+    'tool-directions-config.range-limit-shadow-png'
 ], function ( inc ) {
     "use strict";
 
@@ -91,6 +93,27 @@ include.module( 'tool-directions-config', [
                         point: true
                     },
                     isDraggable: true,
+                    isQueryable: false
+                }
+            ],
+            
+            markerLayers: [
+                {
+                    id: "@range-limit",
+                    title: "Range Limit",
+                    style: {
+                        markerUrl:      inc[ 'tool-directions-config.range-limit-png' ],
+                        markerSize:     [ 38, 42 ],
+                        markerOffset:   [ 19, 42 ],
+                        shadowUrl:      inc[ 'tool-directions-config.range-limit-shadow-png' ],
+                        shadowSize:     [ 38, 42 ],
+                        popupOffset:    [ 1, -34 ]
+                    },
+                    legend: {
+                        title: "Range Limit",
+                        point: true
+                    },
+                    isDraggable: false,
                     isQueryable: false
                 }
             ]

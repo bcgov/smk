@@ -43,6 +43,7 @@ include.module( 'tool-directions.tool-directions-waypoints-js', [
             this.defineProp( 'directions' )
             this.defineProp( 'segmentLayers' )
             this.defineProp( 'waypointLayers' )
+            this.defineProp( 'markerLayers' )
 
             this.waypoints = []
             this.hasRoute = false
@@ -155,7 +156,7 @@ include.module( 'tool-directions.tool-directions-waypoints-js', [
 
             this.layer = {}
             var groupItems = []
-            this.segmentLayers.concat( this.waypointLayers ).forEach( function ( ly ) {
+            this.segmentLayers.concat( this.waypointLayers ).concat(this.markerLayers).forEach( function ( ly ) {
                 ly.type = 'vector'
                 ly.isVisible = true
                 ly.isInternal = true
@@ -291,6 +292,7 @@ include.module( 'tool-directions.tool-directions-waypoints-js', [
                     height:             this.routeOptions.truck && this.routeOptions.truckHeight,
                     weight:             this.routeOptions.truck && this.routeOptions.truckWeight,
                     oversize:           this.routeOptions.oversize,
+                    rangeKm:            this.routeOptions.rangeKm
                 }
 
                 return this.routePlanner.fetchDirections( points, opt )
@@ -322,6 +324,10 @@ include.module( 'tool-directions.tool-directions-waypoints-js', [
 
                         self.directionsRaw = data
                         self.directionsRaw.waypoints = JSON.parse( JSON.stringify( self.waypoints ) )
+
+                        if (data.rangeLimit) {
+                            self.displayRangeLimit(data.rangeLimit);
+                        }
                     } )
                     .catch( function ( err ) {
                         console.debug( err )
@@ -391,6 +397,9 @@ include.module( 'tool-directions.tool-directions-waypoints-js', [
                 function waypointGeom( wp, index ) {
                     return turf.point( [ wp.longitude, wp.latitude ], { index: index } )
                 }
+            },
+            displayRangeLimit: function(rangeLimit) {
+                this.layer['@range-limit'].load(turf.point(rangeLimit));
             }
         }
     )

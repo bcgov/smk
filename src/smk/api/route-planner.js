@@ -115,8 +115,7 @@ include.module( 'api.route-planner-js', [ 'jquery', 'util' ], function () {
                         
                         data.segments.push( turf.lineString( data.route.slice( prop.index, data.partitions[ pi ].index + 1 ), prop ) )
                     }
-                }
-                else {
+                } else {
                     data.segments = [ turf.lineString( data.route, { index: 0 } ) ]
                 }
 
@@ -160,6 +159,16 @@ include.module( 'api.route-planner-js', [ 'jquery', 'util' ], function () {
                         .reduce( function ( acc, v ) { return acc.concat( v ) }, [] )
 
                     // debugger
+                }
+                if (option.rangeKm > 0 && data.distance && option.rangeKm < data.distance) {
+                    var distanceKm = 0;
+                    for (var i = 0; i < data.route.length + 1; i += 1) {
+                        distanceKm += turf.distance(data.route[i], data.route[i+1], {units: "kilometers"});
+                        if (distanceKm >= option.rangeKm) {
+                            data.rangeLimit = data.route[i];
+                            break;
+                        }
+                    }
                 }
             }
 
