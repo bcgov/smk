@@ -99,6 +99,10 @@
     font-size: 11px;
 }
 
+.smk-layers-panel .smk-legend .smk-legend-item .smk-legend-item-indent {
+    width: 10px;
+}
+
 .smk-layers-panel .smk-display .smk-folder-expand:hover {
     border: 1px solid transparent;
 }
