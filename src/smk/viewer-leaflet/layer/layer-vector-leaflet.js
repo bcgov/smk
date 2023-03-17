@@ -319,7 +319,7 @@ include.module( 'layer-leaflet.layer-vector-leaflet-js', [ 'layer.layer-vector-j
     }
 
     function validateNumber(value) {
-        if (Number.isNaN(parseFloat(value))) {
+        if (value && Number.isNaN(parseFloat(value))) {
             console.warn(`The feature value ${value} is not a number and cannot be used in a numerical comparison. This comparison will be ignored.`);
             return false;
         }
