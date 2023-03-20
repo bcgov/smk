@@ -77,6 +77,7 @@ Style attributes applied to features based on feature attribute values. These st
 Each conditional style has a `property`, which is the name of a feature attribute, and `conditions`, an array of objects containing: 
 
 - `value`: the value of the feature's `property` attribute
+- `label`: an optional description of features matching this condition, for use in legends; if omitted; value will be used
 - `style`: an object of style properties and values
 - `operator`: an optional operator to use to compare the condition value to the feature's property value. Operators are:
     - `>` greater than, for number values 
@@ -96,6 +97,7 @@ In this sample configuration, features having a `Station_Type` value of `Public`
         "conditions": [
             {
                 "value": "Public",
+                "label": "Public Stations",
                 "style": {
                     "strokeColor": "#0000ff",
                     "fillColor": "#0000ff"
@@ -103,6 +105,7 @@ In this sample configuration, features having a `Station_Type` value of `Public`
             },
             {
                 "value": "Private",
+                "label": "Private Stations",
                 "style": {
                     "strokeColor": "#00ff00",
                     "fillColor": "#00ff00"
@@ -113,7 +116,7 @@ In this sample configuration, features having a `Station_Type` value of `Public`
 ]
 ```
 
-This sample configuration styles features having a `Charging_Level` value of 2 or higher with a white stroke color:
+This sample configuration styles features having a `Charging_Level` value of 3 or higher with a white stroke color:
 
 ``` 
 "conditionalStyles": [
@@ -121,8 +124,9 @@ This sample configuration styles features having a `Charging_Level` value of 2 o
         "property": "Charging_Level",
         "conditions": [
             {
+                "label": "Fast Charging",
                 "operator": ">=",
-                "value": 2,
+                "value": 3,
                 "style": {
                     "strokeColor": "#ffffff"
                 }

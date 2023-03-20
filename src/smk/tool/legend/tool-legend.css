@@ -16,6 +16,10 @@
     font-size: 11px;
 }
 
+.smk-legend-status .smk-display .smk-legend-item .smk-legend-item-indent {
+    width: 10px;
+}
+
 .smk-legend-status .smk-display .smk-item {
     display: flex;
     align-items: center;
