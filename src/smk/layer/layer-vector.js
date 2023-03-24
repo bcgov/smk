@@ -24,7 +24,8 @@ include.module( 'layer.layer-vector-js', [ 'layer.layer-js' ], function () {
         const legendData = [];
         legendData.push({
             title: self.config.legend && self.config.legend.title || self.config.title,
-            style: self.config.style
+            style: self.config.style,
+            hideLayer: (self.config.conditionalStyles && self.config.legend.hideLayer) || false
         });
 
         if (self.config.conditionalStyles) {

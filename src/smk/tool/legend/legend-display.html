@@ -23,7 +23,7 @@
                 v-for="legend in display.legends"
             >
                 <span v-if="legend.indent" class="smk-legend-item-indent"></span>
-                <img v-bind:src="legend.url" v-bind:style="{ width: legend.width + 'px', height: legend.height + 'px' }">
+                <img v-if="!legend.hideLayer" v-bind:src="legend.url" v-bind:style="{ width: legend.width + 'px', height: legend.height + 'px' }">
                 <span class="smk-legend-title">{{ legend.title }}</span>
             </div>
         </div>
