@@ -115,6 +115,24 @@ include.module( 'api.route-planner-js', [ 'jquery', 'util' ], function () {
                         
                         data.segments.push( turf.lineString( data.route.slice( prop.index, data.partitions[ pi ].index + 1 ), prop ) )
                     }
+                } else if (option.rangeKm > 0 && data.distance && option.rangeKm < data.distance) {
+                    data.segments = [];
+                    var distanceKm = 0;
+                    var routeIndex = 0;
+
+                    // Capture the route segment where the range limit is reached
+                    for (var i = 0; i < data.route.length + 1; i += 1) {
+                        distanceKm += turf.distance(data.route[i], data.route[i+1], {units: "kilometers"});
+                        if (distanceKm >= option.rangeKm) {
+                            data.rangeLimit = data.route[i];
+                            routeIndex = i;
+                            break;
+                        }
+                    }
+
+                    // Add two segments - one before the range limit is reached, one after
+                    data.segments.push(turf.lineString(data.route.slice(0, routeIndex), { index: 0 }));
+                    data.segments.push(turf.lineString(data.route.slice(routeIndex), { index: 1, "@layer": "@segments-after-range-limit" }));
                 } else {
                     data.segments = [ turf.lineString( data.route, { index: 0 } ) ]
                 }
@@ -139,10 +157,15 @@ include.module( 'api.route-planner-js', [ 'jquery', 'util' ], function () {
                     }
                 } )
 
-                // segments that start/end on a node without a direction are a problem
-                var problems = routeAttrs.filter( function ( ra ) {
-                    return Object.keys( ra.segs ).length > 1 && ra.dirs.length == 0
-                } )
+                var problems = [];
+
+                // When there's a range and we've created two segments, this code results in an increase in the number of directions
+                if (option.rangeKm === null) {
+                    // segments that start/end on a node without a direction are a problem
+                    problems = routeAttrs.filter( function ( ra ) {
+                        return Object.keys( ra.segs ).length > 1 && ra.dirs.length == 0
+                    } )
+                }
 
                 if ( problems.length > 0 ) {
                     problems.forEach( function ( p ) {
@@ -157,18 +180,6 @@ include.module( 'api.route-planner-js', [ 'jquery', 'util' ], function () {
                         .map( function ( ra ) { return ra.dirs } )
                         .filter( function ( d ) { return !!d } )
                         .reduce( function ( acc, v ) { return acc.concat( v ) }, [] )
-
-                    // debugger
-                }
-                if (option.rangeKm > 0 && data.distance && option.rangeKm < data.distance) {
-                    var distanceKm = 0;
-                    for (var i = 0; i < data.route.length + 1; i += 1) {
-                        distanceKm += turf.distance(data.route[i], data.route[i+1], {units: "kilometers"});
-                        if (distanceKm >= option.rangeKm) {
-                            data.rangeLimit = data.route[i];
-                            break;
-                        }
-                    }
                 }
             }
 
@@ -178,50 +189,6 @@ include.module( 'api.route-planner-js', [ 'jquery', 'util' ], function () {
         } )
 
         return result
-
-        // return result.catch( function () {
-        //     return {
-        //         distance: '10',
-        //         timeText: '10 mins',
-        //         route: points.map( function ( p ) { return [ p.longitude, p.latitude ] } )
-        //             .reduce( function ( accum, v ) {
-        //                 if ( accum.length == 0 ) {
-        //                     accum.push( v )
-        //                     return accum
-        //                 }
-
-        //                 var prev = accum[ accum.length - 1 ]
-
-        //                 accum.push( interpolate( prev, v, 0.2 ) )
-        //                 accum.push( interpolate( prev, v, 0.4 ) )
-        //                 accum.push( interpolate( prev, v, 0.6 ) )
-        //                 accum.push( interpolate( prev, v, 0.8 ) )
-        //                 accum.push( v )
-
-        //                 return accum 
-        //             }, [] ),
-        //         directions: points
-        //             .map( function ( p ) {
-        //                 return { instruction: 'waypoint: ' + p.longitude + ', ' + p.latitude, point: [ p.longitude, p.latitude ] }
-        //             } )
-        //             .reduce( function ( accum, v ) {
-        //                 if ( accum.length == 0 ) {
-        //                     accum.push( v )
-        //                     return accum
-        //                 }
-
-        //                 var prev = accum[ accum.length - 1 ]
-
-        //                 accum.push( { instruction: 'turn left for 1km (1:00)', point: interpolate( prev.point, v.point, 0.2 ) } )
-        //                 // accum.push( { instruction: 'go straight for 2km (2:00)', point: interpolate( prev.point, v.point, 0.4 ) } )
-        //                 accum.push( { instruction: 'turn right for 3km (3:00)', point: interpolate( prev.point, v.point, 0.6 ) } )
-        //                 // accum.push( { instruction: 'go backwards for 4km (4:00)', point: interpolate( prev.point, v.point, 0.8 ) } )
-        //                 accum.push( v )
-
-        //                 return accum 
-        //             }, [] )
-        //     }
-        // } )
     }
 
     function interpolate( p1, p2, t ) {

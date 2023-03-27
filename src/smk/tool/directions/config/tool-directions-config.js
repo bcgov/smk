@@ -37,6 +37,18 @@ include.module( 'tool-directions-config', [
                     legend: {
                         line: true
                     }
+                },
+                {
+                    id: "@segments-after-range-limit",
+                    title: "Segments After Range Limit",
+                    style: {
+                        strokeColor: "lightblue",
+                        strokeWidth: 4,
+                        strokeOpacity: 0.8
+                    },
+                    legend: {
+                        line: true
+                    }
                 }
             ],
             
