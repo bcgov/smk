@@ -116,7 +116,7 @@ include.module( 'tool-directions-config', [
                     style: {
                         markerUrl:      inc[ 'tool-directions-config.range-limit-png' ],
                         markerSize:     [ 38, 42 ],
-                        markerOffset:   [ 19, 42 ],
+                        markerOffset:   [ 10, 42 ],
                         shadowUrl:      inc[ 'tool-directions-config.range-limit-shadow-png' ],
                         shadowSize:     [ 38, 42 ],
                         popupOffset:    [ 1, -34 ]

@@ -119,20 +119,23 @@ include.module( 'api.route-planner-js', [ 'jquery', 'util' ], function () {
                     data.segments = [];
                     var distanceKm = 0;
                     var routeIndex = 0;
-
                     // Capture the route segment where the range limit is reached
-                    for (var i = 0; i < data.route.length + 1; i += 1) {
+                    for (var i = 0; i < (data.route.length - 1); i += 1) {
                         distanceKm += turf.distance(data.route[i], data.route[i+1], {units: "kilometers"});
-                        if (distanceKm >= option.rangeKm) {
-                            data.rangeLimit = data.route[i];
-                            routeIndex = i;
+                        if (distanceKm >= option.rangeKm && i > 0) {
+                            data.rangeLimit = data.route[i - 1];
+                            routeIndex = i - 1;
                             break;
                         }
                     }
-
-                    // Add two segments - one before the range limit is reached, one after
-                    data.segments.push(turf.lineString(data.route.slice(0, routeIndex), { index: 0 }));
-                    data.segments.push(turf.lineString(data.route.slice(routeIndex), { index: 1, "@layer": "@segments-after-range-limit" }));
+                    // If rangeKm is close enough to data.distance, we may not hit the break above and routeIndex will remain 0
+                    if (routeIndex === 0) {
+                        data.segments = [turf.lineString(data.route, { index: 0 })];
+                    } else {
+                        // Add two segments - one before the range limit is reached, one after
+                        data.segments.push(turf.lineString(data.route.slice(0, routeIndex), { index: 0 }));
+                        data.segments.push(turf.lineString(data.route.slice(routeIndex), { index: 1, "@layer": "@segments-after-range-limit" }));
+                    }
                 } else {
                     data.segments = [ turf.lineString( data.route, { index: 0 } ) ]
                 }
