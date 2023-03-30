@@ -31,7 +31,7 @@ include.module( 'tool-directions-config', [
                     title: "Segments",
                     style: {
                         strokeColor: "blue",
-                        strokeWidth: 8,
+                        strokeWidth: 6,
                         strokeOpacity: 0.8
                     },
                     legend: {
@@ -42,7 +42,8 @@ include.module( 'tool-directions-config', [
                     id: "@segments-after-range-limit",
                     title: "Segments After Range Limit",
                     style: {
-                        strokeColor: "lightblue",
+                        strokeColor: "blue",
+                        strokeDashes: "10,5",
                         strokeWidth: 4,
                         strokeOpacity: 0.8
                     },
