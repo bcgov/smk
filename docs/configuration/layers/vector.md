@@ -23,7 +23,8 @@ Click on a property name for more information:
     <a href="#clusteroption-property"       >"clusterOption"</a>:       null,
     <a href="#useheatmap-property"          >"useHeatmap"</a>:          false,
     <a href="#style-property"               >"style"</a>:               null,
-    <a href="#conditionalstyles-property"  >"conditionalStyles"</a>:   null,
+    <a href="#conditionalstyles-property"   >"conditionalStyles"</a>:   null,
+    <a href="#legend-property"              >"legend"</a>:              null,
     <a href="#dataUrl-property"             >"dataUrl"</a>:             null
 } ] }
 </pre>
@@ -62,7 +63,6 @@ The [cluster option](cluster-option) object used to influence the rendering of c
 If `true`, the layer should use heatmap clustering.
 Only relevant for point geometry layers.
 The default is `false`.
-
 
 ## Style Property
 `"style": Object | Array`
@@ -135,6 +135,19 @@ This sample configuration styles features having a `Charging_Level` value of 3 o
     }
 ]
 ```
+
+## Legend Property
+`"legend": Object`
+
+Optional attributes to configure the display of the layer in legends.
+
+`"point", "line", "fill": Boolean`
+
+Set the shape of the legend swatch. "line" is the default. 
+
+`"excludeOtherLegendWithDefaultStyling": Boolean`
+
+By default, when <a href="#conditionalstyles-property">conditional styles</a> are used, an "Other" legend will be added with a swatch using the styling in the <a href="#style-property">style</a> to represent features that are not matched by any of the conditions. Set `excludeOtherLegendWithDefaultStyling` to true to exclude the "Other" legend for situations where all of a layer's features will be matched by the conditions and an "Other" legend is not necessary.
 
 ## DataUrl Property
 `"dataUrl": String`

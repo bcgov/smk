@@ -24,7 +24,8 @@ include.module( 'layer.layer-vector-js', [ 'layer.layer-js' ], function () {
         const legendData = [];
         legendData.push({
             title: self.config.legend && self.config.legend.title || self.config.title,
-            style: self.config.style
+            style: self.config.style,
+            hasConditionalStyling: 'conditionalStyles' in self.config
         });
 
         if (self.config.conditionalStyles) {
@@ -40,6 +41,13 @@ include.module( 'layer.layer-vector-js', [ 'layer.layer-js' ], function () {
                     });
                 });
             });
+            if (!self.config.legend.excludeOtherLegendWithDefaultStyling) {
+                legendData.push({
+                    title: "Other",
+                    style: self.config.style,
+                    indent: true
+                });
+            }
         }
 
         return SMK.UTIL.resolved( 0 )

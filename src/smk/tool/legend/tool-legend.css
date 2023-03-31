@@ -48,3 +48,8 @@
     display: none;
 }
 
+.smk-legend-status .smk-display.smk-display-folder {
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 5px;
+}
