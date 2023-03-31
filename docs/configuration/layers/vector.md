@@ -145,9 +145,9 @@ Optional attributes to configure the display of the layer in legends.
 
 Set the shape of the legend swatch. "line" is the default. 
 
-`"includeOtherLegendWithDefaultStyling": Boolean`
+`"excludeOtherLegendWithDefaultStyling": Boolean`
 
-When <a href="#conditionalstyles-property">conditional styles</a> are used, set this to true to add an "Other" legend with a swatch using the styling in the <a href="#style-property">style</a> to represent features that are not matched by any of the conditions defined in conditional styling.
+By default, when <a href="#conditionalstyles-property">conditional styles</a> are used, an "Other" legend will be added with a swatch using the styling in the <a href="#style-property">style</a> to represent features that are not matched by any of the conditions. Set `excludeOtherLegendWithDefaultStyling` to true to exclude the "Other" legend for situations where all of a layer's features will be matched by the conditions and an "Other" legend is not necessary.
 
 ## DataUrl Property
 `"dataUrl": String`
