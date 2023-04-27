@@ -43,7 +43,7 @@ include.module( 'layer.layer-vector-js', [ 'layer.layer-js' ], function () {
             });
             if (!self.config.legend.excludeOtherLegendWithDefaultStyling) {
                 legendData.push({
-                    title: "Other",
+                    title: self.config.legend.otherLegendLabelOverride ? self.config.legend.otherLegendLabelOverride : "Other",
                     style: self.config.style,
                     indent: true
                 });
