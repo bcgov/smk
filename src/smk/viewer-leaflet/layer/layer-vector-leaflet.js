@@ -148,7 +148,6 @@ include.module( 'layer-leaflet.layer-vector-leaflet-js', [ 'layer.layer-vector-j
                 var layerOptions = {
                     coordsToLatLng: projectCoord,
                     pointToLayer: function ( geojson, latlng ) {
-                        // return markerForStyle( self, latlng, layers[ 0 ].config.style )
                         return markerForStyle( self, latlng, styles[ 0 ], layers[ 0 ].config )
                             .on( 'moveend', function ( ev ) {
                                 var ll = ev.target.getLatLng()
@@ -174,10 +173,16 @@ include.module( 'layer-leaflet.layer-vector-leaflet-js', [ 'layer.layer-vector-j
                         });
                         return convertStyle(combinedStyle, feature.geometry.type, layerPaneId);
                     };
+                } else if (layers[0].config.isInternal) {
+                    layerOptions.onEachFeature = function ( feature, layer ) {
+                        if (layer.setStyle) {
+                            layer.setStyle(convertStyle(feature.style, feature.geometry.type));
+                        }
+                    };
                 } else {
                     layerOptions.style = function(feature) {
                         return convertStyle(layers[0].config.style, feature.geometry.type, layerPaneId);
-                    }
+                    };
                 }
 
                 var layer = new L.geoJson(null, layerOptions);
