@@ -59,6 +59,8 @@ include.module( 'tool-directions.tool-directions-waypoints-js', [
             this.routePlanner = new SMK.TYPE.RoutePlanner( this.routePlannerService )
             this.geocoder = new SMK.TYPE.Geocoder( this.geocoderService )
 
+            this.map = smk.$viewer.map;
+
             this.changedActive( function () {
                 if ( self.active ) {
                     // if ( self.waypoints.length == 0 ) {
@@ -371,6 +373,10 @@ include.module( 'tool-directions.tool-directions-waypoints-js', [
                         sg.style = self.layer[ ly ].config.style
                     } )
                 } )
+
+                const bbox = turf.bbox(segments);
+                const latLngBounds = L.latLngBounds({lng: bbox[0], lat: bbox[1]}, {lng: bbox[2], lat: bbox[3]});
+                self.map.flyToBounds(latLngBounds, {padding: [100,100]});
             },
 
             displayWaypoints: function () {
