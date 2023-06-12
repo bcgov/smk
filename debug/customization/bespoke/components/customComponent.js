@@ -23,7 +23,7 @@ SMK.HANDLER.set('BespokeTool--101', 'activated', (smk, tool) => {
                 const newCenter = new L.LatLng(48.45,-123.35);
 
                 // We call the Leaflet Map's flyTo() method 
-                // (https://leafletjs.com/reference.html#latlng). 
+                // (https://leafletjs.com/reference.html#map-flyto). 
                 leafletMap.flyTo(newCenter, 13);
             }
         },
