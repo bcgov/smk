@@ -37,6 +37,10 @@ include.module( 'layer-leaflet.layer-esri-feature-leaflet-js', [ 'layer.layer-es
                 cfg.drawingInfo.renderer.symbol.url = ( new URL( cfg.drawingInfo.renderer.symbol.url, document.location ) ).toString()
         }
 
+        if (layers[0].config.simplifyFactor) {
+            cfg.simplifyFactor = layers[0].config.simplifyFactor;
+        }
+
         const overlayPane = self.map.getPane('overlayPane');
         const layerPane = self.map.createPane(layers[0].config.id, overlayPane);
         layerPane.style.zIndex = zIndex;
