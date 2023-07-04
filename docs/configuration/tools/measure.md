@@ -2,6 +2,8 @@
 
 # Measure Tool
 
+**Deprecated** - This tool does not work properly in SMK versions 1.1.2 and later. 
+
 Add a button to the toolbar, that shows a panel that allows the user to measure distances or areas on the map.
 
 This is default configuration for the Measure tool (click on a property name for more information):
