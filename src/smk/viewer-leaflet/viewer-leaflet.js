@@ -193,9 +193,9 @@ include.module( 'viewer-leaflet', [ 'viewer', 'leaflet', 'layer-leaflet', /*'fea
 
     ViewerLeaflet.prototype.basemap.Gray.create = createBasemapEsri
     
-    ViewerLeaflet.prototype.basemap.StamenTonerLight.create = createBasemapTiled
-    ViewerLeaflet.prototype.basemap.StamenTonerLight.url = 'https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}.png'
-    ViewerLeaflet.prototype.basemap.StamenTonerLight.attribution = "Map tiles by <a href='http://stamen.com'>Stamen Design</a>, under <a href='http://creativecommons.org/licenses/by/3.0'>CC BY 3.0</a>. Data by <a href='http://openstreetmap.org'>OpenStreetMap</a>, under <a href='http://www.openstreetmap.org/copyright'>ODbL</a>."
+    ViewerLeaflet.prototype.basemap.BCGov.create = createBasemapTiled
+
+    ViewerLeaflet.prototype.basemap.BCGovHillshade.create = createBasemapTiled
 
     function createBasemapEsri( apiId, esriApiKey ) {
         if (!esriApiKey) {
@@ -212,9 +212,9 @@ include.module( 'viewer-leaflet', [ 'viewer', 'leaflet', 'layer-leaflet', /*'fea
         return [ L.esri.Vector.vectorBasemapLayer( apiId, opt ) ];
     }
 
-    function createBasemapTiled( id ) {
+    function createBasemapTiled( apiId ) {
         /* jshint -W040 */
-        return [ L.tileLayer( this.url, { attribution: this.attribution, pane: BASEMAP_PANE } ) ]
+        return [ L.esri.Vector.vectorTileLayer( apiId ) ]
     }
 
     ViewerLeaflet.prototype.setBasemap = function ( basemapId, esriApiKey ) {
@@ -226,6 +226,10 @@ include.module( 'viewer-leaflet', [ 'viewer', 'leaflet', 'layer-leaflet', /*'fea
             } )
         }
 
+        // If basemap is not recognized, apply the default
+        if(!this.basemap[basemapId]) {
+            basemapId = "BCGov";
+        }
         this.currentBasemap = this.createBasemapLayer( basemapId, esriApiKey );
 
         this.map.addLayer( this.currentBasemap[ 0 ] );

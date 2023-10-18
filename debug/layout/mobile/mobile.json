@@ -1,7 +1,7 @@
 {
   "viewer": {
       "device": "mobile",
-      "baseMap": "StamenTonerLight"
+      "baseMap": "GeoBC"
   },
   "tools": [
     {

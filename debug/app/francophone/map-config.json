@@ -28,7 +28,7 @@
 			],
 			"zoom": 6.0
 		},
-		"baseMap": "StamenTonerLight",
+		"baseMap": "GeoBC",
 		"activeTool": "about",
 		"clusterOption": {
 			"showCoverageOnHover": false

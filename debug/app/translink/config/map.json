@@ -14,7 +14,7 @@
             49.72867079292322
         ]
     },
-    "baseMap": "StamenTonerLight",
+    "baseMap": "GeoBC",
     "minZoom": 10,
     "activeTool": "directions"
   },
