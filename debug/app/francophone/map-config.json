@@ -28,7 +28,7 @@
 			],
 			"zoom": 6.0
 		},
-		"baseMap": "GeoBC",
+		"baseMap": "BCGov",
 		"activeTool": "about",
 		"clusterOption": {
 			"showCoverageOnHover": false
