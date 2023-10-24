@@ -36,6 +36,9 @@ include.module( 'tool-baseMaps', [
                     return Object.assign( { id: id }, smk.$viewer.basemap[ id ] )
                 } )
                 .filter( function ( bm ) {
+                    if (!smk.viewer.esriApiKey && bm.apiId.startsWith("ArcGIS")) {
+                        return false;
+                    }
                     if ( !self.choices || self.choices.length == 0 ) return true
                     if ( self.choices.indexOf( bm.id ) > -1 ) return true
                     if ( smk.viewer.baseMap == bm.id ) return true
