@@ -14,7 +14,7 @@ Click on a property name for more information:
     <a href="#deviceautobreakpoint-property"    >"deviceAutoBreakpoint"</a>: 500,
     <a href="#themes-property"                  >"themes"</a>:      null
     <a href="#panelwidth-property"              >"panelWidth"</a>:  300,
-    <a href="#basemap-property"                 >"baseMap"</a>:     "Topographic",
+    <a href="#basemap-property"                 >"baseMap"</a>:     "BCGov",
     <a href="#esriapikey-property"              >"esriApiKey"</a>:  null,
     <a href="#activeTool-property"              >"activeTool"</a>:  null,
     <a href="#minZoom-property"                 >"minZoom"</a>:  null,
