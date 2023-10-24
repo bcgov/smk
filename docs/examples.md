@@ -236,7 +236,7 @@ Using default configuration.
 - The window/tab has title 'SMK Default Map'.
 - These tools are available: directions, location, markup, and search.
 - Map is centered over BC, showing whole province.
-- The base map is 'Topographic'.
+- The base map is 'BC Government'.
 
 ### Discussion 1
 
@@ -417,7 +417,7 @@ Setting location of map.
 - The window/tab has title 'SMK Default Map'.
 - These tools are available: directions, location, search, and markup.
 - Map is centered over southern Vancouver Island.
-- The base map is 'Topographic'.
+- The base map is 'BC Government'.
 
 
 
@@ -478,7 +478,7 @@ The URL parameters can be processed before or after other configuration specifie
 - The window/tab has title 'SMK Default Map'.
 - These tools are available: directions, location, search, and markup.
 - Map is centered over southern Vancouver Island.
-- The base map is 'Topographic'.
+- The base map is 'BC Government'.
 
 ### Discussion 5
 
@@ -527,7 +527,7 @@ Enabling tools.
 - The map fills browser window.
 - The window/tab has title 'SMK Default Map'.
 - These tools are available: about, baseMaps, coordinate, directions, identify, layers, location, markup, measure, menu, minimap, pan, scale, search, select, and zoom.
-- The base map is 'Topographic'.
+- The base map is 'BC Government'.
 
 ### Discussion 6
 
@@ -575,7 +575,7 @@ Configuring tools.
 - The window/tab has title 'SMK Default Map'.
 - These tools are available: directions, location, scale, search, and markup.
 - The scale display doesn't show the scale factor.
-- The base map is 'Topographic'.
+- The base map is 'BC Government'.
 
 
 
@@ -611,7 +611,7 @@ Running an ad-hoc query.
 - The map fills browser window.
 - The window/tab has title 'SMK Default Map'.
 - These tools are available: directions, location, scale, search, query, and markup.
-- The base map is 'Topographic'.
+- The base map is 'BC Government'.
 - The query tool is activated when the map loads.
 - The query is executed immediately.
 

@@ -1,6 +1,6 @@
 {
     "viewer": {
-        "baseMap": "StamenTonerLight"
+        "baseMap": "BCGov"
     },
     "tools": [
         {

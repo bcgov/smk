@@ -39,44 +39,50 @@ include.module( 'viewer', [ 'jquery', 'util', 'event', 'layer', 'feature-set', '
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
     //
     Viewer.prototype.basemap = {
-        Topographic: {
+        BCGov: {
             order: 1,
+            apiId: "b1624fea73bd46c681fab55be53d96ae",
+            title: 'BC Government'
+        },
+        BCGovHillshade: {
+            order: 2,
+            apiId: "bbe05270d3a642f5b62203d6c454f457",
+            title: 'BC Government Hillshade'
+        },
+        Topographic: {
+            order: 3,
             apiId: 'ArcGIS:Topographic',
-            title: 'Topographic'
+            title: 'ArcGIS Topographic'
         },
         Streets: {
-            order: 2,
+            order: 4,
             apiId: 'ArcGIS:Streets',
-            title: 'Streets'
+            title: 'ArcGIS Streets'
         },
         Imagery: {
-            order: 3,
+            order: 5,
             apiId: 'ArcGIS:Imagery',
-            title: 'Imagery'
+            title: 'ArcGIS Imagery'
         },
         Oceans: {
-            order: 4,
+            order: 6,
             apiId: 'ArcGIS:Oceans',
-            title: 'Oceans'
+            title: 'ArcGIS Oceans'
         },
         ShadedRelief: {
-            order: 6,
+            order: 7,
             apiId: 'ArcGIS:Hillshade:Light', 
-            title: 'Shaded Relief'
+            title: 'ArcGIS Shaded Relief'
         },
         DarkGray: {
-            order: 7,
+            order: 8,
             apiId: 'ArcGIS:DarkGray',
-            title: 'Dark Gray'
+            title: 'ArcGIS Dark Gray'
         },
         Gray: {
-            order: 8,
-            apiId: 'ArcGIS:LightGray',
-            title: 'Gray'
-        },
-        StamenTonerLight: {
             order: 9,
-            title: 'Stamen Toner Light'
+            apiId: 'ArcGIS:LightGray',
+            title: 'ArcGIS Gray'
         }
     }
     // _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _

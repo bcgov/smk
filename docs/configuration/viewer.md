@@ -14,7 +14,7 @@ Click on a property name for more information:
     <a href="#deviceautobreakpoint-property"    >"deviceAutoBreakpoint"</a>: 500,
     <a href="#themes-property"                  >"themes"</a>:      null
     <a href="#panelwidth-property"              >"panelWidth"</a>:  300,
-    <a href="#basemap-property"                 >"baseMap"</a>:     "Topographic",
+    <a href="#basemap-property"                 >"baseMap"</a>:     "BCGov",
     <a href="#esriapikey-property"              >"esriApiKey"</a>:  null,
     <a href="#activeTool-property"              >"activeTool"</a>:  null,
     <a href="#minZoom-property"                 >"minZoom"</a>:  null,
@@ -82,6 +82,8 @@ The width of the UI panel, in pixels.
 The name of the basemap to display at startup.
 These are the possible values:
 
+- `"BCGov"`
+- `"BCGovHillshade"`
 - `"Topographic"`
 - `"Streets"`
 - `"Imagery"`
@@ -89,13 +91,12 @@ These are the possible values:
 - `"ShadedRelief"`
 - `"DarkGray"`
 - `"Gray"`
-- `"StamenTonerLight"`
 
 
 ## EsriApiKey Property
 `"esriApiKey": String`
 
-An Esri API key to use with Esri's [vector basemap service](https://developers.arcgis.com/documentation/mapping-apis-and-services/maps/services/basemap-layer-service), which is used for all basemaps except *StamenTonerLight*.
+An Esri API key to use with Esri's [vector basemap service](https://developers.arcgis.com/documentation/mapping-apis-and-services/maps/services/basemap-layer-service), which is used for all basemaps except *BCGov* and *BCGovHillshade*.
 
 To provide an Esri API key, you can create an [ArcGIS Developer account](https://developers.arcgis.com/sign-up/) for free or use an [ArcGIS Online account](https://www.esri.com/en-us/arcgis/products/arcgis-online/trial) and then create an [API key](https://developers.arcgis.com/documentation/mapping-apis-and-services/security/api-keys/) in the [developer dashboard](https://developers.arcgis.com/dashboard/).
 
