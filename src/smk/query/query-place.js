@@ -35,7 +35,7 @@ include.module( 'query.query-place-js', [ 'query.query-js' ], function () {
             $.ajax( {
                 timeout:    10 * 1000,
                 dataType:   'jsonp',
-                url:        'https://apps.gov.bc.ca/pub/geocoder/addresses.geojsonp',
+                url:        'https://geocoder.api.gov.bc.ca/addresses.geojsonp',
                 data:       query,
             } ).then( res, rej )
         } )
