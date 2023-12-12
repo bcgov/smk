@@ -38,6 +38,7 @@
   },
   "overrides": {
     "async": "~2.6.4",
+    "axios": ">=1.6.0",
     "engine.io": ">=6.4.2",
     "getobject": ">=1.0.0",
     "shelljs": ">=0.8.5",
