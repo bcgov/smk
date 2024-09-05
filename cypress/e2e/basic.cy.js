@@ -8,7 +8,7 @@ describe('SMK Basic Tests', () => {
     })
 
     it('Has the expected Map name', () => {
-        cy.window().its('SMK.MAP.1.name').should('eq', 'SMK Default Map');
+        cy.window().its('SMK.MAP.1.name').should('eq', 'smk-cypress');
     })
 
     it('Has a Location tool with the expected ID', () => {
