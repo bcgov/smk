@@ -20,6 +20,6 @@ import './commands'
 // require('./commands')
 
 beforeEach(() => {
-    cy.visit('./index.html');
+    cy.visit('./cypress/index.html');
 });
   
