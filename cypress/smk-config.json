@@ -1,0 +1,341 @@
+{
+    "name": "smk-cypress",
+    "viewer": {
+        "type": "leaflet",
+        "location": {
+            "extent": [
+                -140.80078125000003,
+                61.62728646147466,
+                -108.72070312500001,
+                46.13417004624326
+            ],
+            "center": [
+                -124.76074218750003,
+                51.88072825385896
+            ],
+            "zoom": 6
+        },
+        "esriApiKey": "",
+        "baseMap": "BCGov"
+    },
+    "layers": [
+        {
+            "type": "esri-dynamic",
+            "id": 4053,
+            "title": "School Districts - Outlined",
+            "isVisible": true,
+            "isQueryable": true,
+            "opacity": 0.65,
+            "minScale": 6000000,
+            "maxScale": 0,
+            "titleAttribute": null,
+            "attributes": [
+                {
+                    "name": "ADMIN_AREA_SID",
+                    "title": "Admin Area ID",
+                    "visible": true
+                },
+                {
+                    "name": "SCHOOL_DISTRICT_NAME",
+                    "title": "School District Name",
+                    "visible": true
+                },
+                {
+                    "name": "FEATURE_CODE",
+                    "title": "Feature Code",
+                    "visible": true
+                },
+                {
+                    "name": "SHAPE",
+                    "title": "Shape",
+                    "visible": true
+                },
+                {
+                    "name": "OBJECTID",
+                    "title": "ObjectID",
+                    "visible": true
+                },
+                {
+                    "name": "SHAPE.AREA",
+                    "title": "Area",
+                    "visible": false
+                },
+                {
+                    "name": "SHAPE.LEN",
+                    "title": "Shape Length",
+                    "visible": false
+                },
+                {
+                    "name": "SCHOOL_DISTRICT_NUMBER",
+                    "title": "School District Number",
+                    "visible": true
+                },
+                {
+                    "name": "FEATURE_AREA_SQM",
+                    "title": "Area Square Meters",
+                    "visible": true
+                },
+                {
+                    "name": "FEATURE_LENGTH_M",
+                    "title": "Length Meters",
+                    "visible": true
+                }
+            ],
+            "queries": null,
+            "mpcmId": "4053",
+            "mpcmWorkspace": "MPCM_ALL_PUB",
+            "serviceUrl": "https://maps.gov.bc.ca/arcgis/rest/services/mpcm/bcgw/MapServer",
+            "dynamicLayers": [
+                "{\"id\":4053,\"minScale\":6000000,\"maxScale\":0,\"source\":{\"type\":\"dataLayer\",\"dataSource\":{\"type\":\"table\",\"workspaceId\":\"MPCM_ALL_PUB\",\"dataSourceName\":\"WHSE_TANTALIS.TA_SCHOOL_DISTRICTS_SVW\",\"gdbVersion\":\"\"}},\"drawingInfo\":{\"renderer\":{\"type\":\"simple\",\"symbol\":{\"type\":\"esriSFS\",\"style\":\"esriSFSSolid\",\"color\":[0,0,0,0],\"outline\":{\"type\":\"esriSLS\",\"style\":\"esriSLSSolid\",\"color\":[78,78,78,255],\"width\":1.2}},\"label\":\"School District\",\"description\":\"\"},\"transparency\":0,\"labelingInfo\":null}}"
+            ],
+            "metadataUrl": "https://catalogue.data.gov.bc.ca/dataset/78ec5279-4534-49a1-97e8-9d315936f08b"
+        },
+        {
+            "type": "esri-dynamic",
+            "id": 4054,
+            "title": "School Districts - Colour Filled",
+            "isVisible": true,
+            "isQueryable": true,
+            "opacity": 0.65,
+            "minScale": 6000000,
+            "maxScale": 0,
+            "titleAttribute": null,
+            "attributes": [
+                {
+                    "name": "ADMIN_AREA_SID",
+                    "title": "Admin Area ID",
+                    "visible": true
+                },
+                {
+                    "name": "SCHOOL_DISTRICT_NAME",
+                    "title": "School District Name",
+                    "visible": true
+                },
+                {
+                    "name": "FEATURE_CODE",
+                    "title": "Feature Code",
+                    "visible": true
+                },
+                {
+                    "name": "SHAPE",
+                    "title": "Shape",
+                    "visible": true
+                },
+                {
+                    "name": "OBJECTID",
+                    "title": "ObjectID",
+                    "visible": true
+                },
+                {
+                    "name": "SHAPE.AREA",
+                    "title": "Area",
+                    "visible": false
+                },
+                {
+                    "name": "SHAPE.LEN",
+                    "title": "Shape Length",
+                    "visible": false
+                },
+                {
+                    "name": "SCHOOL_DISTRICT_NUMBER",
+                    "title": "School District Number",
+                    "visible": true
+                },
+                {
+                    "name": "FEATURE_AREA_SQM",
+                    "title": "Area Square Meters",
+                    "visible": true
+                },
+                {
+                    "name": "FEATURE_LENGTH_M",
+                    "title": "Length Meters",
+                    "visible": true
+                }
+            ],
+            "queries": null,
+            "mpcmId": "4054",
+            "mpcmWorkspace": "MPCM_ALL_PUB",
+            "serviceUrl": "https://maps.gov.bc.ca/arcgis/rest/services/mpcm/bcgw/MapServer",
+            "dynamicLayers": [
+                "{\"id\":4054,\"minScale\":6000000,\"maxScale\":0,\"source\":{\"type\":\"dataLayer\",\"dataSource\":{\"type\":\"table\",\"workspaceId\":\"MPCM_ALL_PUB\",\"dataSourceName\":\"WHSE_TANTALIS.TA_SCHOOL_DISTRICTS_SVW\",\"gdbVersion\":\"\"}},\"drawingInfo\":{\"renderer\":{\"type\":\"simple\",\"symbol\":{\"type\":\"esriSFS\",\"style\":\"esriSFSSolid\",\"color\":[115,178,255,255],\"outline\":{\"type\":\"esriSLS\",\"style\":\"esriSLSSolid\",\"color\":[104,104,104,255],\"width\":0.4}},\"label\":\"School District\",\"description\":\"\"},\"transparency\":50,\"labelingInfo\":null}}"
+            ],
+            "metadataUrl": "https://catalogue.data.gov.bc.ca/dataset/78ec5279-4534-49a1-97e8-9d315936f08b"
+        }
+    ],
+    "tools": [
+        {
+            "type": "toolbar",
+            "enabled": true
+        },
+        {
+            "type": "list-menu",
+            "enabled": true,
+            "title": "SMK Cypress Test Configuration"
+        },
+        {
+            "type": "pan",
+            "enabled": true
+        },
+        {
+            "type": "zoom",
+            "enabled": true
+        },
+        {
+            "type": "about",
+            "enabled": true,
+            "title": "About SMK Cypress Test Configuration",
+            "position": "list-menu",
+            "content": "<p>Welcome to SMK!</p><p>Configuration for use in Cypress testing</p>"
+        },
+        {
+            "order": 3,
+            "position": [
+                "shortcut-menu",
+                "list-menu"
+            ],
+            "icon": "layers",
+            "title": "Layers",
+            "command": {
+                "allVisibility": true,
+                "filter": true,
+                "legend": true
+            },
+            "glyph": {
+                "visible": "visibility",
+                "hidden": "visibility_off"
+            },
+            "type": "layers",
+            "enabled": true,
+            "display": [
+                {
+                    "id": 4053,
+                    "isVisible": false
+                },
+                {
+                    "id": 4054,
+                    "isVisible": false
+                }
+            ]
+        },
+        {
+            "order": 3,
+            "position": [
+                "shortcut-menu",
+                "list-menu"
+            ],
+            "icon": "map",
+            "title": "Base Maps",
+            "mapStyle": {
+                "width": "110px",
+                "height": "110px"
+            },
+            "type": "baseMaps",
+            "enabled": true
+        },
+        {
+            "type": "identify",
+            "enabled": true,
+            "showPanel": true,
+            "showWidget": true,
+            "style": {
+                "strokeWidth": 1,
+                "strokeStyle": "1, 1",
+                "strokeColor": "#000000",
+                "strokeOpacity": 0.8,
+                "fillColor": "#000000",
+                "fillOpacity": 0.5,
+                "markerSize": [
+                    20,
+                    20
+                ],
+                "markerOffset": [
+                    10,
+                    0
+                ]
+            }
+        },
+        {
+            "type": "search",
+            "enabled": true
+        },
+        {
+            "type": "coordinate",
+            "enabled": true
+        },
+        {
+            "type": "markup",
+            "enabled": true
+        },
+        {
+            "type": "scale",
+            "enabled": true
+        },
+        {
+            "type": "minimap",
+            "enabled": true
+        },
+        {
+            "type": "directions",
+            "enabled": true
+        },
+        {
+            "type": "location",
+            "enabled": true
+        },
+        {
+            "type": "select",
+            "enabled": true
+        },
+        {
+            "type": "geomark",
+            "geomarkService": {
+                "url": "https://apps.gov.bc.ca/pub/geomark"
+            },
+            "position": "list-menu",
+            "enabled": true
+        },
+        {
+            "order": 1,
+            "position": "toolbar",
+            "icon": "now_widgets",
+            "title": "Bespoke Tool",
+            "useComponent": true,
+            "component": {
+                "template": "<div>Custom content for tool</div>"
+            },
+            "type": "bespoke",
+            "instance": "101",
+            "enabled": true
+        },
+        {
+            "type": "legend",
+            "enabled": true
+        },
+        {
+            "order": 6,
+            "position": [
+                "shortcut-menu",
+                "list-menu"
+            ],
+            "icon": "straighten",
+            "title": "Measurement",
+            "type": "measure",
+            "enabled": true
+        },
+        {
+            "type": "shortcut-menu",
+            "enabled": true
+        },
+        {
+            "title": "Version Info",
+            "position": "list-menu",
+            "order": 99,
+            "icon": "build",
+            "type": "version",
+            "enabled": true
+        }
+    ],
+    "version": "1.2.3",
+    "createdBy": "SMK Developer",
+    "createdDate": "2024-09-05T21:40:12.423Z"
+}

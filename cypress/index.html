@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>SMK Cypress Test Application</title>
+        <script src="../dist/smk.js"></script>
+        <style>
+            #smk-map-frame {
+                position: absolute;
+                top: 0; left: 0; right: 0; bottom: 0; margin: 0; padding: 0;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="smk-map-frame"></div>
+        <script>
+            SMK.INIT( { containerSel: '#smk-map-frame', config: [ './smk-config.json', '?' ] } )
+        </script>
+    </body>
+</html>
