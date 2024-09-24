@@ -19,9 +19,8 @@
     "release": "grunt release",
     "serve": "browser-sync start --server --serveStatic ./debug --files ./dist/smk.js"
   },
-  "dependencies": {},
   "devDependencies": {
-    "browser-sync": "~2.27.11",
+    "browser-sync": "^3.0.3",
     "concurrently": "~7.0.0",
     "cypress": "^13.4.2",
     "glob": "7.1.2",
