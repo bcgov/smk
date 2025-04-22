@@ -22,7 +22,7 @@
   "devDependencies": {
     "browser-sync": "^3.0.3",
     "concurrently": "~7.0.0",
-    "cypress": "^13.4.2",
+    "cypress": "^13.17.0",
     "glob": "7.1.2",
     "grunt": "1.5.3",
     "grunt-cli": "~1.4.0",
