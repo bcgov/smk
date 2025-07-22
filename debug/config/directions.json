@@ -2,7 +2,7 @@
     "tools": [
         {
             "type": "directions",
-            "apiKey": "ndLv6oEJN4z5FwwhDyaNoF4NfnYWXwVJ"
+            "apiKey": "<your-router-api-key>"
         }
     ]
 }

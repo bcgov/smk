@@ -5,7 +5,7 @@
       "routePlannerService": {
         "# url": "https://ssl.refractions.net/ols/router/",
         "url": "https://routertst.pathfinder.gov.bc.ca/",
-        "apiKey": "11dd756f680c47b5aef5093d95543738"
+        "apiKey": "<your-router-api-key>"
       },
       "geocoderService": {
         "url": "https://geocodertst.api.gov.bc.ca/",
