@@ -6,24 +6,32 @@
 
 Simple Map Kit (SMK) is designed to make it easy to integrate a map into a web application.
 
+Simple Map Kit is not an application itself; it's a JavaScript library that can be added to a web page that, in combination with an SMK configuration file, adds mapping functionality.
+
+# Basic SMK Application
+
 An SMK application needs to include one `<script>` tag to load the library, define a single `<div>` tag to contain the map, and call one method to initialize the map. No other code needs to be written for the application; map functionality is defined in a JSON configuration file, though custom functionality can be added with additional code.
 
-Here is an example of a complete HTML page that uses SMK to show a map:
+Here is an example of an HTML page that uses SMK to show a map:
 
 ```html
 <!DOCTYPE html>
 <html>
     <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>SMK Demo</title>
-        <link rel="stylesheet" type="text/css" href="./assets/style.css"/>
+        <script src="smk.js"></script>
+        <style>
+            #smk-map-frame {
+                position: absolute;
+                top: 0; left: 0; right: 0; bottom: 0; margin: 0; padding: 0;
+            }
+        </style>
     </head>
     <body>
-        <article>
-            <div id="smk-map-frame"></div>
-        </article>
-        <script src="./node_modules/@bcgov/smk/dist/smk.js"></script>
-        <script src="./smk-init.js"></script>
+        <div id="smk-map-frame"></div>
+        <script>
+            SMK.INIT( { containerSel: '#smk-map-frame' } )
+        </script>
     </body>
 </html>
 ```
