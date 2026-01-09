@@ -37,11 +37,11 @@ The simple test server requires [NodeJS](https://nodejs.org/en/) to be installed
 
 Install node modules:
 
-    > npm install --production
+`npm install --production`
 
 Start grunt test server:
 
-    > grunt
+`grunt`
 
 Browser will open at [https://localhost:8443](https://localhost:8443).
 
@@ -51,20 +51,24 @@ If these is desire to make changes to `smk.js`, the full source code is included
 
 To setup your environment for development, assuming the export is at `/smk-export`:
 
-    > cd /smk-export
+`cd /smk-export`
 
-    # Install development libraries
-    > npm install
+Install development libraries
 
-    # Unzip source code into src/
-    > unzip ../smk-<version>-src.zip 
+`npm install`
 
-    > cd src
+Unzip source code into src/
 
-    # Build smk in development mode (unminified) into ../smk.js
-    > grunt develop 
+```
+unzip ../smk-<version>-src.zip
+cd src
+```
+Build smk in development mode (unminified) into ../smk.js
 
-    # *OR* Build smk in release mode (minified) into ../smk.js
-    > grunt release 
+`grunt develop`
+
+*OR* build smk in release mode (minified) into ../smk.js
+
+`grunt release` 
 
 See [DEVELOPMENT.md](DEVELOPMENT.md) for more information on doing development on smk-client.
