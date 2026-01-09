@@ -4,11 +4,13 @@
 
 There are a variety of ways to install Simple Map Kit (SMK) into your application.
 
-## Use `smk create` to make a new app
+## Use SMK-CLI
 
 If you want to create a new application using SMK, then the easiest way is with [`smk-cli`](https://github.com/bcgov/smk-cli) (Command Line Interface), a utility for assisting with the creation, modification and development of SMK projects.
 
-The following instructions will get you up and running, but for more information on creating and editing apps with `smk-cli` [visit the docs](https://bcgov.github.io/smk-cli/).
+For more information on creating and editing apps with `smk-cli` [visit the docs](https://bcgov.github.io/smk-cli/).
+
+=========TODO integrate the section below with smk-cli getting-started.md and installation.md
 
 ### Installing `smk-cli`
 
@@ -38,6 +40,8 @@ You will also be asked whether you want to edit the app. Choosing yes will launc
 To run the app locally at any time, navigate to the app directory and run:
 
     > npm run view
+
+==========END TODO
 
 ## Install from NPM
 
