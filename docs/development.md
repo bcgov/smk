@@ -8,13 +8,15 @@ Install [NodeJS](https://nodejs.org/en/).
 
 After NodeJS is installed, open a terminal window, and execute these commands:
 
-    > cd projects/smk
+`cd projects/smk`
 
-    # Install node modules:
-    > npm install
+Install node modules:
 
-    # Build smk into dist/, start a web server pointing to this directory
-    > npm start
+`npm install`
+
+Build smk into dist/, start a web server pointing to this directory:
+
+`npm start`
 
 Your web browser will automatically open a new page to [https://localhost:8080/debug](https://localhost:8080/debug).
 Visit 'layout', and then 'header' for example.
