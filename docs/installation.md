@@ -10,27 +10,6 @@ If you want to create a new application using SMK, then the easiest way is with 
 
 For more information on creating and editing apps with `smk-cli` [visit the docs](https://bcgov.github.io/smk-cli/).
 
-=========TODO integrate the section below with smk-cli getting-started.md and installation.md
-
-### Creating a project
-Change to the a directory where you keep your projects, and create a new SMK application (change `my-new-app` to whatever you like).
-
-```
-cd projects
-smk create my-new-app
-```
-
-You will be asked some questions about your new application.
-Once they are answered you will have a new skeleton application at `projects/my-new-app`.
-
-You will also be asked whether you want to edit the app. Choosing yes will launch the web GUI editor.
-
-To run the app locally at any time, navigate to the app directory and run:
-
-`npm run view`
-
-==========END TODO
-
 ## Install from NPM
 
 In your NPM project, use this command to add SMK as a dependency:
@@ -48,12 +27,10 @@ After unzipping the package, you should copy the `dist` folder to your project.
 
 Then in your application, you could include SMK like this (assumeing you copied `dist` to `assets/js/smk`):
 
-    <script src="assets/js/smk/smk.js"></script>
+`<script src="assets/js/smk/smk.js"></script>`
 
 ## Use deployed version
 
 Include this in your application:
 
-    <script src="[url of smk deployment]/smk.js"></script>
-
-
+`<script src="[url of smk deployment]/smk.js"></script>`
