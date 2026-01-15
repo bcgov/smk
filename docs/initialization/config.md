@@ -2,14 +2,9 @@
 
 # Initializing the Configuration Sources
 
-This value controls the sources of configuration that are used to setup the map.
-These configuration sources are each ultimately resolved into an object that is interpreted by the [SMK configuration schema](../configuration).
+This value controls the sources of configuration that are used to setup the map. These configuration sources are each ultimately resolved into an object that is interpreted by the [SMK configuration schema](../configuration/index.md).
 
-The resolved configuration objects are merged together, and the final merged object is used to setup the map ([merging rules](merging-rules)).
-
-The default value for the source directives is `[ '?smk-' ]`, which tells SMK to look at the URL of the host page for any parameters that start with `smk-`.
-If this behaviour is undesirable, then the configuration source should be changed.
-
+The default value for the source directives is `[ '?smk-' ]`, which tells SMK to look at the URL of the host page for any parameters that start with `smk-`. If this behaviour is undesirable, then the configuration source should be changed.
 
 ## `smk-config` Attribute
 
@@ -28,12 +23,11 @@ Example showing all types of directives:
 >&lt;/script>
 </pre>
 
-
 ## `config` Option
 
 *Not required, default is "`[ '?smk-' ]`"*
 
-Used by [`SMK.INIT`](..#initializing-with-smk-init).
+Used by [`SMK.INIT`](./index.md).
 The value is an array of [source directives](#source-directives).
 The sources are loaded left to right, with the configuration from later sources overriding configuration from earlier sources.
 

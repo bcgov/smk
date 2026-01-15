@@ -4,7 +4,7 @@
 
 This tool shows a panel that allows drawing, creating, and loading geomarks.
 
-**Note:** This tool is not available on mobile devices.
+> __Note:__ This tool is not available on mobile devices.
 
 A geomark (https://apps.gov.bc.ca/pub/geomark/geomarks) is a geographic area of interest that is stored in a geomark web service and can be shared by a URL.
 
