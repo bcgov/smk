@@ -6,7 +6,7 @@
 
 Simple Map Kit (SMK) is designed to make it easy to integrate a map into a web application.
 
-Simple Map Kit is not an application itself; it's a JavaScript library that can be added to a web page that, in combination with an SMK configuration file, adds mapping functionality.
+Simple Map Kit is not an application itself; it's a JavaScript library that can be added to a web page that, in combination with an SMK configuration file and other SMK-provided libraries, adds mapping functionality.
 
 # Basic SMK Application
 
@@ -38,9 +38,9 @@ Here is an example of an HTML page that uses SMK to show a map:
 
 # SMK-CLI
 
-Creating SMK configuration by hand is possible, but an easier way to create a simple SMK application is to use the command-line development tool [SMK CLI](https://github.com/bcgov/smk-cli).
-This tool lets you initialize a new SMK map application project by answering a few questions.
-It also gives you an interactive web-based UI to do more detailed configuration of your map, and it showcases BC government map layers that you can include in your application.
+An easy way to create an SMK application is to use the command-line development tool [SMK CLI](https://github.com/bcgov/smk-cli). This tool lets you initialize a new SMK map application project by answering a few questions. It also gives you an interactive web-based UI to make more detailed configuration changes for your application, and it showcases BC government map layers that you can include in your application. 
+
+Creating and updating SMK configuration by hand is also possible.
 
 # Examples
 

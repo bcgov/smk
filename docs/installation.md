@@ -25,7 +25,7 @@ Then, in your application you add the SMK library like this:
 Click one of the download links to left to download the most recent build of SMK.
 After unzipping the package, you should copy the `dist` folder to your project.
 
-Then in your application, you could include SMK like this (assumeing you copied `dist` to `assets/js/smk`):
+Then in your application, you could include SMK like this (assuming you copied `dist` to `assets/js/smk`):
 
 `<script src="assets/js/smk/smk.js"></script>`
 
