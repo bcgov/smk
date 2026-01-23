@@ -21,7 +21,7 @@ These are all the tool types available, click on the tool type to see more infor
     { "type": <a href="list-menu"     >"list-menu"</a>     },
     { "type": <a href="location"      >"location"</a>      },
     { "type": <a href="markup"        >"markup"</a>        },
-    { "type": <a href="measure"       >"measure"</a>       },
+    <!-- { "type": <a href="measure"       >"measure"</a>       }, -->
     { "type": <a href="minimap"       >"minimap"</a>       },
     { "type": <a href="pan"           >"pan"</a>           },
     { "type": <a href="query"         >"query"</a>         },

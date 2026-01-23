@@ -16,7 +16,7 @@ Must be one of these values:
 [`"list-menu"`](list-menu),
 [`"location"`](location),
 [`"markup"`](markup),
-[`"measure"`](measure),
+<!-- [`"measure"`](measure), -->
 [`"minimap"`](minimap),
 [`"pan"`](pan),
 [`"query"`](query),

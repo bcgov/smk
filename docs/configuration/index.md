@@ -42,7 +42,7 @@ The `"layers"` and `"tools"` collections can contain a variety of possible objec
         { "type": <a href="tools/list-menu"      >"list-menu"</a>     },
         { "type": <a href="tools/location"       >"location"</a>      },
         { "type": <a href="tools/markup"         >"markup"</a>        },
-        { "type": <a href="tools/measure"        >"measure"</a>       },
+        <!-- { "type": <a href="tools/measure"        >"measure"</a>       }, -->
         { "type": <a href="tools/minimap"        >"minimap"</a>       },
         { "type": <a href="tools/pan"            >"pan"</a>           },
         { "type": <a href="tools/query"          >"query"</a>         },
