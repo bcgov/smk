@@ -518,15 +518,15 @@ Enabling tools.
 ></script>
 ```
 
-[`https://example.com/demo?`](https://example.com/demo?smk-show-tool=measure,menu,minimap&smk-show-tool=pan,scale,select,zoom)
+[`https://example.com/demo?`](https://example.com/demo?smk-show-tool=menu,minimap&smk-show-tool=pan,scale,select,zoom)
 - `smk-show-tool=pan,scale,select,zoom`
-- `smk-show-tool=measure,menu,minimap`
+- `smk-show-tool=menu,minimap`
 
 ### Result 6
 
 - The map fills browser window.
 - The window/tab has title 'SMK Default Map'.
-- These tools are available: about, baseMaps, coordinate, directions, identify, layers, location, markup, measure, menu, minimap, pan, scale, search, select, and zoom.
+- These tools are available: about, baseMaps, coordinate, directions, identify, layers, location, markup, menu, minimap, pan, scale, search, select, and zoom.
 - The base map is 'BC Government'.
 
 ### Discussion 6
