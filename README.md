@@ -47,6 +47,9 @@ It also gives you an interactive web-based UI to do more detailed configuration 
 
 To see some samples of SMK in action, you can look at the [debug folder](https://bcgov.github.io/smk/debug).
 
+# Feedback
+Report a bug, request an enhancement, or provide feedback at https://dpdd.atlassian.net/servicedesk/customer/portal/1/group/1.
+
 # License
 ```
 Copyright 2026 Province of British Columbia
