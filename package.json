@@ -1,5 +1,5 @@
 {
-  "version": "1.2.5",
+  "version": "1.2.6",
   "name": "@bcgov/smk",
   "title": "Simple Map Kit",
   "description": "A simple way to add a map your application.",
@@ -22,8 +22,8 @@
   "devDependencies": {
     "browser-sync": "^3.0.3",
     "concurrently": "~7.0.0",
-    "cypress": "^13.17.0",
-    "grunt": "~1.6.1",
+    "cypress": "^15.16.0",
+    "grunt": "~1.6.2",
     "grunt-contrib-clean": "~2.0.1",
     "grunt-contrib-copy": "~1.0.0",
     "grunt-contrib-concat": "~2.1.0",
@@ -39,6 +39,6 @@
   },
   "overrides": {
     "getobject": ">=1.0.0",
-    "immutable": ">4.3.8"
+    "lodash": ">=4.18.1"
   }
 }
